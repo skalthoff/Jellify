@@ -6,6 +6,7 @@ A music player for Jellyfin powered by React Native
 
 
 ### Backend
+[Jellyfin SDK](https://typescript-sdk.jellyfin.org/)
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)
 
 ### Logging
