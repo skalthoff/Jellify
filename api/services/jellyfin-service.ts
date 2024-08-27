@@ -1,7 +1,7 @@
 import { Api, Jellyfin } from "@jellyfin/sdk";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api"
 import { getDeviceNameSync, getUniqueIdSync } from "react-native-device-info";
-import { ArtistModel } from "./models/ArtistModel";
+import { ArtistModel } from "../../models/ArtistModel";
 import * as Keychain from "react-native-keychain"
 
 let clientName : string = require('root-require')('./package.json').name
@@ -31,6 +31,10 @@ export class JellyfinService {
 
         // TODO: Determine this makes singleton correctly
         return this._instance || (this._instance = new this())
+    }
+
+    public static get api() : Api {
+        return this.instance.api!
     }
 
     public initConnection(serverUrl: string) : void {

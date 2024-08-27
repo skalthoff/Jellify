@@ -24,7 +24,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { JellyfinService } from './api/jellyfinservice';
+import { JellyfinService } from './api/services/jellyfin-service';
 
 type SectionProps = PropsWithChildren<{
   title: string;
