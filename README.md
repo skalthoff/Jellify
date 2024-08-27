@@ -8,6 +8,7 @@ A music player for Jellyfin powered by React Native
 [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
 - Specifically Material Community Icons
 [React Native CarPlay](https://github.com/birkir/react-native-carplay)
+[React Native InApp Browser](https://github.com/proyecto26/react-native-inappbrowser)
 
 ### Backend
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)
