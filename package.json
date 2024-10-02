@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@animatereactnative/marquee": "^0.2.0",
+    "@gcores/react-native-carplay": "^1.1.12",
     "@jellyfin/sdk": "^0.10.0",
+    "@react-native-async-storage/async-storage": "^2.0.0",
     "@sentry/react-native": "^5.30.0",
     "@tanstack/react-query": "^5.52.1",
     "react": "18.3.1",
