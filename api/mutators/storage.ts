@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { MutationKeys } from "../enums/mutation-keys";
+import { MutationKeys } from "../../enums/mutation-keys";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AsyncStorageKeys } from "../enums/async-storage-keys";
+import { AsyncStorageKeys } from "../../enums/async-storage-keys";
 
 import * as Keychain from "react-native-keychain"
 import { useServerUrl } from "../queries/storage";

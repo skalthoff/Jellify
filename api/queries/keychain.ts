@@ -3,8 +3,8 @@ import * as Keychain from "react-native-keychain"
 import { ArtistModel } from "../../models/ArtistModel"
 import { Api } from "@jellyfin/sdk"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { AsyncStorageKeys } from "../enums/async-storage-keys"
-import { QueryKeys } from "../enums/query-keys"
+import { AsyncStorageKeys } from "../../enums/async-storage-keys"
+import { QueryKeys } from "../../enums/query-keys"
 import { useServerUrl } from "./storage"
 
 export const useCredentials = useQuery({
