@@ -1,4 +1,4 @@
-import { Query, QueryFunction, useQueries, useQuery, UseQueryOptions, UseQueryResult } from "@tanstack/react-query"
+import { useQueries, useQuery, UseQueryOptions, UseQueryResult } from "@tanstack/react-query"
 import { getActiveTrack, getProgress, pause, play, removeUpcomingTracks, setupPlayer } from "react-native-track-player/lib/src/trackPlayer"
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api/playstate-api"
 import { useApi } from "../../api/queries";
@@ -52,7 +52,7 @@ const useReportPlaybackStopped : UseQueryOptions = {
         getActiveTrack()
         .then(track => {
             if (!!!track) 
-                throw new Error("Tried to report playback when there wasn't a currently active track");
+                throw new Error("Tried to report playback stopped when there wasn't a currently active track");
             
             return track as Track;
         })
@@ -68,7 +68,7 @@ export const useReportPlaybackProgress : UseQueryResult = useQuery({
         getActiveTrack()
         .then(track => {
             if (!!!track) 
-                throw new Error("Tried to report playback when there wasn't a currently active track");
+                throw new Error("Tried to report playback progress when there wasn't a currently active track");
             
             return track as Track;
         })

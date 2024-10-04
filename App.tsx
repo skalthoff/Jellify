@@ -1,15 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
+import './gesture-handler';
 import React, { useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -19,11 +12,13 @@ import {
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { usePlayer } from './player/queries';
+import Login from './components/Login/component';
+import Player from './components/Player/component';
+import Jellify from './components/Jellify/component';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -59,22 +54,32 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
+  usePlayer;
+
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
+  
+const RootStack = createStackNavigator();
 
-      </ScrollView>
-    </SafeAreaView>
+  return (
+    <NavigationContainer>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
+        <RootStack.Navigator>
+        <RootStack.Group>
+          <RootStack.Screen name="Jellify" component={Jellify} />
+        </RootStack.Group>
+        <RootStack.Group screenOptions={{ presentation: 'modal' }}>
+          <RootStack.Screen name="Player" component={Player} />
+        </RootStack.Group>
+      </RootStack.Navigator>
+      </SafeAreaView>
+    </NavigationContainer>
   );
 }
 
