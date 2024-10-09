@@ -1,12 +1,18 @@
 export enum QueryKeys {
+    AddToQueue = "ADD_TO_QUEUE",
+    AlbumTracks = "ALBUM_TRACKS",
     Api = "API",
+    ArtistAlbums = "ARTIST_ALBUMS",
     ArtistById = "ARTIST_BY_ID",
     Credentials = "CREDENTIALS",
     Pause = "PAUSE",
     Play = "PLAY",
+    Playlists = "PLAYLISTS",
     Progress = "PROGRESS",
     ReportPlaybackPosition = "REPORT_PLAYBACK_POSITION",
     ReportPlaybackStarted = "REPORT_PLAYBACK_STARTED",
     ReportPlaybackStopped = "REPORT_PLAYBACK_STOPPED",
     ServerUrl = "SERVER_URL",
+    RemoveFromQueue = "REMOVE_FROM_QUEUE",
+    RemoveMultipleFromQueue = "REMOVE_MULTIPLE_FROM_QUEUE",
 }
