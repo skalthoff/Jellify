@@ -14,16 +14,12 @@ export const serverUrl = useMutation({
     mutationKey: [MutationKeys.ServerUrl],
     mutationFn: (serverUrl: string) => {
         let jellyfin = new Jellyfin(client);
-
         let api = jellyfin.createApi(serverUrl);
-
         return getSystemApi(api).getPublicSystemInfo()
     },
     onSuccess: (publicSystemInfoResponse, serverUrl, context) => {
-
         if (!!!publicSystemInfoResponse.data.Version)
             throw new Error("Unable to connect to Jellyfin Server");
-
         return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, serverUrl);
     }
 });

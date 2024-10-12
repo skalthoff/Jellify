@@ -9,6 +9,7 @@ export enum QueryKeys {
     Play = "PLAY",
     Playlists = "PLAYLISTS",
     Progress = "PROGRESS",
+    PlayQueue = "PLAY_QUEUE",
     ReportPlaybackPosition = "REPORT_PLAYBACK_POSITION",
     ReportPlaybackStarted = "REPORT_PLAYBACK_STARTED",
     ReportPlaybackStopped = "REPORT_PLAYBACK_STOPPED",

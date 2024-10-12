@@ -1,5 +1,6 @@
 import { SongInfo } from "@jellyfin/sdk/lib/generated-client/models";
 import { PitchAlgorithm, RatingType, Track, TrackType } from "react-native-track-player"
+import { QueuingType } from "../enums/queuing-type";
 
 export interface JellifyTrack extends Track {
     url: string;
@@ -23,4 +24,11 @@ export interface JellifyTrack extends Track {
     Year?: number | null | undefined;
     IndexNumber?: number | null | undefined;
     ParentIndexNumber?: number | null | undefined;
+
+    /**
+     * Represents the type of queuing for this song, be it that it was
+     * queued from the selection chosen, queued by the user directly, or marked
+     * to play next by the user
+     */
+    QueueType?: QueuingType | undefined ;
 }
