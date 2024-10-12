@@ -3,15 +3,52 @@
  */
 
 import { useMutation } from "@tanstack/react-query";
-import { useQueue } from "../../queries/queue";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyTrack } from "../../../types/JellifyTrack";
-import { getQueue, remove } from "react-native-track-player/lib/src/trackPlayer";
-import { storePlayQueue } from "./helpers/storage";
-import { Track } from "react-native-track-player/lib/src/interfaces/Track";
+import { add, getQueue, remove } from "react-native-track-player/lib/src/trackPlayer";
+import { fetchPlayQueue, storePlayQueue } from "./helpers/storage";
+import { findPlayNextIndexStart, findPlayQueueIndexStart } from "./helpers";
 
-export const removeFromQueue = useMutation({
+/**
+ * 
+ */
+export const addToPlayNext = useMutation({
+    mutationFn: async (tracks: JellifyTrack[]) => {
+
+        let playQueue = await fetchPlayQueue();
+        let insertIndex = findPlayNextIndexStart(playQueue);
+
+        add(tracks, insertIndex);
+
+        tracks.forEach(track => {
+            playQueue.splice(insertIndex, 0, track);
+        });
+
+        await storePlayQueue(playQueue)
+    }
+});
+
+/**
+ * Adds additional tracks to the end of the user queue
+ */
+export const addToPlayQueue = useMutation({
+    mutationFn: async (tracks: JellifyTrack[]) => {
+
+        let playQueue = await fetchPlayQueue();
+        let insertIndex = findPlayQueueIndexStart(playQueue);
+
+        add(tracks, insertIndex);
+
+        tracks.forEach(track => {
+            playQueue.splice(insertIndex, 0, track);
+        });
+
+        await storePlayQueue(playQueue)
+    }
+});
+
+export const removeFromPlayQueue = useMutation({
     mutationFn: async (indexes: number[]) => {
         // Remove from the player first thing
         remove(indexes);
