@@ -1,13 +1,18 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import SignIn from "./helpers/sign-in";
 
+const styles = StyleSheet.create({
+    text: {
+        color: "#FFFFFF"
+    }
+})
 
 export default function Login(): React.JSX.Element {
 
     const Stack = createStackNavigator();
 
     return (
-        <Text>Alyssa please be impressed</Text>
+        <Text style={styles.text} >Alyssa please be impressed</Text>
     );
 }
