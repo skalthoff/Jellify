@@ -1,13 +1,10 @@
 import './gesture-handler';
-import React, { useState } from 'react';
-import type {PropsWithChildren} from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
-  View,
 } from 'react-native';
 
 import {
@@ -16,44 +13,16 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { usePlayer } from './player/queries';
 import Login from './components/Login/component';
-import Player from './components/Player/component';
 import Jellify from './components/Jellify/component';
+import { useApi } from './api/queries';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const [isDarkMode, setIsDarkMode ] = useState(useColorScheme() === 'dark');
-  
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
+export default function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   usePlayer;
+
+  // Attempt to create API instance, if it fails we aren't authenticated yet
+  let { error, isLoading, isSuccess } = useApi
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -66,31 +35,8 @@ function App(): React.JSX.Element {
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         />
-        isAuthenticated ? (
-          <Jellify />
-        ) ? <Login />
+        isSuccess ? <Jellify /> : <Login />
       </SafeAreaView>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
