@@ -1,16 +1,15 @@
 import { SafeAreaView, StatusBar, useColorScheme } from "react-native";
-import { useApi, useServerUrl } from "../api/queries";
 import { NavigationContainer } from "@react-navigation/native";
 import Login from "./Login/component";
 import Navigation from "./navigation";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import { usePlayer } from "../player/queries";
+import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 
 export default function Jellify(): React.JSX.Element {
 
   const isDarkMode = useColorScheme() === 'dark';
 
-  usePlayer;
+  setupPlayer();
 
   // Attempt to create API instance, if it fails we aren't authenticated yet
   let error, isLoading = true, isSuccess = false;
