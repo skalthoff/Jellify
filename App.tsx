@@ -1,7 +1,7 @@
 import './gesture-handler';
 import React from 'react';
 
-import Jellify from './components/Jellify/component';
+import Jellify from './components/jellify';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export default function App(): React.JSX.Element {
