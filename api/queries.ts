@@ -4,6 +4,7 @@ import { getDeviceNameSync, getUniqueIdSync } from "react-native-device-info"
 import { QueryKeys } from "../enums/query-keys";
 import { useCredentials } from "./queries/keychain";
 import { name, version } from "../package.json"
+import { createPublicApi } from "./query-functions/api";
 
 export const client : Jellyfin  = new Jellyfin({
     clientInfo: {
@@ -19,7 +20,7 @@ export const client : Jellyfin  = new Jellyfin({
 export const usePublicApi = (serverUrl: string) => useQuery({
     queryKey: [QueryKeys.PublicApi, serverUrl],
     queryFn: ({ queryKey }) => {
-        return client.createApi(serverUrl);
+        createPublicApi(queryKey[1])
     }
 })
 
