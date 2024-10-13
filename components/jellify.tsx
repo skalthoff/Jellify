@@ -26,7 +26,8 @@ export default function Jellify(): React.JSX.Element {
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         />
-        isSuccess ? <Navigation /> : <Login />
+        { isSuccess && <Navigation /> }
+        { !isSuccess && <Login /> }
       </SafeAreaView>
     </NavigationContainer>
 
