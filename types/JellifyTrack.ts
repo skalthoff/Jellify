@@ -30,5 +30,5 @@ export interface JellifyTrack extends Track {
      * queued from the selection chosen, queued by the user directly, or marked
      * to play next by the user
      */
-    QueueType?: QueuingType | undefined ;
+    QueuingType?: QueuingType | undefined ;
 }

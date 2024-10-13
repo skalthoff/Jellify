@@ -1,10 +1,13 @@
-import { BaseItemDto, SongInfo } from "@jellyfin/sdk/lib/generated-client/models";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useQuery } from "@tanstack/react-query";
 import { add, remove, removeUpcomingTracks } from "react-native-track-player/lib/src/trackPlayer";
 import { QueryKeys } from "../../enums/query-keys";
-import { JellifyTrack } from "../../types/JellifyTrack";
 import { mapDtoToJellifyTrack } from "../../helpers/mappings";
+import { QueuingType } from "../../enums/queuing-type";
 
+/**
+ * Clears the queue of existing songs
+ */
 export const useClearQueue = useQuery({
     queryKey: [],
     queryFn: () => {
@@ -17,7 +20,14 @@ export const useClearQueue = useQuery({
  * @param song The song to play next
  * @returns 
  */
-export const playNext = (song: BaseItemDto) => addToQueue(song, 1);
+export const playNext = (song: BaseItemDto) => addToQueue(song, QueuingType.PlayingNext, 1);
+
+/**
+ * Adds a song to the user queue, but not before songs queued to play next
+ * @param song The song to add to the user submitted queue
+ * @returns 
+ */
+export const directlyQueue = (song: BaseItemDto) => addToQueue(song, QueuingType.DirectlyQueued)
 
 /**
  * 
@@ -25,10 +35,10 @@ export const playNext = (song: BaseItemDto) => addToQueue(song, 1);
  * @param index The index position to slot the song in, where "0" is the currently playing track. Defaults to the end of the queue
  * @returns 
  */
-export const addToQueue = (song: BaseItemDto, index: number | undefined) => useQuery({
+const addToQueue = (song: BaseItemDto, queuingType: QueuingType, index?: number) => useQuery({
     queryKey: [QueryKeys.AddToQueue, song.Id, index],
     queryFn: () => {
-        return add(mapDtoToJellifyTrack(song), index)
+        return add(mapDtoToJellifyTrack(song, queuingType), index)
     }
 })
 

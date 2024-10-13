@@ -16,5 +16,5 @@ export const findPlayNextIndexStart = (playQueue: JellifyTrack[]) => {
  * @returns The index to insert songs to add to the user queue
  */
 export const findPlayQueueIndexStart = (playQueue: JellifyTrack[]) => {
-    return playQueue.findIndex(queuedTrack => queuedTrack.QueueType === QueuingType.FromSelection) - 1;
+    return playQueue.findIndex(queuedTrack => queuedTrack.QueuingType === QueuingType.FromSelection) - 1;
 }
