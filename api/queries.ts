@@ -4,8 +4,8 @@ import { getDeviceNameSync, getUniqueIdSync } from "react-native-device-info"
 import { QueryKeys } from "../enums/query-keys";
 import { useCredentials } from "./queries/keychain";
 
-let clientName : string = require('root-require')('./package.json').name
-let clientVersion : string = require('root-require')('./package.json').version
+let clientName : string = require('root-require')('../package.json').name
+let clientVersion : string = require('root-require')('../package.json').version
 
 export const client : Jellyfin  = new Jellyfin({
     clientInfo: {
