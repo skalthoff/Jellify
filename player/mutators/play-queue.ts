@@ -4,9 +4,9 @@
 
 import { useMutation } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
-import { JellifyTrack } from "../../../types/JellifyTrack";
-import { add, getQueue, remove } from "react-native-track-player/lib/src/trackPlayer";
+import { AsyncStorageKeys } from "../../enums/async-storage-keys";
+import { JellifyTrack } from "../../types/JellifyTrack";
+import { add, getQueue, remove, removeUpcomingTracks } from "react-native-track-player/lib/src/trackPlayer";
 import { fetchPlayQueue, storePlayQueue } from "./helpers/storage";
 import { findPlayNextIndexStart, findPlayQueueIndexStart } from "./helpers";
 
@@ -75,5 +75,12 @@ export const removeFromPlayQueue = useMutation({
     },
     onSuccess: () => {
 
+    }
+});
+
+export const clearPlayQueue = useMutation({
+    mutationFn: async () => {
+        removeUpcomingTracks()
+        await storePlayQueue([]);
     }
 })
