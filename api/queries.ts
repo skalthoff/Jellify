@@ -18,6 +18,13 @@ export const client : Jellyfin  = new Jellyfin({
     }
 });
 
+export const usePublicApi = (serverUrl: string) => useQuery({
+    queryKey: [QueryKeys.PublicApi, serverUrl],
+    queryFn: ({ queryKey }) => {
+        return client.createApi(serverUrl);
+    }
+})
+
 export const useApi = useQuery({
     queryKey: [QueryKeys.Api],
     queryFn: () => {

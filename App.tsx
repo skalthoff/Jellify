@@ -14,7 +14,6 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { usePlayer } from './player/queries';
 import Login from './components/Login/component';
 import Player from './components/Player/component';
@@ -60,9 +59,6 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  
-const RootStack = createStackNavigator();
-
   return (
     <NavigationContainer>
       <SafeAreaView style={backgroundStyle}>
@@ -70,14 +66,9 @@ const RootStack = createStackNavigator();
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         />
-        <RootStack.Navigator>
-        <RootStack.Group>
-          <RootStack.Screen name="Jellify" component={Jellify} />
-        </RootStack.Group>
-        <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-          <RootStack.Screen name="Player" component={Player} />
-        </RootStack.Group>
-      </RootStack.Navigator>
+        isAuthenticated ? (
+          <Jellify />
+        ) ? <Login />
       </SafeAreaView>
     </NavigationContainer>
   );

@@ -27,6 +27,6 @@ export const serverUrl = useMutation({
 export const credentials = useMutation({
     mutationKey: [MutationKeys.Credentials],
     mutationFn: (credentials: JellyfinCredentials) => {
-        return Keychain.setInternetCredentials(useServerUrl.data!, credentials.username, credentials.accessToken);
+        return Keychain.setInternetCredentials(useServerUrl.data!, credentials.username, credentials.accessToken!);
     },
 });
