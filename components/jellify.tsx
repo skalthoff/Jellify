@@ -13,7 +13,7 @@ export default function Jellify(): React.JSX.Element {
   usePlayer;
 
   // Attempt to create API instance, if it fails we aren't authenticated yet
-  let { error, isLoading, isSuccess } = useApi(useServerUrl().data!);
+  let error, isLoading = true, isSuccess = false;
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
