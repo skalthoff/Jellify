@@ -8,6 +8,10 @@ export default function ServerAddress(): React.JSX.Element {
 
     const [serverUrl, setServerUrl] = useState("");
 
+    const handleServerUrlMutation = () => {
+        serverUrlMutation.mutate(serverUrl)
+    }
+
     return (
         <YStack>
                 <Input placeholder="Jellyfin Server Address"
@@ -15,9 +19,7 @@ export default function ServerAddress(): React.JSX.Element {
                     ></Input>
 
                 <Button 
-                    onPress={() => {
-                        serverUrlMutation.mutate(serverUrl)
-                    }}
+                    onPress={handleServerUrlMutation}
                     disabled={_.isEmpty(serverUrl)}>
                         Connect
                 </Button>
