@@ -7,6 +7,7 @@ import { useServerUrl } from "../../api/queries";
 import { useServerUrl as serverUrlMutation } from "../../api/mutators/storage";
 import _ from "lodash"
 import ServerAuthentication from "./helpers/server-authentication";
+import { validateServerUrl } from "./utils/validation";
 
 export default function Login(): React.JSX.Element {
 
@@ -14,6 +15,11 @@ export default function Login(): React.JSX.Element {
     
     const styles = StyleSheet.create({
         input: {
+            height: 40,
+            margin: 12,
+            borderRadius: 1,
+            borderWidth: 1,
+            padding: 10,
             color: isDarkMode ? "white" : "black"
         }
     })
@@ -21,6 +27,8 @@ export default function Login(): React.JSX.Element {
     const Stack = createStackNavigator();
 
     let [serverUrl, setServerUrl] = useState(useServerUrl().data);
+
+    let serverUrlIsValid = validateServerUrl(serverUrl);
 
     return (
         (_.isEmpty(serverUrl) ?
@@ -34,6 +42,7 @@ export default function Login(): React.JSX.Element {
 
                 <Button 
                     onPress={(event) => serverUrlMutation.mutate(serverUrl)}
+                    disabled={!serverUrlIsValid}
                     title="Submit Server URL"/>
             </View>
         : 
