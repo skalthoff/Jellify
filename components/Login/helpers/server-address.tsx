@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
-import { handleServerUrlChangeEvent } from "../utils/handlers";
 import { useServerUrl } from "@/api/queries";
 import { validateServerUrl } from "../utils/validation";
 import { useServerUrl as serverUrlMutation } from "../../../api/mutators/storage";
@@ -27,7 +26,7 @@ export default function ServerAddress(): React.JSX.Element {
                 <TextInput
                     style={styles.input}
                     value={serverUrl}
-                    onChangeText={(value) => handleServerUrlChangeEvent(value, setServerUrl)}
+                    onChangeText={(value) => validateServerUrl(value) ?? setServerUrl(value)}
                     />
 
                 <Button 
