@@ -4,6 +4,7 @@ import Login from "./Login/component";
 import Navigation from "./navigation";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
+import { useServerUrl } from "../api/queries";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -12,10 +13,11 @@ export default function Jellify(): React.JSX.Element {
   setupPlayer();
 
   // Attempt to create API instance, if it fails we aren't authenticated yet
-  let error, isLoading = true, isSuccess = false;
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  let { data, isLoading, isSuccess } = useServerUrl();
 
 
   return (
