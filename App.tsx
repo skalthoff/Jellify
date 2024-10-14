@@ -13,7 +13,7 @@ export default function App(): React.JSX.Element {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <GluestackUIProvider mode={useColorScheme()!}>
+      <GluestackUIProvider mode={'dark'}>
         <Jellify />
       </GluestackUIProvider>
     </QueryClientProvider>
