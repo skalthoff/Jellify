@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
-import { useServerUrl } from "@/api/queries";
+import { useServerUrl } from "../../../api/queries/storage";
 import { validateServerUrl } from "../utils/validation";
 import { useServerUrl as serverUrlMutation } from "../../../api/mutators/storage";
 
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 
 export default function ServerAddress(): React.JSX.Element {
 
-    let [serverUrl, setServerUrl] = useState(useServerUrl().data);
+    let [serverUrl, setServerUrl] = useState("");
 
     let serverUrlIsValid = validateServerUrl(serverUrl);
 
