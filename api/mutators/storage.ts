@@ -13,7 +13,7 @@ export const useServerUrl = useMutation({
     mutationFn: async (serverUrl: string | undefined) => {
 
         console.log("Mutating server URL");
-        
+
         if (!!!serverUrl)
             throw Error("Server URL was empty")
 
