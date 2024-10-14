@@ -24,7 +24,7 @@ export default function ServerAddress(): React.JSX.Element {
                 <TextInput
                     style={styles.input}
                     value={serverUrl}
-                    onChangeText={(value) => validateServerUrl(value) ?? setServerUrl(value)}
+                    onChangeText={setServerUrl}
                     />
 
                 <Button 
