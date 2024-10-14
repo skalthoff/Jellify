@@ -17,7 +17,7 @@ export default function Jellify(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  let { data, isLoading, isSuccess } = useServerUrl();
+  let data, isLoading, isSuccess = false;
 
 
   return (
