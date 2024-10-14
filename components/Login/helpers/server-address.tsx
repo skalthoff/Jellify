@@ -23,6 +23,8 @@ export default function ServerAddress(): React.JSX.Element {
     
             let jellyfin = new Jellyfin(client);
             let api = jellyfin.createApi(serverUrl);
+
+            console.log(`Created API client for ${api.basePath}`)
             return await getSystemApi(api).getPublicSystemInfo()
         },
         onSuccess: (publicSystemInfoResponse, serverUrl, context) => {
@@ -31,6 +33,9 @@ export default function ServerAddress(): React.JSX.Element {
     
             console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
             return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, serverUrl!);
+        },
+        onError: (error: Error) => {
+            console.error("An error occurred connecting to the Jellyfin instance", error);
         }
     });
 
