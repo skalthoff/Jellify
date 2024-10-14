@@ -28,7 +28,7 @@ export default function ServerAddress(): React.JSX.Element {
                     />
 
                 <Button 
-                    onPress={(event) => serverUrlMutation.mutate(serverUrl)}
+                    onPress={(event) => console.log(serverUrl)}
                     disabled={_.isEmpty(serverUrl)}>
                         Connect
                 </Button>
