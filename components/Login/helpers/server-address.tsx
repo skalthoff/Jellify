@@ -11,7 +11,7 @@ export default function ServerAddress(): React.JSX.Element {
     return (
         <YStack>
                 <Input placeholder="Jellyfin Server Address"
-                    onChangeText={(value) => validateServerUrl(value) ?? setServerUrl(value)}
+                    onChangeText={(value) => validateServerUrl(value) ? setServerUrl(value) : console.log("Invalid Address")}
                     ></Input>
 
                 <Button 
