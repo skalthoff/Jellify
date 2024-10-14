@@ -42,7 +42,7 @@ export default function Login(): React.JSX.Element {
                 <Button 
                     onPress={(event) => serverUrlMutation.mutate(serverUrl)}
                     disabled={!serverUrlIsValid}
-                    title="Submit Server URL"/>
+                    title="Connect"/>
             </View>
         : 
             <ServerAuthentication />
