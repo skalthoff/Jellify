@@ -1,8 +1,11 @@
 import './gesture-handler';
+import "./global.css";
 import React from 'react';
 
 import Jellify from './components/jellify';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useColorScheme } from 'react-native';
+import { GluestackUIProvider } from './components/ui/gluestack-ui-provider';
 
 export default function App(): React.JSX.Element {
 
@@ -10,7 +13,9 @@ export default function App(): React.JSX.Element {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Jellify />
+      <GluestackUIProvider mode={useColorScheme()!}>
+        <Jellify />
+      </GluestackUIProvider>
     </QueryClientProvider>
   );
 }
