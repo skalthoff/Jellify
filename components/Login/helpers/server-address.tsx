@@ -6,8 +6,9 @@ import { Button, Input, YStack } from "tamagui";
 
 export default function ServerAddress(): React.JSX.Element {
 
+    console.log("YEET")
     const [serverUrl, setServerUrl] = useState("");
-
+    console.log("YEEZUS")
     return (
         <YStack>
                 <Input placeholder="Jellyfin Server Address"
