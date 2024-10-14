@@ -1,5 +1,6 @@
 import './gesture-handler';
 import React from 'react';
+import "react-native-url-polyfill/auto";
 import defaultConfig from '@tamagui/config/v3'
 
 import Jellify from './components/jellify';
