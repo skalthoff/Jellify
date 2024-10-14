@@ -1,8 +1,8 @@
-
+import _ from "lodash"
 
 export function validateServerUrl(serverUrl: string | undefined) {
 
-    if (serverUrl) {
+    if (!_.isEmpty(serverUrl)) {
         // Parse
         return true;
     }
