@@ -9,7 +9,7 @@ import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api"
 import { JellyfinCredentials } from "../types/jellyfin-credentials";
 import { mutateServerCredentials } from "./functions/storage";
 
-export const useServerUrl = useMutation({
+export const serverUrlMutation = useMutation({
     mutationFn: async (serverUrl: string | undefined) => {
 
         console.log("Mutating server URL");

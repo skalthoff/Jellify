@@ -4,7 +4,6 @@ import Login from "./Login/component";
 import Navigation from "./navigation";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
-import { useServerUrl } from "../api/queries";
 
 export default function Jellify(): React.JSX.Element {
 
