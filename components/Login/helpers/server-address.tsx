@@ -8,7 +8,7 @@ export default function ServerAddress(): React.JSX.Element {
 
     const [serverUrl, setServerUrl] = useState("");
 
-    const handleServerUrlMutation = () => {
+    const handleServerUrlMutation = (serverUrl: string) => {
         serverUrlMutation.mutate(serverUrl)
     }
 
@@ -19,7 +19,7 @@ export default function ServerAddress(): React.JSX.Element {
                     ></Input>
 
                 <Button 
-                    onPress={handleServerUrlMutation}
+                    onPress={() => handleServerUrlMutation(serverUrl)}
                     disabled={_.isEmpty(serverUrl)}>
                         Connect
                 </Button>
