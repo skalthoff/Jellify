@@ -1,5 +1,5 @@
 import { Api } from "@jellyfin/sdk";
-import { client } from "../queries";
+import { client } from "../../queries";
 import { fetchCredentials } from "./keychain";
 
 
