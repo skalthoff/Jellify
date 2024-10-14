@@ -1,13 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Button, StyleSheet, Text, TextInput, useColorScheme, View } from "react-native";
-import SignIn from "./helpers/sign-in";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Button, StyleSheet, TextInput, useColorScheme, View } from "react-native";
 import { useState } from "react";
 import { useServerUrl } from "../../api/queries";
 import { useServerUrl as serverUrlMutation } from "../../api/mutators/storage";
 import _ from "lodash"
 import ServerAuthentication from "./helpers/server-authentication";
 import { validateServerUrl } from "./utils/validation";
+import { handleServerUrlChangeEvent } from "./utils/handlers";
 
 export default function Login(): React.JSX.Element {
 
@@ -37,7 +36,7 @@ export default function Login(): React.JSX.Element {
                 <TextInput
                     style={styles.input}
                     value={serverUrl}
-                    onChangeText={(value) => setServerUrl}
+                    onChangeText={(value) => handleServerUrlChangeEvent(value, setServerUrl)}
                     />
 
                 <Button 
