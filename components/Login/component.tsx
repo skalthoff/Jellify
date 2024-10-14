@@ -1,4 +1,3 @@
-import { useServerUrl } from "../../api/queries";
 import _ from "lodash"
 import ServerAuthentication from "./helpers/server-authentication";
 import ServerAddress from "./helpers/server-address";
