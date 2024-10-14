@@ -20,11 +20,7 @@ export default function ServerAuthentication(): React.JSX.Element {
                 onChangeText={setPassword}
                 secureTextEntry
             />
-            <Button title="Sign in" onPress={() => signInHandler(username, password)} />
+            <Button title="Sign in" onPress={() => authenticateWithCredentials.mutate({username, password})} />
         </View>
     );
-}
-
-function signInHandler(username: string, password: string) {
-    return authenticateWithCredentials.mutate({username, password})
 }
