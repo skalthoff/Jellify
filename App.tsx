@@ -4,8 +4,7 @@ import React from 'react';
 
 import Jellify from './components/jellify';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useColorScheme } from 'react-native';
-import { GluestackUIProvider } from './components/ui/gluestack-ui-provider';
+import { GluestackUIProvider } from './components/gluestack-ui-provider';
 
 export default function App(): React.JSX.Element {
 
