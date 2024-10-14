@@ -12,12 +12,12 @@ export default function ServerAuthentication(): React.JSX.Element {
             <TextInput
                 placeholder="Username"
                 value={username}
-                onChangeText={setUsername}
+                onChangeText={(value) => setUsername(value)}
             />
             <TextInput
                 placeholder="Password"
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={(value) => setPassword(value)}
                 secureTextEntry
             />
             <Button title="Sign in" onPress={() => authenticateWithCredentials.mutate({username, password})} />
