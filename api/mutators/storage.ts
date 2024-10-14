@@ -24,6 +24,8 @@ export const useServerUrl = useMutation({
     onSuccess: (publicSystemInfoResponse, serverUrl, context) => {
         if (!!!publicSystemInfoResponse.data.Version)
             throw new Error("Unable to connect to Jellyfin Server");
+
+        console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
         return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, serverUrl!);
     }
 });
