@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
-import { useServerUrl } from "../../../api/queries/storage";
+import { TextInput, StyleSheet } from "react-native";
 import { validateServerUrl } from "../utils/validation";
 import { useServerUrl as serverUrlMutation } from "../../../api/mutators/storage";
+import _ from "lodash";
+import { Button, YStack } from "tamagui";
 
 const styles = StyleSheet.create({
     input: {
@@ -18,11 +19,8 @@ export default function ServerAddress(): React.JSX.Element {
 
     let [serverUrl, setServerUrl] = useState("");
 
-    let serverUrlIsValid = validateServerUrl(serverUrl);
-
     return (
-        <View>
-
+        <YStack>
                 <TextInput
                     style={styles.input}
                     value={serverUrl}
@@ -31,8 +29,9 @@ export default function ServerAddress(): React.JSX.Element {
 
                 <Button 
                     onPress={(event) => serverUrlMutation.mutate(serverUrl)}
-                    disabled={!serverUrlIsValid}
-                    title="Connect"/>
-            </View>
+                    disabled={_.isEmpty(serverUrl)}>
+                        Connect
+                </Button>
+        </YStack>
     )
 }
