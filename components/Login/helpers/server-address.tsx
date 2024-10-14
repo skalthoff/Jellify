@@ -17,18 +17,18 @@ const styles = StyleSheet.create({
 
 export default function ServerAddress(): React.JSX.Element {
 
-    let [serverUrl, setServerUrl] = useState("");
+    const [serverUrl, setServerUrl] = useState("");
 
     return (
         <YStack>
                 <TextInput
                     style={styles.input}
                     value={serverUrl}
-                    onChangeText={(value) => console.log(value)}
+                    onChangeText={(value) => validateServerUrl(value) ?? setServerUrl(value)}
                     />
 
                 <Button 
-                    onPress={(event) => console.log(serverUrl)}
+                    onPress={(event) => serverUrlMutation.mutate(serverUrl)}
                     disabled={_.isEmpty(serverUrl)}>
                         Connect
                 </Button>
