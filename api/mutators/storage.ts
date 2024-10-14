@@ -10,15 +10,14 @@ import { JellyfinCredentials } from "../types/jellyfin-credentials";
 import { mutateServerCredentials } from "./functions/storage";
 
 export const useServerUrl = useMutation({
-    mutationKey: [MutationKeys.ServerUrl],
-    mutationFn: (serverUrl: string | undefined) => {
+    mutationFn: async (serverUrl: string | undefined) => {
 
         if (!!!serverUrl)
             throw Error("Server URL was empty")
 
         let jellyfin = new Jellyfin(client);
         let api = jellyfin.createApi(serverUrl);
-        return getSystemApi(api).getPublicSystemInfo()
+        return await getSystemApi(api).getPublicSystemInfo()
     },
     onSuccess: (publicSystemInfoResponse, serverUrl, context) => {
         if (!!!publicSystemInfoResponse.data.Version)
