@@ -12,16 +12,15 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials> = (
 
     console.debug(`REMOVE THIS::Server Url ${serverUrl}`);
 
-    if (!_.isNull(serverUrl))
-        Keychain.getInternetCredentials(serverUrl!)
-            .then((keychain) => {
-                if (!keychain)
-                    reject(new Error("Unable to retrieve credentials for server address"))
+    if (_.isNull(serverUrl))
+        throw new Error("Unable to retrieve credentials without a server URL");
 
-                resolve(keychain as Keychain.SharedWebCredentials)
-            })
+    const keychain = await Keychain.getInternetCredentials(serverUrl!);
 
-    throw new Error("Unable to retrieve credentials without a server URL");
+    if (!keychain)
+        throw new Error("Unable to retrieve credentials for server address from keychain");
+
+    resolve(keychain as Keychain.SharedWebCredentials)
 });
 
 export const fetchServerUrl : () => Promise<string> = () => new Promise(async (resolve, reject) => {
