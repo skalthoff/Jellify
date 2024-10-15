@@ -14,8 +14,10 @@ export default function ServerAddress(): React.JSX.Element {
 
     const [serverUrl, setServerUrl] = useState("");
 
+    const [storeUrl, setStoreUrl] = useState("");
+
     const serverUrlMutation = useMutation({
-        mutationFn: async () => {
+        mutationFn: async (serverUrl: string) => {
     
             console.log("Mutating server URL");
     
@@ -33,8 +35,9 @@ export default function ServerAddress(): React.JSX.Element {
                 throw new Error("Jellyfin instance did not respond");
     
             console.debug("REMOVE THIS::Public System Info Response", publicSystemInfoResponse);
+            console.debug("REMOVE THIS::onSuccess variable", serverUrl);
             console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
-            return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, publicSystemInfoResponse.config.baseURL!);
+            return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, serverUrl);
         },
         onError: (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
@@ -49,7 +52,7 @@ export default function ServerAddress(): React.JSX.Element {
                 </TextField>
 
             <Button 
-                onPress={() => serverUrlMutation.mutate()}
+                onPress={() => serverUrlMutation.mutate(serverUrl)}
                 label="Connect"
             />
         </View>
