@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { validateServerUrl } from "../utils/validation";
 import _ from "lodash";
 import { Jellyfin } from "@jellyfin/sdk";
 import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
@@ -7,7 +6,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { client } from "../../../api/queries";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
-import { ActivityIndicator } from "react-native";
 import { Button, TextField, View } from "react-native-ui-lib";
 import { JellifyServer } from "../../../types/JellifyServer";
 
@@ -55,11 +53,11 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View>
+        <View useSafeArea>
             <TextField 
                 placeholder="Jellyfin Server Address"
                 onChangeText={setServerUrl}>
-                </TextField>
+            </TextField>
 
             <Button 
                 onPress={() => serverUrlMutation.mutate(serverUrl)}
