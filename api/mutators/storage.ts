@@ -8,32 +8,42 @@ import { client } from "../queries";
 import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api"
 import { JellyfinCredentials } from "../types/jellyfin-credentials";
 import { mutateServerCredentials } from "./functions/storage";
+import { JellifyServer } from "../../types/JellifyServer";
 
 export const serverUrlMutation = useMutation({
-    mutationFn: async (serverUrl: string | undefined) => {
+    mutationFn: async (serverUrl: string) => {
 
         console.log("Mutating server URL");
 
         if (!!!serverUrl)
-            throw Error("Server URL was empty")
+            throw Error("Server URL is empty")
 
         let jellyfin = new Jellyfin(client);
         let api = jellyfin.createApi(serverUrl);
+
+        console.log(`Created API client for ${api.basePath}`)
         return await getSystemApi(api).getPublicSystemInfo()
     },
     onSuccess: (publicSystemInfoResponse, serverUrl, context) => {
         if (!!!publicSystemInfoResponse.data.Version)
-            throw new Error("Unable to connect to Jellyfin Server");
+            throw new Error("Jellyfin instance did not respond");
 
+        console.debug("REMOVE THIS::onSuccess variable", serverUrl);
         console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
 
         // TODO: Store these along side address
         // TODO: Rename url to address
-        publicSystemInfoResponse.data.ServerName;
-        publicSystemInfoResponse.data.StartupWizardCompleted;
-        publicSystemInfoResponse.data.Version;
-
-        return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, serverUrl!);
+        
+        let jellifyServer: JellifyServer = {
+            url: serverUrl,
+            name: publicSystemInfoResponse.data.ServerName!,
+            version: publicSystemInfoResponse.data.Version!,
+            startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
+        }
+        return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, JSON.stringify(jellifyServer));
+    },
+    onError: (error: Error) => {
+        console.error("An error occurred connecting to the Jellyfin instance", error);
     }
 });
 

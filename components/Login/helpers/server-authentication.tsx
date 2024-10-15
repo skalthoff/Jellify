@@ -1,6 +1,5 @@
 import React from "react";
-import { View, TextInput, Button } from "react-native";
-import { authenticateWithCredentials } from "../../../api/mutators/auth";
+import { View, TextField, Button, ActionBar } from "react-native-ui-lib";
 
 
 export default function ServerAuthentication(): React.JSX.Element {
@@ -9,18 +8,25 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     return (
         <View>
-            <TextInput
+            <ActionBar
+                actions={[
+                    {
+                        label: 'Change Server', 
+                        onPress: () => console.log("change server requested")
+                    }
+                ]}/>
+            <TextField
                 placeholder="Username"
                 value={username}
                 onChangeText={(value) => setUsername(value)}
             />
-            <TextInput
+            <TextField
                 placeholder="Password"
                 value={password}
                 onChangeText={(value) => setPassword(value)}
                 secureTextEntry
             />
-            <Button title="Sign in" onPress={() => console.log("sign in pressed")} />
+            <Button label="Sign in" onPress={() => console.log("sign in pressed")} />
         </View>
     );
 }
