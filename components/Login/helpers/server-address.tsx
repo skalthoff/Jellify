@@ -49,7 +49,6 @@ export default function ServerAddress(): React.JSX.Element {
 
             <Button 
                 onPress={() => serverUrlMutation.mutate(serverUrl)}
-                disabled={_.isEmpty(serverUrl) || serverUrlMutation.isPending}
                 label="Connect"
             />
         </View>
