@@ -1,6 +1,6 @@
 import React from "react";
 import { useColorScheme } from "react-native";
-import { View, TextField, Button, ActionBar } from "react-native-ui-lib";
+import { View, TextField, Button, ActionBar, Card } from "react-native-ui-lib";
 
 
 export default function ServerAuthentication(): React.JSX.Element {
@@ -24,24 +24,29 @@ export default function ServerAuthentication(): React.JSX.Element {
                     label: "", 
                 }
             ]}/>
-        <View useSafeArea>
-            <TextField
-                placeholder="Username"
-                value={username}
-                onChangeText={(value) => setUsername(value)}
-                />
-            <TextField
-                placeholder="Password"
-                value={password}
-                onChangeText={(value) => setPassword(value)}
-                secureTextEntry
-                />
-            <Button 
-                backgroundColor={isDarkMode ? 'black' : 'white'}
-                label="Sign in" 
-                onPress={() => console.log("sign in pressed")}
-            />
-        </View>
+        <Card flex center>
+            <Card.Section>
+                <TextField
+                    placeholder="Username"
+                    value={username}
+                    onChangeText={(value) => setUsername(value)}
+                    />
+                <TextField
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={(value) => setPassword(value)}
+                    secureTextEntry
+                    />
+            </Card.Section>
+            <Card.Section>
+
+                <Button 
+                    backgroundColor={isDarkMode ? 'black' : 'white'}
+                    label="Sign in" 
+                    onPress={() => console.log("sign in pressed")}
+                    />
+            </Card.Section>
+        </Card>
         </>
     );
 }
