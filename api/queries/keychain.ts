@@ -10,11 +10,11 @@ export const useCredentials = useQuery({
 
         let serverUrl = await fetchServerUrl();
 
-        if (_.isNull(serverUrl)) {
+        if (_.isEmpty(serverUrl)) {
             Promise.reject("Can't fetch credentials if server address doesn't exist yet :|");
             return;
         }
 
-        return await fetchCredentials(serverUrl);
+        return await fetchCredentials(serverUrl!);
     }
 });
