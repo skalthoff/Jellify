@@ -2,17 +2,19 @@ import { useQuery } from "@tanstack/react-query"
 import { QueryKeys } from "../../enums/query-keys"
 import { fetchCredentials } from "./functions/keychain"
 import { fetchServerUrl } from "./functions/storage";
+import _ from "lodash";
 
 export const useCredentials = useQuery({
     queryKey: [QueryKeys.Credentials],
     queryFn: async () => {
 
-        try {
-            let serverUrl = await fetchServerUrl();
-            return await fetchCredentials(serverUrl);
-        } catch(error: any) {
-            console.error("Exception occurred using credentials", error);
-            Promise.reject(`Unable to use server credentials: ${error}`);
+        let serverUrl = await fetchServerUrl();
+
+        if (_.isNull(serverUrl)) {
+            Promise.reject("Can't fetch credentials if server address doesn't exist yet :|");
+            return;
         }
+
+        return await fetchCredentials(serverUrl);
     }
 });
