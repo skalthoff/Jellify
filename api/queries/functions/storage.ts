@@ -3,7 +3,7 @@ import { AsyncStorageKeys } from "../../../enums/async-storage-keys"
 import _ from "lodash";
 
 
-export const fetchServerUrl : () => Promise<string> = async () => {
+export const fetchServerUrl : () => Promise<string> | never = async () => {
 
     console.log("Attempting to fetch server address from storage");
     

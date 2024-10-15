@@ -7,7 +7,12 @@ export const useCredentials = useQuery({
     queryKey: [QueryKeys.Credentials],
     queryFn: async () => {
 
-        let serverUrl = await fetchServerUrl();
-        return await fetchCredentials(serverUrl);
+        try {
+            let serverUrl = await fetchServerUrl();
+            return await fetchCredentials(serverUrl);
+        } catch(error: any) {
+            console.error("Exception occurred using credentials", error);
+            throw new Error(`Unable to use server credentials: ${error}`)
+        }
     }
 });
