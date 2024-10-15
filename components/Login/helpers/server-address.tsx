@@ -44,7 +44,7 @@ export default function ServerAddress(): React.JSX.Element {
         <View>
             <TextField 
                 placeholder="Jellyfin Server Address"
-                onChangeText={(value) => validateServerUrl(value) ?? setServerUrl(value)}>
+                onChangeText={setServerUrl}>
                 </TextField>
 
             <Button 
