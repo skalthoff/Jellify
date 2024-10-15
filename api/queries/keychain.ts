@@ -6,6 +6,8 @@ import { fetchServerUrl } from "./functions/storage";
 export const useCredentials = useQuery({
     queryKey: [QueryKeys.Credentials],
     queryFn: async () => {
-        return fetchCredentials(await fetchServerUrl())
+
+        let serverUrl = await fetchServerUrl();
+        return await fetchCredentials(serverUrl);
     }
 });

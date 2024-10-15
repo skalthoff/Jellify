@@ -5,6 +5,8 @@ import _ from "lodash";
 
 export const fetchServerUrl : () => Promise<string> = async () => {
 
+    console.log("Attempting to fetch server address from storage");
+    
     let url = await AsyncStorage.getItem(AsyncStorageKeys.ServerUrl)!;
 
     if (_.isNull(url)) 
