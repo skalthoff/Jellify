@@ -4,6 +4,8 @@ import Login from "./Login/component";
 import Navigation from "./navigation";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
+import { CurrentToast } from "./helpers/toast";
+import { useCredentials } from "../api/queries/keychain";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -16,7 +18,7 @@ export default function Jellify(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  let data, isLoading, isSuccess = false;
+  let { data, isError, isSuccess } = useCredentials;
 
 
   return (
@@ -26,8 +28,8 @@ export default function Jellify(): React.JSX.Element {
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         />
-        { isSuccess && <Navigation /> }
-        { !isSuccess && <Login /> }
+        { isError ? <Navigation /> : <Login /> }
+        <CurrentToast />
       </SafeAreaView>
     </NavigationContainer>
 
