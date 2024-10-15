@@ -1,6 +1,9 @@
 import React from "react";
 import { Button, TextInput, useColorScheme, View } from "react-native";
 import { clearServer } from "../../../api/mutators/storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useMutation } from "@tanstack/react-query";
+import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 
 
 export default function ServerAuthentication(): React.JSX.Element {
@@ -8,6 +11,12 @@ export default function ServerAuthentication(): React.JSX.Element {
     const [password, setPassword] = React.useState('');
 
     const isDarkMode = useColorScheme() === 'dark';
+
+    const clearServer = useMutation({
+        mutationFn: async () => {
+            return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
+        }
+    })
 
     return (
         <View>
