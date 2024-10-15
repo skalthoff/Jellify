@@ -8,6 +8,6 @@ import { fetchServerUrl } from "./functions/storage";
 export const usePlaylists = useQuery({
     queryKey: [QueryKeys.Playlists],
     queryFn: async () => {
-        return getPlaylistsApi(await createApi(await fetchServerUrl()))
+        return getPlaylistsApi(await createApi(await fetchServerUrl))
     }
 })

@@ -34,6 +34,6 @@ export const useApi = (serverUrl: string) => useQuery({
 export const useServerUrl = () => useQuery({
     queryKey: [QueryKeys.ServerUrl],
     queryFn: () => {
-        return fetchServerUrl()
+        return fetchServerUrl
     }
 })

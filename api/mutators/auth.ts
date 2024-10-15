@@ -7,7 +7,7 @@ import { fetchServerUrl } from "../queries/functions/storage";
 export const authenticateWithCredentials = useMutation({
     mutationKey: [MutationKeys.AuthenticationWithCredentials],
     mutationFn: async (credentials: JellyfinCredentials) => {
-        createPublicApi(await fetchServerUrl())
+        createPublicApi(await fetchServerUrl)
         .authenticateUserByName(credentials.username, credentials.password!);
     },
     onSuccess(data, credentials, context) {
