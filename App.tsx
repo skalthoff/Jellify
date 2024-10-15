@@ -6,7 +6,6 @@ import defaultConfig from '@tamagui/config/v3'
 import Jellify from './components/jellify';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTamagui, TamaguiProvider } from 'tamagui';
-import { ToastProvider } from '@tamagui/toast';
 
 export default function App(): React.JSX.Element {
 
@@ -17,9 +16,7 @@ export default function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
       <TamaguiProvider config={config}>
-        <ToastProvider>
           <Jellify />
-        </ToastProvider>
       </TamaguiProvider>
     </QueryClientProvider>
   );

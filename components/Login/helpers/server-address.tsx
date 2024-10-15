@@ -8,12 +8,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { client } from "../../../api/queries";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
-import { useToastController } from "@tamagui/toast";
 import { ActivityIndicator } from "react-native";
 
 export default function ServerAddress(): React.JSX.Element {
-
-    const toast = useToastController();
 
     const [serverUrl, setServerUrl] = useState("");
 
@@ -39,7 +36,6 @@ export default function ServerAddress(): React.JSX.Element {
             return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, serverUrl!);
         },
         onError: (error: Error) => {
-            toast.show("An Error Occurred", { message: "An occur occurred connecting to the Jellyfin instance"})
             console.error("An error occurred connecting to the Jellyfin instance", error);
         }
     });
