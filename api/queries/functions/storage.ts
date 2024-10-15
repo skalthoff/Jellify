@@ -28,10 +28,10 @@ export const fetchServerUrl : () => Promise<string> = () => new Promise(async (r
 
     console.log("Attempting to fetch server address from storage");
     
-    let url = "";
+    let url = await AsyncStorage.getItem(AsyncStorageKeys.ServerUrl);
 
-    if (_.isEmpty(url))
+    if (_.isNull(url))
         throw new Error("No stored server address exists");
 
-    resolve(url!);
+    resolve(url);
 });
