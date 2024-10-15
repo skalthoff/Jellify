@@ -5,6 +5,7 @@ import Navigation from "./navigation";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import { useCredentials } from "../api/queries/keychain";
+import _ from "lodash";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -27,7 +28,7 @@ export default function Jellify(): React.JSX.Element {
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         />
-        { isError ? <Navigation /> : <Login /> }
+        { (isError || _.isUndefined(data)) ? <Navigation /> : <Login /> }
       </SafeAreaView>
     </NavigationContainer>
 
