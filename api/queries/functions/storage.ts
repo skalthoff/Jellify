@@ -30,7 +30,7 @@ export const fetchServer : () => Promise<JellifyServer> = () => new Promise(asyn
     
     let serverJson = await AsyncStorage.getItem(AsyncStorageKeys.ServerUrl);
 
-    if (_.isNull(serverJson))
+    if (_.isNull(serverJson) || serverJson.length < 20)
         throw new Error("No stored server address exists");
 
     resolve(JSON.parse(serverJson) as JellifyServer);
