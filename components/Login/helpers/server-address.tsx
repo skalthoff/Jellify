@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import { serverUrlMutation } from "../../../api/mutators/storage";
-import { Button, SafeAreaView, TextInput, useColorScheme } from "react-native";
+import { Button, SafeAreaView, TextInput, useColorScheme, View } from "react-native";
 
 export default function ServerAddress(): React.JSX.Element {
 
@@ -10,7 +10,7 @@ export default function ServerAddress(): React.JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
 
     return (
-        <SafeAreaView>
+        <View>
             <TextInput 
                 placeholder="Jellyfin Server Address"
                 onChangeText={setServerUrl}>
@@ -21,6 +21,6 @@ export default function ServerAddress(): React.JSX.Element {
                 title="Connect"
             />
 
-        </SafeAreaView>
+        </View>
     )
 }

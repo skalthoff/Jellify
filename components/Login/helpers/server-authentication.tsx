@@ -9,15 +9,12 @@ export default function ServerAuthentication(): React.JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
 
     return (
-        <>
         <View>
             <Button
                 title="Change Server"
                 onPress={() => console.log("change server requested")}
                 color={'purple'}
                 />
-        </View>
-        <View>
 
             <TextInput
                 placeholder="Username"
@@ -37,6 +34,5 @@ export default function ServerAuthentication(): React.JSX.Element {
                 onPress={() => console.log("sign in pressed")}
                 />
         </View>
-        </>
     );
 }
