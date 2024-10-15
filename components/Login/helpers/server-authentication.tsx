@@ -11,19 +11,25 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     return (
         <>
-        <ActionBar
-            actions={[
-                {
-                    label: 'Change Server', 
-                    onPress: () => console.log("change server requested")
-                },
-                {
-                    label: "", 
-                },    
-                {
-                    label: "", 
-                }
-            ]}/>
+        <View row>
+            <ActionBar
+                actions={[
+                    {
+                        label: 'Change Server', 
+                        onPress: () => console.log("change server requested")
+                    },
+                    {
+                        label: "", 
+                    },    
+                    {
+                        label: "", 
+                    }
+                ]}
+                backgroundColor={isDarkMode ? 'black' : 'white'}
+                />
+            </View>
+            <View row>
+
         <Card flex center>
             <Card.Section>
                 <TextField
@@ -47,6 +53,7 @@ export default function ServerAuthentication(): React.JSX.Element {
                     />
             </Card.Section>
         </Card>
+                    </View>
         </>
     );
 }

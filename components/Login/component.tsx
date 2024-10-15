@@ -9,7 +9,7 @@ export default function Login(): React.JSX.Element {
     let { isError } = useServerUrl;
 
     return (
-        <View useSafeArea>
+        <View useSafeArea marginH>
             { isError ? <ServerAddress /> : <ServerAuthentication /> }
         </View>
     );
