@@ -16,6 +16,12 @@ export default function ServerAuthentication(): React.JSX.Element {
                 {
                     label: 'Change Server', 
                     onPress: () => console.log("change server requested")
+                },
+                {
+                    label: "", 
+                },    
+                {
+                    label: "", 
                 }
             ]}/>
         <View useSafeArea>

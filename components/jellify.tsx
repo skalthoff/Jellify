@@ -1,4 +1,4 @@
-import { SafeAreaView, StatusBar, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Login from "./Login/component";
 import Navigation from "./navigation";
@@ -23,14 +23,7 @@ export default function Jellify(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-      <SafeAreaView style={backgroundStyle}>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        />
         { (!isError && !_.isUndefined(data)) ? <Navigation /> : <Login /> }
-      </SafeAreaView>
     </NavigationContainer>
-
   );
 }
