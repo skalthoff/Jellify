@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, TextInput, useColorScheme, View } from "react-native";
+import { clearServer } from "../../../api/mutators/storage";
 
 
 export default function ServerAuthentication(): React.JSX.Element {
@@ -12,7 +13,7 @@ export default function ServerAuthentication(): React.JSX.Element {
         <View>
             <Button
                 title="Change Server"
-                onPress={() => console.log("change server requested")}
+                onPress={() => clearServer.mutate()}
                 color={'purple'}
                 />
 

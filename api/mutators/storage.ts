@@ -10,6 +10,12 @@ import { JellyfinCredentials } from "../types/jellyfin-credentials";
 import { mutateServerCredentials } from "./functions/storage";
 import { JellifyServer } from "../../types/JellifyServer";
 
+export const clearServer = useMutation({
+    mutationFn: async () => {
+        await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
+    }
+})
+
 export const serverUrlMutation = useMutation({
     mutationFn: async (serverUrl: string) => {
 
