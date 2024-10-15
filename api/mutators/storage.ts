@@ -42,8 +42,9 @@ export const serverUrlMutation = useMutation({
         }
         return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, JSON.stringify(jellifyServer));
     },
-    onError: (error: Error) => {
+    onError: async (error: Error) => {
         console.error("An error occurred connecting to the Jellyfin instance", error);
+        await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
     }
 });
 

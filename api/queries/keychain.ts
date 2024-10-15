@@ -8,7 +8,7 @@ export const useCredentials = useQuery({
     queryFn: fetchCredentials
 });
 
-export const useServerUrl = useQuery({
+export const useServer = useQuery({
     queryKey: [QueryKeys.ServerUrl],
     queryFn: fetchServer
 })
