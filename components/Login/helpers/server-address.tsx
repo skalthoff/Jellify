@@ -15,12 +15,12 @@ export default function ServerAddress(): React.JSX.Element {
     const [serverUrl, setServerUrl] = useState("");
 
     const serverUrlMutation = useMutation({
-        mutationFn: async (serverUrl: string | undefined) => {
+        mutationFn: async () => {
     
             console.log("Mutating server URL");
     
             if (!!!serverUrl)
-                throw Error("Server URL was empty")
+                throw Error("Server URL is empty")
     
             let jellyfin = new Jellyfin(client);
             let api = jellyfin.createApi(serverUrl);
@@ -48,7 +48,7 @@ export default function ServerAddress(): React.JSX.Element {
                 </TextField>
 
             <Button 
-                onPress={() => serverUrlMutation.mutate(serverUrl)}
+                onPress={() => serverUrlMutation.mutate()}
                 label="Connect"
             />
         </View>
