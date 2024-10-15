@@ -12,7 +12,7 @@ export const useCredentials = useQuery({
             return await fetchCredentials(serverUrl);
         } catch(error: any) {
             console.error("Exception occurred using credentials", error);
-            throw new Error(`Unable to use server credentials: ${error}`)
+            Promise.reject(`Unable to use server credentials: ${error}`);
         }
     }
 });
