@@ -1,6 +1,5 @@
 import React from "react";
-import { useColorScheme } from "react-native";
-import { View, TextField, Button, ActionBar, Card } from "react-native-ui-lib";
+import { Button, TextInput, useColorScheme, View } from "react-native";
 
 
 export default function ServerAuthentication(): React.JSX.Element {
@@ -11,49 +10,33 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     return (
         <>
-        <View row>
-            <ActionBar
-                actions={[
-                    {
-                        label: 'Change Server', 
-                        onPress: () => console.log("change server requested")
-                    },
-                    {
-                        label: "", 
-                    },    
-                    {
-                        label: "", 
-                    }
-                ]}
-                backgroundColor={isDarkMode ? 'black' : 'white'}
+        <View>
+            <Button
+                title="Change Server"
+                onPress={() => console.log("change server requested")}
+                color={'purple'}
                 />
-            </View>
-            <View row>
+        </View>
+        <View>
 
-        <Card flex center>
-            <Card.Section>
-                <TextField
-                    placeholder="Username"
-                    value={username}
-                    onChangeText={(value) => setUsername(value)}
-                    />
-                <TextField
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={(value) => setPassword(value)}
-                    secureTextEntry
-                    />
-            </Card.Section>
-            <Card.Section>
+            <TextInput
+                placeholder="Username"
+                value={username}
+                onChangeText={(value) => setUsername(value)}
+                />
+            <TextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={(value) => setPassword(value)}
+                secureTextEntry
+                />
 
-                <Button 
-                    backgroundColor={isDarkMode ? 'black' : 'white'}
-                    label="Sign in" 
-                    onPress={() => console.log("sign in pressed")}
-                    />
-            </Card.Section>
-        </Card>
-                    </View>
+            <Button 
+                title="Sign in" 
+                color={'purple'}
+                onPress={() => console.log("sign in pressed")}
+                />
+        </View>
         </>
     );
 }
