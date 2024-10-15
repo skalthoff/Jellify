@@ -7,7 +7,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     const [password, setPassword] = React.useState('');
 
     return (
-        <View>
+        <View useSafeArea>
             <ActionBar
                 actions={[
                     {

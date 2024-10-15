@@ -9,12 +9,11 @@ import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { Button, TextField, View } from "react-native-ui-lib";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { serverUrlMutation } from "../../../api/mutators/storage";
+import Toast from "react-native-ui-lib/src/incubator/toast";
 
 export default function ServerAddress(): React.JSX.Element {
 
     const [serverUrl, setServerUrl] = useState("");
-
-    const [storeUrl, setStoreUrl] = useState("");
 
     return (
         <View useSafeArea>
@@ -27,6 +26,12 @@ export default function ServerAddress(): React.JSX.Element {
                 onPress={() => serverUrlMutation.mutate(serverUrl)}
                 label="Connect"
             />
+
+            <Toast  
+                visible={serverUrlMutation.isError}  
+                message="Unable to connect to Jellyfin"
+                position={'bottom'}  
+                autoDismiss={2500}/>
         </View>
     )
 }
