@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { QueryKeys } from "../../enums/query-keys"
 import _ from "lodash";
-import { fetchCredentials, fetchServerUrl } from "./functions/storage";
+import { fetchCredentials, fetchServer } from "./functions/storage";
 
 export const useCredentials = useQuery({
     queryKey: [QueryKeys.Credentials],
@@ -10,5 +10,5 @@ export const useCredentials = useQuery({
 
 export const useServerUrl = useQuery({
     queryKey: [QueryKeys.ServerUrl],
-    queryFn: fetchServerUrl
+    queryFn: fetchServer
 })

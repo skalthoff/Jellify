@@ -4,7 +4,7 @@ import { getDeviceNameSync, getUniqueIdSync } from "react-native-device-info"
 import { QueryKeys } from "../enums/query-keys";
 import { name, version } from "../package.json"
 import { createApi, createPublicApi } from "./queries/functions/api";
-import { fetchServerUrl } from "./queries/functions/storage";
+import { fetchServer } from "./queries/functions/storage";
 
 export const client : Jellyfin  = new Jellyfin({
     clientInfo: {

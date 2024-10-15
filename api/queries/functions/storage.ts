@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys"
 import _ from "lodash";
 import * as Keychain from "react-native-keychain"
+import { JellifyServer } from "../../../types/JellifyServer";
 
 
 export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials> = () => new Promise(async (resolve, reject) => {
@@ -23,14 +24,14 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials> = (
     resolve(keychain as Keychain.SharedWebCredentials)
 });
 
-export const fetchServerUrl : () => Promise<string> = () => new Promise(async (resolve, reject) => {
+export const fetchServer : () => Promise<JellifyServer> = () => new Promise(async (resolve, reject) => {
 
     console.log("Attempting to fetch server address from storage");
     
-    let url = await AsyncStorage.getItem(AsyncStorageKeys.ServerUrl);
+    let serverJson = await AsyncStorage.getItem(AsyncStorageKeys.ServerUrl);
 
-    if (_.isNull(url))
+    if (_.isNull(serverJson))
         throw new Error("No stored server address exists");
 
-    resolve(url);
+    resolve(JSON.parse(serverJson) as JellifyServer);
 });

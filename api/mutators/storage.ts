@@ -26,6 +26,13 @@ export const serverUrlMutation = useMutation({
             throw new Error("Unable to connect to Jellyfin Server");
 
         console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
+
+        // TODO: Store these along side address
+        // TODO: Rename url to address
+        publicSystemInfoResponse.data.ServerName;
+        publicSystemInfoResponse.data.StartupWizardCompleted;
+        publicSystemInfoResponse.data.Version;
+
         return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, serverUrl!);
     }
 });

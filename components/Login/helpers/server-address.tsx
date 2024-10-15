@@ -9,6 +9,7 @@ import { client } from "../../../api/queries";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { ActivityIndicator } from "react-native";
 import { Button, TextField, View } from "react-native-ui-lib";
+import { JellifyServer } from "../../../types/JellifyServer";
 
 export default function ServerAddress(): React.JSX.Element {
 
@@ -34,10 +35,19 @@ export default function ServerAddress(): React.JSX.Element {
             if (!!!publicSystemInfoResponse.data.Version)
                 throw new Error("Jellyfin instance did not respond");
     
-            console.debug("REMOVE THIS::Public System Info Response", publicSystemInfoResponse);
             console.debug("REMOVE THIS::onSuccess variable", serverUrl);
             console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
-            return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, serverUrl);
+
+            // TODO: Store these along side address
+            // TODO: Rename url to address
+            
+            let jellifyServer: JellifyServer = {
+                url: serverUrl,
+                name: publicSystemInfoResponse.data.ServerName!,
+                version: publicSystemInfoResponse.data.Version!,
+                startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
+            }
+            return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, JSON.stringify(jellifyServer));
         },
         onError: (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);

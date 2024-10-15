@@ -4,7 +4,7 @@ import { QueryKeys } from "../../enums/query-keys";
 import { useApi } from "../queries";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useChildrenFromParent } from "./items";
-import { fetchServerUrl } from "./functions/storage";
+import { fetchServer } from "./functions/storage";
 import { createApi } from "./functions/api";
 
 export const useArtistAlbums : (artistId: string) => UseQueryResult<BaseItemDto[], Error> = (artistId: string) => useQuery({
