@@ -1,20 +1,19 @@
 import { useQuery } from "@tanstack/react-query"
 import { QueryKeys } from "../../enums/query-keys"
-import { fetchCredentials } from "./functions/keychain"
 import { fetchServerUrl } from "./functions/storage";
 import _ from "lodash";
+import * as Keychain from "react-native-keychain"
 
 export const useCredentials = useQuery({
     queryKey: [QueryKeys.Credentials],
     queryFn: async () => {
 
-        let serverUrl = await fetchServerUrl();
+        console.log("Attempting to use stored credentials");
 
-        if (_.isEmpty(serverUrl)) {
-            Promise.reject("Can't fetch credentials if server address doesn't exist yet :|");
-            return;
-        }
+        let serverUrl = await fetchServerUrl;
 
-        return await fetchCredentials(serverUrl!);
+        console.debug(`REMOVE THIS::Server Url ${serverUrl}`);
+
+        return Keychain.getInternetCredentials(serverUrl!);
     }
 });

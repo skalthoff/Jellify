@@ -4,6 +4,6 @@ import * as Keychain from "react-native-keychain"
 
 
 
-export const mutateServerCredentials = async (credentials: JellyfinCredentials) => {
-    return Keychain.setInternetCredentials(await fetchServerUrl(), credentials.username, credentials.accessToken!);
+export const mutateServerCredentials = async (credentials: JellyfinCredentials) => {        
+    return Keychain.setInternetCredentials(await fetchServerUrl, credentials.username, credentials.accessToken!);
 }

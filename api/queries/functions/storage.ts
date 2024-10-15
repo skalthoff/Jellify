@@ -3,16 +3,14 @@ import { AsyncStorageKeys } from "../../../enums/async-storage-keys"
 import _ from "lodash";
 
 
-export const fetchServerUrl : () => Promise<string | undefined> = async () => {
+export const fetchServerUrl : Promise<string> = new Promise(async (resolve, reject) => {
 
     console.log("Attempting to fetch server address from storage");
     
     let url = await AsyncStorage.getItem(AsyncStorageKeys.ServerUrl)!;
 
-    if (_.isEmpty(url)) {
-        Promise.reject("No stored server address exists");
-        return;
-    }
+    if (_.isEmpty(url))
+        reject("No stored server address exists");
 
-    return url!;
-}
+    resolve(url!);
+});
