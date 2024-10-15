@@ -1,10 +1,9 @@
 import { Api } from "@jellyfin/sdk";
 import { client } from "../../queries";
-import { fetchCredentials } from "./keychain";
+import { fetchCredentials } from "./storage";
 
-
-export const createApi: (serverUrl: string) => Promise<Api> = async (serverUrl) => {
-    let credentials = await fetchCredentials(serverUrl)
+export const createApi: () => Promise<Api> = async () => {
+    let credentials = await fetchCredentials()
     return client.createApi(credentials.server, credentials.password);
 }
 

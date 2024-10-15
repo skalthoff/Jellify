@@ -24,10 +24,10 @@ export const usePublicApi = (serverUrl: string) => useQuery({
     }
 })
 
-export const useApi = (serverUrl: string) => useQuery({
-    queryKey: [QueryKeys.Api, serverUrl],
+export const useApi = () => useQuery({
+    queryKey: [QueryKeys.Api],
     queryFn: async ({ queryKey }) => {
-        createApi(queryKey[1]);
+        createApi();
     }
 })
 

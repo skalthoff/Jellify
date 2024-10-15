@@ -10,7 +10,7 @@ import { createApi } from "./functions/api";
 export const useArtistAlbums : (artistId: string) => UseQueryResult<BaseItemDto[], Error> = (artistId: string) => useQuery({
     queryKey: [QueryKeys.ArtistAlbums, artistId],
     queryFn: async ({ queryKey }) => {
-        return getItemsApi(await createApi(await fetchServerUrl))
+        return getItemsApi(await createApi())
             .getItems({ albumArtistIds: [queryKey[1]] })
             .then((result) => {
                 return result.data.Items
