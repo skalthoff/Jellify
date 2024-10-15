@@ -21,7 +21,7 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials> = (
                 resolve(keychain as Keychain.SharedWebCredentials)
             })
 
-    reject(new Error("Unable to retrieve credentials without a server URL"));
+    throw new Error("Unable to retrieve credentials without a server URL");
 });
 
 export const fetchServerUrl : Promise<string> = new Promise(async (resolve, reject) => {
