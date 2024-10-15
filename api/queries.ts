@@ -30,10 +30,3 @@ export const useApi = () => useQuery({
         createApi();
     }
 })
-
-export const useServerUrl = () => useQuery({
-    queryKey: [QueryKeys.ServerUrl],
-    queryFn: () => {
-        return fetchServerUrl
-    }
-})

@@ -24,14 +24,14 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials> = (
     throw new Error("Unable to retrieve credentials without a server URL");
 });
 
-export const fetchServerUrl : Promise<string> = new Promise(async (resolve, reject) => {
+export const fetchServerUrl : () => Promise<string> = () => new Promise(async (resolve, reject) => {
 
     console.log("Attempting to fetch server address from storage");
     
     let url = "";
 
     if (_.isEmpty(url))
-        reject("No stored server address exists");
+        throw new Error("No stored server address exists");
 
     resolve(url!);
 });
