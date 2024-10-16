@@ -18,9 +18,11 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials> = (
 
     const keychain = await Keychain.getInternetCredentials(serverUrl!);
 
-    if (!keychain)
+    if (!keychain) {
+        console.warn("No keychain for server address - signin required");
         throw new Error("Unable to retrieve credentials for server address from keychain");
-
+    }
+    
     resolve(keychain as Keychain.SharedWebCredentials)
 });
 

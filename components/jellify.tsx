@@ -24,9 +24,9 @@ export default function Jellify(): React.JSX.Element {
   };
 
   let jellifyServer = useServer;
-  let { data, isError, isSuccess, isPending } = useCredentials;
+  let credentials = useCredentials;
 
-  const [keychain, setKeychain] = useState(data);
+  const [keychain, setKeychain] : [SharedWebCredentials | undefined, React.Dispatch<React.SetStateAction<SharedWebCredentials | undefined>> ]= useState();
   const [server, setServer] = useState(jellifyServer.data)
 
   const loginContextFns = {
@@ -40,7 +40,7 @@ export default function Jellify(): React.JSX.Element {
 
 
   return (
-    (isPending) ? (
+    (credentials.isPending) ? (
       <SafeAreaView style={jellifyStyles.container}>
         <Text>Logging in</Text>
         <ActivityIndicator />
@@ -49,7 +49,7 @@ export default function Jellify(): React.JSX.Element {
       <LoginContext.Provider value={{keychain, server, loginContextFns}}>
         <NavigationContainer>
           <SafeAreaView style={jellifyStyles.container}>
-          { (isSuccess && !_.isUndefined(data)) ? <Navigation /> : <Login /> }
+          { (credentials.isSuccess && !_.isUndefined(credentials.data)) ? <Navigation /> : <Login /> }
           </SafeAreaView>
         </NavigationContainer>
       </LoginContext.Provider>
