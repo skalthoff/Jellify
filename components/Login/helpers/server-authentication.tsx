@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, TextInput, useColorScheme, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
+import { LoginContext } from "../../contexts";
 
 
 export default function ServerAuthentication(): React.JSX.Element {
@@ -11,8 +12,12 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     const isDarkMode = useColorScheme() === 'dark';
 
+    const loginContext = useContext(LoginContext)
+
     const clearServer = useMutation({
         mutationFn: async () => {
+            loginContext.loginContextFns.setKeychainFn(undefined);
+            loginContext.loginContextFns.setServerFn(undefined);
             return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
         }
     })
@@ -21,7 +26,9 @@ export default function ServerAuthentication(): React.JSX.Element {
         <View>
             <Button
                 title="Change Server"
-                onPress={() => clearServer.mutate()}
+                onPress={() => {
+                    clearServer.mutate();
+                }}
                 color={'purple'}
                 />
 

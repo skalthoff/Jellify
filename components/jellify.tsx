@@ -4,11 +4,13 @@ import Login from "./Login/component";
 import Navigation from "./navigation";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
-import { useCredentials } from "../api/queries/keychain";
+import { useCredentials, useServer } from "../api/queries/keychain";
 import _ from "lodash";
 import { jellifyStyles } from "./styles";
-import { createContext, useContext, useState } from "react";
+import { useState } from "react";
+import { LoginContext } from "./contexts";
 import { SharedWebCredentials } from "react-native-keychain";
+import { JellifyServer } from "../types/JellifyServer";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -21,11 +23,21 @@ export default function Jellify(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  let jellifyServer = useServer;
   let { data, isError, isSuccess, isPending } = useCredentials;
 
-  const [credentials, setCredentials] = useState(data);
+  const [keychain, setKeychain] = useState(data);
+  const [server, setServer] = useState(jellifyServer.data)
 
-  const LoginContext = createContext<[SharedWebCredentials | undefined, React.Dispatch<React.SetStateAction<SharedWebCredentials | undefined>>]>([data, setCredentials]);
+  const loginContextFns = {
+    setKeychainFn: (state: SharedWebCredentials | undefined) => {
+      setKeychain(state);
+    },
+    setServerFn: (state: JellifyServer | undefined) => {
+      setServer(state);
+    }
+  }
+
 
   return (
     (isPending) ? (
@@ -34,10 +46,10 @@ export default function Jellify(): React.JSX.Element {
         <ActivityIndicator />
       </SafeAreaView>
     ) : (
-      <LoginContext.Provider value={[credentials, setCredentials]}>
+      <LoginContext.Provider value={{keychain, server, loginContextFns}}>
         <NavigationContainer>
           <SafeAreaView style={jellifyStyles.container}>
-          { (!isError && !_.isUndefined(data)) ? <Navigation /> : <Login /> }
+          { (isSuccess && !_.isUndefined(data)) ? <Navigation /> : <Login /> }
           </SafeAreaView>
         </NavigationContainer>
       </LoginContext.Provider>
