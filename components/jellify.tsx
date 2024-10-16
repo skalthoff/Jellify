@@ -11,6 +11,8 @@ import { useState } from "react";
 import { LoginContext } from "./contexts";
 import { SharedWebCredentials } from "react-native-keychain";
 import { JellifyServer } from "../types/JellifyServer";
+import { serverMutation } from "../api/mutators/functions/storage";
+import { jellifyServerMutation } from "../api/mutators/storage";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -26,11 +28,12 @@ export default function Jellify(): React.JSX.Element {
   let serverQuery = useServer;
   let credentials = useCredentials;
 
-  const [server, setServer] : [JellifyServer | undefined, React.Dispatch<React.SetStateAction<JellifyServer | undefined>>] = useState(serverQuery.isSuccess ? serverQuery.data : undefined);
-  const [keychain, setKeychain] : [SharedWebCredentials | undefined, React.Dispatch<React.SetStateAction<SharedWebCredentials | undefined>> ] = useState(credentials.isSuccess ? credentials.data : undefined);
+  const [server, setServer] : [JellifyServer | undefined, React.Dispatch<React.SetStateAction<JellifyServer | undefined>>] = useState();
+  const [keychain, setKeychain] : [SharedWebCredentials | undefined, React.Dispatch<React.SetStateAction<SharedWebCredentials | undefined>> ] = useState();
 
   const loginContextFns = {
     setServerFn: (state: JellifyServer | undefined) => {
+      jellifyServerMutation.mutate(state)
       setServer(state);
     },
     setKeychainFn: (state: SharedWebCredentials | undefined) => {

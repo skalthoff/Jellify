@@ -36,7 +36,6 @@ export default function ServerAddress(): React.JSX.Element {
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
             loginContext.loginContextFns.setServerFn(jellifyServer);
-            return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, JSON.stringify(jellifyServer));
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
