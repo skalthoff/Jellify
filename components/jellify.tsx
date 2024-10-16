@@ -34,12 +34,7 @@ export default function Jellify(): React.JSX.Element {
   }
 
   return (
-    (credentials.isPending) ? (
-      <SafeAreaView style={jellifyStyles.container}>
-        <Text>Logging in</Text>
-        <ActivityIndicator />
-      </SafeAreaView>
-    ) : (
+    (
       <LoginContext.Provider value={{keychain, loginContextFns}}>
         <NavigationContainer>
           <SafeAreaView style={jellifyStyles.container}>

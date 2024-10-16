@@ -1,10 +1,8 @@
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api"
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/query-keys";
-import { useApi } from "../queries";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useChildrenFromParent } from "./items";
-import { fetchServer } from "./functions/storage";
 import { createApi } from "./functions/api";
 
 export const useArtistAlbums : (artistId: string) => UseQueryResult<BaseItemDto[], Error> = (artistId: string) => useQuery({
