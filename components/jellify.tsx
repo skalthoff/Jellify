@@ -26,8 +26,8 @@ export default function Jellify(): React.JSX.Element {
   let serverQuery = useServer;
   let credentials = useCredentials;
 
-  const [server, setServer] : [JellifyServer | undefined, React.Dispatch<React.SetStateAction<JellifyServer | undefined>>] = useState(serverQuery.data);
-  const [keychain, setKeychain] : [SharedWebCredentials | undefined, React.Dispatch<React.SetStateAction<SharedWebCredentials | undefined>> ] = useState(credentials.data);
+  const [server, setServer] : [JellifyServer | undefined, React.Dispatch<React.SetStateAction<JellifyServer | undefined>>] = useState(serverQuery.isSuccess ? serverQuery.data : undefined);
+  const [keychain, setKeychain] : [SharedWebCredentials | undefined, React.Dispatch<React.SetStateAction<SharedWebCredentials | undefined>> ] = useState(credentials.isSuccess ? credentials.data : undefined);
 
   const loginContextFns = {
     setServerFn: (state: JellifyServer | undefined) => {
