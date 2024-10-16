@@ -9,20 +9,22 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials> = (
 
     console.log("Attempting to use stored credentials");
 
-    let serverUrl = await AsyncStorage.getItem(AsyncStorageKeys.ServerUrl);
+    let server = await fetchServer();
 
-    console.debug(`REMOVE THIS::Server Url ${serverUrl}`);
+    console.debug(`REMOVE THIS::Server name ${server.name}`);
 
-    if (_.isNull(serverUrl))
+    if (_.isEmpty(server.url)) {
+        console.warn("Server url was empty")
         throw new Error("Unable to retrieve credentials without a server URL");
+    }
 
-    const keychain = await Keychain.getInternetCredentials(serverUrl!);
+    const keychain = await Keychain.getInternetCredentials(server.url!);
 
     if (!keychain) {
         console.warn("No keychain for server address - signin required");
         throw new Error("Unable to retrieve credentials for server address from keychain");
     }
-    
+
     resolve(keychain as Keychain.SharedWebCredentials)
 });
 
