@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { serverUrlMutation } from "../../../api/mutators/storage";
-import { Button, SafeAreaView, TextInput, useColorScheme, View } from "react-native";
-import { Jellyfin } from "@jellyfin/sdk";
-import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
+import { Button, TextInput, useColorScheme, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
-import { client } from "../../../api/queries";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { serverMutation } from "../../../api/mutators/functions/storage";
+import { useServer } from "../../../api/queries/keychain";
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const [serverUrl, setServerUrl] = useState("");
+    const [serverUrl, setServerUrl] = useState(useServer.data?.url ?? "");
 
     const isDarkMode = useColorScheme() === 'dark';
 
@@ -51,7 +48,7 @@ export default function ServerAddress(): React.JSX.Element {
             </TextInput>
 
             <Button 
-                onPress={() => serverUrlMutation.mutate(serverUrl)}
+                onPress={() => useServerMutation.mutate(serverUrl)}
                 title="Connect"
             />
 

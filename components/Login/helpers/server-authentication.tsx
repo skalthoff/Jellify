@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, TextInput, useColorScheme, View } from "react-native";
-import { clearServer } from "../../../api/mutators/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
