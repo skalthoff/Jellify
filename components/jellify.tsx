@@ -7,12 +7,14 @@ import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import { useCredentials, useServer } from "../api/queries/keychain";
 import _ from "lodash";
 import { jellifyStyles } from "./styles";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { LoginContext } from "./contexts";
 import { SharedWebCredentials } from "react-native-keychain";
 import { JellifyServer } from "../types/JellifyServer";
-import { serverMutation } from "../api/mutators/functions/storage";
-import { jellifyServerMutation } from "../api/mutators/storage";
+import LoginProvider from "./providers";
+import { mutateServerCredentials } from "../api/mutators/functions/storage";
+import { credentials } from "../api/mutators/storage";
+import { useApi } from "../api/queries";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -25,31 +27,34 @@ export default function Jellify(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  let serverQuery = useServer;
-  let credentials = useCredentials;
-
-  const [server, setServer] : [JellifyServer | undefined, React.Dispatch<React.SetStateAction<JellifyServer | undefined>>] = useState();
-  const [keychain, setKeychain] : [SharedWebCredentials | undefined, React.Dispatch<React.SetStateAction<SharedWebCredentials | undefined>> ] = useState();
+  const [keychainState, setKeychain] : [SharedWebCredentials | undefined, React.Dispatch<React.SetStateAction<SharedWebCredentials | undefined>> ]= useState();
 
   const loginContextFns = {
-    setServerFn: (state: JellifyServer | undefined) => {
-      jellifyServerMutation.mutate(state)
-      setServer(state);
-    },
     setKeychainFn: (state: SharedWebCredentials | undefined) => {
       setKeychain(state);
     }
   }
 
+  const { data: api, isPending, refetch } = useApi();
+
+  const apiContext = useMemo(() => ({api, isPending, refetch}),
+  [api, isPending, refetch] 
+);
+
   return (
-    (
-      <LoginContext.Provider value={{keychain, server, loginContextFns}}>
+    (isPending) ? (
+      <SafeAreaView style={jellifyStyles.container}>
+        <Text>Logging in</Text>
+        <ActivityIndicator />
+      </SafeAreaView>
+    ) : (
+      <LoginProvider loginContextFns={loginContextFns}>
         <NavigationContainer>
           <SafeAreaView style={jellifyStyles.container}>
-          { (credentials.isSuccess && !_.isUndefined(credentials.data)) ? <Navigation /> : <Login /> }
+          { (!_.isUndefined(api)) ? <Navigation /> : <Login /> }
           </SafeAreaView>
         </NavigationContainer>
-      </LoginContext.Provider>
+      </LoginProvider>
     )
   );
 }

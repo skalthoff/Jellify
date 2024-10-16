@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
-import { serverMutation } from "../../../api/mutators/functions/storage";
+import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
 import { useServer } from "../../../api/queries/keychain";
 import { LoginContext } from "../../contexts";
 
@@ -35,7 +35,8 @@ export default function ServerAddress(): React.JSX.Element {
                 version: publicSystemInfoResponse.data.Version!,
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
-            loginContext.loginContextFns.setServerFn(jellifyServer);
+
+            return mutateServer(jellifyServer);
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
