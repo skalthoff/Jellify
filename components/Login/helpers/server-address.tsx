@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import _ from "lodash";
 import { Button, TextInput, useColorScheme, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -7,8 +7,11 @@ import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { serverMutation } from "../../../api/mutators/functions/storage";
 import { useServer } from "../../../api/queries/keychain";
+import { LoginContext } from "../../contexts";
 
 export default function ServerAddress(): React.JSX.Element {
+
+    const loginContext = useContext(LoginContext);
 
     const [serverUrl, setServerUrl] = useState(useServer.data?.url ?? "");
 
@@ -32,6 +35,7 @@ export default function ServerAddress(): React.JSX.Element {
                 version: publicSystemInfoResponse.data.Version!,
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
+            loginContext.loginContextFns.setServerFn(jellifyServer);
             return AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, JSON.stringify(jellifyServer));
         },
         onError: async (error: Error) => {
