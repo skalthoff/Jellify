@@ -9,40 +9,44 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials> = (
 
     console.log("Attempting to use stored credentials");
 
-    let server = await fetchServer();
+    let server = await fetchServer().catch(rejection => {
+        console.warn("Server address doesn't exist (yet)");
+        return Promise.reject(rejection);
+    });
 
     console.debug(`REMOVE THIS::Server name ${server.name}`);
 
     if (_.isEmpty(server.url)) {
         console.warn("Server url was empty");
-        throw new Error("Unable to retrieve credentials without a server URL");
+        return Promise.reject(new Error("Unable to retrieve credentials without a server URL"));
     }
 
     const keychain = await Keychain.getInternetCredentials(server.url!);
 
     if (!keychain) {
         console.warn("No keychain for server address - signin required");
-        throw new Error("Unable to retrieve credentials for server address from keychain");
+        return Promise.reject(new Error("Unable to retrieve credentials for server address from keychain"));
     }
 
     console.log("Successfully retrieved keychain");
     resolve(keychain as Keychain.SharedWebCredentials)
 });
 
-export const fetchServer : () => Promise<JellifyServer> = () => new Promise(async (resolve, reject) => {
+export const fetchServer : () => Promise<JellifyServer> = () => new Promise(async (resolve) => {
 
     console.log("Attempting to fetch server address from storage");
     
     let serverJson = await AsyncStorage.getItem(AsyncStorageKeys.ServerUrl);
 
     if (_.isNull(serverJson)) {
-        throw new Error("No stored server address exists");
+        console.warn("No stored server address exists");
+        return Promise.reject(new Error("No stored server address exists"));
     }
 
     try {
         let server : JellifyServer = JSON.parse(serverJson) as JellifyServer;
         resolve(server);
     } catch(error: any) {
-        throw new Error(error)
+        return Promise.reject(new Error(error));
     }
 });

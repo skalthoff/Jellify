@@ -35,10 +35,10 @@ export default function Jellify(): React.JSX.Element {
     }
   }
 
-  const { data: api, isPending, refetch } = useApi();
+  const { data: api, isPending, isError, refetch } = useApi();
 
-  const apiContext = useMemo(() => ({api, isPending, refetch}),
-  [api, isPending, refetch] 
+  const apiContext = useMemo(() => ({api, isPending, isError, refetch}),
+  [api, isPending, isError, refetch] 
 );
 
   return (
@@ -51,7 +51,7 @@ export default function Jellify(): React.JSX.Element {
       <LoginProvider loginContextFns={loginContextFns}>
         <NavigationContainer>
           <SafeAreaView style={jellifyStyles.container}>
-          { (!_.isUndefined(api)) ? <Navigation /> : <Login /> }
+          { (!_.isUndefined(api) && !isError) ? <Navigation /> : <Login /> }
           </SafeAreaView>
         </NavigationContainer>
       </LoginProvider>
