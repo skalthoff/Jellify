@@ -14,7 +14,7 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials> = (
     console.debug(`REMOVE THIS::Server name ${server.name}`);
 
     if (_.isEmpty(server.url)) {
-        console.warn("Server url was empty")
+        console.warn("Server url was empty");
         throw new Error("Unable to retrieve credentials without a server URL");
     }
 
@@ -25,6 +25,7 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials> = (
         throw new Error("Unable to retrieve credentials for server address from keychain");
     }
 
+    console.log("Successfully retrieved keychain");
     resolve(keychain as Keychain.SharedWebCredentials)
 });
 

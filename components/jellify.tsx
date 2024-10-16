@@ -23,21 +23,15 @@ export default function Jellify(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  let jellifyServer = useServer;
   let credentials = useCredentials;
 
   const [keychain, setKeychain] : [SharedWebCredentials | undefined, React.Dispatch<React.SetStateAction<SharedWebCredentials | undefined>> ]= useState();
-  const [server, setServer] = useState(jellifyServer.data)
 
   const loginContextFns = {
     setKeychainFn: (state: SharedWebCredentials | undefined) => {
       setKeychain(state);
-    },
-    setServerFn: (state: JellifyServer | undefined) => {
-      setServer(state);
     }
   }
-
 
   return (
     (credentials.isPending) ? (
@@ -46,7 +40,7 @@ export default function Jellify(): React.JSX.Element {
         <ActivityIndicator />
       </SafeAreaView>
     ) : (
-      <LoginContext.Provider value={{keychain, server, loginContextFns}}>
+      <LoginContext.Provider value={{keychain, loginContextFns}}>
         <NavigationContainer>
           <SafeAreaView style={jellifyStyles.container}>
           { (credentials.isSuccess && !_.isUndefined(credentials.data)) ? <Navigation /> : <Login /> }

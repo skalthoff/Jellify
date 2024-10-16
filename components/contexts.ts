@@ -4,12 +4,10 @@ import { JellifyServer } from "../types/JellifyServer";
 
 type LoginContextFns = {
     setKeychainFn: (state: SharedWebCredentials | undefined) => void,
-    setServerFn: (state: JellifyServer | undefined) => void
 }
 
 type LoginContext = {
     keychain: SharedWebCredentials | undefined;
-    server: JellifyServer | undefined,
     loginContextFns: LoginContextFns
 };
 /**
@@ -18,10 +16,8 @@ type LoginContext = {
  */
 const loginContextDefaultValue : LoginContext = {
     keychain: undefined,
-    server: undefined,
     loginContextFns: {
         setKeychainFn: (state: SharedWebCredentials | undefined) => {}, // noop default callback
-        setServerFn: (state: JellifyServer | undefined) => {}
     }
 }
 
