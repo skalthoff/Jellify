@@ -37,9 +37,11 @@ function conditionalHomeRender(): React.JSX.Element {
   const Stack = createNativeStackNavigator()
   
   const Tab = createBottomTabNavigator();
+
+  const isDarkMode = useColorScheme() === 'dark';
   
   return (
-    <View style={jellifyStyles.container}>
+    <View style={jellifyStyles.container} bg-$backgroundDark={isDarkMode}>
         <NavigationContainer theme={useTheme()}>
             { !_.isUndefined(libraryId) ? (
               <Stack.Navigator screenOptions={{ headerShown: false }}>
