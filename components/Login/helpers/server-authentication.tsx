@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, TextInput, useColorScheme, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
@@ -13,7 +13,10 @@ export default function ServerAuthentication(): React.JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
 
     const loginContext = useApiClientContext();
-    loginContext.setChangeServer(false);
+    
+    useEffect(() => {
+        loginContext.setChangeServer(false);
+    });
 
     const clearServer = useMutation({
         mutationFn: async () => {
