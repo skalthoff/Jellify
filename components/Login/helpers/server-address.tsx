@@ -60,12 +60,12 @@ export default function ServerAddress(): React.JSX.Element {
                     <RadioButton 
                         value={https} 
                         label={"HTTPS"}
-                        labelStyle={{color: Colors.$textNeutralHeavy}}
+                        labelStyle={{color: Colors.$textDefault, fontSize: 12}}
                     />  
                     <RadioButton 
                         value={http} 
                         label={'HTTP'}
-                        labelStyle={{color: Colors.$textNeutralHeavy}}
+                        labelStyle={{color: Colors.$textDefault, fontSize: 12}}
                     />
                 </RadioGroup>
             </View>
@@ -75,7 +75,8 @@ export default function ServerAddress(): React.JSX.Element {
                     onChangeText={setServerAddress}
                     showClearButton
                     leadingAccessory={ServerIcon()}
-                    color={Colors.$textNeutral}
+                    color={Colors.$textDefault}
+                    labelStyle={{ fontSize: 12 }}
                     marginV
                     paddingV
                     >

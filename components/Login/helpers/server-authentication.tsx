@@ -29,7 +29,8 @@ export default function ServerAuthentication(): React.JSX.Element {
                 onPress={() => {
                     clearServer.mutate();
                 }}
-                color={Colors.$iconDanger}
+                backgroundColor={Colors.$iconDanger}
+                color={Colors.$textDefault}
                 />
 
             <TextField
