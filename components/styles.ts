@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const jellifyStyles = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: 'black',
       justifyContent: 'center',
       marginHorizontal: 16,
     },
