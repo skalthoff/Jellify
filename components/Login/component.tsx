@@ -6,7 +6,7 @@ import { useApiClientContext } from "../jellyfin-api-provider";
 
 export default function Login(): React.JSX.Element {
 
-    const { server } = useApiClientContext();
+    const { server, changeServer } = useApiClientContext();
 
     const Stack = createStackNavigator();
 
@@ -17,7 +17,8 @@ export default function Login(): React.JSX.Element {
                     <Stack.Screen
                         name="ServerAddress"
                         options={{
-                            title: "Enter your Jellyfin server"
+                            title: "Enter your Jellyfin server",
+                            animationTypeForReplace: changeServer ? 'pop' : 'push'
                         }}
                         component={ServerAddress}
                         >

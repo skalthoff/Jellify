@@ -13,6 +13,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
 
     const loginContext = useApiClientContext();
+    loginContext.setChangeServer(false);
 
     const clearServer = useMutation({
         mutationFn: async () => {
