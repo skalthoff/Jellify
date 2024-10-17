@@ -12,7 +12,7 @@ export default function Login(): React.JSX.Element {
     const Stack = createStackNavigator();
 
     return (
-        <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: useColorScheme() === 'dark' ? 'dark' : 'light' }}}>
+        <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: useColorScheme() === 'dark' ? 'black' : 'white' }}}>
             { 
                 (_.isUndefined(server) || _.isEmpty(server.url)) ? (
                     <Stack.Screen
