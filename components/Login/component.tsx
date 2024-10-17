@@ -14,12 +14,13 @@ export default function Login(): React.JSX.Element {
     const Stack = createStackNavigator();
 
     return (
-        <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: useColorScheme() === 'dark' ? 'black' : 'white' }}}>
+        <Stack.Navigator>
             {
                 (_.isUndefined(server) || _.isEmpty(server.url)) ? (
                     <Stack.Screen
                         name="ServerAddress"
                         options={{
+                            headerShown: false,
                             title: "Connect to Jellyfin",
                             animationTypeForReplace: 'pop',
                             headerStyle: {
@@ -28,14 +29,25 @@ export default function Login(): React.JSX.Element {
                             headerTintColor: Colors.$iconPrimary
                         }}
                         component={ServerAddress}
-                        >
-                        </Stack.Screen>
+                        />
                     ) : (
                     
                     (_.isUndefined(username)) ? (
-                        <Stack.Screen name="ServerAuthentication" component={ServerAuthentication} />
+                        <Stack.Screen 
+                            name="ServerAuthentication" 
+                            options={{ 
+                                headerShown: false 
+                            }} 
+                            component={ServerAuthentication} 
+                        />
                     ) : (
-                        <Stack.Screen name="LibrarySelection" component={ServerLibrary}></Stack.Screen>
+                        <Stack.Screen 
+                            name="LibrarySelection" 
+                            options={{ 
+                                headerShown: false 
+                            }} 
+                            component={ServerLibrary}
+                        />
                     )
                 )
             }

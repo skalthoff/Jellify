@@ -4,7 +4,7 @@ import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
 import { JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
 import React, {  } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Navigation from "./navigation";
 import { jellifyStyles } from "./styles";
@@ -40,12 +40,12 @@ function conditionalHomeRender(): React.JSX.Element {
   
   return (
     <View style={jellifyStyles.container}>
-        <NavigationContainer>
-          <Stack.Navigator>
+        <NavigationContainer theme={useTheme()}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
             { !_.isUndefined(libraryId) ? (
-              <Tab.Screen name="Navigation" component={Navigation} />
+              <Tab.Screen name="Navigation" options={{ headerShown: false }} component={Navigation} />
             ) : (
-              <Stack.Screen name="Login" component={Login} /> 
+              <Stack.Screen name="Login" options={{ headerShown: false }} component={Login} /> 
             )}
           </Stack.Navigator>
         </NavigationContainer>

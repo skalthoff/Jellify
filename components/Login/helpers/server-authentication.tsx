@@ -1,12 +1,10 @@
 import React from "react";
-import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { TextField, View, Button, Colors } from 'react-native-ui-lib';
 import { jellifyStyles } from "../../styles";
-import { credentials } from "../../../api/mutators/storage";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
 import * as Keychain from "react-native-keychain"
 import _ from "lodash";
@@ -16,13 +14,11 @@ export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const isDarkMode = useColorScheme() === 'dark';
-
     const { apiClient, setApiClient, server, setServer, setChangeServer } = useApiClientContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
-            return apiClient!.authenticateUserByName(credentials.username, credentials.password!);
+            return await apiClient!.authenticateUserByName(credentials.username, credentials.password!);
         },
         onSuccess: async (authResult, credentials) => {
               
@@ -81,7 +77,9 @@ export default function ServerAuthentication(): React.JSX.Element {
             <Button 
                 label="Sign in" 
                 color={Colors.$iconPrimary}
-                onPress={() => useApiMutation.mutate({ username, password })}
+                onPress={() => {
+                    useApiMutation.mutate({ username, password })
+                }}
                 size={Button.sizes.medium}
                 margin
                 />
