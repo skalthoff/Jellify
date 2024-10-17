@@ -41,13 +41,13 @@ function conditionalHomeRender(): React.JSX.Element {
   return (
     <View style={jellifyStyles.container}>
         <NavigationContainer theme={useTheme()}>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
             { !_.isUndefined(libraryId) ? (
-              <Tab.Screen name="Navigation" options={{ headerShown: false }} component={Navigation} />
+              <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Tab.Screen name="Navigation" options={{ headerShown: false }} component={Navigation} />
+              </Stack.Navigator>
             ) : (
-              <Stack.Screen name="Login" options={{ headerShown: false }} component={Login} /> 
+              <Login /> 
             )}
-          </Stack.Navigator>
         </NavigationContainer>
       </View>
   );

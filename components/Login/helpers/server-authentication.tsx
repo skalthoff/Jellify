@@ -6,39 +6,42 @@ import { useApiClientContext } from "../../jellyfin-api-provider";
 import { TextField, View, Button, Colors } from 'react-native-ui-lib';
 import { jellifyStyles } from "../../styles";
 import _ from "lodash";
+import * as Keychain from "react-native-keychain"
+import { client } from "../../../api/queries";
+import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
 
 export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const { server, setServer, setChangeServer } = useApiClientContext();
+    const { apiClient, setApiClient, server, setServer, setChangeServer } = useApiClientContext();
 
-    // const useApiMutation = useMutation({
-    //     mutationFn: async (credentials: JellyfinCredentials) => {
-    //         return await apiClient!.authenticateUserByName(credentials.username, credentials.password!);
-    //     },
-    //     onSuccess: async (authResult, credentials) => {
+    const useApiMutation = useMutation({
+        mutationFn: async (credentials: JellyfinCredentials) => {
+            return await apiClient!.authenticateUserByName(credentials.username, credentials.password!);
+        },
+        onSuccess: async (authResult, credentials) => {
               
-    //         console.log(`Received auth response from ${server!.name}`)
-    //         if (_.isUndefined(authResult))
-    //             return Promise.reject(new Error("Authentication result was empty"))
+            console.log(`Received auth response from ${server!.name}`)
+            if (_.isUndefined(authResult))
+                return Promise.reject(new Error("Authentication result was empty"))
 
-    //         if (authResult.status >= 400 || _.isEmpty(authResult.data.AccessToken))
-    //             return Promise.reject(new Error("Invalid credentials"))
+            if (authResult.status >= 400 || _.isEmpty(authResult.data.AccessToken))
+                return Promise.reject(new Error("Invalid credentials"))
 
-    //         if (_.isUndefined(authResult.data.User))
-    //             return Promise.reject(new Error("Unable to login"));
+            if (_.isUndefined(authResult.data.User))
+                return Promise.reject(new Error("Unable to login"));
 
-    //         setApiClient(client.createApi(server!.url, (authResult.data.AccessToken as string)))
-    //         setUsername(authResult.data.User.Name!);
-    //         return await Keychain.setInternetCredentials(server!.url, credentials.username, (authResult.data.AccessToken as string));
+            setApiClient(client.createApi(server!.url, (authResult.data.AccessToken as string)))
+            setUsername(authResult.data.User.Name!);
+            return await Keychain.setInternetCredentials(server!.url, credentials.username, (authResult.data.AccessToken as string));
 
-    //     },
-    //     onError: async (error: Error) => {
-    //         console.error("An error occurred connecting to the Jellyfin instance", error);
-    //         return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
-    //     }
-    // });
+        },
+        onError: async (error: Error) => {
+            console.error("An error occurred connecting to the Jellyfin instance", error);
+            return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
+        }
+    });
 
     const clearServer = useMutation({
         mutationFn: async () => {
