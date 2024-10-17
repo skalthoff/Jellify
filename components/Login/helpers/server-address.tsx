@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import _ from "lodash";
+import { RadioGroup, RadioButton } from 'react-native-ui-lib';
 import { Button, TextInput, useColorScheme, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
@@ -8,10 +9,14 @@ import { JellifyServer } from "../../../types/JellifyServer";
 import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 
+const http = "http://"
+const https = "https://"
+
 export default function ServerAddress(): React.JSX.Element {
 
     const loginContext = useApiClientContext();
 
+    const [protocol, setProtocol] = useState(https)
     const [serverAddress, setServerAddress] = useState("");
 
     const isDarkMode = useColorScheme() === 'dark';
@@ -46,6 +51,19 @@ export default function ServerAddress(): React.JSX.Element {
 
     return (
         <View>
+
+            <RadioGroup 
+                initialValue="https://" 
+                onValueChange={setProtocol}>  
+                <RadioButton 
+                    value={https} 
+                    label={"HTTPS"}
+                />  
+                <RadioButton 
+                    value={http} 
+                    label={'HTTP'}
+                />
+            </RadioGroup>
             <TextInput 
                 placeholder="Jellyfin Server Address"
                 onChangeText={setServerAddress}>
@@ -53,7 +71,7 @@ export default function ServerAddress(): React.JSX.Element {
 
             <Button 
                 onPress={() => {
-                    useServerMutation.mutate(serverAddress)
+                    useServerMutation.mutate(`${protocol}${serverAddress}`);
                 }}
                 title="Connect"
             />
