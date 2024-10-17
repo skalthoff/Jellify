@@ -16,7 +16,9 @@ export default function Login(): React.JSX.Element {
                 (_.isUndefined(server) || _.isEmpty(server.url)) ? (
                     <Stack.Screen
                         name="ServerAddress"
-                        options={{title: "ServerAddress"}}
+                        options={{
+                            title: "Enter your Jellyfin server"
+                        }}
                         component={ServerAddress}
                         >
                         </Stack.Screen>
@@ -25,8 +27,8 @@ export default function Login(): React.JSX.Element {
                         name="ServerAuthentication"
                         component={ServerAuthentication}
                         options={{
-                            title: "Server Authentication",
-                            animationTypeForReplace: 'pop'
+                            title: `Sign in to ${server.name}`,
+                            animationTypeForReplace: 'push'
                         }}
                     />
                 )

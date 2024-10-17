@@ -17,6 +17,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     const clearServer = useMutation({
         mutationFn: async () => {
             loginContext.setServer(undefined)
+            loginContext.setChangeServer(true);
             return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
         }
     })
