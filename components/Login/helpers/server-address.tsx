@@ -51,8 +51,7 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <Card>
-            <Card.Image source={{uri: "../../../assets/icon_original.jpeg"}} height={300} />
+        <Card margin paddingH>
             <Card.Section>
                 <RadioGroup 
                     initialValue="https://" 
