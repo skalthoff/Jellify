@@ -8,6 +8,10 @@ import { JellifyServer } from "../../../types/JellifyServer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 
+interface ServerMutationParams {
+    serverUrl: string,
+}
+
 export const serverMutation = async (serverUrl: string) => {
     
     console.log("Mutating server URL");

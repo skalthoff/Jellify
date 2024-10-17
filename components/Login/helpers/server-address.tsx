@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import _ from "lodash";
 import { Button, TextInput, useColorScheme, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -6,14 +6,13 @@ import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
-import { useServer } from "../../../api/queries/keychain";
-import { LoginContext } from "../../contexts";
+import { useApiClientContext } from "../../jellyfin-api-provider";
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const loginContext = useContext(LoginContext);
+    const loginContext = useApiClientContext();
 
-    const [serverUrl, setServerUrl] = useState(useServer.data?.url ?? "");
+    const [serverAddress, setServerAddress] = useState("");
 
     const isDarkMode = useColorScheme() === 'dark';
 
@@ -30,12 +29,13 @@ export default function ServerAddress(): React.JSX.Element {
             // TODO: Rename url to address
             
             let jellifyServer: JellifyServer = {
-                url: serverUrl,
+                url: serverAddress,
                 name: publicSystemInfoResponse.data.ServerName!,
                 version: publicSystemInfoResponse.data.Version!,
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
 
+            loginContext.setServer(jellifyServer);
             return mutateServer(jellifyServer);
         },
         onError: async (error: Error) => {
@@ -48,11 +48,13 @@ export default function ServerAddress(): React.JSX.Element {
         <View>
             <TextInput 
                 placeholder="Jellyfin Server Address"
-                onChangeText={setServerUrl}>
+                onChangeText={setServerAddress}>
             </TextInput>
 
             <Button 
-                onPress={() => useServerMutation.mutate(serverUrl)}
+                onPress={() => {
+                    useServerMutation.mutate(serverAddress)
+                }}
                 title="Connect"
             />
 

@@ -35,7 +35,7 @@ export const fetchServer : () => Promise<JellifyServer> = () => new Promise(asyn
     
     let serverJson = await AsyncStorage.getItem(AsyncStorageKeys.ServerUrl);
 
-    if (_.isNull(serverJson)) {
+    if (_.isEmpty(serverJson) || _.isNull(serverJson)) {
         console.warn("No stored server address exists");
         return Promise.reject(new Error("No stored server address exists"));
     }

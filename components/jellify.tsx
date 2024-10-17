@@ -1,20 +1,13 @@
 import { ActivityIndicator, SafeAreaView, Text, useColorScheme } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
+import _ from "lodash";
+import { JellyfinApiClientContext, JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
+import React, { useContext, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Login from "./Login/component";
 import Navigation from "./navigation";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
-import { useCredentials, useServer } from "../api/queries/keychain";
-import _ from "lodash";
 import { jellifyStyles } from "./styles";
-import { useMemo, useState } from "react";
-import { LoginContext } from "./contexts";
-import { SharedWebCredentials } from "react-native-keychain";
-import { JellifyServer } from "../types/JellifyServer";
-import LoginProvider from "./providers";
-import { mutateServerCredentials } from "../api/mutators/functions/storage";
-import { credentials } from "../api/mutators/storage";
-import { useApi } from "../api/queries";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -27,34 +20,26 @@ export default function Jellify(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const [keychainState, setKeychain] : [SharedWebCredentials | undefined, React.Dispatch<React.SetStateAction<SharedWebCredentials | undefined>> ]= useState();
-
-  const loginContextFns = {
-    setKeychainFn: (state: SharedWebCredentials | undefined) => {
-      setKeychain(state);
-    }
-  }
-
-  const { data: api, isPending, isError, refetch } = useApi();
-
-  const apiContext = useMemo(() => ({api, isPending, isError, refetch}),
-  [api, isPending, isError, refetch] 
-);
-
   return (
-    (isPending) ? (
-      <SafeAreaView style={jellifyStyles.container}>
-        <Text>Logging in</Text>
-        <ActivityIndicator />
-      </SafeAreaView>
-    ) : (
-      <LoginProvider loginContextFns={loginContextFns}>
+    <JellyfinApiClientProvider>
+      {conditionalHomeRender()}
+    </JellyfinApiClientProvider>
+  );
+}
+
+function conditionalHomeRender(): React.JSX.Element {
+
+  const apiClientContext = useApiClientContext();
+  
+  return (
+    <SafeAreaView style={jellifyStyles.container}>
+      { !_.isUndefined(apiClientContext.apiClient) ? (
+        <Navigation />
+      ) : (
         <NavigationContainer>
-          <SafeAreaView style={jellifyStyles.container}>
-          { (!_.isUndefined(api) && !isError) ? <Navigation /> : <Login /> }
-          </SafeAreaView>
+          <Login /> 
         </NavigationContainer>
-      </LoginProvider>
-    )
+      )}
+      </SafeAreaView>
   );
 }

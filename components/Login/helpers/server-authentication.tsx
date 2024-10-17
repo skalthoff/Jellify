@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, TextInput, useColorScheme, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
-import { LoginContext } from "../../contexts";
+import { useApiClientContext } from "../../jellyfin-api-provider";
 
 
 export default function ServerAuthentication(): React.JSX.Element {
@@ -12,11 +12,11 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     const isDarkMode = useColorScheme() === 'dark';
 
-    const loginContext = useContext(LoginContext)
+    const loginContext = useApiClientContext();
 
     const clearServer = useMutation({
         mutationFn: async () => {
-            loginContext.loginContextFns.setKeychainFn(undefined);
+            loginContext.setServer(undefined)
             return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
         }
     })
