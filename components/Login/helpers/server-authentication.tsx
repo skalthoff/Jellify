@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { RadioGroup, RadioButton, TextField, View, Button, Card, Colors } from 'react-native-ui-lib';
+import { jellifyStyles } from "../../styles";
 
 export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
@@ -23,14 +24,14 @@ export default function ServerAuthentication(): React.JSX.Element {
     })
 
     return (
-        <View>
+        <View style={jellifyStyles.container}>
             <Button
                 label="Switch Server"
                 onPress={() => {
                     clearServer.mutate();
                 }}
                 backgroundColor={Colors.$iconDanger}
-                color={Colors.$textDefault}
+                color={Colors.$white}
                 />
 
             <TextField

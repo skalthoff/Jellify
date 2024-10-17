@@ -33,7 +33,7 @@ function conditionalHomeRender(): React.JSX.Element {
   const { apiClient } = useApiClientContext();
   
   return (
-    <View useSafeArea style={jellifyStyles.container}>
+    <View style={jellifyStyles.container}>
       { !_.isUndefined(apiClient) ? (
         <Navigation />
       ) : (
