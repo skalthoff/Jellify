@@ -51,8 +51,8 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <Card margin paddingH>
-            <Card.Section>
+        <View margin paddingH>
+            <View marginV paddingV>
                 <RadioGroup 
                     initialValue="https://" 
                     onValueChange={setProtocol}>  
@@ -65,8 +65,8 @@ export default function ServerAddress(): React.JSX.Element {
                         label={'HTTP'}
                     />
                 </RadioGroup>
-            </Card.Section>
-            <Card.Section>
+            </View>
+            <View marginV paddingV>
                 <TextField 
                     placeholder="jellyfin.org"
                     onChangeText={setServerAddress}
@@ -83,8 +83,8 @@ export default function ServerAddress(): React.JSX.Element {
                     margin
                     label="Connect"
                 />
-            </Card.Section>
+            </View>
 
-        </Card>
+        </View>
     )
 }

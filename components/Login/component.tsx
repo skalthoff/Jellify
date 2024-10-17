@@ -19,7 +19,11 @@ export default function Login(): React.JSX.Element {
                         name="ServerAddress"
                         options={{
                             title: "Connect to Jellyfin",
-                            animationTypeForReplace: changeServer ? 'pop' : 'push'
+                            animationTypeForReplace: changeServer ? 'pop' : 'push',
+                            headerStyle: {
+                                backgroundColor: useColorScheme() === 'dark' ? '#000' : '#FFF',
+                            },
+                            headerTintColor: 'purple'
                         }}
                         component={ServerAddress}
                         >
