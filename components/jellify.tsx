@@ -5,10 +5,12 @@ import _ from "lodash";
 import { JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
 import React, {  } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import Login from "./Login/component";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Navigation from "./navigation";
 import { jellifyStyles } from "./styles";
 import { View } from "react-native-ui-lib";
+import Login from "./Login/component";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 export default function Jellify(): React.JSX.Element {
 
@@ -30,17 +32,23 @@ export default function Jellify(): React.JSX.Element {
 
 function conditionalHomeRender(): React.JSX.Element {
 
-  const { apiClient } = useApiClientContext();
+  const { libraryId } = useApiClientContext();
+
+  const Stack = createNativeStackNavigator()
+  
+  const Tab = createBottomTabNavigator();
   
   return (
     <View style={jellifyStyles.container}>
-      { !_.isUndefined(apiClient) ? (
-        <Navigation />
-      ) : (
         <NavigationContainer>
-          <Login /> 
+          <Stack.Navigator>
+            { !_.isUndefined(libraryId) ? (
+              <Tab.Screen name="Navigation" component={Navigation} />
+            ) : (
+              <Stack.Screen name="Login" component={Login} /> 
+            )}
+          </Stack.Navigator>
         </NavigationContainer>
-      )}
       </View>
   );
 }

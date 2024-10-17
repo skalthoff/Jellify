@@ -24,7 +24,7 @@ export default function ServerAddress(): React.JSX.Element {
 
     const useServerMutation = useMutation({
         mutationFn: serverMutation,
-        onSuccess: async (publicSystemInfoResponse, serverUrl, context) => {
+        onSuccess: async (publicSystemInfoResponse, serverUrl) => {
             if (!!!publicSystemInfoResponse.data.Version)
                 throw new Error("Jellyfin instance did not respond");
     
