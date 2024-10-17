@@ -12,16 +12,12 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     const isDarkMode = useColorScheme() === 'dark';
 
-    const loginContext = useApiClientContext();
-    
-    useEffect(() => {
-        loginContext.setChangeServer(false);
-    });
+    const { setServer, setChangeServer } = useApiClientContext();
 
     const clearServer = useMutation({
         mutationFn: async () => {
-            loginContext.setServer(undefined)
-            loginContext.setChangeServer(true);
+            setServer(undefined)
+            setChangeServer(true);
             return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
         }
     })

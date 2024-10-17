@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { RadioGroup, RadioButton, TextField, View, Button, Card } from 'react-native-ui-lib';
+import { RadioGroup, RadioButton, TextField, View, Button, Card, Colors } from 'react-native-ui-lib';
 import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
@@ -15,7 +15,7 @@ const https = "https://"
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const loginContext = useApiClientContext();
+    const { setChangeServer, setServer } = useApiClientContext();
 
     const [protocol, setProtocol] = useState(https)
     const [serverAddress, setServerAddress] = useState("");
@@ -41,6 +41,8 @@ export default function ServerAddress(): React.JSX.Element {
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
 
+            setChangeServer(false);
+            setServer(jellifyServer);
             return await mutateServer(jellifyServer);
         },
         onError: async (error: Error) => {
@@ -58,10 +60,12 @@ export default function ServerAddress(): React.JSX.Element {
                     <RadioButton 
                         value={https} 
                         label={"HTTPS"}
+                        labelStyle={{color: Colors.$textGeneral}}
                     />  
                     <RadioButton 
                         value={http} 
                         label={'HTTP'}
+                        labelStyle={{color: Colors.$textGeneral}}
                     />
                 </RadioGroup>
             </View>
