@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { RadioGroup, RadioButton, TextField, View, Button, Card, Colors } from 'react-native-ui-lib';
+import { RadioGroup, RadioButton, TextField, View, Button, Card, Colors, Text } from 'react-native-ui-lib';
 import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
@@ -55,23 +55,32 @@ export default function ServerAddress(): React.JSX.Element {
     return (
         <View style={jellifyStyles.container}>
             <View row marginV-30 paddingV-30>
+                <Text style={{ fontSize: 20 }}>
+                    Protocol
+                </Text>
                 <RadioGroup 
                     initialValue="https://" 
                     onValueChange={setProtocol}>  
-                    <RadioButton 
-                        value={https} 
-                        label={"HTTPS"}
-                        labelStyle={{   
-                            color: Colors.$textDefault, 
-                            fontSize: 25
-                        }}
-                        size={30}
-                    />  
+                    <View row centerV>
+
+                        <RadioButton 
+                            value={https} 
+                            label={"HTTPS"}
+                            labelStyle={{   
+                                color: Colors.$textDefault, 
+                                fontSize: 20
+                            }}
+                            size={25}
+                            />  
+                    </View>
+                    <View row centerV>
+
                     <RadioButton 
                         value={http} 
                         label={'HTTP'}
                         labelStyle={{color: Colors.$textDefault, fontSize: 12}}
-                    />
+                        />
+                    </View>
                 </RadioGroup>
             </View>
             <View marginV paddingV>
