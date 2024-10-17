@@ -54,10 +54,12 @@ export default function ServerAddress(): React.JSX.Element {
 
     return (
         <View style={jellifyStyles.container}>
-            <View row marginV-30 paddingV-30>
+            <View row marginT-30 paddingT-30>
                 <Text style={{ fontSize: 20 }}>
                     Protocol
                 </Text>
+            </View>
+            <View row marginB-30 paddingB-30>
                 <RadioGroup 
                     initialValue="https://" 
                     onValueChange={setProtocol}>  
