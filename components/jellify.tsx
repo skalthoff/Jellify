@@ -1,13 +1,14 @@
-import { ActivityIndicator, SafeAreaView, Text, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
-import { JellyfinApiClientContext, JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
-import React, { useContext, useEffect } from "react";
+import { JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
+import React, {  } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Login from "./Login/component";
 import Navigation from "./navigation";
 import { jellifyStyles } from "./styles";
+import { View } from "react-native-ui-lib";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -32,7 +33,7 @@ function conditionalHomeRender(): React.JSX.Element {
   const apiClientContext = useApiClientContext();
   
   return (
-    <SafeAreaView style={jellifyStyles.container}>
+    <View useSafeArea style={jellifyStyles.container}>
       { !_.isUndefined(apiClientContext.apiClient) ? (
         <Navigation />
       ) : (
@@ -40,6 +41,6 @@ function conditionalHomeRender(): React.JSX.Element {
           <Login /> 
         </NavigationContainer>
       )}
-      </SafeAreaView>
+      </View>
   );
 }
