@@ -17,7 +17,7 @@ export default function Login(): React.JSX.Element {
                     <Stack.Screen
                         name="ServerAddress"
                         options={{
-                            title: "Enter your Jellyfin server",
+                            title: "Connect to Jellyfin",
                             animationTypeForReplace: changeServer ? 'pop' : 'push'
                         }}
                         component={ServerAddress}

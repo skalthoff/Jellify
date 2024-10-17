@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { RadioGroup, RadioButton } from 'react-native-ui-lib';
-import { Button, TextInput, useColorScheme, View } from "react-native";
+import { RadioGroup, RadioButton, TextField } from 'react-native-ui-lib';
+import { Button, useColorScheme, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
@@ -64,10 +64,12 @@ export default function ServerAddress(): React.JSX.Element {
                     label={'HTTP'}
                 />
             </RadioGroup>
-            <TextInput 
-                placeholder="Jellyfin Server Address"
-                onChangeText={setServerAddress}>
-            </TextInput>
+            <TextField 
+                placeholder="jellyfin.org"
+                onChangeText={setServerAddress}
+                
+                >
+            </TextField>
 
             <Button 
                 onPress={() => {
