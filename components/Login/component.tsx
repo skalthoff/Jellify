@@ -4,6 +4,7 @@ import ServerAddress from "./helpers/server-address";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { useColorScheme } from "react-native";
+import { Colors } from "react-native-ui-lib";
 
 export default function Login(): React.JSX.Element {
 
@@ -23,7 +24,7 @@ export default function Login(): React.JSX.Element {
                             headerStyle: {
                                 backgroundColor: useColorScheme() === 'dark' ? '#000' : '#FFF',
                             },
-                            headerTintColor: 'purple'
+                            headerTintColor: Colors.$iconPrimary
                         }}
                         component={ServerAddress}
                         >
@@ -34,7 +35,11 @@ export default function Login(): React.JSX.Element {
                         component={ServerAuthentication}
                         options={{
                             title: `Sign in to ${server.name}`,
-                            animationTypeForReplace: 'push'
+                            animationTypeForReplace: 'push',
+                            headerStyle: {
+                                backgroundColor: useColorScheme() === 'dark' ? '#000' : '#FFF',
+                            },
+                            headerTintColor: Colors.$iconPrimary
                         }}
                     />
                 )
