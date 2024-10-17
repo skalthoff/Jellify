@@ -49,7 +49,7 @@ export default function ServerAuthentication(): React.JSX.Element {
             setChangeServer(true);
             return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
         }
-    })
+    });
 
     return (
         <View style={jellifyStyles.container}>
