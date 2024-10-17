@@ -3,6 +3,7 @@ import ServerAuthentication from "./helpers/server-authentication";
 import ServerAddress from "./helpers/server-address";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useApiClientContext } from "../jellyfin-api-provider";
+import { useColorScheme } from "react-native";
 
 export default function Login(): React.JSX.Element {
 
@@ -11,7 +12,7 @@ export default function Login(): React.JSX.Element {
     const Stack = createStackNavigator();
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: useColorScheme() === 'dark' ? 'dark' : 'light' }}}>
             { 
                 (_.isUndefined(server) || _.isEmpty(server.url)) ? (
                     <Stack.Screen
