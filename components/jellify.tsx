@@ -30,11 +30,11 @@ export default function Jellify(): React.JSX.Element {
 
 function conditionalHomeRender(): React.JSX.Element {
 
-  const apiClientContext = useApiClientContext();
+  const { apiClient } = useApiClientContext();
   
   return (
     <View useSafeArea style={jellifyStyles.container}>
-      { !_.isUndefined(apiClientContext.apiClient) ? (
+      { !_.isUndefined(apiClient) ? (
         <Navigation />
       ) : (
         <NavigationContainer>
