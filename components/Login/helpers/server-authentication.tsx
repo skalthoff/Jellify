@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { Button, TextInput, useColorScheme, View } from "react-native";
+import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-
+import { RadioGroup, RadioButton, TextField, View, Button, Card, Colors } from 'react-native-ui-lib';
 
 export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
@@ -25,19 +25,19 @@ export default function ServerAuthentication(): React.JSX.Element {
     return (
         <View>
             <Button
-                title="Change Server"
+                label="Switch Server"
                 onPress={() => {
                     clearServer.mutate();
                 }}
-                color={'purple'}
+                color={Colors.$iconDanger}
                 />
 
-            <TextInput
+            <TextField
                 placeholder="Username"
                 value={username}
                 onChangeText={(value) => setUsername(value)}
                 />
-            <TextInput
+            <TextField
                 placeholder="Password"
                 value={password}
                 onChangeText={(value) => setPassword(value)}
@@ -45,9 +45,11 @@ export default function ServerAuthentication(): React.JSX.Element {
                 />
 
             <Button 
-                title="Sign in" 
-                color={'purple'}
+                label="Sign in" 
+                color={Colors.$iconPrimary}
                 onPress={() => console.log("sign in pressed")}
+                size={Button.sizes.medium}
+                margin
                 />
         </View>
     );

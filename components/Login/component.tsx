@@ -8,7 +8,7 @@ import { Colors } from "react-native-ui-lib";
 
 export default function Login(): React.JSX.Element {
 
-    const { server, changeServer } = useApiClientContext();
+    const { server } = useApiClientContext();
 
     const Stack = createStackNavigator();
 
@@ -20,7 +20,7 @@ export default function Login(): React.JSX.Element {
                         name="ServerAddress"
                         options={{
                             title: "Connect to Jellyfin",
-                            animationTypeForReplace: changeServer ? 'pop' : 'push',
+                            animationTypeForReplace: 'pop',
                             headerStyle: {
                                 backgroundColor: useColorScheme() === 'dark' ? '#000' : '#FFF',
                             },
