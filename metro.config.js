@@ -12,4 +12,10 @@ const config = getDefaultConfig(__dirname, {
 
 config.resolver.sourceExts.push('mjs');
 
+config.watchFolders = [
+    "./components/",
+    "./api/",
+    "./player/"
+]
+
 module.exports = config;
