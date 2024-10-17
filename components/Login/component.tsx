@@ -10,8 +10,6 @@ export default function Login(): React.JSX.Element {
 
     const Stack = createStackNavigator();
 
-    console.log("Server from context", server);
-
     return (
         <Stack.Navigator>
             { 
@@ -26,7 +24,10 @@ export default function Login(): React.JSX.Element {
                     <Stack.Screen
                         name="ServerAuthentication"
                         component={ServerAuthentication}
-                        options={{title: "Server Authentication"}}
+                        options={{
+                            title: "Server Authentication",
+                            animationTypeForReplace: 'pop'
+                        }}
                     />
                 )
             }
