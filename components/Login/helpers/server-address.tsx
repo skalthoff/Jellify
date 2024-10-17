@@ -24,7 +24,7 @@ export default function ServerAddress(): React.JSX.Element {
 
     const useServerMutation = useMutation({
         mutationFn: serverMutation,
-        onSuccess: (publicSystemInfoResponse, serverUrl, context) => {
+        onSuccess: async (publicSystemInfoResponse, serverUrl, context) => {
             if (!!!publicSystemInfoResponse.data.Version)
                 throw new Error("Jellyfin instance did not respond");
     
@@ -42,7 +42,7 @@ export default function ServerAddress(): React.JSX.Element {
             }
 
             loginContext.setServer(jellifyServer);
-            return mutateServer(jellifyServer);
+            return await mutateServer(jellifyServer);
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
