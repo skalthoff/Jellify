@@ -8,6 +8,7 @@ import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
 import { useApiClientContext } from "../../jellyfin-api-provider";
+import ServerIcon from "../../icons/server-icon";
 
 const http = "http://"
 const https = "https://"
@@ -67,7 +68,8 @@ export default function ServerAddress(): React.JSX.Element {
             <TextField 
                 placeholder="jellyfin.org"
                 onChangeText={setServerAddress}
-                
+                showClearButton
+                leadingAccessory={ServerIcon()}
                 >
             </TextField>
 
