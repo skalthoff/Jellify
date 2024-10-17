@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { RadioGroup, RadioButton, TextField } from 'react-native-ui-lib';
-import { Button, useColorScheme, View } from "react-native";
+import { RadioGroup, RadioButton, TextField, View, Button, Card } from 'react-native-ui-lib';
+import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
@@ -51,35 +51,41 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View>
+        <Card>
+            <Card.Image source={{uri: "../../../assets/icon_original.jpeg"}} height={300} />
+            <Card.Section>
+                <RadioGroup 
+                    initialValue="https://" 
+                    onValueChange={setProtocol}>  
+                    <RadioButton 
+                        value={https} 
+                        label={"HTTPS"}
+                    />  
+                    <RadioButton 
+                        value={http} 
+                        label={'HTTP'}
+                    />
+                </RadioGroup>
+            </Card.Section>
+            <Card.Section>
+                <TextField 
+                    placeholder="jellyfin.org"
+                    onChangeText={setServerAddress}
+                    showClearButton
+                    leadingAccessory={ServerIcon()}
+                    >
+                </TextField>
 
-            <RadioGroup 
-                initialValue="https://" 
-                onValueChange={setProtocol}>  
-                <RadioButton 
-                    value={https} 
-                    label={"HTTPS"}
-                />  
-                <RadioButton 
-                    value={http} 
-                    label={'HTTP'}
+                <Button 
+                    onPress={() => {
+                        useServerMutation.mutate(`${protocol}${serverAddress}`);
+                    }}
+                    size={Button.sizes.medium}
+                    margin
+                    label="Connect"
                 />
-            </RadioGroup>
-            <TextField 
-                placeholder="jellyfin.org"
-                onChangeText={setServerAddress}
-                showClearButton
-                leadingAccessory={ServerIcon()}
-                >
-            </TextField>
+            </Card.Section>
 
-            <Button 
-                onPress={() => {
-                    useServerMutation.mutate(`${protocol}${serverAddress}`);
-                }}
-                title="Connect"
-            />
-
-        </View>
+        </Card>
     )
 }
