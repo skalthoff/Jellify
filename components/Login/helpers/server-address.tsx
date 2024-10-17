@@ -9,6 +9,7 @@ import { JellifyServer } from "../../../types/JellifyServer";
 import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import ServerIcon from "../../icons/server-icon";
+import { jellifyStyles } from "../../styles";
 
 const http = "http://"
 const https = "https://"
@@ -52,15 +53,19 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View margin paddingH>
-            <View marginV paddingV>
+        <View style={jellifyStyles.container}>
+            <View row marginV-30 paddingV-30>
                 <RadioGroup 
                     initialValue="https://" 
                     onValueChange={setProtocol}>  
                     <RadioButton 
                         value={https} 
                         label={"HTTPS"}
-                        labelStyle={{color: Colors.$textDefault, fontSize: 12}}
+                        labelStyle={{   
+                            color: Colors.$textDefault, 
+                            fontSize: 25
+                        }}
+                        size={30}
                     />  
                     <RadioButton 
                         value={http} 

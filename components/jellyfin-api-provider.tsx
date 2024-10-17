@@ -15,7 +15,7 @@ interface JellyfinApiClientContext {
   changeServer: boolean;
   setChangeServer: React.Dispatch<React.SetStateAction<boolean>>;
   username: string | undefined;
-  setUsername: React.Dispatch<React.SetStateAction<string>>;
+  setUsername: React.Dispatch<React.SetStateAction<string | undefined>>;
   changeUser: boolean;
   setChangeUser: React.Dispatch<React.SetStateAction<boolean>>;
   libraryName: string | undefined;
@@ -37,7 +37,7 @@ const JellyfinApiClientContextInitializer = () => {
     const [changeUserRequested, setChangeUserRequested] = useState<boolean>(false);
     const [changeLibraryRequested, setChangeLibraryRequested] = useState<boolean>(false);
 
-    const [userName, setUserName] = useState<string>("");
+    const [userName, setUserName] = useState<string | undefined>("");
     const [libraryName, setLibraryName] = useState<string>("");
     const [libraryId, setLibraryId] = useState<string>("");
 

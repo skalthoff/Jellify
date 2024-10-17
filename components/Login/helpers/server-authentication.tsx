@@ -14,7 +14,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const { apiClient, setApiClient, server, setServer, setChangeServer } = useApiClientContext();
+    const { apiClient, setApiClient, server, setServer, setChangeServer, setUsername: setContextUsername } = useApiClientContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
@@ -45,7 +45,8 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     const clearServer = useMutation({
         mutationFn: async () => {
-            setServer(undefined)
+            setServer(undefined);
+            setContextUsername(undefined);
             setChangeServer(true);
             return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
         }

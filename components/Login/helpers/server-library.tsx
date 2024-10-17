@@ -8,11 +8,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ServerLibrary(): React.JSX.Element {
 
-    const { setServer, setChangeServer } = useApiClientContext();
+    const { setServer, setChangeServer, setUsername } = useApiClientContext();
 
     const clearServer = useMutation({
         mutationFn: async () => {
             setServer(undefined)
+            setUsername(undefined)
             setChangeServer(true);
             return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
         }
