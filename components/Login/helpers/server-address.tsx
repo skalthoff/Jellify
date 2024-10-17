@@ -41,7 +41,6 @@ export default function ServerAddress(): React.JSX.Element {
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
 
-            loginContext.setServer(jellifyServer);
             return await mutateServer(jellifyServer);
         },
         onError: async (error: Error) => {
