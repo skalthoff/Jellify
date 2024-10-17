@@ -107,7 +107,9 @@ export default function ServerAddress(): React.JSX.Element {
                     label="Connect"
                 />
             </View>
-
+            <Card>
+                <Text>Please</Text>
+            </Card>
         </View>
     )
 }
