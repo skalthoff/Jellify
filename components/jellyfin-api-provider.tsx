@@ -19,9 +19,9 @@ interface JellyfinApiClientContext {
   changeUser: boolean;
   setChangeUser: React.Dispatch<React.SetStateAction<boolean>>;
   libraryName: string | undefined;
-  setLibraryName: React.Dispatch<React.SetStateAction<string>>;
+  setLibraryName: React.Dispatch<React.SetStateAction<string | undefined>>;
   libraryId: string | undefined;
-  setLibraryId: React.Dispatch<React.SetStateAction<string>>;
+  setLibraryId: React.Dispatch<React.SetStateAction<string | undefined>>;
   changeLibrary: boolean;
   setChangeLibrary: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -37,9 +37,9 @@ const JellyfinApiClientContextInitializer = () => {
     const [changeUserRequested, setChangeUserRequested] = useState<boolean>(false);
     const [changeLibraryRequested, setChangeLibraryRequested] = useState<boolean>(false);
 
-    const [userName, setUserName] = useState<string | undefined>("");
-    const [libraryName, setLibraryName] = useState<string>("");
-    const [libraryId, setLibraryId] = useState<string>("");
+    const [userName, setUserName] = useState<string | undefined>(undefined);
+    const [libraryName, setLibraryName] = useState<string | undefined>(undefined);
+    const [libraryId, setLibraryId] = useState<string | undefined>(undefined);
 
     const { data: api, isPending: apiPending } = useApi();
     const { data: jellyfinServer, isPending: serverPending } = useServer();
@@ -88,19 +88,21 @@ export const JellyfinApiClientContext =
     setServer: () => {},
     changeServer: false,
     setChangeServer: () => {},
-    username: "",
+    username: undefined,
     setUsername: () => {},
     changeUser: false,
     setChangeUser: () => {},
-    libraryName: "",
+    libraryName: undefined,
     setLibraryName: () => {},
-    libraryId: "",
+    libraryId: undefined,
     setLibraryId: () => {},
     changeLibrary: false,
     setChangeLibrary: () => {},
   });
 
-export const JellyfinApiClientProvider = ({ children }: { children: ReactNode }) => {
+export const JellyfinApiClientProvider: ({ children }: {
+  children: ReactNode;
+}) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
   const { 
     apiClient, 
     setApiClient, 
