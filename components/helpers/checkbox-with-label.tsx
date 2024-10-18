@@ -4,7 +4,7 @@ import { CheckboxProps, XStack, Checkbox, Label } from "tamagui"
 
 export function CheckboxWithLabel({
     size,
-    label = 'Accept terms and conditions',
+    label = 'Toggle',
     ...checkboxProps
   }: CheckboxProps & { label?: string }) {
     const id = `checkbox-${(size || '').toString().slice(1)}`

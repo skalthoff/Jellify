@@ -7,10 +7,9 @@ import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import ServerIcon from "../../icons/server-icon";
-import { jellifyStyles } from "../../styles";
-import { Button, Card, getThemes, Input, RadioGroup, SizableText, Text, useTheme, View, YStack } from "tamagui";
+import { Button, Input, SizableText, useTheme, View, YStack, Stack, XStack, getFontSizeToken } from "tamagui";
 import { CheckboxWithLabel } from "../../helpers/checkbox-with-label";
+import { SwitchWithLabel } from "../../helpers/switch-with-label";
 
 const http = "http://"
 const https = "https://"
@@ -22,7 +21,7 @@ export default function ServerAddress(): React.JSX.Element {
     const [useHttps, setUseHttps] = useState(true)
     const [serverAddress, setServerAddress] = useState("");
 
-    const isDarkMode = useColorScheme() === 'dark';
+    const theme = useTheme();
 
     const useServerMutation = useMutation({
         mutationFn: serverMutation,
@@ -54,12 +53,10 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View theme={isDarkMode ? 'dark' : 'light'}>
+        <View backgroundColor={theme.backgroundColor?.get()} theme={theme.$background?.get()}>
             <YStack alignContent="center">
-                <SizableText size="$4" fontWeight="800">Connect to Jellyfin</SizableText>
-                <SizableText color="$color" style={{ fontSize: 20 }}>
-                    Protocol
-                </SizableText>
+                <SizableText style={{ fontSize: 25, fontWeight: '800' }}>Connect to Jellyfin</SizableText>
+
                 <CheckboxWithLabel size="$3" defaultChecked />
                 <Input 
                     placeholder="jellyfin.org"
@@ -67,16 +64,16 @@ export default function ServerAddress(): React.JSX.Element {
                     >
                 </Input>
 
-                <Button 
-                    onPress={() => {
-                        useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
-                    }}>
-                    Connect
-                </Button>
+                <XStack>
+                    <SwitchWithLabel label="HTTPS" size="$2" />
+                    <Button 
+                        onPress={() => {
+                            useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
+                        }}>
+                        Connect
+                    </Button>
+                </XStack>
             </YStack>
-            <Card>
-                <Text>Please</Text>
-            </Card>
         </View>
     )
 }
