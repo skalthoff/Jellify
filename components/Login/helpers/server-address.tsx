@@ -58,13 +58,13 @@ export default function ServerAddress(): React.JSX.Element {
             <XStack>
                 <SwitchWithLabel checked={useHttps} onCheckedChange={(checked) => setUseHttps(checked)} label="HTTPS" size="$2" />
                 <Input 
+                    width={400}
                     placeholder="jellyfin.org"
                     onChangeText={setServerAddress}
                     >
                 </Input>
             </XStack>
             <Button 
-                width={400}
                 onPress={() => {
                     useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
                 }}>
