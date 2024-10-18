@@ -54,7 +54,7 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View theme={isDarkMode ? 'dark' : 'light'} style={jellifyStyles.container}>
+        <View theme={isDarkMode ? 'dark' : 'light'}>
             <YStack alignContent="center">
                 <SizableText size="$4" fontWeight="800">Connect to Jellyfin</SizableText>
                 <SizableText color="$color" style={{ fontSize: 20 }}>

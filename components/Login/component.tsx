@@ -12,7 +12,7 @@ export default function Login(): React.JSX.Element {
     const Stack = createStackNavigator();
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
             {
                 (_.isUndefined(server) || _.isEmpty(server.url)) ? (
                     <Stack.Screen
