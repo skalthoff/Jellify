@@ -54,8 +54,8 @@ export default function ServerAddress(): React.JSX.Element {
 
     return (
         <YStack flex={1} alignContent='center'>
-            <SizableText flex={1} style={{ fontSize: 25, fontWeight: '800' }}>Connect to Jellyfin</SizableText>
-            <XStack flex={2}>
+            <SizableText style={{ fontSize: 25, fontWeight: '800' }}>Connect to Jellyfin</SizableText>
+            <XStack>
                 <SwitchWithLabel checked={useHttps} onCheckedChange={(checked) => setUseHttps(checked)} label="HTTPS" size="$2" />
                 <Input 
                     placeholder="jellyfin.org"
@@ -64,7 +64,6 @@ export default function ServerAddress(): React.JSX.Element {
                 </Input>
             </XStack>
             <Button 
-                flex={1}
                 onPress={() => {
                     useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
                 }}>
