@@ -3,12 +3,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { TextField, View, Button, Colors } from 'react-native-ui-lib';
 import { jellifyStyles } from "../../styles";
 import _ from "lodash";
 import * as Keychain from "react-native-keychain"
 import { client } from "../../../api/queries";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
+import { Button, Input, View } from "tamagui";
 
 export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
@@ -55,20 +55,18 @@ export default function ServerAuthentication(): React.JSX.Element {
     return (
         <View style={jellifyStyles.container}>
             <Button
-                label="Switch Server"
                 onPress={() => {
                     clearServer.mutate();
                 }}
-                backgroundColor={Colors.$iconDanger}
-                color={Colors.$white}
-                />
+                >Switch Server
+            </Button>
 
-            <TextField
+            <Input
                 placeholder="Username"
                 value={username}
                 onChangeText={(value) => setUsername(value)}
                 />
-            <TextField
+            <Input
                 placeholder="Password"
                 value={password}
                 onChangeText={(value) => setPassword(value)}
@@ -76,15 +74,13 @@ export default function ServerAuthentication(): React.JSX.Element {
                 />
 
             <Button 
-                label="Sign in" 
-                color={Colors.$iconPrimary}
                 onPress={() => {
                     console.log(`Signing in to ${server!.name}`);
                     // useApiMutation.mutate({ username, password })
                 }}
-                size={Button.sizes.medium}
-                margin
-                />
+                >
+                    Sign in
+            </Button>
         </View>
     );
 }

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { RadioGroup, RadioButton, TextField, View, Button, Card, Colors, Text } from 'react-native-ui-lib';
 import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
@@ -10,6 +9,8 @@ import { mutateServer, serverMutation } from "../../../api/mutators/functions/st
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import ServerIcon from "../../icons/server-icon";
 import { jellifyStyles } from "../../styles";
+import { Button, Card, Input, RadioGroup, Text, View, YStack } from "tamagui";
+import { CheckboxWithLabel } from "../../helpers/checkbox-with-label";
 
 const http = "http://"
 const https = "https://"
@@ -18,7 +19,7 @@ export default function ServerAddress(): React.JSX.Element {
 
     const { setChangeServer, setServer } = useApiClientContext();
 
-    const [protocol, setProtocol] = useState(https)
+    const [useHttps, setUseHttps] = useState(true)
     const [serverAddress, setServerAddress] = useState("");
 
     const isDarkMode = useColorScheme() === 'dark';
@@ -54,59 +55,24 @@ export default function ServerAddress(): React.JSX.Element {
 
     return (
         <View style={jellifyStyles.container}>
-            <View row marginT-30 paddingT-30>
+            <YStack alignContent="flex-start">
                 <Text style={{ fontSize: 20 }}>
                     Protocol
                 </Text>
-            </View>
-            <View row marginB-30 paddingB-30>
-                <RadioGroup 
-                    initialValue="https://" 
-                    onValueChange={setProtocol}>  
-                    <View row centerV>
-
-                        <RadioButton 
-                            value={https} 
-                            label={"HTTPS"}
-                            labelStyle={{   
-                                color: Colors.$textDefault, 
-                                fontSize: 20
-                            }}
-                            size={25}
-                            />  
-                    </View>
-                    <View row centerV>
-
-                    <RadioButton 
-                        value={http} 
-                        label={'HTTP'}
-                        labelStyle={{color: Colors.$textDefault, fontSize: 12}}
-                        />
-                    </View>
-                </RadioGroup>
-            </View>
-            <View marginV paddingV>
-                <TextField 
+                <CheckboxWithLabel size="$4" defaultChecked />
+                <Input 
                     placeholder="jellyfin.org"
                     onChangeText={setServerAddress}
-                    showClearButton
-                    leadingAccessory={ServerIcon()}
-                    color={Colors.$textDefault}
-                    labelStyle={{ fontSize: 12 }}
-                    marginV
-                    paddingV
                     >
-                </TextField>
+                </Input>
 
                 <Button 
                     onPress={() => {
-                        useServerMutation.mutate(`${protocol}${serverAddress}`);
-                    }}
-                    size={Button.sizes.medium}
-                    margin
-                    label="Connect"
-                />
-            </View>
+                        useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
+                    }}>
+                    Connect
+                </Button>
+            </YStack>
             <Card>
                 <Text>Please</Text>
             </Card>
