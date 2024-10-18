@@ -18,7 +18,8 @@ export default function Login(): React.JSX.Element {
                     <Stack.Screen
                         name="ServerAddress"
                         options={{
-                            headerShown: false,              
+                            headerShown: false,     
+                            animationTypeForReplace: 'pop'         
                         }}
                         component={ServerAddress}
                         />
