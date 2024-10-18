@@ -7,10 +7,8 @@ import React, {  } from "react";
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Navigation from "./navigation";
-import { jellifyStyles } from "./styles";
 import Login from "./Login/component";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View } from "tamagui";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -37,8 +35,6 @@ function conditionalHomeRender(): React.JSX.Element {
   const Stack = createNativeStackNavigator()
   
   const Tab = createBottomTabNavigator();
-
-  const isDarkMode = useColorScheme() === 'dark';
   
   return (
     <NavigationContainer theme={useTheme()}>

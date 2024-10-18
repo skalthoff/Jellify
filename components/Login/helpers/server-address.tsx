@@ -9,7 +9,7 @@ import { mutateServer, serverMutation } from "../../../api/mutators/functions/st
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import ServerIcon from "../../icons/server-icon";
 import { jellifyStyles } from "../../styles";
-import { Button, Card, getThemes, Input, RadioGroup, SizableText, Text, View, YStack } from "tamagui";
+import { Button, Card, getThemes, Input, RadioGroup, SizableText, Text, useTheme, View, YStack } from "tamagui";
 import { CheckboxWithLabel } from "../../helpers/checkbox-with-label";
 
 const http = "http://"
@@ -54,7 +54,7 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View backgroundColor="$background" style={jellifyStyles.container}>
+        <View theme={isDarkMode ? 'dark' : 'light'} style={jellifyStyles.container}>
             <YStack alignContent="center">
                 <SizableText size="$4" fontWeight="800">Connect to Jellyfin</SizableText>
                 <SizableText color="$color" style={{ fontSize: 20 }}>
