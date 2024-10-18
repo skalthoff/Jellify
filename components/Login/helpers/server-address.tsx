@@ -53,27 +53,22 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View backgroundColor={theme.backgroundColor?.get()} theme={theme.$background?.get()}>
-            <YStack alignContent="center">
-                <SizableText style={{ fontSize: 25, fontWeight: '800' }}>Connect to Jellyfin</SizableText>
-
-                <CheckboxWithLabel size="$3" defaultChecked />
-                <Input 
-                    placeholder="jellyfin.org"
-                    onChangeText={setServerAddress}
-                    >
-                </Input>
-
-                <XStack>
-                    <SwitchWithLabel label="HTTPS" size="$2" />
-                    <Button 
-                        onPress={() => {
-                            useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
-                        }}>
-                        Connect
-                    </Button>
-                </XStack>
-            </YStack>
-        </View>
+        <YStack flex={1} alignContent='center'>
+            <SizableText style={{ fontSize: 25, fontWeight: '800' }}>Connect to Jellyfin</SizableText>
+            <Input 
+                placeholder="jellyfin.org"
+                onChangeText={setServerAddress}
+                >
+            </Input>
+            <XStack>
+                <SwitchWithLabel checked={useHttps} onCheckedChange={(checked) => setUseHttps(checked)} label="HTTPS" size="$2" />
+                <Button 
+                    onPress={() => {
+                        useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
+                    }}>
+                    Connect
+                </Button>
+            </XStack>
+        </YStack>
     )
 }

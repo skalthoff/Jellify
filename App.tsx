@@ -4,8 +4,9 @@ import "react-native-url-polyfill/auto";
 
 import Jellify from './components/jellify';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createTamagui, TamaguiProvider } from 'tamagui';
+import { createTamagui, TamaguiProvider, Theme } from 'tamagui';
 import defaultConfig from '@tamagui/config/v3';
+import { useColorScheme } from 'react-native';
 
 const config = createTamagui(defaultConfig);
 
@@ -13,11 +14,14 @@ export default function App(): React.JSX.Element {
   
   const queryClient = new QueryClient();
 
+  const isDarkMode = useColorScheme() === 'dark';
   
   return (
     <QueryClientProvider client={queryClient}>
       <TamaguiProvider config={config}>
+        <Theme name={isDarkMode ? 'dark' : 'light'}>
           <Jellify />
+        </Theme>
       </TamaguiProvider>
     </QueryClientProvider>
   );
