@@ -4,7 +4,7 @@ import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
 import { JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
 import React, {  } from "react";
-import { NavigationContainer, useTheme } from "@react-navigation/native";
+import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Navigation from "./navigation";
 import Login from "./Login/component";
@@ -30,6 +30,8 @@ export default function Jellify(): React.JSX.Element {
 
 function conditionalHomeRender(): React.JSX.Element {
 
+  const isDarkMode = useColorScheme() === 'dark';
+
   const { libraryId } = useApiClientContext();
 
   const Stack = createNativeStackNavigator()
@@ -37,7 +39,7 @@ function conditionalHomeRender(): React.JSX.Element {
   const Tab = createBottomTabNavigator();
   
   return (
-    <NavigationContainer theme={useTheme()}>
+    <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
         { !_.isUndefined(libraryId) ? (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Tab.Screen name="Navigation" options={{ headerShown: false }} component={Navigation} />
