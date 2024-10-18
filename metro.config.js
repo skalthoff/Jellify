@@ -1,16 +1,15 @@
-const { getDefaultConfig } = require('@react-native/metro-config');
+// Learn more https://docs.expo.io/guides/customizing-metro
+const { getDefaultConfig } = require('expo/metro-config')
 
-/**
- * Metro configuration
- * https://reactnative.dev/docs/metro
- *
- * @type {import('metro-config').MetroConfig}
- */
+/** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname, {
-    isCSSEnabled: true
-});
+  // [Web-only]: Enables CSS support in Metro.
+  isCSSEnabled: true,
+})
 
-config.resolver.sourceExts.push('mjs');
+// Expo 49 issue: default metro config needs to include "mjs"
+// https://github.com/expo/expo/issues/23180
+config.resolver.sourceExts.push('mjs')
 
 config.watchFolders = [
     "components",

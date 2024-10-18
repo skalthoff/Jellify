@@ -41,7 +41,7 @@ function conditionalHomeRender(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   
   return (
-    <View>
+    <View backgroundColor="$background">
         <NavigationContainer theme={useTheme()}>
             { !_.isUndefined(libraryId) ? (
               <Stack.Navigator screenOptions={{ headerShown: false }}>

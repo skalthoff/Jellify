@@ -56,7 +56,7 @@ export default function ServerAddress(): React.JSX.Element {
     return (
         <View style={jellifyStyles.container}>
             <YStack alignContent="flex-start">
-                <Text style={{ fontSize: 20 }}>
+                <Text color="$color" style={{ fontSize: 20 }}>
                     Protocol
                 </Text>
                 <CheckboxWithLabel size="$4" defaultChecked />
