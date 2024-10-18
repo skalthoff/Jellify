@@ -53,7 +53,7 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View flex={1} alignContent='center'>
+        <View flex={1} justifyContent='center'>
             <SizableText style={{ fontSize: 25, fontWeight: '800' }}>Connect to Jellyfin</SizableText>
             <XStack>
                 <SwitchWithLabel checked={useHttps} onCheckedChange={(checked) => setUseHttps(checked)} label="HTTPS" size="$2" />
