@@ -39,7 +39,7 @@ export default function ServerAuthentication(): React.JSX.Element {
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
-            return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
+            return Promise.reject(`An error occured signing into ${server!.name}`);
         }
     });
 

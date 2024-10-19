@@ -7,7 +7,7 @@ import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { Button, Input, SizableText, useTheme, View, YStack, Stack, XStack, getFontSizeToken, Paragraph } from "tamagui";
+import { Button, Input, SizableText, useTheme, View, YStack, Stack, XStack, getFontSizeToken, Paragraph, H2 } from "tamagui";
 import { CheckboxWithLabel } from "../../helpers/checkbox-with-label";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
 
@@ -53,13 +53,10 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View flex={1} justifyContent='center'>
-            <Paragraph 
-                paddingVertical={30}
-                fontSize={20} 
-                fontWeight={800}>
-                    Connect to Jellyfin
-                </Paragraph>
+        <View marginHorizontal={10} flex={1} justifyContent='center'>
+            <H2 marginVertical={30}>
+                Connect to Jellyfin
+            </H2>
             <XStack>
                 <SwitchWithLabel 
                     checked={useHttps} 
@@ -73,7 +70,7 @@ export default function ServerAddress(): React.JSX.Element {
                     onChangeText={setServerAddress} />
             </XStack>
             <Button 
-                paddingVertical={30}
+                marginVertical={30}
                 onPress={() => {
                     useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
                 }}>
