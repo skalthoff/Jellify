@@ -8,7 +8,7 @@ import _ from "lodash";
 import * as Keychain from "react-native-keychain"
 import { client } from "../../../api/queries";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { Button, Input, View } from "tamagui";
+import { Button, Input, Paragraph, View } from "tamagui";
 
 export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
@@ -54,6 +54,7 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     return (
         <View style={jellifyStyles.container}>
+            <Paragraph fontSize={25} fontWeight={800}>Sign in to {server?.name ?? "Jellyfin"}</Paragraph>
             <Button
                 onPress={() => {
                     clearServer.mutate();
@@ -76,7 +77,7 @@ export default function ServerAuthentication(): React.JSX.Element {
             <Button 
                 onPress={() => {
                     console.log(`Signing in to ${server!.name}`);
-                    // useApiMutation.mutate({ username, password })
+                    useApiMutation.mutate({ username, password })
                 }}
                 >
                     Sign in
