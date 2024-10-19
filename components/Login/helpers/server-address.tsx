@@ -54,7 +54,7 @@ export default function ServerAddress(): React.JSX.Element {
 
     return (
         <View flex={1} justifyContent='center'>
-            <Paragraph fontSize={25} fontWeight={800}>Connect to Jellyfin</Paragraph>
+            <Paragraph fontSize={20} fontWeight={800}>Connect to Jellyfin</Paragraph>
             <XStack>
                 <SwitchWithLabel 
                     checked={useHttps} 
@@ -63,6 +63,7 @@ export default function ServerAddress(): React.JSX.Element {
                     size="$2"
                     width={100} />
                 <Input 
+                    flexGrow={1}
                     placeholder="jellyfin.org"
                     onChangeText={setServerAddress} />
             </XStack>
