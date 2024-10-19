@@ -7,14 +7,14 @@ import ServerLibrary from "./helpers/server-library";
 
 export default function Login(): React.JSX.Element {
 
-    const { server, username } = useApiClientContext();
+    const { server, changeServer, username } = useApiClientContext();
 
     const Stack = createStackNavigator();
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             {
-                (_.isUndefined(server) || _.isEmpty(server.url)) ? (
+                (_.isUndefined(server) || _.isEmpty(server.url) || changeServer) ? (
                     <Stack.Screen
                         name="ServerAddress"
                         options={{

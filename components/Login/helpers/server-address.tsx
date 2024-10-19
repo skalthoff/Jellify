@@ -10,13 +10,14 @@ import { useApiClientContext } from "../../jellyfin-api-provider";
 import { Button, Input, SizableText, useTheme, View, YStack, Stack, XStack, getFontSizeToken, Paragraph, H2 } from "tamagui";
 import { CheckboxWithLabel } from "../../helpers/checkbox-with-label";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
+import { buildApiClient } from "../../../api/client";
 
 const http = "http://"
 const https = "https://"
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const { setChangeServer, setServer } = useApiClientContext();
+    const { setChangeServer, setServer, setApiClient } = useApiClientContext();
 
     const [useHttps, setUseHttps] = useState(true)
     const [serverAddress, setServerAddress] = useState("");
@@ -44,6 +45,7 @@ export default function ServerAddress(): React.JSX.Element {
 
             setChangeServer(false);
             setServer(jellifyServer);
+            setApiClient(buildApiClient(serverUrl));
             return await mutateServer(jellifyServer);
         },
         onError: async (error: Error) => {

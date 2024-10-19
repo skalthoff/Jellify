@@ -1,12 +1,11 @@
-import { Jellyfin } from "@jellyfin/sdk/lib/jellyfin";
 import { fetchServer } from "../../queries/functions/storage";
 import { JellyfinCredentials } from "../../types/jellyfin-credentials";
 import * as Keychain from "react-native-keychain"
 import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
-import { client } from "../../queries";
 import { JellifyServer } from "../../../types/JellifyServer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
+import { buildApiClient } from "../../client";
 
 interface ServerMutationParams {
     serverUrl: string,
@@ -19,11 +18,10 @@ export const serverMutation = async (serverUrl: string) => {
     if (!!!serverUrl)
         throw Error("Server URL is empty")
 
-    let jellyfin = new Jellyfin(client);
-    let api = jellyfin.createApi(serverUrl);
+    const api = buildApiClient(serverUrl);
 
     console.log(`Created API client for ${api.basePath}`)
-    return await getSystemApi(api).getPublicSystemInfo()
+    return await getSystemApi(api).getPublicSystemInfo();
 }
 
 export const mutateServer = async (server: JellifyServer | undefined) => {

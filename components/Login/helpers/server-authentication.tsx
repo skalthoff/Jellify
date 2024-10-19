@@ -6,9 +6,9 @@ import { useApiClientContext } from "../../jellyfin-api-provider";
 import { jellifyStyles } from "../../styles";
 import _ from "lodash";
 import * as Keychain from "react-native-keychain"
-import { client } from "../../../api/queries";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { Button, Input, Paragraph, View } from "tamagui";
+import { Button, H2, Input, Paragraph, View } from "tamagui";
+import { client } from "../../../api/client";
 
 export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
@@ -45,16 +45,18 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     const clearServer = useMutation({
         mutationFn: async () => {
-            setServer(undefined);
             setContextUsername(undefined);
             setChangeServer(true);
-            return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
+            return Promise.resolve();
         }
     });
 
     return (
-        <View style={jellifyStyles.container}>
-            <Paragraph fontSize={25} fontWeight={800}>Sign in to {server?.name ?? "Jellyfin"}</Paragraph>
+        <View marginHorizontal={10} flex={1} justifyContent='center'>
+            <H2 marginVertical={30}>
+
+                Sign in to {server?.name ?? "Jellyfin"}
+            </H2>
             <Button
                 onPress={() => {
                     clearServer.mutate();
