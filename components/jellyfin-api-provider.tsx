@@ -3,7 +3,7 @@ import React, { createContext, ReactNode, useContext, useEffect, useState } from
 import { useApi } from '../api/queries';
 import _ from 'lodash';
 import { JellifyServer } from '../types/JellifyServer';
-import { useServer } from '../api/queries/keychain';
+import { useCredentials, useServer } from '../api/queries/keychain';
 
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
@@ -16,6 +16,8 @@ interface JellyfinApiClientContext {
   setChangeServer: React.Dispatch<React.SetStateAction<boolean>>;
   username: string | undefined;
   setUsername: React.Dispatch<React.SetStateAction<string | undefined>>;
+  isUsernamePending: boolean;
+  setIsUsernamePending: React.Dispatch<React.SetStateAction<boolean>>;
   changeUser: boolean;
   setChangeUser: React.Dispatch<React.SetStateAction<boolean>>;
   libraryName: string | undefined;
@@ -38,22 +40,29 @@ const JellyfinApiClientContextInitializer = () => {
     const [changeLibraryRequested, setChangeLibraryRequested] = useState<boolean>(false);
 
     const [userName, setUserName] = useState<string | undefined>(undefined);
+    const [isUsernamePending, setIsUsernamePending] = useState<boolean>(false)
+
     const [libraryName, setLibraryName] = useState<string | undefined>(undefined);
     const [libraryId, setLibraryId] = useState<string | undefined>(undefined);
 
     const { data: api, isPending: apiPending } = useApi();
     const { data: jellyfinServer, isPending: serverPending } = useServer();
+    const { data: credentials, isPending: credentialsPending } = useCredentials();
 
     useEffect(() => {
       setApiClient(api);
       setServer(jellyfinServer);
       setIsApiPending(apiPending);
       setIsServerPending(serverPending);
+      setUserName(credentials?.username ?? undefined)
+      setIsUsernamePending(credentialsPending);
     }, [
       api,
       apiPending,
       jellyfinServer,
-      serverPending
+      serverPending,
+      userName,
+      isUsernamePending,
     ]);
 
     return { 
@@ -71,6 +80,8 @@ const JellyfinApiClientContextInitializer = () => {
       setChangeLibraryRequested,
       userName,
       setUserName,
+      isUsernamePending,
+      setIsUsernamePending,
       libraryName,
       setLibraryName,
       libraryId,
@@ -90,6 +101,8 @@ export const JellyfinApiClientContext =
     setChangeServer: () => {},
     username: undefined,
     setUsername: () => {},
+    isUsernamePending: false,
+    setIsUsernamePending: () => {},
     changeUser: false,
     setChangeUser: () => {},
     libraryName: undefined,
@@ -114,6 +127,8 @@ export const JellyfinApiClientProvider: ({ children }: {
     setChangeServerRequested, 
     userName,
     setUserName,
+    isUsernamePending,
+    setIsUsernamePending,
     changeUserRequested, 
     setChangeUserRequested, 
     libraryName,
@@ -138,6 +153,8 @@ export const JellyfinApiClientProvider: ({ children }: {
       setChangeServer: setChangeServerRequested,
       username: userName,
       setUsername: setUserName,
+      isUsernamePending,
+      setIsUsernamePending,
       changeUser: changeUserRequested, 
       setChangeUser: setChangeUserRequested,
       libraryName: libraryName,
