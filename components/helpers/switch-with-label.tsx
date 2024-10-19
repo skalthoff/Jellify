@@ -5,7 +5,6 @@ export function SwitchWithLabel(props: { size: SizeTokens; checked: boolean, lab
     return (
       <XStack width={props.width ?? 150} alignItems="center" gap="$4">
         <Label
-          minWidth={50}
           justifyContent="flex-end"
           size={props.size}
           htmlFor={id}
