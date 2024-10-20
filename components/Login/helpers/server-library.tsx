@@ -6,6 +6,7 @@ import { JellifyLibrary } from "../../../types/JellifyLibrary";
 import { useLibraries } from "../../../api/queries/libraries";
 import { client } from "../../../api/client";
 import { mutateServerCredentials } from "../../../api/mutators/functions/storage";
+import { serverCredentials } from "../../../api/mutators/keychain";
 
 export default function ServerLibrary(): React.JSX.Element {
 
@@ -21,9 +22,6 @@ export default function ServerLibrary(): React.JSX.Element {
     const clearUser = useMutation({
         mutationFn: async () => {
             setUsername(undefined)
-
-            mutateServerCredentials()
-
             // Reset API client so that we don't attempt to auth as a user
             setApiClient(client.createApi(server!.url))
             return Promise.resolve();
@@ -37,6 +35,7 @@ export default function ServerLibrary(): React.JSX.Element {
 
             <Button
                 onPress={() => {
+                    serverCredentials.mutate(undefined);
                     clearUser.mutate();
                 }}
                 >Switch User</Button>
