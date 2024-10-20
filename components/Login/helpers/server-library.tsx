@@ -12,14 +12,14 @@ export default function ServerLibrary(): React.JSX.Element {
 
     const [musicLibraryName, setMusicLibraryName] = useState<string>("")
 
-    const { apiClient, server, setApiClient, setChangeUser } = useApiClientContext();
+    const { apiClient, server, setApiClient, setChangeUser, setUsername } = useApiClientContext();
 
     const { data: musicLibraries, isPending: musicLibrariesPending } = useLibraries(apiClient!);
 
 
     const clearUser = useMutation({
         mutationFn: async () => {
-            setChangeUser(true);
+            setUsername(undefined)
 
             // Reset API client so that we don't attempt to auth as a user
             setApiClient(client.createApi(server!.url))

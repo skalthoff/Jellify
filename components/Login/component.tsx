@@ -7,30 +7,30 @@ import ServerLibrary from "./helpers/server-library";
 
 export default function Login(): React.JSX.Element {
 
-    const { server, changeServer, changeUser, username } = useApiClientContext();
+    const { server, username } = useApiClientContext();
 
     const Stack = createStackNavigator();
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             {
-                (_.isUndefined(server) || _.isEmpty(server.url) || changeServer) ? (
+                (_.isUndefined(server) || _.isEmpty(server.url)) ? (
                     <Stack.Screen
                         name="ServerAddress"
                         options={{
                             headerShown: false,     
-                            animationTypeForReplace: changeServer ? 'pop' : 'push'    
+                            animationTypeForReplace: (_.isUndefined(server) || _.isEmpty(server.url)) ? 'pop' : 'push'    
                         }}
                         component={ServerAddress}
                         />
                     ) : (
                     
-                    (_.isUndefined(username) || changeUser) ? (
+                    (_.isUndefined(username)) ? (
                         <Stack.Screen 
                             name="ServerAuthentication" 
                             options={{ 
                                 headerShown: false, 
-                                animationTypeForReplace: changeUser ? 'pop' : 'push'
+                                animationTypeForReplace: (_.isUndefined(username)) ? 'pop' : 'push'
                             }} 
                             component={ServerAuthentication} 
                         />

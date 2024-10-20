@@ -17,7 +17,7 @@ const https = "https://"
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const { changeServer, setChangeServer, server, setServer, setApiClient } = useApiClientContext();
+    const { changeServer, server, setServer, setApiClient } = useApiClientContext();
 
     const [useHttps, setUseHttps] = useState(true)
     const [serverAddress, setServerAddress] = useState(server?.url ?? undefined);
@@ -43,7 +43,6 @@ export default function ServerAddress(): React.JSX.Element {
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
 
-            setChangeServer(false);
             setServer(jellifyServer);
             setApiClient(buildApiClient(serverUrl));
             return await mutateServer(jellifyServer);
@@ -57,7 +56,6 @@ export default function ServerAddress(): React.JSX.Element {
     useEffect(() => {
         if (changeServer) {
             setServer(undefined);
-            setChangeServer(false);
         }
     })
 
