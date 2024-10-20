@@ -4,7 +4,7 @@ import { useApiClientContext } from "../../jellyfin-api-provider";
 import _ from "lodash";
 import * as Keychain from "react-native-keychain"
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { Button, H2, Input,, View } from "tamagui";
+import { Button, H2, Input, View } from "tamagui";
 import { client } from "../../../api/client";
 
 export default function ServerAuthentication(): React.JSX.Element {
