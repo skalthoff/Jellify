@@ -19,7 +19,7 @@ export default function Login(): React.JSX.Element {
                         name="ServerAddress"
                         options={{
                             headerShown: false,     
-                            animationTypeForReplace: 'pop'         
+                            animationTypeForReplace: changeServer ? 'pop' : 'push'    
                         }}
                         component={ServerAddress}
                         />
@@ -29,7 +29,8 @@ export default function Login(): React.JSX.Element {
                         <Stack.Screen 
                             name="ServerAuthentication" 
                             options={{ 
-                                headerShown: false 
+                                headerShown: false, 
+                                animationTypeForReplace: changeUser ? 'pop' : 'push'
                             }} 
                             component={ServerAuthentication} 
                         />
