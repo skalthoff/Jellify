@@ -1,20 +1,16 @@
-import { createStackNavigator } from "@react-navigation/stack";
-import Player from "./Player/component";
-import Login from "./Login/component";
-
+import createBottomTabNavigator from "@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./Home/component";
 
 export default function Navigation(): React.JSX.Element {
 
-    const RootStack = createStackNavigator();
+  const Stack = createNativeStackNavigator()
+  
+  const Tab = createBottomTabNavigator();
 
     return (
-        <RootStack.Navigator>
-        <RootStack.Group>
-          <RootStack.Screen name="Jellify" component={Login} />
-        </RootStack.Group>
-        <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-          <RootStack.Screen name="Player" component={Player} />
-        </RootStack.Group>
-      </RootStack.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Tab.Screen name="Home" options={{ headerShown: false }} component={Home} />
+        </Stack.Navigator>
     )
 }

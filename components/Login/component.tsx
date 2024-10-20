@@ -7,7 +7,7 @@ import ServerLibrary from "./helpers/server-library";
 
 export default function Login(): React.JSX.Element {
 
-    const { server, changeServer, username } = useApiClientContext();
+    const { server, changeServer, changeUser, username } = useApiClientContext();
 
     const Stack = createStackNavigator();
 
@@ -25,7 +25,7 @@ export default function Login(): React.JSX.Element {
                         />
                     ) : (
                     
-                    (_.isUndefined(username)) ? (
+                    (_.isUndefined(username) || changeUser) ? (
                         <Stack.Screen 
                             name="ServerAuthentication" 
                             options={{ 

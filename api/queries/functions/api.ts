@@ -1,6 +1,6 @@
 import { Api } from "@jellyfin/sdk";
-import { client } from "../../queries";
 import { fetchCredentials } from "./storage";
+import { client } from "../../client";
 
 /**
  * A promise to build an authenticated Jellyfin API client

@@ -17,10 +17,10 @@ const https = "https://"
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const { setChangeServer, setServer, setApiClient } = useApiClientContext();
+    const { setChangeServer, server, setServer, setApiClient } = useApiClientContext();
 
     const [useHttps, setUseHttps] = useState(true)
-    const [serverAddress, setServerAddress] = useState("");
+    const [serverAddress, setServerAddress] = useState(server?.name ?? undefined);
 
     const theme = useTheme();
 
@@ -37,7 +37,7 @@ export default function ServerAddress(): React.JSX.Element {
             // TODO: Rename url to address
             
             let jellifyServer: JellifyServer = {
-                url: serverAddress,
+                url: serverAddress!,
                 name: publicSystemInfoResponse.data.ServerName!,
                 version: publicSystemInfoResponse.data.Version!,
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
@@ -72,6 +72,7 @@ export default function ServerAddress(): React.JSX.Element {
                     onChangeText={setServerAddress} />
             </XStack>
             <Button 
+                disabled={_.isEmpty(serverAddress)}
                 marginVertical={30}
                 onPress={() => {
                     useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
