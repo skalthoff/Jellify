@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import _ from "lodash";
@@ -11,7 +11,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const { apiClient, setApiClient, server, setChangeServer, setUsername: setContextUsername } = useApiClientContext();
+    const { apiClient, setApiClient, server, setChangeUser, setChangeServer, setUsername: setContextUsername } = useApiClientContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
@@ -48,6 +48,10 @@ export default function ServerAuthentication(): React.JSX.Element {
             return Promise.resolve();
         }
     });
+
+    useEffect(() => {
+        setChangeUser(false);
+    })
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>

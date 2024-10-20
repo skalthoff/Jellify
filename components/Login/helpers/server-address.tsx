@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -53,6 +53,10 @@ export default function ServerAddress(): React.JSX.Element {
             return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, "");
         }
     });
+
+    useEffect(() => {
+        setChangeServer(false);
+    })
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
