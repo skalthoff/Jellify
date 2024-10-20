@@ -32,7 +32,7 @@ export default function ServerLibrary(): React.JSX.Element {
                 onPress={() => {
                     clearUser.mutate();
                 }}
-                >Switch Server</Button>
+                >Switch User</Button>
 
             <Select value={musicLibraryName}></Select>
         </View>
