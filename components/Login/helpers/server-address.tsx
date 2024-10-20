@@ -53,12 +53,6 @@ export default function ServerAddress(): React.JSX.Element {
         }
     });
 
-    useEffect(() => {
-        if (changeServer) {
-            setServer(undefined);
-        }
-    })
-
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
             <H2 marginVertical={30}>

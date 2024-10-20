@@ -49,12 +49,6 @@ export default function ServerAuthentication(): React.JSX.Element {
         }
     });
 
-    useEffect(() => {
-        if (changeUser) {
-            setContextUsername(undefined);
-        }
-    })
-
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
             <H2 marginVertical={30}>
