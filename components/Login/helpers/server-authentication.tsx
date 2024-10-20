@@ -1,20 +1,17 @@
 import React from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
-import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { jellifyStyles } from "../../styles";
 import _ from "lodash";
 import * as Keychain from "react-native-keychain"
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { Button, H2, Input, Paragraph, View } from "tamagui";
+import { Button, H2, Input,, View } from "tamagui";
 import { client } from "../../../api/client";
 
 export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const { apiClient, setApiClient, server, setUsername: setContextUsername, setChangeUser } = useApiClientContext();
+    const { apiClient, setApiClient, server, setChangeServer, setUsername: setContextUsername } = useApiClientContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
@@ -44,12 +41,10 @@ export default function ServerAuthentication(): React.JSX.Element {
         }
     });
 
-    const clearUser = useMutation({
+    const clearServer = useMutation({
         mutationFn: async () => {
-            // Reset API client so we don't attempt to auth as a different user
-            setApiClient(client.createApi(server!.url));
             setContextUsername(undefined);
-            setChangeUser(true)
+            setChangeServer(true);
             return Promise.resolve();
         }
     });
@@ -62,7 +57,7 @@ export default function ServerAuthentication(): React.JSX.Element {
             </H2>
             <Button
                 onPress={() => {
-                    clearUser.mutate();
+                    clearServer.mutate();
                 }}
                 >Switch Server
             </Button>
