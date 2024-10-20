@@ -5,6 +5,7 @@ import { Button, H2, Select, Text, View } from "tamagui";
 import { JellifyLibrary } from "../../../types/JellifyLibrary";
 import { useLibraries } from "../../../api/queries/libraries";
 import { client } from "../../../api/client";
+import { mutateServerCredentials } from "../../../api/mutators/functions/storage";
 
 export default function ServerLibrary(): React.JSX.Element {
 
@@ -12,7 +13,7 @@ export default function ServerLibrary(): React.JSX.Element {
 
     const [musicLibraryName, setMusicLibraryName] = useState<string>("")
 
-    const { apiClient, server, setApiClient, setChangeUser, setUsername } = useApiClientContext();
+    const { apiClient, server, setApiClient, setUsername } = useApiClientContext();
 
     const { data: musicLibraries, isPending: musicLibrariesPending } = useLibraries(apiClient!);
 
@@ -20,6 +21,8 @@ export default function ServerLibrary(): React.JSX.Element {
     const clearUser = useMutation({
         mutationFn: async () => {
             setUsername(undefined)
+
+            mutateServerCredentials()
 
             // Reset API client so that we don't attempt to auth as a user
             setApiClient(client.createApi(server!.url))

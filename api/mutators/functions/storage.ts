@@ -6,6 +6,7 @@ import { JellifyServer } from "../../../types/JellifyServer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { buildApiClient } from "../../client";
+import _ from "lodash";
 
 interface ServerMutationParams {
     serverUrl: string,
@@ -28,6 +29,11 @@ export const mutateServer = async (server: JellifyServer | undefined) => {
     return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, JSON.stringify(server));
 }
 
-export const mutateServerCredentials = async (credentials: JellyfinCredentials) => {        
-    return Keychain.setInternetCredentials((await fetchServer()).url, credentials.username, credentials.accessToken!);
+export const mutateServerCredentials = async (credentials?: JellyfinCredentials) => {        
+
+    if (!_.isUndefined(credentials)) {
+        return Keychain.setInternetCredentials((await fetchServer()).url, credentials.username, credentials.accessToken!);
+    }
+
+    return Keychain.resetInternetCredentials((await fetchServer()).url);
 }
