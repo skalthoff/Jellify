@@ -59,6 +59,8 @@ const JellyfinApiClientContextInitializer = () => {
     }, [
       api,
       apiPending,
+      credentials, 
+      credentialsPending,
       jellyfinServer,
       serverPending,
       userName,
