@@ -17,10 +17,10 @@ const https = "https://"
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const { setChangeServer, server, setServer, setApiClient } = useApiClientContext();
+    const { changeServer, setChangeServer, server, setServer, setApiClient } = useApiClientContext();
 
     const [useHttps, setUseHttps] = useState(true)
-    const [serverAddress, setServerAddress] = useState(server?.name ?? undefined);
+    const [serverAddress, setServerAddress] = useState(server?.url ?? undefined);
 
     const theme = useTheme();
 
@@ -55,7 +55,10 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     useEffect(() => {
-        setChangeServer(false);
+        if (changeServer) {
+            setServer(undefined);
+            setChangeServer(false);
+        }
     })
 
     return (
