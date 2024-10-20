@@ -34,7 +34,7 @@ export default function ServerAuthentication(): React.JSX.Element {
 
             console.log(`Successfully signed in to ${server!.name}`)
             setApiClient(client.createApi(server!.url, (authResult.data.AccessToken as string)))
-            setUsername(credentials.username);
+            setContextUsername(credentials.username);
             return await Keychain.setInternetCredentials(server!.url, credentials.username, (authResult.data.AccessToken as string));
 
         },
