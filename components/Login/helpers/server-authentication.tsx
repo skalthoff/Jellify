@@ -14,7 +14,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const { apiClient, setApiClient, server, setServer, setChangeServer, setUsername: setContextUsername } = useApiClientContext();
+    const { apiClient, setApiClient, server, setUsername: setContextUsername, setChangeUser } = useApiClientContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
@@ -44,10 +44,12 @@ export default function ServerAuthentication(): React.JSX.Element {
         }
     });
 
-    const clearServer = useMutation({
+    const clearUser = useMutation({
         mutationFn: async () => {
+            // Reset API client so we don't attempt to auth as a different user
+            setApiClient(client.createApi(server!.url));
             setContextUsername(undefined);
-            setChangeServer(true);
+            setChangeUser(true)
             return Promise.resolve();
         }
     });
@@ -60,7 +62,7 @@ export default function ServerAuthentication(): React.JSX.Element {
             </H2>
             <Button
                 onPress={() => {
-                    clearServer.mutate();
+                    clearUser.mutate();
                 }}
                 >Switch Server
             </Button>
