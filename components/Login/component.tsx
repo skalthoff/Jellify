@@ -30,7 +30,7 @@ export default function Login(): React.JSX.Element {
                             name="ServerAuthentication" 
                             options={{ 
                                 headerShown: false, 
-                                animationTypeForReplace: (_.isUndefined(username)) ? 'pop' : 'push'
+                                animationTypeForReplace: 'push'
                             }} 
                             component={ServerAuthentication} 
                         />
