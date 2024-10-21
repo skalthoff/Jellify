@@ -5,10 +5,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ServerLibrary from "./helpers/server-library";
 import { useAuthenticationContext } from "./provider";
 import { useEffect } from "react";
+import { useApiClientContext } from "../jellyfin-api-provider";
 
 export default function Login(): React.JSX.Element {
 
     const { serverAddress, username, triggerAuth, setTriggerAuth } = useAuthenticationContext();
+
+    const { apiClient, username: clientUsername } = useApiClientContext();
 
     const Stack = createStackNavigator();
 
@@ -19,7 +22,7 @@ export default function Login(): React.JSX.Element {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             {
-                (_.isUndefined(serverAddress)) ? (
+                (_.isUndefined(serverAddress) && _.isUndefined(apiClient)) ? (
                     <Stack.Screen
                         name="ServerAddress"
                         options={{
@@ -30,7 +33,7 @@ export default function Login(): React.JSX.Element {
                         />
                     ) : (
                     
-                    (_.isUndefined(username)) ? (
+                    (_.isUndefined(username) && _.isUndefined(clientUsername)) ? (
                         <Stack.Screen 
                             name="ServerAuthentication" 
                             options={{ 

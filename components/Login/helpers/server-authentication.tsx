@@ -44,7 +44,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     const clearServer = useMutation({
         mutationFn: async () => {
             setServerAddress(undefined);
-
+            setApiClient(undefined);
             return Promise.resolve();
         }
     });
