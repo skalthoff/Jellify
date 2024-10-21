@@ -10,5 +10,9 @@ export const fetchMusicLibraries = async (api: Api) => {
     if (_.isUndefined(libraries.data.Items))
         return Promise.reject("No libraries found on Jellyfin");
 
-    return libraries.data.Items!.filter(library => library.CollectionType == 'music')
+    let musicLibraries = libraries.data.Items!.filter(library => library.CollectionType == 'music');
+
+    console.log(`Found ${musicLibraries.length} music libraries`);
+    
+    return musicLibraries;
 }
