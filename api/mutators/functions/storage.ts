@@ -32,8 +32,10 @@ export const mutateServer = async (server: JellifyServer | undefined) => {
 export const mutateServerCredentials = async (credentials?: JellyfinCredentials) => {        
 
     if (!_.isUndefined(credentials)) {
+        console.log("Setting Jellyfin credentials")
         return await Keychain.setInternetCredentials((await fetchServer()).url, credentials.username, credentials.accessToken!);
     }
 
+    console.log("Resetting Jellyfin credentials")
     return await Keychain.resetInternetCredentials((await fetchServer()).url);
 }

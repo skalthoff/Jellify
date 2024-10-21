@@ -11,8 +11,6 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials | un
 
     let server = await fetchServer();
 
-    console.debug(`REMOVE THIS::Server name ${server.name}`);
-
     if (_.isEmpty(server.url)) {
         console.warn("Unable to retrieve credentials without a server URL");
         resolve(undefined);
