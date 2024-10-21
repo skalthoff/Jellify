@@ -12,7 +12,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     const { username, setUsername, setServerAddress } = useAuthenticationContext();
     const [password, setPassword] = React.useState('');
 
-    const { apiClient, setApiClient, server } = useApiClientContext();
+    const { apiClient, setApiClient, server, setUsername: setClientUsername } = useApiClientContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
@@ -31,6 +31,8 @@ export default function ServerAuthentication(): React.JSX.Element {
                 return Promise.reject(new Error("Unable to login"));
 
             console.log(`Successfully signed in to ${server!.name}`)
+            setUsername(credentials.username);
+            setClientUsername(credentials.username);
             setApiClient(client.createApi(server!.url, (authResult.data.AccessToken as string)))
             return await Keychain.setInternetCredentials(server!.url, credentials.username, (authResult.data.AccessToken as string));
 
