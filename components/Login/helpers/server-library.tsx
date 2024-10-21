@@ -7,6 +7,7 @@ import { useLibraries } from "../../../api/queries/libraries";
 import { client } from "../../../api/client";
 import { mutateServerCredentials } from "../../../api/mutators/functions/storage";
 import { useAuthenticationContext } from "../provider";
+import { useApi } from "../../../api/queries";
 
 export default function ServerLibrary(): React.JSX.Element {
 
@@ -25,8 +26,6 @@ export default function ServerLibrary(): React.JSX.Element {
             setUsername(undefined);
             setClientUsername(undefined);
 
-            // Reset API client so that we don't attempt to auth as a user
-            setApiClient(client.createApi(server!.url))
             return Promise.resolve();
         }
     });

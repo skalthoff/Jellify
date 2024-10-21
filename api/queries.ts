@@ -5,7 +5,7 @@ import { createApi, createPublicApi } from "./queries/functions/api";
 export const usePublicApi = (serverUrl: string) => useQuery({
     queryKey: [QueryKeys.PublicApi, serverUrl],
     queryFn: ({ queryKey }) => {
-        createPublicApi(queryKey[1])
+        return createPublicApi(queryKey[1])
     }
 })
 

@@ -1,6 +1,6 @@
 import { Api } from '@jellyfin/sdk';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { useApi } from '../api/queries';
+import { useApi, usePublicApi } from '../api/queries';
 import _ from 'lodash';
 import { JellifyServer } from '../types/JellifyServer';
 import { useCredentials, useServer } from '../api/queries/keychain';
@@ -26,15 +26,26 @@ const JellyfinApiClientContextInitializer = () => {
 
     const { data: api, isPending: apiPending } = useApi();
     const { data: jellyfinServer, isPending: serverPending } = useServer();
+    const { data: publicApi, isPending: publicApiPending } = usePublicApi(jellyfinServer?.name ?? "");
     const { data: credentials, isPending: credentialsPending } : { data: SharedWebCredentials | undefined, isPending: boolean } = useCredentials();
 
     useEffect(() => {
-      setApiClient(api);
+
+      if (!_.isUndefined(api)) {
+        setApiClient(api);
+      } else if (!_.isUndefined(publicApi)) {
+        setApiClient(publicApi)
+      } else {
+        setApiClient(undefined)
+      }
+      
       setServer(jellyfinServer);
       setUsername(credentials?.username ?? undefined)
     }, [
       api,
       apiPending,
+      publicApi,
+      publicApiPending,
       credentials, 
       credentialsPending,
       jellyfinServer,
