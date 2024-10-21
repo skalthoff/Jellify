@@ -12,6 +12,7 @@ import { CheckboxWithLabel } from "../../helpers/checkbox-with-label";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
 import { buildApiClient } from "../../../api/client";
 import { useAuthenticationContext } from "../provider";
+import { Heading } from "../../helpers/text";
 
 const http = "http://"
 const https = "https://"
@@ -56,9 +57,9 @@ export default function ServerAddress(): React.JSX.Element {
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
-            <H2 marginVertical={30}>
+            <Heading>
                 Connect to Jellyfin
-            </H2>
+            </Heading>
             <XStack>
                 <SwitchWithLabel 
                     checked={useHttps} 

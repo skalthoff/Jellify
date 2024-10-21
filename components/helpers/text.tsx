@@ -1,12 +1,16 @@
 import { StyleSheet } from "react-native"
+import { H1 } from "tamagui"
 
 const styles = StyleSheet.create({
     text: {
         
+    },
+    heading: {
+        fontFamily: 'Aileron-Black'
     }
 })
-export function Text(): React.JSX.Element {
+export function Heading({ children }: { children: string }): React.JSX.Element {
     return (
-        <Text></Text>
+        <H1 marginVertical={30} style={styles.heading}>{ children }</H1>
     )
 }
