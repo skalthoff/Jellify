@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import _ from "lodash";
-import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
 import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { Button, Input, SizableText, useTheme, View, YStack, Stack, XStack, getFontSizeToken, Paragraph, H2 } from "tamagui";
-import { CheckboxWithLabel } from "../../helpers/checkbox-with-label";
+import { Button, useTheme, View, XStack } from "tamagui";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
 import { buildApiClient } from "../../../api/client";
 import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
+import Input from "../../helpers/input";
 
 const http = "http://"
 const https = "https://"
@@ -67,8 +66,8 @@ export default function ServerAddress(): React.JSX.Element {
                     label="HTTPS" 
                     size="$2"
                     width={150} />
+                
                 <Input 
-                    flexGrow={1}
                     placeholder="jellyfin.org"
                     onChangeText={setServerAddress} />
             </XStack>

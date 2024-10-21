@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native"
 import { H1, SizeTokens, Label as TamaguiLabel } from "tamagui"
+import { Fonts } from '../../enums/assets/fonts';
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     heading: {
-        fontFamily: 'Aileron-Black'
+        fontFamily: Fonts.Black
     },
     label: {
-        fontFamily: 'Aileron-SemiBold'
+        fontFamily: Fonts.Heavy
     },
     text: {
-        fontFamily: 'Aileron-Regular'
+        fontFamily: Fonts.Regular
     },
 });
 
