@@ -11,16 +11,17 @@ import { Button, Input, SizableText, useTheme, View, YStack, Stack, XStack, getF
 import { CheckboxWithLabel } from "../../helpers/checkbox-with-label";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
 import { buildApiClient } from "../../../api/client";
+import { useAuthenticationContext } from "../provider";
 
 const http = "http://"
 const https = "https://"
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const { changeServer, server, setServer, setApiClient } = useApiClientContext();
+    const { setServer, setApiClient } = useApiClientContext();
+    const { serverAddress, setServerAddress } = useAuthenticationContext();
 
     const [useHttps, setUseHttps] = useState(true)
-    const [serverAddress, setServerAddress] = useState(server?.url ?? undefined);
 
     const theme = useTheme();
 

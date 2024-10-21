@@ -6,12 +6,13 @@ import * as Keychain from "react-native-keychain"
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
 import { Button, H2, Input, View } from "tamagui";
 import { client } from "../../../api/client";
+import { useAuthenticationContext } from "../provider";
 
 export default function ServerAuthentication(): React.JSX.Element {
-    const [username, setUsername] = React.useState('');
+    const { username, setUsername, setServerAddress } = useAuthenticationContext();
     const [password, setPassword] = React.useState('');
 
-    const { apiClient, setApiClient, server, setServer, changeUser, setUsername: setContextUsername } = useApiClientContext();
+    const { apiClient, setApiClient, server } = useApiClientContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
@@ -31,7 +32,6 @@ export default function ServerAuthentication(): React.JSX.Element {
 
             console.log(`Successfully signed in to ${server!.name}`)
             setApiClient(client.createApi(server!.url, (authResult.data.AccessToken as string)))
-            setContextUsername(credentials.username);
             return await Keychain.setInternetCredentials(server!.url, credentials.username, (authResult.data.AccessToken as string));
 
         },
@@ -43,8 +43,8 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     const clearServer = useMutation({
         mutationFn: async () => {
-            setContextUsername(undefined);
-            setServer(undefined);
+            setServerAddress(undefined);
+
             return Promise.resolve();
         }
     });
@@ -75,9 +75,13 @@ export default function ServerAuthentication(): React.JSX.Element {
                 />
 
             <Button 
+                disabled={_.isEmpty(username) || _.isEmpty(password)}
                 onPress={() => {
-                    console.log(`Signing in to ${server!.name}`);
-                    useApiMutation.mutate({ username, password })
+
+                    if (!_.isUndefined(username)) {
+                        console.log(`Signing in to ${server!.name}`);
+                        useApiMutation.mutate({ username, password })
+                    }
                 }}
                 >
                     Sign in

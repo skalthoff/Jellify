@@ -7,6 +7,7 @@ import React, {  } from "react";
 import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import Navigation from "./navigation";
 import Login from "./Login/component";
+import { JellyfinAuthenticationProvider } from "./Login/provider";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -30,14 +31,17 @@ function conditionalHomeRender(): React.JSX.Element {
 
   const isDarkMode = useColorScheme() === 'dark';
 
-  const { libraryId } = useApiClientContext();
+  // If library ID hasn't been set, we haven't completed the auth flow
+  const { library } = useApiClientContext();
   
   return (
     <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
-        { !_.isUndefined(libraryId) ? (
+        { !_.isUndefined(library) ? (
           <Navigation />
         ) : (
-          <Login /> 
+          <JellyfinAuthenticationProvider>
+            <Login /> 
+          </JellyfinAuthenticationProvider>
         )}
     </NavigationContainer>
   );

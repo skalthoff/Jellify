@@ -2,24 +2,29 @@ import _ from "lodash"
 import ServerAuthentication from "./helpers/server-authentication";
 import ServerAddress from "./helpers/server-address";
 import { createStackNavigator } from "@react-navigation/stack";
-import { useApiClientContext } from "../jellyfin-api-provider";
 import ServerLibrary from "./helpers/server-library";
+import { useAuthenticationContext } from "./provider";
+import { useEffect } from "react";
 
 export default function Login(): React.JSX.Element {
 
-    const { server, username } = useApiClientContext();
+    const { serverAddress, username, triggerAuth, setTriggerAuth } = useAuthenticationContext();
 
     const Stack = createStackNavigator();
+
+    useEffect(() => {
+        setTriggerAuth(false);
+    })
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             {
-                (_.isUndefined(server) || _.isEmpty(server.url)) ? (
+                (_.isUndefined(serverAddress)) ? (
                     <Stack.Screen
                         name="ServerAddress"
                         options={{
                             headerShown: false,     
-                            animationTypeForReplace: (_.isUndefined(server) || _.isEmpty(server.url)) ? 'pop' : 'push'    
+                            animationTypeForReplace: triggerAuth ? 'push' : 'pop'    
                         }}
                         component={ServerAddress}
                         />

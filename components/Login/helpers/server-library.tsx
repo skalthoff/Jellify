@@ -6,21 +6,24 @@ import { JellifyLibrary } from "../../../types/JellifyLibrary";
 import { useLibraries } from "../../../api/queries/libraries";
 import { client } from "../../../api/client";
 import { mutateServerCredentials } from "../../../api/mutators/functions/storage";
+import { useAuthenticationContext } from "../provider";
 
 export default function ServerLibrary(): React.JSX.Element {
 
     const [musicLibrary, setMusicLibrary] = useState<JellifyLibrary | undefined>(undefined);
 
-    const [musicLibraryName, setMusicLibraryName] = useState<string>("")
+    const { setUsername, libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
 
-    const { apiClient, server, setApiClient, setUsername } = useApiClientContext();
+    const { apiClient, server, setApiClient } = useApiClientContext();
 
     const { data: musicLibraries, isPending: musicLibrariesPending } = useLibraries(apiClient!);
 
 
     const clearUser = useMutation({
         mutationFn: async () => {
-            setUsername(undefined)
+
+            setUsername(undefined);
+            
             // Reset API client so that we don't attempt to auth as a user
             setApiClient(client.createApi(server!.url))
             return Promise.resolve();
@@ -43,7 +46,7 @@ export default function ServerLibrary(): React.JSX.Element {
                 }}
                 >Switch User</Button>
 
-            <Select value={musicLibraryName}></Select>
+            <Select value={libraryName}></Select>
         </View>
     )
 }
