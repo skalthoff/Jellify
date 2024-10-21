@@ -4,7 +4,7 @@ import { Label } from "./text";
 export function SwitchWithLabel(props: { size: SizeTokens; checked: boolean, label: string, onCheckedChange: (value: boolean) => void, width?: number }) {
     const id = `switch-${props.size.toString().slice(1)}-${props.checked ?? ''}}`
     return (
-      <XStack alignItems="center" gap="$4">
+      <XStack alignItems="center" gap="$3">
         <Label
           size={props.size}
           htmlFor={id}

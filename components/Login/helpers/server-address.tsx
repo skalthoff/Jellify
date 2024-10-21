@@ -6,12 +6,13 @@ import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { Button, useTheme, View, XStack } from "tamagui";
+import { useTheme, View, XStack } from "tamagui";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
 import { buildApiClient } from "../../../api/client";
 import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
 import Input from "../../helpers/input";
+import Button from "../../helpers/button";
 
 const http = "http://"
 const https = "https://"
@@ -63,9 +64,9 @@ export default function ServerAddress(): React.JSX.Element {
                 <SwitchWithLabel 
                     checked={useHttps} 
                     onCheckedChange={(checked) => setUseHttps(checked)} 
-                    label="HTTPS" 
+                    label="Use HTTPS" 
                     size="$2"
-                    width={150} />
+                    width={100} />
                 
                 <Input 
                     placeholder="jellyfin.org"
@@ -73,11 +74,10 @@ export default function ServerAddress(): React.JSX.Element {
             </XStack>
             <Button 
                 disabled={_.isEmpty(serverAddress)}
-                marginVertical={30}
                 onPress={() => {
                     useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
                 }}>
-                Connect
+                CONNECT
             </Button>
         </View>
     )
