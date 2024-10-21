@@ -69,6 +69,7 @@ export default function ServerAddress(): React.JSX.Element {
                     width={100} />
                 
                 <Input 
+                    value={serverAddress}
                     placeholder="jellyfin.org"
                     onChangeText={setServerAddress} />
             </XStack>

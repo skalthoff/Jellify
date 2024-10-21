@@ -4,13 +4,16 @@ import { useApiClientContext } from "../../jellyfin-api-provider";
 import _ from "lodash";
 import * as Keychain from "react-native-keychain"
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { Button, H2, Input, View } from "tamagui";
+import { View } from "tamagui";
 import { client } from "../../../api/client";
 import { useAuthenticationContext } from "../provider";
+import { Heading } from "../../helpers/text";
+import Button from "../../helpers/button";
+import Input from "../../helpers/input";
 
 export default function ServerAuthentication(): React.JSX.Element {
     const { username, setUsername, setServerAddress } = useAuthenticationContext();
-    const [password, setPassword] = React.useState('');
+    const [password, setPassword] = React.useState<string | undefined>('');
 
     const { apiClient, setApiClient, server, setUsername: setClientUsername } = useApiClientContext();
 
@@ -53,9 +56,9 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
-            <H2 marginVertical={30}>
-                Sign in to {server?.name ?? "Jellyfin"}
-            </H2>
+            <Heading>
+                { `Sign in to ${server?.name ?? "Jellyfin"}`}
+            </Heading>
             <Button
                 onPress={() => {
                     clearServer.mutate();

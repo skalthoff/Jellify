@@ -5,6 +5,8 @@ import { styles } from './text';
 interface InputProps {
     onChangeText: React.Dispatch<SetStateAction<string | undefined>>,
     placeholder: string
+    value: string | undefined;
+    secureTextEntry?: boolean | undefined;
 }
 
 export default function Input(props: InputProps): React.JSX.Element {
@@ -15,6 +17,8 @@ export default function Input(props: InputProps): React.JSX.Element {
             flexGrow={1}
             placeholder={props.placeholder}
             onChangeText={props.onChangeText} 
+            value={props.value}
+            secureTextEntry={props.secureTextEntry}
         />
     )
 }

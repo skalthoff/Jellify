@@ -1,13 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { Button, H2, Select, Text, View } from "tamagui";
+import { Select, View } from "tamagui";
 import { JellifyLibrary } from "../../../types/JellifyLibrary";
 import { useLibraries } from "../../../api/queries/libraries";
-import { client } from "../../../api/client";
 import { mutateServerCredentials } from "../../../api/mutators/functions/storage";
 import { useAuthenticationContext } from "../provider";
-import { useApi } from "../../../api/queries";
+import { Heading } from "../../helpers/text";
+import Button from "../../helpers/button";
 
 export default function ServerLibrary(): React.JSX.Element {
 
@@ -37,14 +37,16 @@ export default function ServerLibrary(): React.JSX.Element {
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
-            <H2 marginVertical={30}>Select Music Library</H2>
+            <Heading>Select Music Library</Heading>
 
             <Button
                 onPress={() => {
                     serverCredentials.mutate(undefined);
                     clearUser.mutate();
                 }}
-                >Switch User</Button>
+            >
+                Switch User
+            </Button>
 
             <Select value={libraryName}></Select>
         </View>

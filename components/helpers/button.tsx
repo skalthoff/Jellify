@@ -4,7 +4,7 @@ import { styles } from './text';
 interface ButtonProps {
     children: string;
     onPress: () => void;
-    disabled: boolean;
+    disabled?: boolean | undefined;
 }
 
 export default function Button(props: ButtonProps): React.JSX.Element {
