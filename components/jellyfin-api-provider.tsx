@@ -32,8 +32,10 @@ const JellyfinApiClientContextInitializer = () => {
     useEffect(() => {
 
       if (!_.isUndefined(api)) {
+        console.log("Using authenticated API client")
         setApiClient(api);
       } else if (!_.isUndefined(publicApi)) {
+        console.log("Using public API client");
         setApiClient(publicApi)
       } else {
         setApiClient(undefined)
