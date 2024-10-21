@@ -14,7 +14,6 @@ export default function Input(props: InputProps): React.JSX.Element {
     return (
         <TamaguiInput 
             style={styles.text}
-            flexGrow={1}
             placeholder={props.placeholder}
             onChangeText={props.onChangeText} 
             value={props.value}

@@ -1,4 +1,9 @@
-import React, { createContext, ReactNode, SetStateAction, useContext, useState } from "react";
+import React, { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
+import { useApi } from "../../api/queries";
+import { useCredentials, useServer } from "../../api/queries/keychain";
+import { Api } from "@jellyfin/sdk";
+import _ from "lodash";
+import { SharedWebCredentials } from "react-native-keychain";
 
 interface JellyfinAuthenticationContext {
     username: string | undefined;
@@ -23,6 +28,22 @@ const JellyfinAuthenticationContextInitializer = () => {
     const [libraryId, setLibraryId] = useState<string | undefined>(undefined);
 
     const [triggerAuth, setTriggerAuth] = useState<boolean>(true);
+
+    const { data: jellyfinServer, isPending: serverPending } = useServer();
+    const { data: credentials, isPending: credentialsPending } : { data: SharedWebCredentials | undefined, isPending: boolean } = useCredentials();
+
+    useEffect(() => {
+        if (!_.isUndefined(jellyfinServer)) {
+            setServerAddress(jellyfinServer.url);
+        }
+
+        if (!_.isUndefined(credentials)) {
+            setUsername(credentials.username)
+        }
+    }, [
+        serverPending,
+        credentialsPending
+    ])
 
     return {
         username,

@@ -78,7 +78,7 @@ export default function ServerAddress(): React.JSX.Element {
                 onPress={() => {
                     useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
                 }}>
-                CONNECT
+                Connect
             </Button>
         </View>
     )
