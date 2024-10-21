@@ -9,8 +9,12 @@ export const fetchMusicLibraries = (api: Api) => new Promise( async (resolve) =>
     
     let libraries = await getItemsApi(api).getItems();
 
-    if (_.isUndefined(libraries.data.Items))
+    console.log(`REMOVE THIS::Libraries response:`, libraries);
+
+    if (_.isUndefined(libraries.data.Items)) {
+        console.log("No libraries found on Jellyfin");
         return Promise.reject("No libraries found on Jellyfin");
+    }
 
     let musicLibraries = libraries.data.Items!.filter(library => library.CollectionType == 'music');
 
