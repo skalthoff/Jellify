@@ -22,7 +22,7 @@ export default function Login(): React.JSX.Element {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             {
-                (_.isUndefined(serverAddress) && _.isUndefined(apiClient)) ? (
+                (_.isUndefined(serverAddress) || _.isUndefined(apiClient)) ? (
                     <Stack.Screen
                         name="ServerAddress"
                         options={{
@@ -33,7 +33,7 @@ export default function Login(): React.JSX.Element {
                         />
                     ) : (
                     
-                    (_.isUndefined(username) && _.isUndefined(clientUsername)) ? (
+                    (_.isUndefined(username) || _.isUndefined(clientUsername)) ? (
                         <Stack.Screen 
                             name="ServerAuthentication" 
                             options={{ 
