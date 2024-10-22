@@ -6,10 +6,12 @@ import { JellifyServer } from '../types/JellifyServer';
 import { useCredentials, useServer } from '../api/queries/keychain';
 import { JellifyLibrary } from '../types/JellifyLibrary';
 import { SharedWebCredentials } from 'react-native-keychain';
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
   setApiClient: React.Dispatch<React.SetStateAction<Api | undefined>>;
+  refetchApi: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<Api, Error>>;
   server: JellifyServer | undefined;
   setServer: React.Dispatch<React.SetStateAction<JellifyServer | undefined>>;
   library: JellifyLibrary | undefined;
@@ -24,7 +26,7 @@ const JellyfinApiClientContextInitializer = () => {
     const [library, setLibrary] = useState<JellifyLibrary | undefined>(undefined);
     const [username, setUsername] = useState<string | undefined>();
 
-    const { data: api, isPending: apiPending } = useApi();
+    const { data: api, isPending: apiPending, refetch: refetchApi } = useApi();
     const { data: jellyfinServer, isPending: serverPending } = useServer();
     const { data: credentials, isPending: credentialsPending } : { data: SharedWebCredentials | undefined, isPending: boolean } = useCredentials();
 
@@ -45,9 +47,17 @@ const JellyfinApiClientContextInitializer = () => {
       serverPending,
     ]);
 
+    useEffect(() => {
+      refetchApi();
+    }, [
+      jellyfinServer,
+      username
+    ]);
+
     return { 
       apiClient,
       setApiClient, 
+      refetchApi,
       server,
       setServer, 
       library, 
@@ -61,6 +71,7 @@ export const JellyfinApiClientContext =
   createContext<JellyfinApiClientContext>({ 
     apiClient: undefined, 
     setApiClient: () => {},
+    refetchApi: () => new Promise(() => {}),
     server: undefined,
     setServer: () => {},
     library: undefined,
@@ -75,6 +86,7 @@ export const JellyfinApiClientProvider: ({ children }: {
   const { 
     apiClient, 
     setApiClient, 
+    refetchApi,
     server, 
     setServer, 
     library,
@@ -89,6 +101,7 @@ export const JellyfinApiClientProvider: ({ children }: {
     <JellyfinApiClientContext.Provider value={{ 
       apiClient, 
       setApiClient, 
+      refetchApi,
       server, 
       setServer, 
       library,

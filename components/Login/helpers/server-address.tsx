@@ -19,7 +19,7 @@ const https = "https://"
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const { setServer, setApiClient } = useApiClientContext();
+    const { setServer } = useApiClientContext();
     const { serverAddress, setServerAddress } = useAuthenticationContext();
 
     const [useHttps, setUseHttps] = useState(true)
@@ -46,7 +46,6 @@ export default function ServerAddress(): React.JSX.Element {
             }
 
             setServer(jellifyServer);
-            setApiClient(buildApiClient(serverUrl));
             return await mutateServer(jellifyServer);
         },
         onError: async (error: Error) => {
