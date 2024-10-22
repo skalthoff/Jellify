@@ -39,10 +39,6 @@ export default function ServerLibrary(): React.JSX.Element {
         }
     });
 
-    const serverCredentials = useMutation({
-        mutationFn: mutateServerCredentials
-    });
-
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
             <Heading>Select Music Library</Heading>
@@ -82,7 +78,6 @@ export default function ServerLibrary(): React.JSX.Element {
 
             <Button
                 onPress={() => {
-                    serverCredentials.mutate(undefined);
                     clearUser.mutate();
                 }}
             >
