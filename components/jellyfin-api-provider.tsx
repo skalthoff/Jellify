@@ -47,13 +47,6 @@ const JellyfinApiClientContextInitializer = () => {
       serverPending,
     ]);
 
-    useEffect(() => {
-      refetchApi();
-    }, [
-      jellyfinServer,
-      username
-    ]);
-
     return { 
       apiClient,
       setApiClient, 

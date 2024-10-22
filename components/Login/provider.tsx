@@ -43,7 +43,7 @@ const JellyfinAuthenticationContextInitializer = () => {
     }, [
         serverPending,
         credentialsPending
-    ])
+    ]);
 
     return {
         username,
