@@ -29,7 +29,9 @@ export default function ServerLibrary(): React.JSX.Element {
         queryFn: ({ queryKey }) => fetchMusicLibraries(queryKey[1] as Api)
     });
     
-    const { data: libraries, isPending } = useLibraries(apiClient!);
+    const { data, isPending } = useLibraries(apiClient!);
+
+    const [libraries, setLibraries] = useState<BaseItemDto[] | undefined>(data)
 
     const clearUser = useMutation({
         mutationFn: async () => {
@@ -45,6 +47,12 @@ export default function ServerLibrary(): React.JSX.Element {
         mutationFn: mutateServerCredentials
     });
 
+    useEffect(() => {
+        setLibraries(data)
+    }, [
+        data,
+        isPending,
+    ])
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>

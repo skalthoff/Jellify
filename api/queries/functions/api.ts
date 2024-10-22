@@ -8,7 +8,7 @@ import _ from "lodash";
  * @returns A Promise of the authenticated Jellyfin API client or a rejection
  */
 export const createApi: () => Promise<Api> = () => new Promise(async (resolve, reject) => {
-    return fetchCredentials()
+    return await fetchCredentials()
         .then(credentials => {
 
             if (!_.isUndefined(credentials))
