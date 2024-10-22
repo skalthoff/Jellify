@@ -19,7 +19,7 @@ export default function ServerLibrary(): React.JSX.Element {
 
     const [musicLibrary, setMusicLibrary] = useState<JellifyLibrary | undefined>(undefined);
 
-    const { setUsername, setChangeUsername, libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
+    const { server, setUsername, setChangeUsername, libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
 
     const { apiClient, refetchApi } = useApiClientContext();
 
@@ -33,7 +33,7 @@ export default function ServerLibrary(): React.JSX.Element {
 
     const clearUser = useMutation({
         mutationFn: async () => {
-            await mutateServerCredentials();
+            await mutateServerCredentials(server!.url);
             setChangeUsername(true);
             return await refetchApi()
         }

@@ -33,13 +33,13 @@ export const mutateServer = async (server?: JellifyServer) => {
     return await AsyncStorage.removeItem(AsyncStorageKeys.ServerUrl);
 }
 
-export const mutateServerCredentials = async (credentials?: JellyfinCredentials) => {        
+export const mutateServerCredentials = async (serverUrl: string, credentials?: JellyfinCredentials) => {        
 
     if (!_.isUndefined(credentials)) {
         console.log("Setting Jellyfin credentials")
-        return await Keychain.setInternetCredentials((await fetchServer()).url, credentials.username, credentials.accessToken!);
+        return await Keychain.setInternetCredentials(serverUrl, credentials.username, credentials.accessToken!);
     }
 
     console.log("Resetting Jellyfin credentials")
-    return await Keychain.resetInternetCredentials((await fetchServer()).url);
+    return await Keychain.resetInternetCredentials(serverUrl);
 }
