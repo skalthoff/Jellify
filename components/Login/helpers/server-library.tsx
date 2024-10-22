@@ -33,8 +33,8 @@ export default function ServerLibrary(): React.JSX.Element {
 
     const clearUser = useMutation({
         mutationFn: async () => {
-            setApiClient(undefined)
             setChangeUsername(true);
+            setApiClient(undefined)
             return await mutateServerCredentials(server!.url);
         }
     });
