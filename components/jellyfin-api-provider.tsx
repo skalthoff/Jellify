@@ -26,7 +26,6 @@ const JellyfinApiClientContextInitializer = () => {
 
     const { data: api, isPending: apiPending } = useApi();
     const { data: jellyfinServer, isPending: serverPending } = useServer();
-    const { data: publicApi, isPending: publicApiPending } = usePublicApi(jellyfinServer?.name ?? "");
     const { data: credentials, isPending: credentialsPending } : { data: SharedWebCredentials | undefined, isPending: boolean } = useCredentials();
 
     useEffect(() => {
@@ -34,9 +33,6 @@ const JellyfinApiClientContextInitializer = () => {
       if (!_.isUndefined(api)) {
         console.log("Using authenticated API client")
         setApiClient(api);
-      } else if (!_.isUndefined(publicApi)) {
-        console.log("Using public API client");
-        setApiClient(publicApi)
       } else {
         setApiClient(undefined)
       }
@@ -45,7 +41,6 @@ const JellyfinApiClientContextInitializer = () => {
       setUsername(credentials?.username ?? undefined)
     }, [
       apiPending,
-      publicApiPending,
       credentialsPending,
       serverPending,
     ]);
