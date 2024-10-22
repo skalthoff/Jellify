@@ -12,6 +12,7 @@ import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
 import Input from "../../helpers/input";
 import Button from "../../helpers/button";
+import { http, https } from "../utils/constants";
 
 export default function ServerAddress(): React.JSX.Element {
 
@@ -26,11 +27,9 @@ export default function ServerAddress(): React.JSX.Element {
             console.debug("REMOVE THIS::onSuccess variable", serverUrl);
             console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
     
-            // TODO: Store these along side address
-            // TODO: Rename url to address
-            
             let jellifyServer: JellifyServer = {
-                url: serverAddress!,
+                url: `${useHttps ? https : http}${serverAddress!}`,
+                address: serverAddress!,
                 name: publicSystemInfoResponse.data.ServerName!,
                 version: publicSystemInfoResponse.data.Version!,
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
