@@ -22,12 +22,12 @@ export default function Login(): React.JSX.Element {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             {
-                (_.isUndefined(storedServer) || changeServer) ? (
+                (changeServer) ? (
                     <Stack.Screen
                         name="ServerAddress"
                         options={{
                             headerShown: false,     
-                            animationTypeForReplace: triggerAuth ? 'push' : 'pop'    
+                            animationTypeForReplace: triggerAuth || changeServer ? 'push' : 'pop'    
                         }}
                         component={ServerAddress}
                         />
@@ -38,7 +38,7 @@ export default function Login(): React.JSX.Element {
                             name="ServerAuthentication" 
                             options={{ 
                                 headerShown: false, 
-                                animationTypeForReplace: 'push'
+                                animationTypeForReplace: changeUsername ? 'pop' : 'push'
                             }} 
                             component={ServerAuthentication} 
                         />

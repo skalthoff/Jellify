@@ -67,6 +67,8 @@ const JellyfinAuthenticationContextInitializer = () => {
 
         if (changeServer)
             mutateServer();
+        else 
+            refetchServer();
     }, [
         changeUsername,
         changeServer
