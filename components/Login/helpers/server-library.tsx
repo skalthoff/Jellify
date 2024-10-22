@@ -52,7 +52,6 @@ export default function ServerLibrary(): React.JSX.Element {
             setLibraries(value.data)
         })
     }, [
-        isPending,
         apiClient,
     ])
 
