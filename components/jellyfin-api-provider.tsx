@@ -44,13 +44,9 @@ const JellyfinApiClientContextInitializer = () => {
       setServer(jellyfinServer);
       setUsername(credentials?.username ?? undefined)
     }, [
-      api,
       apiPending,
-      publicApi,
       publicApiPending,
-      credentials, 
       credentialsPending,
-      jellyfinServer,
       serverPending,
     ]);
 
