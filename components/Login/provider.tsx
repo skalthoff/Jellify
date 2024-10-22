@@ -21,16 +21,14 @@ interface JellyfinAuthenticationContext {
     setServerAddress: React.Dispatch<SetStateAction<string | undefined>>;
     changeServer: boolean;
     setChangeServer: React.Dispatch<SetStateAction<boolean>>;
-    storedServer: JellifyServer | undefined;
-    refetchServer: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<JellifyServer, Error>>;
+    server: JellifyServer | undefined;
+    setServer: React.Dispatch<SetStateAction<JellifyServer | undefined>>;
     libraryName: string | undefined;
     setLibraryName: React.Dispatch<React.SetStateAction<string | undefined>>;
     libraryId: string | undefined;
     setLibraryId: React.Dispatch<React.SetStateAction<string | undefined>>;
     triggerAuth: boolean;
     setTriggerAuth: React.Dispatch<React.SetStateAction<boolean>>;
-    publicApi: Api | undefined;
-    refetchPublicApi: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<Api, Error>>;
 }
 
 const JellyfinAuthenticationContextInitializer = () => {
@@ -41,44 +39,13 @@ const JellyfinAuthenticationContextInitializer = () => {
     const [useHttps, setUseHttps] = useState<boolean>(true);
     const [serverAddress, setServerAddress] = useState<string | undefined>(undefined);
     const [changeServer, setChangeServer] = useState<boolean>(false);
+    const [server, setServer] = useState<JellifyServer | undefined>(undefined);
 
     const [libraryName, setLibraryName] = useState<string | undefined>(undefined);
     const [libraryId, setLibraryId] = useState<string | undefined>(undefined);
 
     const [triggerAuth, setTriggerAuth] = useState<boolean>(true);
 
-
-    const { data: publicApi, isPending: publicApiPending, refetch: refetchPublicApi } = usePublicApi();
-    // Fetch from storage on init to load non-sensitive fields from previous logins
-    const { data: storedServer, isPending: serverPending, refetch: refetchServer } = useServer();
-    const { data: credentials, isPending: credentialsPending } : { data: SharedWebCredentials | undefined, isPending: boolean } = useCredentials();
-
-    useEffect(() => {
-        if (!_.isUndefined(storedServer)) {
-            setServerAddress(storedServer.url);
-        }
-
-        if (!_.isUndefined(credentials)) {
-            setUsername(credentials.username)
-        }
-    }, [
-        serverPending,
-        credentialsPending
-    ]);
-
-    // Remove stored creds if a change is requested
-    useEffect(() => {
-        if (changeUsername)
-            mutateServerCredentials();
-
-        if (changeServer)
-            mutateServer();
-        else 
-            refetchServer();
-    }, [
-        changeUsername,
-        changeServer
-    ])
 
     return {
         username,
@@ -93,16 +60,14 @@ const JellyfinAuthenticationContextInitializer = () => {
         setServerAddress,
         changeServer,
         setChangeServer,
-        storedServer,
-        refetchServer,
+        server,
+        setServer,
         libraryName,
         setLibraryName,
         libraryId,
         setLibraryId,
         triggerAuth,
         setTriggerAuth,
-        publicApi,
-        refetchPublicApi,
     };
 }
 
@@ -120,16 +85,14 @@ const JellyfinAuthenticationContext =
         setServerAddress: () => {},
         changeServer: false,
         setChangeServer: () => {},
-        storedServer: undefined,
-        refetchServer: () => new Promise(() => {}),
+        server: undefined,
+        setServer: () => {},
         libraryName: undefined,
         setLibraryName: () => {},
         libraryId: undefined, 
         setLibraryId: () => {},
         triggerAuth: true,
         setTriggerAuth: () => {},
-        publicApi: undefined,
-        refetchPublicApi: () => new Promise(() => {})
 });
 
 export const JellyfinAuthenticationProvider: ({ children }: {
@@ -148,17 +111,15 @@ export const JellyfinAuthenticationProvider: ({ children }: {
         serverAddress,
         setServerAddress,
         changeServer,
+        server,
+        setServer,
         setChangeServer,
-        storedServer,
-        refetchServer,
         libraryName,
         setLibraryName,
         libraryId,
         setLibraryId,
         triggerAuth,
         setTriggerAuth,
-        publicApi,
-        refetchPublicApi
     } = JellyfinAuthenticationContextInitializer();
 
     return (
@@ -175,16 +136,14 @@ export const JellyfinAuthenticationProvider: ({ children }: {
             setServerAddress,
             changeServer,
             setChangeServer,
-            storedServer,
-            refetchServer,
+            server,
+            setServer,
             libraryName,
             setLibraryName,
             libraryId,
             setLibraryId,
             triggerAuth,
             setTriggerAuth,
-            publicApi,
-            refetchPublicApi
         }}>
             { children }
         </JellyfinAuthenticationContext.Provider>

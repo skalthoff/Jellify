@@ -16,7 +16,7 @@ import { http, https } from "../utils/constants";
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const { serverAddress, setServerAddress, setChangeServer, useHttps, setUseHttps, refetchPublicApi } = useAuthenticationContext();
+    const { serverAddress, setServerAddress, setChangeServer, setServer, useHttps, setUseHttps } = useAuthenticationContext();
 
     const useServerMutation = useMutation({
         mutationFn: serverMutation,
@@ -35,8 +35,7 @@ export default function ServerAddress(): React.JSX.Element {
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
 
-            await mutateServer(jellifyServer);
-            await refetchPublicApi();
+            setServer(jellifyServer);
             setChangeServer(false);
         },
         onError: async (error: Error) => {
