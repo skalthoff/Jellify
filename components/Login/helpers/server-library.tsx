@@ -29,7 +29,7 @@ export default function ServerLibrary(): React.JSX.Element {
         queryFn: ({ queryKey }) => fetchMusicLibraries(queryKey[1] as Api)
     });
     
-    const { data, isPending } = useLibraries(apiClient!);
+    const { data, isPending, refetch } = useLibraries(apiClient!);
 
     const [libraries, setLibraries] = useState<BaseItemDto[] | undefined>(data)
 
@@ -48,7 +48,9 @@ export default function ServerLibrary(): React.JSX.Element {
     });
 
     useEffect(() => {
-        setLibraries(data)
+        refetch().then((value) => {
+            setLibraries(value.data)
+        })
     }, [
         isPending,
         apiClient,
