@@ -1,9 +1,10 @@
 import { Api } from "@jellyfin/sdk";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import _ from "lodash";
 
 
-export const fetchMusicLibraries = (api: Api) => new Promise( async (resolve) => {
+export const fetchMusicLibraries : (api: Api) => Promise<BaseItemDto[]> = (api: Api) => new Promise( async (resolve) => {
 
     console.log("Fetching music libraries from Jellyfin");
     

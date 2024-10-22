@@ -12,6 +12,6 @@ export const usePublicApi = (serverUrl: string) => useQuery({
 export const useApi = () => useQuery({
     queryKey: [QueryKeys.Api],
     queryFn: async () => {
-        return createApi();
+        return createApi;
     }
 })
