@@ -13,6 +13,7 @@ export const createApi: () => Promise<Api> = () => new Promise(async (resolve, r
     if (_.isUndefined(credentials))
         reject("No credentials exist for the current user")
             
+    console.log("Signing into Jellyfin")
     resolve(client.createApi(credentials!.server, credentials!.password));
 });
 
