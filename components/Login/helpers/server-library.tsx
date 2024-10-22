@@ -12,7 +12,7 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models/base-item
 import { Api } from "@jellyfin/sdk";
 import { fetchMusicLibraries } from "../../../api/queries/functions/libraries";
 import { QueryKeys } from "../../../enums/query-keys";
-import { Icon } from "react-native-vector-icons/Icon";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function ServerLibrary(): React.JSX.Element {
 
