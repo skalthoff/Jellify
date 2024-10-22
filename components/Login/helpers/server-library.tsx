@@ -29,7 +29,7 @@ export default function ServerLibrary(): React.JSX.Element {
         queryFn: async ({ queryKey }) => await fetchMusicLibraries(queryKey[1] as Api)
     });
     
-    const { data : libraries, isPending, refetch } = useLibraries(apiClient!);
+    const { data : libraries, isPending } = useLibraries(apiClient!);
 
     const clearUser = useMutation({
         mutationFn: async () => {
@@ -38,13 +38,6 @@ export default function ServerLibrary(): React.JSX.Element {
             return await mutateServerCredentials(server!.url);
         }
     });
-
-    useEffect(() => {
-        refetch();
-    }, [
-        server,
-        apiClient
-    ])
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
