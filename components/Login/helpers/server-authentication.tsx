@@ -9,7 +9,7 @@ import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
 import Button from "../../helpers/button";
 import Input from "../../helpers/input";
-import { mutateServer } from "../../../api/mutators/functions/storage";
+import { mutateServer, mutateServerCredentials } from "../../../api/mutators/functions/storage";
 import { createPublicApi } from "../../../api/queries/functions/api";
 import { client } from "../../../api/client";
 
@@ -37,6 +37,7 @@ export default function ServerAuthentication(): React.JSX.Element {
 
             console.log(`Successfully signed in to ${server!.name}`)
             await Keychain.setInternetCredentials(server!.url, credentials.username, (authResult.data.AccessToken as string));
+            setChangeUsername(false)
             return await refetchApi();
         },
         onError: async (error: Error) => {
@@ -51,8 +52,11 @@ export default function ServerAuthentication(): React.JSX.Element {
                 { `Sign in to ${server?.name ?? "Jellyfin"}`}
             </Heading>
             <Button
-                onPress={() => setChangeServer(true)}
-                >Switch Server
+                onPress={() => {
+                    setChangeServer(true);
+                    mutateServerCredentials(server!.url);
+                }}>
+                    Switch Server
             </Button>
 
             <Input
