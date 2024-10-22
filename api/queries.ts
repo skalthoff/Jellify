@@ -10,5 +10,6 @@ export const usePublicApi = () => useQuery({
 export const useApi = () => useQuery({
     queryKey: [QueryKeys.Api],
     queryFn: createApi,
-    gcTime: 1000
+    gcTime: 1000,
+    refetchInterval: false
 })
