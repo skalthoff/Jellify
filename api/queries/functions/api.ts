@@ -1,5 +1,5 @@
 import { Api } from "@jellyfin/sdk";
-import { fetchCredentials } from "./storage";
+import { fetchCredentials, fetchServer } from "./storage";
 import { client } from "../../client";
 import _ from "lodash";
 import { QueryFunctionContext, QueryKey } from "@tanstack/react-query";
@@ -22,12 +22,13 @@ export function createApi(): Promise<Api> {
     });
 }
 
-export function createPublicApi({ queryKey }: QueryFunctionContext): Promise<Api> {
-    return new Promise((resolve) => {
+export function createPublicApi(): Promise<Api> {
+    return new Promise(async (resolve) => {
 
-        ///@ts-ignore
-        const [_key, { serverUrl } ] = queryKey;
+        console.log("Fetching server details from storage")
+        const server = await fetchServer()
 
-        resolve(client.createApi(serverUrl));
+        console.log(`Found stored server ${server.name}`)
+        resolve(client.createApi(server.url));
     });
 }

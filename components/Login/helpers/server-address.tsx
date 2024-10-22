@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import _ from "lodash";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query";
@@ -6,9 +6,8 @@ import { AsyncStorageKeys } from "../../../enums/async-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { useTheme, View, XStack } from "tamagui";
+import { View, XStack } from "tamagui";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
-import { buildApiClient } from "../../../api/client";
 import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
 import Input from "../../helpers/input";
@@ -16,9 +15,7 @@ import Button from "../../helpers/button";
 
 export default function ServerAddress(): React.JSX.Element {
 
-    const { serverAddress, setServerAddress, setChangeServer, useHttps, setUseHttps, refetchServer } = useAuthenticationContext();
-
-    const { apiClient } = useApiClientContext();
+    const { serverAddress, setServerAddress, setChangeServer, useHttps, setUseHttps, refetchPublicApi } = useAuthenticationContext();
 
     const useServerMutation = useMutation({
         mutationFn: serverMutation,
@@ -40,7 +37,7 @@ export default function ServerAddress(): React.JSX.Element {
             }
 
             await mutateServer(jellifyServer);
-            await refetchServer();
+            await refetchPublicApi();
             setChangeServer(false);
         },
         onError: async (error: Error) => {

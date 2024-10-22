@@ -5,6 +5,8 @@ import { SharedWebCredentials } from "react-native-keychain";
 import { JellifyServer } from "../../types/JellifyServer";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import { mutateServer, mutateServerCredentials } from "../../api/mutators/functions/storage";
+import { usePublicApi } from "../../api/queries";
+import { Api } from "@jellyfin/sdk";
 
 interface JellyfinAuthenticationContext {
     username: string | undefined;
@@ -27,6 +29,8 @@ interface JellyfinAuthenticationContext {
     setLibraryId: React.Dispatch<React.SetStateAction<string | undefined>>;
     triggerAuth: boolean;
     setTriggerAuth: React.Dispatch<React.SetStateAction<boolean>>;
+    publicApi: Api | undefined;
+    refetchPublicApi: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<Api, Error>>;
 }
 
 const JellyfinAuthenticationContextInitializer = () => {
@@ -43,6 +47,8 @@ const JellyfinAuthenticationContextInitializer = () => {
 
     const [triggerAuth, setTriggerAuth] = useState<boolean>(true);
 
+
+    const { data: publicApi, isPending: publicApiPending, refetch: refetchPublicApi } = usePublicApi();
     // Fetch from storage on init to load non-sensitive fields from previous logins
     const { data: storedServer, isPending: serverPending, refetch: refetchServer } = useServer();
     const { data: credentials, isPending: credentialsPending } : { data: SharedWebCredentials | undefined, isPending: boolean } = useCredentials();
@@ -94,7 +100,9 @@ const JellyfinAuthenticationContextInitializer = () => {
         libraryId,
         setLibraryId,
         triggerAuth,
-        setTriggerAuth
+        setTriggerAuth,
+        publicApi,
+        refetchPublicApi,
     };
 }
 
@@ -120,6 +128,8 @@ const JellyfinAuthenticationContext =
         setLibraryId: () => {},
         triggerAuth: true,
         setTriggerAuth: () => {},
+        publicApi: undefined,
+        refetchPublicApi: () => new Promise(() => {})
 });
 
 export const JellyfinAuthenticationProvider: ({ children }: {
@@ -147,6 +157,8 @@ export const JellyfinAuthenticationProvider: ({ children }: {
         setLibraryId,
         triggerAuth,
         setTriggerAuth,
+        publicApi,
+        refetchPublicApi
     } = JellyfinAuthenticationContextInitializer();
 
     return (
@@ -171,6 +183,8 @@ export const JellyfinAuthenticationProvider: ({ children }: {
             setLibraryId,
             triggerAuth,
             setTriggerAuth,
+            publicApi,
+            refetchPublicApi
         }}>
             { children }
         </JellyfinAuthenticationContext.Provider>

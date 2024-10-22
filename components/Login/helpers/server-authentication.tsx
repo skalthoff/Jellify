@@ -12,14 +12,14 @@ import Input from "../../helpers/input";
 import { mutateServer } from "../../../api/mutators/functions/storage";
 
 export default function ServerAuthentication(): React.JSX.Element {
-    const { username, setUsername, setChangeUsername, setServerAddress, setChangeServer, storedServer } = useAuthenticationContext();
+    const { username, setUsername, setChangeUsername, setChangeServer, storedServer, publicApi } = useAuthenticationContext();
     const [password, setPassword] = React.useState<string | undefined>('');
 
-    const { apiClient, refetchApi } = useApiClientContext();
+    const { refetchApi } = useApiClientContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
-            return await apiClient!.authenticateUserByName(credentials.username, credentials.password!);
+            return await publicApi!.authenticateUserByName(credentials.username, credentials.password!);
         },
         onSuccess: async (authResult, credentials) => {
               

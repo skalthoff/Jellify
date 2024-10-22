@@ -27,7 +27,7 @@ export const fetchCredentials : () => Promise<Keychain.SharedWebCredentials | un
     resolve(keychain as Keychain.SharedWebCredentials)
 });
 
-export const fetchServer : () => Promise<JellifyServer> = () => new Promise(async (resolve) => {
+export const fetchServer : () => Promise<JellifyServer> = () => new Promise(async (resolve, reject) => {
 
     console.log("Attempting to fetch server address from storage");
     
@@ -35,12 +35,12 @@ export const fetchServer : () => Promise<JellifyServer> = () => new Promise(asyn
 
     if (_.isEmpty(serverJson) || _.isNull(serverJson)) {
         console.warn("No stored server address exists");
-        return Promise.reject(new Error("No stored server address exists"));
+        return reject(new Error("No stored server address exists"));
     }
 
     try {
         let server : JellifyServer = JSON.parse(serverJson) as JellifyServer;
-        resolve(server);
+        return resolve(server);
     } catch(error: any) {
         return Promise.reject(new Error(error));
     }
