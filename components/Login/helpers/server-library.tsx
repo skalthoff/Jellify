@@ -39,6 +39,13 @@ export default function ServerLibrary(): React.JSX.Element {
         }
     });
 
+    useEffect(() => {
+        refetch();
+    }, [
+        server,
+        apiClient
+    ])
+
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
             <Heading>Select Music Library</Heading>

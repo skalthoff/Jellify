@@ -4,7 +4,7 @@ import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import _ from "lodash";
 
 
-export function fetchMusicLibraries(api: Api):  Promise<BaseItemDto[]> {
+export function fetchMusicLibraries(api: Api): Promise<BaseItemDto[]> {
     return new Promise( async (resolve) => {
         console.log("Fetching music libraries from Jellyfin");
         
