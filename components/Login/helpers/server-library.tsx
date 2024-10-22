@@ -60,21 +60,24 @@ export default function ServerLibrary(): React.JSX.Element {
                         <Select.Value placeholder="Libraries" />
                     </Select.Trigger>
                     <Select.Content>
-                        <Select.Viewport>
-                            { libraries.map((item, i) => {
-                                return (
-                                    <Select.Item
+                        <Select.Viewport animation="quick">
+                            <Select.Group>
+\                               <Select.Label>Music Libraries</Select.Label>
+                                { libraries.map((item, i) => {
+                                    return (
+                                        <Select.Item
                                         index={i}
                                         key={item.Name!}
                                         value={item.Name!}
-                                    >
-                                        <Select.ItemText>{item.Name!}</Select.ItemText>
-                                        <Select.ItemIndicator marginLeft="auto">
-                                            <Icon name="check" size={16} />
-                                        </Select.ItemIndicator>
-                                    </Select.Item>
-                                )
-                            })}
+                                        >
+                                            <Select.ItemText>{item.Name!}</Select.ItemText>
+                                            <Select.ItemIndicator marginLeft="auto">
+                                                <Icon name="check" size={16} />
+                                            </Select.ItemIndicator>
+                                        </Select.Item>
+                                    )
+                                })}
+                            </Select.Group>
                         </Select.Viewport>
                     </Select.Content>
                 </Select>
