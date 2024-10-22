@@ -8,17 +8,12 @@ import _ from "lodash";
  * @returns A Promise of the authenticated Jellyfin API client or a rejection
  */
 export const createApi: () => Promise<Api> = () => new Promise(async (resolve, reject) => {
-    return await fetchCredentials()
-        .then(credentials => {
+    let credentials = await fetchCredentials();
 
-            if (!_.isUndefined(credentials))
-                reject("No credentials exist for the current user")
+    if (_.isUndefined(credentials))
+        reject("No credentials exist for the current user")
             
-            resolve(client.createApi(credentials!.server, credentials!.password));
-
-        }).catch((rejection) => {
-            reject(rejection)
-        })
+    resolve(client.createApi(credentials!.server, credentials!.password));
 });
 
 export const createPublicApi: (serverUrl: string) => Api = (serverUrl) => {
