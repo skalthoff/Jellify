@@ -31,9 +31,7 @@ export default function ServerLibrary(): React.JSX.Element {
         }
     });
     
-    const { data, isPending, refetch } = useLibraries(apiClient!);
-
-    const [libraries, setLibraries] = useState<BaseItemDto[] | undefined>(data)
+    const { data : libraries, isPending, refetch } = useLibraries(apiClient!);
 
     const clearUser = useMutation({
         mutationFn: async () => {
