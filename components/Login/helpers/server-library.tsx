@@ -26,7 +26,9 @@ export default function ServerLibrary(): React.JSX.Element {
     
     const useLibraries = (api: Api) => useQuery({
         queryKey: [QueryKeys.Libraries, api],
-        queryFn: ({ queryKey }) => fetchMusicLibraries(queryKey[1] as Api)
+        queryFn: async ({ queryKey }) => {
+            return await fetchMusicLibraries(queryKey[1] as Api);
+        }
     });
     
     const { data, isPending, refetch } = useLibraries(apiClient!);
@@ -46,14 +48,6 @@ export default function ServerLibrary(): React.JSX.Element {
     const serverCredentials = useMutation({
         mutationFn: mutateServerCredentials
     });
-
-    useEffect(() => {
-        refetch().then((value) => {
-            setLibraries(value.data)
-        })
-    }, [
-        apiClient,
-    ])
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
