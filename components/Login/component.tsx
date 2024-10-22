@@ -33,7 +33,7 @@ export default function Login(): React.JSX.Element {
                         />
                     ) : (
                     
-                    ((_.isUndefined(username) && _.isUndefined(apiClient)) || changeUsername) ? (
+                    ((_.isUndefined(username) || _.isUndefined(apiClient)) || changeUsername) ? (
                         <Stack.Screen 
                             name="ServerAuthentication" 
                             options={{ 
