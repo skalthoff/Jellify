@@ -10,8 +10,6 @@ export const fetchMusicLibraries : (api: Api) => Promise<BaseItemDto[]> = (api: 
     
     let libraries = await getItemsApi(api).getItems();
 
-    console.log(`REMOVE THIS::Libraries response:`, libraries);
-
     if (_.isUndefined(libraries.data.Items)) {
         console.log("No libraries found on Jellyfin");
         return Promise.reject("No libraries found on Jellyfin");

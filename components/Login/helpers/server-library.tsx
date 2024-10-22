@@ -50,8 +50,8 @@ export default function ServerLibrary(): React.JSX.Element {
     useEffect(() => {
         setLibraries(data)
     }, [
-        data,
         isPending,
+        apiClient,
     ])
 
     return (
