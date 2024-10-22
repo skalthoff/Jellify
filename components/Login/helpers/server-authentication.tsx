@@ -9,9 +9,10 @@ import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
 import Button from "../../helpers/button";
 import Input from "../../helpers/input";
+import { mutateServer } from "../../../api/mutators/functions/storage";
 
 export default function ServerAuthentication(): React.JSX.Element {
-    const { username, setUsername, setChangeUsername, setServerAddress, storedServer } = useAuthenticationContext();
+    const { username, setUsername, setChangeUsername, setServerAddress, setChangeServer, storedServer } = useAuthenticationContext();
     const [password, setPassword] = React.useState<string | undefined>('');
 
     const { apiClient, refetchApi } = useApiClientContext();
@@ -44,22 +45,13 @@ export default function ServerAuthentication(): React.JSX.Element {
         }
     });
 
-    const clearServer = useMutation({
-        mutationFn: async () => {
-            setServerAddress(undefined);
-            return Promise.resolve();
-        }
-    });
-
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
             <Heading>
                 { `Sign in to ${storedServer?.name ?? "Jellyfin"}`}
             </Heading>
             <Button
-                onPress={() => {
-                    clearServer.mutate();
-                }}
+                onPress={() => setChangeServer(true)}
                 >Switch Server
             </Button>
 
