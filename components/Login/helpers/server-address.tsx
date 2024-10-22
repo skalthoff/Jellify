@@ -14,17 +14,11 @@ import { Heading } from "../../helpers/text";
 import Input from "../../helpers/input";
 import Button from "../../helpers/button";
 
-const http = "http://"
-const https = "https://"
-
 export default function ServerAddress(): React.JSX.Element {
 
-    const { setServer, refetchApi } = useApiClientContext();
-    const { serverAddress, setServerAddress } = useAuthenticationContext();
+    const { serverAddress, setServerAddress, setChangeServer, useHttps, setUseHttps, refetchServer } = useAuthenticationContext();
 
-    const [useHttps, setUseHttps] = useState(true)
-
-    const theme = useTheme();
+    const { apiClient } = useApiClientContext();
 
     const useServerMutation = useMutation({
         mutationFn: serverMutation,
@@ -45,9 +39,9 @@ export default function ServerAddress(): React.JSX.Element {
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
 
-            setServer(jellifyServer);
-            refetchApi();
-            return await mutateServer(jellifyServer);
+            await mutateServer(jellifyServer);
+            await refetchServer();
+            setChangeServer(false);
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);

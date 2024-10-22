@@ -25,8 +25,12 @@ export const serverMutation = async (serverUrl: string) => {
     return await getSystemApi(api).getPublicSystemInfo();
 }
 
-export const mutateServer = async (server: JellifyServer | undefined) => {
-    return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, JSON.stringify(server));
+export const mutateServer = async (server?: JellifyServer) => {
+
+    if (!_.isUndefined(server)) 
+        return await AsyncStorage.setItem(AsyncStorageKeys.ServerUrl, JSON.stringify(server));
+
+    return await AsyncStorage.removeItem(AsyncStorageKeys.ServerUrl);
 }
 
 export const mutateServerCredentials = async (credentials?: JellyfinCredentials) => {        

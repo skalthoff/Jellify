@@ -3,15 +3,11 @@ import { QueryKeys } from "../enums/query-keys";
 import { createApi, createPublicApi } from "./queries/functions/api";
 
 export const usePublicApi = (serverUrl: string) => useQuery({
-    queryKey: [QueryKeys.PublicApi, serverUrl],
-    queryFn: ({ queryKey }) => {
-        return createPublicApi(queryKey[1])
-    }
-})
+    queryKey: [QueryKeys.PublicApi, { serverUrl }],
+    queryFn: createPublicApi
+});
 
 export const useApi = () => useQuery({
     queryKey: [QueryKeys.Api],
-    queryFn: () => {
-        return createApi()
-    }
+    queryFn: createApi
 })

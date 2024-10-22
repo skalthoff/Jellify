@@ -32,11 +32,11 @@ function conditionalHomeRender(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   // If library ID hasn't been set, we haven't completed the auth flow
-  const { library } = useApiClientContext();
+  const { apiClient } = useApiClientContext();
   
   return (
     <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
-        { !_.isUndefined(library) ? (
+        { !_.isUndefined(apiClient) ? (
           <Navigation />
         ) : (
           <JellyfinAuthenticationProvider>

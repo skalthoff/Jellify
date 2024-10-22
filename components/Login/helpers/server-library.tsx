@@ -21,14 +21,12 @@ export default function ServerLibrary(): React.JSX.Element {
 
     const { setUsername, libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
 
-    const { apiClient, setUsername: setClientUsername } = useApiClientContext();
+    const { apiClient } = useApiClientContext();
 
     
     const useLibraries = (api: Api) => useQuery({
         queryKey: [QueryKeys.Libraries, api],
-        queryFn: async ({ queryKey }) => {
-            return await fetchMusicLibraries(queryKey[1] as Api);
-        }
+        queryFn: async ({ queryKey }) => await fetchMusicLibraries(queryKey[1] as Api)
     });
     
     const { data : libraries, isPending, refetch } = useLibraries(apiClient!);
@@ -37,7 +35,6 @@ export default function ServerLibrary(): React.JSX.Element {
         mutationFn: async () => {
 
             setUsername(undefined);
-            setClientUsername(undefined);
 
             return Promise.resolve();
         }
