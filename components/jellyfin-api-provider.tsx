@@ -1,5 +1,5 @@
 import { Api } from '@jellyfin/sdk';
-import React, { createContext, ReactNode, useContext } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useApi } from '../api/queries';
 import _ from 'lodash';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
@@ -12,11 +12,19 @@ interface JellyfinApiClientContext {
 
 const JellyfinApiClientContextInitializer = () => {
 
+    const [apiClient, setApiClient] = useState<Api | undefined>(undefined);
     const { data: api, isPending: apiPending, refetch: refetchApi } = useApi();
 
+    useEffect(() => {
+      if (!apiPending)
+        setApiClient(api)
+    }, [
+      apiPending
+    ]);
+
     return { 
-      api,
-      apiPending, 
+      apiClient, 
+      apiPending,
       refetchApi,
     };
 }
@@ -32,7 +40,7 @@ export const JellyfinApiClientProvider: ({ children }: {
   children: ReactNode;
 }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
   const { 
-    api, 
+    apiClient, 
     apiPending, 
     refetchApi,
    } = JellyfinApiClientContextInitializer();
@@ -41,7 +49,7 @@ export const JellyfinApiClientProvider: ({ children }: {
 
   return (
     <JellyfinApiClientContext.Provider value={{ 
-      apiClient: api, 
+      apiClient, 
       apiPending, 
       refetchApi,
     }}>
