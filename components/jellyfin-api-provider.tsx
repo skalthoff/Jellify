@@ -1,5 +1,5 @@
 import { Api } from '@jellyfin/sdk';
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import React, { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
 import { useApi } from '../api/queries';
 import _ from 'lodash';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
@@ -7,7 +7,7 @@ import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
   apiPending: boolean;
-  refetchApi: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<Api, Error>>;
+  setApiClient: React.Dispatch<SetStateAction<Api | undefined>>;
 }
 
 const JellyfinApiClientContextInitializer = () => {
@@ -17,6 +17,7 @@ const JellyfinApiClientContextInitializer = () => {
 
     useEffect(() => {
       if (!apiPending)
+        console.log("Setting API client to stored values")
         setApiClient(api)
     }, [
       apiPending
@@ -25,7 +26,7 @@ const JellyfinApiClientContextInitializer = () => {
     return { 
       apiClient, 
       apiPending,
-      refetchApi,
+      setApiClient,
     };
 }
 
@@ -33,7 +34,7 @@ export const JellyfinApiClientContext =
   createContext<JellyfinApiClientContext>({ 
     apiClient: undefined, 
     apiPending: true,
-    refetchApi: () => new Promise(() => {}),
+    setApiClient: () => {},
   });
 
 export const JellyfinApiClientProvider: ({ children }: {
@@ -42,7 +43,7 @@ export const JellyfinApiClientProvider: ({ children }: {
   const { 
     apiClient, 
     apiPending, 
-    refetchApi,
+    setApiClient,
    } = JellyfinApiClientContextInitializer();
 
   // Add your logic to check if credentials are stored and initialize the API client here.
@@ -51,7 +52,7 @@ export const JellyfinApiClientProvider: ({ children }: {
     <JellyfinApiClientContext.Provider value={{ 
       apiClient, 
       apiPending, 
-      refetchApi,
+      setApiClient,
     }}>
         {children}
     </JellyfinApiClientContext.Provider>

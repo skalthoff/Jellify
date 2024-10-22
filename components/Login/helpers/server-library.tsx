@@ -21,7 +21,7 @@ export default function ServerLibrary(): React.JSX.Element {
 
     const { server, setUsername, setChangeUsername, libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
 
-    const { apiClient, refetchApi } = useApiClientContext();
+    const { apiClient, setApiClient } = useApiClientContext();
 
     
     const useLibraries = (api: Api) => useQuery({
@@ -33,9 +33,9 @@ export default function ServerLibrary(): React.JSX.Element {
 
     const clearUser = useMutation({
         mutationFn: async () => {
-            await mutateServerCredentials(server!.url);
+            setApiClient(undefined)
             setChangeUsername(true);
-            return await refetchApi()
+            return await mutateServerCredentials(server!.url);
         }
     });
 
