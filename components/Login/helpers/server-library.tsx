@@ -35,7 +35,7 @@ export default function ServerLibrary(): React.JSX.Element {
         mutationFn: async () => {
             await mutateServerCredentials();
             setChangeUsername(true);
-            return refetchApi()
+            return await refetchApi()
         }
     });
 
