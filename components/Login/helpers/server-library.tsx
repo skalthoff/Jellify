@@ -13,29 +13,23 @@ import { Api } from "@jellyfin/sdk";
 import { fetchMusicLibraries } from "../../../api/queries/functions/libraries";
 import { QueryKeys } from "../../../enums/query-keys";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { ActivityIndicator } from "react-native";
 
 export default function ServerLibrary(): React.JSX.Element {
 
     const [musicLibrary, setMusicLibrary] = useState<JellifyLibrary | undefined>(undefined);
-    const [libraries, setLibraries] = useState<BaseItemDto[] | undefined>(undefined);
 
     const { setUsername, libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
 
-    const { apiClient, server, setApiClient, setUsername: setClientUsername } = useApiClientContext();
+    const { apiClient, setUsername: setClientUsername } = useApiClientContext();
 
+    
     const useLibraries = (api: Api) => useQuery({
         queryKey: [QueryKeys.Libraries, api],
         queryFn: ({ queryKey }) => fetchMusicLibraries(queryKey[1] as Api)
     });
-
-    useEffect(() => {
-
-        if (!_.isUndefined(apiClient)) 
-            setLibraries(useLibraries(apiClient).data);
-    }, [
-        apiClient
-    ])
-
+    
+    const { data: libraries, isPending } = useLibraries(apiClient!);
 
     const clearUser = useMutation({
         mutationFn: async () => {
@@ -55,6 +49,10 @@ export default function ServerLibrary(): React.JSX.Element {
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
             <Heading>Select Music Library</Heading>
+
+            { isPending && (
+                <ActivityIndicator />
+            )}
 
             { !_.isUndefined(libraries) &&
                 <Select defaultValue="">
