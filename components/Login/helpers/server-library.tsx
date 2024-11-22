@@ -62,8 +62,6 @@ export default function ServerLibrary(): React.JSX.Element {
             <Button onPress={() => setAccessToken(undefined)}>
                 Switch User
             </Button>
-
-            <Select value={libraryName}></Select>
         </View>
     )
 }
