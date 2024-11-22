@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { RadioGroup, Text, View, YStack } from "tamagui";
+import { RadioGroup, Text, ToggleGroup, View, YStack } from "tamagui";
 import { JellifyLibrary } from "../../../types/JellifyLibrary";
 import { useAuthenticationContext } from "../provider";
-import { Heading } from "../../helpers/text";
+import { Heading, Label } from "../../helpers/text";
 import Button from "../../helpers/button";
 import _ from "lodash";
 import { Api } from "@jellyfin/sdk";
@@ -35,6 +35,12 @@ export default function ServerLibrary(): React.JSX.Element {
         apiClient
     ])
 
+    useEffect(() => {
+        console.log(libraries)
+    }, [
+        libraries
+    ])
+
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
             <Heading>Select Music Library</Heading>
@@ -44,17 +50,19 @@ export default function ServerLibrary(): React.JSX.Element {
             )}
 
             { !_.isUndefined(libraries) &&
-                <RadioGroup 
-                    aria-labelledby="Select libraries" 
-                    defaultValue="Library" 
-                    name="library"
+                <ToggleGroup
+                    orientation="vertical"
+                    id="librarySelection"
+                    size="$2"
+                    type="single"
+                    disableDeactivation={true}
                 >
-                    <YStack width={300} alignItems="center" space="$2">
-                        { libraries.map((library) => {
-                            <RadioGroupItemWithLabel size="$4" value={library.Id ?? ""} label={library.Name ?? "No library name"} />
-                        })}
-                    </YStack>
-                </RadioGroup>
+                    { libraries.map((library) => {
+                        <ToggleGroup.Item value={library.Id!} aria-label={library.Name!}>
+                            <Label htmlFor={library.Id!} size="$2">{library.Name!}</Label>
+                        </ToggleGroup.Item>
+                    })}
+              </ToggleGroup>
             }
 
             { isError && (
