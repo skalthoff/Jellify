@@ -17,6 +17,7 @@ export default function Input(props: InputProps): React.JSX.Element {
             placeholder={props.placeholder}
             onChangeText={props.onChangeText} 
             value={props.value}
+            minWidth={300}
             secureTextEntry={props.secureTextEntry}
         />
     )

@@ -61,7 +61,7 @@ export default function ServerAddress(): React.JSX.Element {
             <Heading>
                 Connect to Jellyfin
             </Heading>
-            <XStack>
+            <XStack width={400}>
                 <SwitchWithLabel 
                     checked={useHttps} 
                     onCheckedChange={(checked) => setUseHttps(checked)} 
