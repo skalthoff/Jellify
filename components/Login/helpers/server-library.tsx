@@ -51,7 +51,7 @@ export default function ServerLibrary(): React.JSX.Element {
                 >
                     <YStack width={300} alignItems="center" space="$2">
                         { libraries.map((library) => {
-                            <RadioGroupItemWithLabel size="$4" value={library.Id ?? ""} label={library.Name ?? ""} />
+                            <RadioGroupItemWithLabel size="$4" value={library.Id ?? ""} label={library.Name ?? "No library name"} />
                         })}
                     </YStack>
                 </RadioGroup>
