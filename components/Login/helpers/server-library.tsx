@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { RadioGroup, Select, Text, View, YStack } from "tamagui";
+import { RadioGroup, Text, View, YStack } from "tamagui";
 import { JellifyLibrary } from "../../../types/JellifyLibrary";
 import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
@@ -10,7 +10,6 @@ import _ from "lodash";
 import { Api } from "@jellyfin/sdk";
 import { fetchMusicLibraries } from "../../../api/libraries";
 import { QueryKeys } from "../../../enums/query-keys";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ActivityIndicator } from "react-native";
 import { RadioGroupItemWithLabel } from "../../helpers/radio-group-item-with-label";
 
@@ -49,7 +48,6 @@ export default function ServerLibrary(): React.JSX.Element {
                     aria-labelledby="Select libraries" 
                     defaultValue="Library" 
                     name="library"
-                    value={libraryId}
                 >
                     <YStack width={300} alignItems="center" space="$2">
                         { libraries.map((library) => {
