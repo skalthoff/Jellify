@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { Select, View } from "tamagui";
 import { JellifyLibrary } from "../../../types/JellifyLibrary";
@@ -8,9 +8,8 @@ import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
 import Button from "../../helpers/button";
 import _ from "lodash";
-import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models/base-item-dto";
 import { Api } from "@jellyfin/sdk";
-import { fetchMusicLibraries } from "../../../api/queries/functions/libraries";
+import { fetchMusicLibraries } from "../../../api/libraries";
 import { QueryKeys } from "../../../enums/query-keys";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ActivityIndicator } from "react-native";
@@ -19,9 +18,9 @@ export default function ServerLibrary(): React.JSX.Element {
 
     const [musicLibrary, setMusicLibrary] = useState<JellifyLibrary | undefined>(undefined);
 
-    const { server, setUsername, setChangeUsername, libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
+    const { libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
 
-    const { apiClient, setApiClient } = useApiClientContext();
+    const { apiClient, setAccessToken } = useApiClientContext();
 
     
     const useLibraries = (api: Api) => useQuery({
@@ -31,18 +30,9 @@ export default function ServerLibrary(): React.JSX.Element {
     
     const { data : libraries, isPending, refetch } = useLibraries(apiClient!);
 
-    const clearUser = useMutation({
-        mutationFn: async () => {
-            setChangeUsername(true);
-            setApiClient(undefined)
-            return await mutateServerCredentials(server!.url);
-        }
-    });
-
     useEffect(() => {
         refetch();
     }, [
-        server,
         apiClient
     ])
 
@@ -83,11 +73,7 @@ export default function ServerLibrary(): React.JSX.Element {
                 </Select>
             }
 
-            <Button
-                onPress={() => {
-                    clearUser.mutate();
-                }}
-            >
+            <Button onPress={() => setAccessToken(undefined)}>
                 Switch User
             </Button>
 

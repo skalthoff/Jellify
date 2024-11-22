@@ -3,17 +3,28 @@ import React, { createContext, ReactNode, SetStateAction, useContext, useEffect,
 import { useApi } from '../api/queries';
 import _ from 'lodash';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+import { storage } from '../constants/storage';
+import { MMKVStorageKeys } from '../enums/mmkv-storage-keys';
+import { JellifyServer } from '../types/JellifyServer';
 
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
   apiPending: boolean;
-  setApiClient: React.Dispatch<SetStateAction<Api | undefined>>;
+  server: JellifyServer | undefined;
+  setServer: React.Dispatch<SetStateAction<JellifyServer | undefined>>;
+  username: string | undefined;
+  setUsername: React.Dispatch<SetStateAction<string | undefined>>;
+  accessToken: string | undefined;
+  setAccessToken: React.Dispatch<SetStateAction<string | undefined>>;
 }
 
 const JellyfinApiClientContextInitializer = () => {
 
+    const [username, setUsername] = useState<string | undefined>(storage.getString(MMKVStorageKeys.Username));
+    const [accessToken, setAccessToken] = useState<string | undefined>(storage.getString(MMKVStorageKeys.AccessToken));
+    const [server, setServer] = useState<JellifyServer | undefined>(JSON.parse(storage.getString(MMKVStorageKeys.Server) ?? "") as JellifyServer);
     const [apiClient, setApiClient] = useState<Api | undefined>(undefined);
-    const { data: api, isPending: apiPending, refetch: refetchApi } = useApi();
+    const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url ?? undefined, username, undefined, accessToken);
 
     useEffect(() => {
       if (!apiPending)
@@ -23,10 +34,40 @@ const JellyfinApiClientContextInitializer = () => {
       apiPending
     ]);
 
+    useEffect(() => {
+      refetchApi()
+    }, [
+      server,
+      accessToken
+    ])
+
+    useEffect(() => {
+      if (server)
+        storage.set(MMKVStorageKeys.Server, JSON.stringify(server))
+      else 
+        storage.delete(MMKVStorageKeys.Server)
+    }, [
+      server
+    ])
+
+    useEffect(() => {
+      if (accessToken)
+        storage.set(MMKVStorageKeys.AccessToken, accessToken);
+      else
+        storage.delete(MMKVStorageKeys.AccessToken);
+    }, [
+      accessToken
+    ])
+
     return { 
       apiClient, 
       apiPending,
-      setApiClient,
+      server,
+      setServer,
+      username, 
+      setUsername,
+      accessToken,
+      setAccessToken,
     };
 }
 
@@ -34,7 +75,12 @@ export const JellyfinApiClientContext =
   createContext<JellyfinApiClientContext>({ 
     apiClient: undefined, 
     apiPending: true,
-    setApiClient: () => {},
+    server: undefined,
+    setServer: () => {},
+    username: undefined,
+    setUsername: () => {},
+    accessToken: undefined,
+    setAccessToken: () => {}
   });
 
 export const JellyfinApiClientProvider: ({ children }: {
@@ -43,7 +89,12 @@ export const JellyfinApiClientProvider: ({ children }: {
   const { 
     apiClient, 
     apiPending, 
-    setApiClient,
+    server,
+    setServer,
+    username,
+    setUsername,
+    accessToken,
+    setAccessToken
    } = JellyfinApiClientContextInitializer();
 
   // Add your logic to check if credentials are stored and initialize the API client here.
@@ -52,7 +103,12 @@ export const JellyfinApiClientProvider: ({ children }: {
     <JellyfinApiClientContext.Provider value={{ 
       apiClient, 
       apiPending, 
-      setApiClient,
+      server,
+      setServer,
+      username,
+      setUsername,
+      accessToken,
+      setAccessToken
     }}>
         {children}
     </JellyfinApiClientContext.Provider>

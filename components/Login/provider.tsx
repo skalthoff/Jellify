@@ -1,28 +1,11 @@
-import React, { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
-import { useCredentials, useServer } from "../../api/queries/keychain";
+import React, { createContext, ReactNode, SetStateAction, useContext, useState } from "react";
 import _ from "lodash";
-import { SharedWebCredentials } from "react-native-keychain";
-import { JellifyServer } from "../../types/JellifyServer";
-import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
-import { mutateServer, mutateServerCredentials } from "../../api/mutators/functions/storage";
-import { usePublicApi } from "../../api/queries";
-import { Api } from "@jellyfin/sdk";
 
 interface JellyfinAuthenticationContext {
     username: string | undefined;
     setUsername: React.Dispatch<SetStateAction<string | undefined>>;
-    changeUsername: boolean;
-    setChangeUsername: React.Dispatch<SetStateAction<boolean>>;
-    useHttp: boolean;
-    setUseHttp: React.Dispatch<SetStateAction<boolean>>;
-    useHttps: boolean;
-    setUseHttps: React.Dispatch<SetStateAction<boolean>>;
     serverAddress: string | undefined;
     setServerAddress: React.Dispatch<SetStateAction<string | undefined>>;
-    changeServer: boolean;
-    setChangeServer: React.Dispatch<SetStateAction<boolean>>;
-    server: JellifyServer | undefined;
-    setServer: React.Dispatch<SetStateAction<JellifyServer | undefined>>;
     libraryName: string | undefined;
     setLibraryName: React.Dispatch<React.SetStateAction<string | undefined>>;
     libraryId: string | undefined;
@@ -33,35 +16,25 @@ interface JellyfinAuthenticationContext {
 
 const JellyfinAuthenticationContextInitializer = () => {
     const [username, setUsername] = useState<string | undefined>(undefined);
-    const [changeUsername, setChangeUsername] = useState<boolean>(false);
 
     const [useHttp, setUseHttp] = useState<boolean>(false);
     const [useHttps, setUseHttps] = useState<boolean>(true);
     const [serverAddress, setServerAddress] = useState<string | undefined>(undefined);
-    const [changeServer, setChangeServer] = useState<boolean>(false);
-    const [server, setServer] = useState<JellifyServer | undefined>(undefined);
 
     const [libraryName, setLibraryName] = useState<string | undefined>(undefined);
     const [libraryId, setLibraryId] = useState<string | undefined>(undefined);
 
     const [triggerAuth, setTriggerAuth] = useState<boolean>(true);
 
-
     return {
         username,
         setUsername,
-        changeUsername,
-        setChangeUsername,
         useHttp,
         setUseHttp,
         useHttps,
         setUseHttps,
         serverAddress,
         setServerAddress,
-        changeServer,
-        setChangeServer,
-        server,
-        setServer,
         libraryName,
         setLibraryName,
         libraryId,
@@ -75,18 +48,8 @@ const JellyfinAuthenticationContext =
     createContext<JellyfinAuthenticationContext>({
         username: undefined,
         setUsername: () => {},
-        changeUsername: false,
-        setChangeUsername: () => {},
-        useHttp: false,
-        setUseHttp: () => {},
-        useHttps: true,
-        setUseHttps: () => {},
         serverAddress: undefined,
         setServerAddress: () => {},
-        changeServer: false,
-        setChangeServer: () => {},
-        server: undefined,
-        setServer: () => {},
         libraryName: undefined,
         setLibraryName: () => {},
         libraryId: undefined, 
@@ -102,18 +65,8 @@ export const JellyfinAuthenticationProvider: ({ children }: {
     const {
         username,
         setUsername,
-        changeUsername,
-        setChangeUsername,
-        useHttp,
-        setUseHttp,
-        useHttps,
-        setUseHttps,
         serverAddress,
         setServerAddress,
-        changeServer,
-        server,
-        setServer,
-        setChangeServer,
         libraryName,
         setLibraryName,
         libraryId,
@@ -126,18 +79,8 @@ export const JellyfinAuthenticationProvider: ({ children }: {
         <JellyfinAuthenticationContext.Provider value={{
             username,
             setUsername,
-            changeUsername,
-            setChangeUsername,
-            useHttp,
-            setUseHttp,
-            useHttps,
-            setUseHttps,
             serverAddress,
             setServerAddress,
-            changeServer,
-            setChangeServer,
-            server,
-            setServer,
             libraryName,
             setLibraryName,
             libraryId,
