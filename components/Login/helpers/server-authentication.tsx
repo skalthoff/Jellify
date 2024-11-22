@@ -65,7 +65,7 @@ export default function ServerAuthentication(): React.JSX.Element {
                 />
 
             <Button 
-                disabled={_.isEmpty(username) || _.isEmpty(password)}
+                disabled={_.isEmpty(username) || _.isEmpty(password) || useApiMutation.isPending}
                 onPress={() => {
 
                     if (!_.isUndefined(username)) {

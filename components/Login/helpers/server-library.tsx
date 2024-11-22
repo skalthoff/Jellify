@@ -45,11 +45,9 @@ export default function ServerLibrary(): React.JSX.Element {
         <View marginHorizontal={10} flex={1} justifyContent='center'>
             <Heading>Select Music Library</Heading>
 
-            { isPending && (
+            { isPending ? (
                 <ActivityIndicator />
-            )}
-
-            { libraries &&
+            ) : (
                 <ToggleGroup
                     orientation="vertical"
                     id="librarySelection"
@@ -57,13 +55,13 @@ export default function ServerLibrary(): React.JSX.Element {
                     type="single"
                     disableDeactivation={true}
                 >
-                    { libraries.map((library) => {
+                    { libraries!.map((library) => {
                         <ToggleGroup.Item value={library.Id!} aria-label={library.Name!}>
                             <Label htmlFor={library.Id!} size="$2">{library.Name!}</Label>
                         </ToggleGroup.Item>
                     })}
               </ToggleGroup>
-            }
+            )}
 
             { isError && (
                 <Text>Unable to load libraries</Text>
