@@ -20,9 +20,11 @@ interface JellyfinApiClientContext {
 
 const JellyfinApiClientContextInitializer = () => {
 
+    let serverJson = storage.getString(MMKVStorageKeys.Server);
+
     const [username, setUsername] = useState<string | undefined>(storage.getString(MMKVStorageKeys.Username));
     const [accessToken, setAccessToken] = useState<string | undefined>(storage.getString(MMKVStorageKeys.AccessToken));
-    const [server, setServer] = useState<JellifyServer | undefined>(JSON.parse(storage.getString(MMKVStorageKeys.Server) ?? "") as JellifyServer);
+    const [server, setServer] = useState<JellifyServer | undefined>(serverJson ? (JSON.parse(serverJson) as JellifyServer) : undefined);
     const [apiClient, setApiClient] = useState<Api | undefined>(undefined);
     const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url ?? undefined, username, undefined, accessToken);
 
