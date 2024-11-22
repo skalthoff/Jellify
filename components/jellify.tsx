@@ -1,10 +1,13 @@
-import { SafeAreaView, StatusBar, useColorScheme } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import Login from "./Login/component";
-import Navigation from "./navigation";
+import { useColorScheme } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
-import { useServerUrl } from "../api/queries";
+import _ from "lodash";
+import { JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
+import React, {  } from "react";
+import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import Navigation from "./navigation";
+import Login from "./Login/component";
+import { JellyfinAuthenticationProvider } from "./Login/provider";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -17,20 +20,29 @@ export default function Jellify(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  let { data, isLoading, isSuccess } = useServerUrl();
-
-
   return (
-    <NavigationContainer>
-      <SafeAreaView style={backgroundStyle}>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        />
-        { isSuccess && <Navigation /> }
-        { !isSuccess && <Login /> }
-      </SafeAreaView>
-    </NavigationContainer>
+    <JellyfinApiClientProvider>
+      {conditionalHomeRender()}
+    </JellyfinApiClientProvider>
+  );
+}
 
+function conditionalHomeRender(): React.JSX.Element {
+
+  const isDarkMode = useColorScheme() === 'dark';
+
+  // If library ID hasn't been set, we haven't completed the auth flow
+  const { apiClient } = useApiClientContext();
+  
+  return (
+    <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
+        { !_.isUndefined(apiClient) ? (
+          <Navigation />
+        ) : (
+          <JellyfinAuthenticationProvider>
+            <Login /> 
+          </JellyfinAuthenticationProvider>
+        )}
+    </NavigationContainer>
   );
 }
