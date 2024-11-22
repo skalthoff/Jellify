@@ -3,16 +3,15 @@ import _ from "lodash";
 import { useMutation } from "@tanstack/react-query";
 import { MMKVStorageKeys } from "../../../enums/mmkv-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
-import { mutateServer, serverMutation } from "../../../api/mutators/functions/storage";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { View, XStack } from "tamagui";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
-import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
 import Input from "../../helpers/input";
 import Button from "../../helpers/button";
 import { http, https } from "../utils/constants";
 import { storage } from "../../../constants/storage";
+import { serverMutation } from "../../../api/server";
 
 export default function ServerAddress(): React.JSX.Element {
 
