@@ -11,7 +11,9 @@ import Input from "../../helpers/input";
 import Button from "../../helpers/button";
 import { http, https } from "../utils/constants";
 import { storage } from "../../../constants/storage";
-import { serverMutation } from "../../../api/server";
+import { client } from "../../../api/client";
+import { Jellyfin } from "@jellyfin/sdk/lib/jellyfin";
+import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
 
 export default function ServerAddress(): React.JSX.Element {
 
@@ -21,7 +23,16 @@ export default function ServerAddress(): React.JSX.Element {
     const [serverAddress, setServerAddress] = useState<string | undefined>(undefined);
 
     const useServerMutation = useMutation({
-        mutationFn: serverMutation,
+        mutationFn: async () => {
+            let jellyfin = new Jellyfin(client);
+
+            if (!!!serverAddress) 
+                throw new Error("Server address was empty");
+
+            let api  = jellyfin.createApi(serverAddress);
+
+            return getSystemApi(api).getPublicSystemInfo();
+        },
         onSuccess: async (publicSystemInfoResponse, serverUrl) => {
             if (!!!publicSystemInfoResponse.data.Version)
                 throw new Error("Jellyfin instance did not respond");
@@ -66,7 +77,7 @@ export default function ServerAddress(): React.JSX.Element {
             <Button 
                 disabled={_.isEmpty(serverAddress)}
                 onPress={() => {
-                    useServerMutation.mutate(`${useHttps ? "https" : "http"}://${serverAddress}`);
+                    useServerMutation.mutate();
                 }}>
                 Connect
             </Button>
