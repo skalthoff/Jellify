@@ -29,15 +29,15 @@ export default function ServerAddress(): React.JSX.Element {
             if (!!!serverAddress) 
                 throw new Error("Server address was empty");
 
-            let api  = jellyfin.createApi(serverAddress);
+            let api  = jellyfin.createApi(`${useHttps ? https : http}${serverAddress}`);
 
             return getSystemApi(api).getPublicSystemInfo();
         },
-        onSuccess: async (publicSystemInfoResponse, serverUrl) => {
+        onSuccess: async (publicSystemInfoResponse) => {
             if (!!!publicSystemInfoResponse.data.Version)
                 throw new Error("Jellyfin instance did not respond");
     
-            console.debug("REMOVE THIS::onSuccess variable", serverUrl);
+            console.debug("REMOVE THIS::onSuccess variable", publicSystemInfoResponse.data);
             console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
     
             let jellifyServer: JellifyServer = {
