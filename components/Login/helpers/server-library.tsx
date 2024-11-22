@@ -49,7 +49,7 @@ export default function ServerLibrary(): React.JSX.Element {
                 <ActivityIndicator />
             )}
 
-            { !_.isUndefined(libraries) &&
+            { libraries &&
                 <ToggleGroup
                     orientation="vertical"
                     id="librarySelection"
