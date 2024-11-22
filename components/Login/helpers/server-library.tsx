@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { Select, View } from "tamagui";
+import { RadioGroup, Select, View, YStack } from "tamagui";
 import { JellifyLibrary } from "../../../types/JellifyLibrary";
 import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
@@ -12,6 +12,7 @@ import { fetchMusicLibraries } from "../../../api/libraries";
 import { QueryKeys } from "../../../enums/query-keys";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ActivityIndicator } from "react-native";
+import { RadioGroupItemWithLabel } from "../../helpers/radio-group-item-with-label";
 
 export default function ServerLibrary(): React.JSX.Element {
 
@@ -44,32 +45,18 @@ export default function ServerLibrary(): React.JSX.Element {
             )}
 
             { !_.isUndefined(libraries) &&
-                <Select defaultValue="">
-                    <Select.Trigger>
-                        <Select.Value placeholder="Libraries" />
-                    </Select.Trigger>
-                    <Select.Content>
-                        <Select.Viewport animation="quick">
-                            <Select.Group>
-\                               <Select.Label>Music Libraries</Select.Label>
-                                { libraries.map((item, i) => {
-                                    return (
-                                        <Select.Item
-                                        index={i}
-                                        key={item.Name!}
-                                        value={item.Name!}
-                                        >
-                                            <Select.ItemText>{item.Name!}</Select.ItemText>
-                                            <Select.ItemIndicator marginLeft="auto">
-                                                <Icon name="check" size={16} />
-                                            </Select.ItemIndicator>
-                                        </Select.Item>
-                                    )
-                                })}
-                            </Select.Group>
-                        </Select.Viewport>
-                    </Select.Content>
-                </Select>
+                <RadioGroup 
+                    aria-labelledby="Select libraries" 
+                    defaultValue="Library" 
+                    name="library"
+                    value={libraryId}
+                >
+                    <YStack width={300} alignItems="center" space="$2">
+                        { libraries.map((library) => {
+                            <RadioGroupItemWithLabel size="$4" value={library.Id ?? ""} label={library.Name ?? ""} />
+                        })}
+                    </YStack>
+                </RadioGroup>
             }
 
             <Button onPress={() => setAccessToken(undefined)}>
