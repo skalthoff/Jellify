@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { RadioGroup, Select, View, YStack } from "tamagui";
+import { RadioGroup, Select, Text, View, YStack } from "tamagui";
 import { JellifyLibrary } from "../../../types/JellifyLibrary";
 import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
@@ -28,7 +28,7 @@ export default function ServerLibrary(): React.JSX.Element {
         queryFn: async ({ queryKey }) => await fetchMusicLibraries(queryKey[1] as Api)
     });
     
-    const { data : libraries, isPending, refetch } = useLibraries(apiClient!);
+    const { data : libraries, isError, isPending, refetch } = useLibraries(apiClient!);
 
     useEffect(() => {
         refetch();
@@ -58,6 +58,10 @@ export default function ServerLibrary(): React.JSX.Element {
                     </YStack>
                 </RadioGroup>
             }
+
+            { isError && (
+                <Text>Unable to load libraries</Text>
+            )}
 
             <Button onPress={() => setAccessToken(undefined)}>
                 Switch User
