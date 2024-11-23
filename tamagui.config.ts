@@ -10,10 +10,11 @@ const aileronFace = {
     600: { normal: 'Aileron SemiBold', italic: 'Aileron SemiBold Italic' },
     700: { normal: 'Aileron Bold', italic: 'Aileron Bold Italic' },
     800: { normal: 'Aileron Heavy', italic: 'Aileron Heavy Italic' },
-    900: { normal: 'Aileron Black', italic: 'Aileron Black Italic' },
+    900: { normal: 'Aileron-Black', italic: 'Aileron-BlackItalic' }
 };
 
 const bodyFont = createFont({
+    family: "Aileron",
     size: config.fonts.body.size,
     lineHeight: config.fonts.body.lineHeight,
     weight: config.fonts.body.weight,
@@ -22,6 +23,7 @@ const bodyFont = createFont({
 })
 
 const headingFont = createFont({
+    family: "Aileron",
     size: config.fonts.heading.size,
     lineHeight: config.fonts.heading.lineHeight,
     weight: config.fonts.heading.weight,
