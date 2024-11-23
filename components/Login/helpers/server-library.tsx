@@ -50,15 +50,17 @@ export default function ServerLibrary(): React.JSX.Element {
             ) : (
                 <ToggleGroup
                     orientation="vertical"
-                    id="librarySelection"
-                    size="$2"
                     type="single"
                     disableDeactivation={true}
+                    value={libraryId}
+                    onValueChange={setLibraryId}
                 >
                     { libraries!.map((library) => {
-                        <ToggleGroup.Item value={library.Id!} aria-label={library.Name!}>
-                            <Label htmlFor={library.Id!} size="$2">{library.Name!}</Label>
-                        </ToggleGroup.Item>
+                        return (
+                            <ToggleGroup.Item value={library.Id!} aria-label={library.Name!}>
+                                <Label htmlFor={library.Id!} size="$2">{library.Name!}</Label>
+                            </ToggleGroup.Item>
+                        )
                     })}
               </ToggleGroup>
             )}
