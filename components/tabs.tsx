@@ -13,7 +13,7 @@ export function Tabs() {
                 component={Home}
                 options={{
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="home" color={color} size={size} />
+                        <MaterialCommunityIcons name="jellyfish-outline" color={color} size={size} />
                     )
                 }}
             />
