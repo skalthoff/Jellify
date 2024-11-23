@@ -35,6 +35,7 @@ const JellyfinApiClientContextInitializer = () => {
     const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url ?? undefined, username, undefined, accessToken);
 
     const signOut = () => {
+      console.debug("Signing out of Jellify");
       setUsername(undefined);
       setAccessToken(undefined);
       setServer(undefined);
@@ -50,6 +51,7 @@ const JellyfinApiClientContextInitializer = () => {
     ]);
 
     useEffect(() => {
+      console.debug("Access Token or Server changed, creating new API client");
       refetchApi()
     }, [
       server,
@@ -57,19 +59,27 @@ const JellyfinApiClientContextInitializer = () => {
     ])
 
     useEffect(() => {
-      if (server)
+      if (server) {
+        console.debug("Storing new server configuration")
         storage.set(MMKVStorageKeys.Server, JSON.stringify(server))
-      else 
+      }
+      else {
+        console.debug("Deleting server configuration from storage");
         storage.delete(MMKVStorageKeys.Server)
+      }
     }, [
       server
     ])
 
     useEffect(() => {
-      if (accessToken)
+      if (accessToken) {
+        console.debug("Storing new access token")
         storage.set(MMKVStorageKeys.AccessToken, accessToken);
-      else
+      }
+      else {
+        console.debug("Deleting access token from storage");
         storage.delete(MMKVStorageKeys.AccessToken);
+      }
     }, [
       accessToken
     ])
