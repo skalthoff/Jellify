@@ -14,6 +14,6 @@ export function Label(props: LabelProps): React.JSX.Element {
 
 export function Heading({ children }: { children: string }): React.JSX.Element {
     return (
-        <H1 marginVertical={30}>{ children }</H1>
+        <H1 marginVertical={30} fontWeight={800}>{ children }</H1>
     )
 }
