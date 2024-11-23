@@ -11,34 +11,25 @@ import { JellyfinAuthenticationProvider } from "./Login/provider";
 
 export default function Jellify(): React.JSX.Element {
 
-  const isDarkMode = useColorScheme() === 'dark';
-
   setupPlayer();
 
   return (
     <JellyfinApiClientProvider>
-      {conditionalHomeRender()}
+      <App />
     </JellyfinApiClientProvider>
   );
 }
 
-function conditionalHomeRender(): React.JSX.Element {
+function App(): React.JSX.Element {
 
   const isDarkMode = useColorScheme() === 'dark';
 
   // If library hasn't been set, we haven't completed the auth flow
-  const { apiClient, library } = useApiClientContext();
-
-  useEffect(() => {
-    console.debug("Context changed, rerendering")
-  }, [
-    apiClient, 
-    library
-  ])
+  const { library } = useApiClientContext();
   
   return (
     <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
-        { apiClient && library ? <Navigation /> : (
+        { library ? <Navigation /> : (
           <JellyfinAuthenticationProvider>
             <Login /> 
           </JellyfinAuthenticationProvider>
