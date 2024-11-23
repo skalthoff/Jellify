@@ -14,7 +14,7 @@ const aileronFace = {
 };
 
 const bodyFont = createFont({
-    family: "Aileron",
+    family: "Aileron-Regular",
     size: config.fonts.body.size,
     lineHeight: config.fonts.body.lineHeight,
     weight: config.fonts.body.weight,
@@ -23,7 +23,7 @@ const bodyFont = createFont({
 })
 
 const headingFont = createFont({
-    family: "Aileron",
+    family: "Aileron-Black",
     size: config.fonts.heading.size,
     lineHeight: config.fonts.heading.lineHeight,
     weight: config.fonts.heading.weight,
