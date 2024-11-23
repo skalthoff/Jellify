@@ -6,6 +6,7 @@ import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { storage } from '../constants/storage';
 import { MMKVStorageKeys } from '../enums/mmkv-storage-keys';
 import { JellifyServer } from '../types/JellifyServer';
+import { JellifyLibrary } from '../types/JellifyLibrary';
 
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
@@ -16,15 +17,19 @@ interface JellyfinApiClientContext {
   setUsername: React.Dispatch<SetStateAction<string | undefined>>;
   accessToken: string | undefined;
   setAccessToken: React.Dispatch<SetStateAction<string | undefined>>;
+  library: JellifyLibrary | undefined;
+  setLibrary: React.Dispatch<SetStateAction<JellifyLibrary | undefined>>;
 }
 
 const JellyfinApiClientContextInitializer = () => {
 
     let serverJson = storage.getString(MMKVStorageKeys.Server);
+    let libraryJson = storage.getString(MMKVStorageKeys.Library);
 
     const [username, setUsername] = useState<string | undefined>(storage.getString(MMKVStorageKeys.Username));
     const [accessToken, setAccessToken] = useState<string | undefined>(storage.getString(MMKVStorageKeys.AccessToken));
     const [server, setServer] = useState<JellifyServer | undefined>(serverJson ? (JSON.parse(serverJson) as JellifyServer) : undefined);
+    const [library, setLibrary] = useState<JellifyLibrary | undefined>(libraryJson ? (JSON.parse(libraryJson) as JellifyLibrary) : undefined);
     const [apiClient, setApiClient] = useState<Api | undefined>(undefined);
     const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url ?? undefined, username, undefined, accessToken);
 
@@ -61,6 +66,13 @@ const JellyfinApiClientContextInitializer = () => {
       accessToken
     ])
 
+    useEffect(() => {
+      if (library)
+        storage.set(MMKVStorageKeys.Library, JSON.stringify(library));
+      else
+        storage.delete(MMKVStorageKeys.Library)
+    })
+
     return { 
       apiClient, 
       apiPending,
@@ -70,6 +82,8 @@ const JellyfinApiClientContextInitializer = () => {
       setUsername,
       accessToken,
       setAccessToken,
+      library,
+      setLibrary
     };
 }
 
@@ -82,7 +96,9 @@ export const JellyfinApiClientContext =
     username: undefined,
     setUsername: () => {},
     accessToken: undefined,
-    setAccessToken: () => {}
+    setAccessToken: () => {},
+    library: undefined,
+    setLibrary: () => {},
   });
 
 export const JellyfinApiClientProvider: ({ children }: {
@@ -96,7 +112,9 @@ export const JellyfinApiClientProvider: ({ children }: {
     username,
     setUsername,
     accessToken,
-    setAccessToken
+    setAccessToken,
+    library,
+    setLibrary
    } = JellyfinApiClientContextInitializer();
 
   // Add your logic to check if credentials are stored and initialize the API client here.
@@ -110,7 +128,9 @@ export const JellyfinApiClientProvider: ({ children }: {
       username,
       setUsername,
       accessToken,
-      setAccessToken
+      setAccessToken,
+      library,
+      setLibrary
     }}>
         {children}
     </JellyfinApiClientContext.Provider>

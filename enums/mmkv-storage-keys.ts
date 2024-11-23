@@ -2,5 +2,6 @@ export enum MMKVStorageKeys {
     PlayQueue = "PLAY_QUEUE",
     Server = "SERVER",
     AccessToken = "AccessToken",
-    Username = "Username"
+    Username = "Username",
+    Library = "Library"
 }

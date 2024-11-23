@@ -6,19 +6,43 @@ import _ from "lodash";
 
 export function fetchMusicLibraries(api: Api): Promise<BaseItemDto[]> {
     return new Promise(async (resolve, reject) => {
-        console.log("Fetching music libraries from Jellyfin");
+        console.debug("Fetching music libraries from Jellyfin");
         
-        let libraries = await getItemsApi(api).getItems();
+        let libraries = await getItemsApi(api).getItems({ includeItemTypes: ['CollectionFolder'] });
 
         if (_.isUndefined(libraries.data.Items)) {
-            console.log("No libraries found on Jellyfin");
+            console.warn("No libraries found on Jellyfin");
             return reject("No libraries found on Jellyfin");
         }
 
+        console.debug(`Found Jellyfin libraries`, libraries)
+
         let musicLibraries = libraries.data.Items!.filter(library => library.CollectionType == 'music');
 
-        console.log(`Found ${musicLibraries.length} music libraries`);
+        console.debug(`Returning ${musicLibraries.length} music libraries`);
         
         return resolve(musicLibraries);
     });
+}
+
+export function fetchPlaylistLibrary(api: Api): Promise<BaseItemDto> {
+    return new Promise(async (resolve, reject) => {
+        console.debug("Fetching music libraries from Jellyfin");
+        
+        let libraries = await getItemsApi(api).getItems({ includeItemTypes: ['CollectionFolder'] });
+
+        if (_.isUndefined(libraries.data.Items)) {
+            console.warn("No libraries found on Jellyfin");
+            return reject("No libraries found on Jellyfin");
+        }
+
+        console.debug(`Found Jellyfin libraries`, libraries)
+
+        let musicLibraries = libraries.data.Items!.filter(library => library.CollectionType == 'music')[0];
+
+        console.debug(`Returning ${musicLibraries} music libraries`);
+        
+        return resolve(musicLibraries);
+
+    })
 }

@@ -8,10 +8,11 @@ import { Heading, Label } from "../../helpers/text";
 import Button from "../../helpers/button";
 import _ from "lodash";
 import { Api } from "@jellyfin/sdk";
-import { fetchMusicLibraries } from "../../../api/libraries";
+import { fetchMusicLibraries, fetchPlaylistLibrary } from "../../../api/libraries";
 import { QueryKeys } from "../../../enums/query-keys";
 import { ActivityIndicator } from "react-native";
 import { RadioGroupItemWithLabel } from "../../helpers/radio-group-item-with-label";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 export default function ServerLibrary(): React.JSX.Element {
 
@@ -19,18 +20,24 @@ export default function ServerLibrary(): React.JSX.Element {
 
     const { libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
 
-    const { apiClient, setAccessToken } = useApiClientContext();
-
+    const { apiClient, setAccessToken, setLibrary } = useApiClientContext();
     
-    const useLibraries = (api: Api) => useQuery({
+    const useMusicLibraries = (api: Api) => useQuery({
         queryKey: [QueryKeys.Libraries, api],
         queryFn: async ({ queryKey }) => await fetchMusicLibraries(queryKey[1] as Api)
     });
+
+    const usePlaylistLibrary = (api: Api) => useQuery({
+        queryKey: [QueryKeys.Playlist, api],
+        queryFn: async ({ queryKey }) => await fetchPlaylistLibrary(queryKey[1] as Api)
+    })
     
-    const { data : libraries, isError, isPending, refetch } = useLibraries(apiClient!);
+    const { data : libraries, isError, isPending, refetch: refetchMusicLibraries } = useMusicLibraries(apiClient!);
+    const { data : playlistLibrary, isError: playlistLibraryError, refetch: refetchPlaylistLibrary } = usePlaylistLibrary(apiClient!);
 
     useEffect(() => {
-        refetch();
+        refetchMusicLibraries();
+        refetchPlaylistLibrary();
     }, [
         apiClient
     ])
@@ -68,6 +75,20 @@ export default function ServerLibrary(): React.JSX.Element {
             { isError && (
                 <Text>Unable to load libraries</Text>
             )}
+
+            <Button disabled={!!!libraryId}
+                onPress={() => {
+                    setLibrary({
+                        musicLibraryId: libraryId!,
+                        musicLibraryName: libraries?.filter((library) => library.Id == libraryId)[0].Name ?? "No library name",
+                        musicLibraryImageId: libraries?.filter((library) => library.Id == libraryId)[0].ImageTags?.Primary ?? "",
+                        playlistLibraryId: playlistLibrary?.Id ?? "",
+                        playlistLibraryImageId: playlistLibrary?.ImageTags?.Primary ?? "",
+                        
+                    })
+                }}>
+                Let's Go!
+            </Button>
 
             <Button onPress={() => setAccessToken(undefined)}>
                 Switch User
