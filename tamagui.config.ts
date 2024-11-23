@@ -14,21 +14,21 @@ const aileronFace = {
 };
 
 const bodyFont = createFont({
-    family: "Aileron-Regular",
+    family: "Aileron",
     size: config.fonts.body.size,
     lineHeight: config.fonts.body.lineHeight,
     weight: config.fonts.body.weight,
     letterSpacing: config.fonts.body.letterSpacing,
-    face: aileronFace
+    face: config.fonts.body.face
 })
 
 const headingFont = createFont({
-    family: "Aileron-Black",
+    family: "Aileron",
     size: config.fonts.heading.size,
     lineHeight: config.fonts.heading.lineHeight,
     weight: config.fonts.heading.weight,
     letterSpacing: config.fonts.heading.letterSpacing,
-    face: aileronFace
+    face: config.fonts.body.face
 })
 
 const jellifyConfig = createTamagui({
