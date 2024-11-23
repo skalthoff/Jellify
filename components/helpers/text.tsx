@@ -28,6 +28,6 @@ export function Label(props: LabelProps): React.JSX.Element {
 
 export function Heading({ children }: { children: string }): React.JSX.Element {
     return (
-        <H1 marginVertical={30} style={styles.heading}>{ children }</H1>
+        <H1 marginVertical={30} fontWeight={900}>{ children }</H1>
     )
 }

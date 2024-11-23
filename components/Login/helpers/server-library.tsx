@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { RadioGroup, Text, ToggleGroup, View, YStack } from "tamagui";
-import { JellifyLibrary } from "../../../types/JellifyLibrary";
+import { Text, ToggleGroup, View } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { Heading, Label } from "../../helpers/text";
 import Button from "../../helpers/button";
@@ -11,8 +10,6 @@ import { Api } from "@jellyfin/sdk";
 import { fetchMusicLibraries, fetchPlaylistLibrary } from "../../../api/libraries";
 import { QueryKeys } from "../../../enums/query-keys";
 import { ActivityIndicator } from "react-native";
-import { RadioGroupItemWithLabel } from "../../helpers/radio-group-item-with-label";
-import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 export default function ServerLibrary(): React.JSX.Element {
 
