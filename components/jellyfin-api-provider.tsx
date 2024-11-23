@@ -71,7 +71,9 @@ const JellyfinApiClientContextInitializer = () => {
         storage.set(MMKVStorageKeys.Library, JSON.stringify(library));
       else
         storage.delete(MMKVStorageKeys.Library)
-    })
+    }, [
+      library
+    ])
 
     return { 
       apiClient, 
