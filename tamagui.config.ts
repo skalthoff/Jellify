@@ -2,15 +2,15 @@ import { animations, tokens, themes, media, shorthands, config } from '@tamagui/
 import { createFont, createTamagui } from 'tamagui' // or '@tamagui/core'
 
 const aileronFace = {
-    100: { normal: 'Aileron-UltraLight', italic: 'Aileron-UltraLightItalic' },
-    200: { normal: 'Aileron-Thin', italic: 'Aileron-ThinItalic' },
-    300: { normal: 'Aileron-Light', italic: 'Aileron-LightItalic' },
-    400: { normal: 'Aileron-Regular', italic: 'Aileron-Italic'} ,
-    500: { normal: 'Aileron-Regular', italic: 'Aileron-Italic' },
-    600: { normal: 'Aileron-SemiBold', italic: 'Aileron-SemiBoldItalic' },
-    700: { normal: 'Aileron-Bold', italic: 'Aileron-BoldItalic' },
-    800: { normal: 'Aileron-Heavy', italic: 'Aileron-HeavyItalic' },
-    900: { normal: 'Aileron-Black', italic: 'Aileron-BlackItalic' },
+    100: { normal: 'Aileron UltraLight', italic: 'Aileron-UltraLightItalic' },
+    200: { normal: 'Aileron Thin', italic: 'Aileron-ThinItalic' },
+    300: { normal: 'Aileron Light', italic: 'Aileron-LightItalic' },
+    400: { normal: 'Aileron Regular', italic: 'Aileron-Italic'} ,
+    500: { normal: 'Aileron Regular', italic: 'Aileron-Italic' },
+    600: { normal: 'Aileron SemiBold', italic: 'Aileron-SemiBoldItalic' },
+    700: { normal: 'Aileron Bold', italic: 'Aileron-BoldItalic' },
+    800: { normal: 'Aileron Heavy', italic: 'Aileron-HeavyItalic' },
+    900: { normal: 'Aileron Black', italic: 'Aileron-BlackItalic' },
 };
 
 const bodyFont = createFont({

@@ -1,5 +1,5 @@
 export enum Fonts {
-    Black = "Aileron-Black",
+    Black = "Aileron Black",
     BlackItalic = "Aileron-BlackItalic",
     Bold = "Aileron-Bold",
     BoldItalic = "Aileron-BoldItalic",
