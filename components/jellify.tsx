@@ -15,11 +15,6 @@ export default function Jellify(): React.JSX.Element {
 
   setupPlayer();
 
-  // Attempt to create API instance, if it fails we aren't authenticated yet
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
     <JellyfinApiClientProvider>
       {conditionalHomeRender()}
