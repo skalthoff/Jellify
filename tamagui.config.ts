@@ -10,7 +10,7 @@ const aileronFace = {
     600: { normal: 'Aileron SemiBold', italic: 'Aileron SemiBold Italic' },
     700: { normal: 'Aileron Bold', italic: 'Aileron Bold Italic' },
     800: { normal: 'Aileron Heavy', italic: 'Aileron Heavy Italic' },
-    900: { normal: 'Aileron-Black', italic: 'Aileron-BlackItalic' }
+    900: { normal: 'Aileron Black', italic: 'Aileron-BlackItalic' }
 };
 
 const bodyFont = createFont({
@@ -19,7 +19,7 @@ const bodyFont = createFont({
     lineHeight: config.fonts.body.lineHeight,
     weight: config.fonts.body.weight,
     letterSpacing: config.fonts.body.letterSpacing,
-    face: config.fonts.body.face
+    face: aileronFace
 })
 
 const headingFont = createFont({
@@ -28,7 +28,7 @@ const headingFont = createFont({
     lineHeight: config.fonts.heading.lineHeight,
     weight: config.fonts.heading.weight,
     letterSpacing: config.fonts.heading.letterSpacing,
-    face: config.fonts.body.face
+    face: aileronFace
 })
 
 const jellifyConfig = createTamagui({
