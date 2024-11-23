@@ -1,18 +1,4 @@
-import { StyleSheet } from "react-native"
 import { H1, SizeTokens, Label as TamaguiLabel } from "tamagui"
-import { Fonts } from '../../enums/assets/fonts';
-
-export const styles = StyleSheet.create({
-    heading: {
-        fontFamily: Fonts.Black
-    },
-    label: {
-        fontFamily: Fonts.Heavy
-    },
-    text: {
-        fontFamily: Fonts.Regular
-    },
-});
 
 interface LabelProps {
     htmlFor: string,
@@ -28,6 +14,6 @@ export function Label(props: LabelProps): React.JSX.Element {
 
 export function Heading({ children }: { children: string }): React.JSX.Element {
     return (
-        <H1 marginVertical={30} size="$3" fontFamily={"$heading"}>{ children }</H1>
+        <H1 marginVertical={30}>{ children }</H1>
     )
 }
