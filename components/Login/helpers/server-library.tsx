@@ -17,7 +17,7 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 export default function ServerLibrary(): React.JSX.Element {
 
     const { libraryId, setLibraryId } = useAuthenticationContext();
-    const { apiClient, setAccessToken, setLibrary } = useApiClientContext();
+    const { apiClient, setUser, setLibrary } = useApiClientContext();
     
     const useMusicLibraries = (api: Api) => useQuery({
         queryKey: [QueryKeys.Libraries, api],
@@ -87,7 +87,7 @@ export default function ServerLibrary(): React.JSX.Element {
                 Let's Go!
             </Button>
 
-            <Button onPress={() => setAccessToken(undefined)}>
+            <Button onPress={() => setUser(undefined)}>
                 Switch User
             </Button>
         </View>

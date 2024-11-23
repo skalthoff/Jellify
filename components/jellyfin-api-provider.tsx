@@ -7,16 +7,15 @@ import { storage } from '../constants/storage';
 import { MMKVStorageKeys } from '../enums/mmkv-storage-keys';
 import { JellifyServer } from '../types/JellifyServer';
 import { JellifyLibrary } from '../types/JellifyLibrary';
+import { JellifyUser } from '../types/JellifyUser';
 
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
   apiPending: boolean;
   server: JellifyServer | undefined;
   setServer: React.Dispatch<SetStateAction<JellifyServer | undefined>>;
-  username: string | undefined;
-  setUsername: React.Dispatch<SetStateAction<string | undefined>>;
-  accessToken: string | undefined;
-  setAccessToken: React.Dispatch<SetStateAction<string | undefined>>;
+  user: JellifyUser | undefined;
+  setUser: React.Dispatch<SetStateAction<JellifyUser | undefined>>;
   library: JellifyLibrary | undefined;
   setLibrary: React.Dispatch<SetStateAction<JellifyLibrary | undefined>>;
   signOut: () => void
@@ -24,20 +23,19 @@ interface JellyfinApiClientContext {
 
 const JellyfinApiClientContextInitializer = () => {
 
-    let serverJson = storage.getString(MMKVStorageKeys.Server);
-    let libraryJson = storage.getString(MMKVStorageKeys.Library);
+    const userJson = storage.getString(MMKVStorageKeys.User)
+    const serverJson = storage.getString(MMKVStorageKeys.Server);
+    const libraryJson = storage.getString(MMKVStorageKeys.Library);
 
-    const [username, setUsername] = useState<string | undefined>(storage.getString(MMKVStorageKeys.Username));
-    const [accessToken, setAccessToken] = useState<string | undefined>(storage.getString(MMKVStorageKeys.AccessToken));
+    const [user, setUser] = useState<JellifyUser | undefined>(userJson ? (JSON.parse(userJson) as JellifyUser) : undefined);
     const [server, setServer] = useState<JellifyServer | undefined>(serverJson ? (JSON.parse(serverJson) as JellifyServer) : undefined);
     const [library, setLibrary] = useState<JellifyLibrary | undefined>(libraryJson ? (JSON.parse(libraryJson) as JellifyLibrary) : undefined);
     const [apiClient, setApiClient] = useState<Api | undefined>(undefined);
-    const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url ?? undefined, username, undefined, accessToken);
+    const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url ?? undefined, user?.name, undefined, user?.accessToken);
 
     const signOut = () => {
       console.debug("Signing out of Jellify");
-      setUsername(undefined);
-      setAccessToken(undefined);
+      setUser(undefined);
       setServer(undefined);
       setLibrary(undefined);
     }
@@ -55,7 +53,7 @@ const JellyfinApiClientContextInitializer = () => {
       refetchApi()
     }, [
       server,
-      accessToken
+      user
     ])
 
     useEffect(() => {
@@ -72,16 +70,16 @@ const JellyfinApiClientContextInitializer = () => {
     ])
 
     useEffect(() => {
-      if (accessToken) {
-        console.debug("Storing new access token")
-        storage.set(MMKVStorageKeys.AccessToken, accessToken);
+      if (user) {
+        console.debug("Storing new user profile")
+        storage.set(MMKVStorageKeys.User, JSON.stringify(user));
       }
       else {
         console.debug("Deleting access token from storage");
-        storage.delete(MMKVStorageKeys.AccessToken);
+        storage.delete(MMKVStorageKeys.User);
       }
     }, [
-      accessToken
+      user
     ])
 
     useEffect(() => {
@@ -100,10 +98,8 @@ const JellyfinApiClientContextInitializer = () => {
       apiPending,
       server,
       setServer,
-      username, 
-      setUsername,
-      accessToken,
-      setAccessToken,
+      user, 
+      setUser,
       library,
       setLibrary,
       signOut
@@ -116,10 +112,8 @@ export const JellyfinApiClientContext =
     apiPending: true,
     server: undefined,
     setServer: () => {},
-    username: undefined,
-    setUsername: () => {},
-    accessToken: undefined,
-    setAccessToken: () => {},
+    user: undefined,
+    setUser: () => {},
     library: undefined,
     setLibrary: () => {},
     signOut: () => {}
@@ -133,10 +127,8 @@ export const JellyfinApiClientProvider: ({ children }: {
     apiPending, 
     server,
     setServer,
-    username,
-    setUsername,
-    accessToken,
-    setAccessToken,
+    user,
+    setUser,
     library,
     setLibrary,
     signOut
@@ -150,10 +142,8 @@ export const JellyfinApiClientProvider: ({ children }: {
       apiPending, 
       server,
       setServer,
-      username,
-      setUsername,
-      accessToken,
-      setAccessToken,
+      user,
+      setUser,
       library,
       setLibrary,
       signOut
