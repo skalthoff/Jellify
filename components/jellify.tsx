@@ -27,11 +27,12 @@ function conditionalHomeRender(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   // If library hasn't been set, we haven't completed the auth flow
-  const { library } = useApiClientContext();
+  const { apiClient, library } = useApiClientContext();
 
   useEffect(() => {
-    console.debug("Library changed, rerendering")
+    console.debug("Context changed, rerendering")
   }, [
+    apiClient, 
     library
   ])
   
