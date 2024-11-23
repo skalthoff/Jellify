@@ -38,7 +38,7 @@ function conditionalHomeRender(): React.JSX.Element {
   
   return (
     <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
-        { !!!library ? <Navigation /> : (
+        { apiClient && library ? <Navigation /> : (
           <JellyfinAuthenticationProvider>
             <Login /> 
           </JellyfinAuthenticationProvider>
