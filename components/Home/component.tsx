@@ -3,6 +3,7 @@ import { useApiClientContext } from "../jellyfin-api-provider";
 import _ from "lodash";
 import { Heading } from "../helpers/text";
 import { SafeAreaView } from "react-native-safe-area-context";
+import RecentlyPlayed from "./helpers/recently-played";
 
 
 export default function Home(): React.JSX.Element {
@@ -13,9 +14,8 @@ export default function Home(): React.JSX.Element {
             <ScrollView paddingLeft={10}>
                 <YStack alignContent='flex-start'>
                     <Heading>Hi there</Heading>
-                    <ScrollView horizontal>
-
-                    </ScrollView>
+                    
+                    <RecentlyPlayed />
                 </YStack>
             </ScrollView>
     );

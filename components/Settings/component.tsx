@@ -1,10 +1,13 @@
 import React from "react";
-import { View } from "tamagui";
+import { ScrollView } from "tamagui";
+import AccountDetails from "./helpers/account-details";
+import SignOut from "./helpers/sign-out";
 
 export default function Settings(): React.JSX.Element {
     return (
-        <View>
-            
-        </View>
+        <ScrollView>
+            <AccountDetails />
+            <SignOut />
+        </ScrollView>
     )
 }

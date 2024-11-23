@@ -19,6 +19,7 @@ interface JellyfinApiClientContext {
   setAccessToken: React.Dispatch<SetStateAction<string | undefined>>;
   library: JellifyLibrary | undefined;
   setLibrary: React.Dispatch<SetStateAction<JellifyLibrary | undefined>>;
+  signOut: () => void
 }
 
 const JellyfinApiClientContextInitializer = () => {
@@ -32,6 +33,13 @@ const JellyfinApiClientContextInitializer = () => {
     const [library, setLibrary] = useState<JellifyLibrary | undefined>(libraryJson ? (JSON.parse(libraryJson) as JellifyLibrary) : undefined);
     const [apiClient, setApiClient] = useState<Api | undefined>(undefined);
     const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url ?? undefined, username, undefined, accessToken);
+
+    const signOut = () => {
+      setUsername(undefined);
+      setAccessToken(undefined);
+      setServer(undefined);
+      setLibrary(undefined);
+    }
 
     useEffect(() => {
       if (!apiPending)
@@ -87,7 +95,8 @@ const JellyfinApiClientContextInitializer = () => {
       accessToken,
       setAccessToken,
       library,
-      setLibrary
+      setLibrary,
+      signOut
     };
 }
 
@@ -103,6 +112,7 @@ export const JellyfinApiClientContext =
     setAccessToken: () => {},
     library: undefined,
     setLibrary: () => {},
+    signOut: () => {}
   });
 
 export const JellyfinApiClientProvider: ({ children }: {
@@ -118,7 +128,8 @@ export const JellyfinApiClientProvider: ({ children }: {
     accessToken,
     setAccessToken,
     library,
-    setLibrary
+    setLibrary,
+    signOut
    } = JellyfinApiClientContextInitializer();
 
   // Add your logic to check if credentials are stored and initialize the API client here.
@@ -134,7 +145,8 @@ export const JellyfinApiClientProvider: ({ children }: {
       accessToken,
       setAccessToken,
       library,
-      setLibrary
+      setLibrary,
+      signOut
     }}>
         {children}
     </JellyfinApiClientContext.Provider>

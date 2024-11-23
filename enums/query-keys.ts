@@ -21,4 +21,5 @@ export enum QueryKeys {
     ReportPlaybackStopped = "REPORT_PLAYBACK_STOPPED",
     ServerUrl = "SERVER_URL",
     Playlist = "Playlist",
+    RecentlyPlayed = "RecentlyPlayed",
 }
