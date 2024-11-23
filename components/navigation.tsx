@@ -13,7 +13,7 @@ export default function Navigation(): React.JSX.Element {
           name="Home" 
           component={Home}
           options={{
-            headerShown: false
+            headerTitle: undefined
           }}
         />
       </RootStack.Group>
