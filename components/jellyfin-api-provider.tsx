@@ -68,9 +68,10 @@ const JellyfinApiClientContextInitializer = () => {
 
     useEffect(() => {
       console.debug("Library changed")
-      if (library)
+      if (library) {
+        console.debug("Setting library");
         storage.set(MMKVStorageKeys.Library, JSON.stringify(library));
-      else
+      } else
         storage.delete(MMKVStorageKeys.Library)
     }, [
       library

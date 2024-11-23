@@ -3,7 +3,7 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
 import { JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
-import React, {  } from "react";
+import React, { useEffect } from "react";
 import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import Navigation from "./navigation";
 import Login from "./Login/component";
@@ -33,12 +33,16 @@ function conditionalHomeRender(): React.JSX.Element {
 
   // If library hasn't been set, we haven't completed the auth flow
   const { library } = useApiClientContext();
+
+  useEffect(() => {
+    console.debug("Library changed, rerendering")
+  }, [
+    library
+  ])
   
   return (
     <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
-        { !_.isUndefined(library) ? (
-          <Navigation />
-        ) : (
+        { !!!library ? <Navigation /> : (
           <JellyfinAuthenticationProvider>
             <Login /> 
           </JellyfinAuthenticationProvider>
