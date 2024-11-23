@@ -13,7 +13,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     const { username, setUsername } = useAuthenticationContext();
     const [password, setPassword] = React.useState<string | undefined>('');
 
-    const { server, setServer, setAccessToken, apiClient } = useApiClientContext();
+    const { server, setServer, setUser, apiClient } = useApiClientContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
@@ -32,7 +32,11 @@ export default function ServerAuthentication(): React.JSX.Element {
                 return Promise.reject(new Error("Unable to login"));
 
             console.log(`Successfully signed in to server`)
-            return setAccessToken(authResult.data.AccessToken as string)
+            return setUser({ 
+                id: authResult.data.User!.Id!, 
+                name: authResult.data.User!.Name!, 
+                accessToken: (authResult.data.AccessToken as string) 
+            })
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
