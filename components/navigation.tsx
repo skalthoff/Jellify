@@ -9,7 +9,13 @@ export default function Navigation(): React.JSX.Element {
     return (
       <RootStack.Navigator>
       <RootStack.Group>
-        <RootStack.Screen name="Jellify" component={Home} />
+        <RootStack.Screen 
+          name="Home" 
+          component={Home}
+          options={{
+            headerShown: false
+          }}
+        />
       </RootStack.Group>
       <RootStack.Group screenOptions={{ presentation: 'modal' }}>
         <RootStack.Screen name="Player" component={Player} />
