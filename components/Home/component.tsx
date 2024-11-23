@@ -10,7 +10,6 @@ export default function Home(): React.JSX.Element {
     const { apiClient } = useApiClientContext();
 
     return (
-        <SafeAreaView>
             <ScrollView paddingLeft={10}>
                 <YStack alignContent='flex-start'>
                     <Heading>Hi there</Heading>
@@ -19,6 +18,5 @@ export default function Home(): React.JSX.Element {
                     </ScrollView>
                 </YStack>
             </ScrollView>
-        </SafeAreaView>
     );
 }

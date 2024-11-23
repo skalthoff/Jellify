@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "./Home/component";
 import Player from "./Player/component";
+import { Tabs } from "./tabs";
 
 export default function Navigation(): React.JSX.Element {
 
@@ -10,10 +10,10 @@ export default function Navigation(): React.JSX.Element {
       <RootStack.Navigator>
       <RootStack.Group>
         <RootStack.Screen 
-          name="Home" 
-          component={Home}
+          name="Tabs" 
+          component={Tabs}
           options={{
-            headerTitle: undefined
+            headerShown: false
           }}
         />
       </RootStack.Group>
