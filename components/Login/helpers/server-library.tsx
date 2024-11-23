@@ -16,10 +16,7 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 export default function ServerLibrary(): React.JSX.Element {
 
-    const [musicLibrary, setMusicLibrary] = useState<JellifyLibrary | undefined>(undefined);
-
-    const { libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
-
+    const { libraryId, setLibraryId } = useAuthenticationContext();
     const { apiClient, setAccessToken, setLibrary } = useApiClientContext();
     
     const useMusicLibraries = (api: Api) => useQuery({
@@ -33,7 +30,7 @@ export default function ServerLibrary(): React.JSX.Element {
     })
     
     const { data : libraries, isError, isPending, refetch: refetchMusicLibraries } = useMusicLibraries(apiClient!);
-    const { data : playlistLibrary, isError: playlistLibraryError, refetch: refetchPlaylistLibrary } = usePlaylistLibrary(apiClient!);
+    const { data : playlistLibrary, refetch: refetchPlaylistLibrary } = usePlaylistLibrary(apiClient!);
 
     useEffect(() => {
         refetchMusicLibraries();
@@ -81,9 +78,9 @@ export default function ServerLibrary(): React.JSX.Element {
                     setLibrary({
                         musicLibraryId: libraryId!,
                         musicLibraryName: libraries?.filter((library) => library.Id == libraryId)[0].Name ?? "No library name",
-                        musicLibraryImageId: libraries?.filter((library) => library.Id == libraryId)[0].ImageTags?.Primary ?? "",
-                        playlistLibraryId: playlistLibrary?.Id ?? "",
-                        playlistLibraryImageId: playlistLibrary?.ImageTags?.Primary ?? "",
+                        musicLibraryPrimaryImageId: libraries?.filter((library) => library.Id == libraryId)[0].ImageTags!.Primary,
+                        playlistLibraryId: playlistLibrary!.Id!,
+                        playlistLibraryPrimaryImageId: playlistLibrary!.ImageTags!.Primary,
                         
                     })
                 }}>

@@ -1,8 +1,8 @@
 
 export interface JellifyLibrary {
     musicLibraryId: string;
-    musicLibraryName: string;
-    musicLibraryImageId: string;
+    musicLibraryName?: string;
+    musicLibraryPrimaryImageId?: string;
     playlistLibraryId: string;
-    playlistLibraryImageId: string;
+    playlistLibraryPrimaryImageId?: string;
 }
