@@ -11,7 +11,7 @@ export default function Login(): React.JSX.Element {
 
     const { triggerAuth, setTriggerAuth } = useAuthenticationContext();
 
-    const { server, accessToken } = useApiClientContext();
+    const { server, user } = useApiClientContext();
 
     const Stack = createStackNavigator();
 
@@ -33,7 +33,7 @@ export default function Login(): React.JSX.Element {
                         />
                     ) : (
                     
-                    (_.isUndefined(accessToken)) ? (
+                    (_.isUndefined(user)) ? (
                         <Stack.Screen 
                             name="ServerAuthentication" 
                             options={{ 
