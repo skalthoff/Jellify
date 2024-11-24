@@ -11,7 +11,15 @@ export default function RecentlyPlayed(): React.JSX.Element {
 
     useEffect(() => {
         refetch();
-    })
+    }, [
+        apiClient
+    ]);
+
+    useEffect(() => {
+        console.log("Recently played", data);
+    }, [
+        data
+    ])
 
     return (
         <ScrollView horizontal>
