@@ -1,8 +1,8 @@
 import { Button as TamaguiButton } from 'tamagui';
 
 interface ButtonProps {
-    children: string;
-    onPress: () => void;
+    children?: string | undefined;
+    onPress?: () => void | undefined;
     disabled?: boolean | undefined;
 }
 

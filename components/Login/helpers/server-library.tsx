@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { Text, ToggleGroup, View } from "tamagui";
+import { Spinner, Text, ToggleGroup, View } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { Heading, Label } from "../../helpers/text";
 import Button from "../../helpers/button";
@@ -9,7 +9,6 @@ import _ from "lodash";
 import { Api } from "@jellyfin/sdk";
 import { fetchMusicLibraries, fetchPlaylistLibrary } from "../../../api/libraries";
 import { QueryKeys } from "../../../enums/query-keys";
-import { ActivityIndicator } from "react-native";
 
 export default function ServerLibrary(): React.JSX.Element {
 
@@ -47,7 +46,7 @@ export default function ServerLibrary(): React.JSX.Element {
             <Heading>Select Music Library</Heading>
 
             { isPending ? (
-                <ActivityIndicator />
+                <Spinner />
             ) : (
                 <ToggleGroup
                     orientation="vertical"

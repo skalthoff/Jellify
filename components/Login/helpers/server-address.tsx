@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { MMKVStorageKeys } from "../../../enums/mmkv-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { getTokens, Spacer, View, XStack } from "tamagui";
+import { getTokens, Spacer, Spinner, View, XStack, ZStack } from "tamagui";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
 import { Heading } from "../../helpers/text";
 import Input from "../../helpers/input";
@@ -61,7 +61,7 @@ export default function ServerAddress(): React.JSX.Element {
             <Heading>
                 Connect to Jellyfin
             </Heading>
-            <XStack width={400}>
+            <XStack fullscreen>
                 <SwitchWithLabel 
                     checked={useHttps} 
                     onCheckedChange={(checked) => setUseHttps(checked)} 
@@ -77,9 +77,18 @@ export default function ServerAddress(): React.JSX.Element {
                     value={serverAddress}
                     placeholder="jellyfin.org"
                     onChangeText={setServerAddress} 
-                    width={200}
                     />
             </XStack>
+
+            { useServerMutation.isPending && (
+                <ZStack alignContent="center">
+                    <Button disabled />
+                    <Spinner />
+                </ZStack>
+            )}
+            <ZStack>
+
+            </ZStack>
             <Button 
                 disabled={_.isEmpty(serverAddress)}
                 onPress={() => {
