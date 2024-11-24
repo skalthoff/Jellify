@@ -57,7 +57,7 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View marginHorizontal={10} justifyContent='center'>
+        <View marginHorizontal={10} flex={1} justifyContent='center'>
             <Heading>
                 Connect to Jellyfin
             </Heading>
