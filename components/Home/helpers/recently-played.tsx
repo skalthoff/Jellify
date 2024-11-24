@@ -10,12 +10,6 @@ export default function RecentlyPlayed(): React.JSX.Element {
     const { data, isError, refetch } = useRecentlyPlayed(apiClient!, library!.musicLibraryId);
 
     useEffect(() => {
-        refetch();
-    }, [
-        apiClient
-    ]);
-
-    useEffect(() => {
         console.log("Recently played", data);
     }, [
         data
