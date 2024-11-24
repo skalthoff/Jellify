@@ -72,7 +72,9 @@ export default function ServerAddress(): React.JSX.Element {
                 <Input 
                     value={serverAddress}
                     placeholder="jellyfin.org"
-                    onChangeText={setServerAddress} />
+                    onChangeText={setServerAddress} 
+                    width={300}
+                    />
             </XStack>
             <Button 
                 disabled={_.isEmpty(serverAddress)}
