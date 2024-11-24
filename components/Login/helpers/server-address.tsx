@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { MMKVStorageKeys } from "../../../enums/mmkv-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { Spacer, View, XStack } from "tamagui";
+import { getTokens, Spacer, View, XStack } from "tamagui";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
 import { Heading } from "../../helpers/text";
 import Input from "../../helpers/input";
@@ -68,7 +68,7 @@ export default function ServerAddress(): React.JSX.Element {
                     label="Use HTTPS" 
                     size="$2"
                     width={100}
-                    backgroundColor="$pink1"
+                    backgroundColor={"$pink6"}
                  />
                     
                 
