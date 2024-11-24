@@ -7,8 +7,6 @@ interface InputProps {
     placeholder: string
     value: string | undefined;
     secureTextEntry?: boolean | undefined;
-    width?: number | undefined;
-    flex?: number | "unset" | undefined;
 }
 
 export default function Input(props: InputProps): React.JSX.Element {
@@ -18,8 +16,7 @@ export default function Input(props: InputProps): React.JSX.Element {
             placeholder={props.placeholder}
             onChangeText={props.onChangeText} 
             value={props.value}
-            width={props.width}
-            flex={props.flex}
+            flexGrow={1}
             secureTextEntry={props.secureTextEntry}
         />
     )
