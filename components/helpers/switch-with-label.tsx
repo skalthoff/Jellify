@@ -12,7 +12,13 @@ export function SwitchWithLabel(props: { size: SizeTokens; checked: boolean, lab
           {props.label}
         </Label>
         <Separator minHeight={20} vertical />
-        <Switch id={id} size={props.size} checked={props.checked} onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}>
+        <Switch 
+          id={id} 
+          size={props.size} 
+          checked={props.checked} 
+          onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
+          backgroundColor="$color"
+        >
           <Switch.Thumb animation="quicker" />
         </Switch>
       </XStack>

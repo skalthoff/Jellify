@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { MMKVStorageKeys } from "../../../enums/mmkv-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { View, XStack } from "tamagui";
+import { Spacer, View, XStack } from "tamagui";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
 import { Heading } from "../../helpers/text";
 import Input from "../../helpers/input";
@@ -69,11 +69,13 @@ export default function ServerAddress(): React.JSX.Element {
                     size="$2"
                     width={100} />
                 
+                <Spacer />
+
                 <Input 
                     value={serverAddress}
                     placeholder="jellyfin.org"
                     onChangeText={setServerAddress} 
-                    width={300}
+                    width={200}
                     />
             </XStack>
             <Button 
