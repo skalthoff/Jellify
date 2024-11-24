@@ -68,7 +68,6 @@ export default function ServerAddress(): React.JSX.Element {
                     label="Use HTTPS" 
                     size="$2"
                     width={100}
-                    backgroundColor={"$secondary"}
                  />
                     
                 
