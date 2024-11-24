@@ -3,6 +3,7 @@ import { Avatar, ScrollView, Text } from "tamagui";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { useRecentlyPlayed } from "../../../api/queries/recently-played";
 import { Stack } from "tamagui"
+import { Colors } from "../../../enums/colors";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
@@ -20,7 +21,10 @@ export default function RecentlyPlayed(): React.JSX.Element {
         <ScrollView horizontal>
             { data && data.map((recentlyPlayedTrack) => {
                 return (
-                    <Stack>
+                    <Stack maxWidth={150} gap="$2">
+                        <Avatar>
+                            <Avatar.Fallback backgroundColor={Colors.Primary}/>
+                        </Avatar>
                         <Text>{recentlyPlayedTrack.Name}</Text>
                     </Stack>
                 )

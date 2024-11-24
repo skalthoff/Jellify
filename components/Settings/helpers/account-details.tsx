@@ -13,7 +13,7 @@ export default function AccountDetails(): React.JSX.Element {
             <Avatar circular>
                 <Avatar.Image src=""/>
 
-                <Avatar.Fallback backgroundColor={Colors.Secondary}/>
+                <Avatar.Fallback backgroundColor={Colors.Primary}/>
             </Avatar>
         </XStack>
     )
