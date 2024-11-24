@@ -1,5 +1,5 @@
 import { Api } from "@jellyfin/sdk/lib/api";
-import { BaseItemDto, ItemSortBy, SortOrder } from "@jellyfin/sdk/lib/generated-client/models";
+import { BaseItemDto, BaseItemKind, ItemSortBy, SortOrder } from "@jellyfin/sdk/lib/generated-client/models";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 
 export function fetchRecentlyPlayed(api: Api, libraryId: string): Promise<BaseItemDto[]> {
@@ -9,14 +9,18 @@ export function fetchRecentlyPlayed(api: Api, libraryId: string): Promise<BaseIt
     return new Promise(async (resolve, reject) => {
         getItemsApi(api)
         .getItems({ 
+            includeItemTypes: [
+                BaseItemKind.Audio
+            ],
+            limit: 100,
             parentId: libraryId, 
+            recursive: true,
             sortBy: [ 
                 ItemSortBy.DatePlayed 
             ], 
             sortOrder: [
                 SortOrder.Descending
             ],
-            limit: 100 
         })
         .then((response) => {
 
