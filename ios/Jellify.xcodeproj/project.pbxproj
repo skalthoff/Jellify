@@ -15,6 +15,22 @@
 		217EBE16A3E8C5FBF476C905 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F757EB73303E0AC21EF34F64 /* PrivacyInfo.xcprivacy */; };
 		7699B88040F8A987B510C191 /* libPods-Jellify-JellifyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Jellify-JellifyTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		CF620D0C2CF2BB210045E433 /* Aileron-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFC2CF2BB1F0045E433 /* Aileron-Italic.otf */; };
+		CF620D0D2CF2BB210045E433 /* Aileron-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFD2CF2BB1F0045E433 /* Aileron-Thin.otf */; };
+		CF620D0E2CF2BB210045E433 /* Aileron-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFE2CF2BB1F0045E433 /* Aileron-HeavyItalic.otf */; };
+		CF620D0F2CF2BB210045E433 /* Aileron-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFF2CF2BB1F0045E433 /* Aileron-SemiBoldItalic.otf */; };
+		CF620D102CF2BB210045E433 /* Aileron-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D002CF2BB1F0045E433 /* Aileron-Heavy.otf */; };
+		CF620D112CF2BB210045E433 /* Aileron-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D012CF2BB1F0045E433 /* Aileron-BoldItalic.otf */; };
+		CF620D122CF2BB210045E433 /* Aileron-UltraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D022CF2BB1F0045E433 /* Aileron-UltraLight.otf */; };
+		CF620D132CF2BB210045E433 /* Aileron-UltraLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D032CF2BB200045E433 /* Aileron-UltraLightItalic.otf */; };
+		CF620D142CF2BB210045E433 /* Aileron-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D042CF2BB200045E433 /* Aileron-Regular.otf */; };
+		CF620D152CF2BB210045E433 /* Aileron-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D052CF2BB200045E433 /* Aileron-LightItalic.otf */; };
+		CF620D162CF2BB210045E433 /* Aileron-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D062CF2BB200045E433 /* Aileron-BlackItalic.otf */; };
+		CF620D172CF2BB210045E433 /* Aileron-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D072CF2BB200045E433 /* Aileron-Light.otf */; };
+		CF620D182CF2BB210045E433 /* Aileron-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D082CF2BB200045E433 /* Aileron-Bold.otf */; };
+		CF620D192CF2BB210045E433 /* Aileron-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D092CF2BB200045E433 /* Aileron-Black.otf */; };
+		CF620D1A2CF2BB210045E433 /* Aileron-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D0A2CF2BB200045E433 /* Aileron-ThinItalic.otf */; };
+		CF620D1B2CF2BB210045E433 /* Aileron-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D0B2CF2BB200045E433 /* Aileron-SemiBold.otf */; };
 		CF71790B2CBC486C0021BCA3 /* dummy-rntp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF71790A2CBC486C0021BCA3 /* dummy-rntp.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +62,22 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-Jellify.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Jellify.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Jellify/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Jellify-JellifyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jellify-JellifyTests.release.xcconfig"; path = "Target Support Files/Pods-Jellify-JellifyTests/Pods-Jellify-JellifyTests.release.xcconfig"; sourceTree = "<group>"; };
+		CF620CFC2CF2BB1F0045E433 /* Aileron-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Italic.otf"; path = "../assets/fonts/Aileron-Italic.otf"; sourceTree = "<group>"; };
+		CF620CFD2CF2BB1F0045E433 /* Aileron-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Thin.otf"; path = "../assets/fonts/Aileron-Thin.otf"; sourceTree = "<group>"; };
+		CF620CFE2CF2BB1F0045E433 /* Aileron-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-HeavyItalic.otf"; path = "../assets/fonts/Aileron-HeavyItalic.otf"; sourceTree = "<group>"; };
+		CF620CFF2CF2BB1F0045E433 /* Aileron-SemiBoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-SemiBoldItalic.otf"; path = "../assets/fonts/Aileron-SemiBoldItalic.otf"; sourceTree = "<group>"; };
+		CF620D002CF2BB1F0045E433 /* Aileron-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Heavy.otf"; path = "../assets/fonts/Aileron-Heavy.otf"; sourceTree = "<group>"; };
+		CF620D012CF2BB1F0045E433 /* Aileron-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-BoldItalic.otf"; path = "../assets/fonts/Aileron-BoldItalic.otf"; sourceTree = "<group>"; };
+		CF620D022CF2BB1F0045E433 /* Aileron-UltraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-UltraLight.otf"; path = "../assets/fonts/Aileron-UltraLight.otf"; sourceTree = "<group>"; };
+		CF620D032CF2BB200045E433 /* Aileron-UltraLightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-UltraLightItalic.otf"; path = "../assets/fonts/Aileron-UltraLightItalic.otf"; sourceTree = "<group>"; };
+		CF620D042CF2BB200045E433 /* Aileron-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Regular.otf"; path = "../assets/fonts/Aileron-Regular.otf"; sourceTree = "<group>"; };
+		CF620D052CF2BB200045E433 /* Aileron-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-LightItalic.otf"; path = "../assets/fonts/Aileron-LightItalic.otf"; sourceTree = "<group>"; };
+		CF620D062CF2BB200045E433 /* Aileron-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-BlackItalic.otf"; path = "../assets/fonts/Aileron-BlackItalic.otf"; sourceTree = "<group>"; };
+		CF620D072CF2BB200045E433 /* Aileron-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Light.otf"; path = "../assets/fonts/Aileron-Light.otf"; sourceTree = "<group>"; };
+		CF620D082CF2BB200045E433 /* Aileron-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Bold.otf"; path = "../assets/fonts/Aileron-Bold.otf"; sourceTree = "<group>"; };
+		CF620D092CF2BB200045E433 /* Aileron-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Black.otf"; path = "../assets/fonts/Aileron-Black.otf"; sourceTree = "<group>"; };
+		CF620D0A2CF2BB200045E433 /* Aileron-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-ThinItalic.otf"; path = "../assets/fonts/Aileron-ThinItalic.otf"; sourceTree = "<group>"; };
+		CF620D0B2CF2BB200045E433 /* Aileron-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-SemiBold.otf"; path = "../assets/fonts/Aileron-SemiBold.otf"; sourceTree = "<group>"; };
 		CF7179092CBC486C0021BCA3 /* Jellify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jellify-Bridging-Header.h"; sourceTree = "<group>"; };
 		CF71790A2CBC486C0021BCA3 /* dummy-rntp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "dummy-rntp.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -126,6 +158,22 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				CF620D092CF2BB200045E433 /* Aileron-Black.otf */,
+				CF620D062CF2BB200045E433 /* Aileron-BlackItalic.otf */,
+				CF620D082CF2BB200045E433 /* Aileron-Bold.otf */,
+				CF620D012CF2BB1F0045E433 /* Aileron-BoldItalic.otf */,
+				CF620D002CF2BB1F0045E433 /* Aileron-Heavy.otf */,
+				CF620CFE2CF2BB1F0045E433 /* Aileron-HeavyItalic.otf */,
+				CF620CFC2CF2BB1F0045E433 /* Aileron-Italic.otf */,
+				CF620D072CF2BB200045E433 /* Aileron-Light.otf */,
+				CF620D052CF2BB200045E433 /* Aileron-LightItalic.otf */,
+				CF620D042CF2BB200045E433 /* Aileron-Regular.otf */,
+				CF620D0B2CF2BB200045E433 /* Aileron-SemiBold.otf */,
+				CF620CFF2CF2BB1F0045E433 /* Aileron-SemiBoldItalic.otf */,
+				CF620CFD2CF2BB1F0045E433 /* Aileron-Thin.otf */,
+				CF620D0A2CF2BB200045E433 /* Aileron-ThinItalic.otf */,
+				CF620D022CF2BB1F0045E433 /* Aileron-UltraLight.otf */,
+				CF620D032CF2BB200045E433 /* Aileron-UltraLightItalic.otf */,
 				13B07FAE1A68108700A75B9A /* Jellify */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* JellifyTests */,
@@ -251,6 +299,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF620D0C2CF2BB210045E433 /* Aileron-Italic.otf in Resources */,
+				CF620D0D2CF2BB210045E433 /* Aileron-Thin.otf in Resources */,
+				CF620D0E2CF2BB210045E433 /* Aileron-HeavyItalic.otf in Resources */,
+				CF620D0F2CF2BB210045E433 /* Aileron-SemiBoldItalic.otf in Resources */,
+				CF620D102CF2BB210045E433 /* Aileron-Heavy.otf in Resources */,
+				CF620D112CF2BB210045E433 /* Aileron-BoldItalic.otf in Resources */,
+				CF620D122CF2BB210045E433 /* Aileron-UltraLight.otf in Resources */,
+				CF620D132CF2BB210045E433 /* Aileron-UltraLightItalic.otf in Resources */,
+				CF620D142CF2BB210045E433 /* Aileron-Regular.otf in Resources */,
+				CF620D152CF2BB210045E433 /* Aileron-LightItalic.otf in Resources */,
+				CF620D162CF2BB210045E433 /* Aileron-BlackItalic.otf in Resources */,
+				CF620D172CF2BB210045E433 /* Aileron-Light.otf in Resources */,
+				CF620D182CF2BB210045E433 /* Aileron-Bold.otf in Resources */,
+				CF620D192CF2BB210045E433 /* Aileron-Black.otf in Resources */,
+				CF620D1A2CF2BB210045E433 /* Aileron-ThinItalic.otf in Resources */,
+				CF620D1B2CF2BB210045E433 /* Aileron-SemiBold.otf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				217EBE16A3E8C5FBF476C905 /* PrivacyInfo.xcprivacy in Resources */,
@@ -600,10 +664,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -676,10 +737,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
