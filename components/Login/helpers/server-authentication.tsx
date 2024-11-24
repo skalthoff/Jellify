@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { View } from "tamagui";
+import { View, YStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { Heading } from "../../helpers/text";
 import Button from "../../helpers/button";
@@ -56,17 +56,19 @@ export default function ServerAuthentication(): React.JSX.Element {
                     Switch Server
             </Button>
 
-            <Input
-                placeholder="Username"
-                value={username}
-                onChangeText={(value) => setUsername(value)}
-                />
-            <Input
-                placeholder="Password"
-                value={password}
-                onChangeText={(value) => setPassword(value)}
-                secureTextEntry
-                />
+            <YStack flex={1}>
+                <Input
+                    placeholder="Username"
+                    value={username}
+                    onChangeText={(value) => setUsername(value)}
+                    />
+                <Input
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={(value) => setPassword(value)}
+                    secureTextEntry
+                    />
+            </YStack>
 
             <Button 
                 disabled={_.isEmpty(username) || _.isEmpty(password) || useApiMutation.isPending}
