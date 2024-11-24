@@ -19,9 +19,11 @@ export default function RecentlyPlayed(): React.JSX.Element {
     return (
         <ScrollView horizontal>
             { data && data.map((recentlyPlayedTrack) => {
-                <Stack>
-                    <Text>{recentlyPlayedTrack.Name}</Text>
-                </Stack>
+                return (
+                    <Stack>
+                        <Text>{recentlyPlayedTrack.Name}</Text>
+                    </Stack>
+                )
             })}
         </ScrollView>
     )
