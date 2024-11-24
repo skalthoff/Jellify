@@ -77,6 +77,7 @@ export default function ServerAddress(): React.JSX.Element {
                     value={serverAddress}
                     placeholder="jellyfin.org"
                     onChangeText={setServerAddress}
+                    flexGrow
                 />
             </XStack>
 

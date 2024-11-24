@@ -56,7 +56,7 @@ export default function ServerAuthentication(): React.JSX.Element {
                     Switch Server
             </Button>
 
-            <YStack flex={1}>
+            <YStack>
                 <Input
                     placeholder="Username"
                     value={username}

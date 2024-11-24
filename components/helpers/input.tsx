@@ -7,6 +7,7 @@ interface InputProps {
     placeholder: string
     value: string | undefined;
     secureTextEntry?: boolean | undefined;
+    flexGrow?: boolean | undefined
 }
 
 export default function Input(props: InputProps): React.JSX.Element {
@@ -16,7 +17,7 @@ export default function Input(props: InputProps): React.JSX.Element {
             placeholder={props.placeholder}
             onChangeText={props.onChangeText} 
             value={props.value}
-            flexGrow={1}
+            flexGrow={props.flexGrow ? 1 : "unset"}
             secureTextEntry={props.secureTextEntry}
         />
     )
