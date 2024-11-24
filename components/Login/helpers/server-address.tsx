@@ -61,7 +61,7 @@ export default function ServerAddress(): React.JSX.Element {
             <Heading>
                 Connect to Jellyfin
             </Heading>
-            <XStack flex={3} gap="$2">
+            <XStack fullscreen>
                 <SwitchWithLabel 
                     checked={useHttps} 
                     onCheckedChange={(checked) => setUseHttps(checked)} 
@@ -70,11 +70,14 @@ export default function ServerAddress(): React.JSX.Element {
                     width={100}
                  />
                     
+                
+                <Spacer />
+
                 <Input 
                     value={serverAddress}
                     placeholder="jellyfin.org"
-                    onChangeText={setServerAddress} 
-                    flex={2}
+                    onChangeText={setServerAddress}
+                    width={200}
                     />
             </XStack>
 
