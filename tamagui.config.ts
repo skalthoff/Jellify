@@ -1,7 +1,6 @@
 import { animations, tokens, themes, media, shorthands } from '@tamagui/config/v3'
 import { createTamagui } from 'tamagui' // or '@tamagui/core'
 import { headingFont, bodyFont } from './fonts.config'
-import { jellifyTokens } from './colors.config'
 
 const jellifyConfig = createTamagui({
     animations,
@@ -11,7 +10,7 @@ const jellifyConfig = createTamagui({
     },
     media,
     shorthands,
-    jellifyTokens,
+    tokens,
     themes,
 })
 
