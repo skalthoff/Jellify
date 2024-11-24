@@ -1,7 +1,16 @@
-import { SizeTokens, XStack, Separator, Switch } from "tamagui";
+import { SizeTokens, XStack, Separator, Switch, ColorTokens } from "tamagui";
 import { Label } from "./text";
 
-export function SwitchWithLabel(props: { size: SizeTokens; checked: boolean, label: string, onCheckedChange: (value: boolean) => void, width?: number }) {
+interface SwitchWithLabelProps {
+  onCheckedChange: (value: boolean) => void,
+  size: SizeTokens
+  checked: boolean;
+  label: string;
+  width?: number | undefined;
+  backgroundColor?: ColorTokens;
+}
+
+export function SwitchWithLabel(props: SwitchWithLabelProps) {
     const id = `switch-${props.size.toString().slice(1)}-${props.checked ?? ''}}`
     return (
       <XStack alignItems="center" gap="$3">
@@ -17,7 +26,7 @@ export function SwitchWithLabel(props: { size: SizeTokens; checked: boolean, lab
           size={props.size} 
           checked={props.checked} 
           onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
-          backgroundColor="$color"
+          backgroundColor={props.backgroundColor}
         >
           <Switch.Thumb animation="quicker" />
         </Switch>

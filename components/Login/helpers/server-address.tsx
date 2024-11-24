@@ -67,7 +67,10 @@ export default function ServerAddress(): React.JSX.Element {
                     onCheckedChange={(checked) => setUseHttps(checked)} 
                     label="Use HTTPS" 
                     size="$2"
-                    width={100} />
+                    width={100}
+                    backgroundColor="$accentColor"
+                 />
+                    
                 
                 <Spacer />
 
