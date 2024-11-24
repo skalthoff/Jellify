@@ -5,9 +5,9 @@ import { useRecentlyPlayed } from "../../../api/queries/recently-played";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
-    const { apiClient } = useApiClientContext();
+    const { apiClient, library } = useApiClientContext();
 
-    const { data, isError, refetch } = useRecentlyPlayed(apiClient!);
+    const { data, isError, refetch } = useRecentlyPlayed(apiClient!, library!.musicLibraryId);
 
     useEffect(() => {
         refetch();
