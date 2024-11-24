@@ -6,7 +6,7 @@ import { JellifyServer } from "../../../types/JellifyServer";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { getTokens, Spacer, Spinner, View, XStack, ZStack } from "tamagui";
 import { SwitchWithLabel } from "../../helpers/switch-with-label";
-import { Heading } from "../../helpers/text";
+import { H1 } from "../../helpers/text";
 import Input from "../../helpers/input";
 import Button from "../../helpers/button";
 import { http, https } from "../utils/constants";
@@ -58,9 +58,9 @@ export default function ServerAddress(): React.JSX.Element {
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
-            <Heading>
+            <H1>
                 Connect to Jellyfin
-            </Heading>
+            </H1>
             <XStack>
                 <SwitchWithLabel 
                     checked={useHttps} 

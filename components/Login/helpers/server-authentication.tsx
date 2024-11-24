@@ -5,7 +5,7 @@ import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
 import { View, YStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
-import { Heading } from "../../helpers/text";
+import { H1 } from "../../helpers/text";
 import Button from "../../helpers/button";
 import Input from "../../helpers/input";
 
@@ -46,9 +46,9 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
-            <Heading>
+            <H1>
                 { `Sign in to ${server?.name ?? "Jellyfin"}`}
-            </Heading>
+            </H1>
             <Button
                 onPress={() => {
                     setServer(undefined);

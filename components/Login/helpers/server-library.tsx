@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { Spinner, Text, ToggleGroup, View } from "tamagui";
 import { useAuthenticationContext } from "../provider";
-import { Heading, Label } from "../../helpers/text";
+import { H1, Label } from "../../helpers/text";
 import Button from "../../helpers/button";
 import _ from "lodash";
 import { Api } from "@jellyfin/sdk";
@@ -43,7 +43,7 @@ export default function ServerLibrary(): React.JSX.Element {
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
-            <Heading>Select Music Library</Heading>
+            <H1>Select Music Library</H1>
 
             { isPending ? (
                 <Spinner />

@@ -1,4 +1,4 @@
-import { H1, SizeTokens, Label as TamaguiLabel } from "tamagui"
+import { H1 as TamaguiH1, SizeTokens, Label as TamaguiLabel } from "tamagui"
 
 interface LabelProps {
     htmlFor: string,
@@ -12,8 +12,8 @@ export function Label(props: LabelProps): React.JSX.Element {
     )
 }
 
-export function Heading({ children }: { children: string }): React.JSX.Element {
+export function H1({ children }: { children: string }): React.JSX.Element {
     return (
-        <H1 marginVertical={30} fontWeight={900}>{ children }</H1>
+        <TamaguiH1 marginVertical={30}>{ children }</TamaguiH1>
     )
 }
