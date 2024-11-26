@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Avatar, ScrollView, Text } from "tamagui";
+import { Avatar, ScrollView, Text, YStack } from "tamagui";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { useRecentlyPlayedArtists } from "../../../api/queries/recently-played";
 import { Stack } from "tamagui"
@@ -21,13 +21,17 @@ export default function RecentArtists(): React.JSX.Element {
         <ScrollView horizontal>
             { data && data.map((recentArtist) => {
                 return (
-                    <Stack maxWidth={150} gap="$2">
+                    <YStack 
+                        maxWidth={150} 
+                        gap="$2" 
+                        alignContent="center"
+                    >
                         <Avatar>
                             <Avatar.Image src={`${server!.url}/Items/${recentArtist.Id!}/Images/Primary`} />
                             <Avatar.Fallback backgroundColor={Colors.Primary}/>
                         </Avatar>
-                        <Text>{recentArtist.Name}</Text>
-                    </Stack>
+                        <Text>{recentArtist!.Name}</Text>
+                    </YStack>
                 )
             })}
         </ScrollView>
