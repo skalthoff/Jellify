@@ -14,7 +14,7 @@ export function Label(props: LabelProps): React.JSX.Element {
 
 export function H1({ children }: { children: string }): React.JSX.Element {
     return (
-        <TamaguiH1 marginVertical={30}>{ children }</TamaguiH1>
+        <TamaguiH1 marginBottom={10}>{ children }</TamaguiH1>
     )
 }
 
