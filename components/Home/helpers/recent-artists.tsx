@@ -1,25 +1,23 @@
 import React, { useEffect } from "react";
 import { Avatar, ScrollView, Text, YStack } from "tamagui";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { useRecentlyPlayedArtists } from "../../../api/queries/recently-played";
-import { Stack } from "tamagui"
 import { Colors } from "../../../enums/colors";
+import { useHomeContext } from "../provider";
 
 export default function RecentArtists(): React.JSX.Element {
 
-    const { apiClient, library, server } = useApiClientContext();
-
-    const { data } = useRecentlyPlayedArtists(apiClient!, library!.musicLibraryId);
+    const { server } = useApiClientContext();
+    const { recentArtists } = useHomeContext();
 
     useEffect(() => {
-        console.log("Recently played artists", data);
+        console.log("Recently played artists", recentArtists);
     }, [
-        data
+        recentArtists
     ])
 
     return (
         <ScrollView horizontal>
-            { data && data.map((recentArtist) => {
+            { recentArtists && recentArtists.map((recentArtist) => {
                 return (
                     <YStack 
                         maxWidth={150} 
