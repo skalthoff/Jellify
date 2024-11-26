@@ -26,7 +26,7 @@ export default function RecentArtists(): React.JSX.Element {
                         gap="$2" 
                         alignContent="center"
                     >
-                        <Avatar>
+                        <Avatar circular>
                             <Avatar.Image src={`${server!.url}/Items/${recentArtist.Id!}/Images/Primary`} />
                             <Avatar.Fallback backgroundColor={Colors.Primary}/>
                         </Avatar>
