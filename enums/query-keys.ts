@@ -22,4 +22,5 @@ export enum QueryKeys {
     ServerUrl = "SERVER_URL",
     Playlist = "Playlist",
     RecentlyPlayed = "RecentlyPlayed",
+    RecentlyPlayedArtists = "RecentlyPlayedArtists",
 }
