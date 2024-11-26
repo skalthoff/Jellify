@@ -1,4 +1,4 @@
-import { H1 as TamaguiH1, H2 as TamaguiH2, SizeTokens, Label as TamaguiLabel, H6 } from "tamagui"
+import { H1 as TamaguiH1, H2 as TamaguiH2, SizeTokens, Label as TamaguiLabel, H5 } from "tamagui"
 
 interface LabelProps {
     htmlFor: string,
@@ -31,8 +31,8 @@ interface TextProps {
 
 export function Text(props: TextProps): React.JSX.Element {
     return (
-        <H6 alignContent={props.alignCenter ? 'center' : 'unset'}>
+        <H5 fontSize="$3" alignContent={props.alignCenter ? 'center' : 'unset'}>
             { props.children }
-        </H6>
+        </H5>
     )
 }
