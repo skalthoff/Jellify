@@ -26,6 +26,8 @@ export default function RecentArtists(): React.JSX.Element {
                         gap="$4" 
                         alignContent="center"
                         justifyContent="center"
+                        padding="$3"
+                        width="$20"
                         >
                             <Avatar circular size="$10">
                                 <Avatar.Image src={`${server!.url}/Items/${recentArtist.Id!}/Images/Primary`} />
