@@ -21,11 +21,11 @@ export default function RecentArtists(): React.JSX.Element {
             { recentArtists && recentArtists.map((recentArtist) => {
                 return (
                     <YStack 
-                        maxWidth={300} 
-                        gap="$2" 
+                        gap="$4" 
                         alignContent="center"
+                        justifyContent="center"
                     >
-                        <Avatar circular>
+                        <Avatar circular size="$10">
                             <Avatar.Image src={`${server!.url}/Items/${recentArtist.Id!}/Images/Primary`} />
                             <Avatar.Fallback backgroundColor={Colors.Primary}/>
                         </Avatar>
