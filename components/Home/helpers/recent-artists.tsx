@@ -29,7 +29,7 @@ export default function RecentArtists(): React.JSX.Element {
                             <Avatar.Image src={`${server!.url}/Items/${recentArtist.Id!}/Images/Primary`} />
                             <Avatar.Fallback backgroundColor={Colors.Primary}/>
                         </Avatar>
-                        <Text>{`${recentArtist!.Name}`}</Text>
+                        <Text alignCenter>{`${recentArtist!.Name}`}</Text>
                     </YStack>
                 )
             })}

@@ -18,8 +18,15 @@ export function H1({ children }: { children: string }): React.JSX.Element {
     )
 }
 
-export function Text({ children }: { children: string }): React.JSX.Element {
+interface TextProps {
+    children: string,
+    alignCenter?: boolean | undefined
+}
+
+export function Text(props: TextProps): React.JSX.Element {
     return (
-        <H6>{ children }</H6>
+        <H6 alignContent={props.alignCenter ? 'center' : 'unset'}>
+            { props.children }
+        </H6>
     )
 }

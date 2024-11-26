@@ -25,7 +25,8 @@ export default function RecentlyPlayed(): React.JSX.Element {
                             <Avatar.Image src={`${server!.url}/Items/${recentlyPlayedTrack.AlbumId}/Images/Primary`} />
                             <Avatar.Fallback backgroundColor={Colors.Primary}/>
                         </Avatar>
-                        <Text>{`${recentlyPlayedTrack.Name}`}</Text>
+                        <Text alignCenter>{`${recentlyPlayedTrack.Name}`}</Text>
+                        <Text>{`${recentlyPlayedTrack.Artists?.join(", ")}`}</Text>
                     </YStack>
                 )
             })}
