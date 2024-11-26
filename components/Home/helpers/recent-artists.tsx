@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { Avatar, ScrollView, Text, YStack } from "tamagui";
+import { Avatar, ScrollView, YStack } from "tamagui";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { Colors } from "../../../enums/colors";
 import { useHomeContext } from "../provider";
+import { Text } from "../../helpers/text";
 
 export default function RecentArtists(): React.JSX.Element {
 
@@ -20,7 +21,7 @@ export default function RecentArtists(): React.JSX.Element {
             { recentArtists && recentArtists.map((recentArtist) => {
                 return (
                     <YStack 
-                        maxWidth={150} 
+                        maxWidth={300} 
                         gap="$2" 
                         alignContent="center"
                     >
@@ -28,7 +29,7 @@ export default function RecentArtists(): React.JSX.Element {
                             <Avatar.Image src={`${server!.url}/Items/${recentArtist.Id!}/Images/Primary`} />
                             <Avatar.Fallback backgroundColor={Colors.Primary}/>
                         </Avatar>
-                        <Text>{recentArtist!.Name}</Text>
+                        <Text>{`${recentArtist!.Name}`}</Text>
                     </YStack>
                 )
             })}
