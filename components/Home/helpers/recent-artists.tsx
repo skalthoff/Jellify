@@ -25,12 +25,12 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
             <ScrollView horizontal>
                 { recentArtists && recentArtists.map((recentArtist) => {
                     return (
-                        <Button onPress={() => navigation.navigate('Artist', { artistId: recentArtist.Id! })}>
+                        <Button onPress={() => navigation.navigate('Artist', { artistId: recentArtist.Id!, artistName: recentArtist.Name ?? "Unknown Artist" })}>
                             <YStack 
                             gap="$4" 
                             alignContent="center"
                             justifyContent="center"
-                            padding="$3"
+                            marginHorizontal="$3"
                             width="$10"
                             >
                                 <Avatar circular size="$10">

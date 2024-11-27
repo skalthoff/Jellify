@@ -1,6 +1,6 @@
 import { ScrollView, YStack } from "tamagui";
 import _ from "lodash";
-import { H2 } from "../helpers/text";
+import { H2, Text } from "../helpers/text";
 import RecentlyPlayed from "./helpers/recently-played";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import RecentArtists from "./helpers/recent-artists";
@@ -17,8 +17,25 @@ export default function Home(): React.JSX.Element {
     return (
         <HomeProvider>
             <Stack.Navigator id="Home" initialRouteName="Home">
-                <Stack.Screen name="Home" component={ProvidedHome} />
-                <Stack.Screen name="Artist" component={HomeArtistScreen} />
+                <Stack.Screen 
+                    name="Home" 
+                    component={ProvidedHome} 
+                    options={{
+                        headerShown: false
+                    }}
+                />
+
+                <Stack.Screen 
+                    name="Artist" 
+                    component={HomeArtistScreen} 
+                    options={({ route }) => ({
+                        title: route.params.artistName,
+                        headerLargeTitle: true,
+                        headerLargeTitleStyle: {
+                            fontFamily: 'Aileron-Black'
+                        }
+                    })}
+                />
             </Stack.Navigator>
         </HomeProvider>
     );
