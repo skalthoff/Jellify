@@ -7,6 +7,7 @@ interface AvatarProps {
     circular?: boolean | undefined;
     itemId: string;
     children?: string | undefined;
+    subheading?: string | undefined;
     onPress?: () => void | undefined;
 }
 
@@ -15,10 +16,10 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
     const { server } = useApiClientContext();
 
     return (
-        <View>
+        <View alignItems="center">
             <TamaguiAvatar 
                 circular={props.circular} 
-                size={125}
+                size={100}
                 onPress={props.onPress}
                 borderRadius={!!!props.circular ? 2 : 'unset'}
             >
@@ -26,7 +27,7 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
                 <TamaguiAvatar.Fallback backgroundColor={Colors.Secondary}/>
             </TamaguiAvatar>
             { props.children && (
-                <Label htmlFor={""} size={"$3"}>{props.children}</Label>
+                <Text>{props.children}</Text>
             )}
         </View>
     )
