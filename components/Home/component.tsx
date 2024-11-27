@@ -9,6 +9,7 @@ import { HomeProvider, useHomeContext } from "./provider";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeStackParamList, ProvidedHomeProps } from "./types";
 import { HomeArtistScreen } from "./screens/artist";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export const Stack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -48,20 +49,21 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
     const { refreshing: refetching, onRefresh: onRefetch } = useHomeContext()
 
     return (
-        <ScrollView 
-            paddingLeft={10}
-            refreshControl={
-            <RefreshControl 
-                refreshing={refetching} 
-                onRefresh={onRefetch}
-            />
-        }>
-            <YStack alignContent='flex-start'>
-                <H2>{`Hi, ${user!.name}`}</H2>
-                
-                <RecentArtists route={route} navigation={navigation} />
-                <RecentlyPlayed />
-            </YStack>
-        </ScrollView>
+        <SafeAreaView>
+            <ScrollView 
+                paddingLeft={10}
+                refreshControl={
+                    <RefreshControl 
+                    refreshing={refetching} 
+                    onRefresh={onRefetch}
+                    />
+                }>
+                <YStack alignContent='flex-start'>
+                    <H2>{`Hi, ${user!.name}`}</H2>
+                    <RecentArtists route={route} navigation={navigation} />
+                    <RecentlyPlayed />
+                </YStack>
+            </ScrollView>
+        </SafeAreaView>
     );
 }

@@ -1,12 +1,15 @@
 import { ScrollView } from "tamagui";
 import Avatar from "../helpers/avatar";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Artist({ artistId, artistName }: { artistId: string, artistName: string  }): React.JSX.Element {
     return (
-        <ScrollView>
-            <Avatar itemId={artistId}>
-                {artistName}
-            </Avatar>
-        </ScrollView>
+        <SafeAreaView>
+            <ScrollView>
+                <Avatar itemId={artistId}>
+                    {artistName}
+                </Avatar>
+            </ScrollView>
+        </SafeAreaView>
     )
 }

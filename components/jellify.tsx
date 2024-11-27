@@ -8,6 +8,7 @@ import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/
 import Navigation from "./navigation";
 import Login from "./Login/component";
 import { JellyfinAuthenticationProvider } from "./Login/provider";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -29,11 +30,13 @@ function App(): React.JSX.Element {
   
   return (
     <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
+      <SafeAreaProvider>
         { library ? <Navigation /> : (
           <JellyfinAuthenticationProvider>
             <Login /> 
           </JellyfinAuthenticationProvider>
         )}
+      </SafeAreaProvider>
     </NavigationContainer>
   );
 }
