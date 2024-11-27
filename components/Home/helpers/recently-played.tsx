@@ -23,8 +23,10 @@ export default function RecentlyPlayed(): React.JSX.Element {
                 { recentTracks && recentTracks.map((recentlyPlayedTrack) => {
                     return (
                         <YStack 
-                            height={200}
-                            gap="$5">
+                            alignItems="center"
+                            height={150}
+                            gap={5}
+                        >
                             <Avatar borderRadius={2}>
                                 <Avatar.Image src={`${server!.url}/Items/${recentlyPlayedTrack.AlbumId}/Images/Primary`} />
                                 <Avatar.Fallback backgroundColor={Colors.Primary}/>

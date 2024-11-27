@@ -7,6 +7,7 @@ interface AvatarProps {
     circular?: boolean | undefined;
     itemId: string;
     children?: string | undefined;
+    onPress?: () => void | undefined;
 }
 
 export default function Avatar(props: AvatarProps): React.JSX.Element {
@@ -18,6 +19,7 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
             <TamaguiAvatar 
                 circular={props.circular} 
                 size={50}
+                onPress={props.onPress}
             >
                 <TamaguiAvatar.Image src={`${server!.url}/Items/${props.itemId!}/Images/Primary`} />
                 <TamaguiAvatar.Fallback backgroundColor={Colors.Secondary}/>
