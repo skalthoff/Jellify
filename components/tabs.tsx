@@ -26,7 +26,8 @@ export function Tabs() {
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="jellyfish-outline" color={color} size={size} />
-                    )
+                    ),
+                    headerShown: false
                 }}
             />
 

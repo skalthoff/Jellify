@@ -4,9 +4,13 @@ import { useApiClientContext } from "../../jellyfin-api-provider";
 import { Colors } from "../../../enums/colors";
 import { useHomeContext } from "../provider";
 import { H2, Text } from "../../helpers/text";
+import Button from "../../helpers/button";
+import { HomeStackParamList, ProvidedHomeProps } from "../types";
+import { useNavigation } from "@react-navigation/native";
 
 export default function RecentArtists(): React.JSX.Element {
 
+    const { navigation } = useNavigation<ProvidedHomeProps>();
     const { server } = useApiClientContext();
     const { recentArtists } = useHomeContext();
 
@@ -22,19 +26,21 @@ export default function RecentArtists(): React.JSX.Element {
             <ScrollView horizontal>
                 { recentArtists && recentArtists.map((recentArtist) => {
                     return (
-                        <YStack 
-                        gap="$4" 
-                        alignContent="center"
-                        justifyContent="center"
-                        padding="$3"
-                        width="$10"
-                        >
-                            <Avatar circular size="$10">
-                                <Avatar.Image src={`${server!.url}/Items/${recentArtist.Id!}/Images/Primary`} />
-                                <Avatar.Fallback backgroundColor={Colors.Primary}/>
-                            </Avatar>
-                            <Text alignCenter>{`${recentArtist!.Name}`}</Text>
-                        </YStack>
+                        <Button onPress={() => navigation.navigate('Artist', { artistId: recentArtist.Id! })}>
+                            <YStack 
+                            gap="$4" 
+                            alignContent="center"
+                            justifyContent="center"
+                            padding="$3"
+                            width="$10"
+                            >
+                                <Avatar circular size="$10">
+                                    <Avatar.Image src={`${server!.url}/Items/${recentArtist.Id!}/Images/Primary`} />
+                                    <Avatar.Fallback backgroundColor={Colors.Primary}/>
+                                </Avatar>
+                                <Text alignCenter>{`${recentArtist!.Name}`}</Text>
+                            </YStack>
+                        </Button>
                     )
                 })}
             </ScrollView>

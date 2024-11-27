@@ -6,18 +6,25 @@ import { useApiClientContext } from "../jellyfin-api-provider";
 import RecentArtists from "./helpers/recent-artists";
 import { RefreshControl } from "react-native";
 import { HomeProvider, useHomeContext } from "./provider";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { HomeStackParamList, ProvidedHomeProps } from "./types";
+import { HomeArtistScreen } from "./screens/artist";
 
+export const Stack = createNativeStackNavigator<HomeStackParamList>();
 
 export default function Home(): React.JSX.Element {
 
     return (
         <HomeProvider>
-            <ProvidedHome />
+            <Stack.Navigator id="Home" initialRouteName="Home">
+                <Stack.Screen name="Home" component={ProvidedHome} />
+                <Stack.Screen name="Artist" component={HomeArtistScreen} />
+            </Stack.Navigator>
         </HomeProvider>
     );
 }
 
-function ProvidedHome(): React.JSX.Element {
+function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Element {
 
     const { user } = useApiClientContext();
 
