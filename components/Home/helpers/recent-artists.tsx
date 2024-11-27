@@ -24,7 +24,7 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                 { recentArtists && recentArtists.map((recentArtist) => {
                     return (
                         <YStack
-                            height={100}
+                            height={200}
                             gap="$4" 
                             alignItems="center"
                         >
