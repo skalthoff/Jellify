@@ -1,4 +1,4 @@
-import { Avatar as TamaguiAvatar } from "tamagui"
+import { Avatar as TamaguiAvatar, View } from "tamagui"
 import { Label, Text } from "./text"
 import { useApiClientContext } from "../jellyfin-api-provider"
 import { Colors } from "../../enums/colors";
@@ -14,7 +14,7 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
     const { server } = useApiClientContext();
 
     return (
-        <>
+        <View>
             <TamaguiAvatar 
                 circular={props.circular} 
                 size="$10"
@@ -23,6 +23,6 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
                 <TamaguiAvatar.Fallback backgroundColor={Colors.Secondary}/>
             </TamaguiAvatar>
             <Label htmlFor={""} size={"$3"}>{props.children}</Label>
-        </>
+        </View>
     )
 }
