@@ -27,8 +27,6 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                             <YStack 
                             gap="$4" 
                             alignItems="center"
-                            width="$5"
-                            minHeight="$20"
                             >
                                 <Avatar circular size="$10">
                                     <Avatar.Image src={`${server!.url}/Items/${recentArtist.Id!}/Images/Primary`} />
