@@ -1,9 +1,12 @@
+import { RouteProp } from "@react-navigation/native";
 import Artist from "../../Artist/component";
-import { ProvidedHomeProps } from "../types";
+import { HomeStackParamList, ProvidedHomeProps } from "../types";
 
-export function HomeArtistScreen({route, navigation}: ProvidedHomeProps): React.JSX.Element {
+export function HomeArtistScreen({ route }: { route: RouteProp<HomeStackParamList> }): React.JSX.Element {
     return (
-        // @ts-ignore
-        <Artist artistId={route.params!.artistId} />
+        <Artist 
+            artistId={route.params!.artistId}
+            artistName={route.params!.artistName}
+        />
     );
 }
