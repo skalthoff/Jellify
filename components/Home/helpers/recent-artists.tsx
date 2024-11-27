@@ -8,9 +8,8 @@ import Button from "../../helpers/button";
 import { HomeStackParamList, ProvidedHomeProps } from "../types";
 import { useNavigation } from "@react-navigation/native";
 
-export default function RecentArtists(): React.JSX.Element {
+export default function RecentArtists({ navigation }: ProvidedHomeProps): React.JSX.Element {
 
-    const { navigation } = useNavigation<ProvidedHomeProps>();
     const { server } = useApiClientContext();
     const { recentArtists } = useHomeContext();
 

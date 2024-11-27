@@ -42,7 +42,7 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
             <YStack alignContent='flex-start'>
                 <H2>{`Hi, ${user!.name}`}</H2>
                 
-                <RecentArtists />
+                <RecentArtists route={route} navigation={navigation} />
                 <RecentlyPlayed />
             </YStack>
         </ScrollView>
