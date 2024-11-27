@@ -6,9 +6,7 @@ export default function Artist({ artistId, artistName }: { artistId: string, art
     return (
         <SafeAreaView>
             <ScrollView>
-                <Avatar itemId={artistId}>
-                    {artistName}
-                </Avatar>
+                <Avatar itemId={artistId} />
             </ScrollView>
         </SafeAreaView>
     )

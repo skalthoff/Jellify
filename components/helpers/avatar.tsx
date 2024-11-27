@@ -6,7 +6,7 @@ import { Colors } from "../../enums/colors";
 interface AvatarProps {
     circular?: boolean | undefined;
     itemId: string;
-    children: string;
+    children?: string | undefined;
 }
 
 export default function Avatar(props: AvatarProps): React.JSX.Element {
@@ -22,7 +22,9 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
                 <TamaguiAvatar.Image src={`${server!.url}/Items/${props.itemId!}/Images/Primary`} />
                 <TamaguiAvatar.Fallback backgroundColor={Colors.Secondary}/>
             </TamaguiAvatar>
-            <Label htmlFor={""} size={"$3"}>{props.children}</Label>
+            { props.children && (
+                <Label htmlFor={""} size={"$3"}>{props.children}</Label>
+            )}
         </View>
     )
 }
