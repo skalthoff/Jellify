@@ -23,18 +23,17 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
             <ScrollView horizontal>
                 { recentArtists && recentArtists.map((recentArtist) => {
                     return (
-                        <Button onPress={() => navigation.navigate('Artist', { artistId: recentArtist.Id!, artistName: recentArtist.Name ?? "Unknown Artist" })}>
-                            <YStack 
+                        <YStack
+                            height={100}
                             gap="$4" 
                             alignItems="center"
-                            >
-                                <Avatar circular size="$10">
+                        >
+                                <Avatar circular size="$10" onPress={() => navigation.navigate('Artist', { artistId: recentArtist.Id!, artistName: recentArtist.Name ?? "Unknown Artist" })}>
                                     <Avatar.Image src={`${server!.url}/Items/${recentArtist.Id!}/Images/Primary`} />
                                     <Avatar.Fallback backgroundColor={Colors.Primary}/>
                                 </Avatar>
                                 <Text>{`${recentArtist!.Name}`}</Text>
-                            </YStack>
-                        </Button>
+                        </YStack>
                     )
                 })}
             </ScrollView>
