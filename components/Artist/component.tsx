@@ -22,7 +22,7 @@ export default function Artist({ artistId, artistName }: { artistId: string, art
                     renderItem={({ item: album }) => {
                         return (
                             <Avatar itemId={album.Id!} subheading={album.Name}>
-                                { album.ProductionYear?.toLocaleString() ?? "" }
+                                { album.ProductionYear?.toString() ?? "" }
                             </Avatar>
                         )
                     }}

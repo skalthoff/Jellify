@@ -32,7 +32,7 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
                 <Text>{props.children}</Text>
             )}
             { props.subheading && (
-                <Text>{ props.subheading }</Text>
+                <Text bold>{ props.subheading }</Text>
             )}
         </YStack>
     )
