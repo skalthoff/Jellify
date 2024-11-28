@@ -58,6 +58,7 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
     return (
         <SafeAreaView>
             <ScrollView 
+                contentInsetAdjustmentBehavior="automatic"
                 paddingLeft={10}
                 refreshControl={
                     <RefreshControl 
