@@ -21,7 +21,7 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
                 circular={props.circular} 
                 size={100}
                 onPress={props.onPress}
-                borderRadius={!!!props.circular ? 2 : 'unset'}
+                borderRadius={!!!props.circular ? 4 : 'unset'}
             >
                 <TamaguiAvatar.Image src={`${server!.url}/Items/${props.itemId!}/Images/Primary`} />
                 <TamaguiAvatar.Fallback backgroundColor={Colors.Secondary}/>
