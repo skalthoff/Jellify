@@ -25,13 +25,14 @@ export function H2({ children }: { children: string }): React.JSX.Element {
 }
 
 interface TextProps {
+    bold?: boolean | undefined
     children: string;
     width?: number;
 }
 
 export function Text(props: TextProps): React.JSX.Element {
     return (
-        <Paragraph width={props.width} fontWeight={800} fontSize="$4">
+        <Paragraph width={props.width} fontWeight={props.bold ? 800 : 600} fontSize="$4">
             { props.children }
         </Paragraph>
     )

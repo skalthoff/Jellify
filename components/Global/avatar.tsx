@@ -32,7 +32,7 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
                 <Text>{props.children}</Text>
             )}
             { props.subheading && (
-                <H6 fontWeight={900}>{ props.subheading }</H6>
+                <Text>{ props.subheading }</Text>
             )}
         </YStack>
     )
