@@ -33,9 +33,9 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                                         artistId: recentArtist.Id!, 
                                         artistName: recentArtist.Name ?? "Unknown Artist" 
                                     }
-                                )}>
-                            {`${recentArtist!.Name}`}
-                        </Avatar>
+                                )} 
+                            subheading={recentArtist.Name ?? "Unknown Artist"}
+                        />
                     )
                 })}
             </ScrollView>
