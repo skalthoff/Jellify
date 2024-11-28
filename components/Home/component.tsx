@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeStackParamList, ProvidedHomeProps } from "./types";
 import { HomeArtistScreen } from "./screens/artist";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Colors } from "../../enums/colors";
 
 export const Stack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -17,7 +18,13 @@ export default function Home(): React.JSX.Element {
 
     return (
         <HomeProvider>
-            <Stack.Navigator id="Home" initialRouteName="Home">
+            <Stack.Navigator 
+                id="Home" 
+                initialRouteName="Home"
+                screenOptions={{
+                    navigationBarColor: Colors.Primary
+                }}
+            >
                 <Stack.Screen 
                     name="Home" 
                     component={ProvidedHome} 
@@ -54,8 +61,8 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
                 paddingLeft={10}
                 refreshControl={
                     <RefreshControl 
-                    refreshing={refetching} 
-                    onRefresh={onRefetch}
+                        refreshing={refetching} 
+                        onRefresh={onRefetch}
                     />
                 }>
                 <YStack alignContent='flex-start'>

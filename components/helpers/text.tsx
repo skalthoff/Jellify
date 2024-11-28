@@ -20,17 +20,18 @@ export function H1({ children }: { children: string }): React.JSX.Element {
 
 export function H2({ children }: { children: string }): React.JSX.Element {
     return (
-        <TamaguiH2 marginVertical={25}>{ children }</TamaguiH2>
+        <TamaguiH2 marginVertical={5}>{ children }</TamaguiH2>
     )
 }
 
 interface TextProps {
-    children: string,
+    children: string;
+    width?: number;
 }
 
 export function Text(props: TextProps): React.JSX.Element {
     return (
-        <Paragraph fontWeight={600} fontSize="$3">
+        <Paragraph width={props.width} fontWeight={600} fontSize="$3">
             { props.children }
         </Paragraph>
     )

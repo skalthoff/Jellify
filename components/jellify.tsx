@@ -1,9 +1,8 @@
 import { useColorScheme } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
 import { JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
-import React, { useEffect } from "react";
+import React from "react";
 import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import Navigation from "./navigation";
 import Login from "./Login/component";

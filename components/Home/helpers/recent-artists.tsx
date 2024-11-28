@@ -26,7 +26,7 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                     return (
                         <YStack
                             height={150}
-                            gap={10} 
+                            paddingHorizontal={10} 
                             alignItems="center"
                         >
                             <Avatar 

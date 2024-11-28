@@ -27,7 +27,7 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
                 <TamaguiAvatar.Fallback backgroundColor={Colors.Secondary}/>
             </TamaguiAvatar>
             { props.children && (
-                <Text>{props.children}</Text>
+                <Text width={100}>{props.children}</Text>
             )}
         </View>
     )
