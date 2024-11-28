@@ -18,7 +18,7 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
     const { server } = useApiClientContext();
 
     return (
-        <YStack alignItems="center" width={size} marginHorizontal={10}>
+        <YStack alignItems="center" width={size} height={size + 50} marginHorizontal={10}>
             <TamaguiAvatar 
                 circular={props.circular} 
                 size={size}

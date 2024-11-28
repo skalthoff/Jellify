@@ -24,23 +24,18 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
             <ScrollView horizontal>
                 { recentArtists && recentArtists.map((recentArtist) => {
                     return (
-                        <YStack
-                            height={150}
-                            alignItems="center"
-                        >
-                            <Avatar 
-                                circular
-                                itemId={recentArtist.Id!} 
-                                onPress={() => 
-                                    navigation.navigate('Artist', 
-                                        { 
-                                            artistId: recentArtist.Id!, 
-                                            artistName: recentArtist.Name ?? "Unknown Artist" 
-                                        }
-                                    )}>
-                                {`${recentArtist!.Name}`}
-                            </Avatar>
-                        </YStack>
+                        <Avatar 
+                            circular
+                            itemId={recentArtist.Id!} 
+                            onPress={() => 
+                                navigation.navigate('Artist', 
+                                    { 
+                                        artistId: recentArtist.Id!, 
+                                        artistName: recentArtist.Name ?? "Unknown Artist" 
+                                    }
+                                )}>
+                            {`${recentArtist!.Name}`}
+                        </Avatar>
                     )
                 })}
             </ScrollView>
