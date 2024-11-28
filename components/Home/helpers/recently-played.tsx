@@ -3,7 +3,7 @@ import { Avatar, ScrollView, View, YStack } from "tamagui";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { Colors } from "../../../enums/colors";
 import { useHomeContext } from "../provider";
-import { H2, Text } from "../../helpers/text";
+import { H2, Text } from "../../Global/text";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 

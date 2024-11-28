@@ -1,6 +1,6 @@
 import { ScrollView, YStack } from "tamagui";
 import _ from "lodash";
-import { H2, Text } from "../helpers/text";
+import { H2, Text } from "../Global/text";
 import RecentlyPlayed from "./helpers/recently-played";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import RecentArtists from "./helpers/recent-artists";
@@ -40,7 +40,7 @@ export default function Home(): React.JSX.Element {
                         title: route.params.artistName,
                         headerLargeTitle: true,
                         headerLargeTitleStyle: {
-                            fontFamily: 'Aileron-Black'
+                            fontFamily: 'Aileron-Bold'
                         }
                     })}
                 />

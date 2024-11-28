@@ -7,6 +7,7 @@ import { Colors } from "../enums/colors";
 import Search from "./Search/component";
 import Library from "./Library/component";
 import Settings from "./Settings/component";
+import { Discover } from "./Discover/component";
 
 const Tab = createBottomTabNavigator();
 
@@ -47,6 +48,16 @@ export function Tabs() {
                 options={{
                     tabBarIcon: ({color, size }) => (
                         <MaterialCommunityIcons name="magnify" color={color} size={size} />
+                    )
+                }}
+            />
+
+            <Tab.Screen
+                name="Discover"
+                component={Discover}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="music-box-multiple-outline" color={color} size={size} />
                     )
                 }}
             />

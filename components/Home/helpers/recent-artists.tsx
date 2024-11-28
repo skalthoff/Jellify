@@ -3,9 +3,9 @@ import { ScrollView, View, YStack } from "tamagui";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { Colors } from "../../../enums/colors";
 import { useHomeContext } from "../provider";
-import { H2, Text } from "../../helpers/text";
+import { H2, Text } from "../../Global/text";
 import { ProvidedHomeProps } from "../types";
-import Avatar from "../../helpers/avatar";
+import Avatar from "../../Global/avatar";
 
 export default function RecentArtists({ navigation }: ProvidedHomeProps): React.JSX.Element {
 
