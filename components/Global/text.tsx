@@ -31,7 +31,7 @@ interface TextProps {
 
 export function Text(props: TextProps): React.JSX.Element {
     return (
-        <Paragraph width={props.width} fontWeight={600} fontSize="$3">
+        <Paragraph width={props.width} fontWeight={800} fontSize="$4">
             { props.children }
         </Paragraph>
     )

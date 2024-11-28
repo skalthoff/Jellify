@@ -1,7 +1,9 @@
-import { H6, Avatar as TamaguiAvatar, View, YStack } from "tamagui"
-import { Label, Text } from "./text"
+import { H6, Avatar as TamaguiAvatar, YStack } from "tamagui"
+import { Text } from "./text"
 import { useApiClientContext } from "../jellyfin-api-provider"
 import { Colors } from "../../enums/colors";
+
+const size: number = 150;
 
 interface AvatarProps {
     circular?: boolean | undefined;
@@ -16,10 +18,10 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
     const { server } = useApiClientContext();
 
     return (
-        <YStack alignItems="center" width={100} paddingHorizontal={10}>
+        <YStack alignItems="center" width={size} marginHorizontal={10}>
             <TamaguiAvatar 
                 circular={props.circular} 
-                size={100}
+                size={size}
                 onPress={props.onPress}
                 borderRadius={!!!props.circular ? 4 : 'unset'}
             >
@@ -30,7 +32,7 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
                 <Text>{props.children}</Text>
             )}
             { props.subheading && (
-                <H6>{ props.subheading }</H6>
+                <H6 fontWeight={900}>{ props.subheading }</H6>
             )}
         </YStack>
     )
