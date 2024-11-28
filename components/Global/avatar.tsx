@@ -1,4 +1,4 @@
-import { Avatar as TamaguiAvatar, View } from "tamagui"
+import { H6, Avatar as TamaguiAvatar, View, YStack } from "tamagui"
 import { Label, Text } from "./text"
 import { useApiClientContext } from "../jellyfin-api-provider"
 import { Colors } from "../../enums/colors";
@@ -7,7 +7,7 @@ interface AvatarProps {
     circular?: boolean | undefined;
     itemId: string;
     children?: string | undefined;
-    subheading?: string | undefined;
+    subheading?: string | null | undefined;
     onPress?: () => void | undefined;
 }
 
@@ -16,7 +16,7 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
     const { server } = useApiClientContext();
 
     return (
-        <View alignItems="center">
+        <YStack alignItems="center" width={100} paddingHorizontal={10}>
             <TamaguiAvatar 
                 circular={props.circular} 
                 size={100}
@@ -27,8 +27,11 @@ export default function Avatar(props: AvatarProps): React.JSX.Element {
                 <TamaguiAvatar.Fallback backgroundColor={Colors.Secondary}/>
             </TamaguiAvatar>
             { props.children && (
-                <Text width={100}>{props.children}</Text>
+                <Text>{props.children}</Text>
             )}
-        </View>
+            { props.subheading && (
+                <H6>{ props.subheading }</H6>
+            )}
+        </YStack>
     )
 }

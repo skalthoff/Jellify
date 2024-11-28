@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
-import { Avatar, ScrollView, View, YStack } from "tamagui";
-import { useApiClientContext } from "../../jellyfin-api-provider";
-import { Colors } from "../../../enums/colors";
+import { ScrollView, View } from "tamagui";
 import { useHomeContext } from "../provider";
-import { H2, Text } from "../../Global/text";
+import { H2 } from "../../Global/text";
+import Avatar from "../../Global/avatar";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
-    const { server } = useApiClientContext();
     const { recentTracks } = useHomeContext();
 
     useEffect(() => {
@@ -22,18 +20,9 @@ export default function RecentlyPlayed(): React.JSX.Element {
             <ScrollView horizontal>
                 { recentTracks && recentTracks.map((recentlyPlayedTrack) => {
                     return (
-                        <YStack 
-                            alignItems="center"
-                            height={150}
-                            gap={5}
-                        >
-                            <Avatar borderRadius={2}>
-                                <Avatar.Image src={`${server!.url}/Items/${recentlyPlayedTrack.AlbumId}/Images/Primary`} />
-                                <Avatar.Fallback backgroundColor={Colors.Primary}/>
+                            <Avatar itemId={recentlyPlayedTrack.AlbumId!} subheading={`${recentlyPlayedTrack.Artists?.join(", ")}`}>
+                                {`${recentlyPlayedTrack.Name}`}
                             </Avatar>
-                            <Text>{`${recentlyPlayedTrack.Name}`}</Text>
-                            <Text>{`${recentlyPlayedTrack.Artists?.join(", ")}`}</Text>
-                        </YStack>
                     )
                 })}
             </ScrollView>
