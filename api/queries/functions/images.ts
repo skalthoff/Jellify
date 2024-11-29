@@ -8,7 +8,6 @@ export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, 
     
     return getImageApi(api).getItemImage({ itemId, imageType: imageType ? imageType : ImageType.Primary })
         .then((response) => {
-            console.log(response);
             convertFileToBase64((response.data as File))
                 .then((encode) => {
                     console.log(encode);
@@ -18,12 +17,20 @@ export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, 
 }
 
 function convertFileToBase64(file: File): Promise<string> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
         reader.onloadend = () => {
             if (!_.isEmpty(reader.result))
                 resolve(reader.result.toString())
+            else
+                reject(new Error("Unable to convert file to base64"));
         }
-    })
+
+        reader.onerror = (error) => {
+            reject(error);
+        }
+
+        reader.readAsDataURL(file);
+    });
 }
