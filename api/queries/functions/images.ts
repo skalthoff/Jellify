@@ -10,4 +10,7 @@ export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, 
             itemId,
             width: width
         })
+        .then((response) => {
+            return response.data
+        })
 }

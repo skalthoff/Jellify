@@ -4,6 +4,8 @@ import { H3, Image, Card as TamaguiCard, ZStack } from "tamagui";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { cardDimensions } from "./component.config";
+import { useItemImage } from "../../api/queries/image";
+import { Colors } from "../../enums/colors";
 
 interface CardProps extends TamaguiCardProps {
     children?: string;
@@ -13,7 +15,7 @@ interface CardProps extends TamaguiCardProps {
 
 export function Card(props: CardProps) {
 
-    const { server } = useApiClientContext();
+    const { data, isPending } = useItemImage(useApiClientContext().apiClient!, props.itemId)
 
     return (
         <TamaguiCard 
@@ -39,16 +41,19 @@ export function Card(props: CardProps) {
             <TamaguiCard.Background>
                 <ZStack>
                     <LinearGradient
-                        colors={["$colorTransparent", "$black4"]}
+                        colors={[Colors.Primary, "$black4"]}
                         start={[1, 1]}
                         end={[0,0]}
                     />
-                    <Image
-                    alignSelf="center"
-                    source={{
-                        uri: `${server!.url}/Items/${props.itemId}/Images/Primary`,
-                    }}
-                    />
+
+                    ( data && (
+                        <Image
+                        alignSelf="center"
+                        source={{
+                            uri: data,
+                        }}
+                        />
+                    ))
                 </ZStack>
             </TamaguiCard.Background>
         </TamaguiCard>
