@@ -4,7 +4,7 @@ import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/text";
 import { ProvidedHomeProps } from "../types";
 import { FlatList } from "react-native";
-import { Card } from "../../Global/card";
+import { Card, CardType } from "../../Global/card";
 
 export default function RecentArtists({ navigation }: ProvidedHomeProps): React.JSX.Element {
 
@@ -24,6 +24,7 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                 renderItem={({ item: recentArtist}) => {
                     return (
                         <Card 
+                            cardType={CardType.Artist}
                             itemId={recentArtist.Id!}
                             onPress={() => {
                                 navigation.navigate('Artist', 

@@ -7,7 +7,13 @@ import { cardDimensions } from "./component.config";
 import { useItemImage } from "../../api/queries/image";
 import { Colors } from "../../enums/colors";
 
+export enum CardType {
+    Artist = "ARTIST",
+    Album = "ALBUM"
+}
+
 interface CardProps extends TamaguiCardProps {
+    cardType?: CardType;
     children?: string;
     itemId: string;
     footer?: ReactNode;
@@ -18,6 +24,8 @@ export function Card(props: CardProps) {
     const { apiClient } = useApiClientContext();
     const { data, isPending } = useItemImage(apiClient!, props.itemId)
 
+    const dimensions = props.cardType === CardType.Artist ? cardDimensions.artist : cardDimensions.album;
+
     return (
         <TamaguiCard 
             elevate 
@@ -26,7 +34,7 @@ export function Card(props: CardProps) {
             hoverStyle={props.onPress ? { scale: 0.925 } : {}}
             pressStyle={props.onPress ? { scale: 0.875 } : {}}
             borderRadius={25}
-            {...cardDimensions}
+            {...dimensions}
             {...props}
         >
             <TamaguiCard.Header padded>
