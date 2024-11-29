@@ -5,7 +5,7 @@ export enum QueryKeys {
     ArtistAlbums = "ARTIST_ALBUMS",
     ArtistById = "ARTIST_BY_ID",
     Credentials = "CREDENTIALS",
-    ImageByItemId = "IMAGE_BY_ITEM_ID",
+    ItemImage = "IMAGE_BY_ITEM_ID",
     Libraries = "LIBRARIES",
     Pause = "PAUSE",
     Play = "PLAY",
