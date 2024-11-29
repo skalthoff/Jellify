@@ -3,11 +3,8 @@ import type { CardProps as TamaguiCardProps } from "tamagui"
 import { H2, Image, Paragraph, Card as TamaguiCard } from "tamagui";
 import { useItemImage } from "../../api/queries/image";
 import { useApiClientContext } from "../jellyfin-api-provider";
-
-const cardDimensions = {
-    width: 300,
-    height: 300
-}
+import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
+import { cardDimensions } from "./component.config";
 
 interface CardProps extends TamaguiCardProps {
     children?: string;
@@ -18,7 +15,7 @@ interface CardProps extends TamaguiCardProps {
 export function Card(props: CardProps) {
 
     const { apiClient } = useApiClientContext();
-    const { data, isPending } = useItemImage(apiClient!, props.itemId)
+    const { data, isPending } = useItemImage(apiClient!, props.itemId, ImageType.Primary, cardDimensions.width)
 
     return (
       <TamaguiCard 
@@ -27,6 +24,7 @@ export function Card(props: CardProps) {
         animation="bouncy"
         hoverStyle={{ scale: 0.925 }}
         pressStyle={{ scale: 0.875 }}
+        {...cardDimensions}
         {...props}
     >
         <TamaguiCard.Header padded>
