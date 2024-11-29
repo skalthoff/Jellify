@@ -12,6 +12,7 @@ export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, 
         format: ImageFormat.Jpg
     })
     .then((response) => {
+        console.log(`data:image/jpeg;base64,${response.data}`)
         return `data:image/jpeg;base64,${response.data}`;
     })
 }
