@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
-import { H2, Image, Paragraph, Card as TamaguiCard } from "tamagui";
+import { H3, Image, Card as TamaguiCard } from "tamagui";
 import { useItemImage } from "../../api/queries/image";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
@@ -29,7 +29,7 @@ export function Card(props: CardProps) {
     >
         <TamaguiCard.Header padded>
           { props.children && (
-              <H2>{ props.children }</H2>
+              <H3>{ props.children }</H3>
           )}
         </TamaguiCard.Header>
         <TamaguiCard.Footer padded>
