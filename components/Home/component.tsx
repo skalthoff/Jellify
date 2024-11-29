@@ -66,7 +66,7 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
                 }>
                 <YStack alignContent='flex-start'>
                     <XStack>
-                        <Avatar itemId={user!.id} />
+                        <Avatar maxHeight={30} itemId={user!.id} />
                         <H3>{`Hi, ${user!.name}`}</H3>
                     </XStack>
                     <RecentArtists route={route} navigation={navigation} />
