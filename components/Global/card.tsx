@@ -14,8 +14,7 @@ interface CardProps extends TamaguiCardProps {
 
 export function Card(props: CardProps) {
 
-    const { apiClient } = useApiClientContext();
-    const { data, isPending } = useItemImage(apiClient!, props.itemId, ImageType.Primary, cardDimensions.width)
+    const { server } = useApiClientContext();
 
     return (
       <TamaguiCard 
@@ -38,16 +37,13 @@ export function Card(props: CardProps) {
           )}
         </TamaguiCard.Footer>
         <TamaguiCard.Background>
-          { data && (
-
-              <Image
-              alignSelf="center"
-              source={{
-                  uri: data?.data,
-                  ...cardDimensions
-                }}
-                />
-        )}
+            <Image
+            alignSelf="center"
+            source={{
+                uri: `${server!.url}/Items/${props.itemId}/Images/Primary`,
+                ...cardDimensions
+            }}
+            />
         </TamaguiCard.Background>
       </TamaguiCard>
     )
