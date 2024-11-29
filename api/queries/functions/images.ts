@@ -8,11 +8,7 @@ export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, 
     
     return getImageApi(api).getItemImage({ itemId, imageType: imageType ? imageType : ImageType.Primary })
         .then((response) => {
-            return convertFileToBase64((response.data as File))
-                .then((encode) => {
-                    console.log(encode);
-                    return encode;
-                })
+            return response.data;
         })
 }
 
