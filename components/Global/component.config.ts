@@ -1,4 +1,4 @@
 export const cardDimensions = {
-    width: 250,
-    height: 300
+    width: 200,
+    height: 250
 }

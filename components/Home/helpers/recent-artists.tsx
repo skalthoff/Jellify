@@ -17,13 +17,15 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
     ])
 
     return (
-        <View>
+        <View marginTop={25}>
             <H2>Recent Artists</H2>
             <FlatList horizontal
                 data={recentArtists}
                 renderItem={({ item: recentArtist}) => {
                     return (
                         <Card 
+                            circular
+                            marginRight={25}
                             itemId={recentArtist.Id!}
                             onPress={() => {
                                 navigation.navigate('Artist', 

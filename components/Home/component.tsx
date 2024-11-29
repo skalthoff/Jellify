@@ -1,6 +1,5 @@
-import { ScrollView, YStack } from "tamagui";
+import { H3, ScrollView, YStack } from "tamagui";
 import _ from "lodash";
-import { H2 } from "../Global/text";
 import RecentlyPlayed from "./helpers/recently-played";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import RecentArtists from "./helpers/recent-artists";
@@ -65,7 +64,7 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
                     />
                 }>
                 <YStack alignContent='flex-start'>
-                    <H2>{`Hi, ${user!.name}`}</H2>
+                    <H3>{`Hi, ${user!.name}`}</H3>
                     <RecentArtists route={route} navigation={navigation} />
                     <RecentlyPlayed />
                 </YStack>

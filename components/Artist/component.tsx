@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useArtistAlbums } from "../../api/queries/artist";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { FlatList } from "react-native";
+import { Card } from "../Global/card";
 
 export default function Artist({ artistId, artistName }: { artistId: string, artistName: string  }): React.JSX.Element {
 
@@ -13,7 +14,10 @@ export default function Artist({ artistId, artistName }: { artistId: string, art
 
     return (
         <SafeAreaView>
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <ScrollView 
+                alignContent="center" 
+                contentInsetAdjustmentBehavior="automatic"
+            >
                 <Avatar itemId={artistId} />
 
                 <FlatList
@@ -21,9 +25,9 @@ export default function Artist({ artistId, artistName }: { artistId: string, art
                     numColumns={2} // TODO: Make this adjustable
                     renderItem={({ item: album }) => {
                         return (
-                            <Avatar itemId={album.Id!} subheading={album.Name}>
-                                { album.ProductionYear?.toString() ?? "" }
-                            </Avatar>
+                            <Card itemId={album.Id!}>
+                                { album.Name! }
+                            </Card>
                         )
                     }}
                 />

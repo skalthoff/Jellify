@@ -17,35 +17,36 @@ export function Card(props: CardProps) {
     const { server } = useApiClientContext();
 
     return (
-      <TamaguiCard 
-        elevate 
-        size="$4" 
-        animation="bouncy"
-        hoverStyle={{ scale: 0.925 }}
-        pressStyle={{ scale: 0.875 }}
-        {...cardDimensions}
-        {...props}
-    >
-        <TamaguiCard.Header padded>
-          { props.children && (
-              <H3>{ props.children }</H3>
-          )}
-        </TamaguiCard.Header>
-        <TamaguiCard.Footer padded>
-          { props.footer && (
-            props.footer
-          )}
-        </TamaguiCard.Footer>
-        <TamaguiCard.Background>
-            <Image
-            alignSelf="center"
-            source={{
-                uri: `${server!.url}/Items/${props.itemId}/Images/Primary`,
-                ...cardDimensions
-            }}
-            />
-        </TamaguiCard.Background>
-      </TamaguiCard>
+        <TamaguiCard 
+            elevate 
+            size="$4" 
+            animation="bouncy"
+            hoverStyle={{ scale: 0.925 }}
+            pressStyle={{ scale: 0.875 }}
+            borderRadius={25}
+            {...cardDimensions}
+            {...props}
+        >
+            <TamaguiCard.Header padded>
+            { props.children && (
+                <H3>{ props.children }</H3>
+            )}
+            </TamaguiCard.Header>
+            <TamaguiCard.Footer padded>
+            { props.footer && (
+                props.footer
+            )}
+            </TamaguiCard.Footer>
+            <TamaguiCard.Background>
+                <Image
+                alignSelf="center"
+                source={{
+                    uri: `${server!.url}/Items/${props.itemId}/Images/Primary`,
+                    ...cardDimensions
+                }}
+                />
+            </TamaguiCard.Background>
+        </TamaguiCard>
     )
   }
   
