@@ -21,8 +21,8 @@ export function Card(props: CardProps) {
             elevate 
             size="$4" 
             animation="bouncy"
-            hoverStyle={{ scale: 0.925 }}
-            pressStyle={{ scale: 0.875 }}
+            hoverStyle={props.onPress ? { scale: 0.925 } : {}}
+            pressStyle={props.onPress ? { scale: 0.875 } : {}}
             borderRadius={25}
             {...cardDimensions}
             {...props}
