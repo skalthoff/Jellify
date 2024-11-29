@@ -1,9 +1,10 @@
 import { useQueries, useQuery, UseQueryOptions, UseQueryResult } from "@tanstack/react-query"
-import { getActiveTrack, getProgress, pause, play, removeUpcomingTracks, setupPlayer } from "react-native-track-player/lib/src/trackPlayer"
+import { getActiveTrack, getProgress, pause, play } from "react-native-track-player/lib/src/trackPlayer"
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api/playstate-api"
-import { useApi } from "../../api/queries";
 import { Progress, Track } from "react-native-track-player";
 import { QueryKeys } from "../../enums/query-keys";
+import { Api } from "@jellyfin/sdk";
+import { useApiClientContext } from "../../components/jellyfin-api-provider";
 
 const usePause : UseQueryOptions = {
     queryKey: [QueryKeys.Pause],
@@ -26,11 +27,11 @@ const useProgress : UseQueryResult<Progress, Error> = useQuery({
             .then((progress => {
                 if (!!!progress)
                     throw new Error("Tried to fetch progress when there wasn't a currently active track");
-            }))
+            }));
     }
-})
+});
 
-const useReportPlaybackStarted : UseQueryOptions = {
+const useReportPlaybackStarted = {
     queryKey: [QueryKeys.ReportPlaybackStarted],
     queryFn: () => {
         getActiveTrack()
@@ -41,12 +42,18 @@ const useReportPlaybackStarted : UseQueryOptions = {
             return track as Track;
         })
         .then(track => {
-            getPlaystateApi(useApi.data!).reportPlaybackStart({playbackStartInfo: { ItemId: track.id, PositionTicks: useProgress.data!.position }})
-        })
+            getPlaystateApi(useApiClientContext().apiClient!)
+                .reportPlaybackStart({
+                    playbackStartInfo: { 
+                        ItemId: track.id, 
+                        PositionTicks: useProgress.data!.position 
+                    }
+                });
+        });
     }
 }
 
-const useReportPlaybackStopped : UseQueryOptions = {
+const useReportPlaybackStopped = {
     queryKey: [QueryKeys.ReportPlaybackStopped],
     queryFn: () => {
         getActiveTrack()
@@ -57,12 +64,18 @@ const useReportPlaybackStopped : UseQueryOptions = {
             return track as Track;
         })
         .then(track => {
-            getPlaystateApi(useApi.data!).reportPlaybackStopped({playbackStopInfo: { ItemId: track.id, PositionTicks: useProgress.data!.position }})
-        })
+            getPlaystateApi(useApiClientContext().apiClient!)
+                .reportPlaybackStopped({
+                    playbackStopInfo: { 
+                        ItemId: track.id, 
+                        PositionTicks: useProgress.data!.position 
+                    }
+                });
+        });
     }
 }
 
-export const useReportPlaybackProgress : UseQueryResult = useQuery({
+export const useReportPlaybackProgress = {
     queryKey: [QueryKeys.ReportPlaybackPosition],
     queryFn: () => {
         getActiveTrack()
@@ -73,15 +86,21 @@ export const useReportPlaybackProgress : UseQueryResult = useQuery({
             return track as Track;
         })
         .then(track => {
-            getPlaystateApi(useApi.data!).reportPlaybackProgress({playbackProgressInfo: { ItemId: track.id, PositionTicks: useProgress.data!.position }})
-        })
+            getPlaystateApi(useApiClientContext().apiClient!)
+                .reportPlaybackProgress({
+                    playbackProgressInfo: { 
+                        ItemId: track.id, 
+                        PositionTicks: useProgress.data!.position 
+                    }
+                });
+        });
     }
-});
+};
 
 export const usePauseAndReportPlaybackStopped = useQueries({
     queries: [useReportPlaybackStopped, usePause]
 })
 
-export const usePlayAndReportPlayback = useQueries({
+export const usePlayAndReportPlayback = (api: Api) => useQueries({
     queries: [useReportPlaybackStarted, usePlay]
 })

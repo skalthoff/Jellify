@@ -3,20 +3,17 @@
  */
 
 import { useMutation } from "@tanstack/react-query";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { MMKVStorageKeys } from "../../enums/mmkv-storage-keys";
 import { JellifyTrack } from "../../types/JellifyTrack";
-import { add, getQueue, remove, removeUpcomingTracks } from "react-native-track-player/lib/src/trackPlayer";
-import { fetchPlayQueue, storePlayQueue } from "./helpers/storage";
+import { add, remove, removeUpcomingTracks } from "react-native-track-player/lib/src/trackPlayer";
 import { findPlayNextIndexStart, findPlayQueueIndexStart } from "./helpers";
+import { usePlayerContext } from "../provider";
 
 /**
  * 
  */
 export const addToPlayNext = useMutation({
     mutationFn: async (tracks: JellifyTrack[]) => {
-
-        let playQueue = await fetchPlayQueue();
+        const { queue : playQueue, setQueue } = usePlayerContext();
         let insertIndex = findPlayNextIndexStart(playQueue);
 
         add(tracks, insertIndex);
@@ -25,7 +22,7 @@ export const addToPlayNext = useMutation({
             playQueue.splice(insertIndex, 0, track);
         });
 
-        await storePlayQueue(playQueue)
+        setQueue(playQueue)
     }
 });
 
@@ -35,7 +32,7 @@ export const addToPlayNext = useMutation({
 export const addToPlayQueue = useMutation({
     mutationFn: async (tracks: JellifyTrack[]) => {
 
-        let playQueue = await fetchPlayQueue();
+        const { queue : playQueue, setQueue } = usePlayerContext();
         let insertIndex = findPlayQueueIndexStart(playQueue);
 
         add(tracks, insertIndex);
@@ -44,7 +41,7 @@ export const addToPlayQueue = useMutation({
             playQueue.splice(insertIndex, 0, track);
         });
 
-        await storePlayQueue(playQueue)
+        setQueue(playQueue)
     }
 });
 
@@ -52,20 +49,12 @@ export const removeFromPlayQueue = useMutation({
     mutationFn: async (indexes: number[]) => {
         // Remove from the player first thing
         remove(indexes);
-        let cachedQueue = await AsyncStorage.getItem(MMKVStorageKeys.PlayQueue);
+        let { queue, setQueue } = usePlayerContext();
 
-        if (cachedQueue === null) {
-            // Warn, not a showstopper as we'll just cache it at the end of this, this should hopefully never happen
-            console.warn("Queue cache was null, setting...");
-
-            storePlayQueue((await getQueue()) as JellifyTrack[]);
-        } else {
-            let queue : Array<JellifyTrack> = JSON.parse(cachedQueue);
-            indexes.forEach(index => {
-                queue.splice(index, 1); // Returns deleted queue items
-            })
-            storePlayQueue(queue);
-        }
+        indexes.forEach(index => {
+            queue.splice(index, 1); // Returns deleted queue items
+        })
+        setQueue(queue);
     },
     onError: () => {
 
@@ -80,7 +69,8 @@ export const removeFromPlayQueue = useMutation({
 
 export const clearPlayQueue = useMutation({
     mutationFn: async () => {
+        const { setQueue } = usePlayerContext();
         removeUpcomingTracks()
-        await storePlayQueue([]);
+        setQueue([]);
     }
 })

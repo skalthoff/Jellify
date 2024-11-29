@@ -8,6 +8,8 @@ import Navigation from "./navigation";
 import Login from "./Login/component";
 import { JellyfinAuthenticationProvider } from "./Login/provider";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { JellifyTheme } from "./theme";
+import { PlayerProvider } from "../player/provider";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -22,15 +24,17 @@ export default function Jellify(): React.JSX.Element {
 
 function App(): React.JSX.Element {
 
-  const isDarkMode = useColorScheme() === 'dark';
-
   // If library hasn't been set, we haven't completed the auth flow
   const { library } = useApiClientContext();
   
   return (
-    <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
+    <NavigationContainer theme={JellifyTheme}>
       <SafeAreaProvider>
-        { library ? <Navigation /> : (
+        { library ? (
+          <PlayerProvider>
+            <Navigation />
+          </PlayerProvider>
+         ) : (
           <JellyfinAuthenticationProvider>
             <Login /> 
           </JellyfinAuthenticationProvider>

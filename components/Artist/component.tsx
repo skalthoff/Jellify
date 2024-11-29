@@ -18,7 +18,7 @@ export default function Artist({ artistId, artistName }: { artistId: string, art
 
                 <FlatList
                     data={albums}
-                    numColumns={3} // TODO: Make this adjustable
+                    numColumns={2} // TODO: Make this adjustable
                     renderItem={({ item: album }) => {
                         return (
                             <Avatar itemId={album.Id!} subheading={album.Name}>

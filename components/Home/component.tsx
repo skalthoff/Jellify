@@ -1,6 +1,6 @@
 import { ScrollView, YStack } from "tamagui";
 import _ from "lodash";
-import { H2, Text } from "../Global/text";
+import { H2 } from "../Global/text";
 import RecentlyPlayed from "./helpers/recently-played";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import RecentArtists from "./helpers/recent-artists";
@@ -10,22 +10,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeStackParamList, ProvidedHomeProps } from "./types";
 import { HomeArtistScreen } from "./screens/artist";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "../../enums/colors";
 
-export const Stack = createNativeStackNavigator<HomeStackParamList>();
+export const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 export default function Home(): React.JSX.Element {
 
     return (
         <HomeProvider>
-            <Stack.Navigator 
+            <HomeStack.Navigator 
                 id="Home" 
                 initialRouteName="Home"
                 screenOptions={{
-                    navigationBarColor: Colors.Primary
                 }}
             >
-                <Stack.Screen 
+                <HomeStack.Screen 
                     name="Home" 
                     component={ProvidedHome} 
                     options={{
@@ -33,7 +31,7 @@ export default function Home(): React.JSX.Element {
                     }}
                 />
 
-                <Stack.Screen 
+                <HomeStack.Screen 
                     name="Artist" 
                     component={HomeArtistScreen} 
                     options={({ route }) => ({
@@ -44,7 +42,7 @@ export default function Home(): React.JSX.Element {
                         }
                     })}
                 />
-            </Stack.Navigator>
+            </HomeStack.Navigator>
         </HomeProvider>
     );
 }
