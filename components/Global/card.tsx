@@ -60,7 +60,9 @@ export function Card(props: CardProps) {
                         alignSelf="center"
                         source={{
                             uri: data
-                        }} />
+                        }} 
+                        {...dimensions}
+                        />
                     )}
                 </ZStack>
             </TamaguiCard.Background>
