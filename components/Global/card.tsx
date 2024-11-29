@@ -15,7 +15,8 @@ interface CardProps extends TamaguiCardProps {
 
 export function Card(props: CardProps) {
 
-    const { data, isPending } = useItemImage(useApiClientContext().apiClient!, props.itemId)
+    const { apiClient } = useApiClientContext();
+    const { data, isPending } = useItemImage(apiClient!, props.itemId)
 
     return (
         <TamaguiCard 
@@ -41,19 +42,18 @@ export function Card(props: CardProps) {
             <TamaguiCard.Background>
                 <ZStack>
                     <LinearGradient
-                        colors={[Colors.Primary, "$black4"]}
+                        colors={[isPending ? Colors.Primary : "$colorTransparent", "$black4"]}
                         start={[1, 1]}
                         end={[0,0]}
                     />
 
-                    ( data && (
+                    { data && (
                         <Image
                         alignSelf="center"
                         source={{
-                            uri: data,
-                        }}
-                        />
-                    ))
+                            uri: data
+                        }} />
+                    )}
                 </ZStack>
             </TamaguiCard.Background>
         </TamaguiCard>
