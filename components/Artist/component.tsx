@@ -21,6 +21,10 @@ export default function Artist({ artistId, artistName }: { artistId: string, art
                 <Avatar itemId={artistId} />
 
                 <FlatList
+                    contentContainerStyle={{
+                        flexGrow: 1,
+                        justifyContent: 'center'
+                    }}
                     data={albums}
                     numColumns={2} // TODO: Make this adjustable
                     renderItem={({ item: album }) => {
