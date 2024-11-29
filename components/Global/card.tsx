@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
-import { H3, Image, Card as TamaguiCard } from "tamagui";
+import { H3, Image, Card as TamaguiCard, ZStack } from "tamagui";
+import { LinearGradient } from "tamagui/linear-gradient";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { cardDimensions } from "./component.config";
 
@@ -36,12 +37,19 @@ export function Card(props: CardProps) {
             )}
             </TamaguiCard.Footer>
             <TamaguiCard.Background>
-                <Image
-                alignSelf="center"
-                source={{
-                    uri: `${server!.url}/Items/${props.itemId}/Images/Primary`,
-                }}
-                />
+                <ZStack>
+                    <LinearGradient
+                        colors={["$colorTransparent", "$black4"]}
+                        start={[1, 1]}
+                        end={[0,0]}
+                    />
+                    <Image
+                    alignSelf="center"
+                    source={{
+                        uri: `${server!.url}/Items/${props.itemId}/Images/Primary`,
+                    }}
+                    />
+                </ZStack>
             </TamaguiCard.Background>
         </TamaguiCard>
     )
