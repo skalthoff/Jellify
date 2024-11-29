@@ -4,13 +4,5 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 
 export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, width?: number) {
 
-        return getImageApi(api)
-        .getItemImage({
-            imageType: imageType ? imageType : ImageType.Primary,
-            itemId,
-            width: width
-        })
-        .then((response) => {
-            return response.data
-        })
+        return getImageApi(api).getItemImageUrlById(itemId, imageType)
 }
