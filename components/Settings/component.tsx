@@ -1,13 +1,23 @@
 import React from "react";
-import { ScrollView } from "tamagui";
-import AccountDetails from "./helpers/account-details";
-import SignOut from "./helpers/sign-out";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Root from "./screens/root";
+
+export const SettingsStack = createNativeStackNavigator();
 
 export default function Settings(): React.JSX.Element {
     return (
-        <ScrollView>
-            <AccountDetails />
-            <SignOut />
-        </ScrollView>
+        <SettingsStack.Navigator>
+
+            <SettingsStack.Screen 
+                name="Settings" 
+                component={Root} 
+                options={{
+                    headerLargeTitle: true,
+                    headerLargeTitleStyle: {
+                        fontFamily: 'Aileron-Bold'
+                    }
+                }}
+            />
+        </SettingsStack.Navigator>
     )
 }

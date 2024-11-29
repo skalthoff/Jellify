@@ -25,12 +25,12 @@ export default function Jellify(): React.JSX.Element {
 function App(): React.JSX.Element {
 
   // If library hasn't been set, we haven't completed the auth flow
-  const { library } = useApiClientContext();
+  const { server, library } = useApiClientContext();
   
   return (
     <NavigationContainer theme={JellifyTheme}>
       <SafeAreaProvider>
-        { library ? (
+        { server && library ? (
           <PlayerProvider>
             <Navigation />
           </PlayerProvider>

@@ -1,4 +1,4 @@
-import { H3, ScrollView, XStack, YStack } from "tamagui";
+import { H3, ScrollView, Separator, XStack, YStack } from "tamagui";
 import _ from "lodash";
 import RecentlyPlayed from "./helpers/recently-played";
 import { useApiClientContext } from "../jellyfin-api-provider";
@@ -70,8 +70,11 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
                         <YStack />
                         <Avatar maxHeight={30} itemId={user!.id} />
                     </XStack>
+                    <Separator marginVertical={15} />
                     <RecentArtists route={route} navigation={navigation} />
+                    <Separator marginVertical={15} />
                     <RecentlyPlayed />
+                    <Separator marginVertical={15} />
                 </YStack>
             </ScrollView>
         </SafeAreaView>
