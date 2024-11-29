@@ -1,9 +1,7 @@
 import { ReactNode } from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
 import { H3, Image, Card as TamaguiCard } from "tamagui";
-import { useItemImage } from "../../api/queries/image";
 import { useApiClientContext } from "../jellyfin-api-provider";
-import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { cardDimensions } from "./component.config";
 
 interface CardProps extends TamaguiCardProps {
@@ -42,7 +40,6 @@ export function Card(props: CardProps) {
                 alignSelf="center"
                 source={{
                     uri: `${server!.url}/Items/${props.itemId}/Images/Primary`,
-                    ...cardDimensions
                 }}
                 />
             </TamaguiCard.Background>

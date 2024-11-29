@@ -17,7 +17,7 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
     ])
 
     return (
-        <View marginTop={25}>
+        <View>
             <H2>Recent Artists</H2>
             <FlatList horizontal
                 data={recentArtists}
