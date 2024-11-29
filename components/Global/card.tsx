@@ -21,7 +21,14 @@ export function Card(props: CardProps) {
     const { data, isPending } = useItemImage(apiClient!, props.itemId)
 
     return (
-      <TamaguiCard elevate size="$4" bordered {...props}>
+      <TamaguiCard 
+        elevate 
+        size="$4" 
+        animation="bouncy"
+        hoverStyle={{ scale: 0.925 }}
+        pressStyle={{ scale: 0.875 }}
+        {...props}
+    >
         <TamaguiCard.Header padded>
           { props.children && (
               <H2>{ props.children }</H2>
