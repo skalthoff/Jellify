@@ -1,15 +1,19 @@
 import { Api } from "@jellyfin/sdk/lib/api"
-import { ImageType } from "@jellyfin/sdk/lib/generated-client/models"
+import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/models"
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 
 
 export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, width?: number) {
     
-    return getImageApi(api).getItemImage({ itemId, imageType: imageType ? imageType : ImageType.Primary })
-        .then((response) => {
-            return response.data;
-        })
+    return getImageApi(api).getItemImage({ 
+        itemId, 
+        imageType: imageType ? imageType : ImageType.Primary,
+        format: ImageFormat.Jpg
+    })
+    .then((response) => {
+        return `data:image/jpeg;base64,${response.data}`;
+    })
 }
 
 function convertFileToBase64(file: File): Promise<string> {
