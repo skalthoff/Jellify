@@ -1,4 +1,4 @@
-import { H3, ScrollView, YStack } from "tamagui";
+import { H3, ScrollView, XStack, YStack } from "tamagui";
 import _ from "lodash";
 import RecentlyPlayed from "./helpers/recently-played";
 import { useApiClientContext } from "../jellyfin-api-provider";
@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeStackParamList, ProvidedHomeProps } from "./types";
 import { HomeArtistScreen } from "./screens/artist";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Avatar from "../Global/avatar";
 
 export const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -64,7 +65,10 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
                     />
                 }>
                 <YStack alignContent='flex-start'>
-                    <H3>{`Hi, ${user!.name}`}</H3>
+                    <XStack>
+                        <Avatar itemId={user!.id} />
+                        <H3>{`Hi, ${user!.name}`}</H3>
+                    </XStack>
                     <RecentArtists route={route} navigation={navigation} />
                     <RecentlyPlayed />
                 </YStack>

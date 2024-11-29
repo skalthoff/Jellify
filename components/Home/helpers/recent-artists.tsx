@@ -24,8 +24,6 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                 renderItem={({ item: recentArtist}) => {
                     return (
                         <Card 
-                            circular
-                            columnGap={10}
                             itemId={recentArtist.Id!}
                             onPress={() => {
                                 navigation.navigate('Artist', 
