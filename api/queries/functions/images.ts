@@ -2,15 +2,25 @@ import { Api } from "@jellyfin/sdk/lib/api"
 import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/models"
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
+import { queryConfig } from "../query.config"
 
 
 
 
 export function fetchImage(api: Api, itemId: string, imageType?: ImageType) : Promise<string> {
     return api.axiosInstance
-        .get(getImageApi(api).getItemImageUrlById(itemId, imageType, { format: ImageFormat.Jpg }))
+        .get(getImageApi(api).getItemImageUrlById(
+            itemId, 
+            imageType, 
+            { 
+                format: queryConfig.images.format, 
+                fillHeight: queryConfig.images.height,
+                fillWidth: queryConfig.images.width
+            }
+        ))
         .then((response) => {
             console.debug(convertFileToBase64(response.data));
+            console.debug(typeof response.data)
             return convertFileToBase64(response.data);
         })
 }
