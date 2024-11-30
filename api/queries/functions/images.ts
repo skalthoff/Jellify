@@ -8,21 +8,22 @@ import { queryConfig } from "../query.config"
 
 
 export function fetchImage(api: Api, itemId: string, imageType?: ImageType) : Promise<string> {
-    return api.axiosInstance
-        .get(getImageApi(api).getItemImageUrlById(
-            itemId, 
-            imageType, 
-            { 
-                format: queryConfig.images.format, 
-                fillHeight: queryConfig.images.height,
-                fillWidth: queryConfig.images.width
-            }
-        ))
-        .then((response) => {
-            console.debug(convertFileToBase64(response.data));
-            console.debug(typeof response.data)
-            return convertFileToBase64(response.data);
-        })
+    return new Promise(async (resolve) => {
+        let imageResponse = await api.axiosInstance
+            .get(getImageApi(api).getItemImageUrlById(
+                itemId, 
+                imageType, 
+                { 
+                    format: queryConfig.images.format, 
+                    fillHeight: queryConfig.images.height,
+                    fillWidth: queryConfig.images.width
+                }
+            ))
+
+        console.debug(convertFileToBase64(imageResponse.data));
+        console.debug(typeof imageResponse.data)
+        resolve(convertFileToBase64(imageResponse.data));
+    });
 }
 
 
