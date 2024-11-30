@@ -22,6 +22,8 @@ interface CardProps extends TamaguiCardProps {
 
 export function Card(props: CardProps) {
 
+    console.log(`${props.artistName} ${props.blurhash}`)
+
     const { apiClient } = useApiClientContext();
     const { data, isPending, isSuccess } = useImage(apiClient!, props.itemId)
 
@@ -51,21 +53,11 @@ export function Card(props: CardProps) {
             )}
             </TamaguiCard.Footer>
             <TamaguiCard.Background>
-                <ZStack>
-                    <LinearGradient
-                        colors={[isPending ? Colors.Primary : "$colorTransparent", "$black4"]}
-                        start={[1, 1]}
-                        end={[0,0]}
+                {props.blurhash && (
+                    <Blurhash
+                        blurhash={props.blurhash}
                     />
-
-                    {props.blurhash && (
-                        <Blurhash
-                            blurhash={props.blurhash}
-                        />
-                        
-                    )}
-                        
-                </ZStack>
+                )}
             </TamaguiCard.Background>
         </TamaguiCard>
     )
