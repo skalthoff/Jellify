@@ -15,8 +15,8 @@ export function fetchImage(api: Api, itemId: string, imageType?: ImageType) : Pr
                 imageType, 
                 { 
                     format: queryConfig.images.format, 
-                    fillHeight: queryConfig.images.height,
-                    fillWidth: queryConfig.images.width
+                    fillHeight: queryConfig.images.fillHeight,
+                    fillWidth: queryConfig.images.fillWidth
                 }
             ))
 

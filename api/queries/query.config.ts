@@ -5,8 +5,8 @@ export const queryConfig = {
         recents: 50
     },
     images: {
-        width: 480,
-        height: 480,
+        fillWidth: 480,
+        fillHeight: 480,
         format: ImageFormat.Jpg
     }
 }

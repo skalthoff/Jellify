@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
-import { H3, Image, Card as TamaguiCard, ZStack } from "tamagui";
+import { H3, Card as TamaguiCard, ZStack } from "tamagui";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { cardDimensions } from "./component.config";
@@ -8,6 +8,7 @@ import { useImage } from "../../api/queries/image";
 import { Colors } from "../../enums/colors";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
+import { CachedImage } from "@georstat/react-native-image-cache";
 import { queryConfig } from "../../api/queries/query.config";
 
 interface CardProps extends TamaguiCardProps {
@@ -53,22 +54,23 @@ export function Card(props: CardProps) {
                         end={[0,0]}
                     />
 
-                    { isSuccess && data && (
-                        <Image
-                        alignSelf="center"
-                        source={{
-                            uri: getImageApi(apiClient!).getItemImageUrlById(
-                                props.itemId, 
-                                ImageType.Primary, 
-                                { 
-                                    format: queryConfig.images.format, 
-                                    fillHeight: queryConfig.images.height,
-                                    fillWidth: queryConfig.images.width
-                                })
-                        }} 
-                        {...dimensions}
-                        />
-                    )}
+                    <CachedImage
+                        style={{...dimensions}}
+                        thumbnailSource={getImageApi(apiClient!).getItemImageUrlById(
+                            props.itemId,
+                            ImageType.Thumb,
+                            {...queryConfig.images}
+                        )}
+                        source={getImageApi(apiClient!).getItemImageUrlById(
+                            props.itemId, 
+                            ImageType.Primary, 
+                            { 
+                                format: queryConfig.images.format, 
+                                fillHeight: queryConfig.images.fillHeight,
+                                fillWidth: queryConfig.images.fillWidth
+                            })
+                        }
+                    />
                 </ZStack>
             </TamaguiCard.Background>
         </TamaguiCard>
