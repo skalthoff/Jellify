@@ -18,5 +18,6 @@ export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, 
 }
 
 function convertFileToBase64(file: any): string {
+    console.debug("Converting file to base64", file)
     return Buffer.from(file, 'binary').toString('base64');
 }
