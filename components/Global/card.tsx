@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
-import { H3, Image, Card as TamaguiCard, ZStack } from "tamagui";
+import { H3, Card as TamaguiCard, ZStack } from "tamagui";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { cardDimensions } from "./component.config";
-import { useArtistImage, useImage, useItemImage } from "../../api/queries/image";
+import { useImage } from "../../api/queries/image";
 import { Colors } from "../../enums/colors";
+import { Image } from "react-native";
 
 interface CardProps extends TamaguiCardProps {
     artistName?: string;
@@ -52,7 +53,6 @@ export function Card(props: CardProps) {
 
                     { isSuccess && data && (
                         <Image
-                        alignSelf="center"
                         source={{
                             uri: data
                         }} 
