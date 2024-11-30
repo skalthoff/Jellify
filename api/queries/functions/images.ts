@@ -3,6 +3,19 @@ import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 
+
+
+
+export function fetchImage(api: Api, itemId: string, imageType?: ImageType) : Promise<string> {
+    return api.axiosInstance
+        .get(getImageApi(api).getItemImageUrlById(itemId, imageType))
+        .then((response) => {
+            console.log(response.data);
+            return convertFileToBase64(response.data);
+        })
+}
+
+
 export function fetchArtistImage(api: Api, artistId: string, imageType?: ImageType) : Promise<string> {
     return new Promise(async (resolve, reject) => {
         let response = await getImageApi(api).getArtistImage({ 

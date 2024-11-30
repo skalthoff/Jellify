@@ -1,8 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/query-keys";
 import { Api } from "@jellyfin/sdk";
-import { fetchArtistImage, fetchItemImage } from "./functions/images";
+import { fetchArtistImage, fetchImage, fetchItemImage } from "./functions/images";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
+
+export const useImage = (api: Api, itemId: string, imageType?: ImageType) => useQuery({
+    queryKey: [QueryKeys.ItemImage, api, itemId, imageType],
+    queryFn: ({ queryKey }) => fetchImage(queryKey[1] as Api, queryKey[2] as string, queryKey[3] as ImageType | undefined)
+});
 
 export const useArtistImage = (api: Api, artistName: string, imageType?: ImageType) => useQuery({
     queryKey: [QueryKeys.ArtistImage, api, artistName, imageType],
