@@ -23,9 +23,14 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                 data={recentArtists}
                 renderItem={({ item: recentArtist}) => {
 
-                    let artistBlurhash : string | undefined = 
+                    const artistBlurhashKey : string | undefined = 
                         recentArtist.ImageBlurHashes!.Primary 
-                        ? recentArtist.ImageBlurHashes!.Primary[0] 
+                        ? Object.keys(recentArtist.ImageBlurHashes!.Primary)[0] 
+                        : undefined;
+
+                    const artistBlurhash : string | undefined = 
+                        artistBlurhashKey 
+                        ? recentArtist.ImageBlurHashes!.Primary![artistBlurhashKey!] 
                         : undefined;
 
                     return (
