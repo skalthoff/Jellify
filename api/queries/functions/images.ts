@@ -51,5 +51,9 @@ function base64toJpeg(encode: string) : string {
 
 function convertFileToBase64(file: any): string {
     console.debug("Converting file to base64", file)
-    return base64toJpeg(Buffer.from(file, 'binary').toString('base64'));
+    let encode =  base64toJpeg(Buffer.from(file, 'binary').toString('base64'));
+
+    console.debug(encode);
+
+    return encode;
 }
