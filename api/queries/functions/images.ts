@@ -11,9 +11,9 @@ export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, 
         imageType: imageType ? imageType : ImageType.Primary,
         format: ImageFormat.Jpg
     })
-    .then(async (response) => {
-        console.log(`data:image/jpeg;base64,${await convertFileToBase64(response.data)}`)
-        return `data:image/jpeg;base64,${response.data}`;
+    .then((response) => {
+        console.log(`data:image/jpeg;base64,${convertFileToBase64(response.data)}`)
+        return `data:image/jpeg;base64,${convertFileToBase64(response.data)}`;
     })
 }
 
