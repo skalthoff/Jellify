@@ -6,6 +6,9 @@ import { useApiClientContext } from "../jellyfin-api-provider";
 import { cardDimensions } from "./component.config";
 import { useImage } from "../../api/queries/image";
 import { Colors } from "../../enums/colors";
+import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
+import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
+import { queryConfig } from "../../api/queries/query.config";
 
 interface CardProps extends TamaguiCardProps {
     artistName?: string;
@@ -54,7 +57,14 @@ export function Card(props: CardProps) {
                         <Image
                         alignSelf="center"
                         source={{
-                            uri: data
+                            uri: getImageApi(apiClient!).getItemImageUrlById(
+                                props.itemId, 
+                                ImageType.Primary, 
+                                { 
+                                    format: queryConfig.images.format, 
+                                    fillHeight: queryConfig.images.height,
+                                    fillWidth: queryConfig.images.width
+                                })
                         }} 
                         {...dimensions}
                         />
