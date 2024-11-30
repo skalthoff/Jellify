@@ -53,12 +53,16 @@ export function Card(props: CardProps) {
             )}
             </TamaguiCard.Footer>
             <TamaguiCard.Background>
-                {props.blurhash && (
+                {props.blurhash && isPending && (
                     <Blurhash
                         decodeWidth={dimensions.width}
                         decodeHeight={dimensions.height}
                         blurhash={props.blurhash}
                     />
+                )}
+
+                {isSuccess && (
+                    <CachedImage source={getImageApi(apiClient!).getItemImageUrlById(props.itemId, ImageType.Primary, { ...dimensions})} />
                 )}
             </TamaguiCard.Background>
         </TamaguiCard>
