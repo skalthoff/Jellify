@@ -22,14 +22,10 @@ interface CardProps extends TamaguiCardProps {
 
 export function Card(props: CardProps) {
 
-    console.log(`${props.artistName} ${props.blurhash}`)
-
     const { apiClient } = useApiClientContext();
-    const { data, isPending, isSuccess } = useImage(apiClient!, props.itemId)
 
     const [imageLoaded, setImageLoaded] = useState<boolean>(false); 
     const dimensions = props.artistName ? cardDimensions.artist : cardDimensions.album;
-    const imageDimensions = props.artistName ? queryConfig.images.artist : queryConfig.images.album;
 
     return (
         <TamaguiCard 
@@ -53,7 +49,7 @@ export function Card(props: CardProps) {
             )}
             </TamaguiCard.Footer>
             <TamaguiCard.Background>
-                {props.blurhash && isPending && (
+                {props.blurhash && !imageLoaded && (
                     <Blurhash
                         decodeWidth={dimensions.width}
                         decodeHeight={dimensions.height}
@@ -61,9 +57,15 @@ export function Card(props: CardProps) {
                     />
                 )}
 
-                {isSuccess && (
-                    <CachedImage source={getImageApi(apiClient!).getItemImageUrlById(props.itemId, ImageType.Primary, { ...dimensions})} />
-                )}
+                <CachedImage 
+                    source={getImageApi(apiClient!)
+                        .getItemImageUrlById(
+                            props.itemId, 
+                            ImageType.Primary, 
+                            { ...dimensions})
+                    } 
+                    onLoadEnd={() => setImageLoaded(true)}
+                />
             </TamaguiCard.Background>
         </TamaguiCard>
     )
