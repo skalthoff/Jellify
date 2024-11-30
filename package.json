@@ -31,6 +31,7 @@
     "lodash": "^4.17.21",
     "react": "18.3.1",
     "react-native": "0.75.2",
+    "react-native-blurhash": "^2.1.0",
     "react-native-device-info": "^11.1.0",
     "react-native-file-access": "^3.1.1",
     "react-native-gesture-handler": "^2.20.0",

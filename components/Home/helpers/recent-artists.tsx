@@ -22,9 +22,16 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
             <FlatList horizontal
                 data={recentArtists}
                 renderItem={({ item: recentArtist}) => {
+
+                    let artistBlurhash : string | undefined = 
+                        recentArtist.ImageBlurHashes!.Primary 
+                        ? recentArtist.ImageBlurHashes!.Primary[0] 
+                        : undefined;
+
                     return (
                         <Card 
                             artistName={recentArtist.Name!}
+                            blurhash={artistBlurhash}
                             itemId={recentArtist.Id!}
                             onPress={() => {
                                 navigation.navigate('Artist', 
