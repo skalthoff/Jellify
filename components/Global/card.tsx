@@ -64,6 +64,9 @@ export function Card(props: CardProps) {
                             ImageType.Primary, 
                             { ...dimensions})
                     } 
+                    imageStyle={{
+                        ...dimensions
+                    }}
                     onLoadEnd={() => setImageLoaded(true)}
                 />
             </TamaguiCard.Background>
