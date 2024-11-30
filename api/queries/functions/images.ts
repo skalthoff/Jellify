@@ -23,7 +23,7 @@ function convertFileToBase64(file: File): Promise<string> {
 
         reader.onloadend = () => {
             if (!_.isEmpty(reader.result))
-                resolve(reader.result.toString())
+                resolve(Buffer.from(reader.result as ArrayBuffer).toString())
             else
                 reject(new Error("Unable to convert file to base64"));
         }

@@ -25,10 +25,10 @@ export function Tabs() {
                 name="Home" 
                 component={Home}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="jellyfish-outline" color={color} size={size} />
                     ),
-                    headerShown: false
                 }}
             />
 
@@ -36,6 +36,7 @@ export function Tabs() {
                 name="Library"
                 component={Library}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({color, size }) => (
                         <MaterialCommunityIcons name="heart-multiple-outline" color={color} size={size} />
                     )
@@ -56,6 +57,7 @@ export function Tabs() {
                 name="Discover"
                 component={Discover}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="music-box-multiple-outline" color={color} size={size} />
                     )
@@ -66,6 +68,7 @@ export function Tabs() {
                 name="Settings"
                 component={Settings}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="dip-switch" color={color} size={size} />
                     )

@@ -11,7 +11,7 @@ export default function AccountDetails(): React.JSX.Element {
 
     return (
 
-        <XStack>
+        <XStack alignItems="center">
             <MaterialCommunityIcons name="account-music-outline" />
             <Text>{user!.name}</Text>
             <Avatar itemId={user!.id} circular />
