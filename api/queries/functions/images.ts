@@ -10,6 +10,7 @@ export function fetchImage(api: Api, itemId: string, imageType?: ImageType) : Pr
     return api.axiosInstance
         .get(getImageApi(api).getItemImageUrlById(itemId, imageType, { format: ImageFormat.Jpg }))
         .then((response) => {
+            console.debug(convertFileToBase64(response.data));
             return convertFileToBase64(response.data);
         })
 }
