@@ -24,6 +24,7 @@ export function Card(props: CardProps) {
     const { data, isPending, isSuccess } = useImage(apiClient!, props.itemId)
 
     const dimensions = props.artistName ? cardDimensions.artist : cardDimensions.album;
+    const imageDimensions = props.artistName ? queryConfig.images.artist : queryConfig.images.album;
 
     return (
         <TamaguiCard 
@@ -59,17 +60,13 @@ export function Card(props: CardProps) {
                         thumbnailSource={getImageApi(apiClient!).getItemImageUrlById(
                             props.itemId,
                             ImageType.Thumb,
-                            {...queryConfig.images}
+                            {...imageDimensions}
                         )}
                         source={getImageApi(apiClient!).getItemImageUrlById(
                             props.itemId, 
                             ImageType.Primary, 
-                            { 
-                                format: queryConfig.images.format, 
-                                fillHeight: queryConfig.images.fillHeight,
-                                fillWidth: queryConfig.images.fillWidth
-                            })
-                        }
+                            {...imageDimensions}
+                        )}
                     />
                 </ZStack>
             </TamaguiCard.Background>

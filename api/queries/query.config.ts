@@ -5,8 +5,15 @@ export const queryConfig = {
         recents: 50
     },
     images: {
-        fillWidth: 480,
-        fillHeight: 480,
-        format: ImageFormat.Jpg
+        album: {
+            fillHeight: 300,
+            fillWidth: 300,
+            format: ImageFormat.Jpg
+        },
+        artist: {
+            fillWidth: 300,
+            fillHeight: 400,
+            format: ImageFormat.Jpg
+        }
     }
 }
