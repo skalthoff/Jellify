@@ -55,6 +55,8 @@ export function Card(props: CardProps) {
             <TamaguiCard.Background>
                 {props.blurhash && (
                     <Blurhash
+                        decodeWidth={dimensions.width}
+                        decodeHeight={dimensions.height}
                         blurhash={props.blurhash}
                     />
                 )}
