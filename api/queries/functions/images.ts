@@ -17,21 +17,6 @@ export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, 
     })
 }
 
-function convertFileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-            if (!_.isEmpty(reader.result))
-                resolve(Buffer.from(reader.result as ArrayBuffer).toString())
-            else
-                reject(new Error("Unable to convert file to base64"));
-        }
-
-        reader.onerror = (error) => {
-            reject(error);
-        }
-
-        reader.readAsDataURL(file);
-    });
+function convertFileToBase64(file: any): string {
+    return Buffer.from(file, 'binary').toString('base64');
 }
