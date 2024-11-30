@@ -8,9 +8,8 @@ import _ from "lodash"
 
 export function fetchImage(api: Api, itemId: string, imageType?: ImageType) : Promise<string> {
     return api.axiosInstance
-        .get(getImageApi(api).getItemImageUrlById(itemId, imageType))
+        .get(getImageApi(api).getItemImageUrlById(itemId, imageType, { format: ImageFormat.Jpg }))
         .then((response) => {
-            console.log(response.data);
             return convertFileToBase64(response.data);
         })
 }

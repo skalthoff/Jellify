@@ -17,7 +17,7 @@ interface CardProps extends TamaguiCardProps {
 export function Card(props: CardProps) {
 
     const { apiClient } = useApiClientContext();
-    const { data, isPending } = useImage(apiClient!, props.itemId)
+    const { data, isPending, isSuccess } = useImage(apiClient!, props.itemId)
 
     const dimensions = props.artistName ? cardDimensions.artist : cardDimensions.album;
 
@@ -50,7 +50,7 @@ export function Card(props: CardProps) {
                         end={[0,0]}
                     />
 
-                    { data && (
+                    { isSuccess && data && (
                         <Image
                         alignSelf="center"
                         source={{
