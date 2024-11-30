@@ -4,16 +4,11 @@ import { H3, Image, Card as TamaguiCard, ZStack } from "tamagui";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { cardDimensions } from "./component.config";
-import { useItemImage } from "../../api/queries/image";
+import { useArtistImage, useItemImage } from "../../api/queries/image";
 import { Colors } from "../../enums/colors";
 
-export enum CardType {
-    Artist = "ARTIST",
-    Album = "ALBUM"
-}
-
 interface CardProps extends TamaguiCardProps {
-    cardType?: CardType;
+    artistName?: string;
     children?: string;
     itemId: string;
     footer?: ReactNode;
@@ -22,9 +17,9 @@ interface CardProps extends TamaguiCardProps {
 export function Card(props: CardProps) {
 
     const { apiClient } = useApiClientContext();
-    const { data, isPending } = useItemImage(apiClient!, props.itemId)
+    const { data, isPending } = props.artistName ? useArtistImage(apiClient!, props.artistName) : useItemImage(apiClient!, props.itemId)
 
-    const dimensions = props.cardType === CardType.Artist ? cardDimensions.artist : cardDimensions.album;
+    const dimensions = props.artistName ? cardDimensions.artist : cardDimensions.album;
 
     return (
         <TamaguiCard 

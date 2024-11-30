@@ -3,6 +3,17 @@ import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 
+export function fetchArtistImage(api: Api, artistId: string, imageType?: ImageType) {
+    return getImageApi(api).getArtistImage({ 
+        name: "",
+        imageIndex: 1,
+        imageType: imageType ? imageType : ImageType.Primary 
+    })
+    .then((response) => {
+        console.log(response.data)
+        return response.data;
+    })
+}
 
 export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, width?: number) {
     

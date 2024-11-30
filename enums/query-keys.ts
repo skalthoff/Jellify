@@ -24,4 +24,5 @@ export enum QueryKeys {
     RecentlyPlayed = "RecentlyPlayed",
     RecentlyPlayedArtists = "RecentlyPlayedArtists",
     ArtistFeaturedAlbums = "ArtistFeaturedAlbums",
+    ArtistImage = "ArtistImage",
 }
