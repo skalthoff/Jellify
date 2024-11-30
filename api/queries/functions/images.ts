@@ -3,16 +3,21 @@ import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 
-export function fetchArtistImage(api: Api, artistId: string, imageType?: ImageType) {
-    return getImageApi(api).getArtistImage({ 
-        name: "",
-        imageIndex: 1,
-        imageType: imageType ? imageType : ImageType.Primary 
-    })
-    .then((response) => {
+export function fetchArtistImage(api: Api, artistId: string, imageType?: ImageType) : Promise<string> {
+    return new Promise(async (resolve, reject) => {
+        let response = await getImageApi(api).getArtistImage({ 
+            name: "",
+            imageIndex: 1,
+            imageType: imageType ? imageType : ImageType.Primary 
+        })
+
         console.log(response.data)
-        return response.data;
-    })
+
+        if (_.isEmpty(response.data))
+            reject(new Error("No image for artist"))
+        
+        resolve(convertFileToBase64(response.data));
+    });
 }
 
 export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, width?: number) {
@@ -23,12 +28,16 @@ export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, 
         format: ImageFormat.Jpg
     })
     .then((response) => {
-        console.log(`data:image/jpeg;base64,${convertFileToBase64(response.data)}`)
-        return `data:image/jpeg;base64,${convertFileToBase64(response.data)}`;
+        console.log(convertFileToBase64(response.data))
+        return convertFileToBase64(response.data);
     })
+}
+
+function base64toJpeg(encode: string) : string {
+    return `data:image/jpeg;base64,${encode}`;
 }
 
 function convertFileToBase64(file: any): string {
     console.debug("Converting file to base64", file)
-    return Buffer.from(file, 'binary').toString('base64');
+    return base64toJpeg(Buffer.from(file, 'binary').toString('base64'));
 }
