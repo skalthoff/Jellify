@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ScrollView, View } from "tamagui";
+import { H5, ScrollView, Text, View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/text";
 import Avatar from "../../Global/avatar";
@@ -22,11 +22,17 @@ export default function RecentlyPlayed(): React.JSX.Element {
                 { recentTracks && recentTracks.map((recentlyPlayedTrack) => {
                     return (
                         <Card
+                            caption={
+                                <>
+                                    <H5>{`${recentlyPlayedTrack.Name}`}</H5>
+                                    <Text>`${recentlyPlayedTrack.Artists?.join(", ")}`</Text>
+                                </>
+                            }
                             cornered
                             itemId={recentlyPlayedTrack.AlbumId!}
                             marginRight={20}
                         >
-                                {`${recentlyPlayedTrack.Name}`}
+                                
                         </Card>
                     )
                 })}

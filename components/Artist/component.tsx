@@ -1,9 +1,9 @@
-import { ScrollView } from "tamagui";
+import { H5, ScrollView } from "tamagui";
 import Avatar from "../Global/avatar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useArtistAlbums } from "../../api/queries/artist";
 import { useApiClientContext } from "../jellyfin-api-provider";
-import { FlatList } from "react-native";
+import { FlatList, Text } from "react-native";
 import { Card } from "../Global/card";
 
 export default function Artist({ artistId, artistName }: { artistId: string, artistName: string  }): React.JSX.Element {
@@ -29,7 +29,15 @@ export default function Artist({ artistId, artistName }: { artistId: string, art
                     numColumns={2} // TODO: Make this adjustable
                     renderItem={({ item: album }) => {
                         return (
-                            <Card itemId={album.Id!}>
+                            <Card
+                            caption={
+                                <>
+                                    <H5>{`${album.Name}`}</H5>
+                                    <Text>`${album.ProductionYear}`</Text>
+                                </>
+                            }
+                                cornered 
+                                itemId={album.Id!}>
                                 { album.Name! }
                             </Card>
                         )
