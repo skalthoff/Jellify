@@ -1,5 +1,5 @@
 import React from "react";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from "./Home/component";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useColorScheme } from "react-native";
@@ -8,7 +8,7 @@ import Search from "./Search/component";
 import Library from "./Library/component";
 import Settings from "./Settings/component";
 import { Discover } from "./Discover/component";
-import { Text, View, ZStack } from "tamagui";
+import { Miniplayer } from "./Player/mini-player";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,15 +17,16 @@ export function Tabs() : React.JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
 
     return (
-        <ZStack fullscreen>
-            <View backgroundColor={Colors.Primary}>
-                <Text>Miniplayer</Text>
-            </View>
-
             <Tab.Navigator
                 screenOptions={{
                     tabBarActiveTintColor: isDarkMode ? Colors.Primary : Colors.Secondary
                 }}
+                tabBar={(props) => (
+                    <>
+                        <Miniplayer />
+                        <BottomTabBar {...props} />
+                    </>
+                )}
             >
                 <Tab.Screen 
                     name="Home" 
@@ -81,6 +82,5 @@ export function Tabs() : React.JSX.Element {
                     }}
                 />
             </Tab.Navigator>
-        </ZStack>
     )
 }

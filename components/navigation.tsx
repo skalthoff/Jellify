@@ -8,18 +8,18 @@ export default function Navigation(): React.JSX.Element {
   
     return (
       <RootStack.Navigator>
-      <RootStack.Group>
-        <RootStack.Screen 
-          name="Tabs" 
-          component={Tabs}
-          options={{
-            headerShown: false
-          }}
-        />
-      </RootStack.Group>
-      <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-        <RootStack.Screen name="Player" component={Player} />
-      </RootStack.Group>
+        <RootStack.Group>
+          <RootStack.Screen 
+            name="Tabs" 
+            component={Tabs}
+            options={{
+              headerShown: false
+            }}
+          />
+        </RootStack.Group>
+        <RootStack.Group screenOptions={{ presentation: 'modal' }}>
+          <RootStack.Screen name="Player" component={Player} />
+        </RootStack.Group>
     </RootStack.Navigator>
     )
 }
