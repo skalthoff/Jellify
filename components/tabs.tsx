@@ -8,7 +8,7 @@ import Search from "./Search/component";
 import Library from "./Library/component";
 import Settings from "./Settings/component";
 import { Discover } from "./Discover/component";
-import { ZStack } from "tamagui";
+import { Text, View, ZStack } from "tamagui";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,6 +18,10 @@ export function Tabs() : React.JSX.Element {
 
     return (
         <ZStack fullscreen>
+            <View backgroundColor={Colors.Primary}>
+                <Text>Miniplayer</Text>
+            </View>
+
             <Tab.Navigator
                 screenOptions={{
                     tabBarActiveTintColor: isDarkMode ? Colors.Primary : Colors.Secondary
