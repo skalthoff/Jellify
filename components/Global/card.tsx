@@ -8,6 +8,7 @@ import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
+import { queryConfig } from "../../api/queries/query.config";
 
 interface CardProps extends TamaguiCardProps {
     artistName?: string;
@@ -24,7 +25,7 @@ export function Card(props: CardProps) {
     const [imageLoaded, setImageLoaded] = useState<boolean>(false); 
     const dimensions = props.artistName ? cardDimensions.artist : cardDimensions.album;
 
-    const cardTextColor = props.blurhash ? invert(Blurhash.getAverageColor(props.blurhash)!, true) : undefined;
+    const cardTextColor = props.blurhash ? invert(Blurhash.getAverageColor(props.blurhash)!) : undefined;
 
     return (
         <TamaguiCard 
@@ -39,7 +40,7 @@ export function Card(props: CardProps) {
         >
             <TamaguiCard.Header padded>
             { props.children && (
-                <H3 color={cardTextColor ? cardTextColor : 'unset'}>{ props.children }</H3>
+                <H3 color={cardTextColor}>{ props.children }</H3>
             )}
             </TamaguiCard.Header>
             <TamaguiCard.Footer padded>
@@ -61,7 +62,7 @@ export function Card(props: CardProps) {
                         .getItemImageUrlById(
                             props.itemId, 
                             ImageType.Primary, 
-                            { ...dimensions})
+                            { ...queryConfig.images})
                     } 
                     imageStyle={{
                         ...dimensions,
