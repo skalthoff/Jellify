@@ -7,7 +7,10 @@ import { JellifyTrack } from "../../../types/JellifyTrack";
  * @returns The index to insert songs to play next at
  */
 export const findPlayNextIndexStart = (playQueue: JellifyTrack[]) => {
-    return 1
+    if (playQueue.length > 0)
+        return 1
+
+    return 0;
 }
 
 /**
