@@ -24,7 +24,8 @@ export function Tabs() : React.JSX.Element {
                 }}
                 tabBar={(props) => (
                     <>
-                        <Miniplayer />
+                        <Separator />
+                        <Miniplayer navigation={props.navigation} />
                         <Separator />
                         <BottomTabBar {...props} />
                     </>

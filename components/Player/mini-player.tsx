@@ -1,13 +1,19 @@
 import React from "react";
 import { Text, View, XStack, YStack } from "tamagui";
+import { useActiveTrack } from "react-native-track-player";
+import { JellifyTrack } from "../../types/JellifyTrack";
 import { usePlayerContext } from "../../player/provider";
+import { BottomTabNavigationEventMap, BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 
-export function Miniplayer() : React.JSX.Element {
+export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
-    const { activeTrack } = usePlayerContext();
+    const activeTrack = useActiveTrack() as JellifyTrack | undefined;
+
+    const { setShowPlayer } = usePlayerContext();
 
     return (
-        <View backgroundColor={"$colorTransparent"}>
+        <View backgroundColor="$black5" onPress={() => navigation.navigate("Player")}>
             <XStack>
                 <YStack>
                     <Text>{activeTrack?.title ?? "Nothing Playing"}</Text>

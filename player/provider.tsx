@@ -15,11 +15,7 @@ interface PlayerContext {
     queue: JellifyTrack[];
     clearQueue: () => Promise<void>;
     addToQueue: (tracks: JellifyTrack[]) => Promise<void>;
-    activeTrack: JellifyTrack | undefined;
     setPlayerState: React.Dispatch<SetStateAction<null>>;
-    position: number;
-    buffered: number;
-    duration: number;
 }
 
 const PlayerContextInitializer = () => {
@@ -34,9 +30,6 @@ const PlayerContextInitializer = () => {
     setupPlayer().then(() => console.debug("Player setup successfully"));
 
     const [playerState, setPlayerState] = useState(null);
-    const { position, buffered, duration } = useProgress()
-
-    let activeTrack = useActiveTrack() as JellifyTrack | undefined;
     //#endregion RNTP Setup
 
     const clearQueue = async () => {
@@ -67,11 +60,7 @@ const PlayerContextInitializer = () => {
         queue,
         addToQueue,
         clearQueue,
-        activeTrack,
         setPlayerState,
-        position,
-        buffered,
-        duration,
     }
 }
 
@@ -83,11 +72,7 @@ export const PlayerContext = createContext<PlayerContext>({
     queue: [],
     clearQueue: async () => {},
     addToQueue: async ([]) => {},
-    activeTrack: undefined,
     setPlayerState: () => {},
-    position: 0,
-    buffered: 0,
-    duration: 0
 });
 
 export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
@@ -99,11 +84,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         queue, 
         clearQueue,
         addToQueue,
-        activeTrack,
         setPlayerState,
-        position,
-        buffered,
-        duration
     } = PlayerContextInitializer();
 
     return <PlayerContext.Provider value={{
@@ -114,11 +95,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         queue,
         clearQueue,
         addToQueue,
-        activeTrack,
         setPlayerState,
-        position,
-        buffered,
-        duration
     }}>
         { children }
     </PlayerContext.Provider>
