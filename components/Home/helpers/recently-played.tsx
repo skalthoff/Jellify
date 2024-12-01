@@ -2,11 +2,15 @@ import React, { useEffect } from "react";
 import { H5, ScrollView, Text, View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/text";
-import Avatar from "../../Global/avatar";
 import { Card } from "../../Global/card";
+import { addToPlayQueue, clearPlayQueue } from "../../../player/mutators/play-queue";
+import { play } from "react-native-track-player/lib/src/trackPlayer";
+import { mapDtoToTrack } from "../../../helpers/mappings";
+import { useApiClientContext } from "../../jellyfin-api-provider";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
+    const { apiClient } = useApiClientContext();
     const { recentTracks } = useHomeContext();
 
     useEffect(() => {
@@ -31,6 +35,11 @@ export default function RecentlyPlayed(): React.JSX.Element {
                             cornered
                             itemId={recentlyPlayedTrack.AlbumId!}
                             marginRight={20}
+                            onPress={() => {
+                                clearPlayQueue.mutate();
+                                addToPlayQueue.mutate([mapDtoToTrack(apiClient!, recentlyPlayedTrack)])
+                                play();
+                            }}
                         >
                                 
                         </Card>

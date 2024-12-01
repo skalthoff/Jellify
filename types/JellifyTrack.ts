@@ -1,4 +1,3 @@
-import { SongInfo } from "@jellyfin/sdk/lib/generated-client/models";
 import { PitchAlgorithm, RatingType, Track, TrackType } from "react-native-track-player"
 import { QueuingType } from "../enums/queuing-type";
 

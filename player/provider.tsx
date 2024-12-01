@@ -2,6 +2,7 @@ import { createContext, ReactNode, SetStateAction, useContext, useState } from "
 import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
+import { useActiveTrack, useProgress } from "react-native-track-player";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -10,6 +11,11 @@ interface PlayerContext {
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
     queue: JellifyTrack[];
     setQueue: React.Dispatch<SetStateAction<JellifyTrack[]>>;
+    activeTrack: JellifyTrack | undefined;
+    setPlayerState: React.Dispatch<SetStateAction<null>>;
+    position: number;
+    buffered: number;
+    duration: number;
 }
 
 const PlayerContextInitializer = () => {
@@ -20,13 +26,26 @@ const PlayerContextInitializer = () => {
     const [showMiniplayer, setShowMiniplayer] = useState<boolean>(false);
     const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
 
+    //#region RNTP Setup
+    const [playerState, setPlayerState] = useState(null);
+    const { position, buffered, duration } = useProgress()
+
+    let activeTrack = useActiveTrack() as JellifyTrack | undefined;
+    //#endregion RNTP Setup
+
+
     return {
         showPlayer,
         setShowPlayer,
         showMiniplayer,
         setShowMiniplayer,
         queue,
-        setQueue
+        setQueue,
+        activeTrack,
+        setPlayerState,
+        position,
+        buffered,
+        duration,
     }
 }
 
@@ -36,7 +55,12 @@ export const PlayerContext = createContext<PlayerContext>({
     showMiniplayer: false,
     setShowMiniplayer: () => {},
     queue: [],
-    setQueue: () => {}
+    setQueue: () => {},
+    activeTrack: undefined,
+    setPlayerState: () => {},
+    position: 0,
+    buffered: 0,
+    duration: 0
 });
 
 export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
@@ -46,7 +70,12 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         showMiniplayer, 
         setShowMiniplayer, 
         queue, 
-        setQueue 
+        setQueue,
+        activeTrack,
+        setPlayerState,
+        position,
+        buffered,
+        duration
     } = PlayerContextInitializer();
 
     return <PlayerContext.Provider value={{
@@ -55,7 +84,12 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         showMiniplayer,
         setShowMiniplayer,
         queue,
-        setQueue
+        setQueue,
+        activeTrack,
+        setPlayerState,
+        position,
+        buffered,
+        duration
     }}>
         { children }
     </PlayerContext.Provider>
