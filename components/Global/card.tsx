@@ -37,7 +37,7 @@ export function Card(props: CardProps) {
                 animation="bouncy"
                 hoverStyle={props.onPress ? { scale: 0.925 } : {}}
                 pressStyle={props.onPress ? { scale: 0.875 } : {}}
-                borderRadius={props.cornered ? 5 : 25}
+                borderRadius={props.cornered ? 2 : 25}
                 {...dimensions}
                 {...props}
             >

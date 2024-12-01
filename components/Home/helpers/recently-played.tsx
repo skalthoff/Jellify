@@ -25,7 +25,7 @@ export default function RecentlyPlayed(): React.JSX.Element {
                             caption={
                                 <>
                                     <H5>{`${recentlyPlayedTrack.Name}`}</H5>
-                                    <Text>`${recentlyPlayedTrack.Artists?.join(", ")}`</Text>
+                                    <Text>{`${recentlyPlayedTrack.Artists?.join(", ")}`}</Text>
                                 </>
                             }
                             cornered

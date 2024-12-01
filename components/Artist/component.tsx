@@ -30,16 +30,15 @@ export default function Artist({ artistId, artistName }: { artistId: string, art
                     renderItem={({ item: album }) => {
                         return (
                             <Card
-                            caption={
-                                <>
-                                    <H5>{`${album.Name}`}</H5>
-                                    <Text>`${album.ProductionYear}`</Text>
-                                </>
-                            }
+                                caption={
+                                    <>
+                                        <H5>{`${album.Name}`}</H5>
+                                        <Text>{`${album.ProductionYear}`}</Text>
+                                    </>
+                                }
                                 cornered 
-                                itemId={album.Id!}>
-                                { album.Name! }
-                            </Card>
+                                itemId={album.Id!}
+                            />
                         )
                     }}
                 />
