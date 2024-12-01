@@ -3,6 +3,9 @@ import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { useActiveTrack, useProgress } from "react-native-track-player";
+import { findPlayQueueIndexStart } from "./mutators/helpers";
+import { add, remove, removeUpcomingTracks } from "react-native-track-player/lib/src/trackPlayer";
+import _ from "lodash";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -10,7 +13,8 @@ interface PlayerContext {
     showMiniplayer: boolean;
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
     queue: JellifyTrack[];
-    setQueue: React.Dispatch<SetStateAction<JellifyTrack[]>>;
+    clearQueue: () => Promise<void>;
+    addToQueue: (tracks: JellifyTrack[]) => Promise<void>;
     activeTrack: JellifyTrack | undefined;
     setPlayerState: React.Dispatch<SetStateAction<null>>;
     position: number;
@@ -33,6 +37,24 @@ const PlayerContextInitializer = () => {
     let activeTrack = useActiveTrack() as JellifyTrack | undefined;
     //#endregion RNTP Setup
 
+    const clearQueue = async () => {
+        await removeUpcomingTracks();
+        await remove(0)
+        setQueue([]);
+    }
+
+    const addToQueue = async (tracks: JellifyTrack[]) => {
+        let insertIndex = findPlayQueueIndexStart(queue);
+
+        await add(tracks, insertIndex);
+
+        let newQueue : JellifyTrack[] = [];
+        tracks.forEach(track => {
+            newQueue = _.cloneDeep(queue).splice(insertIndex, 0, track);
+        });
+
+        setQueue(newQueue)
+    }
 
     return {
         showPlayer,
@@ -40,7 +62,8 @@ const PlayerContextInitializer = () => {
         showMiniplayer,
         setShowMiniplayer,
         queue,
-        setQueue,
+        addToQueue,
+        clearQueue,
         activeTrack,
         setPlayerState,
         position,
@@ -55,7 +78,8 @@ export const PlayerContext = createContext<PlayerContext>({
     showMiniplayer: false,
     setShowMiniplayer: () => {},
     queue: [],
-    setQueue: () => {},
+    clearQueue: async () => {},
+    addToQueue: async ([]) => {},
     activeTrack: undefined,
     setPlayerState: () => {},
     position: 0,
@@ -70,7 +94,8 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         showMiniplayer, 
         setShowMiniplayer, 
         queue, 
-        setQueue,
+        clearQueue,
+        addToQueue,
         activeTrack,
         setPlayerState,
         position,
@@ -84,7 +109,8 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         showMiniplayer,
         setShowMiniplayer,
         queue,
-        setQueue,
+        clearQueue,
+        addToQueue,
         activeTrack,
         setPlayerState,
         position,
