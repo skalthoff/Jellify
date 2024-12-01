@@ -9,6 +9,7 @@ import Library from "./Library/component";
 import Settings from "./Settings/component";
 import { Discover } from "./Discover/component";
 import { Miniplayer } from "./Player/mini-player";
+import { Separator } from "tamagui";
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +25,7 @@ export function Tabs() : React.JSX.Element {
                 tabBar={(props) => (
                     <>
                         <Miniplayer />
+                        <Separator />
                         <BottomTabBar {...props} />
                     </>
                 )}
