@@ -5,6 +5,7 @@ import { H2 } from "../../Global/text";
 import { ProvidedHomeProps } from "../types";
 import { FlatList } from "react-native";
 import { Card } from "../../Global/card";
+import { getPrimaryBlurhashFromDto } from "../../../helpers/blurhash";
 
 export default function RecentArtists({ navigation }: ProvidedHomeProps): React.JSX.Element {
 
@@ -23,20 +24,10 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                 data={recentArtists}
                 renderItem={({ item: recentArtist}) => {
 
-                    const artistBlurhashKey : string | undefined = 
-                        recentArtist.ImageBlurHashes!.Primary 
-                        ? Object.keys(recentArtist.ImageBlurHashes!.Primary)[0] 
-                        : undefined;
-
-                    const artistBlurhash : string | undefined = 
-                        artistBlurhashKey 
-                        ? recentArtist.ImageBlurHashes!.Primary![artistBlurhashKey!] 
-                        : undefined;
-
                     return (
                         <Card 
                             artistName={recentArtist.Name!}
-                            blurhash={artistBlurhash}
+                            blurhash={getPrimaryBlurhashFromDto(recentArtist)}
                             itemId={recentArtist.Id!}
                             marginRight={20}
                             onPress={() => {

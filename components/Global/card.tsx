@@ -16,6 +16,7 @@ interface CardProps extends TamaguiCardProps {
     children?: string;
     itemId: string;
     footer?: ReactNode;
+    cornered?: boolean;
 }
 
 export function Card(props: CardProps) {
@@ -25,7 +26,7 @@ export function Card(props: CardProps) {
     const [imageLoaded, setImageLoaded] = useState<boolean>(false); 
     const dimensions = props.artistName ? cardDimensions.artist : cardDimensions.album;
 
-    const cardTextColor = props.blurhash ? invert(Blurhash.getAverageColor(props.blurhash)!) : undefined;
+    const cardTextColor = props.blurhash ? invert(Blurhash.getAverageColor(props.blurhash)!, true) : undefined;
 
     return (
         <TamaguiCard 
@@ -34,7 +35,7 @@ export function Card(props: CardProps) {
             animation="bouncy"
             hoverStyle={props.onPress ? { scale: 0.925 } : {}}
             pressStyle={props.onPress ? { scale: 0.875 } : {}}
-            borderRadius={25}
+            borderRadius={props.cornered ? 5 : 25}
             {...dimensions}
             {...props}
         >

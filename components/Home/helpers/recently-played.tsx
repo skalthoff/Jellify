@@ -3,6 +3,7 @@ import { ScrollView, View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/text";
 import Avatar from "../../Global/avatar";
+import { Card } from "../../Global/card";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
@@ -20,9 +21,13 @@ export default function RecentlyPlayed(): React.JSX.Element {
             <ScrollView horizontal>
                 { recentTracks && recentTracks.map((recentlyPlayedTrack) => {
                     return (
-                            <Avatar itemId={recentlyPlayedTrack.AlbumId!} subheading={`${recentlyPlayedTrack.Artists?.join(", ")}`}>
+                        <Card
+                            cornered
+                            itemId={recentlyPlayedTrack.AlbumId!}
+                            marginRight={20}
+                        >
                                 {`${recentlyPlayedTrack.Name}`}
-                            </Avatar>
+                        </Card>
                     )
                 })}
             </ScrollView>
