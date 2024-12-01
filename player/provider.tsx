@@ -4,7 +4,7 @@ import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { useActiveTrack, useProgress } from "react-native-track-player";
 import { findPlayQueueIndexStart } from "./mutators/helpers";
-import { add, remove, removeUpcomingTracks } from "react-native-track-player/lib/src/trackPlayer";
+import { add, remove, removeUpcomingTracks, setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
 
 interface PlayerContext {
@@ -31,6 +31,8 @@ const PlayerContextInitializer = () => {
     const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
 
     //#region RNTP Setup
+    setupPlayer();
+
     const [playerState, setPlayerState] = useState(null);
     const { position, buffered, duration } = useProgress()
 
@@ -38,12 +40,14 @@ const PlayerContextInitializer = () => {
     //#endregion RNTP Setup
 
     const clearQueue = async () => {
+        console.debug("Clearing queue")
         await removeUpcomingTracks();
         await remove(0)
         setQueue([]);
     }
 
     const addToQueue = async (tracks: JellifyTrack[]) => {
+        console.debug(`Adding ${tracks.length} to queue`)
         let insertIndex = findPlayQueueIndexStart(queue);
 
         await add(tracks, insertIndex);

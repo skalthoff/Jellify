@@ -1,9 +1,7 @@
-import { useColorScheme } from "react-native";
-import { setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
 import { JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
 import React from "react";
-import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import Navigation from "./navigation";
 import Login from "./Login/component";
 import { JellyfinAuthenticationProvider } from "./Login/provider";
@@ -12,8 +10,6 @@ import { JellifyTheme } from "./theme";
 import { PlayerProvider } from "../player/provider";
 
 export default function Jellify(): React.JSX.Element {
-
-  setupPlayer();
 
   return (
     <JellyfinApiClientProvider>
