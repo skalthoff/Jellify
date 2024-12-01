@@ -31,7 +31,7 @@ const PlayerContextInitializer = () => {
     const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
 
     //#region RNTP Setup
-    setupPlayer();
+    setupPlayer().then(() => console.debug("Player setup successfully"));
 
     const [playerState, setPlayerState] = useState(null);
     const { position, buffered, duration } = useProgress()
