@@ -54,8 +54,6 @@ export function Card(props: CardProps) {
                 <TamaguiCard.Background>
                     {props.blurhash && !imageLoaded && (
                         <Blurhash
-                            decodeWidth={dimensions.width}
-                            decodeHeight={dimensions.height}
                             blurhash={props.blurhash}
                         />
                     )}
@@ -69,7 +67,7 @@ export function Card(props: CardProps) {
                             } 
                             imageStyle={{
                                 ...dimensions,
-                            borderRadius: 25
+                            borderRadius: props.cornered ? 2 : 25
                         }}
                         onLoadEnd={() => setImageLoaded(true)}
                         />
