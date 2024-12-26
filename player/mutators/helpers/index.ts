@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 import { QueuingType } from "../../../enums/queuing-type";
 import { JellifyTrack } from "../../../types/JellifyTrack";
 
@@ -20,7 +21,7 @@ export const findPlayNextIndexStart = (playQueue: JellifyTrack[]) => {
  */
 export const findPlayQueueIndexStart = (playQueue: JellifyTrack[]) => {
 
-    if (playQueue.length === 0)
+    if (isEmpty(playQueue))
         return 0;
 
 
