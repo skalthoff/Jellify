@@ -12,8 +12,6 @@ const transcodingContainer = "m4a";
 
 export function mapDtoToTrack(api: Api, item: BaseItemDto, queuingType?: QueuingType) {
 
-    console.log(`Mapping track for ${api.basePath} server`)
-
     const urlParams = {
         "Container": container,
         "TranscodingContainer": transcodingContainer,

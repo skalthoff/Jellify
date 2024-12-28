@@ -34,6 +34,7 @@ const PlayerContextInitializer = () => {
     const clearQueue = async () => {
         console.debug("Clearing queue")
         await removeUpcomingTracks();
+        await remove(0)
         setQueue([]);
     }
 
