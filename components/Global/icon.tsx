@@ -3,11 +3,28 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Colors } from "react-native/Libraries/NewAppScreen"
 
 const iconDimensions = {
-    width: 25,
-    height: 25
+    width: 50,
+    height: 50
 }
 
-export default function Icon({ name }: { name: string }) : React.JSX.Element {
-    return <MaterialCommunityIcons color={Colors.Primary} name={name} {...iconDimensions} />
+const largeDimensions = {
+    width: 100,
+    height: 100
+}
 
+export default function Icon({ name, onPress, large }: { name: string, onPress?: Function, large?: boolean }) : React.JSX.Element {
+    
+    let dimensions = large ? largeDimensions : iconDimensions
+    
+    return (
+        <MaterialCommunityIcons 
+            color={Colors.Primary} 
+            name={name} 
+            onPress={() => {
+                if (onPress)
+                    onPress();
+            }}
+            {...dimensions} 
+        />
+    )
 }

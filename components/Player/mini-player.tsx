@@ -1,15 +1,17 @@
 import React from "react";
-import { Button, Spacer, Text, XStack, YStack } from "tamagui";
-import { useActiveTrack } from "react-native-track-player";
+import { Button, Spacer, Spinner, Text, XStack, YStack } from "tamagui";
+import { State, useActiveTrack, usePlaybackState } from "react-native-track-player";
 import { JellifyTrack } from "../../types/JellifyTrack";
 import { usePlayerContext } from "../../player/provider";
 import { BottomTabNavigationEventMap, BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 import { BlurView } from "@react-native-community/blur";
-import { pause, skipToNext } from "react-native-track-player/lib/src/trackPlayer";
+import { pause, play, skipToNext } from "react-native-track-player/lib/src/trackPlayer";
 import Icon from "../Global/icon";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
+
+    const playbackState = usePlaybackState();
 
     const activeTrack = useActiveTrack() as JellifyTrack | undefined;
 
@@ -27,12 +29,25 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                 <Button onPress={() => {
                     pause()
                 }}>
+                </Button>
+                    
+                { playbackState.state === State.Playing && (
                     <Icon name="pause" />
-                </Button>
+                )}
 
-                <Button onPress={() => skipToNext()}>
-                    <Icon name="fast-forward" />
-                </Button>
+                { playbackState.state === State.Paused && (
+                    <Icon name="play" large onPress={() => play()} />
+                )}
+
+                { playbackState.state === State.Buffering || playbackState.state === State.Loading && (
+                    <Spinner size="small" />
+                )}
+
+                <Icon 
+                    large
+                    name="fast-forward" 
+                    onPress={() => skipToNext()} 
+                />
             </XStack>
         </BlurView>
     )

@@ -46,7 +46,7 @@ export default function ServerLibrary(): React.JSX.Element {
             <H1>Select Music Library</H1>
 
             { isPending ? (
-                <Spinner />
+                <Spinner size="large" />
             ) : (
                 <ToggleGroup
                     orientation="vertical"
