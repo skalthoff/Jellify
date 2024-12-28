@@ -14,7 +14,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
     const { setShowPlayer } = usePlayerContext();
 
     return (
-        <BlurView onPointerDown={() => navigation.navigate("Player")}>
+        <BlurView>
             <XStack>
                 <YStack>
                     <Text>{activeTrack?.title ?? "Nothing Playing"}</Text>
