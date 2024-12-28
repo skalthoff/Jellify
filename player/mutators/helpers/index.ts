@@ -24,6 +24,5 @@ export const findPlayQueueIndexStart = (playQueue: JellifyTrack[]) => {
     if (isEmpty(playQueue))
         return 0;
 
-
     return playQueue.findIndex(queuedTrack => queuedTrack.QueuingType === QueuingType.FromSelection);
 }

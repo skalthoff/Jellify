@@ -38,13 +38,15 @@ const PlayerContextInitializer = () => {
     }
 
     const addToQueue = async (tracks: JellifyTrack[]) => {
-        console.debug(`Adding ${tracks.length} to queue`)
         let insertIndex = findPlayQueueIndexStart(queue);
+        console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`)
 
         await add(tracks, insertIndex);
 
         let newQueue : JellifyTrack[] =
              _.cloneDeep(queue).splice(insertIndex, 0, ...tracks);
+
+        console.debug(`Setting queue: ${newQueue}`)
 
         setQueue(newQueue)
     }
