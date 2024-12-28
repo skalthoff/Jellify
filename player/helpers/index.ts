@@ -1,6 +1,6 @@
 import { isEmpty } from "lodash";
-import { QueuingType } from "../../../enums/queuing-type";
-import { JellifyTrack } from "../../../types/JellifyTrack";
+import { QueuingType } from "../../enums/queuing-type";
+import { JellifyTrack } from "../../types/JellifyTrack";
 
 /**
  * Finds and returns the index of the player queue to insert additional tracks into

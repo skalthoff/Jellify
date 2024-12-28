@@ -2,9 +2,10 @@ import { createContext, ReactNode, SetStateAction, useContext, useEffect, useSta
 import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
-import { findPlayQueueIndexStart } from "./mutators/helpers";
+import { findPlayQueueIndexStart } from "./helpers";
 import { add, reset, setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
+import { buildNewQueue } from "./helpers/queue";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -43,12 +44,7 @@ const PlayerContextInitializer = () => {
 
         await add(tracks, insertIndex);
 
-        let newQueue : JellifyTrack[] =
-             _.cloneDeep(queue).splice(insertIndex, 0, ...tracks);
-
-        console.debug(`Setting queue: ${newQueue}`)
-
-        setQueue(newQueue)
+        setQueue(buildNewQueue(queue, tracks, insertIndex))
     }
 
     // Hide miniplayer if the queue is empty
