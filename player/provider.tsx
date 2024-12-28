@@ -13,7 +13,7 @@ interface PlayerContext {
     showMiniplayer: boolean;
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
     queue: JellifyTrack[];
-    resetQueue: () => Promise<void>;
+    resetQueue: (hideMiniplayer : boolean | undefined) => Promise<void>;
     addToQueue: (tracks: JellifyTrack[]) => Promise<void>;
     setPlayerState: React.Dispatch<SetStateAction<null>>;
 }
@@ -32,10 +32,12 @@ const PlayerContextInitializer = () => {
     const [playerState, setPlayerState] = useState(null);
     //#endregion RNTP Setup
 
-    const resetQueue = async () => {
+    const resetQueue = async (hideMiniplayer: boolean | undefined) => {
         console.debug("Clearing queue")
         await reset();
         setQueue([]);
+
+        setShowMiniplayer(!hideMiniplayer)
     }
 
     const addToQueue = async (tracks: JellifyTrack[]) => {
@@ -45,15 +47,9 @@ const PlayerContextInitializer = () => {
         await add(tracks, insertIndex);
 
         setQueue(buildNewQueue(queue, tracks, insertIndex))
-    }
 
-    // Hide miniplayer if the queue is empty
-    useEffect(() => {
-        console.log(`Queue length: ${queue.length}`);
-        setShowMiniplayer(queue.length > 0)
-    }, [
-        queue
-    ])
+        setShowMiniplayer(true);
+    }
 
     return {
         showPlayer,
