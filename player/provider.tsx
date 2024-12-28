@@ -1,4 +1,4 @@
-import { createContext, ReactNode, SetStateAction, useContext, useState } from "react";
+import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
@@ -50,6 +50,13 @@ const PlayerContextInitializer = () => {
 
         setQueue(newQueue)
     }
+
+    // Hide miniplayer if the queue is empty
+    useEffect(() => {
+        setShowMiniplayer(queue.length > 0)
+    }, [
+        queue
+    ])
 
     return {
         showPlayer,

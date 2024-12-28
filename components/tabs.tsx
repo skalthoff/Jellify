@@ -10,12 +10,15 @@ import Settings from "./Settings/component";
 import { Discover } from "./Discover/component";
 import { Miniplayer } from "./Player/mini-player";
 import { Separator } from "tamagui";
+import { usePlayerContext } from "../player/provider";
 
 const Tab = createBottomTabNavigator();
 
 export function Tabs() : React.JSX.Element {
 
     const isDarkMode = useColorScheme() === 'dark';
+
+    const { showMiniplayer } = usePlayerContext();
 
     return (
             <Tab.Navigator
@@ -24,8 +27,13 @@ export function Tabs() : React.JSX.Element {
                 }}
                 tabBar={(props) => (
                     <>
-                        <Separator />
-                        <Miniplayer navigation={props.navigation} />
+                        { showMiniplayer && (
+                            /* Hide miniplayer if the queue is empty */
+                            <>
+                                <Separator />
+                                <Miniplayer navigation={props.navigation} />
+                            </>
+                        )}
                         <Separator />
                         <BottomTabBar {...props} />
                     </>
