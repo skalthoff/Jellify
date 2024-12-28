@@ -1,6 +1,7 @@
 import React from "react"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { useTheme } from "tamagui"
+import { Colors } from "../../enums/colors"
 
 const iconDimensions = {
     width: 50,
@@ -19,7 +20,7 @@ export default function Icon({ name, onPress, large }: { name: string, onPress?:
     
     return (
         <MaterialCommunityIcons 
-            color={theme.white0.get()} 
+            color={Colors.White} 
             name={name} 
             onPress={() => {
                 if (onPress)

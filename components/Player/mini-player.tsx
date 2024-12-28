@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Spacer, Spinner, Stack, XStack, YStack } from "tamagui";
+import { Button, Spacer, Spinner, Stack, useTheme, XStack, YStack } from "tamagui";
 import { State, useActiveTrack, usePlaybackState } from "react-native-track-player";
 import { JellifyTrack } from "../../types/JellifyTrack";
 import { usePlayerContext } from "../../player/provider";
@@ -9,10 +9,13 @@ import { BlurView } from "@react-native-community/blur";
 import { pause, play, skipToNext } from "react-native-track-player/lib/src/trackPlayer";
 import Icon from "../Global/icon";
 import { Text } from "../Global/text";
+import { Colors } from "../../enums/colors";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
     const playbackState = usePlaybackState();
+
+    const theme = useTheme();
 
     const activeTrack = useActiveTrack() as JellifyTrack | undefined;
 
@@ -25,15 +28,10 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                 </YStack>
 
                 <Spacer />
-
-                <Button onPress={() => {
-                    pause()
-                }}>
-                </Button>
                 
                 <XStack alignItems="flex-end" flex={1}>
                     { playbackState.state === State.Playing && (
-                        <Icon name="pause" />
+                        <Icon name="pause" large onPress={() => pause()} />
                     )}
 
                     { playbackState.state === State.Paused && (
@@ -41,7 +39,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     )}
 
                     { playbackState.state === State.Buffering || playbackState.state === State.Loading && (
-                        <Spinner size="small" />
+                        <Spinner size="small" color={Colors.Primary}/>
                     )}
 
                     <Icon 
