@@ -43,10 +43,8 @@ const PlayerContextInitializer = () => {
 
         await add(tracks, insertIndex);
 
-        let newQueue : JellifyTrack[] = [];
-        tracks.forEach(track => {
-            newQueue = _.cloneDeep(queue).splice(insertIndex, 0, track);
-        });
+        let newQueue : JellifyTrack[] =
+             _.cloneDeep(queue).splice(insertIndex, 0, ...tracks);
 
         setQueue(newQueue)
     }
