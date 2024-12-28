@@ -53,6 +53,7 @@ const PlayerContextInitializer = () => {
 
     // Hide miniplayer if the queue is empty
     useEffect(() => {
+        console.log(`Queue length: ${queue.length}`);
         setShowMiniplayer(queue.length > 0)
     }, [
         queue
