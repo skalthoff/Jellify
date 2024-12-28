@@ -10,7 +10,7 @@ import { usePlayerContext } from "../../../player/provider";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
-    const { clearQueue, addToQueue } = usePlayerContext();
+    const { resetQueue: clearQueue, addToQueue } = usePlayerContext();
     const { apiClient } = useApiClientContext();
     const { recentTracks } = useHomeContext();
 

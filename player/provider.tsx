@@ -3,7 +3,7 @@ import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./mutators/helpers";
-import { add, remove, removeUpcomingTracks, setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
+import { add, reset, setupPlayer } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
 
 interface PlayerContext {
@@ -12,7 +12,7 @@ interface PlayerContext {
     showMiniplayer: boolean;
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
     queue: JellifyTrack[];
-    clearQueue: () => Promise<void>;
+    resetQueue: () => Promise<void>;
     addToQueue: (tracks: JellifyTrack[]) => Promise<void>;
     setPlayerState: React.Dispatch<SetStateAction<null>>;
 }
@@ -31,10 +31,9 @@ const PlayerContextInitializer = () => {
     const [playerState, setPlayerState] = useState(null);
     //#endregion RNTP Setup
 
-    const clearQueue = async () => {
+    const resetQueue = async () => {
         console.debug("Clearing queue")
-        await removeUpcomingTracks();
-        await remove(0)
+        await reset();
         setQueue([]);
     }
 
@@ -59,7 +58,7 @@ const PlayerContextInitializer = () => {
         setShowMiniplayer,
         queue,
         addToQueue,
-        clearQueue,
+        resetQueue,
         setPlayerState,
     }
 }
@@ -70,7 +69,7 @@ export const PlayerContext = createContext<PlayerContext>({
     showMiniplayer: false,
     setShowMiniplayer: () => {},
     queue: [],
-    clearQueue: async () => {},
+    resetQueue: async () => {},
     addToQueue: async ([]) => {},
     setPlayerState: () => {},
 });
@@ -82,7 +81,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         showMiniplayer, 
         setShowMiniplayer, 
         queue, 
-        clearQueue,
+        resetQueue,
         addToQueue,
         setPlayerState,
     } = PlayerContextInitializer();
@@ -93,7 +92,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         showMiniplayer,
         setShowMiniplayer,
         queue,
-        clearQueue,
+        resetQueue,
         addToQueue,
         setPlayerState,
     }}>
