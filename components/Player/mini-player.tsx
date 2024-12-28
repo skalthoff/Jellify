@@ -15,7 +15,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
     return (
         <BlurView>
-            <XStack height={"$20"} onPress={() => navigation.navigate("Player")}>
+            <XStack height={"$8"} onPress={() => navigation.navigate("Player")}>
                 <YStack>
                     <Text>{activeTrack?.title ?? "Nothing Playing"}</Text>
                 </YStack>
