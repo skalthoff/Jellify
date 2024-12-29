@@ -29,7 +29,14 @@ export default function RecentlyPlayed(): React.JSX.Element {
                         <Card
                             caption={
                                 <>
-                                    <H5>{`${recentlyPlayedTrack.Name}`}</H5>
+                                    <H5 
+                                        numberOfLines={1}
+                                        textBreakStrategy="simple"
+                                        lineBreakStrategyIOS="standard"
+                                        width={150}
+                                    >
+                                        {`${recentlyPlayedTrack.Name}`}
+                                    </H5>
                                     <Text>{`${recentlyPlayedTrack.Artists?.join(", ")}`}</Text>
                                 </>
                             }
