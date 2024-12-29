@@ -33,7 +33,7 @@ export default function RecentlyPlayed(): React.JSX.Element {
                                         numberOfLines={1}
                                         textBreakStrategy="simple"
                                         lineBreakStrategyIOS="standard"
-                                        width={150}
+                                        width={200}
                                     >
                                         {`${recentlyPlayedTrack.Name}`}
                                     </H5>
