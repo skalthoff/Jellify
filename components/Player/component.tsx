@@ -9,6 +9,7 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "../Global/text";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 /**
  * Events subscribed to within RNTP
@@ -31,32 +32,36 @@ export default function Player(): React.JSX.Element {
 
 
     return (
-        <YStack alignItems="center" justifyContent="center" flex={1}>
-{/* 
-            <CachedImage
-                source={getImageApi(apiClient!)
-                    .getItemImageUrlById(
-                        activeTrack!.albumId,
-                        ImageType.Primary,
-                        { ...queryConfig.playerArtwork }
-                    )
-                }
-                imageStyle={{
-                    width: 500,
-                    height: 500,
-                    borderRadius: 2
-                }}
-            /> */}
+        <SafeAreaView>
+            { activeTrack && (
+                <YStack alignItems="center" justifyContent="center" flex={1}>
 
-            <Stack justifyContent="space-between">
+                    <CachedImage
+                        source={getImageApi(apiClient!)
+                            .getItemImageUrlById(
+                                activeTrack!.albumId,
+                                ImageType.Primary,
+                                { ...queryConfig.playerArtwork }
+                            )
+                        }
+                        imageStyle={{
+                            width: 500,
+                            height: 500,
+                            borderRadius: 2
+                        }}
+                        />
+                    <Stack justifyContent="space-between">
 
-                <Stack alignItems="flex-start" justifyContent="flex-start">
-                    <Text>{activeTrack!.title ?? "Untitled Track"}</Text>
-                    <Text bold>{activeTrack!.artist ?? "Unknown Artist"}</Text>
-                </Stack>
+                        <Stack alignItems="flex-start" justifyContent="flex-start">
+                            <Text>{activeTrack?.title ?? "Untitled Track"}</Text>
+                            <Text bold>{activeTrack?.artist ?? "Unknown Artist"}</Text>
+                        </Stack>
 
-            </Stack>
-        </YStack>
+                    </Stack>
+                    
+                    </YStack>
+            )}
+        </SafeAreaView>
     );
 }
 
