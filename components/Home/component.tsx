@@ -6,12 +6,13 @@ import RecentArtists from "./helpers/recent-artists";
 import { RefreshControl } from "react-native";
 import { HomeProvider, useHomeContext } from "./provider";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomeStackParamList, ProvidedHomeProps } from "./types";
+import { StackParamList, ProvidedHomeProps } from "../types";
 import { HomeArtistScreen } from "./screens/artist";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Avatar from "../Global/avatar";
+import { HomeAlbumScreen } from "./screens/album";
 
-export const HomeStack = createNativeStackNavigator<HomeStackParamList>();
+export const HomeStack = createNativeStackNavigator<StackParamList>();
 
 export default function Home(): React.JSX.Element {
 
@@ -40,6 +41,14 @@ export default function Home(): React.JSX.Element {
                         headerLargeTitleStyle: {
                             fontFamily: 'Aileron-Bold'
                         }
+                    })}
+                />
+
+                <HomeStack.Screen
+                    name="Album"
+                    component={HomeAlbumScreen}
+                    options={({ route }) => ({
+                        headerShown: false
                     })}
                 />
             </HomeStack.Navigator>

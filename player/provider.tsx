@@ -2,7 +2,7 @@ import { createContext, ReactNode, SetStateAction, useContext, useEffect, useSta
 import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
-import { findPlayQueueIndexStart } from "./helpers";
+import { findPlayQueueIndexStart } from "./helpers/index";
 import { add, reset, play as rntpPlay, pause as rntpPause, skipToNext, skipToPrevious, setupPlayer, getActiveTrack } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
 import { buildNewQueue } from "./helpers/queue";

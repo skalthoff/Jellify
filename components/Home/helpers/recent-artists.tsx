@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/text";
-import { ProvidedHomeProps } from "../types";
+import { ProvidedHomeProps } from "../../types";
 import { FlatList } from "react-native";
 import { Card } from "../../Global/card";
 import { getPrimaryBlurhashFromDto } from "../../../helpers/blurhash";
