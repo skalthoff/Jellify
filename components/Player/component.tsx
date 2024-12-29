@@ -34,7 +34,7 @@ export default function Player(): React.JSX.Element {
     return (
         <SafeAreaView>
             { activeTrack && (
-                <YStack alignItems="center" justifyContent="center" flex={1}>
+                <YStack alignItems="center" justifyContent="center">
 
                     <CachedImage
                         source={getImageApi(apiClient!)
