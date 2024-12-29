@@ -42,7 +42,7 @@ export function Card(props: CardProps) {
                 pressStyle={props.onPress ? { scale: 0.875 } : {}}
                 borderRadius={props.cornered ? 2 : 25}
                 width={props.width ?? 150}
-                height={props.width}
+                height={props.width ?? 150 + 50}
                 {...props}
             >
                 <TamaguiCard.Header padded>
