@@ -30,7 +30,7 @@ export function Card(props: CardProps) {
 
     const cardTextColor = props.blurhash ? invert(Blurhash.getAverageColor(props.blurhash)!, true) : undefined;
 
-    const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 4, height: props.width / 4 }: { width: 35, height: 35 };
+    const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 3, height: props.width / 3 }: { width: 50, height: 50 };
     const cardLogoSource = getImageApi(apiClient!).getItemImageUrlById(props.itemId, ImageType.Logo);
 
     return (
