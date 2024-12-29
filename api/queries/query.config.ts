@@ -14,6 +14,13 @@ export const queryConfig = {
         fillWidth: 100,
         format: ImageFormat.Png
     },
+    miniplayerArtwork: {
+        height: 100,
+        width: 100,
+        fillHeight: 100,
+        fillWidth: 100,
+        format: ImageFormat.Jpg
+    },
     playerArtwork: {
         fillHeight: 500,
         fillWidth: 500,

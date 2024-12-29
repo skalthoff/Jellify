@@ -9,6 +9,11 @@ import { BlurView } from "@react-native-community/blur";
 import Icon from "../Global/icon";
 import { Text } from "../Global/text";
 import { Colors } from "../../enums/colors";
+import { CachedImage } from "@georstat/react-native-image-cache";
+import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
+import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
+import { queryConfig } from "../../api/queries/query.config";
+import { useApiClientContext } from "../jellyfin-api-provider";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
@@ -18,35 +23,55 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
     const { play, pause } = usePlayerContext();
 
+    const { apiClient } = useApiClientContext();
+
     return (
         <BlurView>
-            <XStack height={"$8"} onPress={() => navigation.navigate("Player")}>
-                <YStack alignItems="flex-start" flex={3}>
-                    <Text bold>{activeTrack?.title ?? "Nothing Playing"}</Text>
-                    <Text>{activeTrack?.artist ?? ""}</Text>
-                </YStack>
+            { activeTrack && (
 
-                <Spacer />
-                
-                <XStack alignItems="flex-end" flex={1}>
-                    { playbackState.state === State.Playing && (
-                        <Icon name="pause" large onPress={() => pause()} />
-                    )}
+                <XStack height={"$8"} onPress={() => navigation.navigate("Player")}>
 
-                    { playbackState.state === State.Paused && (
-                        <Icon name="play" large onPress={() => play()} />
-                    )}
+                    <CachedImage
+                        source={getImageApi(apiClient!)
+                            .getItemImageUrlById(
+                                activeTrack!.albumId,
+                                ImageType.Primary,
+                                { ...queryConfig.miniplayerArtwork }
+                            )
+                        }
+                        imageStyle={{
+                            ...queryConfig.miniplayerArtwork,
+                            borderRadius: 2
+                        }}
+                    />
 
-                    { playbackState.state === State.Buffering || playbackState.state === State.Loading && (
-                        <Spinner size="small" color={Colors.Primary}/>
-                    )}
+                    <YStack alignItems="flex-start" flex={3}>
+                        <Text bold>{activeTrack?.title ?? "Nothing Playing"}</Text>
+                        <Text>{activeTrack?.artist ?? ""}</Text>
+                    </YStack>
 
-                    <Icon 
-                        large
-                        name="fast-forward" 
-                        />
+                    <Spacer />
+                    
+                    <XStack alignItems="flex-end" flex={1}>
+                        { playbackState.state === State.Playing && (
+                            <Icon name="pause" large onPress={() => pause()} />
+                        )}
+
+                        { playbackState.state === State.Paused && (
+                            <Icon name="play" large onPress={() => play()} />
+                        )}
+
+                        { playbackState.state === State.Buffering || playbackState.state === State.Loading && (
+                            <Spinner size="small" color={Colors.Primary}/>
+                        )}
+
+                        <Icon 
+                            large
+                            name="fast-forward" 
+                            />
+                    </XStack>
                 </XStack>
-            </XStack>
+            )}
         </BlurView>
     )
 }
