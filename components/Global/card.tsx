@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
-import { H3, Card as TamaguiCard, View } from "tamagui";
+import { H3, H5, Card as TamaguiCard, View } from "tamagui";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { cardDimensions } from "./component.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
@@ -9,11 +9,13 @@ import { CachedImage } from "@georstat/react-native-image-cache";
 import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
 import { queryConfig } from "../../api/queries/query.config";
+import { Text } from "./text";
 
 interface CardProps extends TamaguiCardProps {
     artistName?: string;
     blurhash?: string;
-    caption?: ReactNode;
+    caption?: string | null | undefined;
+    subCaption?: string | null | undefined;
     children?: string;
     itemId: string;
     footer?: ReactNode;
@@ -75,7 +77,23 @@ export function Card(props: CardProps) {
                 </TamaguiCard.Background>
             </TamaguiCard>
             { props.caption && (
-                props.caption
+                <View 
+                    alignContent="center"
+                    alignItems="center"
+                    width={dimensions.width}
+                >
+                    <H5 
+                        lineBreakStrategyIOS="standard"
+                    >
+                        { props.caption }
+                    </H5>
+
+                    { props.subCaption && (
+                        <Text>
+                            { props.subCaption }
+                        </Text>
+                    )}
+                </View>
             )}
         </View>
     )

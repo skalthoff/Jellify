@@ -27,19 +27,8 @@ export default function RecentlyPlayed(): React.JSX.Element {
                 { recentTracks && recentTracks.map((recentlyPlayedTrack) => {
                     return (
                         <Card
-                            caption={
-                                <>
-                                    <H5 
-                                        numberOfLines={1}
-                                        textBreakStrategy="simple"
-                                        lineBreakStrategyIOS="standard"
-                                        width={200}
-                                    >
-                                        {`${recentlyPlayedTrack.Name}`}
-                                    </H5>
-                                    <Text>{`${recentlyPlayedTrack.Artists?.join(", ")}`}</Text>
-                                </>
-                            }
+                            caption={recentlyPlayedTrack.Name}
+                            subCaption={`${recentlyPlayedTrack.Artists?.join(", ")}`}
                             cornered
                             itemId={recentlyPlayedTrack.AlbumId!}
                             marginRight={20}
@@ -48,9 +37,7 @@ export default function RecentlyPlayed(): React.JSX.Element {
                                 await addToQueue([mapDtoToTrack(apiClient!, sessionId, recentlyPlayedTrack)])
                                 play();
                             }}
-                        >
-                                
-                        </Card>
+                        />                                
                     )
                 })}
             </ScrollView>
