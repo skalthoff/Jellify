@@ -83,13 +83,17 @@ export function Card(props: CardProps) {
                     width={dimensions.width}
                 >
                     <H5 
+                        textAlign="center"
                         lineBreakStrategyIOS="standard"
+                        numberOfLines={1}
                     >
                         { props.caption }
                     </H5>
 
                     { props.subCaption && (
-                        <Text>
+                        <Text
+                            textAlign="center"
+                        >
                             { props.subCaption }
                         </Text>
                     )}

@@ -28,6 +28,7 @@ interface TextProps {
     bold?: boolean | undefined
     children: string;
     width?: number;
+    textAlign?: "left" | "right" | "unset" | "auto" | "center" | "justify" | undefined;
 }
 
 export function Text(props: TextProps): React.JSX.Element {
@@ -35,6 +36,7 @@ export function Text(props: TextProps): React.JSX.Element {
         <Paragraph 
             width={props.width} 
             fontWeight={props.bold ? 800 : 600} 
+            textAlign={props.textAlign}
             fontSize="$4"
             lineBreakMode="clip"
         >
