@@ -12,6 +12,6 @@ export const queryConfig = {
     logos: {
         fillHeight: 100,
         fillWidth: 100,
-        format: ImageFormat.Jpg
+        format: ImageFormat.Png
     }
 }
