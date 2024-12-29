@@ -32,7 +32,7 @@ export default function Player(): React.JSX.Element {
 
     return (
         <YStack alignItems="center" justifyContent="center" flex={1}>
-
+{/* 
             <CachedImage
                 source={getImageApi(apiClient!)
                     .getItemImageUrlById(
@@ -46,7 +46,7 @@ export default function Player(): React.JSX.Element {
                     height: 500,
                     borderRadius: 2
                 }}
-            />
+            /> */}
 
             <Stack justifyContent="space-between">
 
