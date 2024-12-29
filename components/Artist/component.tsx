@@ -23,19 +23,18 @@ export default function Artist({ artistId, artistName }: { artistId: string, art
                 <FlatList
                     contentContainerStyle={{
                         flexGrow: 1,
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        alignItems: "center"
                     }}
                     data={albums}
                     numColumns={2} // TODO: Make this adjustable
                     renderItem={({ item: album }) => {
                         return (
                             <Card
-                                caption={
-                                    <>
-                                        <H5>{`${album.Name}`}</H5>
-                                        <Text>{`${album.ProductionYear}`}</Text>
-                                    </>
-                                }
+                                caption={album.Name}
+                                subCaption={album.ProductionYear?.toString()}
+                                width={250}
+                                marginHorizontal={20}
                                 cornered 
                                 itemId={album.Id!}
                             />

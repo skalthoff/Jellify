@@ -30,6 +30,7 @@ export default function RecentlyPlayed(): React.JSX.Element {
                             caption={recentlyPlayedTrack.Name}
                             subCaption={`${recentlyPlayedTrack.Artists?.join(", ")}`}
                             cornered
+                            width={150}
                             itemId={recentlyPlayedTrack.AlbumId!}
                             marginRight={20}
                             onPress={async () => {

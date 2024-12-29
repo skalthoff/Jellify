@@ -40,7 +40,8 @@ export function Card(props: CardProps) {
                 hoverStyle={props.onPress ? { scale: 0.925 } : {}}
                 pressStyle={props.onPress ? { scale: 0.875 } : {}}
                 borderRadius={props.cornered ? 2 : 25}
-                {...dimensions}
+                width={props.width ?? 150}
+                height={props.width ?? 150 + 50}
                 {...props}
             >
                 <TamaguiCard.Header padded>

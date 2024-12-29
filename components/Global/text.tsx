@@ -1,4 +1,4 @@
-import { H1 as TamaguiH1, H2 as TamaguiH2, SizeTokens, Label as TamaguiLabel, H5, Paragraph } from "tamagui"
+import { H1 as TamaguiH1, H2 as TamaguiH2, SizeTokens, Label as TamaguiLabel, H5, Paragraph, TextProps as TamaguiTextProps } from "tamagui"
 
 interface LabelProps {
     htmlFor: string,
@@ -24,11 +24,9 @@ export function H2({ children }: { children: string }): React.JSX.Element {
     )
 }
 
-interface TextProps {
+interface TextProps extends TamaguiTextProps {
     bold?: boolean | undefined
     children: string;
-    width?: number;
-    textAlign?: "left" | "right" | "unset" | "auto" | "center" | "justify" | undefined;
 }
 
 export function Text(props: TextProps): React.JSX.Element {
