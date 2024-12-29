@@ -2,16 +2,17 @@ import { Api } from '@jellyfin/sdk';
 import React, { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
 import { useApi } from '../api/queries';
 import _ from 'lodash';
-import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { storage } from '../constants/storage';
 import { MMKVStorageKeys } from '../enums/mmkv-storage-keys';
 import { JellifyServer } from '../types/JellifyServer';
 import { JellifyLibrary } from '../types/JellifyLibrary';
 import { JellifyUser } from '../types/JellifyUser';
+import { uuid } from "uuidv4";
 
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
   apiPending: boolean;
+  sessionId: string;
   server: JellifyServer | undefined;
   setServer: React.Dispatch<SetStateAction<JellifyServer | undefined>>;
   user: JellifyUser | undefined;
@@ -27,6 +28,7 @@ const JellyfinApiClientContextInitializer = () => {
     const serverJson = storage.getString(MMKVStorageKeys.Server);
     const libraryJson = storage.getString(MMKVStorageKeys.Library);
 
+    const [sessionId, setSessionId] = useState<string>(uuid())
     const [user, setUser] = useState<JellifyUser | undefined>(userJson ? (JSON.parse(userJson) as JellifyUser) : undefined);
     const [server, setServer] = useState<JellifyServer | undefined>(serverJson ? (JSON.parse(serverJson) as JellifyServer) : undefined);
     const [library, setLibrary] = useState<JellifyLibrary | undefined>(libraryJson ? (JSON.parse(libraryJson) as JellifyLibrary) : undefined);
@@ -96,6 +98,7 @@ const JellyfinApiClientContextInitializer = () => {
     return { 
       apiClient, 
       apiPending,
+      sessionId,
       server,
       setServer,
       user, 
@@ -110,6 +113,7 @@ export const JellyfinApiClientContext =
   createContext<JellyfinApiClientContext>({ 
     apiClient: undefined, 
     apiPending: true,
+    sessionId: "",
     server: undefined,
     setServer: () => {},
     user: undefined,
@@ -125,6 +129,7 @@ export const JellyfinApiClientProvider: ({ children }: {
   const { 
     apiClient, 
     apiPending, 
+    sessionId,
     server,
     setServer,
     user,
@@ -140,6 +145,7 @@ export const JellyfinApiClientProvider: ({ children }: {
     <JellyfinApiClientContext.Provider value={{ 
       apiClient, 
       apiPending, 
+      sessionId,
       server,
       setServer,
       user,

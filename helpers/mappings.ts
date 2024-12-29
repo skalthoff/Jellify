@@ -10,7 +10,7 @@ const container = "opus,mp3,aac,m4a,flac,webma,webm,wav,ogg,mpa,wma";
 // TODO: Make this configurable
 const transcodingContainer = "m4a";
 
-export function mapDtoToTrack(api: Api, item: BaseItemDto, queuingType?: QueuingType) {
+export function mapDtoToTrack(api: Api, sessionId: string, item: BaseItemDto, queuingType?: QueuingType) {
 
     const urlParams = {
         "Container": container,
@@ -20,6 +20,7 @@ export function mapDtoToTrack(api: Api, item: BaseItemDto, queuingType?: Queuing
         "EnableRedirection": true,
         "api_key": api.accessToken,
         "StartTimeTicks": 0,
+        "PlaySessionId": sessionId,
     }
 
     return {
@@ -32,6 +33,8 @@ export function mapDtoToTrack(api: Api, item: BaseItemDto, queuingType?: Queuing
         album: item.Album,
         artist: item.Artists?.join(", "),
         duration: item.RunTimeTicks,
+
+        ItemId: item.Id!,
         QueuingType: queuingType ?? QueuingType.DirectlyQueued
     } as JellifyTrack
 }

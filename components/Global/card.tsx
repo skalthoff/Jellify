@@ -55,6 +55,7 @@ export function Card(props: CardProps) {
                     {props.blurhash && !imageLoaded && (
                         <Blurhash
                             blurhash={props.blurhash}
+                            {...dimensions}
                         />
                     )}
 

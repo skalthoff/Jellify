@@ -6,7 +6,6 @@ import { usePlayerContext } from "../../player/provider";
 import { BottomTabNavigationEventMap, BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 import { BlurView } from "@react-native-community/blur";
-import { pause, play, skipToNext } from "react-native-track-player/lib/src/trackPlayer";
 import Icon from "../Global/icon";
 import { Text } from "../Global/text";
 import { Colors } from "../../enums/colors";
@@ -15,9 +14,9 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
     const playbackState = usePlaybackState();
 
-    const theme = useTheme();
-
     const activeTrack = useActiveTrack() as JellifyTrack | undefined;
+
+    const { play, pause } = usePlayerContext();
 
     return (
         <BlurView>
@@ -45,7 +44,6 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     <Icon 
                         large
                         name="fast-forward" 
-                        onPress={() => skipToNext()} 
                         />
                 </XStack>
             </XStack>

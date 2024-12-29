@@ -10,8 +10,8 @@ import { usePlayerContext } from "../../../player/provider";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
-    const { resetQueue: clearQueue, addToQueue } = usePlayerContext();
-    const { apiClient } = useApiClientContext();
+    const { addToQueue, resetQueue } = usePlayerContext();
+    const { apiClient, sessionId } = useApiClientContext();
     const { recentTracks } = useHomeContext();
 
     useEffect(() => {
@@ -37,8 +37,8 @@ export default function RecentlyPlayed(): React.JSX.Element {
                             itemId={recentlyPlayedTrack.AlbumId!}
                             marginRight={20}
                             onPress={async () => {
-                                await clearQueue();
-                                await addToQueue([mapDtoToTrack(apiClient!, recentlyPlayedTrack)])
+                                await resetQueue(false);
+                                await addToQueue([mapDtoToTrack(apiClient!, sessionId, recentlyPlayedTrack)])
                                 play();
                             }}
                         >
