@@ -43,9 +43,9 @@
     "react-native-screens": "^3.34.0",
     "react-native-track-player": "^4.1.1",
     "react-native-url-polyfill": "^2.0.0",
+    "react-native-uuid": "^2.0.3",
     "react-native-vector-icons": "^10.2.0",
-    "tamagui": "^1.115.5",
-    "uuidv4": "^6.2.13"
+    "tamagui": "^1.115.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

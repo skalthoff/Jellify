@@ -7,7 +7,7 @@ import { MMKVStorageKeys } from '../enums/mmkv-storage-keys';
 import { JellifyServer } from '../types/JellifyServer';
 import { JellifyLibrary } from '../types/JellifyLibrary';
 import { JellifyUser } from '../types/JellifyUser';
-import { uuid } from "uuidv4";
+import uuid from 'react-native-uuid';
 
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
@@ -28,7 +28,7 @@ const JellyfinApiClientContextInitializer = () => {
     const serverJson = storage.getString(MMKVStorageKeys.Server);
     const libraryJson = storage.getString(MMKVStorageKeys.Library);
 
-    const [sessionId, setSessionId] = useState<string>(uuid())
+    const [sessionId, setSessionId] = useState<string>(uuid.v4())
     const [user, setUser] = useState<JellifyUser | undefined>(userJson ? (JSON.parse(userJson) as JellifyUser) : undefined);
     const [server, setServer] = useState<JellifyServer | undefined>(serverJson ? (JSON.parse(serverJson) as JellifyServer) : undefined);
     const [library, setLibrary] = useState<JellifyLibrary | undefined>(libraryJson ? (JSON.parse(libraryJson) as JellifyLibrary) : undefined);
