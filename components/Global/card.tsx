@@ -30,6 +30,7 @@ export function Card(props: CardProps) {
 
     const cardTextColor = props.blurhash ? invert(Blurhash.getAverageColor(props.blurhash)!, true) : undefined;
 
+    const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 4, height: props.width / 4 }: { width: 35, height: 35 };
     const cardLogoSource = getImageApi(apiClient!).getItemImageUrlById(props.itemId, ImageType.Logo);
 
     return (
@@ -55,7 +56,7 @@ export function Card(props: CardProps) {
                                 { ...queryConfig.logos})
                             } 
                         imageStyle={{
-                            ...dimensions,
+                            ...logoDimensions,
                             borderRadius: props.cornered ? 2 : 25
                         }}
                 />
