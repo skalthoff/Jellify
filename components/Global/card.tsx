@@ -10,13 +10,13 @@ import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
 import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "./text";
+import { isEmpty } from "lodash";
 
 interface CardProps extends TamaguiCardProps {
     artistName?: string;
     blurhash?: string;
     caption?: string | null | undefined;
     subCaption?: string | null | undefined;
-    children?: string;
     itemId: string;
     footer?: ReactNode;
     cornered?: boolean;
@@ -26,10 +26,11 @@ export function Card(props: CardProps) {
 
     const { apiClient } = useApiClientContext();
 
-    const [imageLoaded, setImageLoaded] = useState<boolean>(false); 
-    const dimensions = props.artistName ? cardDimensions.artist : cardDimensions.album;
+    const dimensions = props.width && typeof(props.width) === "number" ? { width: props.width, height: props.width } : { width: 150, height: 150 };
 
     const cardTextColor = props.blurhash ? invert(Blurhash.getAverageColor(props.blurhash)!, true) : undefined;
+
+    const cardLogoSource = getImageApi(apiClient!).getItemImageUrlById(props.itemId, ImageType.Logo);
 
     return (
         <View alignItems="center">
@@ -41,13 +42,24 @@ export function Card(props: CardProps) {
                 pressStyle={props.onPress ? { scale: 0.875 } : {}}
                 borderRadius={props.cornered ? 2 : 25}
                 width={props.width ?? 150}
-                height={props.width ?? 150 + 50}
+                height={props.width}
                 {...props}
             >
                 <TamaguiCard.Header padded>
-                { props.children && (
-                    <H3 color={cardTextColor}>{ props.children }</H3>
-                )}
+                
+                <CachedImage 
+                        source={getImageApi(apiClient!)
+                            .getItemImageUrlById(
+                                props.itemId, 
+                                ImageType.Logo, 
+                                { ...queryConfig.logos})
+                            } 
+                        imageStyle={{
+                            ...dimensions,
+                            borderRadius: props.cornered ? 2 : 25
+                        }}
+                />
+
                 </TamaguiCard.Header>
                 <TamaguiCard.Footer padded>
                 { props.footer && (
@@ -55,13 +67,6 @@ export function Card(props: CardProps) {
                 )}
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
-                    {props.blurhash && !imageLoaded && (
-                        <Blurhash
-                            blurhash={props.blurhash}
-                            {...dimensions}
-                        />
-                    )}
-
                     <CachedImage 
                         source={getImageApi(apiClient!)
                             .getItemImageUrlById(
@@ -69,12 +74,11 @@ export function Card(props: CardProps) {
                                 ImageType.Primary, 
                                 { ...queryConfig.images})
                             } 
-                            imageStyle={{
-                                ...dimensions,
+                        imageStyle={{
+                            ...dimensions,
                             borderRadius: props.cornered ? 2 : 25
                         }}
-                        onLoadEnd={() => setImageLoaded(true)}
-                        />
+                    />
                 </TamaguiCard.Background>
             </TamaguiCard>
             { props.caption && (
