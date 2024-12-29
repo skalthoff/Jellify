@@ -29,7 +29,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
         <BlurView>
             { activeTrack && (
 
-                <XStack height={"$8"} onPress={() => navigation.navigate("Player")}>
+                <XStack height={"$6"} onPress={() => navigation.navigate("Player")}>
 
                     <CachedImage
                         source={getImageApi(apiClient!)
