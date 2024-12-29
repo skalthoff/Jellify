@@ -2,7 +2,7 @@ import { Event, useActiveTrack, useTrackPlayerEvents } from "react-native-track-
 import { handlePlayerError } from "./helpers/error-handlers";
 import { usePlayerContext } from "../../player/provider";
 import { JellifyTrack } from "../../types/JellifyTrack";
-import { Stack as HStack, YStack } from "tamagui";
+import { Stack, YStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
@@ -48,14 +48,14 @@ export default function Player(): React.JSX.Element {
                 }}
             />
 
-            <HStack justifyContent="space-between">
+            <Stack justifyContent="space-between">
 
-                <HStack alignItems="flex-start" justifyContent="flex-start">
+                <Stack alignItems="flex-start" justifyContent="flex-start">
                     <Text>{activeTrack!.title ?? "Untitled Track"}</Text>
                     <Text bold>{activeTrack!.artist ?? "Unknown Artist"}</Text>
-                </HStack>
+                </Stack>
 
-            </HStack>
+            </Stack>
         </YStack>
     );
 }

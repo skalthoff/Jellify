@@ -1,9 +1,9 @@
-import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, SetStateAction, useContext, useState } from "react";
 import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./helpers/index";
-import { add, reset, play as rntpPlay, pause as rntpPause, skipToNext, skipToPrevious, setupPlayer, getActiveTrack } from "react-native-track-player/lib/src/trackPlayer";
+import { add, reset, play as rntpPlay, pause as rntpPause, setupPlayer, getActiveTrack } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
 import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
