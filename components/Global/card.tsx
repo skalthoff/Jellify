@@ -18,7 +18,6 @@ interface CardProps extends TamaguiCardProps {
     caption?: string | null | undefined;
     subCaption?: string | null | undefined;
     itemId: string;
-    footer?: ReactNode;
     cornered?: boolean;
 }
 
@@ -48,24 +47,21 @@ export function Card(props: CardProps) {
             >
                 <TamaguiCard.Header padded>
                 
-                <CachedImage 
-                        source={getImageApi(apiClient!)
-                            .getItemImageUrlById(
-                                props.itemId, 
-                                ImageType.Logo, 
-                                { ...queryConfig.logos})
-                            } 
-                        imageStyle={{
-                            ...logoDimensions,
-                            borderRadius: props.cornered ? 2 : 25
-                        }}
-                />
 
                 </TamaguiCard.Header>
-                <TamaguiCard.Footer padded>
-                { props.footer && (
-                    props.footer
-                )}
+                <TamaguiCard.Footer>
+                    <CachedImage 
+                            source={getImageApi(apiClient!)
+                                .getItemImageUrlById(
+                                    props.itemId, 
+                                    ImageType.Logo, 
+                                    { ...queryConfig.logos})
+                                } 
+                            imageStyle={{
+                                ...logoDimensions,
+                                borderRadius: props.cornered ? 2 : 25
+                            }}
+                    />
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
                     <CachedImage 
