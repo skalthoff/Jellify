@@ -20,7 +20,8 @@ export interface JellifyTrack extends Track {
     rating?: RatingType | undefined;
     isLiveStream?: boolean | undefined;
 
-    ItemId: string | undefined;
+    ItemId: string;
+    AlbumId: string;
     Year?: number | null | undefined;
     IndexNumber?: number | null | undefined;
     ParentIndexNumber?: number | null | undefined;

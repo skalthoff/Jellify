@@ -35,6 +35,7 @@ export function mapDtoToTrack(api: Api, sessionId: string, item: BaseItemDto, qu
         duration: item.RunTimeTicks,
 
         ItemId: item.Id!,
+        AlbumId: item.AlbumId,
         QueuingType: queuingType ?? QueuingType.DirectlyQueued
     } as JellifyTrack
 }
