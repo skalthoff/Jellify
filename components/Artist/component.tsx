@@ -7,6 +7,7 @@ import { FlatList } from "react-native";
 import { Card } from "../Global/card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
+import { H5 } from "../Global/text";
 
 interface ArtistProps {
     artistId: string,
@@ -28,6 +29,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
             >
                 <Avatar itemId={props.artistId} />
 
+                <H5>Albums</H5>
                 <FlatList
                     contentContainerStyle={{
                         flexGrow: 1,
@@ -41,7 +43,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                             <Card
                                 caption={album.Name}
                                 subCaption={album.ProductionYear?.toString()}
-                                width={250}
+                                width={200}
                                 marginHorizontal={20}
                                 cornered 
                                 itemId={album.Id!}

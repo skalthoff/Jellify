@@ -1,4 +1,12 @@
-import { H1 as TamaguiH1, H2 as TamaguiH2, SizeTokens, Label as TamaguiLabel, H5, Paragraph, TextProps as TamaguiTextProps } from "tamagui"
+import { 
+    H1 as TamaguiH1, 
+    H2 as TamaguiH2, 
+    H5 as TamaguiH5, 
+    Label as TamaguiLabel, 
+    SizeTokens, 
+    Paragraph, 
+    TextProps as TamaguiTextProps 
+} from "tamagui"
 
 interface LabelProps {
     htmlFor: string,
@@ -21,6 +29,12 @@ export function H1({ children }: { children: string }): React.JSX.Element {
 export function H2({ children }: { children: string }): React.JSX.Element {
     return (
         <TamaguiH2 marginVertical={5}>{ children }</TamaguiH2>
+    )
+}
+
+export function H5({ children }: { children: string }): React.JSX.Element {
+    return (
+        <TamaguiH5 marginVertical={5}>{ children }</TamaguiH5>
     )
 }
 

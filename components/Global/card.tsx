@@ -45,11 +45,7 @@ export function Card(props: CardProps) {
                 height={props.width ?? 150}
                 {...props}
             >
-                <TamaguiCard.Header padded>
-                
-
-                </TamaguiCard.Header>
-                <TamaguiCard.Footer>
+                <TamaguiCard.Header>
                     <CachedImage 
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
@@ -62,6 +58,8 @@ export function Card(props: CardProps) {
                                 borderRadius: props.cornered ? 2 : 25
                             }}
                     />
+                </TamaguiCard.Header>
+                <TamaguiCard.Footer>
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
                     <CachedImage 
@@ -85,7 +83,6 @@ export function Card(props: CardProps) {
                     width={dimensions.width}
                 >
                     <H5 
-                        textAlign="center"
                         lineBreakStrategyIOS="standard"
                         numberOfLines={1}
                     >
