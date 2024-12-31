@@ -36,8 +36,10 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
          */
         setTimeout(() => {
             setNowPlaying(activeTrack);
-        }, 200)
-    })
+        }, 250)
+    }, [
+        activeTrack
+    ])
 
     return (
         <BlurView>
