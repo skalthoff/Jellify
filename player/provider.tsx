@@ -3,8 +3,7 @@ import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./helpers/index";
-import { Event } from "react-native-track-player";
-import { add, reset, play as rntpPlay, pause as rntpPause, setupPlayer, getActiveTrack, addEventListener } from "react-native-track-player/lib/src/trackPlayer";
+import TrackPlayer, { Event, useTrackPlayerEvents } from "react-native-track-player";
 import _ from "lodash";
 import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
@@ -39,9 +38,9 @@ const PlayerContextInitializer = () => {
     
     //#region Functions
     const play = async () => {
-        rntpPlay();
+        TrackPlayer.play();
         
-        const activeTrack = await getActiveTrack() as JellifyTrack;
+        const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
         playStateApi.reportPlaybackStart({
             playbackStartInfo: {
                 SessionId: sessionId,
@@ -51,9 +50,9 @@ const PlayerContextInitializer = () => {
     }
 
     const pause = async () => {
-        rntpPause();
+        TrackPlayer.pause();
         
-        const activeTrack = await getActiveTrack() as JellifyTrack;
+        const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
         playStateApi.reportPlaybackStopped({
             playbackStopInfo: {
                 SessionId: sessionId,
@@ -64,7 +63,7 @@ const PlayerContextInitializer = () => {
     
     const resetQueue = async (hideMiniplayer: boolean | undefined) => {
         console.debug("Clearing queue")
-        await reset();
+        await TrackPlayer.reset();
         setQueue([]);
         
         setShowMiniplayer(!hideMiniplayer)
@@ -74,7 +73,7 @@ const PlayerContextInitializer = () => {
         let insertIndex = findPlayQueueIndexStart(queue);
         console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`)
         
-        await add(tracks, insertIndex);
+        await TrackPlayer.add(tracks, insertIndex);
         
         setQueue(buildNewQueue(queue, tracks, insertIndex))
         
@@ -83,10 +82,17 @@ const PlayerContextInitializer = () => {
     //#endregion Functions
     
     //#region RNTP Setup
-    setupPlayer().then(() => console.debug("Player setup successfully"));
+    TrackPlayer.setupPlayer();
 
-    addEventListener(Event.RemotePlay, () => play());
-    addEventListener(Event.RemotePause, () => pause());
+    useTrackPlayerEvents([Event.RemotePause], async () => {
+        const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
+        playStateApi.reportPlaybackStart({
+            playbackStartInfo: {
+                SessionId: sessionId,
+                ItemId: activeTrack.ItemId
+            }
+        })
+    })
 
     const [playerState, setPlayerState] = useState(null);
     //#endregion RNTP Setup

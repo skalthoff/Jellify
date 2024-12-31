@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Spacer, Spinner, Stack, useTheme, XStack, YStack } from "tamagui";
+import { Spacer, Spinner, XStack, YStack } from "tamagui";
 import { State, useActiveTrack, usePlaybackState } from "react-native-track-player";
 import { JellifyTrack } from "../../types/JellifyTrack";
 import { usePlayerContext } from "../../player/provider";
-import { BottomTabNavigationEventMap, BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 import { BlurView } from "@react-native-community/blur";
 import Icon from "../Global/icon";
