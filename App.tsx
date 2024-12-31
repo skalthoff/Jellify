@@ -11,7 +11,6 @@ import { clientPersister } from './constants/storage';
 import { queryClient } from './constants/query-client';
 import { CacheManager } from '@georstat/react-native-image-cache';
 import { Dirs } from "react-native-file-access";
-import { usePlayer } from './player/queries';
 
 CacheManager.config = {
   baseDir: `${Dirs.CacheDir}/images_cache/`,

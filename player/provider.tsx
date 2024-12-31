@@ -3,7 +3,8 @@ import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./helpers/index";
-import { add, reset, play as rntpPlay, pause as rntpPause, setupPlayer, getActiveTrack } from "react-native-track-player/lib/src/trackPlayer";
+import { Event } from "react-native-track-player";
+import { add, reset, play as rntpPlay, pause as rntpPause, setupPlayer, getActiveTrack, addEventListener } from "react-native-track-player/lib/src/trackPlayer";
 import _ from "lodash";
 import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
@@ -35,16 +36,11 @@ const PlayerContextInitializer = () => {
     const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
     //#endregion State
 
-    //#region RNTP Setup
-    setupPlayer().then(() => console.debug("Player setup successfully"));
-
-    const [playerState, setPlayerState] = useState(null);
-    //#endregion RNTP Setup
-
+    
     //#region Functions
     const play = async () => {
         rntpPlay();
-
+        
         const activeTrack = await getActiveTrack() as JellifyTrack;
         playStateApi.reportPlaybackStart({
             playbackStartInfo: {
@@ -56,7 +52,7 @@ const PlayerContextInitializer = () => {
 
     const pause = async () => {
         rntpPause();
-
+        
         const activeTrack = await getActiveTrack() as JellifyTrack;
         playStateApi.reportPlaybackStopped({
             playbackStopInfo: {
@@ -65,26 +61,35 @@ const PlayerContextInitializer = () => {
             }
         })
     }
-
+    
     const resetQueue = async (hideMiniplayer: boolean | undefined) => {
         console.debug("Clearing queue")
         await reset();
         setQueue([]);
-
+        
         setShowMiniplayer(!hideMiniplayer)
     }
-
+    
     const addToQueue = async (tracks: JellifyTrack[]) => {
         let insertIndex = findPlayQueueIndexStart(queue);
         console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`)
-
+        
         await add(tracks, insertIndex);
-
+        
         setQueue(buildNewQueue(queue, tracks, insertIndex))
-
+        
         setShowMiniplayer(true);
     }
     //#endregion Functions
+    
+    //#region RNTP Setup
+    setupPlayer().then(() => console.debug("Player setup successfully"));
+
+    addEventListener(Event.RemotePlay, () => play());
+    addEventListener(Event.RemotePause, () => pause());
+
+    const [playerState, setPlayerState] = useState(null);
+    //#endregion RNTP Setup
 
     return {
         showPlayer,
