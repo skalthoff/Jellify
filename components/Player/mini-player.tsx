@@ -36,13 +36,14 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                             .getItemImageUrlById(
                                 activeTrack!.AlbumId,
                                 ImageType.Primary,
-                                { ...queryConfig.miniplayerArtwork }
+                                { ...queryConfig.images }
                             )
                         }
                         imageStyle={{
-                            width: queryConfig.miniplayerArtwork.width,
-                            height: queryConfig.miniplayerArtwork.height,
-                            borderRadius: 2
+                            width: 50,
+                            height: 50,
+                            borderRadius: 2,
+                            flex: 1
                         }}
                     />
 
