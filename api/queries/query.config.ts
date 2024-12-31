@@ -10,8 +10,8 @@ export const queryConfig = {
         format: ImageFormat.Jpg
     },
     logos: {
-        fillHeight: 25,
-        fillWidth: 100,
+        fillHeight: 50,
+        fillWidth: 300,
         format: ImageFormat.Png
     },
     playerArtwork: {

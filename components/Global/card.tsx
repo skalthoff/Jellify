@@ -51,7 +51,7 @@ export function Card(props: CardProps) {
                                 .getItemImageUrlById(
                                     props.itemId, 
                                     ImageType.Logo, 
-                                    { ...queryConfig.images})
+                                    { ...queryConfig.logos})
                                 } 
                             imageStyle={{
                                 ...logoDimensions,
