@@ -1,9 +1,9 @@
-import { createContext, ReactNode, SetStateAction, useContext, useState } from "react";
+import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./helpers/index";
-import TrackPlayer, { Event, useTrackPlayerEvents } from "react-native-track-player";
+import TrackPlayer, { Event, State, usePlaybackState, useTrackPlayerEvents } from "react-native-track-player";
 import _ from "lodash";
 import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
@@ -98,7 +98,21 @@ const PlayerContextInitializer = () => {
         })
     })
 
+    const { state: playbackState } = usePlaybackState()
+
     const [playerState, setPlayerState] = useState(null);
+
+    useEffect(() => {
+
+        if (!!!playbackState)
+            return
+
+        switch (playbackState) {
+
+        }
+    }, [
+        playbackState
+    ])
     //#endregion RNTP Setup
 
     return {

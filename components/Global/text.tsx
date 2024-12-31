@@ -1,6 +1,8 @@
 import { 
     H1 as TamaguiH1, 
     H2 as TamaguiH2, 
+    H3 as TamaguiH3,
+    H4 as TamaguiH4,
     H5 as TamaguiH5, 
     Label as TamaguiLabel, 
     SizeTokens, 
@@ -28,13 +30,25 @@ export function H1({ children }: { children: string }): React.JSX.Element {
 
 export function H2({ children }: { children: string }): React.JSX.Element {
     return (
-        <TamaguiH2 marginVertical={5}>{ children }</TamaguiH2>
+        <TamaguiH2 marginVertical={7}>{ children }</TamaguiH2>
+    )
+}
+
+export function H3({ children }: { children: string }): React.JSX.Element {
+    return (
+        <TamaguiH3 marginVertical={5}>{ children }</TamaguiH3>
+    )
+}
+
+export function H4({ children }: { children: string }): React.JSX.Element {
+    return (
+        <TamaguiH4 marginVertical={3}>{children}</TamaguiH4>
     )
 }
 
 export function H5({ children }: { children: string }): React.JSX.Element {
     return (
-        <TamaguiH5 marginVertical={5}>{ children }</TamaguiH5>
+        <TamaguiH5 marginVertical={2}>{ children }</TamaguiH5>
     )
 }
 

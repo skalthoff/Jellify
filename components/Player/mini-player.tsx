@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Spacer, Spinner, XStack, YStack } from "tamagui";
 import { State, useActiveTrack, usePlaybackState } from "react-native-track-player";
 import { JellifyTrack } from "../../types/JellifyTrack";
@@ -21,20 +21,37 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
     const activeTrack = useActiveTrack() as JellifyTrack | undefined;
 
+    const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>();
+
     const { play, pause } = usePlayerContext();
 
     const { apiClient } = useApiClientContext();
 
+    useEffect(() => {
+
+        /**
+         * When we are skipping to an index in the queue 
+         * (like when a track in the middle of an album is queued),
+         * prevent flickering of the first queue item.
+         */
+        setTimeout(() => {
+            setNowPlaying(activeTrack);
+        }, 200)
+    })
+
     return (
         <BlurView>
-            { activeTrack && (
+            { nowPlaying && (
 
-                <XStack height={"$6"} onPress={() => navigation.navigate("Player")}>
+                <XStack 
+                    height={"$6"} 
+                    onPress={() => navigation.navigate("Player")}
+                >
 
                     <CachedImage
                         source={getImageApi(apiClient!)
                             .getItemImageUrlById(
-                                activeTrack!.AlbumId,
+                                nowPlaying!.AlbumId,
                                 ImageType.Primary,
                                 { ...queryConfig.images }
                             )
@@ -42,14 +59,15 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         imageStyle={{
                             width: 50,
                             height: 50,
+                            marginRight: 20,
                             borderRadius: 2,
-                            flex: 1
+                            flex: 2
                         }}
                     />
 
-                    <YStack alignItems="flex-start" flex={2}>
-                        <Text bold>{activeTrack?.title ?? "Nothing Playing"}</Text>
-                        <Text>{activeTrack?.artist ?? ""}</Text>
+                    <YStack alignItems="flex-start" flex={3}>
+                        <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
+                        <Text>{nowPlaying?.artist ?? ""}</Text>
                     </YStack>
 
                     <Spacer />
