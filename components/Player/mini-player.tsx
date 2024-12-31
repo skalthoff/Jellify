@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Spacer, Spinner, XStack, YStack } from "tamagui";
 import { State, useActiveTrack, usePlaybackState } from "react-native-track-player";
 import { JellifyTrack } from "../../types/JellifyTrack";
@@ -27,7 +27,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
     const { apiClient } = useApiClientContext();
 
-    useEffect(() => {
+    useMemo(() => {
 
         /**
          * When we are skipping to an index in the queue 
