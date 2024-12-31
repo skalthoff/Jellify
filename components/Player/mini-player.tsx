@@ -36,7 +36,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
          */
         setTimeout(() => {
             setNowPlaying(activeTrack);
-        }, 250)
+        }, 500)
     }, [
         activeTrack
     ])
