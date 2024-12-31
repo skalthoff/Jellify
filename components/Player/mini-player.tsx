@@ -32,32 +32,34 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     height={"$6"} 
                     onPress={() => navigation.navigate("Player")}
                 >
+                    <YStack alignContent="center" flex={1}>
+                        <CachedImage
+                            source={getImageApi(apiClient!)
+                                .getItemImageUrlById(
+                                    nowPlaying!.AlbumId,
+                                    ImageType.Primary,
+                                    { ...queryConfig.images }
+                                )
+                            }
+                            imageStyle={{
+                                width: 50,
+                                height: 50,
+                                marginRight: 20,
+                                borderRadius: 2,
+                            }}
+                        />
 
-                    <CachedImage
-                        source={getImageApi(apiClient!)
-                            .getItemImageUrlById(
-                                nowPlaying!.AlbumId,
-                                ImageType.Primary,
-                                { ...queryConfig.images }
-                            )
-                        }
-                        imageStyle={{
-                            width: 50,
-                            height: 50,
-                            marginRight: 20,
-                            borderRadius: 2,
-                            flex: 2
-                        }}
-                    />
+                    </YStack>
 
-                    <YStack alignContent="flex-start">
+
+                    <YStack alignContent="flex-start" flex={3}>
                         <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
                         <Text>{nowPlaying?.artist ?? ""}</Text>
                     </YStack>
 
                     <Spacer />
                     
-                    <XStack alignItems="flex-end">
+                    <XStack alignItems="flex-end" flex={1}>
                         { playbackState.state === State.Playing && (
                             <Icon name="pause" large onPress={() => pause()} />
                         )}
