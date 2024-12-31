@@ -65,7 +65,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         }}
                     />
 
-                    <YStack alignItems="flex-start" flex={3}>
+                    <YStack justifyContent="flex-start" flex={3}>
                         <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
                         <Text>{nowPlaying?.artist ?? ""}</Text>
                     </YStack>
