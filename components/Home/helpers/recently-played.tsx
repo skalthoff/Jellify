@@ -23,7 +23,7 @@ export default function RecentlyPlayed(): React.JSX.Element {
         <View>
             <H2>Play it again</H2>
             <ScrollView horizontal>
-                { recentTracks && recentTracks.map((recentlyPlayedTrack) => {
+                { recentTracks && recentTracks.map((recentlyPlayedTrack, index) => {
                     return (
                         <Card
                             caption={recentlyPlayedTrack.Name}
@@ -34,8 +34,8 @@ export default function RecentlyPlayed(): React.JSX.Element {
                             marginRight={20}
                             onPress={async () => {
                                 await resetQueue(false);
-                                await addToQueue([mapDtoToTrack(apiClient!, sessionId, recentlyPlayedTrack)])
-                                play();
+                                await addToQueue(recentTracks.map((track) => mapDtoToTrack(apiClient!, sessionId, track)));
+                                play(index);
                             }}
                         />                                
                     )

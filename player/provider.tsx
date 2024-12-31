@@ -15,7 +15,7 @@ interface PlayerContext {
     showMiniplayer: boolean;
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
     queue: JellifyTrack[];
-    play: () => Promise<void>,
+    play: (index?: number | undefined) => Promise<void>,
     pause: () => Promise<void>,
     resetQueue: (hideMiniplayer : boolean | undefined) => Promise<void>;
     addToQueue: (tracks: JellifyTrack[]) => Promise<void>;
@@ -37,7 +37,11 @@ const PlayerContextInitializer = () => {
 
     
     //#region Functions
-    const play = async () => {
+    const play = async (index?: number | undefined) => {
+
+        if (index)
+            TrackPlayer.skip(index)
+
         TrackPlayer.play();
         
         const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
@@ -117,7 +121,7 @@ export const PlayerContext = createContext<PlayerContext>({
     showMiniplayer: false,
     setShowMiniplayer: () => {},
     queue: [],
-    play: async () => {},
+    play: async (index?: number | undefined) => {},
     pause: async () => {},
     resetQueue: async () => {},
     addToQueue: async ([]) => {},
