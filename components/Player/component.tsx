@@ -31,22 +31,6 @@ export default function Player(): React.JSX.Element {
         playerEventCallback(event, setPlayerState)
     });
 
-    useEffect(() => {
-        if (activeTrack) {
-
-            console.debug(activeTrack)
-            console.debug(getImageApi(apiClient!)
-            .getItemImageUrlById(
-                activeTrack!.albumId,
-                ImageType.Primary,
-                { ...queryConfig.playerArtwork }
-            ));
-        }
-    }, [
-        activeTrack
-    ]);
-
-
     return (
         <SafeAreaView>
             { activeTrack && (
@@ -55,7 +39,7 @@ export default function Player(): React.JSX.Element {
                     <CachedImage
                         source={getImageApi(apiClient!)
                             .getItemImageUrlById(
-                                activeTrack!.albumId,
+                                activeTrack!.AlbumId,
                                 ImageType.Primary,
                                 { ...queryConfig.playerArtwork }
                             )
