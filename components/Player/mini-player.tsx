@@ -19,33 +19,16 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
     const playbackState = usePlaybackState();
 
-    const activeTrack = useActiveTrack() as JellifyTrack | undefined;
-
-    const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>();
-
-    const { play, pause } = usePlayerContext();
+    const { nowPlaying, play, pause } = usePlayerContext();
 
     const { apiClient } = useApiClientContext();
-
-    useMemo(() => {
-
-        /**
-         * When we are skipping to an index in the queue 
-         * (like when a track in the middle of an album is queued),
-         * prevent flickering of the first queue item.
-         */
-        setTimeout(() => {
-            setNowPlaying(activeTrack);
-        }, 500)
-    }, [
-        activeTrack
-    ])
 
     return (
         <BlurView>
             { nowPlaying && (
 
                 <XStack 
+                    alignContent="center"
                     height={"$6"} 
                     onPress={() => navigation.navigate("Player")}
                 >
@@ -67,14 +50,14 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         }}
                     />
 
-                    <YStack justifyContent="flex-start" flex={3}>
+                    <YStack alignContent="flex-start">
                         <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
                         <Text>{nowPlaying?.artist ?? ""}</Text>
                     </YStack>
 
                     <Spacer />
                     
-                    <XStack alignItems="flex-end" flex={1}>
+                    <XStack alignItems="flex-end">
                         { playbackState.state === State.Playing && (
                             <Icon name="pause" large onPress={() => pause()} />
                         )}

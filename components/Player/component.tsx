@@ -22,10 +22,8 @@ const playerEvents = [
 
 export default function Player(): React.JSX.Element {
 
-    const activeTrack = useActiveTrack() as JellifyTrack | undefined;
-
     const { apiClient } = useApiClientContext();
-    const { queue, setPlayerState } = usePlayerContext();
+    const { queue, setPlayerState, nowPlaying } = usePlayerContext();
 
     useTrackPlayerEvents(playerEvents, (event : any) => {
         playerEventCallback(event, setPlayerState)
@@ -33,13 +31,13 @@ export default function Player(): React.JSX.Element {
 
     return (
         <SafeAreaView>
-            { activeTrack && (
+            { nowPlaying && (
                 <YStack alignItems="center">
 
                     <CachedImage
                         source={getImageApi(apiClient!)
                             .getItemImageUrlById(
-                                activeTrack!.AlbumId,
+                                nowPlaying!.AlbumId,
                                 ImageType.Primary,
                                 { ...queryConfig.playerArtwork }
                             )
@@ -53,8 +51,8 @@ export default function Player(): React.JSX.Element {
                     <Stack justifyContent="space-between">
 
                         <Stack alignItems="flex-start" justifyContent="flex-start">
-                            <Text>{activeTrack?.title ?? "Untitled Track"}</Text>
-                            <Text bold>{activeTrack?.artist ?? "Unknown Artist"}</Text>
+                            <Text>{nowPlaying?.title ?? "Untitled Track"}</Text>
+                            <Text bold>{nowPlaying?.artist ?? "Unknown Artist"}</Text>
                         </Stack>
 
                     </Stack>

@@ -14,6 +14,7 @@ interface PlayerContext {
     setShowPlayer: React.Dispatch<SetStateAction<boolean>>;
     showMiniplayer: boolean;
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
+    nowPlaying: JellifyTrack | undefined;
     queue: JellifyTrack[];
     play: (index?: number | undefined) => Promise<void>,
     pause: () => Promise<void>,
@@ -32,6 +33,8 @@ const PlayerContextInitializer = () => {
     //#region State
     const [showPlayer, setShowPlayer] = useState<boolean>(false);
     const [showMiniplayer, setShowMiniplayer] = useState<boolean>(false);
+
+    const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(undefined);
     const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
     //#endregion State
 
@@ -45,6 +48,8 @@ const PlayerContextInitializer = () => {
         TrackPlayer.play();
         
         const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
+
+        setNowPlaying(activeTrack);
         playStateApi.reportPlaybackStart({
             playbackStartInfo: {
                 SessionId: sessionId,
@@ -65,7 +70,7 @@ const PlayerContextInitializer = () => {
         })
     }
     
-    const resetQueue = async (hideMiniplayer: boolean | undefined) => {
+    const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
         console.debug("Clearing queue")
         await TrackPlayer.reset();
         setQueue([]);
@@ -113,6 +118,13 @@ const PlayerContextInitializer = () => {
     }, [
         playbackState
     ])
+
+    useEffect(() => {
+        if (!showMiniplayer)
+            setNowPlaying(undefined);
+    }, [
+        showMiniplayer
+    ])
     //#endregion RNTP Setup
 
     return {
@@ -120,6 +132,7 @@ const PlayerContextInitializer = () => {
         setShowPlayer,
         showMiniplayer,
         setShowMiniplayer,
+        nowPlaying,
         queue,
         play,
         pause,
@@ -134,6 +147,7 @@ export const PlayerContext = createContext<PlayerContext>({
     setShowPlayer: () => {},
     showMiniplayer: false,
     setShowMiniplayer: () => {},
+    nowPlaying: undefined,
     queue: [],
     play: async (index?: number | undefined) => {},
     pause: async () => {},
@@ -148,6 +162,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowPlayer, 
         showMiniplayer, 
         setShowMiniplayer, 
+        nowPlaying,
         queue, 
         play,
         pause,
@@ -161,6 +176,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowPlayer,
         showMiniplayer,
         setShowMiniplayer,
+        nowPlaying,
         queue,
         play,
         pause,
