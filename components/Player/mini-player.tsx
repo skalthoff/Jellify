@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, {  } from "react";
 import { Spacer, Spinner, XStack, YStack } from "tamagui";
-import { State, useActiveTrack, usePlaybackState } from "react-native-track-player";
-import { JellifyTrack } from "../../types/JellifyTrack";
+import { State, usePlaybackState } from "react-native-track-player";
 import { usePlayerContext } from "../../player/provider";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
@@ -14,6 +13,7 @@ import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { queryConfig } from "../../api/queries/query.config";
 import { useApiClientContext } from "../jellyfin-api-provider";
+import { Marquee } from "@animatereactnative/marquee";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
@@ -52,8 +52,13 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
 
                     <YStack alignContent="flex-start" flex={3}>
-                        <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
-                        <Text>{nowPlaying?.artist ?? ""}</Text>
+                        <Marquee spacing={20} speed={1}>
+                            <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
+                        </Marquee>
+
+                        <Marquee spacing={20} speed={1}>
+                            <Text>{nowPlaying?.artist ?? ""}</Text>
+                        </Marquee>
                     </YStack>
 
                     <Spacer />
