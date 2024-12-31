@@ -33,6 +33,8 @@ export default function Player(): React.JSX.Element {
 
     useEffect(() => {
         if (activeTrack) {
+
+            console.debug(activeTrack)
             console.debug(getImageApi(apiClient!)
             .getItemImageUrlById(
                 activeTrack!.albumId,
