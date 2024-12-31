@@ -45,13 +45,13 @@ export function Card(props: CardProps) {
                 height={props.width ?? 150}
                 {...props}
             >
-                <TamaguiCard.Header>
+                <TamaguiCard.Header position="absolute" x={25}>
                     <CachedImage 
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
                                     props.itemId, 
                                     ImageType.Logo, 
-                                    { ...queryConfig.logos})
+                                    { ...queryConfig.images})
                                 } 
                             imageStyle={{
                                 ...logoDimensions,
