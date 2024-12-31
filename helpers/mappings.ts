@@ -12,6 +12,8 @@ const transcodingContainer = "m4a";
 
 export function mapDtoToTrack(api: Api, sessionId: string, item: BaseItemDto, queuingType?: QueuingType) {
 
+    console.debug(`Mapping item to track: ${item.Id}, ${item.AlbumId}`)
+
     const urlParams = {
         "Container": container,
         "TranscodingContainer": transcodingContainer,

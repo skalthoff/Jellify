@@ -43,8 +43,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                             <Card
                                 caption={album.Name}
                                 subCaption={album.ProductionYear?.toString()}
-                                width={200}
-                                marginHorizontal={20}
+                                marginHorizontal={10}
                                 cornered 
                                 itemId={album.Id!}
                                 onPress={() => {
