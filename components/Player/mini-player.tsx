@@ -44,7 +44,6 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                             imageStyle={{
                                 width: 50,
                                 height: 50,
-                                marginRight: 20,
                                 borderRadius: 2,
                             }}
                         />
