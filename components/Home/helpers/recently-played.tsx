@@ -3,14 +3,13 @@ import { H5, ScrollView, View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2, Text } from "../../Global/text";
 import { Card } from "../../Global/card";
-import { play } from "react-native-track-player/lib/src/trackPlayer";
 import { mapDtoToTrack } from "../../../helpers/mappings";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { usePlayerContext } from "../../../player/provider";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
-    const { addToQueue, resetQueue } = usePlayerContext();
+    const { addToQueue, resetQueue, play } = usePlayerContext();
     const { apiClient, sessionId } = useApiClientContext();
     const { recentTracks } = useHomeContext();
 
