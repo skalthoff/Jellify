@@ -40,7 +40,8 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                             )
                         }
                         imageStyle={{
-                            ...queryConfig.miniplayerArtwork,
+                            width: queryConfig.miniplayerArtwork.width,
+                            height: queryConfig.miniplayerArtwork.height,
                             borderRadius: 2
                         }}
                     />

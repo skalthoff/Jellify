@@ -10,6 +10,7 @@ import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "../Global/text";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useEffect } from "react";
 
 /**
  * Events subscribed to within RNTP
@@ -29,6 +30,19 @@ export default function Player(): React.JSX.Element {
     useTrackPlayerEvents(playerEvents, (event : any) => {
         playerEventCallback(event, setPlayerState)
     });
+
+    useEffect(() => {
+        if (activeTrack) {
+            console.debug(getImageApi(apiClient!)
+            .getItemImageUrlById(
+                activeTrack!.albumId,
+                ImageType.Primary,
+                { ...queryConfig.playerArtwork }
+            ));
+        }
+    }, [
+        activeTrack
+    ]);
 
 
     return (
