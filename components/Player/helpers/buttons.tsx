@@ -11,16 +11,19 @@ export function playPauseButton(playbackState: State | undefined, play: Function
 
     switch (playbackState) {
         case (State.Playing) : {
-            button = <Icon name="pause" large onPress={() => pause()} />
+            button = <Icon name="pause" large onPress={() => pause()} />;
+            break;
         }
     
         case (State.Buffering) :
         case (State.Loading) : {
-            button = <Spinner size="small" color={Colors.Primary}/>
+            button = <Spinner size="small" color={Colors.Primary}/>;
+            break;
         }
         
         default : {
             button = <Icon name="play" large onPress={() => play()} />
+            break;
         }
     }
 
