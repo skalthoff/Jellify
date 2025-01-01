@@ -93,20 +93,15 @@ const PlayerContextInitializer = () => {
     TrackPlayer.setupPlayer();
 
     useTrackPlayerEvents([
+        Event.PlaybackState,
         Event.PlaybackActiveTrackChanged,
-        Event.RemotePlay,
-        Event.RemotePause
     ], async (event) => {
 
         console.debug(`TrackPlayer Event received: ${event}`);
 
         switch (event.type) {
-            case (Event.RemotePlay) : {
-                play();
-            }
-
-            case (Event.RemotePause) : {
-                pause();
+            case (Event.PlaybackState) : {
+                console.debug(`PlaybackState changed: ${event}`)
             }
 
             case (Event.PlaybackActiveTrackChanged) : {
