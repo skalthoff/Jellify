@@ -4,7 +4,7 @@ import { Colors } from "../../enums/colors"
 
 const regularSize = 12;
 
-const largeSize = 30
+const largeSize = 48
 
 export default function Icon({ name, onPress, large }: { name: string, onPress?: Function, large?: boolean }) : React.JSX.Element {
     

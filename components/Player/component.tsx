@@ -30,7 +30,7 @@ export default function Player(): React.JSX.Element {
     return (
         <SafeAreaView>
             { nowPlaying && (
-                <YStack>
+                <YStack alignItems="center">
 
                     <HStack alignItems="center">
 
@@ -52,12 +52,12 @@ export default function Player(): React.JSX.Element {
 
                     <HStack>
 
-                        <YStack alignItems="flex-start" justifyContent="flex-start" flex={3}>
+                        <YStack>
                             <Text>{nowPlaying?.title ?? "Untitled Track"}</Text>
                             <Text bold>{nowPlaying?.artist ?? "Unknown Artist"}</Text>
                         </YStack>
 
-                        <HStack flex={1}>
+                        <HStack>
                             {/* Buttons for favorites, song menu go here */}
 
                         </HStack>

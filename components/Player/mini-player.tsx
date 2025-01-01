@@ -75,7 +75,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         </TextTicker>
                     </YStack>
                     
-                    <XStack flex={2}>
+                    <XStack flex={1}>
                         { renderPlayPause(playbackState.state, play, pause) }
 
                         <Icon 
@@ -90,18 +90,23 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 }
 
 function renderPlayPause(playbackState: State | undefined, play: Function, pause: Function) {
+
+    let button : React.JSX.Element;
+
     switch (playbackState) {
         case (State.Playing) : {
-            <Icon name="pause" large onPress={() => pause()} />
+            button = <Icon name="pause" large onPress={() => pause()} />
         }
     
         case (State.Buffering) :
         case (State.Loading) : {
-            <Spinner size="small" color={Colors.Primary}/>
+            button = <Spinner size="small" color={Colors.Primary}/>
         }
         
         default : {
-            <Icon name="play" large onPress={() => play()} />
+            button = <Icon name="play" large onPress={() => play()} />
         }
     }
+
+    return button;
 }
