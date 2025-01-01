@@ -20,7 +20,7 @@ export default function Icon({ name, onPress, large }: { name: string, onPress?:
     
     return (
         <MaterialCommunityIcons 
-            color="white"
+            color="#ffffff"
             name={name} 
             onPress={() => {
                 if (onPress)
