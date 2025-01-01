@@ -76,17 +76,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </YStack>
                     
                     <XStack flex={2}>
-                        { playbackState.state === State.Playing && (
-                            <Icon name="pause" large onPress={() => pause()} />
-                        )}
-
-                        { playbackState.state === State.Paused && (
-                            <Icon name="play" large onPress={() => play()} />
-                        )}
-
-                        { playbackState.state === State.Buffering || playbackState.state === State.Loading && (
-                            <Spinner size="small" color={Colors.Primary}/>
-                        )}
+                        { renderPlayPause(playbackState.state, play, pause) }
 
                         <Icon 
                             large
@@ -97,4 +87,21 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
             )}
         </BlurView>
     )
+}
+
+function renderPlayPause(playbackState: State | undefined, play: Function, pause: Function) {
+    switch (playbackState) {
+        case (State.Playing) : {
+            <Icon name="pause" large onPress={() => pause()} />
+        }
+    
+        case (State.Buffering) :
+        case (State.Loading) : {
+            <Spinner size="small" color={Colors.Primary}/>
+        }
+        
+        default : {
+            <Icon name="play" large onPress={() => play()} />
+        }
+    }
 }
