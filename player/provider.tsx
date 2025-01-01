@@ -98,6 +98,8 @@ const PlayerContextInitializer = () => {
         Event.RemotePause
     ], async (event) => {
 
+        console.debug(`TrackPlayer Event received: ${event}`);
+
         switch (event.type) {
             case (Event.RemotePlay) : {
                 play();
@@ -109,6 +111,13 @@ const PlayerContextInitializer = () => {
 
             case (Event.PlaybackActiveTrackChanged) : {
                 const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
+
+                playStateApi.reportPlaybackStart({
+                    playbackStartInfo: {
+                        SessionId: sessionId,
+                        ItemId: activeTrack.ItemId
+                    }
+                })
 
                 setNowPlaying(activeTrack);        
             }
