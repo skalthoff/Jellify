@@ -30,9 +30,9 @@ export default function Player(): React.JSX.Element {
     return (
         <SafeAreaView>
             { nowPlaying && (
-                <YStack>
+                <YStack alignItems="center">
 
-                    <HStack flex={3}>
+                    <HStack alignItems="center">
 
                         <CachedImage
                             source={getImageApi(apiClient!)
@@ -50,7 +50,7 @@ export default function Player(): React.JSX.Element {
                             />
                     </HStack>
 
-                    <HStack justifyContent="space-between" flex={1}>
+                    <HStack justifyContent="space-between">
 
                         <YStack alignItems="flex-start" justifyContent="flex-start" flex={3}>
                             <Text>{nowPlaying?.title ?? "Untitled Track"}</Text>
