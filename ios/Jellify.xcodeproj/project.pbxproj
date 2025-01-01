@@ -81,6 +81,7 @@
 		CF620D092CF2BB200045E433 /* Aileron-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Black.otf"; path = "../assets/fonts/Aileron-Black.otf"; sourceTree = "<group>"; };
 		CF620D0A2CF2BB200045E433 /* Aileron-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-ThinItalic.otf"; path = "../assets/fonts/Aileron-ThinItalic.otf"; sourceTree = "<group>"; };
 		CF620D0B2CF2BB200045E433 /* Aileron-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-SemiBold.otf"; path = "../assets/fonts/Aileron-SemiBold.otf"; sourceTree = "<group>"; };
+		CF6588752D25C12400AECE18 /* Jellify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Jellify.entitlements; path = Jellify/Jellify.entitlements; sourceTree = "<group>"; };
 		CF7179092CBC486C0021BCA3 /* Jellify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jellify-Bridging-Header.h"; sourceTree = "<group>"; };
 		CF71790A2CBC486C0021BCA3 /* dummy-rntp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "dummy-rntp.swift"; sourceTree = "<group>"; };
 		DA6259C8F5B99EE317280940 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Jellify/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
@@ -128,6 +129,7 @@
 		13B07FAE1A68108700A75B9A /* Jellify */ = {
 			isa = PBXGroup;
 			children = (
+				CF6588752D25C12400AECE18 /* Jellify.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -617,6 +619,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Jellify/Jellify.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WAH9CZ8BPG;
 				ENABLE_BITCODE = NO;
@@ -647,6 +650,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Jellify/Jellify.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WAH9CZ8BPG;
 				INFOPLIST_FILE = Jellify/Info.plist;
@@ -742,10 +746,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -819,10 +820,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
