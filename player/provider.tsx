@@ -49,7 +49,6 @@ const PlayerContextInitializer = () => {
         
         const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
 
-        setNowPlaying(activeTrack);
         playStateApi.reportPlaybackStart({
             playbackStartInfo: {
                 SessionId: sessionId,
@@ -93,14 +92,27 @@ const PlayerContextInitializer = () => {
     //#region RNTP Setup
     TrackPlayer.setupPlayer();
 
-    useTrackPlayerEvents([Event.RemotePause], async () => {
-        const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
-        playStateApi.reportPlaybackStart({
-            playbackStartInfo: {
-                SessionId: sessionId,
-                ItemId: activeTrack.ItemId
+    useTrackPlayerEvents([
+        Event.PlaybackActiveTrackChanged,
+        Event.RemotePlay,
+        Event.RemotePause
+    ], async (event) => {
+
+        switch (event.type) {
+            case (Event.RemotePlay) : {
+                play();
             }
-        })
+
+            case (Event.RemotePause) : {
+                pause();
+            }
+
+            case (Event.PlaybackActiveTrackChanged) : {
+                const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
+
+                setNowPlaying(activeTrack);        
+            }
+        }
     })
 
     const { state: playbackState } = usePlaybackState()
