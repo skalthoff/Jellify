@@ -129,6 +129,7 @@ const PlayerContextInitializer = () => {
     ])
     //#endregion RNTP Setup
 
+    //#region return
     return {
         showPlayer,
         setShowPlayer,
@@ -142,6 +143,7 @@ const PlayerContextInitializer = () => {
         resetQueue,
         playbackState,
     }
+    //#endregion return
 }
 
 export const PlayerContext = createContext<PlayerContext>({

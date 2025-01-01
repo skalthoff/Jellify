@@ -27,7 +27,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
             { nowPlaying && (
 
                 <XStack 
-                    alignContent="center"
+                    alignItems="center"
                     margin={0}
                     padding={0}
                     height={"$6"} 
@@ -45,7 +45,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                             imageStyle={{
                                 width: 60,
                                 height: 60,
-                                marginHorizontal: 0,
+                                marginRight: 2,
                                 marginVertical: 'auto',
                                 borderRadius: 2,
                             }}
