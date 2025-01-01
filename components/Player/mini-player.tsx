@@ -28,6 +28,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
                 <XStack 
                     alignItems="center"
+                    alignContent="center"
                     margin={0}
                     padding={0}
                     height={"$6"} 
