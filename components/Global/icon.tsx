@@ -2,19 +2,13 @@ import React from "react"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { Colors } from "../../enums/colors"
 
-const iconDimensions = {
-    width: 75,
-    height: 75
-}
+const regularSize = 12;
 
-const largeDimensions = {
-    width: 150,
-    height: 150
-}
+const largeSize = 30
 
 export default function Icon({ name, onPress, large }: { name: string, onPress?: Function, large?: boolean }) : React.JSX.Element {
     
-    let dimensions = large ? largeDimensions : iconDimensions
+    let size = large ? largeSize : regularSize
     
     return (
         <MaterialCommunityIcons 
@@ -24,7 +18,7 @@ export default function Icon({ name, onPress, large }: { name: string, onPress?:
                 if (onPress)
                     onPress();
             }}
-            {...dimensions} 
+            size={size}
         />
     )
 }
