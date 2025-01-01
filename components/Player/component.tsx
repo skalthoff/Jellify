@@ -10,22 +10,10 @@ import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "../Global/text";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-/**
- * Events subscribed to within RNTP
- */
-const playerEvents = [
-    Event.PlaybackState,
-    Event.PlaybackError
-]
-
 export default function Player(): React.JSX.Element {
 
     const { apiClient } = useApiClientContext();
-    const { queue, setPlayerState, nowPlaying } = usePlayerContext();
-
-    useTrackPlayerEvents(playerEvents, (event : any) => {
-        playerEventCallback(event, setPlayerState)
-    });
+    const { queue, playbackState, nowPlaying } = usePlayerContext();
 
     return (
         <SafeAreaView>
@@ -69,13 +57,4 @@ export default function Player(): React.JSX.Element {
             )}
         </SafeAreaView>
     );
-}
-
-function playerEventCallback(event: any, setPlayerState: React.Dispatch<React.SetStateAction<null>>) {
-    if (event.type === Event.PlaybackError)
-        handlePlayerError();
-
-    if (event.type === Event.PlaybackState) {
-        setPlayerState(event.state)
-    }
 }

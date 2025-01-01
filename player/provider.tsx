@@ -20,7 +20,7 @@ interface PlayerContext {
     pause: () => Promise<void>,
     resetQueue: (hideMiniplayer : boolean | undefined) => Promise<void>;
     addToQueue: (tracks: JellifyTrack[]) => Promise<void>;
-    setPlayerState: React.Dispatch<SetStateAction<null>>;
+    playbackState: State | undefined;
 }
 
 const PlayerContextInitializer = () => {
@@ -121,20 +121,6 @@ const PlayerContextInitializer = () => {
 
     const { state: playbackState } = usePlaybackState()
 
-    const [playerState, setPlayerState] = useState(null);
-
-    useEffect(() => {
-
-        if (!!!playbackState)
-            return
-
-        switch (playbackState) {
-
-        }
-    }, [
-        playbackState
-    ])
-
     useEffect(() => {
         if (!showMiniplayer)
             setNowPlaying(undefined);
@@ -154,7 +140,7 @@ const PlayerContextInitializer = () => {
         pause,
         addToQueue,
         resetQueue,
-        setPlayerState,
+        playbackState,
     }
 }
 
@@ -169,7 +155,7 @@ export const PlayerContext = createContext<PlayerContext>({
     pause: async () => {},
     resetQueue: async () => {},
     addToQueue: async ([]) => {},
-    setPlayerState: () => {},
+    playbackState: undefined,
 });
 
 export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
@@ -184,7 +170,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         pause,
         resetQueue,
         addToQueue,
-        setPlayerState,
+        playbackState,
     } = PlayerContextInitializer();
 
     return <PlayerContext.Provider value={{
@@ -198,7 +184,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         pause,
         resetQueue,
         addToQueue,
-        setPlayerState,
+        playbackState,
     }}>
         { children }
     </PlayerContext.Provider>

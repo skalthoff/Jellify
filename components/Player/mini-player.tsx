@@ -14,12 +14,11 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { queryConfig } from "../../api/queries/query.config";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import TextTicker from 'react-native-text-ticker';
+import { playPauseButton } from "./helpers/buttons";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
-    const playbackState = usePlaybackState();
-
-    const { nowPlaying, play, pause } = usePlayerContext();
+    const { nowPlaying, playbackState, play, pause } = usePlayerContext();
 
     const { apiClient } = useApiClientContext();
 
@@ -55,7 +54,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </YStack>
 
 
-                    <YStack alignContent="flex-start" flex={3}>
+                    <YStack alignContent="flex-start" flex={4}>
                         <TextTicker 
                             duration={3000}
                             loop
@@ -75,8 +74,8 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         </TextTicker>
                     </YStack>
                     
-                    <XStack flex={1}>
-                        { renderPlayPause(playbackState.state, play, pause) }
+                    <XStack flex={2}>
+                        { playPauseButton(playbackState, play, pause) }
 
                         <Icon 
                             large
@@ -87,26 +86,4 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
             )}
         </BlurView>
     )
-}
-
-function renderPlayPause(playbackState: State | undefined, play: Function, pause: Function) {
-
-    let button : React.JSX.Element;
-
-    switch (playbackState) {
-        case (State.Playing) : {
-            button = <Icon name="pause" large onPress={() => pause()} />
-        }
-    
-        case (State.Buffering) :
-        case (State.Loading) : {
-            button = <Spinner size="small" color={Colors.Primary}/>
-        }
-        
-        default : {
-            button = <Icon name="play" large onPress={() => play()} />
-        }
-    }
-
-    return button;
 }
