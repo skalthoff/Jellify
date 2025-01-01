@@ -15,8 +15,8 @@ export const queryConfig = {
         format: ImageFormat.Png
     },
     playerArtwork: {
-        fillHeight: 500,
-        fillWidth: 500,
+        fillHeight: 750,
+        fillWidth: 750,
         format: ImageFormat.Jpg
     }
 }
