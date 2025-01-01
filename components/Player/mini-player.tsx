@@ -13,7 +13,7 @@ import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { queryConfig } from "../../api/queries/query.config";
 import { useApiClientContext } from "../jellyfin-api-provider";
-import { Marquee } from "@animatereactnative/marquee";
+import TextTicker from 'react-native-text-ticker';
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
@@ -42,8 +42,8 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                                 )
                             }
                             imageStyle={{
-                                width: 75,
-                                height: 75,
+                                width: 60,
+                                height: 60,
                                 borderRadius: 2,
                             }}
                         />
@@ -52,13 +52,23 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
 
                     <YStack alignContent="flex-start" flex={3}>
-                        <Marquee spacing={20} speed={1}>
+                        <TextTicker 
+                            duration={3000}
+                            loop
+                            repeatSpacer={20} 
+                            marqueeDelay={1000}
+                        >
                             <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
-                        </Marquee>
+                        </TextTicker>
 
-                        <Marquee spacing={20} speed={1}>
+                        <TextTicker 
+                            duration={3000}
+                            loop
+                            repeatSpacer={20}
+                            marqueeDelay={1000} 
+                        >
                             <Text>{nowPlaying?.artist ?? ""}</Text>
-                        </Marquee>
+                        </TextTicker>
                     </YStack>
 
                     <Spacer />
