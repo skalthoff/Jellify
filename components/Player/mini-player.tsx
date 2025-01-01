@@ -72,10 +72,8 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                             <Text>{nowPlaying?.artist ?? ""}</Text>
                         </TextTicker>
                     </YStack>
-
-                    <Spacer />
                     
-                    <XStack alignItems="flex-end" flex={1}>
+                    <XStack flex={2}>
                         { playbackState.state === State.Playing && (
                             <Icon name="pause" large onPress={() => pause()} />
                         )}
