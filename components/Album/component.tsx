@@ -63,12 +63,12 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                     await addToQueue(tracks!.map((track) => mapDtoToTrack(apiClient!, sessionId, track)));
                                     play(index);
                                 }}>
-                                    <Stack flex={4}>
+                                    <Stack>
                                         <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
                                         <Text>{ track.Name ?? "Untitled Track" }</Text>
                                     </Stack>
 
-                                    <Stack flex={1}>
+                                    <Stack>
                                         <Text>{ track.RunTimeTicks?.toString() ?? "" }</Text>
                                     </Stack>
                                 </Stack>
