@@ -28,22 +28,22 @@ export default function Album(props: AlbumProps): React.JSX.Element {
     const { data: tracks, isLoading } = useAlbumTracks(props.albumId, apiClient!);
 
     return (
-        <ScrollView fullscreen alignItems="center">
-                <CachedImage
-                    source={getImageApi(apiClient!)
-                        .getItemImageUrlById(
-                            props.albumId,
-                            ImageType.Primary,
-                            { ...queryConfig.images})}
-                    imageStyle={{
-                        position: "relative",
-                        width: 300,
-                        height: 300,
-                        borderRadius: 2
-                    }}
-                />
+        <ScrollView>
+                <YStack alignItems="center">
+                    <CachedImage
+                        source={getImageApi(apiClient!)
+                            .getItemImageUrlById(
+                                props.albumId,
+                                ImageType.Primary,
+                                { ...queryConfig.images})}
+                        imageStyle={{
+                            position: "relative",
+                            width: 300,
+                            height: 300,
+                            borderRadius: 2
+                        }}
+                    />
 
-                <YStack>
                     <H4>{ props.albumName ?? "Untitled Album" }</H4>
                 </YStack>
                 <FlatList
