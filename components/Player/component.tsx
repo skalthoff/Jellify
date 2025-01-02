@@ -9,34 +9,33 @@ import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "../Global/text";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { playPauseButton } from "./helpers/buttons";
 
 export default function Player(): React.JSX.Element {
 
     const { apiClient } = useApiClientContext();
-    const { queue, playbackState, nowPlaying } = usePlayerContext();
+    const { queue, playbackState, nowPlaying, play, pause } = usePlayerContext();
 
     return (
         <SafeAreaView>
             { nowPlaying && (
                 <YStack alignItems="center">
 
-                    <HStack alignItems="center">
 
-                        <CachedImage
-                            source={getImageApi(apiClient!)
-                                .getItemImageUrlById(
-                                    nowPlaying!.AlbumId,
-                                    ImageType.Primary,
-                                    { ...queryConfig.playerArtwork }
-                                )
-                            }
-                            imageStyle={{
-                                width: 400,
-                                height: 400,
-                                borderRadius: 2
-                            }}
-                            />
-                    </HStack>
+                    <CachedImage
+                        source={getImageApi(apiClient!)
+                            .getItemImageUrlById(
+                                nowPlaying!.AlbumId,
+                                ImageType.Primary,
+                                { ...queryConfig.playerArtwork }
+                            )
+                        }
+                        imageStyle={{
+                            width: 400,
+                            height: 400,
+                            borderRadius: 2
+                        }}
+                        />
 
                     <HStack>
 
@@ -50,6 +49,14 @@ export default function Player(): React.JSX.Element {
 
                         </HStack>
 
+                    </HStack>
+
+                    <HStack>
+                        {/* playback progress goes here */}
+                    </HStack>
+
+                    <HStack>
+                        {playPauseButton(playbackState, play, pause)}
                     </HStack>
 
                     
