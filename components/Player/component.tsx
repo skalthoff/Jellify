@@ -32,6 +32,7 @@ export default function Player(): React.JSX.Element {
                                 )
                             }
                             imageStyle={{
+                                position: "relative",
                                 width: 400,
                                 height: 400,
                                 borderRadius: 2
