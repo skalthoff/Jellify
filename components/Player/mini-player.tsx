@@ -27,14 +27,12 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
             { nowPlaying && (
 
                 <XStack 
-                    alignItems="center"
-                    alignContent="center"
                     margin={0}
                     padding={0}
                     height={"$6"} 
                     onPress={() => navigation.navigate("Player")}
                 >
-                    <YStack justifyContent="flex-start" flex={1}>
+                    <YStack flex={1}>
                         <CachedImage
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
