@@ -21,21 +21,23 @@ export default function Player(): React.JSX.Element {
             { nowPlaying && (
                 <YStack alignItems="center">
 
+                    <HStack alignItems="center">
 
-                    <CachedImage
-                        source={getImageApi(apiClient!)
-                            .getItemImageUrlById(
-                                nowPlaying!.AlbumId,
-                                ImageType.Primary,
-                                { ...queryConfig.playerArtwork }
-                            )
-                        }
-                        imageStyle={{
-                            width: 400,
-                            height: 400,
-                            borderRadius: 2
-                        }}
-                        />
+                        <CachedImage
+                            source={getImageApi(apiClient!)
+                                .getItemImageUrlById(
+                                    nowPlaying!.AlbumId,
+                                    ImageType.Primary,
+                                    { ...queryConfig.playerArtwork }
+                                )
+                            }
+                            imageStyle={{
+                                width: 400,
+                                height: 400,
+                                borderRadius: 2
+                            }}
+                            />
+                    </HStack>
 
                     <HStack>
 
