@@ -28,7 +28,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
     const { data: tracks, isLoading } = useAlbumTracks(props.albumId, apiClient!);
 
     return (
-        <ScrollView alignItems="center">
+        <ScrollView fullscreen alignItems="center">
                 <CachedImage
                     source={getImageApi(apiClient!)
                         .getItemImageUrlById(
@@ -47,9 +47,6 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                     <H4>{ props.albumName ?? "Untitled Album" }</H4>
                 </YStack>
                 <FlatList
-                    contentContainerStyle={{
-                        flexGrow: 1,
-                    }}
                     data={tracks}
                     numColumns={1}
                     renderItem={({ item: track, index }) => {
