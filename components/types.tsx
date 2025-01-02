@@ -1,3 +1,4 @@
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 
@@ -8,8 +9,7 @@ export type StackParamList = {
         artistName: string
     };
     Album: {
-        albumId: string,
-        albumName: string,
+        album: BaseItemDto
     };
 }
 

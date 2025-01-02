@@ -48,8 +48,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                                 itemId={album.Id!}
                                 onPress={() => {
                                     props.navigation.navigate('Album', {
-                                        albumId: album.Id!,
-                                        albumName: album.Name ?? "Untitled Album"
+                                        album
                                     })
                                 }}
                             />
