@@ -34,23 +34,22 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     height={"$6"} 
                     onPress={() => navigation.navigate("Player")}
                 >
-                    <YStack alignContent="flex-start" flex={1}>
-                        <CachedImage
-                            source={getImageApi(apiClient!)
-                                .getItemImageUrlById(
-                                    nowPlaying!.AlbumId,
-                                    ImageType.Primary,
-                                    { ...queryConfig.images }
-                                )
-                            }
-                            imageStyle={{
-                                width: 60,
-                                height: 60,
-                                borderRadius: 2,
-                            }}
-                        />
+                    <CachedImage
+                        source={getImageApi(apiClient!)
+                            .getItemImageUrlById(
+                                nowPlaying!.AlbumId,
+                                ImageType.Primary,
+                                { ...queryConfig.images }
+                            )
+                        }
+                        imageStyle={{
+                            width: 60,
+                            height: 60,
+                            flex: 1,
+                            borderRadius: 2,
+                        }}
+                    />
 
-                    </YStack>
 
 
                     <YStack alignContent="flex-start" flex={4}>
