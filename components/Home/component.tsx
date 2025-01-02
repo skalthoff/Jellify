@@ -48,7 +48,7 @@ export default function Home(): React.JSX.Element {
                     name="Album"
                     component={HomeAlbumScreen}
                     options={({ route }) => ({
-                        headerShown: false
+                        headerShown: true
                     })}
                 />
             </HomeStack.Navigator>
