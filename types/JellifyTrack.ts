@@ -21,6 +21,7 @@ export interface JellifyTrack extends Track {
     isLiveStream?: boolean | undefined;
 
     ItemId: string;
+    ArtistId: string;
     AlbumId: string;
     Year?: number | null | undefined;
     IndexNumber?: number | null | undefined;

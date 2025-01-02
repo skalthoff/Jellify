@@ -10,8 +10,10 @@ import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "../Global/text";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { playPauseButton } from "./helpers/buttons";
+import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
+import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 
-export default function Player(): React.JSX.Element {
+export default function Player({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }): React.JSX.Element {
 
     const { apiClient } = useApiClientContext();
     const { queue, playbackState, nowPlaying, play, pause } = usePlayerContext();
@@ -44,7 +46,17 @@ export default function Player(): React.JSX.Element {
 
                         <YStack>
                             <Text>{nowPlaying?.title ?? "Untitled Track"}</Text>
-                            <Text bold>{nowPlaying?.artist ?? "Unknown Artist"}</Text>
+                            <Text 
+                                bold
+                                onPress={() => {
+                                    navigation.goBack();
+                                    navigation.navigate("Artist", {
+                                        artistName: nowPlaying?.artist,
+                                        artistId: nowPlaying?.ArtistId
+                                    })
+                                }}
+                            >
+                                {nowPlaying?.artist ?? "Unknown Artist"}</Text>
                         </YStack>
 
                         <HStack>
