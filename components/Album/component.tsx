@@ -40,6 +40,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                 ImageType.Primary,
                                 { ...queryConfig.images})}
                         imageStyle={{
+                            position: "relative",
                             width: 300,
                             height: 300,
                             borderRadius: 2
@@ -62,7 +63,14 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                     await addToQueue(tracks!.map((track) => mapDtoToTrack(apiClient!, sessionId, track)));
                                     play(index);
                                 }}>
-                                    <Text>{ track.IndexNumber?.toString() }</Text>
+                                    <Stack flex={4}>
+                                        <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
+                                        <Text>{ track.Name ?? "Untitled Track" }</Text>
+                                    </Stack>
+
+                                    <Stack flex={1}>
+                                        <Text>{ track.RunTimeTicks?.toString() ?? "" }</Text>
+                                    </Stack>
                                 </Stack>
                             )
 
