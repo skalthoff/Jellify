@@ -13,6 +13,7 @@ import { useAlbumTracks } from "../../api/queries/album";
 import { usePlayerContext } from "../../player/provider";
 import { mapDtoToTrack } from "../../helpers/mappings";
 import RunTimeTicks from "../Global/runtimeticks";
+import { Colors } from "../../enums/colors";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -23,7 +24,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
 
     const { apiClient, sessionId } = useApiClientContext();
 
-    const { resetQueue, addToQueue, play } = usePlayerContext();
+    const { resetQueue, addToQueue, play, nowPlaying } = usePlayerContext();
 
     const { data: tracks, isLoading } = useAlbumTracks(props.album.Id!, apiClient!);
 
@@ -51,6 +52,9 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                     data={tracks}
                     numColumns={1}
                     renderItem={({ item: track, index }) => {
+
+                        let isPlaying = nowPlaying?.ItemId == track.Id;
+
                         return (
                             <View>
                                 <Separator />
@@ -60,16 +64,21 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                         await resetQueue(false)
                                         await addToQueue(tracks!.map((track) => mapDtoToTrack(apiClient!, sessionId, track)));
                                         play(index);
-                                    }
-                                }>
-                                    <XStack alignContent="flex-start" flex={4}>
+                                    }}
+                                    paddingVertical={"$4"}
+                                    paddingHorizontal={"$1"}
+                                >
+                                    <YStack flex={1}>
                                         <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
-                                        <Text>{ track.Name ?? "Untitled Track" }</Text>
-                                    </XStack>
+                                    </YStack>
 
-                                    <XStack alignContent="flex-end" flex={1}>
+                                    <YStack alignContent="flex-start" flex={4}>
+                                        <Text color={ isPlaying ? Colors.Primary : "unset" }>{ track.Name ?? "Untitled Track" }</Text>
+                                    </YStack>
+
+                                    <YStack alignContent="flex-end" flex={1}>
                                         <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
-                                    </XStack>
+                                    </YStack>
                                 </XStack>
                             </View>
                         )
