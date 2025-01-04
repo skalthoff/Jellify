@@ -33,14 +33,14 @@ export function Card(props: CardProps) {
     return (
         <View 
             alignItems="center"
-            animation="bouncy"
-            hoverStyle={props.onPress ? { scale: 0.925 } : {}}
-            pressStyle={props.onPress ? { scale: 0.875 } : {}}
-        >
+            >
             <TamaguiCard 
                 elevate 
                 size="$4" 
                 borderRadius={props.cornered ? 2 : 25}
+                animation="bouncy"
+                hoverStyle={props.onPress ? { scale: 0.925 } : {}}
+                pressStyle={props.onPress ? { scale: 0.875 } : {}}
                 width={props.width ?? 150}
                 height={props.width ?? 150}
                 {...props}
@@ -57,6 +57,7 @@ export function Card(props: CardProps) {
                                 } 
                             imageStyle={{
                                 ...logoDimensions,
+                                position: "relative",
                                 shadowRadius: 2,
                                 shadowOffset: {
                                     width: 2,
