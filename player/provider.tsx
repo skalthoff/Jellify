@@ -102,10 +102,14 @@ const PlayerContextInitializer = () => {
         switch (event.type) {
             case (Event.PlaybackState) : {
                 console.debug(`PlaybackState changed: ${event}`)
+
+                
             }
 
             case (Event.PlaybackActiveTrackChanged) : {
                 const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
+
+                // If we have a queue, report the previous one as played
 
                 playStateApi.reportPlaybackStart({
                     playbackStartInfo: {

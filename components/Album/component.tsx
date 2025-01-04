@@ -68,17 +68,17 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                     paddingVertical={"$4"}
                                     paddingHorizontal={"$1"}
                                 >
-                                    <YStack justifyContent="flex-end" flex={2}>
+                                    <XStack alignContent="flex-end" flex={2}>
                                         <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
-                                    </YStack>
+                                    </XStack>
 
-                                    <YStack justifyContent="flex-start" flex={5}>
+                                    <XStack alignContent="flex-start" flex={5}>
                                         <Text color={ isPlaying ? Colors.Primary : "unset" }>{ track.Name ?? "Untitled Track" }</Text>
-                                    </YStack>
+                                    </XStack>
 
-                                    <YStack justifyContent="flex-end" flex={1}>
+                                    <XStack alignContent="flex-end" flex={1}>
                                         <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
-                                    </YStack>
+                                    </XStack>
                                 </XStack>
                             </View>
                         )
