@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StackParamList } from "../types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ScrollView, Separator, Stack, View, YStack } from "tamagui";
+import { ScrollView, Separator, View, YStack, XStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { useApiClientContext } from "../jellyfin-api-provider";
@@ -54,7 +54,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                         return (
                             <View>
                                 <Separator />
-                                <Stack 
+                                <XStack 
                                     flex={1}
                                     onPress={async (track) => {
                                         await resetQueue(false)
@@ -62,15 +62,15 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                         play(index);
                                     }
                                 }>
-                                    <Stack alignContent="flex-start" flex={4}>
+                                    <XStack alignContent="flex-start" flex={4}>
                                         <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
                                         <Text>{ track.Name ?? "Untitled Track" }</Text>
-                                    </Stack>
+                                    </XStack>
 
-                                    <Stack alignContent="flex-end" flex={1}>
+                                    <XStack alignContent="flex-end" flex={1}>
                                         <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
-                                    </Stack>
-                                </Stack>
+                                    </XStack>
+                                </XStack>
                             </View>
                         )
 

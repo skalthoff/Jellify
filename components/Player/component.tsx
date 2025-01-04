@@ -1,7 +1,7 @@
 import { Event, useTrackPlayerEvents } from "react-native-track-player";
 import { handlePlayerError } from "./helpers/error-handlers";
 import { usePlayerContext } from "../../player/provider";
-import { Stack as HStack, YStack } from "tamagui";
+import { XStack, YStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
@@ -23,7 +23,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
             { nowPlaying && (
                 <YStack alignItems="center">
 
-                    <HStack alignItems="center">
+                    <XStack alignItems="center">
 
                         <CachedImage
                             source={getImageApi(apiClient!)
@@ -40,9 +40,9 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                                 borderRadius: 2
                             }}
                             />
-                    </HStack>
+                    </XStack>
 
-                    <HStack>
+                    <XStack>
 
                         <YStack>
                             <Text>{nowPlaying?.title ?? "Untitled Track"}</Text>
@@ -59,20 +59,20 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                                 {nowPlaying?.artist ?? "Unknown Artist"}</Text>
                         </YStack>
 
-                        <HStack>
+                        <XStack>
                             {/* Buttons for favorites, song menu go here */}
 
-                        </HStack>
+                        </XStack>
 
-                    </HStack>
+                    </XStack>
 
-                    <HStack>
+                    <XStack>
                         {/* playback progress goes here */}
-                    </HStack>
+                    </XStack>
 
-                    <HStack>
+                    <XStack>
                         {playPauseButton(playbackState, play, pause)}
-                    </HStack>
+                    </XStack>
 
                     
                     </YStack>
