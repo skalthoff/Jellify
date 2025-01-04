@@ -12,6 +12,7 @@ import { FlatList } from "react-native";
 import { useAlbumTracks } from "../../api/queries/album";
 import { usePlayerContext } from "../../player/provider";
 import { mapDtoToTrack } from "../../helpers/mappings";
+import RunTimeTicks from "../Global/runtimeticks";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -67,7 +68,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                     </Stack>
 
                                     <Stack alignItems="flex-end">
-                                        <Text>{ track.RunTimeTicks?.toString() ?? "" }</Text>
+                                        <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
                                     </Stack>
                                 </Stack>
                             </View>
@@ -75,7 +76,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
 
                 }}/>
 
-                <Text>{ props.album.CumulativeRunTimeTicks ?? "" }</Text>
+                <RunTimeTicks>{ props.album.CumulativeRunTimeTicks }</RunTimeTicks>
             </ScrollView>
     )
 }
