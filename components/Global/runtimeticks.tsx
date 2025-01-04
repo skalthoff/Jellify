@@ -22,5 +22,12 @@ function calculateRunTimeFromTicks(runTimeTicks: number) : string {
     const runTimeMinutes = Math.floor((runTimeTotalSeconds % 3600) / 60)
     const runTimeSeconds = runTimeTotalSeconds % 60;
 
-    return `${ runTimeHours != 0 ? pad(runTimeHours.toString(), 2, "0") : "" }:${pad(runTimeMinutes.toString(), 2, "0")}:${pad(runTimeSeconds.toString(), 2, "0")}`;
+    return `${ runTimeHours != 0 ? `${padRunTimeNumber(runTimeHours)}:` : "" }${padRunTimeNumber(runTimeMinutes)}:${padRunTimeNumber(runTimeSeconds)}`;
+}
+
+function padRunTimeNumber(number: number) : string {
+    if (number >= 10)
+        return `${number}`
+
+    return `0${number}`;
 }

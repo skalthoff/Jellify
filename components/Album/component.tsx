@@ -62,12 +62,12 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                         play(index);
                                     }
                                 }>
-                                    <Stack alignItems="flex-start">
+                                    <Stack alignContent="flex-start" flex={4}>
                                         <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
                                         <Text>{ track.Name ?? "Untitled Track" }</Text>
                                     </Stack>
 
-                                    <Stack alignItems="flex-end">
+                                    <Stack alignContent="flex-end" flex={1}>
                                         <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
                                     </Stack>
                                 </Stack>
@@ -76,7 +76,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
 
                 }}/>
 
-                <RunTimeTicks>{ props.album.CumulativeRunTimeTicks }</RunTimeTicks>
+                <RunTimeTicks>{ props.album.RunTimeTicks }</RunTimeTicks>
             </ScrollView>
     )
 }
