@@ -7,7 +7,8 @@ import { FlatList } from "react-native";
 import { Card } from "../Global/card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { H5 } from "../Global/text";
+import { H4, H5 } from "../Global/text";
+import { useState } from "react";
 
 interface ArtistProps {
     artistId: string,
@@ -16,6 +17,8 @@ interface ArtistProps {
 }
 
 export default function Artist(props: ArtistProps): React.JSX.Element {
+
+    const [columns, setColumns] = useState<number>(2);
 
     const { apiClient } = useApiClientContext();
 
@@ -29,7 +32,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
             >
                 <Avatar itemId={props.artistId} />
 
-                <H5>Albums</H5>
+                <H4>Albums</H4>
                 <FlatList
                     contentContainerStyle={{
                         flexGrow: 1,
@@ -37,13 +40,14 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                         alignItems: "flex-start"
                     }}
                     data={albums}
-                    numColumns={2} // TODO: Make this adjustable
+                    numColumns={columns} // TODO: Make this adjustable
                     renderItem={({ item: album }) => {
                         return (
                             <Card
                                 caption={album.Name}
                                 subCaption={album.ProductionYear?.toString()}
                                 marginHorizontal={10}
+                                width={500 / columns}
                                 cornered 
                                 itemId={album.Id!}
                                 onPress={() => {

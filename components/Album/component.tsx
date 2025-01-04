@@ -46,7 +46,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                     />
 
                     <H4>{ props.album.Name ?? "Untitled Album" }</H4>
-                    <H5>{ props.album.AlbumArtists?.join(", ") ?? "" }</H5>
+                    <H5>{ props.album.ProductionYear?.toString() ?? "" }</H5>
                 </YStack>
                 <FlatList
                     data={tracks}
@@ -68,15 +68,15 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                     paddingVertical={"$4"}
                                     paddingHorizontal={"$1"}
                                 >
-                                    <YStack flex={1}>
+                                    <YStack alignContent="center">
                                         <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
                                     </YStack>
 
-                                    <YStack alignContent="flex-start" flex={4}>
+                                    <YStack justifyContent="flex-start" flex={5}>
                                         <Text color={ isPlaying ? Colors.Primary : "unset" }>{ track.Name ?? "Untitled Track" }</Text>
                                     </YStack>
 
-                                    <YStack alignContent="flex-end" flex={1}>
+                                    <YStack justifyContent="flex-end" flex={1}>
                                         <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
                                     </YStack>
                                 </XStack>
