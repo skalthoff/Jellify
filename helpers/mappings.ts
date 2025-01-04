@@ -1,33 +1,42 @@
-import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models"
-import { PitchAlgorithm, RatingType, Track, TrackType } from "react-native-track-player"
-import { JellifyTrack } from "../types/JellifyTrack"
-import { useApi } from "../api/queries"
-import _ from "lodash";
-import { useImageByItemId } from "../api/queries/image";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { JellifyTrack } from "../types/JellifyTrack";
+import { TrackType } from "react-native-track-player";
+import { Api } from "@jellyfin/sdk";
 import { QueuingType } from "../enums/queuing-type";
-let clientName : string = require('root-require')('./package.json').name
+import querystring from "querystring"
 
-export function mapDtoToJellifyTrack(item: BaseItemDto, queuingType: QueuingType) : JellifyTrack {
-    return {
-        url: `${useApi.data!.basePath}/Audio/${item.Id!}/universal`,
-        type: TrackType.HLS, // TODO: Confirm this
-        userAgent: clientName,
-        contentType: _.isNull(item.Container) ? undefined : item.Container,
-        pitchAlgorithm: PitchAlgorithm.Music,
-        headers: {
-            "Authorization": useApi.data?.authorizationHeader
-        },
+const container = "opus,mp3,aac,m4a,flac,webma,webm,wav,ogg,mpa,wma";
 
-        title: _.isNull(item.Name) ? undefined : item.Name,
-        album: _.isNull(item.Album) ? undefined : item.Album,
-        artist: _.isNull(item.Artists) ? undefined : item.Artists?.join(", "),
-        duration: _.isNull(item.RunTimeTicks) ? undefined : item.RunTimeTicks,
-        artwork: useImageByItemId(item.Id!, ImageType.Primary).data,
+// TODO: Make this configurable
+const transcodingContainer = "m4a";
 
-        genre: _.isNull(item.Genres) ? undefined : item.Genres?.join(", "),
-        date: _.isNull(item.PremiereDate) ? undefined : item.PremiereDate,
-        // rating
-        isLiveStream: false, // TODO: only for iOS
-        QueuingType: queuingType
+export function mapDtoToTrack(api: Api, sessionId: string, item: BaseItemDto, queuingType?: QueuingType) {
+
+    const urlParams = {
+        "Container": container,
+        "TranscodingContainer": transcodingContainer,
+        "TranscodingProtocol": "hls",
+        "EnableRemoteMedia": true,
+        "EnableRedirection": true,
+        "api_key": api.accessToken,
+        "StartTimeTicks": 0,
+        "PlaySessionId": sessionId,
     }
+
+    return {
+        url: `${api.basePath}/Audio/${item.Id!}/universal?${querystring.stringify(urlParams)}`,
+        type: TrackType.HLS,
+        headers: {
+            "X-Emby-Token": api.accessToken
+        },
+        title: item.Name,
+        album: item.Album,
+        artist: item.Artists?.join(", "),
+        duration: item.RunTimeTicks,
+
+        ItemId: item.Id!,
+        ArtistId: item.ParentId,
+        AlbumId: item.AlbumId!,
+        QueuingType: queuingType ?? QueuingType.DirectlyQueued
+    } as JellifyTrack
 }

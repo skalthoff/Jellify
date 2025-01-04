@@ -1,23 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/query-keys";
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api"
-import { useApi } from "../queries";
+import { Api } from "@jellyfin/sdk";
+import { fetchArtistImage, fetchImage, fetchItemImage } from "./functions/images";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { createApi } from "./functions/api";
 
+export const useImage = (api: Api, itemId: string, imageType?: ImageType) => useQuery({
+    queryKey: [QueryKeys.ItemImage, api, itemId, imageType],
+    queryFn: ({ queryKey }) => fetchImage(queryKey[1] as Api, queryKey[2] as string, queryKey[3] as ImageType | undefined)
+});
 
-export const useImageByItemId = (itemId: string, imageType: ImageType) => useQuery({
-    queryKey: [QueryKeys.ImageByItemId, itemId],
-    queryFn: (async ({ queryKey }) => {
-
-        let imageFile = await getImageApi(await createApi())
-        .getItemImage({ itemId: queryKey[1], imageType: imageType })
-        .then((response) => {
-            // This should be returning a File per Jellyfin's docs
-            // https://typescript-sdk.jellyfin.org/classes/generated_client.ImageApi.html#getItemImage
-            return (response.data as File)
-        });
-
-        return await imageFile.text();
-    })
+export const useArtistImage = (api: Api, artistName: string, imageType?: ImageType) => useQuery({
+    queryKey: [QueryKeys.ArtistImage, api, artistName, imageType],
+    queryFn: ({ queryKey }) => fetchArtistImage(queryKey[1] as Api, queryKey[2] as string, queryKey[3] as ImageType | undefined)
 })
+
+export const useItemImage = (api: Api, itemId: string, imageType?: ImageType, width?: number) => useQuery({
+    queryKey: [QueryKeys.ItemImage, api, itemId, imageType, width],
+    queryFn: ({ queryKey }) => fetchItemImage(queryKey[1] as Api, queryKey[2] as string, queryKey[3] as ImageType | undefined, queryKey[4] as number | undefined)
+});

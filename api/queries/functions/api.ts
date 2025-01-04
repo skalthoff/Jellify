@@ -1,34 +1,35 @@
 import { Api } from "@jellyfin/sdk";
-import { fetchCredentials, fetchServer } from "./storage";
 import { client } from "../../client";
 import _ from "lodash";
-import { QueryFunctionContext, QueryKey } from "@tanstack/react-query";
 
-/**
- * A promise to build an authenticated Jellyfin API client
- * @returns A Promise of the authenticated Jellyfin API client or a rejection
- */
-export function createApi(): Promise<Api> {
+export function createApi(serverUrl?: string, username?: string, password?: string, accessToken?: string): Promise<Api> {
     return new Promise(async (resolve, reject) => {
-        let credentials = await fetchCredentials();
 
-        if (_.isUndefined(credentials)) {
-            console.warn("No credentials exist for user, launching login flow");
-            return reject("No credentials exist for the current user");
+        if (_.isUndefined(serverUrl)) {
+            console.info("Server Url doesn't exist yet")
+            return reject("Server Url doesn't exist");
+        }
+
+        if (!_.isUndefined(accessToken)) {
+            console.info("Creating API with accessToken")
+            return resolve(client.createApi(serverUrl, accessToken));
         }
                 
+
+        if (_.isUndefined(username) && _.isUndefined(password)) {
+
+            console.info("Creating public API for server url")
+            return resolve(client.createApi(serverUrl));
+        }
+
         console.log("Signing into Jellyfin")
-        return resolve(client.createApi(credentials!.server, credentials!.password));
-    });
-}
+        let authResult = await client.createApi(serverUrl).authenticateUserByName(username!, password);
 
-export function createPublicApi(): Promise<Api> {
-    return new Promise(async (resolve) => {
+        if (authResult.data.AccessToken) {
+            console.info("Signed into Jellyfin successfully")
+            return resolve(client.createApi(serverUrl, authResult.data.AccessToken));
+        }
 
-        console.log("Fetching server details from storage")
-        const server = await fetchServer()
-
-        console.log(`Found stored server ${server.name}`)
-        resolve(client.createApi(server.url));
+        return reject("Unable to sign in");
     });
 }

@@ -2,30 +2,26 @@ import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import _ from "lodash";
-import * as Keychain from "react-native-keychain"
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { View } from "tamagui";
+import { View, YStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
-import { Heading } from "../../helpers/text";
-import Button from "../../helpers/button";
-import Input from "../../helpers/input";
-import { mutateServer, mutateServerCredentials } from "../../../api/mutators/functions/storage";
-import { createPublicApi } from "../../../api/queries/functions/api";
-import { client } from "../../../api/client";
+import { H1 } from "../../Global/text";
+import Button from "../../Global/button";
+import Input from "../../Global/input";
 
 export default function ServerAuthentication(): React.JSX.Element {
-    const { username, server, setUsername, setChangeUsername, setChangeServer } = useAuthenticationContext();
+    const { username, setUsername } = useAuthenticationContext();
     const [password, setPassword] = React.useState<string | undefined>('');
 
-    const { setApiClient } = useApiClientContext();
+    const { server, setServer, setUser, apiClient } = useApiClientContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
-            return await client.createApi(server!.url).authenticateUserByName(credentials.username, credentials.password!);
+            return await apiClient!.authenticateUserByName(credentials.username, credentials.password!);
         },
-        onSuccess: async (authResult, credentials) => {
+        onSuccess: async (authResult) => {
               
-            console.log(`Received auth response from ${server!.name}`)
+            console.log(`Received auth response from server`)
             if (_.isUndefined(authResult))
                 return Promise.reject(new Error("Authentication result was empty"))
 
@@ -35,10 +31,12 @@ export default function ServerAuthentication(): React.JSX.Element {
             if (_.isUndefined(authResult.data.User))
                 return Promise.reject(new Error("Unable to login"));
 
-            console.log(`Successfully signed in to ${server!.name}`)
-            setApiClient(client.createApi(server!.url, authResult.data.AccessToken as string))
-            setChangeUsername(false);
-            return await Keychain.setInternetCredentials(server!.url, credentials.username, (authResult.data.AccessToken as string));
+            console.log(`Successfully signed in to server`)
+            return setUser({ 
+                id: authResult.data.User!.Id!, 
+                name: authResult.data.User!.Name!, 
+                accessToken: (authResult.data.AccessToken as string) 
+            })
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
@@ -48,31 +46,32 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
-            <Heading>
+            <H1>
                 { `Sign in to ${server?.name ?? "Jellyfin"}`}
-            </Heading>
+            </H1>
             <Button
                 onPress={() => {
-                    setChangeServer(true);
-                    mutateServerCredentials(server!.url);
+                    setServer(undefined);
                 }}>
                     Switch Server
             </Button>
 
-            <Input
-                placeholder="Username"
-                value={username}
-                onChangeText={(value) => setUsername(value)}
-                />
-            <Input
-                placeholder="Password"
-                value={password}
-                onChangeText={(value) => setPassword(value)}
-                secureTextEntry
-                />
+            <YStack>
+                <Input
+                    placeholder="Username"
+                    value={username}
+                    onChangeText={(value) => setUsername(value)}
+                    />
+                <Input
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={(value) => setPassword(value)}
+                    secureTextEntry
+                    />
+            </YStack>
 
             <Button 
-                disabled={_.isEmpty(username) || _.isEmpty(password)}
+                disabled={_.isEmpty(username) || _.isEmpty(password) || useApiMutation.isPending}
                 onPress={() => {
 
                     if (!_.isUndefined(username)) {

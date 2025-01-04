@@ -15,7 +15,25 @@
 		217EBE16A3E8C5FBF476C905 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F757EB73303E0AC21EF34F64 /* PrivacyInfo.xcprivacy */; };
 		7699B88040F8A987B510C191 /* libPods-Jellify-JellifyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Jellify-JellifyTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8AC3ECB3A690B29771C29318 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6259C8F5B99EE317280940 /* ExpoModulesProvider.swift */; };
+		CF620D0C2CF2BB210045E433 /* Aileron-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFC2CF2BB1F0045E433 /* Aileron-Italic.otf */; };
+		CF620D0D2CF2BB210045E433 /* Aileron-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFD2CF2BB1F0045E433 /* Aileron-Thin.otf */; };
+		CF620D0E2CF2BB210045E433 /* Aileron-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFE2CF2BB1F0045E433 /* Aileron-HeavyItalic.otf */; };
+		CF620D0F2CF2BB210045E433 /* Aileron-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFF2CF2BB1F0045E433 /* Aileron-SemiBoldItalic.otf */; };
+		CF620D102CF2BB210045E433 /* Aileron-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D002CF2BB1F0045E433 /* Aileron-Heavy.otf */; };
+		CF620D112CF2BB210045E433 /* Aileron-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D012CF2BB1F0045E433 /* Aileron-BoldItalic.otf */; };
+		CF620D122CF2BB210045E433 /* Aileron-UltraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D022CF2BB1F0045E433 /* Aileron-UltraLight.otf */; };
+		CF620D132CF2BB210045E433 /* Aileron-UltraLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D032CF2BB200045E433 /* Aileron-UltraLightItalic.otf */; };
+		CF620D142CF2BB210045E433 /* Aileron-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D042CF2BB200045E433 /* Aileron-Regular.otf */; };
+		CF620D152CF2BB210045E433 /* Aileron-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D052CF2BB200045E433 /* Aileron-LightItalic.otf */; };
+		CF620D162CF2BB210045E433 /* Aileron-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D062CF2BB200045E433 /* Aileron-BlackItalic.otf */; };
+		CF620D172CF2BB210045E433 /* Aileron-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D072CF2BB200045E433 /* Aileron-Light.otf */; };
+		CF620D182CF2BB210045E433 /* Aileron-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D082CF2BB200045E433 /* Aileron-Bold.otf */; };
+		CF620D192CF2BB210045E433 /* Aileron-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D092CF2BB200045E433 /* Aileron-Black.otf */; };
+		CF620D1A2CF2BB210045E433 /* Aileron-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D0A2CF2BB200045E433 /* Aileron-ThinItalic.otf */; };
+		CF620D1B2CF2BB210045E433 /* Aileron-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D0B2CF2BB200045E433 /* Aileron-SemiBold.otf */; };
 		CF71790B2CBC486C0021BCA3 /* dummy-rntp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF71790A2CBC486C0021BCA3 /* dummy-rntp.swift */; };
+		FD44E03C057499699671A391 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2736241344FDDCC9D455D9 /* ExpoModulesProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,14 +58,33 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Jellify/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = Jellify/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Jellify-JellifyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Jellify-JellifyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E2736241344FDDCC9D455D9 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Jellify-JellifyTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Jellify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jellify.debug.xcconfig"; path = "Target Support Files/Pods-Jellify/Pods-Jellify.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Jellify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jellify.release.xcconfig"; path = "Target Support Files/Pods-Jellify/Pods-Jellify.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Jellify-JellifyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jellify-JellifyTests.debug.xcconfig"; path = "Target Support Files/Pods-Jellify-JellifyTests/Pods-Jellify-JellifyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Jellify.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Jellify.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Jellify/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Jellify-JellifyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jellify-JellifyTests.release.xcconfig"; path = "Target Support Files/Pods-Jellify-JellifyTests/Pods-Jellify-JellifyTests.release.xcconfig"; sourceTree = "<group>"; };
+		CF620CFC2CF2BB1F0045E433 /* Aileron-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Italic.otf"; path = "../assets/fonts/Aileron-Italic.otf"; sourceTree = "<group>"; };
+		CF620CFD2CF2BB1F0045E433 /* Aileron-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Thin.otf"; path = "../assets/fonts/Aileron-Thin.otf"; sourceTree = "<group>"; };
+		CF620CFE2CF2BB1F0045E433 /* Aileron-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-HeavyItalic.otf"; path = "../assets/fonts/Aileron-HeavyItalic.otf"; sourceTree = "<group>"; };
+		CF620CFF2CF2BB1F0045E433 /* Aileron-SemiBoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-SemiBoldItalic.otf"; path = "../assets/fonts/Aileron-SemiBoldItalic.otf"; sourceTree = "<group>"; };
+		CF620D002CF2BB1F0045E433 /* Aileron-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Heavy.otf"; path = "../assets/fonts/Aileron-Heavy.otf"; sourceTree = "<group>"; };
+		CF620D012CF2BB1F0045E433 /* Aileron-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-BoldItalic.otf"; path = "../assets/fonts/Aileron-BoldItalic.otf"; sourceTree = "<group>"; };
+		CF620D022CF2BB1F0045E433 /* Aileron-UltraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-UltraLight.otf"; path = "../assets/fonts/Aileron-UltraLight.otf"; sourceTree = "<group>"; };
+		CF620D032CF2BB200045E433 /* Aileron-UltraLightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-UltraLightItalic.otf"; path = "../assets/fonts/Aileron-UltraLightItalic.otf"; sourceTree = "<group>"; };
+		CF620D042CF2BB200045E433 /* Aileron-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Regular.otf"; path = "../assets/fonts/Aileron-Regular.otf"; sourceTree = "<group>"; };
+		CF620D052CF2BB200045E433 /* Aileron-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-LightItalic.otf"; path = "../assets/fonts/Aileron-LightItalic.otf"; sourceTree = "<group>"; };
+		CF620D062CF2BB200045E433 /* Aileron-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-BlackItalic.otf"; path = "../assets/fonts/Aileron-BlackItalic.otf"; sourceTree = "<group>"; };
+		CF620D072CF2BB200045E433 /* Aileron-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Light.otf"; path = "../assets/fonts/Aileron-Light.otf"; sourceTree = "<group>"; };
+		CF620D082CF2BB200045E433 /* Aileron-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Bold.otf"; path = "../assets/fonts/Aileron-Bold.otf"; sourceTree = "<group>"; };
+		CF620D092CF2BB200045E433 /* Aileron-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-Black.otf"; path = "../assets/fonts/Aileron-Black.otf"; sourceTree = "<group>"; };
+		CF620D0A2CF2BB200045E433 /* Aileron-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-ThinItalic.otf"; path = "../assets/fonts/Aileron-ThinItalic.otf"; sourceTree = "<group>"; };
+		CF620D0B2CF2BB200045E433 /* Aileron-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-SemiBold.otf"; path = "../assets/fonts/Aileron-SemiBold.otf"; sourceTree = "<group>"; };
+		CF6588752D25C12400AECE18 /* Jellify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Jellify.entitlements; path = Jellify/Jellify.entitlements; sourceTree = "<group>"; };
 		CF7179092CBC486C0021BCA3 /* Jellify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jellify-Bridging-Header.h"; sourceTree = "<group>"; };
 		CF71790A2CBC486C0021BCA3 /* dummy-rntp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "dummy-rntp.swift"; sourceTree = "<group>"; };
+		DA6259C8F5B99EE317280940 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Jellify/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F757EB73303E0AC21EF34F64 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Jellify/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +129,7 @@
 		13B07FAE1A68108700A75B9A /* Jellify */ = {
 			isa = PBXGroup;
 			children = (
+				CF6588752D25C12400AECE18 /* Jellify.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -126,12 +164,29 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				CF620D092CF2BB200045E433 /* Aileron-Black.otf */,
+				CF620D062CF2BB200045E433 /* Aileron-BlackItalic.otf */,
+				CF620D082CF2BB200045E433 /* Aileron-Bold.otf */,
+				CF620D012CF2BB1F0045E433 /* Aileron-BoldItalic.otf */,
+				CF620D002CF2BB1F0045E433 /* Aileron-Heavy.otf */,
+				CF620CFE2CF2BB1F0045E433 /* Aileron-HeavyItalic.otf */,
+				CF620CFC2CF2BB1F0045E433 /* Aileron-Italic.otf */,
+				CF620D072CF2BB200045E433 /* Aileron-Light.otf */,
+				CF620D052CF2BB200045E433 /* Aileron-LightItalic.otf */,
+				CF620D042CF2BB200045E433 /* Aileron-Regular.otf */,
+				CF620D0B2CF2BB200045E433 /* Aileron-SemiBold.otf */,
+				CF620CFF2CF2BB1F0045E433 /* Aileron-SemiBoldItalic.otf */,
+				CF620CFD2CF2BB1F0045E433 /* Aileron-Thin.otf */,
+				CF620D0A2CF2BB200045E433 /* Aileron-ThinItalic.otf */,
+				CF620D022CF2BB1F0045E433 /* Aileron-UltraLight.otf */,
+				CF620D032CF2BB200045E433 /* Aileron-UltraLightItalic.otf */,
 				13B07FAE1A68108700A75B9A /* Jellify */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* JellifyTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				FD77E19D77A9C2B467098F57 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +202,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8416CE4219E7CC11004894B4 /* JellifyTests */ = {
+			isa = PBXGroup;
+			children = (
+				1E2736241344FDDCC9D455D9 /* ExpoModulesProvider.swift */,
+			);
+			name = JellifyTests;
+			sourceTree = "<group>";
+		};
+		89BACC168326BC5320E81D79 /* Jellify */ = {
+			isa = PBXGroup;
+			children = (
+				DA6259C8F5B99EE317280940 /* ExpoModulesProvider.swift */,
+			);
+			name = Jellify;
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +229,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FD77E19D77A9C2B467098F57 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				89BACC168326BC5320E81D79 /* Jellify */,
+				8416CE4219E7CC11004894B4 /* JellifyTests */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -166,6 +246,7 @@
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "JellifyTests" */;
 			buildPhases = (
 				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				D7C145763168E210648CCBD4 /* [Expo] Configure project */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -187,6 +268,7 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Jellify" */;
 			buildPhases = (
 				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				9B9571B1B8AF79E561D2815F /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -251,6 +333,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF620D0C2CF2BB210045E433 /* Aileron-Italic.otf in Resources */,
+				CF620D0D2CF2BB210045E433 /* Aileron-Thin.otf in Resources */,
+				CF620D0E2CF2BB210045E433 /* Aileron-HeavyItalic.otf in Resources */,
+				CF620D0F2CF2BB210045E433 /* Aileron-SemiBoldItalic.otf in Resources */,
+				CF620D102CF2BB210045E433 /* Aileron-Heavy.otf in Resources */,
+				CF620D112CF2BB210045E433 /* Aileron-BoldItalic.otf in Resources */,
+				CF620D122CF2BB210045E433 /* Aileron-UltraLight.otf in Resources */,
+				CF620D132CF2BB210045E433 /* Aileron-UltraLightItalic.otf in Resources */,
+				CF620D142CF2BB210045E433 /* Aileron-Regular.otf in Resources */,
+				CF620D152CF2BB210045E433 /* Aileron-LightItalic.otf in Resources */,
+				CF620D162CF2BB210045E433 /* Aileron-BlackItalic.otf in Resources */,
+				CF620D172CF2BB210045E433 /* Aileron-Light.otf in Resources */,
+				CF620D182CF2BB210045E433 /* Aileron-Bold.otf in Resources */,
+				CF620D192CF2BB210045E433 /* Aileron-Black.otf in Resources */,
+				CF620D1A2CF2BB210045E433 /* Aileron-ThinItalic.otf in Resources */,
+				CF620D1B2CF2BB210045E433 /* Aileron-SemiBold.otf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				217EBE16A3E8C5FBF476C905 /* PrivacyInfo.xcprivacy in Resources */,
@@ -274,7 +372,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli')\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n";
 		};
 		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -292,6 +390,25 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Jellify/Pods-Jellify-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		9B9571B1B8AF79E561D2815F /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Jellify/expo-configure-project.sh\"\n";
 		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -354,6 +471,25 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Jellify-JellifyTests/Pods-Jellify-JellifyTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D7C145763168E210648CCBD4 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Jellify-JellifyTests/expo-configure-project.sh\"\n";
+		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -396,6 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* JellifyTests.m in Sources */,
+				FD44E03C057499699671A391 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,6 +543,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				CF71790B2CBC486C0021BCA3 /* dummy-rntp.swift in Sources */,
+				8AC3ECB3A690B29771C29318 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,8 +579,10 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Jellify.app/Jellify";
 			};
 			name = Debug;
@@ -465,8 +605,10 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Jellify.app/Jellify";
 			};
 			name = Release;
@@ -477,6 +619,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Jellify/Jellify.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WAH9CZ8BPG;
 				ENABLE_BITCODE = NO;
@@ -491,6 +634,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cosmonautical.jellify;
 				PRODUCT_NAME = Jellify;
 				SWIFT_OBJC_BRIDGING_HEADER = "Jellify-Bridging-Header.h";
@@ -506,6 +650,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Jellify/Jellify.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WAH9CZ8BPG;
 				INFOPLIST_FILE = Jellify/Info.plist;
@@ -519,6 +664,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cosmonautical.jellify;
 				PRODUCT_NAME = Jellify;
 				SWIFT_OBJC_BRIDGING_HEADER = "Jellify-Bridging-Header.h";
@@ -600,13 +746,11 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_VERSION = 5.0;
 				USE_HERMES = true;
 			};
 			name = Debug;
@@ -676,12 +820,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};

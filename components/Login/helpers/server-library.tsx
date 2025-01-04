@@ -1,97 +1,91 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import React, { useEffect } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { Select, View } from "tamagui";
-import { JellifyLibrary } from "../../../types/JellifyLibrary";
-import { mutateServerCredentials } from "../../../api/mutators/functions/storage";
+import { Spinner, Text, ToggleGroup, View } from "tamagui";
 import { useAuthenticationContext } from "../provider";
-import { Heading } from "../../helpers/text";
-import Button from "../../helpers/button";
+import { H1, Label } from "../../Global/text";
+import Button from "../../Global/button";
 import _ from "lodash";
-import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models/base-item-dto";
 import { Api } from "@jellyfin/sdk";
-import { fetchMusicLibraries } from "../../../api/queries/functions/libraries";
+import { fetchMusicLibraries, fetchPlaylistLibrary } from "../../../api/libraries";
 import { QueryKeys } from "../../../enums/query-keys";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { ActivityIndicator } from "react-native";
 
 export default function ServerLibrary(): React.JSX.Element {
 
-    const [musicLibrary, setMusicLibrary] = useState<JellifyLibrary | undefined>(undefined);
-
-    const { server, setUsername, setChangeUsername, libraryName, setLibraryName, libraryId, setLibraryId } = useAuthenticationContext();
-
-    const { apiClient, setApiClient } = useApiClientContext();
-
+    const { libraryId, setLibraryId } = useAuthenticationContext();
+    const { apiClient, setUser, setLibrary } = useApiClientContext();
     
-    const useLibraries = (api: Api) => useQuery({
+    const useMusicLibraries = (api: Api) => useQuery({
         queryKey: [QueryKeys.Libraries, api],
         queryFn: async ({ queryKey }) => await fetchMusicLibraries(queryKey[1] as Api)
     });
-    
-    const { data : libraries, isPending, refetch } = useLibraries(apiClient!);
 
-    const clearUser = useMutation({
-        mutationFn: async () => {
-            setChangeUsername(true);
-            setApiClient(undefined)
-            return await mutateServerCredentials(server!.url);
-        }
-    });
+    const usePlaylistLibrary = (api: Api) => useQuery({
+        queryKey: [QueryKeys.Playlist, api],
+        queryFn: async ({ queryKey }) => await fetchPlaylistLibrary(queryKey[1] as Api)
+    })
+    
+    const { data : libraries, isError, isPending, refetch: refetchMusicLibraries } = useMusicLibraries(apiClient!);
+    const { data : playlistLibrary, refetch: refetchPlaylistLibrary } = usePlaylistLibrary(apiClient!);
 
     useEffect(() => {
-        refetch();
+        refetchMusicLibraries();
+        refetchPlaylistLibrary();
     }, [
-        server,
         apiClient
+    ])
+
+    useEffect(() => {
+        console.log(libraries)
+    }, [
+        libraries
     ])
 
     return (
         <View marginHorizontal={10} flex={1} justifyContent='center'>
-            <Heading>Select Music Library</Heading>
+            <H1>Select Music Library</H1>
 
-            { isPending && (
-                <ActivityIndicator />
+            { isPending ? (
+                <Spinner size="large" />
+            ) : (
+                <ToggleGroup
+                    orientation="vertical"
+                    type="single"
+                    disableDeactivation={true}
+                    value={libraryId}
+                    onValueChange={setLibraryId}
+                >
+                    { libraries!.map((library) => {
+                        return (
+                            <ToggleGroup.Item value={library.Id!} aria-label={library.Name!}>
+                                <Label htmlFor={library.Id!} size="$2">{library.Name!}</Label>
+                            </ToggleGroup.Item>
+                        )
+                    })}
+              </ToggleGroup>
             )}
 
-            { !_.isUndefined(libraries) &&
-                <Select defaultValue="">
-                    <Select.Trigger>
-                        <Select.Value placeholder="Libraries" />
-                    </Select.Trigger>
-                    <Select.Content>
-                        <Select.Viewport animation="quick">
-                            <Select.Group>
-\                               <Select.Label>Music Libraries</Select.Label>
-                                { libraries.map((item, i) => {
-                                    return (
-                                        <Select.Item
-                                        index={i}
-                                        key={item.Name!}
-                                        value={item.Name!}
-                                        >
-                                            <Select.ItemText>{item.Name!}</Select.ItemText>
-                                            <Select.ItemIndicator marginLeft="auto">
-                                                <Icon name="check" size={16} />
-                                            </Select.ItemIndicator>
-                                        </Select.Item>
-                                    )
-                                })}
-                            </Select.Group>
-                        </Select.Viewport>
-                    </Select.Content>
-                </Select>
-            }
+            { isError && (
+                <Text>Unable to load libraries</Text>
+            )}
 
-            <Button
+            <Button disabled={!!!libraryId}
                 onPress={() => {
-                    clearUser.mutate();
-                }}
-            >
-                Switch User
+                    setLibrary({
+                        musicLibraryId: libraryId!,
+                        musicLibraryName: libraries?.filter((library) => library.Id == libraryId)[0].Name ?? "No library name",
+                        musicLibraryPrimaryImageId: libraries?.filter((library) => library.Id == libraryId)[0].ImageTags!.Primary,
+                        playlistLibraryId: playlistLibrary!.Id!,
+                        playlistLibraryPrimaryImageId: playlistLibrary!.ImageTags!.Primary,
+                        
+                    })
+                }}>
+                Let's Go!
             </Button>
 
-            <Select value={libraryName}></Select>
+            <Button onPress={() => setUser(undefined)}>
+                Switch User
+            </Button>
         </View>
     )
 }
