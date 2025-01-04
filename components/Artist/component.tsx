@@ -47,7 +47,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                                 caption={album.Name}
                                 subCaption={album.ProductionYear?.toString()}
                                 marginHorizontal={10}
-                                width={300 / columns}
+                                width={350 / columns}
                                 cornered 
                                 itemId={album.Id!}
                                 onPress={() => {
