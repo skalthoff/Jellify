@@ -1,8 +1,7 @@
-import React, { ReactNode, useState } from "react";
-import type { CardProps as TamaguiCardProps, ViewProps } from "tamagui"
-import { H3, H5, Card as TamaguiCard, View } from "tamagui";
+import React, {  } from "react";
+import type { CardProps as TamaguiCardProps } from "tamagui"
+import { H5, Card as TamaguiCard, View } from "tamagui";
 import { useApiClientContext } from "../jellyfin-api-provider";
-import { cardDimensions } from "./component.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { CachedImage } from "@georstat/react-native-image-cache";
@@ -10,9 +9,8 @@ import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
 import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "./text";
-import { isEmpty } from "lodash";
 
-interface CardProps extends ViewProps {
+interface CardProps extends TamaguiCardProps {
     artistName?: string;
     blurhash?: string;
     caption?: string | null | undefined;
@@ -35,19 +33,21 @@ export function Card(props: CardProps) {
     return (
         <View 
             alignItems="center"
-            {...props}
+            animation="bouncy"
+            hoverStyle={props.onPress ? { scale: 0.925 } : {}}
+            pressStyle={props.onPress ? { scale: 0.875 } : {}}
         >
             <TamaguiCard 
                 elevate 
                 size="$4" 
-                animation="bouncy"
-                hoverStyle={props.onPress ? { scale: 0.925 } : {}}
-                pressStyle={props.onPress ? { scale: 0.875 } : {}}
                 borderRadius={props.cornered ? 2 : 25}
                 width={props.width ?? 150}
                 height={props.width ?? 150}
+                {...props}
             >
                 <TamaguiCard.Header>
+                </TamaguiCard.Header>
+                <TamaguiCard.Footer>
                     <CachedImage 
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
@@ -57,35 +57,14 @@ export function Card(props: CardProps) {
                                 } 
                             imageStyle={{
                                 ...logoDimensions,
-                                position: "relative",
-                                top: -5,
+                                shadowRadius: 2,
+                                shadowOffset: {
+                                    width: 2,
+                                    height: 2,
+                                },
                                 borderRadius: props.cornered ? 2 : 25
                             }}
                     />
-                </TamaguiCard.Header>
-                <TamaguiCard.Footer>
-                    { props.caption && (
-                        <View 
-                            alignContent="center"
-                            alignItems="center"
-                            width={dimensions.width}
-                        >
-                            <H5 
-                                lineBreakStrategyIOS="standard"
-                                numberOfLines={1}
-                            >
-                                { props.caption }
-                            </H5>
-
-                            { props.subCaption && (
-                                <Text
-                                    textAlign="center"
-                                >
-                                    { props.subCaption }
-                                </Text>
-                            )}
-                        </View>
-                    )}
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
                     <CachedImage 
@@ -102,7 +81,28 @@ export function Card(props: CardProps) {
                     />
                 </TamaguiCard.Background>
             </TamaguiCard>
+            { props.caption && (
+                <View 
+                    alignContent="center"
+                    alignItems="center"
+                    width={dimensions.width}
+                >
+                    <H5 
+                        lineBreakStrategyIOS="standard"
+                        numberOfLines={1}
+                    >
+                        { props.caption }
+                    </H5>
+            
+                    { props.subCaption && (
+                        <Text
+                            textAlign="center"
+                        >
+                            { props.subCaption }
+                        </Text>
+                    )}
+                </View>
+            )}
         </View>
     )
-  }
-  
+}
