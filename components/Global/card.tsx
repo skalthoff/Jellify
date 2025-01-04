@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import type { CardProps as TamaguiCardProps } from "tamagui"
+import type { CardProps as TamaguiCardProps, ViewProps } from "tamagui"
 import { H3, H5, Card as TamaguiCard, View } from "tamagui";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { cardDimensions } from "./component.config";
@@ -12,7 +12,7 @@ import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "./text";
 import { isEmpty } from "lodash";
 
-interface CardProps extends TamaguiCardProps {
+interface CardProps extends ViewProps {
     artistName?: string;
     blurhash?: string;
     caption?: string | null | undefined;
@@ -33,7 +33,10 @@ export function Card(props: CardProps) {
     const cardLogoSource = getImageApi(apiClient!).getItemImageUrlById(props.itemId, ImageType.Logo);
 
     return (
-        <View alignItems="center">
+        <View 
+            alignItems="center"
+            {...props}
+        >
             <TamaguiCard 
                 elevate 
                 size="$4" 
@@ -43,7 +46,6 @@ export function Card(props: CardProps) {
                 borderRadius={props.cornered ? 2 : 25}
                 width={props.width ?? 150}
                 height={props.width ?? 150}
-                {...props}
             >
                 <TamaguiCard.Header>
                     <CachedImage 
@@ -61,6 +63,28 @@ export function Card(props: CardProps) {
                     />
                 </TamaguiCard.Header>
                 <TamaguiCard.Footer>
+                    { props.caption && (
+                        <View 
+                            alignContent="center"
+                            alignItems="center"
+                            width={dimensions.width}
+                        >
+                            <H5 
+                                lineBreakStrategyIOS="standard"
+                                numberOfLines={1}
+                            >
+                                { props.caption }
+                            </H5>
+
+                            { props.subCaption && (
+                                <Text
+                                    textAlign="center"
+                                >
+                                    { props.subCaption }
+                                </Text>
+                            )}
+                        </View>
+                    )}
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
                     <CachedImage 
@@ -77,28 +101,6 @@ export function Card(props: CardProps) {
                     />
                 </TamaguiCard.Background>
             </TamaguiCard>
-            { props.caption && (
-                <View 
-                    alignContent="center"
-                    alignItems="center"
-                    width={dimensions.width}
-                >
-                    <H5 
-                        lineBreakStrategyIOS="standard"
-                        numberOfLines={1}
-                    >
-                        { props.caption }
-                    </H5>
-
-                    { props.subCaption && (
-                        <Text
-                            textAlign="center"
-                        >
-                            { props.subCaption }
-                        </Text>
-                    )}
-                </View>
-            )}
         </View>
     )
   }
