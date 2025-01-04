@@ -58,6 +58,7 @@ export function Card(props: CardProps) {
                             imageStyle={{
                                 ...logoDimensions,
                                 position: "relative",
+                                top: -5,
                                 borderRadius: props.cornered ? 2 : 25
                             }}
                     />
