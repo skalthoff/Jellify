@@ -3,13 +3,12 @@ import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./helpers/index";
-import TrackPlayer, { Event, Progress, State, useActiveTrack, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
+import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
 import _ from "lodash";
 import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
-import { handlePlaybackStateChange, usePlaybackStopped } from "./handlers";
-import { sleep } from "@/helpers/sleep";
+import { handlePlaybackStarted, handlePlaybackStopped } from "./handlers";
 import { useSetupPlayer } from "@/components/Player/hooks";
 import { UPDATE_INTERVAL } from "./config";
 
@@ -52,20 +51,12 @@ const PlayerContextInitializer = () => {
 
         TrackPlayer.play();
         
-        const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
-
-        playStateApi.reportPlaybackStart({
-            playbackStartInfo: {
-                SessionId: sessionId,
-                ItemId: activeTrack.ItemId
-            }
-        })
+        handlePlaybackStarted(sessionId, playStateApi, nowPlaying!)
     }
 
     const pause = async () => {
         TrackPlayer.pause();
-        
-        const { isSuccess } = usePlaybackStopped(sessionId, playStateApi, nowPlaying!);
+        handlePlaybackStopped(sessionId, playStateApi, nowPlaying!);
     }
     
     const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
@@ -101,7 +92,7 @@ const PlayerContextInitializer = () => {
 
                 // Scrobble previously played track
                 if (nowPlaying) {
-                    usePlaybackStopped(sessionId, playStateApi, nowPlaying)
+                    handlePlaybackStopped(sessionId, playStateApi, nowPlaying)
                 }
 
                 console.debug("Setting nowPlaying")
