@@ -9,6 +9,7 @@ import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackStateChange } from "./handlers";
+import { sleep } from "@/helpers/sleep";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -108,7 +109,9 @@ const PlayerContextInitializer = () => {
             }
 
             case (Event.PlaybackActiveTrackChanged) : {
-                const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
+                const activeTrack = await sleep(500).then(async () => {
+                    return await TrackPlayer.getActiveTrack()
+                }) as JellifyTrack;
 
                 setNowPlaying(activeTrack);        
             }

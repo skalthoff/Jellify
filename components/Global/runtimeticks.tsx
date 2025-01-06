@@ -7,7 +7,7 @@ export default function RunTimeTicks({ children } : { children?: number | null |
 
     let time = calculateRunTimeFromTicks(children);
 
-    return <Text>{ time }</Text>
+    return <Text color="$gray10">{ time }</Text>
 }
 
 function calculateRunTimeFromTicks(runTimeTicks: number) : string {
