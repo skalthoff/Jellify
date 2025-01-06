@@ -13,6 +13,7 @@ import { queryClient } from './constants/query-client';
 import { CacheManager } from '@georstat/react-native-image-cache';
 import { Dirs } from "react-native-file-access";
 import TrackPlayer from 'react-native-track-player';
+import { useSetupPlayer } from './components/Player/hooks';
 
 CacheManager.config = {
   baseDir: `${Dirs.CacheDir}/images_cache/`,
@@ -26,7 +27,7 @@ CacheManager.config = {
 
 export default function App(): React.JSX.Element {
   
-  const isPlayerReady = TrackPlayer.setupPlayer();
+  const isPlayerReady = useSetupPlayer().isSuccess;
 
   const isDarkMode = useColorScheme() === 'dark';
   

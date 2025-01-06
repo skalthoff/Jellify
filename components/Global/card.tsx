@@ -33,7 +33,7 @@ export function Card(props: CardProps) {
     return (
         <View 
             alignItems="center"
-            marginHorizontal={15}
+            marginHorizontal={10}
             >
             <TamaguiCard 
                 elevate 

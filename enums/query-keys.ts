@@ -26,4 +26,5 @@ export enum QueryKeys {
     ArtistFeaturedAlbums = "ArtistFeaturedAlbums",
     ArtistImage = "ArtistImage",
     PlaybackStateChange = "PlaybackStateChange",
+    Player = "Player",
 }
