@@ -96,23 +96,15 @@ const PlayerContextInitializer = () => {
     ], async (event) => {
         switch (event.type) {
             case (Event.PlaybackActiveTrackChanged) : {
-                
+
                 console.debug("Active track changed");
 
                 // Scrobble previously played track
                 if (nowPlaying) {
                     usePlaybackStopped(sessionId, playStateApi, nowPlaying)
                 }
-                
 
-                // Sleep before capturing the active track in case we are
-                // skipping to an initial queue index 
-                const activeTrack = await sleep(500).then(async () => {
-                    return await TrackPlayer.getActiveTrack()
-                }) as JellifyTrack;
-
-
-                setNowPlaying(activeTrack);
+                setNowPlaying(event.track as JellifyTrack | undefined);
             }
         }
     })
