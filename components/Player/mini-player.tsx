@@ -15,6 +15,7 @@ import { queryConfig } from "../../api/queries/query.config";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import TextTicker from 'react-native-text-ticker';
 import { playPauseButton } from "./helpers/buttons";
+import { skipToNext } from "react-native-track-player/lib/src/trackPlayer";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
@@ -81,6 +82,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         <Icon 
                             large
                             name="fast-forward" 
+                            onPress={() => skipToNext()}
                             />
                     </XStack>
                 </XStack>

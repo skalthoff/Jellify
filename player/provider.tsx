@@ -92,8 +92,6 @@ const PlayerContextInitializer = () => {
     //#endregion Functions
     
     //#region RNTP Setup
-    TrackPlayer.setupPlayer();
-
     useTrackPlayerEvents([
         Event.PlaybackState,
         Event.PlaybackActiveTrackChanged,
@@ -109,6 +107,7 @@ const PlayerContextInitializer = () => {
             }
 
             case (Event.PlaybackActiveTrackChanged) : {
+                console.debug("Active track changed")
                 const activeTrack = await sleep(500).then(async () => {
                     return await TrackPlayer.getActiveTrack()
                 }) as JellifyTrack;
