@@ -28,7 +28,6 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                             artistName={recentArtist.Name!}
                             blurhash={getPrimaryBlurhashFromDto(recentArtist)}
                             itemId={recentArtist.Id!}
-                            marginRight={20}
                             caption={recentArtist.Name ?? "Unknown Artist"}
                             onPress={() => {
                                 navigation.navigate('Artist', 
