@@ -27,18 +27,7 @@ CacheManager.config = {
 
 export default function App(): React.JSX.Element {
   
-  const isPlayerReady = useSetupPlayer().isSuccess;
-
   const isDarkMode = useColorScheme() === 'dark';
-  
-  useEffect(() => {
-    if (isPlayerReady)
-      console.debug("Player is ready")
-    else
-      console.warn("Player could not be setup")
-  }, [
-    isPlayerReady
-  ])
 
   return (
     <PersistQueryClientProvider 

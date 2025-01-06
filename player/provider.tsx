@@ -10,6 +10,7 @@ import { useApiClientContext } from "../components/jellyfin-api-provider";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackStateChange } from "./handlers";
 import { sleep } from "@/helpers/sleep";
+import { useSetupPlayer } from "@/components/Player/hooks";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -92,6 +93,8 @@ const PlayerContextInitializer = () => {
     //#endregion Functions
     
     //#region RNTP Setup
+    const isPlayerReady = useSetupPlayer().isSuccess;
+
     useTrackPlayerEvents([
         Event.PlaybackState,
         Event.PlaybackActiveTrackChanged,
@@ -134,6 +137,15 @@ const PlayerContextInitializer = () => {
     }, [
         showMiniplayer
     ])
+
+    useEffect(() => {
+        if (isPlayerReady)
+          console.debug("Player is ready")
+        else
+          console.warn("Player could not be setup")
+      }, [
+        isPlayerReady
+      ])
     //#endregion RNTP Setup
 
     //#region return
