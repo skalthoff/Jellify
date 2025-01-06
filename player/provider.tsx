@@ -113,18 +113,16 @@ const PlayerContextInitializer = () => {
                     return await TrackPlayer.getActiveTrack()
                 }) as JellifyTrack;
 
-                setNowPlaying(activeTrack);
-                
-                const activeTrackIndex = queue.indexOf(activeTrack);
-
-                if (activeTrackIndex > 0) {
+                if (nowPlaying) {
                     playStateApi.reportPlaybackStopped({
                         playbackStopInfo: {
                             SessionId: sessionId,
-                            ItemId: activeTrack.ItemId
+                            ItemId: nowPlaying.ItemId
                         }
                     })
                 }
+
+                setNowPlaying(activeTrack);
             }
         }
     })
