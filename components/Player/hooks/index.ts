@@ -6,6 +6,7 @@ const CAPABILITIES: Capability[] = [
     Capability.Pause,
     Capability.Play,
     Capability.PlayFromId,
+    Capability.Skip,
     Capability.SkipToNext,
     Capability.SkipToPrevious,
     Capability.SeekTo,

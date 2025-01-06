@@ -11,6 +11,7 @@ import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackStarted, handlePlaybackStopped } from "./handlers";
 import { useSetupPlayer } from "@/components/Player/hooks";
 import { UPDATE_INTERVAL } from "./config";
+import { sleep } from "@/helpers/sleep";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -96,7 +97,11 @@ const PlayerContextInitializer = () => {
                 }
 
                 console.debug("Setting nowPlaying")
-                setNowPlaying(event.track as JellifyTrack | undefined);
+
+                // Sleep to prevent flickering in players when skipping to a queue index
+                sleep(250).then(async () => {
+                    setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack | undefined);
+                })
             }
         }
     })

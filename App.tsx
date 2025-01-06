@@ -1,6 +1,6 @@
 import './gesture-handler';
 import "./global.css";
-import React, { useEffect } from 'react';
+import React from 'react';
 import "react-native-url-polyfill/auto";
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import Jellify from './components/jellify';
@@ -12,8 +12,6 @@ import { clientPersister } from './constants/storage';
 import { queryClient } from './constants/query-client';
 import { CacheManager } from '@georstat/react-native-image-cache';
 import { Dirs } from "react-native-file-access";
-import TrackPlayer from 'react-native-track-player';
-import { useSetupPlayer } from './components/Player/hooks';
 
 CacheManager.config = {
   baseDir: `${Dirs.CacheDir}/images_cache/`,
