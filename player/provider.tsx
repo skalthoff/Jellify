@@ -116,7 +116,7 @@ const PlayerContextInitializer = () => {
 
                 // Sleep before capturing the active track in case we are
                 // skipping to an initial queue index 
-                const activeTrack = await sleep(250).then(async () => {
+                const activeTrack = await sleep(500).then(async () => {
                     return await TrackPlayer.getActiveTrack()
                 }) as JellifyTrack;
 
