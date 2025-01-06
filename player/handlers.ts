@@ -4,22 +4,31 @@ import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../enums/query-keys";
 import { PlaystateApi } from "@jellyfin/sdk/lib/generated-client/api/playstate-api";
 
-export const handlePlaybackStateChange(state: State, playStateApi: PlaystateApi, activeTrack: JellifyTrack) => useQuery({
-    queryKey: [QueryKeys.PlaybackStateChange, state, activeTrack, playStateApi],
+export const handlePlaybackStateChange = (state: State, sessionId: string, playStateApi: PlaystateApi, activeTrack: JellifyTrack) => useQuery({
+    queryKey: [QueryKeys.PlaybackStateChange, state, sessionId, activeTrack, playStateApi],
     queryFn: ({ queryKey }) => {
-        let state : State = queryKey[1] as State;
-        let activeTrack : JellifyTrack = queryKey[2] as JellifyTrack;
-        let api : PlaystateApi = queryKey[3] as PlaystateApi;
+        const state : State = queryKey[1] as State;
+        const sessionId : string = queryKey[2] as string;
+        const activeTrack : JellifyTrack = queryKey[3] as JellifyTrack;
+        const playStateApi : PlaystateApi = queryKey[4] as PlaystateApi;
 
-        switch (state) {
-            case (State.Ended) :
-            case (State.Paused) :
-            case (State.Stopped) : {
-
-            }
-
+        switch (state) {            
             case (State.Playing) : {
-                
+                playStateApi.reportPlaybackStart({
+                    playbackStartInfo: {
+                        SessionId: sessionId,
+                        ItemId: activeTrack.ItemId
+                    }
+                })
+            }
+            
+            default: {
+                playStateApi.reportPlaybackStopped({
+                    playbackStopInfo: {
+                        SessionId: sessionId,
+                        ItemId: activeTrack.ItemId
+                    }
+                })
             }
         }
     }

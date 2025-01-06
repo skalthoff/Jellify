@@ -8,6 +8,7 @@ import _ from "lodash";
 import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
+import { handlePlaybackStateChange } from "./handlers";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -103,20 +104,11 @@ const PlayerContextInitializer = () => {
             case (Event.PlaybackState) : {
                 console.debug(`PlaybackState changed: ${event}`)
 
-                
+                handlePlaybackStateChange(event.state, sessionId, playStateApi, nowPlaying!)
             }
 
             case (Event.PlaybackActiveTrackChanged) : {
                 const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
-
-                // If we have a queue, report the previous one as played
-
-                playStateApi.reportPlaybackStart({
-                    playbackStartInfo: {
-                        SessionId: sessionId,
-                        ItemId: activeTrack.ItemId
-                    }
-                })
 
                 setNowPlaying(activeTrack);        
             }

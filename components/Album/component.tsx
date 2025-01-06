@@ -68,7 +68,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                     paddingVertical={"$4"}
                                     paddingHorizontal={"$1"}
                                 >
-                                    <XStack alignContent="flex-end" flex={1}>
+                                    <XStack alignItems="flex-end" flex={1}>
                                         <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
                                     </XStack>
 
