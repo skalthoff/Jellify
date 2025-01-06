@@ -6,7 +6,7 @@ import { PlaystateApi } from "@jellyfin/sdk/lib/generated-client/api/playstate-a
 
 export const handlePlaybackStateChange = (state: State, sessionId: string, playStateApi: PlaystateApi, activeTrack: JellifyTrack) => useQuery({
     queryKey: [QueryKeys.PlaybackStateChange, state, sessionId, activeTrack, playStateApi],
-    queryFn: ({ queryKey }) => {
+    queryFn: async ({ queryKey }) => {
         const state : State = queryKey[1] as State;
         const sessionId : string = queryKey[2] as string;
         const activeTrack : JellifyTrack = queryKey[3] as JellifyTrack;
@@ -14,7 +14,7 @@ export const handlePlaybackStateChange = (state: State, sessionId: string, playS
 
         switch (state) {            
             case (State.Playing) : {
-                playStateApi.reportPlaybackStart({
+                return await playStateApi.reportPlaybackStart({
                     playbackStartInfo: {
                         SessionId: sessionId,
                         ItemId: activeTrack.ItemId
@@ -22,13 +22,19 @@ export const handlePlaybackStateChange = (state: State, sessionId: string, playS
                 })
             }
             
-            default: {
-                playStateApi.reportPlaybackStopped({
+            case (State.Ended) :
+            case (State.Paused) :
+            case (State.Stopped) : {
+                return await playStateApi.reportPlaybackStopped({
                     playbackStopInfo: {
                         SessionId: sessionId,
                         ItemId: activeTrack.ItemId
                     }
                 })
+            }
+
+            default : {
+                return
             }
         }
     }

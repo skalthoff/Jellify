@@ -110,10 +110,6 @@ const PlayerContextInitializer = () => {
             }
 
             case (Event.PlaybackActiveTrackChanged) : {
-                console.debug("Active track changed")
-                const activeTrack = await sleep(500).then(async () => {
-                    return await TrackPlayer.getActiveTrack()
-                }) as JellifyTrack;
 
                 if (nowPlaying) {
                     playStateApi.reportPlaybackStopped({
@@ -123,6 +119,12 @@ const PlayerContextInitializer = () => {
                         }
                     })
                 }
+                
+                console.debug("Active track changed")
+                const activeTrack = await sleep(500).then(async () => {
+                    return await TrackPlayer.getActiveTrack()
+                }) as JellifyTrack;
+
 
                 setNowPlaying(activeTrack);
             }
