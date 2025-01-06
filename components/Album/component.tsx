@@ -65,15 +65,15 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                         await addToQueue(tracks!.map((track) => mapDtoToTrack(apiClient!, sessionId, track)));
                                         play(index);
                                     }}
-                                    paddingVertical={"$4"}
+                                    paddingVertical={"$2"}
                                     paddingHorizontal={"$1"}
                                 >
-                                    <XStack justifyContent="flex-end" flex={1}>
+                                    <XStack justifyContent="center" flex={1}>
                                         <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
                                     </XStack>
 
                                     <XStack alignContent="flex-start" flex={8}>
-                                        <Text color={ isPlaying ? Colors.Primary : "unset" }>{ track.Name ?? "Untitled Track" }</Text>
+                                        <Text color={ isPlaying ? Colors.Primary : "auto" }>{ track.Name ?? "Untitled Track" }</Text>
                                     </XStack>
 
                                     <XStack alignContent="flex-end" flex={1}>
