@@ -33,6 +33,7 @@ export function Card(props: CardProps) {
     return (
         <View 
             alignItems="center"
+            {...props}
             >
             <TamaguiCard 
                 elevate 
@@ -43,7 +44,6 @@ export function Card(props: CardProps) {
                 pressStyle={props.onPress ? { scale: 0.875 } : {}}
                 width={props.width ?? 150}
                 height={props.width ?? 150}
-                {...props}
             >
                 <TamaguiCard.Header>
                 </TamaguiCard.Header>
