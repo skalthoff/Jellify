@@ -1,6 +1,6 @@
 import './gesture-handler';
 import "./global.css";
-import React from 'react';
+import React, { useEffect } from 'react';
 import "react-native-url-polyfill/auto";
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import Jellify from './components/jellify';
@@ -31,6 +31,15 @@ export default function App(): React.JSX.Element {
 
   const isDarkMode = useColorScheme() === 'dark';
   
+  useEffect(() => {
+    if (isPlayerReady)
+      console.debug("Player is ready")
+    else
+      console.warn("Player could not be setup")
+  }, [
+    isPlayerReady
+  ])
+
   return (
     <PersistQueryClientProvider 
       client={queryClient} 
