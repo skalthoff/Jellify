@@ -66,12 +66,8 @@ const PlayerContextInitializer = () => {
         TrackPlayer.pause();
         
         const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
-        playStateApi.reportPlaybackStopped({
-            playbackStopInfo: {
-                SessionId: sessionId,
-                ItemId: activeTrack.ItemId
-            }
-        })
+
+        usePlaybackStopped(sessionId, playStateApi, activeTrack)
     }
     
     const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
@@ -100,19 +96,16 @@ const PlayerContextInitializer = () => {
     useTrackPlayerEvents([
         Event.PlaybackActiveTrackChanged,
     ], async (event) => {
-
-        console.debug(`TrackPlayer Event received: ${event}`);
-
         switch (event.type) {
-
             case (Event.PlaybackActiveTrackChanged) : {
+                
+                console.debug("Active track changed");
 
                 // Scrobble previously played track
                 if (nowPlaying) {
                     usePlaybackStopped(sessionId, playStateApi, nowPlaying)
                 }
                 
-                console.debug("Active track changed");
 
                 // Sleep before capturing the active track in case we are
                 // skipping to an initial queue index 

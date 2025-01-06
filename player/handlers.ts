@@ -11,6 +11,8 @@ export const usePlaybackStopped = (sessionId: string, playStateApi: PlaystateApi
         const activeTrack : JellifyTrack = queryKey[2] as JellifyTrack;
         const playStateApi : PlaystateApi = queryKey[3] as PlaystateApi;
 
+        console.debug("Stopping playback for session")
+
         return await playStateApi.reportPlaybackStopped({
             playbackStopInfo: {
                 SessionId: sessionId,

@@ -7,8 +7,6 @@ export function playPauseButton(playbackState: State | undefined, play: Function
 
     let button : React.JSX.Element;
 
-    console.debug(`Playback State: ${playbackState}`)
-
     switch (playbackState) {
         case (State.Playing) : {
             button = <Icon name="pause" large onPress={() => pause()} />;
