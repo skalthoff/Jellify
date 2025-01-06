@@ -12,11 +12,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { playPauseButton } from "./helpers/buttons";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
+import { HorizontalSlider } from "../Global/slider";
 
 export default function Player({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }): React.JSX.Element {
 
     const { apiClient } = useApiClientContext();
-    const { queue, playbackState, nowPlaying, play, pause } = usePlayerContext();
+    const { queue, playbackState, nowPlaying, play, pause, progress } = usePlayerContext();
 
     return (
         <SafeAreaView>
@@ -42,21 +43,23 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             />
                     </XStack>
 
-                    <XStack>
+                    <XStack 
+                        alignContent="flex-start"
+                        marginHorizontal={10}
+                    >
 
                         <YStack alignContent="flex-start">
                             <Text>{nowPlaying?.title ?? "Untitled Track"}</Text>
                             <Text 
                                 bold
                                 onPress={() => {
-                                    navigation.goBack();
                                     navigation.navigate("Artist", {
-                                        artistName: nowPlaying?.artist,
-                                        artistId: nowPlaying?.ArtistId
+                                        artistName: nowPlaying.artist,
+                                        artistId: nowPlaying.ArtistId
                                     })
                                 }}
                             >
-                                {nowPlaying?.artist ?? "Unknown Artist"}</Text>
+                                {nowPlaying.artist ?? "Unknown Artist"}</Text>
                         </YStack>
 
                         <XStack>
@@ -68,6 +71,12 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
 
                     <XStack>
                         {/* playback progress goes here */}
+                        <HorizontalSlider 
+                            value={progress!.position}
+                            max={progress!.duration}
+                            width={400}
+                        />
+
                     </XStack>
 
                     <XStack>

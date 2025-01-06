@@ -3,14 +3,15 @@ import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./helpers/index";
-import TrackPlayer, { Event, State, usePlaybackState, useTrackPlayerEvents } from "react-native-track-player";
+import TrackPlayer, { Event, Progress, State, useActiveTrack, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
 import _ from "lodash";
 import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
-import { handlePlaybackStateChange } from "./handlers";
+import { handlePlaybackStateChange, usePlaybackStopped } from "./handlers";
 import { sleep } from "@/helpers/sleep";
 import { useSetupPlayer } from "@/components/Player/hooks";
+import { UPDATE_INTERVAL } from "./config";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -24,6 +25,7 @@ interface PlayerContext {
     resetQueue: (hideMiniplayer : boolean | undefined) => Promise<void>;
     addToQueue: (tracks: JellifyTrack[]) => Promise<void>;
     playbackState: State | undefined;
+    progress: Progress | undefined;
 }
 
 const PlayerContextInitializer = () => {
@@ -97,6 +99,7 @@ const PlayerContextInitializer = () => {
 
     useTrackPlayerEvents([
         Event.PlaybackState,
+        Event.PlaybackProgressUpdated,
         Event.PlaybackActiveTrackChanged,
     ], async (event) => {
 
@@ -111,17 +114,16 @@ const PlayerContextInitializer = () => {
 
             case (Event.PlaybackActiveTrackChanged) : {
 
+                // Scrobble previously played track
                 if (nowPlaying) {
-                    playStateApi.reportPlaybackStopped({
-                        playbackStopInfo: {
-                            SessionId: sessionId,
-                            ItemId: nowPlaying.ItemId
-                        }
-                    })
+                    usePlaybackStopped(sessionId, playStateApi, nowPlaying)
                 }
                 
-                console.debug("Active track changed")
-                const activeTrack = await sleep(500).then(async () => {
+                console.debug("Active track changed");
+
+                // Sleep before capturing the active track in case we are
+                // skipping to an initial queue index 
+                const activeTrack = await sleep(250).then(async () => {
                     return await TrackPlayer.getActiveTrack()
                 }) as JellifyTrack;
 
@@ -131,7 +133,8 @@ const PlayerContextInitializer = () => {
         }
     })
 
-    const { state: playbackState } = usePlaybackState()
+    const { state: playbackState } = usePlaybackState();
+    const progress = useProgress(UPDATE_INTERVAL);
 
     useEffect(() => {
         if (!showMiniplayer)
@@ -163,6 +166,7 @@ const PlayerContextInitializer = () => {
         addToQueue,
         resetQueue,
         playbackState,
+        progress,
     }
     //#endregion return
 }
@@ -179,6 +183,7 @@ export const PlayerContext = createContext<PlayerContext>({
     resetQueue: async () => {},
     addToQueue: async ([]) => {},
     playbackState: undefined,
+    progress: undefined,
 });
 
 export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
@@ -194,6 +199,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         resetQueue,
         addToQueue,
         playbackState,
+        progress
     } = PlayerContextInitializer();
 
     return <PlayerContext.Provider value={{
@@ -208,6 +214,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         resetQueue,
         addToQueue,
         playbackState,
+        progress
     }}>
         { children }
     </PlayerContext.Provider>

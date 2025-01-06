@@ -4,6 +4,22 @@ import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../enums/query-keys";
 import { PlaystateApi } from "@jellyfin/sdk/lib/generated-client/api/playstate-api";
 
+export const usePlaybackStopped = (sessionId: string, playStateApi: PlaystateApi, activeTrack: JellifyTrack) => useQuery({
+    queryKey: [QueryKeys.ReportPlaybackStopped, sessionId, activeTrack, playStateApi],
+    queryFn: async ({ queryKey }) => {
+        const sessionId: string = queryKey[1] as string;
+        const activeTrack : JellifyTrack = queryKey[2] as JellifyTrack;
+        const playStateApi : PlaystateApi = queryKey[3] as PlaystateApi;
+
+        return await playStateApi.reportPlaybackStopped({
+            playbackStopInfo: {
+                SessionId: sessionId,
+                ItemId: activeTrack.ItemId
+            }
+        })
+    }
+})
+
 export const handlePlaybackStateChange = (state: State, sessionId: string, playStateApi: PlaystateApi, activeTrack: JellifyTrack) => useQuery({
     queryKey: [QueryKeys.PlaybackStateChange, state, sessionId, activeTrack, playStateApi],
     queryFn: async ({ queryKey }) => {
