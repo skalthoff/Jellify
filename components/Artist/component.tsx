@@ -38,9 +38,10 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                         { ...queryConfig.images})
                 } 
                 imageStyle={{
-                    width: 1000,
+                    width: 500,
                     height: 250,
-                    resizeMode: "cover"
+                    resizeMode: "cover",
+                    position: "relative"
                 }}
             />
 
