@@ -1,6 +1,6 @@
 import TrackPlayer, { Event } from "react-native-track-player";
 
-export const PlaybackService = async function() {
+export async function PlaybackService() {
 
     console.debug("Registering playback service");
     TrackPlayer.setupPlayer();
