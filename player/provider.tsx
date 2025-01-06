@@ -65,9 +65,7 @@ const PlayerContextInitializer = () => {
     const pause = async () => {
         TrackPlayer.pause();
         
-        const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack;
-
-        usePlaybackStopped(sessionId, playStateApi, activeTrack)
+        usePlaybackStopped(sessionId, playStateApi, nowPlaying!)
     }
     
     const resetQueue = async (hideMiniplayer?: boolean | undefined) => {

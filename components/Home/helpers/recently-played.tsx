@@ -6,6 +6,7 @@ import { Card } from "../../Global/card";
 import { mapDtoToTrack } from "../../../helpers/mappings";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { usePlayerContext } from "../../../player/provider";
+import { QueuingType } from "@/enums/queuing-type";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
@@ -33,7 +34,9 @@ export default function RecentlyPlayed(): React.JSX.Element {
                             itemId={recentlyPlayedTrack.AlbumId!}
                             onPress={async () => {
                                 await resetQueue(false);
-                                await addToQueue(recentTracks.map((track) => mapDtoToTrack(apiClient!, sessionId, track)));
+                                await addToQueue(recentTracks.map((track) => {
+                                    return mapDtoToTrack(apiClient!, sessionId, track, QueuingType.FromSelection)
+                                }));
                                 play(index);
                             }}
                         />                                
