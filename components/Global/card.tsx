@@ -48,7 +48,7 @@ export function Card(props: CardProps) {
             >
                 <TamaguiCard.Header>
                 </TamaguiCard.Header>
-                <TamaguiCard.Footer>
+                <TamaguiCard.Footer padded>
                     <CachedImage 
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
