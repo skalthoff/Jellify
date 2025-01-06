@@ -44,7 +44,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                     </XStack>
 
                     <XStack 
-                        alignContent="flex-start"
+                        justifyContent="flex-start"
                         marginHorizontal={10}
                     >
 

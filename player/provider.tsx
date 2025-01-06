@@ -98,19 +98,12 @@ const PlayerContextInitializer = () => {
     const isPlayerReady = useSetupPlayer().isSuccess;
 
     useTrackPlayerEvents([
-        Event.PlaybackState,
-        Event.PlaybackProgressUpdated,
         Event.PlaybackActiveTrackChanged,
     ], async (event) => {
 
         console.debug(`TrackPlayer Event received: ${event}`);
 
         switch (event.type) {
-            case (Event.PlaybackState) : {
-                console.debug(`PlaybackState changed: ${event}`)
-
-                handlePlaybackStateChange(event.state, sessionId, playStateApi, nowPlaying!)
-            }
 
             case (Event.PlaybackActiveTrackChanged) : {
 
