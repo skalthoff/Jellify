@@ -44,7 +44,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
 
                     <XStack>
 
-                        <YStack>
+                        <YStack alignContent="flex-start">
                             <Text>{nowPlaying?.title ?? "Untitled Track"}</Text>
                             <Text 
                                 bold

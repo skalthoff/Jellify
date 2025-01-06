@@ -33,7 +33,7 @@ export function Card(props: CardProps) {
     return (
         <View 
             alignItems="center"
-            marginHorizontal={10}
+            margin={5}
             >
             <TamaguiCard 
                 elevate 
@@ -98,6 +98,8 @@ export function Card(props: CardProps) {
             
                     { props.subCaption && (
                         <Text
+                            lineBreakStrategyIOS="standard"
+                            numberOfLines={1}
                             textAlign="center"
                         >
                             { props.subCaption }
