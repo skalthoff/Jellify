@@ -65,7 +65,7 @@ const PlayerContextInitializer = () => {
     const pause = async () => {
         TrackPlayer.pause();
         
-        usePlaybackStopped(sessionId, playStateApi, nowPlaying!)
+        const { isSuccess } = usePlaybackStopped(sessionId, playStateApi, nowPlaying!);
     }
     
     const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
@@ -104,6 +104,7 @@ const PlayerContextInitializer = () => {
                     usePlaybackStopped(sessionId, playStateApi, nowPlaying)
                 }
 
+                console.debug("Setting nowPlaying")
                 setNowPlaying(event.track as JellifyTrack | undefined);
             }
         }

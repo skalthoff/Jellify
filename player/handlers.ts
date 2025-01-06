@@ -6,14 +6,14 @@ import { PlaystateApi } from "@jellyfin/sdk/lib/generated-client/api/playstate-a
 
 export const usePlaybackStopped = (sessionId: string, playStateApi: PlaystateApi, activeTrack: JellifyTrack) => useQuery({
     queryKey: [QueryKeys.ReportPlaybackStopped, sessionId, activeTrack, playStateApi],
-    queryFn: async ({ queryKey }) => {
+    queryFn: ({ queryKey }) => {
         const sessionId: string = queryKey[1] as string;
         const activeTrack : JellifyTrack = queryKey[2] as JellifyTrack;
         const playStateApi : PlaystateApi = queryKey[3] as PlaystateApi;
 
         console.debug("Stopping playback for session")
 
-        return await playStateApi.reportPlaybackStopped({
+        return playStateApi.reportPlaybackStopped({
             playbackStopInfo: {
                 SessionId: sessionId,
                 ItemId: activeTrack.ItemId
@@ -24,7 +24,7 @@ export const usePlaybackStopped = (sessionId: string, playStateApi: PlaystateApi
 
 export const handlePlaybackStateChange = (state: State, sessionId: string, playStateApi: PlaystateApi, activeTrack: JellifyTrack) => useQuery({
     queryKey: [QueryKeys.PlaybackStateChange, state, sessionId, activeTrack, playStateApi],
-    queryFn: async ({ queryKey }) => {
+    queryFn: ({ queryKey }) => {
         const state : State = queryKey[1] as State;
         const sessionId : string = queryKey[2] as string;
         const activeTrack : JellifyTrack = queryKey[3] as JellifyTrack;
@@ -32,7 +32,7 @@ export const handlePlaybackStateChange = (state: State, sessionId: string, playS
 
         switch (state) {            
             case (State.Playing) : {
-                return await playStateApi.reportPlaybackStart({
+                return playStateApi.reportPlaybackStart({
                     playbackStartInfo: {
                         SessionId: sessionId,
                         ItemId: activeTrack.ItemId
@@ -43,7 +43,7 @@ export const handlePlaybackStateChange = (state: State, sessionId: string, playS
             case (State.Ended) :
             case (State.Paused) :
             case (State.Stopped) : {
-                return await playStateApi.reportPlaybackStopped({
+                return playStateApi.reportPlaybackStopped({
                     playbackStopInfo: {
                         SessionId: sessionId,
                         ItemId: activeTrack.ItemId
