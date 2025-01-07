@@ -11,6 +11,7 @@ import { HomeArtistScreen } from "./screens/artist";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Avatar from "../Global/avatar";
 import { HomeAlbumScreen } from "./screens/album";
+import Playlists from "./helpers/playlists";
 
 export const HomeStack = createNativeStackNavigator<StackParamList>();
 
@@ -80,11 +81,18 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
                         <YStack />
                         <Avatar maxHeight={30} itemId={user!.id} />
                     </XStack>
+
                     <Separator marginVertical={15} />
+
                     <RecentArtists route={route} navigation={navigation} />
+
                     <Separator marginVertical={15} />
+
                     <RecentlyPlayed />
+
                     <Separator marginVertical={15} />
+                    
+                    <Playlists />
                 </YStack>
             </ScrollView>
         </SafeAreaView>

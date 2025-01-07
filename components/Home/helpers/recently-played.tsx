@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { H5, ScrollView, View } from "tamagui";
+import { ScrollView, View } from "tamagui";
 import { useHomeContext } from "../provider";
-import { H2, Text } from "../../Global/text";
+import { H2 } from "../../Global/text";
 import { Card } from "../../Global/card";
 import { mapDtoToTrack } from "../../../helpers/mappings";
 import { useApiClientContext } from "../../jellyfin-api-provider";

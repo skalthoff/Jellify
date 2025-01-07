@@ -29,9 +29,9 @@ export function fetchRecentlyPlayed(api: Api, libraryId: string): Promise<BaseIt
 
             if (response.data.Items)
                 resolve(response.data.Items);
-            else {
+            else
                 resolve([]);
-            }
+            
         }).catch((error) => {
             console.error(error);
             reject(error);

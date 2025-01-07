@@ -8,7 +8,7 @@ import _ from "lodash";
 import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
-import { handlePlaybackProgressUpdated, handlePlaybackStarted, handlePlaybackStopped } from "./handlers";
+import { handlePlaybackProgressUpdated, handlePlaybackStarted, handlePlaybackState, handlePlaybackStopped } from "./handlers";
 import { useSetupPlayer } from "@/components/Player/hooks";
 import { UPDATE_INTERVAL } from "./config";
 import { sleep } from "@/helpers/sleep";
@@ -85,14 +85,19 @@ const PlayerContextInitializer = () => {
 
     useTrackPlayerEvents([
         Event.PlaybackProgressUpdated,
+        Event.PlaybackState,
         Event.PlaybackActiveTrackChanged,
     ], async (event) => {
         switch (event.type) {
+
+            case (Event.PlaybackState) : {
+                handlePlaybackState(sessionId, playStateApi, nowPlaying!, event.state);
+                break;
+
+            }
             case (Event.PlaybackProgressUpdated) : {
-                if (event.position === event.duration - 10)
-                    handlePlaybackStopped(sessionId, playStateApi, nowPlaying!)
-                else
-                    handlePlaybackProgressUpdated(sessionId, playStateApi, nowPlaying!, event)
+                handlePlaybackProgressUpdated(sessionId, playStateApi, nowPlaying!, event);
+                break;
             }
 
             case (Event.PlaybackActiveTrackChanged) : {

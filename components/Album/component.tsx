@@ -85,8 +85,13 @@ export default function Album(props: AlbumProps): React.JSX.Element {
 
                 }}/>
 
-                <XStack alignContent="flex-end">
-                    <Text style={{display: "block"}}>Total Runtime:</Text>
+                <XStack justifyContent="flex-end">
+                    <Text 
+                        color={"$gray10"} 
+                        style={{ display: "block"}}
+                    >
+                        Total Runtime:
+                    </Text>
                     <RunTimeTicks>{ props.album.RunTimeTicks }</RunTimeTicks>
                 </XStack>
             </ScrollView>
