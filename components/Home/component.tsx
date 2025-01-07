@@ -65,36 +65,33 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
     const { refreshing: refetching, onRefresh: onRefetch } = useHomeContext()
 
     return (
-        <SafeAreaView>
-            <ScrollView 
-                contentInsetAdjustmentBehavior="automatic"
-                paddingLeft={10}
-                refreshControl={
-                    <RefreshControl 
-                        refreshing={refetching} 
-                        onRefresh={onRefetch}
-                    />
-                }>
-                <YStack alignContent='flex-start'>
-                    <XStack>
-                        <H3>{`Hi, ${user!.name}`}</H3>
-                        <YStack />
-                        <Avatar maxHeight={30} itemId={user!.id} />
-                    </XStack>
+        <ScrollView 
+            paddingLeft={10}
+            refreshControl={
+                <RefreshControl 
+                    refreshing={refetching} 
+                    onRefresh={onRefetch}
+                />
+            }>
+            <YStack alignContent='flex-start'>
+                <XStack>
+                    <H3>{`Hi, ${user!.name}`}</H3>
+                    <YStack />
+                    <Avatar maxHeight={30} itemId={user!.id} />
+                </XStack>
 
-                    <Separator marginVertical={15} />
+                <Separator marginVertical={15} />
 
-                    <RecentArtists route={route} navigation={navigation} />
+                <RecentArtists route={route} navigation={navigation} />
 
-                    <Separator marginVertical={15} />
+                <Separator marginVertical={15} />
 
-                    <RecentlyPlayed />
+                <RecentlyPlayed />
 
-                    <Separator marginVertical={15} />
-                    
-                    <Playlists />
-                </YStack>
-            </ScrollView>
-        </SafeAreaView>
+                <Separator marginVertical={15} />
+
+                <Playlists />
+            </YStack>
+        </ScrollView>
     );
 }

@@ -95,14 +95,16 @@ const PlayerContextInitializer = () => {
                 break;
 
             }
-            case (Event.PlaybackProgressUpdated) : {
-                handlePlaybackProgressUpdated(sessionId, playStateApi, nowPlaying!, event);
-                break;
-            }
+            // case (Event.PlaybackProgressUpdated) : {
+            //     handlePlaybackProgressUpdated(sessionId, playStateApi, nowPlaying!, event);
+            //     break;
+            // }
 
             case (Event.PlaybackActiveTrackChanged) : {
 
                 console.debug("Active track changed");
+
+                handlePlaybackStopped(sessionId, playStateApi, nowPlaying!);
 
                 // Sleep to prevent flickering in players when skipping to a queue index
                 sleep(250).then(async () => {
