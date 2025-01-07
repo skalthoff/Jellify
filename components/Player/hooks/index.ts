@@ -6,10 +6,10 @@ const CAPABILITIES: Capability[] = [
     Capability.Pause,
     Capability.Play,
     Capability.PlayFromId,
+    Capability.SeekTo,
     Capability.Skip,
     Capability.SkipToNext,
-    Capability.SkipToPrevious,
-    Capability.SeekTo,
+    Capability.SkipToPrevious
   ]
   
 export const useSetupPlayer = () => useQuery({
@@ -21,7 +21,7 @@ export const useSetupPlayer = () => useQuery({
                 capabilities: CAPABILITIES,
                 notificationCapabilities: CAPABILITIES,
                 compactCapabilities: CAPABILITIES
-            })
-        })
+            });
+        });
     }
-})
+});

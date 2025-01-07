@@ -22,7 +22,7 @@ export function HorizontalSlider({
     
     return (
         <TamaguiSlider 
-            size="$3" 
+            size="$4" 
             width={width} 
             value={value ? [value] : []}
             max={max} 
@@ -34,7 +34,7 @@ export function HorizontalSlider({
             <TamaguiSlider.Track>
                 <TamaguiSlider.TrackActive />
             </TamaguiSlider.Track>
-            <TamaguiSlider.Thumb circular index={0} />
+            <TamaguiSlider.Thumb circular index={0} size={"$3"} />
         </TamaguiSlider>
     )
 }

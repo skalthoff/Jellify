@@ -84,24 +84,24 @@ const PlayerContextInitializer = () => {
     const isPlayerReady = useSetupPlayer().isSuccess;
 
     useTrackPlayerEvents([
+        Event.PlaybackProgressUpdated,
         Event.PlaybackActiveTrackChanged,
     ], async (event) => {
         switch (event.type) {
+            case (Event.PlaybackProgressUpdated) : {
+                if (event.position === event.duration - 10) {
+                    handlePlaybackStopped(sessionId, playStateApi, nowPlaying!)
+                }
+            }
+
             case (Event.PlaybackActiveTrackChanged) : {
 
                 console.debug("Active track changed");
 
-                // Scrobble previously played track
-                if (nowPlaying) {
-                    handlePlaybackStopped(sessionId, playStateApi, nowPlaying)
-                }
-
-                console.debug("Setting nowPlaying")
-
                 // Sleep to prevent flickering in players when skipping to a queue index
                 sleep(250).then(async () => {
                     setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack | undefined);
-                })
+                });
             }
         }
     })

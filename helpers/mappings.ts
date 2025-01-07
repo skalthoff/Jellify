@@ -4,6 +4,7 @@ import { TrackType } from "react-native-track-player";
 import { Api } from "@jellyfin/sdk";
 import { QueuingType } from "../enums/queuing-type";
 import querystring from "querystring"
+import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 
 const container = "opus,mp3,aac,m4a,flac,webma,webm,wav,ogg,mpa,wma";
 
@@ -33,9 +34,10 @@ export function mapDtoToTrack(api: Api, sessionId: string, item: BaseItemDto, qu
         album: item.Album,
         artist: item.Artists?.join(", "),
         duration: item.RunTimeTicks,
+        artwork: getImageApi(api).getItemImageUrlById(item.Id!),
 
         ItemId: item.Id!,
-        ArtistId: item.ParentId,
+        ArtistId: item.AlbumArtists![0].Id!,
         AlbumId: item.AlbumId!,
         QueuingType: queuingType ?? QueuingType.DirectlyQueued
     } as JellifyTrack
