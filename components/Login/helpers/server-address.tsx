@@ -14,6 +14,7 @@ import { storage } from "../../../constants/storage";
 import { client } from "../../../api/client";
 import { Jellyfin } from "@jellyfin/sdk/lib/jellyfin";
 import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ServerAddress(): React.JSX.Element {
 
@@ -57,7 +58,7 @@ export default function ServerAddress(): React.JSX.Element {
     });
 
     return (
-        <View marginHorizontal={10} flex={1} justifyContent='center'>
+        <SafeAreaView>
             <H1>
                 Connect to Jellyfin
             </H1>
@@ -94,6 +95,6 @@ export default function ServerAddress(): React.JSX.Element {
                     Connect
                 </Button>
             </ZStack>
-        </View>
+        </SafeAreaView>
     )
 }
