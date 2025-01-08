@@ -40,11 +40,15 @@ export function fetchPlaylistLibrary(api: Api): Promise<BaseItemDto> {
 
         console.debug("Playlist libraries", libraries.data.Items!)
 
-        if (libraries.data.Items!.length > 1) {
-            console.warn("Multiple playlist libraries detected")
-            return reject("Multiple playlist libraries detected")
+        let playlistLibrary = libraries.data.Items!.filter(library => 
+            library.CollectionType == 'playlists'
+        )[0];
+
+        if (isUndefined(playlistLibrary)) {
+            console.warn("Playlist libary does not exist on server");
+            return reject("Playlist library does not exist on server");
         }
         
-        return resolve(libraries.data.Items![0]);
+        return resolve(playlistLibrary);
     })
 }
