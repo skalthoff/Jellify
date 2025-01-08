@@ -9,7 +9,7 @@ export const useMusicLibraries = (api: Api) => useQuery({
 
         const api : Api = queryKey[1] as Api;
 
-        await fetchMusicLibraries(api)
+        return await fetchMusicLibraries(api)
     }
 });
 
@@ -19,6 +19,6 @@ export const usePlaylistLibrary = (api: Api) => useQuery({
 
         const api : Api = queryKey[1] as Api;
 
-        await fetchPlaylistLibrary(api)
+        return await fetchPlaylistLibrary(api)
     }
 });
