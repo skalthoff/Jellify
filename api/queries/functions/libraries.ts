@@ -32,6 +32,8 @@ export function fetchPlaylistLibrary(api: Api): Promise<BaseItemDto> {
             return reject("No playlist libraries found on Jellyfin");
         }
 
+        console.debug("Playlist libraries", libraries.data.Items!)
+
         if (libraries.data.Items!.length > 1) {
             console.warn("Multiple playlist libraries detected")
             return reject("Multiple playlist libraries detected")

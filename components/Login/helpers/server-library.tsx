@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { Spinner, Text, ToggleGroup, View } from "tamagui";
@@ -6,25 +5,13 @@ import { useAuthenticationContext } from "../provider";
 import { H1, Label } from "../../Global/text";
 import Button from "../../Global/button";
 import _ from "lodash";
-import { Api } from "@jellyfin/sdk";
-import { fetchMusicLibraries, fetchPlaylistLibrary } from "../../../api/libraries";
-import { QueryKeys } from "../../../enums/query-keys";
+import { useMusicLibraries, usePlaylistLibrary } from "@/api/queries/libraries";
 
 export default function ServerLibrary(): React.JSX.Element {
 
     const { libraryId, setLibraryId } = useAuthenticationContext();
     const { apiClient, setUser, setLibrary } = useApiClientContext();
-    
-    const useMusicLibraries = (api: Api) => useQuery({
-        queryKey: [QueryKeys.Libraries, api],
-        queryFn: async ({ queryKey }) => await fetchMusicLibraries(queryKey[1] as Api)
-    });
 
-    const usePlaylistLibrary = (api: Api) => useQuery({
-        queryKey: [QueryKeys.Playlist, api],
-        queryFn: async ({ queryKey }) => await fetchPlaylistLibrary(queryKey[1] as Api)
-    })
-    
     const { data : libraries, isError, isPending, refetch: refetchMusicLibraries } = useMusicLibraries(apiClient!);
     const { data : playlistLibrary, refetch: refetchPlaylistLibrary } = usePlaylistLibrary(apiClient!);
 
