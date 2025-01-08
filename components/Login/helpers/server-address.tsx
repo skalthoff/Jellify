@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { MMKVStorageKeys } from "../../../enums/mmkv-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { useApiClientContext } from "../../jellyfin-api-provider";
-import { getTokens, Spacer, Spinner, View, XStack, ZStack } from "tamagui";
+import { Spacer, Spinner, View, XStack, ZStack } from "tamagui";
 import { SwitchWithLabel } from "../../Global/switch-with-label";
 import { H1 } from "../../Global/text";
 import Input from "../../Global/input";
@@ -81,22 +81,19 @@ export default function ServerAddress(): React.JSX.Element {
                 />
             </XStack>
 
-            { useServerMutation.isPending && (
-                <ZStack alignContent="center">
-                    <Button disabled />
-                    <Spinner />
-                </ZStack>
-            )}
             <ZStack>
+            { useServerMutation.isPending && (
+                    <Spinner />
+            )}
 
+                <Button 
+                    disabled={_.isEmpty(serverAddress)}
+                    onPress={() => {
+                        useServerMutation.mutate();
+                    }}>
+                    Connect
+                </Button>
             </ZStack>
-            <Button 
-                disabled={_.isEmpty(serverAddress)}
-                onPress={() => {
-                    useServerMutation.mutate();
-                }}>
-                Connect
-            </Button>
         </View>
     )
 }

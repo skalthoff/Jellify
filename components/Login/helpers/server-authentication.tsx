@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { View, YStack } from "tamagui";
+import { Spinner, View, YStack, ZStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { H1 } from "../../Global/text";
 import Button from "../../Global/button";
@@ -70,18 +70,24 @@ export default function ServerAuthentication(): React.JSX.Element {
                     />
             </YStack>
 
-            <Button 
-                disabled={_.isEmpty(username) || _.isEmpty(password) || useApiMutation.isPending}
-                onPress={() => {
+            <ZStack>
+                { useApiMutation.isPending && (
+                    <Spinner />
+                )}
 
-                    if (!_.isUndefined(username)) {
-                        console.log(`Signing in to ${server!.name}`);
-                        useApiMutation.mutate({ username, password });
-                    }
-                }}
-                >
-                    Sign in
-            </Button>
+                <Button 
+                    disabled={_.isEmpty(username) || _.isEmpty(password) || useApiMutation.isPending}
+                    onPress={() => {
+                        
+                        if (!_.isUndefined(username)) {
+                            console.log(`Signing in to ${server!.name}`);
+                            useApiMutation.mutate({ username, password });
+                        }
+                    }}
+                    >
+                        Sign in
+                </Button>
+            </ZStack>
         </View>
     );
 }

@@ -91,7 +91,7 @@ const PlayerContextInitializer = () => {
         switch (event.type) {
 
             case (Event.PlaybackState) : {
-                handlePlaybackState(sessionId, playStateApi, nowPlaying!, event.state);
+                handlePlaybackState(sessionId, playStateApi, await TrackPlayer.getActiveTrack() as JellifyTrack, event.state);
                 break;
 
             }
