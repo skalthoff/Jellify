@@ -8,10 +8,10 @@ import { HomeProvider, useHomeContext } from "./provider";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StackParamList, ProvidedHomeProps } from "../types";
 import { HomeArtistScreen } from "./screens/artist";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Avatar from "../Global/avatar";
 import { HomeAlbumScreen } from "./screens/album";
 import Playlists from "./helpers/playlists";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export const HomeStack = createNativeStackNavigator<StackParamList>();
 
@@ -65,33 +65,36 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
     const { refreshing: refetching, onRefresh: onRefetch } = useHomeContext()
 
     return (
-        <ScrollView 
-            paddingLeft={10}
-            refreshControl={
-                <RefreshControl 
+        <SafeAreaView edges={["top", "right", "left"]}>
+            <ScrollView 
+                contentInsetAdjustmentBehavior="automatic"
+                paddingLeft={10}
+                refreshControl={
+                    <RefreshControl 
                     refreshing={refetching} 
                     onRefresh={onRefetch}
-                />
-            }>
-            <YStack alignContent='flex-start'>
-                <XStack>
-                    <H3>{`Hi, ${user!.name}`}</H3>
-                    <YStack />
-                    <Avatar maxHeight={30} itemId={user!.id} />
-                </XStack>
+                    />
+                }>
+                <YStack alignContent='flex-start'>
+                    <XStack>
+                        <H3>{`Hi, ${user!.name}`}</H3>
+                        <YStack />
+                        <Avatar maxHeight={30} itemId={user!.id} />
+                    </XStack>
 
-                <Separator marginVertical={15} />
+                    <Separator marginVertical={15} />
 
-                <RecentArtists route={route} navigation={navigation} />
+                    <RecentArtists route={route} navigation={navigation} />
 
-                <Separator marginVertical={15} />
+                    <Separator marginVertical={15} />
 
-                <RecentlyPlayed />
+                    <RecentlyPlayed />
 
-                <Separator marginVertical={15} />
+                    <Separator marginVertical={15} />
 
-                <Playlists />
-            </YStack>
-        </ScrollView>
+                    <Playlists />
+                </YStack>
+            </ScrollView>
+        </SafeAreaView>
     );
 }

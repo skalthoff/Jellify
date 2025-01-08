@@ -13,7 +13,6 @@ import { useAlbumTracks } from "../../api/queries/album";
 import { usePlayerContext } from "../../player/provider";
 import { mapDtoToTrack } from "../../helpers/mappings";
 import RunTimeTicks from "../Global/runtimeticks";
-import { Colors } from "../../enums/colors";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -50,10 +49,11 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                 </YStack>
                 <FlatList
                     data={tracks}
+                    extraData={nowPlaying}
                     numColumns={1}
                     renderItem={({ item: track, index }) => {
 
-                        let isPlaying = nowPlaying?.ItemId == track.Id;
+                        let isPlaying = nowPlaying?.ItemId === track.Id;
 
                         return (
                             <View>
@@ -73,7 +73,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                     </XStack>
 
                                     <XStack alignContent="flex-start" flex={8}>
-                                        <Text color={ isPlaying ? Colors.Primary : "auto" }>{ track.Name ?? "Untitled Track" }</Text>
+                                        <Text>{ track.Name ?? "Untitled Track" }</Text>
                                     </XStack>
 
                                     <XStack alignContent="flex-end" flex={1}>

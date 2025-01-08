@@ -4,6 +4,7 @@ import { ScrollView, Separator } from "tamagui";
 import AccountDetails from "../helpers/account-details";
 import SignOut from "../helpers/sign-out";
 import ServerDetails from "../helpers/server-details";
+import LibraryDetails from "../helpers/library-details";
 
 export default function Root() : React.JSX.Element {
     return (
@@ -13,6 +14,7 @@ export default function Root() : React.JSX.Element {
                 <Separator marginVertical={15} />
                 <ServerDetails />
                 <Separator marginVertical={15} />
+                <LibraryDetails />
                 <SignOut />
             </ScrollView>
         </SafeAreaView>
