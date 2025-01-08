@@ -29,7 +29,7 @@ export function fetchPlaylistLibrary(api: Api): Promise<BaseItemDto> {
     return new Promise(async (resolve, reject) => {
         console.debug("Fetching music libraries from Jellyfin");
         
-        let libraries = await getItemsApi(api).getItems({ includeItemTypes: ['PlaylistsFolder'] });
+        let libraries = await getItemsApi(api).getItems({ includeItemTypes: ['CollectionFolder'], nameStartsWith: "Playlists" });
 
         if (_.isUndefined(libraries.data.Items)) {
             console.warn("No playlist libraries found on Jellyfin");
