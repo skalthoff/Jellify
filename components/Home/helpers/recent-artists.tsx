@@ -11,12 +11,6 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
 
     const { recentArtists } = useHomeContext();
 
-    useEffect(() => {
-        console.log("Recently played artists", recentArtists);
-    }, [
-        recentArtists
-    ])
-
     return (
         <View>
             <H2>Recent Artists</H2>

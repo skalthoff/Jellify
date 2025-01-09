@@ -28,7 +28,7 @@ export function HorizontalSlider({
             max={max} 
             step={1}
             orientation="horizontal"
-            marginHorizontal={5}
+            marginHorizontal={10}
             { ...props }
         >
             <TamaguiSlider.Track>
@@ -49,7 +49,7 @@ export function VerticalSlider(props: SliderVerticalProps) : React.JSX.Element {
             max={100} 
             step={1}
             orientation="vertical"
-            marginVertical={5}
+            marginVertical={10}
         >
             <TamaguiSlider.Track>
                 <TamaguiSlider.TrackActive />

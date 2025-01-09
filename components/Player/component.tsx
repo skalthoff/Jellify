@@ -44,14 +44,14 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                     </XStack>
 
                     <XStack 
-                        justifyContent="flex-start"
                         marginVertical={10}
+                        flex={1}
                     >
 
-                        <YStack justifyContent="flex-start">
-                            <Text fontSize={"$4"}>{nowPlaying?.title ?? "Untitled Track"}</Text>
+                        <YStack justifyContent="flex-start" flex={4}>
+                            <Text fontSize={"$6"}>{nowPlaying?.title ?? "Untitled Track"}</Text>
                             <Text 
-                                fontSize={"$4"}
+                                fontSize={"$6"}
                                 bold
                                 onPress={() => {
                                     navigation.navigate("Artist", {
@@ -63,7 +63,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                                 {nowPlaying.artist ?? "Unknown Artist"}</Text>
                         </YStack>
 
-                        <XStack>
+                        <XStack alignItems="center">
                             {/* Buttons for favorites, song menu go here */}
 
                         </XStack>
