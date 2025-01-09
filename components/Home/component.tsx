@@ -17,6 +17,8 @@ export const HomeStack = createNativeStackNavigator<StackParamList>();
 
 export default function Home(): React.JSX.Element {
 
+    const { user } = useApiClientContext();
+
     return (
         <HomeProvider>
             <HomeStack.Navigator 
@@ -29,7 +31,11 @@ export default function Home(): React.JSX.Element {
                     name="Home" 
                     component={ProvidedHome} 
                     options={{
-                        headerShown: false
+                        title: `Hi ${user!.name}`,
+                        headerLargeTitle: true,
+                        headerLargeTitleStyle: {
+                            fontFamily: 'Aileron-Bold'
+                        }
                     }}
                 />
 

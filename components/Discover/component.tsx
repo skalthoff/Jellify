@@ -17,7 +17,10 @@ export function Discover(): React.JSX.Element {
                 name="Discover"
                 component={Index}
                 options={{
-                    headerLargeTitle: true
+                    headerLargeTitle: true,
+                    headerLargeTitleStyle: {
+                        fontFamily: 'Aileron-Bold'
+                    }
                 }}
             />
 
