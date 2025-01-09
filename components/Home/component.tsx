@@ -31,7 +31,6 @@ export default function Home(): React.JSX.Element {
                     name="Home" 
                     component={ProvidedHome} 
                     options={{
-                        title: `Hi ${user!.name}`,
                         headerLargeTitle: true,
                         headerLargeTitleStyle: {
                             fontFamily: 'Aileron-Bold'
