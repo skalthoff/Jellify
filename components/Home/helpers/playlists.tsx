@@ -14,7 +14,7 @@ export default function Playlists() : React.JSX.Element {
 
     return (
         <View>
-            <H2>Your Playlists</H2>
+            <H2 marginLeft={15}>Your Playlists</H2>
             <FlatList horizontal
                 data={playlists}
                 renderItem={({ item: playlist }) => {

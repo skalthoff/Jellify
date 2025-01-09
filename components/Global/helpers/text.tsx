@@ -28,9 +28,9 @@ export function H1({ children }: { children: string }): React.JSX.Element {
     )
 }
 
-export function H2({ children }: { children: string }): React.JSX.Element {
+export function H2(props: TamaguiTextProps): React.JSX.Element {
     return (
-        <TamaguiH2 marginVertical={7}>{ children }</TamaguiH2>
+        <TamaguiH2 marginVertical={7} {...props}>{ props.children }</TamaguiH2>
     )
 }
 
