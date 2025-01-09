@@ -3,6 +3,7 @@ import { JellifyTrack } from "../../types/JellifyTrack";
 
 export function buildNewQueue(existingQueue: JellifyTrack[], tracksToInsert: JellifyTrack[], insertIndex: number) {
 
+    console.debug(`Building new queue`);
 
     let newQueue : JellifyTrack[] = [];
 
@@ -12,7 +13,7 @@ export function buildNewQueue(existingQueue: JellifyTrack[], tracksToInsert: Jel
         newQueue = _.cloneDeep(existingQueue).splice(insertIndex, 0, ...tracksToInsert);
     }
 
-    console.debug(`Setting queue: ${newQueue}`)
+    console.debug(`Built new queue of ${newQueue.length} items`);
 
     return newQueue;
 }
