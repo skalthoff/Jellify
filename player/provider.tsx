@@ -9,7 +9,7 @@ import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackStarted, handlePlaybackState, handlePlaybackStopped } from "./handlers";
-import { useSetupPlayer } from "@/components/Player/hooks";
+import { useSetupPlayer } from "@/player/hooks";
 import { UPDATE_INTERVAL } from "./config";
 import { sleep } from "@/helpers/sleep";
 

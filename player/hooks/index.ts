@@ -7,14 +7,13 @@ const CAPABILITIES: Capability[] = [
     Capability.Play,
     Capability.PlayFromId,
     Capability.SeekTo,
-    Capability.Skip,
     Capability.SkipToNext,
     Capability.SkipToPrevious
-  ]
+]
   
 export const useSetupPlayer = () => useQuery({
     queryKey: [QueryKeys.Player],
-    queryFn: async () => {
+    queryFn: () => {
         return TrackPlayer.setupPlayer().then(() => {
             return TrackPlayer.updateOptions({
                 progressUpdateEventInterval: 1,
