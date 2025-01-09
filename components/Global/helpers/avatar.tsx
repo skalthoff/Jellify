@@ -1,8 +1,8 @@
 import type { AvatarProps as TamaguiAvatarProps } from "tamagui";
 import { Avatar as TamaguiAvatar, YStack } from "tamagui"
 import { Text } from "./text"
-import { useApiClientContext } from "../jellyfin-api-provider"
-import { Colors } from "../../enums/colors";
+import { useApiClientContext } from "@/components/jellyfin-api-provider";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 interface AvatarProps extends TamaguiAvatarProps {
     itemId: string;
