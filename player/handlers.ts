@@ -58,8 +58,11 @@ export async function handlePlaybackStarted(sessionId: string, playstateApi: Pla
 
 export async function handlePlaybackProgressUpdated(sessionId: string, playstateApi: PlaystateApi, track: JellifyTrack, progress: Progress) {
 
-    console.debug("Progress updated:", progress)
-    if (progress.duration - progress.position === 5) {
+    console.debug("Progress updated:", progress);
+
+    console.debug(Math.floor(progress.duration - progress.position))
+
+    if (Math.floor(progress.duration - progress.position) === 5) {
         console.debug("Track finished, scrobbling...");
         await playstateApi.reportPlaybackStopped({
             playbackStopInfo: {
