@@ -1,4 +1,6 @@
 # Jellify
+![Jellify App Icon](assets/icon_60pt_3x.jpg)
+
 A music player for Jellyfin powered by React Native. 
 
 ### Background

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ScrollView, View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
@@ -10,15 +10,9 @@ import { QueuingType } from "@/enums/queuing-type";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
-    const { addToQueue, resetQueue, play } = usePlayerContext();
+    const { playNewQueue } = usePlayerContext();
     const { apiClient, sessionId } = useApiClientContext();
     const { recentTracks } = useHomeContext();
-
-    useEffect(() => {
-        console.log("Recently played", recentTracks);
-    }, [
-        recentTracks
-    ])
 
     return (
         <View>
@@ -33,14 +27,10 @@ export default function RecentlyPlayed(): React.JSX.Element {
                             width={150}
                             itemId={recentlyPlayedTrack.AlbumId!}
                             onPress={() => {
-                                resetQueue(false)
-                                .then(() => {
-                                    addToQueue(recentTracks.map((track) => {
-                                        return mapDtoToTrack(apiClient!, sessionId, track, QueuingType.FromSelection)
-                                    }))
-                                    .then(() => {
-                                        play(index);
-                                    });
+                                playNewQueue.mutate({ 
+                                    track: recentlyPlayedTrack, 
+                                    index: index,
+                                    tracklist: recentTracks
                                 });
                             }}
                         />                                

@@ -1,5 +1,6 @@
 import { QueryKeys } from "@/enums/query-keys"
-import { useQuery } from "@tanstack/react-query"
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { useMutation, useQuery } from "@tanstack/react-query"
 import TrackPlayer, { Capability } from "react-native-track-player"
 
 const CAPABILITIES: Capability[] = [

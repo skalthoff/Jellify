@@ -12,6 +12,10 @@ import { handlePlaybackProgressUpdated, handlePlaybackStarted, handlePlaybackSta
 import { useSetupPlayer } from "@/player/hooks";
 import { UPDATE_INTERVAL } from "./config";
 import { sleep } from "@/helpers/sleep";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { QueueMutation } from "./interfaces";
+import { mapDtoToTrack } from "@/helpers/mappings";
+import { QueuingType } from "@/enums/queuing-type";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -24,6 +28,7 @@ interface PlayerContext {
     pause: () => Promise<void>,
     resetQueue: (hideMiniplayer : boolean | undefined) => Promise<void>;
     addToQueue: (tracks: JellifyTrack[]) => Promise<void>;
+    playNewQueue: UseMutationResult<void, Error, QueueMutation, unknown>;
     playbackState: State | undefined;
     progress: Progress | undefined;
 }
@@ -80,6 +85,20 @@ const PlayerContextInitializer = () => {
     }
     //#endregion Functions
     
+    //#region Hooks
+    const playNewQueue = useMutation({
+        mutationFn: async (mutation: QueueMutation) => {
+            await resetQueue(false)
+            await addToQueue(mutation.tracklist.map((track) => {
+                return mapDtoToTrack(apiClient!, sessionId, track, QueuingType.FromSelection)
+            }));
+            
+            await play(mutation.index);
+        }
+    });
+
+    //#endregion
+
     //#region RNTP Setup
     const isPlayerReady = useSetupPlayer().isSuccess;
 
@@ -145,6 +164,7 @@ const PlayerContextInitializer = () => {
         pause,
         addToQueue,
         resetQueue,
+        playNewQueue,
         playbackState,
         progress,
     }
@@ -162,6 +182,24 @@ export const PlayerContext = createContext<PlayerContext>({
     pause: async () => {},
     resetQueue: async () => {},
     addToQueue: async ([]) => {},
+    playNewQueue: {
+        mutate: () => {},
+        mutateAsync: async () => {},
+        data: undefined,
+        error: null,
+        variables: undefined,
+        isError: false,
+        isIdle: true,
+        isPaused: false,
+        isPending: false,
+        isSuccess: false,
+        status: "idle",
+        reset: () => {},
+        context: {},
+        failureCount: 0,
+        failureReason: null,
+        submittedAt: 0
+    },
     playbackState: undefined,
     progress: undefined,
 });
@@ -178,6 +216,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         pause,
         resetQueue,
         addToQueue,
+        playNewQueue,
         playbackState,
         progress
     } = PlayerContextInitializer();
@@ -193,6 +232,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         pause,
         resetQueue,
         addToQueue,
+        playNewQueue,
         playbackState,
         progress
     }}>
