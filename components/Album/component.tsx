@@ -13,6 +13,7 @@ import { useAlbumTracks } from "../../api/queries/album";
 import { usePlayerContext } from "../../player/provider";
 import { mapDtoToTrack } from "../../helpers/mappings";
 import RunTimeTicks from "../Global/runtimeticks";
+import Track from "../Global/track";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -53,34 +54,12 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                     numColumns={1}
                     renderItem={({ item: track, index }) => {
 
-                        let isPlaying = nowPlaying?.ItemId === track.Id;
-
                         return (
-                            <View>
-                                <Separator />
-                                <XStack 
-                                    flex={1}
-                                    onPress={async (track) => {
-                                        await resetQueue(false)
-                                        await addToQueue(tracks!.map((track) => mapDtoToTrack(apiClient!, sessionId, track)));
-                                        play(index);
-                                    }}
-                                    paddingVertical={"$2"}
-                                    paddingHorizontal={"$1"}
-                                >
-                                    <XStack justifyContent="center" flex={1}>
-                                        <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
-                                    </XStack>
-
-                                    <XStack alignContent="flex-start" flex={8}>
-                                        <Text>{ track.Name ?? "Untitled Track" }</Text>
-                                    </XStack>
-
-                                    <XStack alignContent="flex-end" flex={1}>
-                                        <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
-                                    </XStack>
-                                </XStack>
-                            </View>
+                            <Track
+                                track={track}
+                                tracklist={tracks!}
+                                index={index}
+                            />
                         )
 
                 }}/>
