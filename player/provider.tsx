@@ -91,6 +91,7 @@ const PlayerContextInitializer = () => {
         switch (event.type) {
 
             case (Event.PlaybackState) : {
+
                 handlePlaybackState(sessionId, playStateApi, await TrackPlayer.getActiveTrack() as JellifyTrack, event.state);
                 break;
 
@@ -104,12 +105,14 @@ const PlayerContextInitializer = () => {
 
                 console.debug("Active track changed");
 
-                handlePlaybackStopped(sessionId, playStateApi, nowPlaying!);
-
-                // Sleep to prevent flickering in players when skipping to a queue index
-                sleep(250).then(async () => {
-                    setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack | undefined);
-                });
+                if ((await TrackPlayer.getActiveTrack() as JellifyTrack | undefined) !== nowPlaying) {
+                    handlePlaybackStopped(sessionId, playStateApi, nowPlaying!);
+    
+                    // Sleep to prevent flickering in players when skipping to a queue index
+                    sleep(250).then(async () => {
+                        setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack | undefined);
+                    });
+                }
             }
         }
     })

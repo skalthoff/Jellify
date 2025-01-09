@@ -53,7 +53,7 @@ export default function Track({
                 </XStack>
 
                 <XStack alignContent="flex-start" flex={8}>
-                    <Text color={isPlaying ? theme.accentColor : theme.white12}>{ track.Name ?? "Untitled Track" }</Text>
+                    <Text color={isPlaying ? Colors.Primary : Colors.White}>{ track.Name ?? "Untitled Track" }</Text>
                 </XStack>
 
                 <XStack alignContent="flex-end" flex={1}>
