@@ -15,7 +15,7 @@ export async function PlaybackService() {
         await TrackPlayer.pause();
     });
 
-    TrackPlayer.addEventListener(Event.RemoteSkip, async () => {
+    TrackPlayer.addEventListener(Event.RemoteNext, async () => {
         await TrackPlayer.skipToNext();
     });
 
