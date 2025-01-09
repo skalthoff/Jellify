@@ -32,12 +32,16 @@ export default function RecentlyPlayed(): React.JSX.Element {
                             cornered
                             width={150}
                             itemId={recentlyPlayedTrack.AlbumId!}
-                            onPress={async () => {
-                                await resetQueue(false);
-                                await addToQueue(recentTracks.map((track) => {
-                                    return mapDtoToTrack(apiClient!, sessionId, track, QueuingType.FromSelection)
-                                }));
-                                play(index);
+                            onPress={() => {
+                                resetQueue(false)
+                                .then(() => {
+                                    addToQueue(recentTracks.map((track) => {
+                                        return mapDtoToTrack(apiClient!, sessionId, track, QueuingType.FromSelection)
+                                    }))
+                                    .then(() => {
+                                        play(index);
+                                    });
+                                });
                             }}
                         />                                
                     )
