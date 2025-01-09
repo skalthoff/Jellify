@@ -1,7 +1,6 @@
-import { SafeAreaView } from "react-native-safe-area-context";
 import { StackParamList } from "../types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ScrollView, Separator, View, YStack, XStack } from "tamagui";
+import { ScrollView, YStack, XStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { useApiClientContext } from "../jellyfin-api-provider";
@@ -11,7 +10,6 @@ import { H4, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
 import { useAlbumTracks } from "../../api/queries/album";
 import { usePlayerContext } from "../../player/provider";
-import { mapDtoToTrack } from "../../helpers/mappings";
 import RunTimeTicks from "../Global/helpers/runtimeticks";
 import Track from "../Global/components/track";
 

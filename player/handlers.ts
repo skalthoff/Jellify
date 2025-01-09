@@ -6,7 +6,7 @@ import { convertSecondsToRunTimeTicks } from "@/helpers/runtimeticks";
 export async function handlePlaybackState(sessionId: string, playstateApi: PlaystateApi, track: JellifyTrack, state: State) {
     switch (state) {            
         case (State.Playing) : {
-            return playstateApi.reportPlaybackStart({
+            await playstateApi.reportPlaybackStart({
                 playbackStartInfo: {
                     SessionId: sessionId,
                     ItemId: track.ItemId
@@ -17,7 +17,7 @@ export async function handlePlaybackState(sessionId: string, playstateApi: Plays
         case (State.Ended) :
         case (State.Paused) :
         case (State.Stopped) : {
-            return playstateApi.reportPlaybackStopped({
+            await playstateApi.reportPlaybackStopped({
                 playbackStopInfo: {
                     SessionId: sessionId,
                     ItemId: track.ItemId
@@ -26,7 +26,7 @@ export async function handlePlaybackState(sessionId: string, playstateApi: Plays
         }
 
         default : {
-
+            return;
         }
     }
 }
@@ -34,7 +34,7 @@ export async function handlePlaybackState(sessionId: string, playstateApi: Plays
 export async function handlePlaybackStopped(sessionId: string, playstateApi: PlaystateApi, track: JellifyTrack) {
     console.debug("Stopping playback for session");
     
-    return playstateApi.reportPlaybackStopped({
+    await playstateApi.reportPlaybackStopped({
         playbackStopInfo: {
             SessionId: sessionId,
             ItemId: track.ItemId
@@ -45,7 +45,7 @@ export async function handlePlaybackStopped(sessionId: string, playstateApi: Pla
 export async function handlePlaybackStarted(sessionId: string, playstateApi: PlaystateApi, track: JellifyTrack) {
     console.debug("Starting playback for session");
 
-    return playstateApi.reportPlaybackStart({
+    await playstateApi.reportPlaybackStart({
         playbackStartInfo: {
             SessionId: sessionId,
             ItemId: track.ItemId
@@ -54,13 +54,14 @@ export async function handlePlaybackStarted(sessionId: string, playstateApi: Pla
 }
 
 export async function handlePlaybackProgressUpdated(sessionId: string, playstateApi: PlaystateApi, track: JellifyTrack, progress: Progress) {
-    console.debug("Reporting playback progress");
 
-    return playstateApi.reportPlaybackProgress({
-        playbackProgressInfo: {
-            SessionId: sessionId,
-            ItemId: track.ItemId,
-            PositionTicks: convertSecondsToRunTimeTicks(progress.position)
-        }
-    });
+    if (progress.duration - progress.position === 5)
+        await playstateApi.reportPlaybackStopped({
+            playbackStopInfo: {
+                SessionId: sessionId,
+                ItemId: track.ItemId
+            }
+        })
+    else 
+        return
 }
