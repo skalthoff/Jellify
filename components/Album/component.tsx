@@ -7,13 +7,13 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
-import { H4, H5, Text } from "../Global/text";
+import { H4, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
 import { useAlbumTracks } from "../../api/queries/album";
 import { usePlayerContext } from "../../player/provider";
 import { mapDtoToTrack } from "../../helpers/mappings";
-import RunTimeTicks from "../Global/runtimeticks";
-import Track from "../Global/track";
+import RunTimeTicks from "../Global/helpers/runtimeticks";
+import Track from "../Global/components/track";
 
 interface AlbumProps {
     album: BaseItemDto,

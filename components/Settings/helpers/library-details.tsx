@@ -1,4 +1,4 @@
-import { Text } from "@/components/Global/text";
+import { Text } from "@/components/Global/helpers/text";
 import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import React from "react";
 import { View } from "tamagui";

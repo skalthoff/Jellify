@@ -8,7 +8,7 @@ import { HomeProvider, useHomeContext } from "./provider";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StackParamList, ProvidedHomeProps } from "../types";
 import { HomeArtistScreen } from "./screens/artist";
-import Avatar from "../Global/avatar";
+import Avatar from "../Global/helpers/avatar";
 import { HomeAlbumScreen } from "./screens/album";
 import Playlists from "./helpers/playlists";
 import { SafeAreaView } from "react-native-safe-area-context";

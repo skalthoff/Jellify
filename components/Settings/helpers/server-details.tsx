@@ -3,7 +3,7 @@ import { useApiClientContext } from "../../jellyfin-api-provider";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { H5, Text, XStack, YStack } from "tamagui";
 import { Colors } from "../../../enums/colors";
-import Icon from "../../Global/icon";
+import Icon from "../../Global/helpers/icon";
 
 export default function ServerDetails() : React.JSX.Element {
     

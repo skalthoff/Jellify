@@ -1,6 +1,6 @@
 import React from "react"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import { Colors } from "../../enums/colors"
+import { Colors } from "../../../enums/colors"
 
 const regularSize = 12;
 

@@ -1,6 +1,6 @@
 import { useUserPlaylists } from "@/api/queries/playlist";
-import { Card } from "@/components/Global/card";
-import { H2 } from "@/components/Global/text";
+import { Card } from "@/components/Global/helpers/card";
+import { H2 } from "@/components/Global/helpers/text";
 import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import React from "react";
 import { FlatList } from "react-native";

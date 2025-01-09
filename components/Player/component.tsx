@@ -7,12 +7,12 @@ import { useApiClientContext } from "../jellyfin-api-provider";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
-import { Text } from "../Global/text";
+import { Text } from "../Global/helpers/text";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { playPauseButton } from "./helpers/buttons";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
-import { HorizontalSlider } from "../Global/slider";
+import { HorizontalSlider } from "../Global/helpers/slider";
 
 export default function Player({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }): React.JSX.Element {
 
@@ -45,12 +45,13 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
 
                     <XStack 
                         justifyContent="flex-start"
-                        marginHorizontal={10}
+                        marginVertical={10}
                     >
 
-                        <YStack alignContent="flex-start">
-                            <Text>{nowPlaying?.title ?? "Untitled Track"}</Text>
+                        <YStack justifyContent="flex-start">
+                            <Text fontSize={"$4"}>{nowPlaying?.title ?? "Untitled Track"}</Text>
                             <Text 
+                                fontSize={"$4"}
                                 bold
                                 onPress={() => {
                                     navigation.navigate("Artist", {

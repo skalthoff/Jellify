@@ -1,7 +1,7 @@
 import { State } from "react-native-track-player";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Spinner } from "tamagui";
-import Icon from "../../Global/icon";
+import Icon from "../../Global/helpers/icon";
 
 export function playPauseButton(playbackState: State | undefined, play: Function, pause: Function) {
 

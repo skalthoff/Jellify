@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { View } from "tamagui";
 import { useHomeContext } from "../provider";
-import { H2 } from "../../Global/text";
+import { H2 } from "../../Global/helpers/text";
 import { ProvidedHomeProps } from "../../types";
 import { FlatList } from "react-native";
-import { Card } from "../../Global/card";
+import { Card } from "../../Global/helpers/card";
 import { getPrimaryBlurhashFromDto } from "../../../helpers/blurhash";
 
 export default function RecentArtists({ navigation }: ProvidedHomeProps): React.JSX.Element {

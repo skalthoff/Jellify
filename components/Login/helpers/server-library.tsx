@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { Spinner, Text, ToggleGroup, View } from "tamagui";
 import { useAuthenticationContext } from "../provider";
-import { H1, Label } from "../../Global/text";
-import Button from "../../Global/button";
+import { H1, Label } from "../../Global/helpers/text";
+import Button from "../../Global/helpers/button";
 import _ from "lodash";
 import { useMusicLibraries, usePlaylistLibrary } from "@/api/queries/libraries";
 

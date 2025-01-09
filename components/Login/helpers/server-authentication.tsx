@@ -5,9 +5,9 @@ import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
 import { Spinner, View, YStack, ZStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
-import { H1 } from "../../Global/text";
-import Button from "../../Global/button";
-import Input from "../../Global/input";
+import { H1 } from "../../Global/helpers/text";
+import Button from "../../Global/helpers/button";
+import Input from "../../Global/helpers/input";
 
 export default function ServerAuthentication(): React.JSX.Element {
     const { username, setUsername } = useAuthenticationContext();

@@ -1,13 +1,11 @@
 import { ScrollView } from "tamagui";
-import Avatar from "../Global/avatar";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useArtistAlbums } from "../../api/queries/artist";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { FlatList } from "react-native";
-import { Card } from "../Global/card";
+import { Card } from "../Global/helpers/card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { H4, H5 } from "../Global/text";
+import { H4 } from "../Global/helpers/text";
 import { useState } from "react";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";

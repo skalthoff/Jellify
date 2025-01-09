@@ -1,13 +1,13 @@
 import React, {  } from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
 import { H5, Card as TamaguiCard, View } from "tamagui";
-import { useApiClientContext } from "../jellyfin-api-provider";
+import { useApiClientContext } from "../../jellyfin-api-provider";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
-import { queryConfig } from "../../api/queries/query.config";
+import { queryConfig } from "../../../api/queries/query.config";
 import { Text } from "./text";
 
 interface CardProps extends TamaguiCardProps {
