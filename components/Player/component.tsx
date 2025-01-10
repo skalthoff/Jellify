@@ -24,7 +24,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
             { nowPlaying && (
                 <YStack>
 
-                    <XStack alignItems="center">
+                    <XStack justifyContent="center">
 
                         <CachedImage
                             source={getImageApi(apiClient!)
@@ -36,6 +36,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             }
                             imageStyle={{
                                 position: "relative",
+                                alignSelf: "center",
                                 width: 400,
                                 height: 400,
                                 borderRadius: 2
@@ -43,10 +44,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             />
                     </XStack>
 
-                    <XStack 
-                        marginVertical={10}
-                    >
-
+                    <XStack margin={10}>
                         <YStack justifyContent="flex-start" flex={4}>
                             <Text fontSize={"$6"}>{nowPlaying?.title ?? "Untitled Track"}</Text>
                             <Text 
@@ -66,10 +64,9 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             {/* Buttons for favorites, song menu go here */}
 
                         </XStack>
-
                     </XStack>
 
-                    <XStack alignItems="center">
+                    <XStack justifyContent="center" marginTop={10}>
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progress!.position}
@@ -79,7 +76,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
 
                     </XStack>
 
-                    <XStack alignItems="center">
+                    <XStack justifyContent="center">
                         <PlayPauseButton />
                     </XStack>
 
