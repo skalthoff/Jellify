@@ -29,7 +29,9 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
 
     return (
         <SafeAreaView edges={["top", "right", "left"]}>
-            <ScrollView alignContent="center">
+            <ScrollView 
+                contentInsetAdjustmentBehavior="automatic"
+                alignContent="center">
                 <CachedImage
                     source={getImageApi(apiClient!)
                         .getItemImageUrlById(

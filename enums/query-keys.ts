@@ -28,4 +28,5 @@ export enum QueryKeys {
     PlaybackStateChange = "PlaybackStateChange",
     Player = "Player",
     UserPlaylists = "UserPlaylists",
+    ItemTracks = "ItemTracks",
 }

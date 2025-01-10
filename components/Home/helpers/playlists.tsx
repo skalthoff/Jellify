@@ -2,11 +2,12 @@ import { useUserPlaylists } from "@/api/queries/playlist";
 import { Card } from "@/components/Global/helpers/card";
 import { H2 } from "@/components/Global/helpers/text";
 import { useApiClientContext } from "@/components/jellyfin-api-provider";
+import { ProvidedHomeProps } from "@/components/types";
 import React from "react";
 import { FlatList } from "react-native";
-import { ScrollView, View } from "tamagui";
+import { View } from "tamagui";
 
-export default function Playlists() : React.JSX.Element {
+export default function Playlists({ navigation }: ProvidedHomeProps) : React.JSX.Element {
 
     const { apiClient, user, library } = useApiClientContext();
 
@@ -23,7 +24,9 @@ export default function Playlists() : React.JSX.Element {
                             itemId={playlist.Id!}
                             caption={playlist.Name ?? "Untitled Playlist"}
                             onPress={() => {
-
+                                navigation.navigate('Playlist', {
+                                    playlist
+                                })
                             }} />
                     )
                 }} />

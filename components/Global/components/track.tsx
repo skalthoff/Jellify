@@ -27,23 +27,21 @@ export default function Track({
     showArtwork?: boolean | undefined
 }) : React.JSX.Element {
 
-    const { apiClient, sessionId } = useApiClientContext();
+    const { nowPlaying, playNewQueue } = usePlayerContext();
 
-    const { nowPlaying, resetQueue, addToQueue, play } = usePlayerContext();
-
-    const theme = useTheme();
-
-    let isPlaying = nowPlaying?.ItemId === track.Id
+    const isPlaying = nowPlaying?.ItemId === track.Id
 
     return (
         <View>
             <Separator />
             <XStack 
                 flex={1}
-                onPress={async () => {
-                    await resetQueue(false)
-                    await addToQueue(tracklist.map((track) => mapDtoToTrack(apiClient!, sessionId, track)));
-                    play(index);
+                onPress={() => {
+                    playNewQueue.mutate({
+                        track,
+                        index,
+                        tracklist
+                    });
                 }}
                 paddingVertical={"$2"}
                 paddingHorizontal={"$1"}

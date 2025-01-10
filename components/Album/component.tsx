@@ -8,10 +8,10 @@ import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { queryConfig } from "../../api/queries/query.config";
 import { H4, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
-import { useAlbumTracks } from "../../api/queries/album";
 import { usePlayerContext } from "../../player/provider";
 import RunTimeTicks from "../Global/helpers/runtimeticks";
 import Track from "../Global/components/track";
+import { useItemTracks } from "@/api/queries/tracks";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -22,9 +22,9 @@ export default function Album(props: AlbumProps): React.JSX.Element {
 
     const { apiClient, sessionId } = useApiClientContext();
 
-    const { resetQueue, addToQueue, play, nowPlaying } = usePlayerContext();
+    const { nowPlaying } = usePlayerContext();
 
-    const { data: tracks, isLoading } = useAlbumTracks(props.album.Id!, apiClient!);
+    const { data: tracks, isLoading } = useItemTracks(props.album.Id!, apiClient!);
 
     return (
         <ScrollView>
