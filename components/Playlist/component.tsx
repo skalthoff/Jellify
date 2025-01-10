@@ -11,7 +11,7 @@ import Track from "../Global/components/track";
 import { FlatList } from "react-native";
 import { queryConfig } from "@/api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
-import CachedImage from "@georstat/react-native-image-cache/lib/typescript/CachedImage";
+import { CachedImage } from "@georstat/react-native-image-cache";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
