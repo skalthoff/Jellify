@@ -12,6 +12,7 @@ import Avatar from "../Global/helpers/avatar";
 import { HomeAlbumScreen } from "./screens/album";
 import Playlists from "./helpers/playlists";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { HomePlaylistScreen } from "./screens/playlist";
 
 export const HomeStack = createNativeStackNavigator<StackParamList>();
 
@@ -58,6 +59,15 @@ export default function Home(): React.JSX.Element {
                         headerTitle: ""
                     })}
                 />
+
+                <HomeStack.Screen
+                    name="Playlist"
+                    component={HomePlaylistScreen}
+                    options={({ route }) => ({
+                        headerShown: true,
+                        headerTitle: ""
+                    })}
+                />
             </HomeStack.Navigator>
         </HomeProvider>
     );
@@ -96,7 +106,7 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
 
                     <Separator marginVertical={15} />
 
-                    <Playlists />
+                    <Playlists route={route} navigation={navigation}/>
                 </YStack>
             </ScrollView>
         </SafeAreaView>
