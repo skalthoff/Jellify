@@ -19,8 +19,10 @@ export function fetchUserPlaylists(api: Api, userId: string, playlistLibraryId: 
                 ]
             })
             .then((response) => {
-                if (response.data.Items)
+                if (response.data.Items) {
+                    console.log(response.data.Items)
                     resolve(response.data.Items.filter(playlist => playlist.Path?.includes("/config/data/playlists")))
+                }
                 else 
                     resolve([]);
             })
