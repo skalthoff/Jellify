@@ -33,7 +33,7 @@ const JellyfinApiClientContextInitializer = () => {
     const [server, setServer] = useState<JellifyServer | undefined>(serverJson ? (JSON.parse(serverJson) as JellifyServer) : undefined);
     const [library, setLibrary] = useState<JellifyLibrary | undefined>(libraryJson ? (JSON.parse(libraryJson) as JellifyLibrary) : undefined);
     const [apiClient, setApiClient] = useState<Api | undefined>(undefined);
-    const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url ?? undefined, user?.name, undefined, user?.accessToken);
+    const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url, user?.name, undefined, user?.accessToken);
 
     const signOut = () => {
       console.debug("Signing out of Jellify");
@@ -51,8 +51,11 @@ const JellyfinApiClientContextInitializer = () => {
     ]);
 
     useEffect(() => {
-      console.debug("Access Token or Server changed, creating new API client");
-      refetchApi()
+      
+      if (!apiPending) {
+        console.debug("Access Token or Server changed, creating new API client");
+        refetchApi()
+      }
     }, [
       server,
       user
