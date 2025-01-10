@@ -9,20 +9,20 @@ import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "../Global/helpers/text";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { playPauseButton } from "./helpers/buttons";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 import { HorizontalSlider } from "../Global/helpers/slider";
+import PlayPauseButton from "./helpers/buttons";
 
 export default function Player({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }): React.JSX.Element {
 
     const { apiClient } = useApiClientContext();
-    const { queue, playbackState, nowPlaying, play, pause, progress } = usePlayerContext();
+    const { queue, playbackState, nowPlaying, useTogglePlayback, progress } = usePlayerContext();
 
     return (
         <SafeAreaView>
             { nowPlaying && (
-                <YStack alignItems="center">
+                <YStack>
 
                     <XStack alignItems="center">
 
@@ -45,7 +45,6 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
 
                     <XStack 
                         marginVertical={10}
-                        flex={1}
                     >
 
                         <YStack justifyContent="flex-start" flex={4}>
@@ -63,14 +62,14 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                                 {nowPlaying.artist ?? "Unknown Artist"}</Text>
                         </YStack>
 
-                        <XStack alignItems="center">
+                        <XStack alignItems="center" flex={1}>
                             {/* Buttons for favorites, song menu go here */}
 
                         </XStack>
 
                     </XStack>
 
-                    <XStack>
+                    <XStack alignItems="center">
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progress!.position}
@@ -80,12 +79,12 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
 
                     </XStack>
 
-                    <XStack>
-                        {playPauseButton(playbackState, play, pause)}
+                    <XStack alignItems="center">
+                        <PlayPauseButton />
                     </XStack>
 
                     
-                    </YStack>
+                </YStack>
             )}
         </SafeAreaView>
     );

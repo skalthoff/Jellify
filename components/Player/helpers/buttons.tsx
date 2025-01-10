@@ -2,14 +2,17 @@ import { State } from "react-native-track-player";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Spinner } from "tamagui";
 import Icon from "../../Global/helpers/icon";
+import { usePlayerContext } from "@/player/provider";
 
-export function playPauseButton(playbackState: State | undefined, play: Function, pause: Function) {
+export default function PlayPauseButton() : React.JSX.Element {
+
+    const { playbackState, useTogglePlayback } = usePlayerContext();
 
     let button : React.JSX.Element;
 
     switch (playbackState) {
         case (State.Playing) : {
-            button = <Icon name="pause" large onPress={() => pause()} />;
+            button = <Icon name="pause" large onPress={() => useTogglePlayback.mutate(undefined)} />;
             break;
         }
     
@@ -20,7 +23,7 @@ export function playPauseButton(playbackState: State | undefined, play: Function
         }
         
         default : {
-            button = <Icon name="play" large onPress={() => play()} />
+            button = <Icon name="play" large onPress={() => useTogglePlayback.mutate(undefined)} />
             break;
         }
     }

@@ -14,12 +14,12 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { queryConfig } from "../../api/queries/query.config";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import TextTicker from 'react-native-text-ticker';
-import { playPauseButton } from "./helpers/buttons";
+import PlayPauseButton from "./helpers/buttons";
 import { skipToNext } from "react-native-track-player/lib/src/trackPlayer";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
-    const { nowPlaying, playbackState, play, pause } = usePlayerContext();
+    const { nowPlaying } = usePlayerContext();
 
     const { apiClient } = useApiClientContext();
 
@@ -77,7 +77,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </YStack>
                     
                     <XStack flex={2}>
-                        { playPauseButton(playbackState, play, pause) }
+                        <PlayPauseButton />
 
                         <Icon 
                             large

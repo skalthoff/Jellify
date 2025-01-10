@@ -16,6 +16,8 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { QueueMutation } from "./interfaces";
 import { mapDtoToTrack } from "@/helpers/mappings";
 import { QueuingType } from "@/enums/queuing-type";
+import { trigger } from "react-native-haptic-feedback";
+import { pause } from "react-native-track-player/lib/src/trackPlayer";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -24,10 +26,7 @@ interface PlayerContext {
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
     nowPlaying: JellifyTrack | undefined;
     queue: JellifyTrack[];
-    play: (index?: number | undefined) => Promise<void>,
-    pause: () => Promise<void>,
-    resetQueue: (hideMiniplayer : boolean | undefined) => Promise<void>;
-    addToQueue: (tracks: JellifyTrack[]) => Promise<void>;
+    useTogglePlayback: UseMutationResult<void, Error, number | undefined, unknown>;
     playNewQueue: UseMutationResult<void, Error, QueueMutation, unknown>;
     playbackState: State | undefined;
     progress: Progress | undefined;
@@ -56,13 +55,6 @@ const PlayerContextInitializer = () => {
             TrackPlayer.skip(index)
 
         TrackPlayer.play();
-        
-        handlePlaybackStarted(sessionId, playStateApi, nowPlaying!)
-    }
-
-    const pause = async () => {
-        TrackPlayer.pause();
-        handlePlaybackStopped(sessionId, playStateApi, nowPlaying!);
     }
     
     const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
@@ -86,8 +78,19 @@ const PlayerContextInitializer = () => {
     //#endregion Functions
     
     //#region Hooks
+    const useTogglePlayback = useMutation({
+        mutationFn: async (index?: number | undefined) => {
+            trigger("impactLight");
+            if (playbackState === State.Playing)
+                await pause();
+            else 
+                await play(index);
+        }
+    })
+
     const playNewQueue = useMutation({
         mutationFn: async (mutation: QueueMutation) => {
+            trigger("impactLight");
             await resetQueue(false)
             await addToQueue(mutation.tracklist.map((track) => {
                 return mapDtoToTrack(apiClient!, sessionId, track, QueuingType.FromSelection)
@@ -160,10 +163,7 @@ const PlayerContextInitializer = () => {
         setShowMiniplayer,
         nowPlaying,
         queue,
-        play,
-        pause,
-        addToQueue,
-        resetQueue,
+        useTogglePlayback,
         playNewQueue,
         playbackState,
         progress,
@@ -171,6 +171,7 @@ const PlayerContextInitializer = () => {
     //#endregion return
 }
 
+//#region Create PlayerContext
 export const PlayerContext = createContext<PlayerContext>({
     showPlayer: false,
     setShowPlayer: () => {},
@@ -178,10 +179,24 @@ export const PlayerContext = createContext<PlayerContext>({
     setShowMiniplayer: () => {},
     nowPlaying: undefined,
     queue: [],
-    play: async (index?: number | undefined) => {},
-    pause: async () => {},
-    resetQueue: async () => {},
-    addToQueue: async ([]) => {},
+    useTogglePlayback: {
+        mutate: () => {},
+        mutateAsync: async () => {},
+        data: undefined,
+        error: null,
+        variables: undefined,
+        isError: false,
+        isIdle: true,
+        isPaused: false,
+        isPending: false,
+        isSuccess: false,
+        status: "idle",
+        reset: () => {},
+        context: {},
+        failureCount: 0,
+        failureReason: null,
+        submittedAt: 0
+    },
     playNewQueue: {
         mutate: () => {},
         mutateAsync: async () => {},
@@ -203,6 +218,7 @@ export const PlayerContext = createContext<PlayerContext>({
     playbackState: undefined,
     progress: undefined,
 });
+//#endregion Create PlayerContext
 
 export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
     const { 
@@ -212,10 +228,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowMiniplayer, 
         nowPlaying,
         queue, 
-        play,
-        pause,
-        resetQueue,
-        addToQueue,
+        useTogglePlayback,
         playNewQueue,
         playbackState,
         progress
@@ -228,10 +241,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowMiniplayer,
         nowPlaying,
         queue,
-        play,
-        pause,
-        resetQueue,
-        addToQueue,
+        useTogglePlayback,
         playNewQueue,
         playbackState,
         progress
