@@ -1,7 +1,7 @@
 import { Api } from '@jellyfin/sdk';
 import React, { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
 import { useApi } from '../api/queries';
-import _ from 'lodash';
+import { isUndefined } from 'lodash';
 import { storage } from '../constants/storage';
 import { MMKVStorageKeys } from '../enums/mmkv-storage-keys';
 import { JellifyServer } from '../types/JellifyServer';
@@ -43,11 +43,11 @@ const JellyfinApiClientContextInitializer = () => {
     }
 
     useEffect(() => {
-      if (!apiPending)
-        console.log("Setting API client to stored values")
+      if (!apiPending && !isUndefined(api))
+        console.debug("Setting API client for use")
         setApiClient(api)
     }, [
-      apiPending
+      api
     ]);
 
     useEffect(() => {
