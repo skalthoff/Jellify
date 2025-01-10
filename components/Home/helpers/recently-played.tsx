@@ -3,10 +3,8 @@ import { ScrollView, View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import { Card } from "../../Global/helpers/card";
-import { mapDtoToTrack } from "../../../helpers/mappings";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { usePlayerContext } from "../../../player/provider";
-import { QueuingType } from "@/enums/queuing-type";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 

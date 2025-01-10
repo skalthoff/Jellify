@@ -6,7 +6,7 @@ import { H5, Text } from "@/components/Global/helpers/text";
 
 export default function ServerDetails() : React.JSX.Element {
     
-    const { server, apiClient } = useApiClientContext();
+    const { apiClient } = useApiClientContext();
     
     return (
         <YStack>
@@ -21,7 +21,7 @@ export default function ServerDetails() : React.JSX.Element {
                 <H5>Jellyfin Server</H5>
                 <XStack>
                     <Icon name="server-network" />
-                    <Text>{server!.url}</Text>
+                    <Text>{apiClient!.basePath}</Text>
                 </XStack>
             </YStack>
         </YStack>
