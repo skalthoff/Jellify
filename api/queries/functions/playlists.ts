@@ -10,6 +10,9 @@ export function fetchUserPlaylists(api: Api, userId: string, playlistLibraryId: 
             .getItems({
                 userId: userId,
                 parentId: playlistLibraryId,
+                fields: [
+                    "Path"
+                ],
                 sortBy: [
                     ItemSortBy.IsFolder,
                     ItemSortBy.SortName
@@ -20,7 +23,7 @@ export function fetchUserPlaylists(api: Api, userId: string, playlistLibraryId: 
             })
             .then((response) => {
                 if (response.data.Items) {
-                    console.log(response.data.Items)
+                    console.log(response.data.Items);
                     resolve(response.data.Items.filter(playlist => playlist.Path?.includes("/config/data/playlists")))
                 }
                 else 
