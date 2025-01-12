@@ -36,7 +36,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                 >
                     <YStack
                         alignContent="flex-start"
-                        flex={2}>
+                        flex={1}>
                         <CachedImage
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
