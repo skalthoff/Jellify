@@ -24,7 +24,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
 
     const { nowPlaying } = usePlayerContext();
 
-    const { data: tracks, isLoading } = useItemTracks(props.album.Id!, apiClient!);
+    const { data: tracks, isLoading } = useItemTracks(props.album.Id!, apiClient!, true);
 
     return (
         <ScrollView>
