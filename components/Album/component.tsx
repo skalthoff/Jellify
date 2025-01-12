@@ -56,9 +56,9 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                         
                         return (
                             <Track
-                            track={track}
-                            tracklist={tracks!}
-                            index={index}
+                                track={track}
+                                tracklist={tracks!}
+                                index={index}
                             />
                         )
                         
@@ -69,7 +69,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                         color={"$gray10"} 
                         style={{ display: "block"}}
                         >
-                        Total Runtime:
+                        Total Runtime: 
                     </Text>
                     <RunTimeTicks>{ props.album.RunTimeTicks }</RunTimeTicks>
                 </XStack>
