@@ -35,7 +35,8 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     onPress={() => navigation.navigate("Player")}
                 >
                     <YStack
-                        marginRight={5} 
+                        alignContent="flex-start"
+                        paddingRight={5}
                         flex={1}>
                         <CachedImage
                             source={getImageApi(apiClient!)
@@ -56,7 +57,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </YStack>
 
 
-                    <YStack alignContent="flex-start" flex={4}>
+                    <YStack alignContent="flex-start" flex={3}>
                         <TextTicker 
                             duration={5000}
                             loop

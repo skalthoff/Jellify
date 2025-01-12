@@ -1,4 +1,4 @@
-import { ScrollView } from "tamagui";
+import { ScrollView, useWindowDimensions } from "tamagui";
 import { useArtistAlbums } from "../../api/queries/artist";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { FlatList } from "react-native";
@@ -24,6 +24,8 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
     const [columns, setColumns] = useState<number>(2);
 
     const { apiClient } = useApiClientContext();
+
+    const { width } = useWindowDimensions();
 
     const { data: albums } = useArtistAlbums(props.artistId, apiClient!);
 
@@ -62,7 +64,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                                 caption={album.Name}
                                 subCaption={album.ProductionYear?.toString()}
                                 marginHorizontal={10}
-                                width={350 / columns}
+                                width={width / columns}
                                 cornered 
                                 itemId={album.Id!}
                                 onPress={() => {
