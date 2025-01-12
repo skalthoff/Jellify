@@ -64,8 +64,8 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             imageStyle={{
                                 position: "relative",
                                 alignSelf: "center",
-                                width: width / 1.5,
-                                height: width / 1.5,
+                                width: width / 1.3,
+                                height: width / 1.3,
                                 borderRadius: 2
                             }}
                             />
@@ -98,7 +98,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         <HorizontalSlider 
                             value={progress!.position}
                             max={progress!.duration}
-                            width={width / 1.5}
+                            width={width / 1.3}
                             props={{
                                 onValueChange: (value) => {
                                     const position = value[0];
