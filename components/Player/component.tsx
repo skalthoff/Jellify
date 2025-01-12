@@ -96,7 +96,9 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                             max={progress!.duration}
                             width={width / 1.1}
                             props={{
+                                // If user swipes off of the slider we should seek to the spot
                                 onPressOut: (event) => {
+                                    useSeekTo.mutate(progressState);
                                     setSeeking(false);
                                 },
                                 onSlideStart: (event, value) => {
