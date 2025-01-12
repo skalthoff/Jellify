@@ -38,9 +38,10 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                     }
                     imageStyle={{
                         position: "absolute",
-                        alignSelf: "center",
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        top: 0,
+                        left: 0,
+                        bottom: 0,
+                        right: 0,
                         zIndex: -99,
                         width: height,
                         height: height,
@@ -48,7 +49,15 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         borderRadius: 2
                     }}
                 />
-                <BlurView style={{ zIndex: -98 }}/>
+                <BlurView style={{ 
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    position: "absolute", 
+                    zIndex: -98 
+                    }}
+                />
 
                 <YStack>
 
