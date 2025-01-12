@@ -8,24 +8,48 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "../Global/helpers/text";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 import { HorizontalSlider } from "../Global/helpers/slider";
 import PlayPauseButton from "./helpers/buttons";
+import { BlurView } from "@react-native-community/blur";
+import React from "react";
 
 export default function Player({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }): React.JSX.Element {
 
     const { apiClient } = useApiClientContext();
-    const { queue, playbackState, nowPlaying, useTogglePlayback, progress } = usePlayerContext();
+    const { nowPlaying, progress } = usePlayerContext();
+
+    const { width } = useSafeAreaFrame();
 
     return (
         <SafeAreaView>
             { nowPlaying && (
+            <>
+                {/* Blurred album artwork background */}
+                <CachedImage
+                    source={getImageApi(apiClient!)
+                        .getItemImageUrlById(
+                            nowPlaying!.AlbumId,
+                            ImageType.Primary,
+                            { ...queryConfig.playerArtwork }
+                        )
+                    }
+                    imageStyle={{
+                        position: "relative",
+                        alignSelf: "center",
+                        width: width,
+                        height: width,
+                        resizeMode: "cover",
+                        borderRadius: 2
+                    }}
+                />
+                <BlurView blurType="dark" />
+
                 <YStack>
 
                     <XStack justifyContent="center">
-
                         <CachedImage
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
@@ -37,8 +61,8 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             imageStyle={{
                                 position: "relative",
                                 alignSelf: "center",
-                                width: 400,
-                                height: 400,
+                                width: width,
+                                height: width,
                                 borderRadius: 2
                             }}
                             />
@@ -71,8 +95,8 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         <HorizontalSlider 
                             value={progress!.position}
                             max={progress!.duration}
-                            width={400}
-                        />
+                            width={width}
+                            />
 
                     </XStack>
 
@@ -82,6 +106,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
 
                     
                 </YStack>
+            </>
             )}
         </SafeAreaView>
     );
