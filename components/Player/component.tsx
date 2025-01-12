@@ -1,5 +1,3 @@
-import { Event, useTrackPlayerEvents } from "react-native-track-player";
-import { handlePlayerError } from "./helpers/error-handlers";
 import { usePlayerContext } from "../../player/provider";
 import { Spacer, View, XStack, YStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
@@ -8,7 +6,7 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
 import { Text } from "../Global/helpers/text";
-import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 import { HorizontalSlider } from "../Global/helpers/slider";
@@ -66,8 +64,8 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             imageStyle={{
                                 position: "relative",
                                 alignSelf: "center",
-                                width: width / 1.3,
-                                height: width / 1.3,
+                                width: width / 1.25,
+                                height: width / 1.25,
                                 borderRadius: 2
                             }}
                             />
@@ -100,7 +98,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         <HorizontalSlider 
                             value={progress!.position}
                             max={progress!.duration}
-                            width={width / 1.3}
+                            width={width / 1.25}
                             props={{
                                 onValueChange: (value) => {
                                     const position = value[0];
