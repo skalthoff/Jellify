@@ -1,7 +1,7 @@
 import { Event, useTrackPlayerEvents } from "react-native-track-player";
 import { handlePlayerError } from "./helpers/error-handlers";
 import { usePlayerContext } from "../../player/provider";
-import { Spacer, XStack, YStack } from "tamagui";
+import { Spacer, View, XStack, YStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
@@ -26,7 +26,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
     const { width, height } = useSafeAreaFrame();
 
     return (
-        <SafeAreaView>
+        <View>
             { nowPlaying && (
             <>
                 {/* Blurred album artwork background */}
@@ -41,7 +41,6 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                     imageStyle={{
                         position: "absolute",
                         alignSelf: "center",
-                        zIndex: -99,
                         width: height,
                         height: height,
                         resizeMode: "cover",
@@ -134,6 +133,6 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                 </YStack>
             </>
             )}
-        </SafeAreaView>
+        </View>
     );
 }
