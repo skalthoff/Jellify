@@ -12,7 +12,7 @@ import { usePlayerContext } from "../../player/provider";
 import RunTimeTicks from "../Global/helpers/runtimeticks";
 import Track from "../Global/components/track";
 import { useItemTracks } from "@/api/queries/tracks";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -21,9 +21,10 @@ interface AlbumProps {
 
 export default function Album(props: AlbumProps): React.JSX.Element {
 
-    const { apiClient, sessionId } = useApiClientContext();
-
+    const { apiClient } = useApiClientContext();
     const { nowPlaying } = usePlayerContext();
+
+    const { width } = useSafeAreaFrame();
 
     const { data: tracks, isLoading } = useItemTracks(props.album.Id!, apiClient!, true);
 
@@ -39,8 +40,8 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                 { ...queryConfig.images})}
                                 imageStyle={{
                                     position: "relative",
-                                    width: 300,
-                                    height: 300,
+                                    width: width / 1.1,
+                                    height: width / 1.1,
                                     borderRadius: 2
                                 }}
                                 />

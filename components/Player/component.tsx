@@ -60,13 +60,13 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         borderRadius: 2
                     }}
                 />
-                <BlurView style={{ 
+                <BlurView blurType="dark" style={{ 
                     top: 0,
                     left: 0,
                     bottom: 0,
                     right: 0,
                     position: "absolute", 
-                    zIndex: -98 
+                    zIndex: -1
                     }}
                 />
 
@@ -91,7 +91,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             />
                     </XStack>
 
-                    <XStack margin={10}>
+                    <XStack margin={20}>
                         <YStack justifyContent="flex-start" flex={4}>
                             <Text fontSize={"$6"}>{nowPlaying?.title ?? "Untitled Track"}</Text>
                             <Text 
@@ -113,17 +113,24 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center" marginHorizontal={20}>
+                    <XStack justifyContent="center" marginVertical={20}>
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progressState}
                             max={progress!.duration}
                             width={width / 1.1}
                             props={{
+                                onSlideStart: (event, value) => {
+                                    setSeeking(true);
+                                },
+                                onSlideMove: (event, value) => {
+                                    setProgressState(value);
+                                },
                                 onSlideEnd: (event, value) => {
                                     const position = value;
 
                                     useSeekTo.mutate(position);
+                                    setSeeking(false);
                                 }
                             }}
                             />

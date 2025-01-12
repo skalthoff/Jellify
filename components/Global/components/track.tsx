@@ -43,7 +43,7 @@ export default function Track({
                         tracklist
                     });
                 }}
-                paddingVertical={"$2"}
+                paddingVertical={"$3"}
                 paddingHorizontal={"$1"}
             >
                 <XStack justifyContent="flex-start" flex={1}>
@@ -52,7 +52,7 @@ export default function Track({
                     </Text>
                 </XStack>
 
-                <XStack alignContent="flex-start" flex={5}>
+                <XStack alignContent="flex-start" flex={6}>
                     <Text 
                         color={isPlaying ? Colors.Primary : Colors.White}
                         lineBreakStrategyIOS="standard"
