@@ -23,7 +23,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
     const { apiClient } = useApiClientContext();
     const { nowPlaying, progress, useSeekTo } = usePlayerContext();
 
-    const { width } = useSafeAreaFrame();
+    const { width, height } = useSafeAreaFrame();
 
     return (
         <SafeAreaView>
@@ -39,10 +39,11 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         )
                     }
                     imageStyle={{
-                        position: "relative",
+                        position: "absolute",
+                        alignSelf: "center",
                         zIndex: -99,
-                        width: width,
-                        height: width,
+                        width: height,
+                        height: height,
                         resizeMode: "cover",
                         borderRadius: 2
                     }}
