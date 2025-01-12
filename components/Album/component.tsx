@@ -29,7 +29,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
     const { data: tracks, isLoading } = useItemTracks(props.album.Id!, apiClient!, true);
 
     return (
-        <SafeAreaView edges={["top", "right", "left"]}>
+        <SafeAreaView edges={["right", "left"]}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
                 <YStack alignItems="center">
                     <CachedImage
@@ -37,7 +37,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                             .getItemImageUrlById(
                                 props.album.Id!,
                                 ImageType.Primary,
-                                { ...queryConfig.images})}
+                                { ...queryConfig.playerArtwork})}
                                 imageStyle={{
                                     position: "relative",
                                     width: width / 1.1,
