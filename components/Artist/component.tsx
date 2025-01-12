@@ -11,7 +11,7 @@ import { CachedImage } from "@georstat/react-native-image-cache";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "@/api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 
 interface ArtistProps {
     artistId: string,
@@ -25,7 +25,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
 
     const { apiClient } = useApiClientContext();
 
-    const { width } = useWindowDimensions();
+    const { width } = useSafeAreaFrame();
 
     const { data: albums } = useArtistAlbums(props.artistId, apiClient!);
 
