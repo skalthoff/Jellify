@@ -37,7 +37,6 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         )
                     }
                     imageStyle={{
-                        position: "relative",
                         alignSelf: "center",
                         width: width,
                         height: width,
