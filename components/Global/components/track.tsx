@@ -50,8 +50,14 @@ export default function Track({
                     <Text>{ track.IndexNumber?.toString() ?? "" }</Text>
                 </XStack>
 
-                <XStack alignContent="flex-start" flex={8}>
-                    <Text color={isPlaying ? Colors.Primary : Colors.White}>{ track.Name ?? "Untitled Track" }</Text>
+                <XStack alignContent="flex-start" flex={5}>
+                    <Text 
+                        color={isPlaying ? Colors.Primary : Colors.White}
+                        lineBreakStrategyIOS="standard"
+                        numberOfLines={1}
+                    >
+                        { track.Name ?? "Untitled Track" }
+                    </Text>
                 </XStack>
 
                 <XStack alignContent="flex-end" flex={1}>

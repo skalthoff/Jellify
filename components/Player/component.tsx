@@ -1,7 +1,7 @@
 import { Event, useTrackPlayerEvents } from "react-native-track-player";
 import { handlePlayerError } from "./helpers/error-handlers";
 import { usePlayerContext } from "../../player/provider";
-import { XStack, YStack } from "tamagui";
+import { Spacer, XStack, YStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
@@ -39,7 +39,8 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         )
                     }
                     imageStyle={{
-                        alignSelf: "center",
+                        position: "relative",
+                        zIndex: -99,
                         width: width,
                         height: width,
                         resizeMode: "cover",
@@ -62,8 +63,8 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             imageStyle={{
                                 position: "relative",
                                 alignSelf: "center",
-                                width: width,
-                                height: width,
+                                width: width / 1.25,
+                                height: width / 1.25,
                                 borderRadius: 2
                             }}
                             />
@@ -91,12 +92,12 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center" marginTop={10}>
+                    <XStack justifyContent="center" margin={15}>
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progress!.position}
                             max={progress!.duration}
-                            width={width}
+                            width={width / 1.25}
                             />
 
                     </XStack>
@@ -108,7 +109,11 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             onPress={() => skipToPrevious()}
                             />
 
+                        <Spacer />
+
                         <PlayPauseButton />
+
+                        <Spacer />
 
                         <Icon 
                             large
