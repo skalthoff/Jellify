@@ -5,7 +5,7 @@ import { FlatList } from "react-native";
 import { Card } from "../Global/helpers/card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { H4 } from "../Global/helpers/text";
+import { H2 } from "../Global/helpers/text";
 import { useState } from "react";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
@@ -49,12 +49,12 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                     }}
                 />
 
-                <H4>Albums</H4>
+                <H2>Albums</H2>
                 <FlatList
                     contentContainerStyle={{
                         flexGrow: 1,
                         justifyContent: 'center',
-                        alignItems: "flex-start"
+                        alignItems: "center"
                     }}
                     data={albums}
                     numColumns={columns} // TODO: Make this adjustable
@@ -63,7 +63,6 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                             <Card
                                 caption={album.Name}
                                 subCaption={album.ProductionYear?.toString()}
-                                marginHorizontal={10}
                                 width={width / columns}
                                 cornered 
                                 itemId={album.Id!}
