@@ -31,13 +31,7 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
 
     // Prevent gesture event to close player if we're seeking
     useEffect(() => {
-        navigation.addListener('beforeRemove', (event) => {
-            if (!seeking) {
-                return;
-            }
-
-            event.preventDefault();
-        })
+        navigation.setOptions({ gestureEnabled: !seeking });
     }, [
         navigation,
         seeking

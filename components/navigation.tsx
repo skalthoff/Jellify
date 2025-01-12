@@ -18,7 +18,7 @@ export default function Navigation(): React.JSX.Element {
             }}
           />
         </RootStack.Group>
-        <RootStack.Group screenOptions={{ presentation: 'modal' }}>
+        <RootStack.Group screenOptions={{ presentation: 'transparentModal' }}>
           <RootStack.Screen 
             name="Player" 
             component={Player} 
