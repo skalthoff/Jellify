@@ -12,6 +12,7 @@ import { FlatList } from "react-native";
 import { queryConfig } from "@/api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
 import { CachedImage } from "@georstat/react-native-image-cache";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
@@ -27,7 +28,8 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
     const { data: tracks, isLoading } = useItemTracks(props.playlist.Id!, apiClient!);
 
     return (
-        <ScrollView>
+        <SafeAreaView edges={["top", "right", "left"]}>
+            <ScrollView contentInsetAdjustmentBehavior="automatic">
                 <YStack alignItems="center">
                     <CachedImage
                         source={getImageApi(apiClient!)
@@ -72,5 +74,6 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
                     <RunTimeTicks>{ props.playlist.RunTimeTicks }</RunTimeTicks>
                 </XStack>
             </ScrollView>
+        </SafeAreaView>
     )
 }
