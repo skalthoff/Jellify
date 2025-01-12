@@ -46,7 +46,7 @@ export default function Track({
                 paddingVertical={"$2"}
                 paddingHorizontal={"$1"}
             >
-                <XStack justifyContent="flex-end" flex={1}>
+                <XStack justifyContent="flex-start" flex={1}>
                     <Text color={isPlaying ? Colors.Primary : Colors.White}>
                         { track.IndexNumber?.toString() ?? "" }
                     </Text>
