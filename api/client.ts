@@ -3,7 +3,10 @@ import { getDeviceNameSync, getUniqueIdSync } from "react-native-device-info";
 import { name, version } from "../package.json"
 import { capitalize } from "lodash";
 
-export const client : Jellyfin  = new Jellyfin({
+/**
+ * Client object that represents Jellify on the Jellyfin server.
+ */
+export const jellifyClient: Jellyfin = new Jellyfin({
     clientInfo: {
         name: capitalize(name),
         version: version
@@ -14,7 +17,20 @@ export const client : Jellyfin  = new Jellyfin({
     }
 });
 
-export function buildApiClient (serverUrl : string): Api {
-    let jellyfin = new Jellyfin(client);
-    return jellyfin.createApi(serverUrl);
-} 
+/**
+ * Uses the jellifyClient to create a public Jellyfin API instance.
+ * @param serverUrl The URL of the Jellyfin server
+ * @returns 
+ */
+export function buildPublicApiClient(serverUrl : string) : Api {
+    return jellifyClient.createApi(serverUrl);
+}
+
+/**
+ * 
+ * @param serverUrl The URL of the Jellyfin server
+ * @param accessToken The assigned accessToken for the Jellyfin user
+ */
+export function buildAuthenticatedApiClient(serverUrl: string, accessToken: string) : Api {
+    return jellifyClient.createApi(serverUrl, accessToken);
+}

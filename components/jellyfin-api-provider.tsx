@@ -8,6 +8,7 @@ import { JellifyServer } from '../types/JellifyServer';
 import { JellifyLibrary } from '../types/JellifyLibrary';
 import { JellifyUser } from '../types/JellifyUser';
 import uuid from 'react-native-uuid';
+import { buildAuthenticatedApiClient } from '@/api/client';
 
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
@@ -32,7 +33,9 @@ const JellyfinApiClientContextInitializer = () => {
     const [user, setUser] = useState<JellifyUser | undefined>(userJson ? (JSON.parse(userJson) as JellifyUser) : undefined);
     const [server, setServer] = useState<JellifyServer | undefined>(serverJson ? (JSON.parse(serverJson) as JellifyServer) : undefined);
     const [library, setLibrary] = useState<JellifyLibrary | undefined>(libraryJson ? (JSON.parse(libraryJson) as JellifyLibrary) : undefined);
-    const [apiClient, setApiClient] = useState<Api | undefined>(undefined);
+
+    const [apiClient, setApiClient] = useState<Api | undefined>(!isUndefined(server) && !isUndefined(user) ? buildAuthenticatedApiClient(server!.url, user!.accessToken) : undefined);
+    
     const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url, user?.name, undefined, user?.accessToken);
 
     const signOut = () => {
