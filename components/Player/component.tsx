@@ -96,6 +96,9 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                             max={progress!.duration}
                             width={width / 1.1}
                             props={{
+                                onPressOut: (event) => {
+                                    setSeeking(false);
+                                },
                                 onSlideStart: (event, value) => {
                                     setSeeking(true);
                                 },
