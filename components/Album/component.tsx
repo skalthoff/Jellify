@@ -12,6 +12,7 @@ import { usePlayerContext } from "../../player/provider";
 import RunTimeTicks from "../Global/helpers/runtimeticks";
 import Track from "../Global/components/track";
 import { useItemTracks } from "@/api/queries/tracks";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -27,7 +28,8 @@ export default function Album(props: AlbumProps): React.JSX.Element {
     const { data: tracks, isLoading } = useItemTracks(props.album.Id!, apiClient!, true);
 
     return (
-        <ScrollView>
+        <SafeAreaView edges={["top", "right", "left"]}>
+            <ScrollView contentInsetAdjustmentBehavior="automatic">
                 <YStack alignItems="center">
                     <CachedImage
                         source={getImageApi(apiClient!)
@@ -35,13 +37,13 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                 props.album.Id!,
                                 ImageType.Primary,
                                 { ...queryConfig.images})}
-                        imageStyle={{
-                            position: "relative",
-                            width: 300,
-                            height: 300,
-                            borderRadius: 2
-                        }}
-                    />
+                                imageStyle={{
+                                    position: "relative",
+                                    width: 300,
+                                    height: 300,
+                                    borderRadius: 2
+                                }}
+                                />
 
                     <H4>{ props.album.Name ?? "Untitled Album" }</H4>
                     <H5>{ props.album.ProductionYear?.toString() ?? "" }</H5>
@@ -51,26 +53,27 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                     extraData={nowPlaying}
                     numColumns={1}
                     renderItem={({ item: track, index }) => {
-
+                        
                         return (
                             <Track
-                                track={track}
-                                tracklist={tracks!}
-                                index={index}
+                            track={track}
+                            tracklist={tracks!}
+                            index={index}
                             />
                         )
-
-                }}/>
+                        
+                    }}/>
 
                 <XStack justifyContent="flex-end">
                     <Text 
                         color={"$gray10"} 
                         style={{ display: "block"}}
-                    >
+                        >
                         Total Runtime:
                     </Text>
                     <RunTimeTicks>{ props.album.RunTimeTicks }</RunTimeTicks>
                 </XStack>
             </ScrollView>
+        </SafeAreaView>
     )
 }
