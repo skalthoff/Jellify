@@ -16,12 +16,15 @@ import { useApiClientContext } from "../jellyfin-api-provider";
 import TextTicker from 'react-native-text-ticker';
 import PlayPauseButton from "./helpers/buttons";
 import { skipToNext } from "react-native-track-player/lib/src/trackPlayer";
+import { useSafeAreaFrame } from "react-native-safe-area-context";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
     const { nowPlaying } = usePlayerContext();
 
     const { apiClient } = useApiClientContext();
+
+    const { width } = useSafeAreaFrame();
 
     return (
         <BlurView>
@@ -47,8 +50,8 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                             }
                             imageStyle={{
                                 position: "relative",
-                                width: 60,
-                                height: 60,
+                                width: width / 6,
+                                height: width / 6,
                                 borderRadius: 2,
                             }}
                         />
@@ -77,14 +80,14 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </YStack>
                     
                     <XStack 
-                        justifyContent="flex-end" 
+                        justifyContent="center" 
                         flex={1}
                     >
                         <PlayPauseButton />
 
                         <Icon 
                             large
-                            name="fast-forward" 
+                            name="skip-next" 
                             onPress={() => skipToNext()}
                             />
                     </XStack>

@@ -15,6 +15,8 @@ import { HorizontalSlider } from "../Global/helpers/slider";
 import PlayPauseButton from "./helpers/buttons";
 import { BlurView } from "@react-native-community/blur";
 import React from "react";
+import { skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
+import Icon from "../Global/helpers/icon";
 
 export default function Player({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }): React.JSX.Element {
 
@@ -44,7 +46,7 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         borderRadius: 2
                     }}
                 />
-                <BlurView blurType="dark" />
+                <BlurView />
 
                 <YStack>
 
@@ -100,7 +102,19 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                     </XStack>
 
                     <XStack justifyContent="center">
+                        <Icon
+                            large
+                            name="skip-previous"
+                            onPress={() => skipToPrevious()}
+                            />
+
                         <PlayPauseButton />
+
+                        <Icon 
+                            large
+                            name="skip-next" 
+                            onPress={() => skipToNext()}
+                            />                    
                     </XStack>
 
                     
