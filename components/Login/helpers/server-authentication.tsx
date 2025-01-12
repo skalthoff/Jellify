@@ -8,6 +8,7 @@ import { useAuthenticationContext } from "../provider";
 import { H1 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
 import Input from "../../Global/helpers/input";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ServerAuthentication(): React.JSX.Element {
     const { username, setUsername } = useAuthenticationContext();
@@ -45,7 +46,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     });
 
     return (
-        <View marginHorizontal={10} flex={1} justifyContent='center'>
+        <SafeAreaView>
             <H1>
                 { `Sign in to ${server?.name ?? "Jellyfin"}`}
             </H1>
@@ -88,6 +89,6 @@ export default function ServerAuthentication(): React.JSX.Element {
                         Sign in
                 </Button>
             </ZStack>
-        </View>
+        </SafeAreaView>
     );
 }
