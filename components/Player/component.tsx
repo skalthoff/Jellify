@@ -21,7 +21,7 @@ import Icon from "../Global/helpers/icon";
 export default function Player({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }): React.JSX.Element {
 
     const { apiClient } = useApiClientContext();
-    const { nowPlaying, progress } = usePlayerContext();
+    const { nowPlaying, progress, useSeekTo } = usePlayerContext();
 
     const { width } = useSafeAreaFrame();
 
@@ -63,8 +63,8 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                             imageStyle={{
                                 position: "relative",
                                 alignSelf: "center",
-                                width: width / 1.25,
-                                height: width / 1.25,
+                                width: width / 1.5,
+                                height: width / 1.5,
                                 borderRadius: 2
                             }}
                             />
@@ -92,12 +92,19 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center" margin={15}>
+                    <XStack justifyContent="center" marginHorizontal={20}>
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progress!.position}
                             max={progress!.duration}
-                            width={width / 1.25}
+                            width={width / 1.5}
+                            props={{
+                                onValueChange: (value) => {
+                                    const position = value[0];
+
+                                    useSeekTo.mutate(position);
+                                }
+                            }}
                             />
 
                     </XStack>

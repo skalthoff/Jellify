@@ -50,8 +50,8 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                             }
                             imageStyle={{
                                 position: "relative",
-                                width: width / 6,
-                                height: width / 6,
+                                width: width / 8,
+                                height: width / 8,
                                 borderRadius: 2,
                             }}
                         />
