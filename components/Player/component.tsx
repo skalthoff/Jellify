@@ -15,8 +15,10 @@ import { BlurView } from "@react-native-community/blur";
 import React, { useEffect, useState } from "react";
 import { skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
 import Icon from "../Global/helpers/icon";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamList } from "../types";
 
-export default function Player({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }): React.JSX.Element {
+export default function Player({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
     
     const { apiClient } = useApiClientContext();
@@ -26,6 +28,20 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
     const [progressState, setProgressState] = useState<number>(progress!.position);
 
     const { width, height } = useSafeAreaFrame();
+
+    // Prevent gesture event to close player if we're seeking
+    useEffect(() => {
+        navigation.addListener('beforeRemove', (event) => {
+            if (!seeking) {
+                return;
+            }
+
+            event.preventDefault();
+        })
+    }, [
+        navigation,
+        seeking
+    ])
 
     useEffect(() => {
         if (!seeking)
@@ -98,8 +114,9 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                                 fontSize={"$6"}
                                 bold
                                 onPress={() => {
-                                    navigation.navigate("Artist", {
-                                        artistName: nowPlaying.artist,
+                                    navigation.goBack(); // Dismiss player modal
+                                    navigation.push("Artist", {
+                                        artistName: nowPlaying.artist!,
                                         artistId: nowPlaying.ArtistId
                                     })
                                 }}
