@@ -12,16 +12,27 @@ import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 import { HorizontalSlider } from "../Global/helpers/slider";
 import PlayPauseButton from "./helpers/buttons";
 import { BlurView } from "@react-native-community/blur";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
 import Icon from "../Global/helpers/icon";
 
 export default function Player({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }): React.JSX.Element {
 
+    
     const { apiClient } = useApiClientContext();
     const { nowPlaying, progress, useSeekTo } = usePlayerContext();
+    
+    const [seeking, setSeeking] = useState<boolean>(false);
+    const [progressState, setProgressState] = useState<number>(progress!.position);
 
     const { width, height } = useSafeAreaFrame();
+
+    useEffect(() => {
+        if (!seeking)
+            setProgressState(progress!.position)
+    }, [
+        progress
+    ]);
 
     return (
         <View>
@@ -105,12 +116,12 @@ export default function Player({ navigation }: { navigation : NavigationHelpers<
                     <XStack justifyContent="center" marginHorizontal={20}>
                         {/* playback progress goes here */}
                         <HorizontalSlider 
-                            value={progress!.position}
+                            value={progressState}
                             max={progress!.duration}
                             width={width / 1.1}
                             props={{
-                                onValueChange: (value) => {
-                                    const position = value[0];
+                                onSlideEnd: (event, value) => {
+                                    const position = value;
 
                                     useSeekTo.mutate(position);
                                 }
