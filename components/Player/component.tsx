@@ -54,38 +54,6 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
         <View>
             { nowPlaying && (
             <>
-                {/* Blurred album artwork background */}
-                <CachedImage
-                    source={getImageApi(apiClient!)
-                        .getItemImageUrlById(
-                            nowPlaying!.AlbumId,
-                            ImageType.Primary,
-                            { ...queryConfig.playerArtwork }
-                        )
-                    }
-                    imageStyle={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        bottom: 0,
-                        right: 0,
-                        zIndex: -99,
-                        width: height,
-                        height: height,
-                        resizeMode: "cover",
-                        borderRadius: 2
-                    }}
-                />
-                <BlurView blurType="dark" style={{ 
-                    top: 0,
-                    left: 0,
-                    bottom: 0,
-                    right: 0,
-                    position: "absolute", 
-                    zIndex: -99
-                    }}
-                />
-
                 <YStack>
 
                     <XStack justifyContent="center">
