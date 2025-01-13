@@ -6,7 +6,7 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
 import { H5, Text } from "../Global/helpers/text";
-import { useSafeAreaFrame } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { HorizontalSlider } from "../Global/helpers/slider";
 import PlayPauseButton from "./helpers/buttons";
 import React, { useEffect, useState } from "react";
@@ -43,12 +43,12 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
     ]);
 
     return (
-        <View>
+        <SafeAreaView edges={["right", "left"]}>
             { nowPlaying && (
             <>
                 <YStack>
 
-                    <YStack justifyContent="center">
+                    <YStack alignContent="center">
                         <Text>Playing from</Text>
                         <H5>THING</H5>
                     </YStack>
@@ -72,7 +72,7 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                             />
                     </XStack>
 
-                    <XStack margin={20}>
+                    <XStack marginHorizontal={20} paddingVertical={5}>
                         <YStack justifyContent="flex-start" flex={4}>
                             <Text fontSize={"$6"}>{nowPlaying?.title ?? "Untitled Track"}</Text>
                             <Text 
@@ -100,7 +100,7 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                         <HorizontalSlider 
                             value={progressState}
                             max={progress!.duration}
-                            width={width / 1.25}
+                            width={width / 1.1}
                             props={{
                                 // If user swipes off of the slider we should seek to the spot
                                 onPressOut: (event) => {
@@ -124,12 +124,10 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
 
                     </XStack>
 
-                    <XStack alignContent="space-between">
+                    <XStack>
                         <XStack alignContent="flex-start">
                             <RunTimeSeconds>{progressState}</RunTimeSeconds>
                         </XStack>
-
-                        <Spacer />
 
                         <XStack alignContent="flex-end">
                             <RunTimeSeconds>{progress!.duration}</RunTimeSeconds>
@@ -160,6 +158,6 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                 </YStack>
             </>
             )}
-        </View>
+        </SafeAreaView>
     );
 }
