@@ -95,7 +95,7 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center" marginTop={20}>
+                    <XStack justifyContent="center" marginTop={"$5"}>
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progressState}
@@ -124,7 +124,7 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
 
                     </XStack>
 
-                    <XStack marginHorizontal={20} marginVertical={10}>
+                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$7"}>
                         <XStack flex={1} alignContent="flex-start">
                             <RunTimeSeconds>{progressState}</RunTimeSeconds>
                         </XStack>
@@ -134,7 +134,7 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="space-evenly" marginVertical={20}>
+                    <XStack justifyContent="space-evenly" marginVertical={"$7"}>
                         <Icon
                             large
                             name="rewind-15"
