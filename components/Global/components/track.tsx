@@ -1,10 +1,8 @@
 import { usePlayerContext } from "@/player/provider";
 import React from "react";
-import { Separator, useTheme, View, XStack, YStack } from "tamagui";
+import { Separator, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
-import RunTimeTicks from "../helpers/time-codes";
-import { useApiClientContext } from "../../jellyfin-api-provider";
-import { mapDtoToTrack } from "@/helpers/mappings";
+import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { Colors } from "@/enums/colors";
 
