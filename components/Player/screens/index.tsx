@@ -11,7 +11,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { seekBy, skipToPrevious, skipToNext } from "react-native-track-player/lib/src/trackPlayer";
-import { YStack, XStack } from "tamagui";
+import { YStack, XStack, Spacer } from "tamagui";
 import PlayPauseButton from "../helpers/buttons";
 import { H5, Text } from "@/components/Global/helpers/text";
 import Icon from "@/components/Global/helpers/icon";
@@ -171,12 +171,16 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             name="speaker-multiple"
                         />
 
+                        <Spacer />
+
                         <Icon
                             name="arrow-down-drop-circle"
                             onPress={() => {
                                 navigation.goBack();
                             }}
                         />
+
+                        <Spacer />
 
 
                         <Icon
