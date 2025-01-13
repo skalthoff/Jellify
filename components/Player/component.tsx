@@ -37,7 +37,7 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
 
     useEffect(() => {
         if (!seeking)
-            setProgressState(progress!.position)
+            setProgressState(Math.floor(progress!.position))
     }, [
         progress
     ]);
@@ -125,11 +125,11 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                     </XStack>
 
                     <XStack marginHorizontal={20} marginVertical={10}>
-                        <XStack alignItems="flex-start">
+                        <XStack flex={1} alignContent="flex-start">
                             <RunTimeSeconds>{progressState}</RunTimeSeconds>
                         </XStack>
 
-                        <XStack alignItems="flex-end">
+                        <XStack flex={1} alignContent="flex-end">
                             <RunTimeSeconds>{progress!.duration}</RunTimeSeconds>
                         </XStack>
                     </XStack>
