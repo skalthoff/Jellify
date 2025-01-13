@@ -59,6 +59,8 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
                                 track={track}
                                 tracklist={tracks!}
                                 index={index}
+                                queueName={props.playlist.Name ?? "Untitled Playlist"}
+                                showArtwork
                             />
                         )
 
