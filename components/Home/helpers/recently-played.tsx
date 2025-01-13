@@ -28,7 +28,8 @@ export default function RecentlyPlayed(): React.JSX.Element {
                                 playNewQueue.mutate({ 
                                     track: recentlyPlayedTrack, 
                                     index: index,
-                                    tracklist: recentTracks
+                                    tracklist: recentTracks,
+                                    queueName: "Recently Played"
                                 });
                             }}
                         />                                

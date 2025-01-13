@@ -20,7 +20,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
     
     const { apiClient } = useApiClientContext();
-    const { nowPlaying, progress, useSeekTo } = usePlayerContext();
+    const { nowPlaying, progress, useSeekTo, queueName } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
     const [progressState, setProgressState] = useState<number>(progress!.position);
@@ -50,7 +50,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                     <YStack alignItems="center">
                         <Text>Playing from</Text>
-                        <H5>THING</H5>
+                        <H5>{ queueName ?? "Queue"}</H5>
                     </YStack>
 
                     <XStack justifyContent="center">

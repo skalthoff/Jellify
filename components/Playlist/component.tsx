@@ -23,7 +23,7 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
 
     const { apiClient, sessionId } = useApiClientContext();
 
-    const { playNewQueue, nowPlaying } = usePlayerContext();
+    const { nowPlaying } = usePlayerContext();
 
     const { data: tracks, isLoading } = useItemTracks(props.playlist.Id!, apiClient!);
 

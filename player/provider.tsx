@@ -27,6 +27,7 @@ interface PlayerContext {
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
     nowPlaying: JellifyTrack | undefined;
     queue: JellifyTrack[];
+    queueName: string | undefined;
     useTogglePlayback: UseMutationResult<void, Error, number | undefined, unknown>;
     useSeekTo: UseMutationResult<void, Error, number, unknown>;
     playNewQueue: UseMutationResult<void, Error, QueueMutation, unknown>;
@@ -47,6 +48,7 @@ const PlayerContextInitializer = () => {
 
     const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(undefined);
     const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
+    const [queueName, setQueueName] = useState<string | undefined>(undefined);
     //#endregion State
 
     
@@ -106,11 +108,12 @@ const PlayerContextInitializer = () => {
     const playNewQueue = useMutation({
         mutationFn: async (mutation: QueueMutation) => {
             trigger("impactLight");
-            await resetQueue(false)
+            await resetQueue(false);
             await addToQueue(mutation.tracklist.map((track) => {
                 return mapDtoToTrack(apiClient!, sessionId, track, QueuingType.FromSelection)
             }));
             
+            setQueueName(mutation.queueName);
             await play(mutation.index);
         }
     });
@@ -178,6 +181,7 @@ const PlayerContextInitializer = () => {
         setShowMiniplayer,
         nowPlaying,
         queue,
+        queueName,
         useTogglePlayback,
         useSeekTo,
         playNewQueue,
@@ -195,6 +199,7 @@ export const PlayerContext = createContext<PlayerContext>({
     setShowMiniplayer: () => {},
     nowPlaying: undefined,
     queue: [],
+    queueName: undefined,
     useTogglePlayback: {
         mutate: () => {},
         mutateAsync: async () => {},
@@ -262,6 +267,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowMiniplayer, 
         nowPlaying,
         queue, 
+        queueName,
         useTogglePlayback,
         useSeekTo,
         playNewQueue,
@@ -276,6 +282,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowMiniplayer,
         nowPlaying,
         queue,
+        queueName,
         useTogglePlayback,
         useSeekTo,
         playNewQueue,

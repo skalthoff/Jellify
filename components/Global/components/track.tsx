@@ -17,11 +17,13 @@ export default function Track({
     track,
     tracklist,
     index,
+    queueName,
     showArtwork
 } : {
     track: BaseItemDto,
     tracklist: BaseItemDto[],
     index: number,
+    queueName?: string | undefined,
     showArtwork?: boolean | undefined
 }) : React.JSX.Element {
 
@@ -38,7 +40,8 @@ export default function Track({
                     playNewQueue.mutate({
                         track,
                         index,
-                        tracklist
+                        tracklist,
+                        queueName: queueName ? queueName : track.Album ? track.Album! : "Queue"
                     });
                 }}
                 paddingVertical={"$3"}
