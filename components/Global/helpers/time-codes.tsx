@@ -18,7 +18,7 @@ export function RunTimeTicks({ children } : { children?: number | null | undefin
 function calculateRunTimeFromSeconds(seconds: number) : string {
     const runTimeHours = Math.floor(seconds / 3600);
     const runTimeMinutes = Math.floor((seconds % 3600) / 60)
-    const runTimeSeconds = seconds % 60;
+    const runTimeSeconds = Math.floor(seconds % 60);
 
     return (runTimeHours != 0 ? `${padRunTimeNumber(runTimeHours)}:` : "") + 
         (runTimeHours != 0 ? `${padRunTimeNumber(runTimeMinutes)}:` : `${runTimeMinutes}:`) +

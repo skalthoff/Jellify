@@ -125,8 +125,15 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                     </XStack>
 
                     <XStack alignContent="space-between">
-                        <RunTimeSeconds>{progress!.position}</RunTimeSeconds>
-                        <RunTimeSeconds>{progress!.duration}</RunTimeSeconds>
+                        <XStack alignContent="flex-start">
+                            <RunTimeSeconds>{progress!.position}</RunTimeSeconds>
+                        </XStack>
+
+                        <Spacer />
+                        
+                        <XStack alignContent="flex-end">
+                            <RunTimeSeconds>{progress!.duration}</RunTimeSeconds>
+                        </XStack>
                     </XStack>
 
                     <XStack justifyContent="center">
