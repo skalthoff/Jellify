@@ -86,7 +86,9 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                                     })
                                 }}
                             >
-                                {nowPlaying.artist ?? "Unknown Artist"}</Text>
+                                {nowPlaying.artist ?? "Unknown Artist"}
+                            </Text>
+                            <Text fontSize={"$6"} color={"$gray10"}>{ nowPlaying!.album ?? "" }</Text>
                         </YStack>
 
                         <XStack alignItems="center" flex={1}>
@@ -124,7 +126,7 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
 
                     </XStack>
 
-                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$7"}>
+                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$5"}>
                         <XStack flex={1} justifyContent="flex-start">
                             <RunTimeSeconds>{progressState}</RunTimeSeconds>
                         </XStack>
