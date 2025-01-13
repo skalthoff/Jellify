@@ -7,6 +7,7 @@ export type StackParamList = {
     Discover: undefined;
     Tabs: undefined,
     Player: undefined,
+    Queue: undefined,
     Artist: { 
         artistId: string,
         artistName: string
@@ -32,3 +33,5 @@ export type HomeArtistProps = NativeStackScreenProps<StackParamList, 'Artist'>;
 export type HomeAlbumProps = NativeStackScreenProps<StackParamList, 'Album'>;
 
 export type HomePlaylistProps = NativeStackScreenProps<StackParamList, "Playlist">;
+
+export type QueueProps = NativeStackScreenProps<StackParamList, "Queue">;

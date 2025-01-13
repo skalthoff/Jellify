@@ -14,7 +14,7 @@ import Playlists from "./helpers/playlists";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HomePlaylistScreen } from "./screens/playlist";
 
-export const HomeStack = createNativeStackNavigator<StackParamList>();
+const HomeStack = createNativeStackNavigator<StackParamList>();
 
 export default function Home(): React.JSX.Element {
 
