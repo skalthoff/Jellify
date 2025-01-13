@@ -10,7 +10,7 @@ import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { HorizontalSlider } from "../Global/helpers/slider";
 import PlayPauseButton from "./helpers/buttons";
 import React, { useEffect, useState } from "react";
-import { skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
+import { seekBy, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
 import Icon from "../Global/helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
@@ -48,7 +48,7 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
             <>
                 <YStack>
 
-                    <YStack alignContent="center">
+                    <YStack alignItems="center">
                         <Text>Playing from</Text>
                         <H5>THING</H5>
                     </YStack>
@@ -124,34 +124,42 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
 
                     </XStack>
 
-                    <XStack>
-                        <XStack alignContent="flex-start">
+                    <XStack marginHorizontal={20} marginVertical={10}>
+                        <XStack alignItems="flex-start">
                             <RunTimeSeconds>{progressState}</RunTimeSeconds>
                         </XStack>
 
-                        <XStack alignContent="flex-end">
+                        <XStack alignItems="flex-end">
                             <RunTimeSeconds>{progress!.duration}</RunTimeSeconds>
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center">
+                    <XStack justifyContent="space-evenly" marginVertical={20}>
+                        <Icon
+                            large
+                            name="rewind-15"
+                            onPress={() => seekBy(-15)}
+                        />
+                        
                         <Icon
                             large
                             name="skip-previous"
                             onPress={() => skipToPrevious()}
-                            />
-
-                        <Spacer />
+                        />
 
                         <PlayPauseButton />
-
-                        <Spacer />
 
                         <Icon 
                             large
                             name="skip-next" 
                             onPress={() => skipToNext()}
-                            />                    
+                        />    
+
+                        <Icon
+                            large
+                            name="fast-forward-15"
+                            onPress={() => seekBy(15)}  
+                        />              
                     </XStack>
 
                     
