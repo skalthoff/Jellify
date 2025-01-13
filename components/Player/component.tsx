@@ -125,11 +125,15 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                     </XStack>
 
                     <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$7"}>
-                        <XStack flex={1} alignContent="flex-start">
+                        <XStack flex={1} justifyContent="flex-start">
                             <RunTimeSeconds>{progressState}</RunTimeSeconds>
                         </XStack>
 
-                        <XStack flex={1} alignContent="flex-end">
+                        <XStack flex={1} justifyContent="center">
+                            { /** Track metadata can go here */}
+                        </XStack>
+
+                        <XStack flex={1} justifyContent="flex-end">
                             <RunTimeSeconds>{progress!.duration}</RunTimeSeconds>
                         </XStack>
                     </XStack>
