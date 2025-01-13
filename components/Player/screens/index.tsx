@@ -142,7 +142,6 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                     <XStack justifyContent="space-evenly" marginVertical={"$7"}>
                         <Icon
-                            large
                             name="rewind-15"
                             onPress={() => seekBy(-15)}
                         />
@@ -162,15 +161,25 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         />    
 
                         <Icon
-                            large
                             name="fast-forward-15"
                             onPress={() => seekBy(15)}  
                         />              
                     </XStack>
 
-                    <XStack>
+                    <XStack justifyContent="space-evenly">
                         <Icon
-                            large
+                            name="speaker-multiple"
+                        />
+
+                        <Icon
+                            name="arrow-down-drop-circle"
+                            onPress={() => {
+                                navigation.goBack();
+                            }}
+                        />
+
+
+                        <Icon
                             name="playlist-music"
                             onPress={() => {
                                 navigation.navigate("Queue");
