@@ -17,13 +17,17 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                 name="Player"
                 component={PlayerScreen}
                 options={{
-                    headerShown: false
+                    headerShown: false,
+                    headerTitle: "",
                 }}
             />
 
             <PlayerStack.Screen
                 name="Queue"
                 component={Queue}
+                options={{
+                    headerTitle: ""
+                }}
             />
 
         </PlayerStack.Navigator>
