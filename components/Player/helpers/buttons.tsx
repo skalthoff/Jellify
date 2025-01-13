@@ -18,7 +18,7 @@ export default function PlayPauseButton() : React.JSX.Element {
     
         case (State.Buffering) :
         case (State.Loading) : {
-            button = <Spinner marginHorizontal={5} size="small" color={Colors.Primary}/>;
+            button = <Spinner marginHorizontal={10} size="small" color={Colors.Primary}/>;
             break;
         }
         
