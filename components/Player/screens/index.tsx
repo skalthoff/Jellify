@@ -140,7 +140,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="space-evenly" marginVertical={"$7"}>
+                    <XStack justifyContent="space-evenly" marginVertical={"$5"}>
                         <Icon
                             name="rewind-15"
                             onPress={() => seekBy(-15)}
@@ -166,7 +166,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         />              
                     </XStack>
 
-                    <XStack justifyContent="space-evenly">
+                    <XStack justifyContent="space-evenly" marginVertical={"$3"}>
                         <Icon
                             name="speaker-multiple"
                         />
