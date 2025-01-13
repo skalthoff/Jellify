@@ -5,7 +5,7 @@ import { useApiClientContext } from "../jellyfin-api-provider";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
-import { Text } from "../Global/helpers/text";
+import { H5, Text } from "../Global/helpers/text";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { HorizontalSlider } from "../Global/helpers/slider";
 import PlayPauseButton from "./helpers/buttons";
@@ -14,6 +14,7 @@ import { skipToNext, skipToPrevious } from "react-native-track-player/lib/src/tr
 import Icon from "../Global/helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
+import { RunTimeSeconds } from "../Global/helpers/time-codes";
 
 export default function Player({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -46,6 +47,11 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
             { nowPlaying && (
             <>
                 <YStack>
+
+                    <YStack justifyContent="center">
+                        <Text>Playing from</Text>
+                        <H5>THING</H5>
+                    </YStack>
 
                     <XStack justifyContent="center">
                         <CachedImage
@@ -89,12 +95,12 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center" marginVertical={20}>
+                    <XStack justifyContent="center" marginTop={20}>
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progressState}
                             max={progress!.duration}
-                            width={width / 1.1}
+                            width={width / 1.25}
                             props={{
                                 // If user swipes off of the slider we should seek to the spot
                                 onPressOut: (event) => {
@@ -116,6 +122,11 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                             }}
                             />
 
+                    </XStack>
+
+                    <XStack alignContent="space-between">
+                        <RunTimeSeconds>{progress!.position}</RunTimeSeconds>
+                        <RunTimeSeconds>{progress!.duration}</RunTimeSeconds>
                     </XStack>
 
                     <XStack justifyContent="center">

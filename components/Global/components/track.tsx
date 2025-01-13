@@ -1,8 +1,8 @@
 import { usePlayerContext } from "@/player/provider";
 import React from "react";
-import { Separator, useTheme, View, XStack } from "tamagui";
+import { Separator, useTheme, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
-import RunTimeTicks from "../helpers/runtimeticks";
+import RunTimeTicks from "../helpers/time-codes";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { mapDtoToTrack } from "@/helpers/mappings";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
@@ -44,7 +44,7 @@ export default function Track({
                     });
                 }}
                 paddingVertical={"$3"}
-                paddingHorizontal={"$1"}
+                marginHorizontal={"$1"}
             >
                 <XStack justifyContent="flex-start" flex={1}>
                     <Text color={isPlaying ? Colors.Primary : Colors.White}>
@@ -52,7 +52,7 @@ export default function Track({
                     </Text>
                 </XStack>
 
-                <XStack alignContent="flex-start" flex={6}>
+                <YStack justifyContent="flex-start" flex={6}>
                     <Text 
                         color={isPlaying ? Colors.Primary : Colors.White}
                         lineBreakStrategyIOS="standard"
@@ -60,7 +60,7 @@ export default function Track({
                     >
                         { track.Name ?? "Untitled Track" }
                     </Text>
-                </XStack>
+                </YStack>
 
                 <XStack alignContent="flex-end" flex={1}>
                     <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>

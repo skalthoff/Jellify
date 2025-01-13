@@ -5,7 +5,7 @@ import { ScrollView, XStack, YStack } from "tamagui";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { usePlayerContext } from "@/player/provider";
 import { useItemTracks } from "@/api/queries/tracks";
-import RunTimeTicks from "../Global/helpers/runtimeticks";
+import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
 import { FlatList } from "react-native";
@@ -28,7 +28,7 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
     const { data: tracks, isLoading } = useItemTracks(props.playlist.Id!, apiClient!);
 
     return (
-        <SafeAreaView edges={["top", "right", "left"]}>
+        <SafeAreaView edges={["right", "left"]}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
                 <YStack alignItems="center">
                     <CachedImage
