@@ -79,7 +79,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     
                     <XStack 
                         justifyContent="flex-start" 
-                        flex={1}
+                        flex={2}
                     >
                         <PlayPauseButton />
 

@@ -65,7 +65,7 @@ export default function Track({
                     alignContent="center" 
                     justifyContent="center" 
                     flex={1}
-                    minHeight={width / 9}
+                    minHeight={showArtwork ? width / 9 : "unset"}
                 >
                     { showArtwork ? (
                         <CachedImage
