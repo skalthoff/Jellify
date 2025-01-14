@@ -1,6 +1,5 @@
 import React, {  } from "react";
-import { Spacer, Spinner, XStack, YStack } from "tamagui";
-import { State, usePlaybackState } from "react-native-track-player";
+import { XStack, YStack } from "tamagui";
 import { usePlayerContext } from "../../player/provider";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";

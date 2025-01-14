@@ -90,21 +90,21 @@ function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Eleme
                     />
                 }>
                 <YStack alignContent='flex-start'>
-                    <XStack>
+                    <XStack margin={"$2"}>
                         <H3>{`Hi, ${user!.name}`}</H3>
                         <YStack />
                         <Avatar maxHeight={30} itemId={user!.id} />
                     </XStack>
 
-                    <Separator marginVertical={15} />
+                    <Separator marginVertical={"$2"} />
 
                     <RecentArtists route={route} navigation={navigation} />
 
-                    <Separator marginVertical={15} />
+                    <Separator marginVertical={"$3"} />
 
                     <RecentlyPlayed />
 
-                    <Separator marginVertical={15} />
+                    <Separator marginVertical={"$3"} />
 
                     <Playlists route={route} navigation={navigation}/>
                 </YStack>

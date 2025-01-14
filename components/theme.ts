@@ -1,4 +1,4 @@
-import { DarkTheme } from "@react-navigation/native";
+import { DarkTheme, DefaultTheme } from "@react-navigation/native";
 import { Colors } from "../enums/colors";
 
 export const JellifyDarkTheme = {
@@ -10,4 +10,12 @@ export const JellifyDarkTheme = {
       primary: Colors.Primary,
     },  
     dark: true
+};
+
+export const JellifyLightTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: Colors.Primary
+  }
 };
