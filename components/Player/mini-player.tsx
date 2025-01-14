@@ -73,7 +73,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                             repeatSpacer={20}
                             marqueeDelay={1000} 
                         >
-                            <Text>{nowPlaying?.artist ?? ""}</Text>
+                            <Text color={Colors.Primary}>{nowPlaying?.artist ?? ""}</Text>
                         </TextTicker>
                     </YStack>
                     
