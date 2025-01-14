@@ -87,14 +87,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             </Text>
 
                             <Text 
-                                bold
                                 fontSize={"$6"}
                                 color={Colors.Primary}
                                 onPress={() => {
                                     navigation.goBack(); // Dismiss player modal
                                     navigation.push("Artist", {
-                                        artistName: nowPlaying.artist!,
-                                        artistId: nowPlaying.ArtistId
+                                        artistName: nowPlaying!.item.ArtistItems![0].Name ?? "Untitled",
+                                        artistId: nowPlaying!.item.ArtistItems![0].Id!,
                                     })
                                 }}
                             >
@@ -102,7 +101,6 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             </Text>
 
                             <Text 
-                                bold
                                 fontSize={"$6"} 
                                 color={"$gray10"}
                             >
