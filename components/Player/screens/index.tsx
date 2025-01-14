@@ -102,7 +102,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                             <Text 
                                 fontSize={"$6"} 
-                                color={"$gray10"}
+                                color={Colors.Secondary}
                             >
                                 { nowPlaying!.album ?? "" }
                             </Text>
