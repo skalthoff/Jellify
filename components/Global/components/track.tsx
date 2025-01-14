@@ -58,10 +58,15 @@ export default function Track({
                         });
                     }
                 }}
-                paddingVertical={"$3"}
+                paddingVertical={"$2"}
                 marginHorizontal={"$1"}
             >
-                <XStack alignContent="center" justifyContent="center" flex={1}>
+                <XStack 
+                    alignContent="center" 
+                    justifyContent="center" 
+                    flex={1}
+                    minHeight={width / 9}
+                >
                     { showArtwork ? (
                         <CachedImage
                             source={getImageApi(apiClient!)
@@ -96,7 +101,7 @@ export default function Track({
                         { track.Name ?? "Untitled Track" }
                     </Text>
 
-                    { showArtwork || (track.ArtistCount ?? 0 > 1) && (
+                    { (showArtwork || (track.ArtistCount ?? 0 > 1)) && (
                         <Text lineBreakStrategyIOS="standard" numberOfLines={1}>{ track.Artists?.join(", ") ?? "" }</Text>
                     )}
                 </YStack>
