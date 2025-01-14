@@ -45,6 +45,7 @@ export default function Track({
         <View>
             <Separator />
             <XStack 
+                alignContent="center"
                 flex={1}
                 onPress={() => {
                     if (onPress) {
