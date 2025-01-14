@@ -78,7 +78,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </YStack>
                     
                     <XStack 
-                        justifyContent="center" 
+                        justifyContent="flex-start" 
                         flex={1}
                     >
                         <PlayPauseButton />
