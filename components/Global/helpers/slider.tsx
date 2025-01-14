@@ -68,7 +68,7 @@ export function VerticalSlider(props: SliderVerticalProps) : React.JSX.Element {
             <JellifySliderTrack>
                 <JellifyActiveSliderTrack />
             </JellifySliderTrack>
-            <TamaguiSlider.Thumb circular index={0} />
+            <JellifySliderThumb circular index={0} size={"$2"} />
         </TamaguiSlider>
     )
 }
