@@ -87,6 +87,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             </Text>
 
                             <Text 
+                                bold
                                 fontSize={"$6"}
                                 color={Colors.Primary}
                                 onPress={() => {
@@ -101,8 +102,9 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             </Text>
 
                             <Text 
+                                bold
                                 fontSize={"$6"} 
-                                color={Colors.Secondary}
+                                color={"$gray10"}
                             >
                                 { nowPlaying!.album ?? "" }
                             </Text>
