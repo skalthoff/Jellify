@@ -30,7 +30,7 @@ export default function Track({
     onPress?: () => void | undefined
 }) : React.JSX.Element {
 
-    const { nowPlaying, playNewQueue } = usePlayerContext();
+    const { nowPlaying, usePlayNewQueue } = usePlayerContext();
 
     const isPlaying = nowPlaying?.ItemId === track.Id
 
@@ -43,7 +43,7 @@ export default function Track({
                     if (onPress) {
                         onPress();
                     } else {
-                        playNewQueue.mutate({
+                        usePlayNewQueue.mutate({
                             track,
                             index,
                             tracklist,

@@ -8,7 +8,7 @@ import { usePlayerContext } from "../../../player/provider";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
-    const { playNewQueue } = usePlayerContext();
+    const { usePlayNewQueue } = usePlayerContext();
     const { apiClient, sessionId } = useApiClientContext();
     const { recentTracks } = useHomeContext();
 
@@ -25,7 +25,7 @@ export default function RecentlyPlayed(): React.JSX.Element {
                             width={150}
                             itemId={recentlyPlayedTrack.AlbumId!}
                             onPress={() => {
-                                playNewQueue.mutate({ 
+                                usePlayNewQueue.mutate({ 
                                     track: recentlyPlayedTrack, 
                                     index: index,
                                     tracklist: recentTracks,

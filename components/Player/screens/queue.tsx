@@ -2,11 +2,10 @@ import Track from "@/components/Global/components/track";
 import { usePlayerContext } from "@/player/provider";
 import { FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { skip } from "react-native-track-player/lib/src/trackPlayer";
 
 export default function Queue(): React.JSX.Element {
 
-    const { queue } = usePlayerContext();
+    const { queue, useSkip } = usePlayerContext();
 
     return (
         <SafeAreaView edges={["right", "left"]}>
@@ -21,7 +20,7 @@ export default function Queue(): React.JSX.Element {
                             index={index}
                             showArtwork
                             onPress={() => {
-                                skip(index);
+                                useSkip.mutate(index);
                             }}
                         />
                     )

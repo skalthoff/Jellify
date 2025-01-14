@@ -10,7 +10,6 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { seekBy, skipToPrevious, skipToNext } from "react-native-track-player/lib/src/trackPlayer";
 import { YStack, XStack, Spacer } from "tamagui";
 import PlayPauseButton from "../helpers/buttons";
 import { H5, Text } from "@/components/Global/helpers/text";
@@ -22,7 +21,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
     
     const { apiClient } = useApiClientContext();
-    const { playbackState, nowPlaying, progress, useSeekTo, queueName } = usePlayerContext();
+    const { playbackState, nowPlaying, progress, useSeekTo, useSkip, usePrevious, queueName } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
     const [progressState, setProgressState] = useState<number>(progress!.position);
@@ -160,13 +159,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     <XStack justifyContent="space-evenly" marginVertical={"$3"}>
                         <Icon
                             name="rewind-15"
-                            onPress={() => seekBy(-15)}
+                            onPress={() => useSeekTo.mutate(progress!.position - 15)}
                         />
                         
                         <Icon
                             large
                             name="skip-previous"
-                            onPress={() => skipToPrevious()}
+                            onPress={() => usePrevious.mutate()}
                         />
 
                         <PlayPauseButton />
@@ -174,12 +173,12 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         <Icon 
                             large
                             name="skip-next" 
-                            onPress={() => skipToNext()}
+                            onPress={() => useSkip.mutate(undefined)}
                         />    
 
                         <Icon
                             name="fast-forward-15"
-                            onPress={() => seekBy(15)}  
+                            onPress={() => useSeekTo.mutate(progress!.position + 15)}  
                         />              
                     </XStack>
 

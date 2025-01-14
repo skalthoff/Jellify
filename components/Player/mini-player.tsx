@@ -15,12 +15,11 @@ import { queryConfig } from "../../api/queries/query.config";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import TextTicker from 'react-native-text-ticker';
 import PlayPauseButton from "./helpers/buttons";
-import { skipToNext } from "react-native-track-player/lib/src/trackPlayer";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
-    const { nowPlaying } = usePlayerContext();
+    const { nowPlaying, useSkip } = usePlayerContext();
 
     const { apiClient } = useApiClientContext();
 
@@ -88,7 +87,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         <Icon 
                             large
                             name="skip-next" 
-                            onPress={() => skipToNext()}
+                            onPress={() => useSkip.mutate(undefined)}
                             />
                     </XStack>
                 </XStack>
