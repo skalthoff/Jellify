@@ -73,8 +73,8 @@ export default function Track({
                             }
                             imageStyle={{
                                 position: "relative",
-                                width: width / 7,
-                                height: width / 7,
+                                width: width / 9,
+                                height: width / 9,
                                 borderRadius: 2,
                             }}
                         />
@@ -86,14 +86,19 @@ export default function Track({
                 )}
                 </XStack>
 
-                <YStack justifyContent="flex-start" flex={6}>
+                <YStack alignContent="center" justifyContent="flex-start" flex={6}>
                     <Text 
+                        bold
                         color={isPlaying ? Colors.Primary : Colors.White}
                         lineBreakStrategyIOS="standard"
                         numberOfLines={1}
                     >
                         { track.Name ?? "Untitled Track" }
                     </Text>
+
+                    { showArtwork || (track.Artists?.length ?? 0 > 1) && (
+                        <Text lineBreakStrategyIOS="standard" numberOfLines={1}>{ track.Artists?.join(", ") ?? "" }</Text>
+                    )}
                 </YStack>
 
                 <XStack alignContent="center" flex={1}>
