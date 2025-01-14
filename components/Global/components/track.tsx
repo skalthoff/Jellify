@@ -54,7 +54,7 @@ export default function Track({
                 paddingVertical={"$3"}
                 marginHorizontal={"$1"}
             >
-                <XStack justifyContent="flex-end" flex={1} paddingRight={"$1"}>
+                <XStack justifyContent="center" flex={1}>
                     <Text color={isPlaying ? Colors.Primary : Colors.White}>
                         { track.IndexNumber?.toString() ?? "" }
                     </Text>
@@ -70,7 +70,7 @@ export default function Track({
                     </Text>
                 </YStack>
 
-                <XStack alignContent="flex-end" flex={1}>
+                <XStack alignContent="center" flex={1}>
                     <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
                 </XStack>
             </XStack>
