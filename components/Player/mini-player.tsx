@@ -36,7 +36,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     onPress={() => navigation.navigate("Player")}
                 >
                     <YStack
-                        alignContent="flex-start"
+                        alignContent="center"
                         flex={1}>
                         <CachedImage
                             source={getImageApi(apiClient!)
