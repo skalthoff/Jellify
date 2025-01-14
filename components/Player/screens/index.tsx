@@ -15,12 +15,14 @@ import { YStack, XStack, Spacer } from "tamagui";
 import PlayPauseButton from "../helpers/buttons";
 import { H5, Text } from "@/components/Global/helpers/text";
 import Icon from "@/components/Global/helpers/icon";
+import { Colors } from "@/enums/colors";
+import { State } from "react-native-track-player";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
     
     const { apiClient } = useApiClientContext();
-    const { nowPlaying, progress, useSeekTo, queueName } = usePlayerContext();
+    const { playbackState, nowPlaying, progress, useSeekTo, queueName } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
     const [progressState, setProgressState] = useState<number>(progress!.position);
@@ -65,8 +67,8 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             imageStyle={{
                                 position: "relative",
                                 alignSelf: "center",
-                                width: width / 1.1,
-                                height: width / 1.1,
+                                width: playbackState === State.Playing ? width / 1.2 : width / 1.35,
+                                height: playbackState === State.Playing ? width / 1.2 : width / 1.35,
                                 borderRadius: 2
                             }}
                             />
@@ -74,10 +76,16 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                     <XStack marginHorizontal={20} paddingVertical={5}>
                         <YStack justifyContent="flex-start" flex={4}>
-                            <Text fontSize={"$6"}>{nowPlaying?.title ?? "Untitled Track"}</Text>
+                            <Text 
+                                bold 
+                                fontSize={"$6"}
+                            >
+                                {nowPlaying?.title ?? "Untitled Track"}
+                            </Text>
+
                             <Text 
                                 fontSize={"$6"}
-                                bold
+                                color={Colors.Primary}
                                 onPress={() => {
                                     navigation.goBack(); // Dismiss player modal
                                     navigation.push("Artist", {
@@ -88,7 +96,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             >
                                 {nowPlaying.artist ?? "Unknown Artist"}
                             </Text>
-                            <Text fontSize={"$6"} color={"$gray10"}>{ nowPlaying!.album ?? "" }</Text>
+
+                            <Text 
+                                fontSize={"$6"} 
+                                color={"$gray10"}
+                            >
+                                { nowPlaying!.album ?? "" }
+                            </Text>
                         </YStack>
 
                         <XStack alignItems="center" flex={1}>
