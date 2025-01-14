@@ -36,12 +36,7 @@ export function mapDtoToTrack(api: Api, sessionId: string, item: BaseItemDto, qu
         duration: item.RunTimeTicks,
         artwork: getImageApi(api).getItemImageUrlById(item.Id!),
 
-        ItemId: item.Id!,
-        ArtistId: item.AlbumArtists![0].Id!,
-        AlbumId: item.AlbumId!,
-        Name: item.Name,
-        RunTimeTicks: item.RunTimeTicks,
-        IndexNumber: item.IndexNumber,
+        item,
         QueuingType: queuingType ?? QueuingType.DirectlyQueued
     } as JellifyTrack
 }

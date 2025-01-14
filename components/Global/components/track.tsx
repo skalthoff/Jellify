@@ -39,7 +39,7 @@ export default function Track({
     const { apiClient } = useApiClientContext();
     const { nowPlaying, usePlayNewQueue } = usePlayerContext();
 
-    const isPlaying = nowPlaying?.ItemId === track.Id
+    const isPlaying = nowPlaying?.item.Id === track.Id;
 
     return (
         <View>

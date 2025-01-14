@@ -15,8 +15,8 @@ export default function Queue(): React.JSX.Element {
                 renderItem={({ item: queueItem, index }) => {
                     return (
                         <Track
-                            track={queueItem}
-                            tracklist={queue}
+                            track={queueItem.item}
+                            tracklist={queue.map((track) => track.item)}
                             index={index}
                             showArtwork
                             onPress={() => {
