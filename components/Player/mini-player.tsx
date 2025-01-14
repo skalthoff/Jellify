@@ -57,7 +57,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </YStack>
 
 
-                    <YStack alignContent="flex-start" flex={3}>
+                    <YStack alignContent="flex-start" flex={3} maxWidth={"$20"}>
                         <TextTicker 
                             duration={5000}
                             loop
@@ -78,7 +78,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </YStack>
                     
                     <XStack 
-                        justifyContent="flex-start" 
+                        justifyContent="flex-end" 
                         flex={2}
                     >
                         <PlayPauseButton />
