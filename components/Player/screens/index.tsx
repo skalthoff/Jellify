@@ -57,6 +57,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     <XStack 
                         animation={"quick"} 
                         justifyContent="center"
+                        minHeight={width / 1.1}
                     >
                         <CachedImage
                             source={getImageApi(apiClient!)
@@ -69,8 +70,8 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             imageStyle={{
                                 position: "relative",
                                 alignSelf: "center",
-                                width: playbackState === State.Playing ? width / 1.15 : width / 1.35,
-                                height: playbackState === State.Playing ? width / 1.15 : width / 1.35,
+                                width: playbackState === State.Playing ? width / 1.1 : width / 1.4,
+                                height: playbackState === State.Playing ? width / 1.1 : width / 1.4,
                                 borderRadius: 2
                             }}
                             />
