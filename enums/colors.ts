@@ -1,7 +1,7 @@
 export enum Colors {
-    White = "#ffffff",
-    Primary = "#cc2f71",
-    Secondary = "#100538",
-    Black = "#000000",
-    Background = "#0a0322"
+    Primary = "#cc2f71",    // Fuchsia
+    Secondary = "#a58ef5",  // Lilac
+    Background = "#0a0322", // Russian Purple
+    White = "#ffffff",      // White
+    Black = "#000000",      // Black
 }
