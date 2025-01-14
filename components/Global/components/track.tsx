@@ -66,7 +66,7 @@ export default function Track({
                         <CachedImage
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
-                                    nowPlaying!.AlbumId,
+                                    track.AlbumId ?? "",
                                     ImageType.Primary,
                                     { ...queryConfig.images }
                                 )
