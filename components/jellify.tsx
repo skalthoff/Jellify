@@ -6,7 +6,7 @@ import Navigation from "./navigation";
 import Login from "./Login/component";
 import { JellyfinAuthenticationProvider } from "./Login/provider";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { JellifyTheme } from "./theme";
+import { JellifyDarkTheme } from "./theme";
 import { PlayerProvider } from "../player/provider";
 
 export default function Jellify(): React.JSX.Element {
@@ -24,7 +24,7 @@ function App(): React.JSX.Element {
   const { server, library } = useApiClientContext();
   
   return (
-    <NavigationContainer theme={JellifyTheme}>
+    <NavigationContainer theme={JellifyDarkTheme}>
       <SafeAreaProvider>
         { server && library ? (
           <PlayerProvider>

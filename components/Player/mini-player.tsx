@@ -26,7 +26,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
     const { width } = useSafeAreaFrame();
 
     return (
-        <BlurView>
+        <BlurView overlayColor={Colors.Background}>
             { nowPlaying && (
 
                 <XStack 
