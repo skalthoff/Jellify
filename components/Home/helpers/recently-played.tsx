@@ -14,7 +14,7 @@ export default function RecentlyPlayed(): React.JSX.Element {
 
     return (
         <View>
-            <H2 marginLeft={15}>Play it again</H2>
+            <H2 marginLeft={"$2"}>Play it again</H2>
             <ScrollView horizontal>
                 { recentTracks && recentTracks.map((recentlyPlayedTrack, index) => {
                     return (

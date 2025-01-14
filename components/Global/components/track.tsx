@@ -11,6 +11,7 @@ interface TrackProps {
     tracklist: BaseItemDto[];
     index: number;
     showArtwork?: boolean | undefined;
+    onPress?: () => void | undefined
 }
 
 export default function Track({
@@ -18,13 +19,15 @@ export default function Track({
     tracklist,
     index,
     queueName,
-    showArtwork
+    showArtwork,
+    onPress
 } : {
     track: BaseItemDto,
     tracklist: BaseItemDto[],
     index: number,
     queueName?: string | undefined,
-    showArtwork?: boolean | undefined
+    showArtwork?: boolean | undefined,
+    onPress?: () => void | undefined
 }) : React.JSX.Element {
 
     const { nowPlaying, playNewQueue } = usePlayerContext();
@@ -37,12 +40,16 @@ export default function Track({
             <XStack 
                 flex={1}
                 onPress={() => {
-                    playNewQueue.mutate({
-                        track,
-                        index,
-                        tracklist,
-                        queueName: queueName ? queueName : track.Album ? track.Album! : "Queue"
-                    });
+                    if (onPress) {
+                        onPress();
+                    } else {
+                        playNewQueue.mutate({
+                            track,
+                            index,
+                            tracklist,
+                            queueName: queueName ? queueName : track.Album ? track.Album! : "Queue"
+                        });
+                    }
                 }}
                 paddingVertical={"$3"}
                 marginHorizontal={"$1"}

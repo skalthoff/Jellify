@@ -55,7 +55,10 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         <H5>{ queueName ?? "Queue"}</H5>
                     </YStack>
 
-                    <XStack justifyContent="center">
+                    <XStack 
+                        animation={"quick"} 
+                        justifyContent="center"
+                    >
                         <CachedImage
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
@@ -67,8 +70,8 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             imageStyle={{
                                 position: "relative",
                                 alignSelf: "center",
-                                width: playbackState === State.Playing ? width / 1.2 : width / 1.35,
-                                height: playbackState === State.Playing ? width / 1.2 : width / 1.35,
+                                width: playbackState === State.Playing ? width / 1.15 : width / 1.35,
+                                height: playbackState === State.Playing ? width / 1.15 : width / 1.35,
                                 borderRadius: 2
                             }}
                             />
