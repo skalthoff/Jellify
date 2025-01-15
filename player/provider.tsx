@@ -17,7 +17,7 @@ import { QueueMutation } from "./interfaces";
 import { mapDtoToTrack } from "@/helpers/mappings";
 import { QueuingType } from "@/enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
-import { pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
+import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
 import { convertRunTimeTicksToSeconds } from "@/helpers/runtimeticks";
 
 interface PlayerContext {
@@ -57,7 +57,7 @@ const PlayerContextInitializer = () => {
     //#region Functions
     const play = async (index?: number | undefined) => {
 
-        if (index)
+        if (index && index > 0)
             TrackPlayer.skip(index)
 
         TrackPlayer.play();
@@ -77,7 +77,7 @@ const PlayerContextInitializer = () => {
         
         await TrackPlayer.add(tracks, insertIndex);
         
-        setQueue(buildNewQueue(queue, tracks, insertIndex))
+        setQueue(await getQueue() as JellifyTrack[])
         
         setShowMiniplayer(true);
     }
