@@ -1,5 +1,7 @@
 import { Card, View } from "tamagui";
 import { H5, Text } from "./text";
+import { Colors } from "@/enums/colors";
+import Icon from "./icon";
 
 export default function IconCard({ 
     name, 
@@ -29,11 +31,12 @@ export default function IconCard({
                 onPress={onPress}
             >
                 <Card.Header>
+                    <Icon color={Colors.Background} name={name} large />
                 </Card.Header>
                 <Card.Footer padded>
           
                 </Card.Footer>
-                <Card.Background>
+                <Card.Background backgroundColor={Colors.Primary}>
 
                 </Card.Background>
             </Card>
