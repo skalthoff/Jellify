@@ -4,7 +4,7 @@ import { RouteProp } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import Albums from "./component"
 
-export default function AlbumScreen({
+export default function AlbumsScreen({
     route,
     navigation
 } : {

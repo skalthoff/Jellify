@@ -6,6 +6,7 @@ import { ArtistScreen } from "../Artist/screens";
 import { AlbumScreen } from "../Album/screens";
 import { PlaylistScreen } from "../Playlist/screens";
 import ArtistsScreen from "../Artists/screen";
+import AlbumsScreen from "../Albums/screen";
 
 const LibraryStack = createNativeStackNavigator<StackParamList>();
 
@@ -56,6 +57,17 @@ export default function Library(): React.JSX.Element {
                     headerShown: true,
                     headerTitle: ""
                 })}
+            />
+
+            <LibraryStack.Screen
+                name="Albums"
+                component={AlbumsScreen}
+                options={{
+                    headerLargeTitle: true,
+                    headerLargeTitleStyle: {
+                        fontFamily: 'Aileron-Bold'
+                    }
+                }}
             />
 
             <LibraryStack.Screen
