@@ -6,11 +6,13 @@ import Icon from "./icon";
 export default function IconCard({ 
     name, 
     onPress,
+    width,
     caption,
     subCaption,
  }: { 
     name: string, 
     onPress: () => void,
+    width?: number | undefined,
     caption?: string | undefined,
     subCaption?: string | undefined
 }) : React.JSX.Element {
@@ -26,8 +28,8 @@ export default function IconCard({
                 animation="bouncy"
                 hoverStyle={{ scale: 0.925 }}
                 pressStyle={{ scale: 0.875 }}
-                width={150}
-                height={150}
+                width={width ? width : 150}
+                height={width ? width : 150}
                 onPress={onPress}
             >
                 <Card.Header>

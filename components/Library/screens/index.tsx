@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import Categories from "./categories";
 import IconCard from "@/components/Global/helpers/icon-card";
 import { StackParamList } from "@/components/types";
@@ -13,15 +13,20 @@ export default function LibraryScreen({
     route: RouteProp<StackParamList, "Library">,
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
+
+    const { width } = useSafeAreaFrame();
+
     return (
-        <SafeAreaView>
+        <SafeAreaView edges={["top", "right", "left"]}>
             <FlatList
+                contentInsetAdjustmentBehavior="automatic"
                 data={Categories}
                 numColumns={2}
                 renderItem={({ index, item }) => {
                     return (
                         <IconCard 
                             name={item.iconName}
+                            width={width / 2.1}
                             onPress={() => {
                                 navigation.navigate(item.name)
                             }}
