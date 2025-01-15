@@ -48,13 +48,16 @@ export async function handlePlaybackProgressUpdated(sessionId: string, playstate
             }
         });
     } else {
-        console.debug("Reporting playback position");
-        await playstateApi.reportPlaybackProgress({
-            playbackProgressInfo: {
-                SessionId: sessionId,
-                ItemId: track.ItemId,
-                PositionTicks: convertSecondsToRunTimeTicks(progress.position)
-            }
-        });
+        // DO NOTHING, reporting playback will just eat up power
+        // Jellyfin can keep track of progress, we're going to intentionally
+        // only give it the "greatest hits" (i.e., anything that involves user interaction)
+        // console.debug("Reporting playback position");
+        // await playstateApi.reportPlaybackProgress({
+        //     playbackProgressInfo: {
+        //         SessionId: sessionId,
+        //         ItemId: track.ItemId,
+        //         PositionTicks: convertSecondsToRunTimeTicks(progress.position)
+        //     }
+        // });
     };
 }

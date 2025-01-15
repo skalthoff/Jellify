@@ -162,11 +162,9 @@ const PlayerContextInitializer = () => {
 
             case (Event.PlaybackActiveTrackChanged) : {
 
-                console.debug("Active track changed");
-
                 if ((await TrackPlayer.getActiveTrack() as JellifyTrack | undefined) !== nowPlaying) {    
                     // Sleep to prevent flickering in players when skipping to a queue index
-                    sleep(250).then(async () => {
+                    sleep(100).then(async () => {
                         setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack | undefined);
                     });
                 }
