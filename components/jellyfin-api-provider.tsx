@@ -8,11 +8,10 @@ import { JellifyServer } from '../types/JellifyServer';
 import { JellifyLibrary } from '../types/JellifyLibrary';
 import { JellifyUser } from '../types/JellifyUser';
 import uuid from 'react-native-uuid';
-import { buildAuthenticatedApiClient } from '@/api/client';
+import { buildAuthenticatedApiClient, buildPublicApiClient } from '@/api/client';
 
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
-  apiPending: boolean;
   sessionId: string;
   server: JellifyServer | undefined;
   setServer: React.Dispatch<SetStateAction<JellifyServer | undefined>>;
@@ -36,8 +35,6 @@ const JellyfinApiClientContextInitializer = () => {
 
     const [apiClient, setApiClient] = useState<Api | undefined>(!isUndefined(server) && !isUndefined(user) ? buildAuthenticatedApiClient(server!.url, user!.accessToken) : undefined);
     
-    const { data: api, isPending: apiPending, refetch: refetchApi } = useApi(server?.url, user?.name, undefined, user?.accessToken);
-
     const signOut = () => {
       console.debug("Signing out of Jellify");
       setUser(undefined);
@@ -46,23 +43,16 @@ const JellyfinApiClientContextInitializer = () => {
     }
 
     useEffect(() => {
-      if (!apiPending && !isUndefined(api))
-        console.debug("Setting API client for use")
-        setApiClient(api)
-    }, [
-      api
-    ]);
-
-    useEffect(() => {
-      
-      if (!apiPending) {
-        console.debug("Access Token or Server changed, creating new API client");
-        refetchApi()
-      }
+      if (server && user)
+        setApiClient(buildAuthenticatedApiClient(server.url, user.accessToken));
+      else if (server)
+        setApiClient(buildPublicApiClient(server.url));
+      else
+        setApiClient(undefined);
     }, [
       server,
       user
-    ])
+    ]);
 
     useEffect(() => {
       if (server) {
@@ -103,7 +93,6 @@ const JellyfinApiClientContextInitializer = () => {
 
     return { 
       apiClient, 
-      apiPending,
       sessionId,
       server,
       setServer,
@@ -118,7 +107,6 @@ const JellyfinApiClientContextInitializer = () => {
 export const JellyfinApiClientContext =
   createContext<JellyfinApiClientContext>({ 
     apiClient: undefined, 
-    apiPending: true,
     sessionId: "",
     server: undefined,
     setServer: () => {},
@@ -134,7 +122,6 @@ export const JellyfinApiClientProvider: ({ children }: {
 }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
   const { 
     apiClient, 
-    apiPending, 
     sessionId,
     server,
     setServer,
@@ -150,7 +137,6 @@ export const JellyfinApiClientProvider: ({ children }: {
   return (
     <JellyfinApiClientContext.Provider value={{ 
       apiClient, 
-      apiPending, 
       sessionId,
       server,
       setServer,
