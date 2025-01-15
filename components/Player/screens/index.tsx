@@ -91,7 +91,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 color={Colors.Primary}
                                 onPress={() => {
                                     navigation.goBack(); // Dismiss player modal
-                                    navigation.navigate("Artist", {
+                                    navigation.push("Artist", {
                                         artistName: nowPlaying!.item.ArtistItems![0].Name ?? "Untitled",
                                         artistId: nowPlaying!.item.ArtistItems![0].Id!,
                                     })

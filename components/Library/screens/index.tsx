@@ -26,6 +26,7 @@ export default function LibraryScreen({
                     return (
                         <IconCard 
                             name={item.iconName}
+                            caption={item.name}
                             width={width / 2.1}
                             onPress={() => {
                                 navigation.navigate(item.name)
