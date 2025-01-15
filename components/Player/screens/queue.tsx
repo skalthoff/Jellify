@@ -12,6 +12,7 @@ export default function Queue(): React.JSX.Element {
             <FlatList
                 data={queue}
                 extraData={nowPlaying}
+                initialScrollIndex={queue.indexOf(nowPlaying!)}
                 numColumns={1}
                 renderItem={({ item: queueItem, index }) => {
                     return (

@@ -122,21 +122,20 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             width={width / 1.1}
                             props={{
                                 // If user swipes off of the slider we should seek to the spot
-                                onPressOut: (event) => {
-                                    useSeekTo.mutate(progressState);
+                                onPressOut: () => {
                                     setSeeking(false);
+                                    useSeekTo.mutate(progressState);
                                 },
-                                onSlideStart: (event, value) => {
+                                onSlideStart: () => {
                                     setSeeking(true);
                                 },
                                 onSlideMove: (event, value) => {
+                                    setSeeking(true);
                                     setProgressState(value);
                                 },
                                 onSlideEnd: (event, value) => {
-                                    const position = value;
-
-                                    useSeekTo.mutate(position);
                                     setSeeking(false);
+                                    useSeekTo.mutate(value);
                                 }
                             }}
                             />
