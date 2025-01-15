@@ -5,7 +5,7 @@ import { queryConfig } from "../query.config";
 
 export function fetchRecentlyPlayed(api: Api, libraryId: string): Promise<BaseItemDto[]> {
 
-    console.debug("Fetching recently played items");
+    console.debug("Fetching recently played items", api);
 
     return new Promise(async (resolve, reject) => {
         getItemsApi(api)

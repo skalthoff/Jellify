@@ -4,11 +4,11 @@ import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./helpers/index";
 import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
-import _ from "lodash";
+import _, { isNumber, isUndefined } from "lodash";
 import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
-import { handlePlaybackProgressUpdated, handlePlaybackStarted, handlePlaybackState, handlePlaybackStopped } from "./handlers";
+import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
 import { useSetupPlayer } from "@/player/hooks";
 import { UPDATE_INTERVAL } from "./config";
 import { sleep } from "@/helpers/sleep";
@@ -17,7 +17,8 @@ import { QueueMutation } from "./interfaces";
 import { mapDtoToTrack } from "@/helpers/mappings";
 import { QueuingType } from "@/enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
-import { pause } from "react-native-track-player/lib/src/trackPlayer";
+import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
+import { convertRunTimeTicksToSeconds } from "@/helpers/runtimeticks";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -26,8 +27,12 @@ interface PlayerContext {
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
     nowPlaying: JellifyTrack | undefined;
     queue: JellifyTrack[];
+    queueName: string | undefined;
     useTogglePlayback: UseMutationResult<void, Error, number | undefined, unknown>;
-    playNewQueue: UseMutationResult<void, Error, QueueMutation, unknown>;
+    useSeekTo: UseMutationResult<void, Error, number, unknown>;
+    useSkip: UseMutationResult<void, Error, number | undefined, unknown>;
+    usePrevious: UseMutationResult<void, Error, void, unknown>;
+    usePlayNewQueue: UseMutationResult<void, Error, QueueMutation, unknown>;
     playbackState: State | undefined;
     progress: Progress | undefined;
 }
@@ -45,13 +50,14 @@ const PlayerContextInitializer = () => {
 
     const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(undefined);
     const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
+    const [queueName, setQueueName] = useState<string | undefined>(undefined);
     //#endregion State
 
     
     //#region Functions
     const play = async (index?: number | undefined) => {
 
-        if (index)
+        if (index && index > 0)
             TrackPlayer.skip(index)
 
         TrackPlayer.play();
@@ -71,7 +77,7 @@ const PlayerContextInitializer = () => {
         
         await TrackPlayer.add(tracks, insertIndex);
         
-        setQueue(buildNewQueue(queue, tracks, insertIndex))
+        setQueue(await getQueue() as JellifyTrack[])
         
         setShowMiniplayer(true);
     }
@@ -86,16 +92,47 @@ const PlayerContextInitializer = () => {
             else 
                 await play(index);
         }
+    });
+
+    const useSeekTo = useMutation({
+        mutationFn: async (position: number) => {
+            trigger('impactLight');
+            await seekTo(position);
+
+            handlePlaybackProgressUpdated(sessionId, playStateApi, nowPlaying!, { 
+                buffered: 0, 
+                position, 
+                duration: convertRunTimeTicksToSeconds(nowPlaying!.duration!) 
+            });
+        }
+    });
+
+    const useSkip = useMutation({
+        mutationFn: async (index?: number | undefined) => {
+            trigger("impactLight")
+            if (!isUndefined(index))
+                skip(index)
+            else
+                skipToNext();
+        }
+    });
+
+    const usePrevious = useMutation({
+        mutationFn: async () => {
+            trigger("impactLight")
+            await skipToPrevious();
+        }
     })
 
-    const playNewQueue = useMutation({
+    const usePlayNewQueue = useMutation({
         mutationFn: async (mutation: QueueMutation) => {
             trigger("impactLight");
-            await resetQueue(false)
+            await resetQueue(false);
             await addToQueue(mutation.tracklist.map((track) => {
                 return mapDtoToTrack(apiClient!, sessionId, track, QueuingType.FromSelection)
             }));
             
+            setQueueName(mutation.queueName);
             await play(mutation.index);
         }
     });
@@ -104,6 +141,8 @@ const PlayerContextInitializer = () => {
 
     //#region RNTP Setup
     const isPlayerReady = useSetupPlayer().isSuccess;
+    const { state: playbackState } = usePlaybackState();
+    const progress = useProgress(UPDATE_INTERVAL);
 
     useTrackPlayerEvents([
         Event.PlaybackProgressUpdated,
@@ -113,7 +152,7 @@ const PlayerContextInitializer = () => {
         switch (event.type) {
 
             case (Event.PlaybackState) : {
-                handlePlaybackState(sessionId, playStateApi, await TrackPlayer.getActiveTrack() as JellifyTrack, event.state);
+                handlePlaybackState(sessionId, playStateApi, await TrackPlayer.getActiveTrack() as JellifyTrack, event.state, progress);
                 break;
             }
             case (Event.PlaybackProgressUpdated) : {
@@ -123,11 +162,9 @@ const PlayerContextInitializer = () => {
 
             case (Event.PlaybackActiveTrackChanged) : {
 
-                console.debug("Active track changed");
-
                 if ((await TrackPlayer.getActiveTrack() as JellifyTrack | undefined) !== nowPlaying) {    
                     // Sleep to prevent flickering in players when skipping to a queue index
-                    sleep(250).then(async () => {
+                    sleep(100).then(async () => {
                         setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack | undefined);
                     });
                 }
@@ -135,8 +172,6 @@ const PlayerContextInitializer = () => {
         }
     })
 
-    const { state: playbackState } = usePlaybackState();
-    const progress = useProgress(UPDATE_INTERVAL);
 
     useEffect(() => {
         if (!showMiniplayer)
@@ -163,8 +198,12 @@ const PlayerContextInitializer = () => {
         setShowMiniplayer,
         nowPlaying,
         queue,
+        queueName,
         useTogglePlayback,
-        playNewQueue,
+        useSeekTo,
+        useSkip,
+        usePrevious,
+        usePlayNewQueue,
         playbackState,
         progress,
     }
@@ -179,6 +218,7 @@ export const PlayerContext = createContext<PlayerContext>({
     setShowMiniplayer: () => {},
     nowPlaying: undefined,
     queue: [],
+    queueName: undefined,
     useTogglePlayback: {
         mutate: () => {},
         mutateAsync: async () => {},
@@ -197,7 +237,61 @@ export const PlayerContext = createContext<PlayerContext>({
         failureReason: null,
         submittedAt: 0
     },
-    playNewQueue: {
+    useSeekTo: {
+        mutate: () => {},
+        mutateAsync: async () => {},
+        data: undefined,
+        error: null,
+        variables: undefined,
+        isError: false,
+        isIdle: true,
+        isPaused: false,
+        isPending: false,
+        isSuccess: false,
+        status: "idle",
+        reset: () => {},
+        context: {},
+        failureCount: 0,
+        failureReason: null,
+        submittedAt: 0
+    },
+    useSkip: {
+        mutate: () => {},
+        mutateAsync: async () => {},
+        data: undefined,
+        error: null,
+        variables: undefined,
+        isError: false,
+        isIdle: true,
+        isPaused: false,
+        isPending: false,
+        isSuccess: false,
+        status: "idle",
+        reset: () => {},
+        context: {},
+        failureCount: 0,
+        failureReason: null,
+        submittedAt: 0
+    },
+    usePrevious: {
+        mutate: () => {},
+        mutateAsync: async () => {},
+        data: undefined,
+        error: null,
+        variables: undefined,
+        isError: false,
+        isIdle: true,
+        isPaused: false,
+        isPending: false,
+        isSuccess: false,
+        status: "idle",
+        reset: () => {},
+        context: {},
+        failureCount: 0,
+        failureReason: null,
+        submittedAt: 0
+    },
+    usePlayNewQueue: {
         mutate: () => {},
         mutateAsync: async () => {},
         data: undefined,
@@ -228,8 +322,12 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowMiniplayer, 
         nowPlaying,
         queue, 
+        queueName,
         useTogglePlayback,
-        playNewQueue,
+        useSeekTo,
+        useSkip,
+        usePrevious,
+        usePlayNewQueue,
         playbackState,
         progress
     } = PlayerContextInitializer();
@@ -241,8 +339,12 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowMiniplayer,
         nowPlaying,
         queue,
+        queueName,
         useTogglePlayback,
-        playNewQueue,
+        useSeekTo,
+        useSkip,
+        usePrevious,
+        usePlayNewQueue,
         playbackState,
         progress
     }}>
