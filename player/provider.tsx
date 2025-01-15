@@ -4,7 +4,7 @@ import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./helpers/index";
 import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
-import _ from "lodash";
+import _, { isNumber, isUndefined } from "lodash";
 import { buildNewQueue } from "./helpers/queue";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
@@ -110,7 +110,7 @@ const PlayerContextInitializer = () => {
     const useSkip = useMutation({
         mutationFn: async (index?: number) => {
             trigger("impactLight")
-            if (index)
+            if (isNumber(index))
                 skip(index)
             else
                 skipToNext();
