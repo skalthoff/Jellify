@@ -3,7 +3,10 @@ import Artist from "../component";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../types";
 
-export function ArtistScreen({ route, navigation } : { 
+export function ArtistScreen({ 
+    route, 
+    navigation 
+} : { 
     route: RouteProp<StackParamList, "Artist">, 
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {

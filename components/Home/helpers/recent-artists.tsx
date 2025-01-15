@@ -4,7 +4,7 @@ import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import { ProvidedHomeProps } from "../../types";
 import { FlatList } from "react-native";
-import { Card } from "../../Global/helpers/card";
+import { ItemCard } from "../../Global/helpers/item-card";
 import { getPrimaryBlurhashFromDto } from "../../../helpers/blurhash";
 
 export default function RecentArtists({ navigation }: ProvidedHomeProps): React.JSX.Element {
@@ -18,7 +18,7 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                 data={recentArtists}   
                 renderItem={({ item: recentArtist}) => {
                     return (
-                        <Card 
+                        <ItemCard 
                             artistName={recentArtist.Name!}
                             blurhash={getPrimaryBlurhashFromDto(recentArtist)}
                             itemId={recentArtist.Id!}
@@ -31,7 +31,7 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                                     }
                                 )}
                             }>
-                        </Card>
+                        </ItemCard>
                     )
                 }}
             />

@@ -2,7 +2,7 @@ import { ScrollView, useWindowDimensions } from "tamagui";
 import { useArtistAlbums } from "../../api/queries/artist";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { FlatList } from "react-native";
-import { Card } from "../Global/helpers/card";
+import { ItemCard } from "../Global/helpers/item-card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
 import { H2 } from "../Global/helpers/text";
@@ -60,7 +60,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                     numColumns={columns} // TODO: Make this adjustable
                     renderItem={({ item: album }) => {
                         return (
-                            <Card
+                            <ItemCard
                                 caption={album.Name}
                                 subCaption={album.ProductionYear?.toString()}
                                 width={(width / 1.1) / columns}

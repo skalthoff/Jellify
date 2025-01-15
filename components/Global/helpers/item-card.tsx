@@ -19,7 +19,7 @@ interface CardProps extends TamaguiCardProps {
     cornered?: boolean;
 }
 
-export function Card(props: CardProps) {
+export function ItemCard(props: CardProps) {
 
     const { apiClient } = useApiClientContext();
 

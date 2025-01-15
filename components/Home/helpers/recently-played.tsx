@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
-import { Card } from "../../Global/helpers/card";
+import { ItemCard } from "../../Global/helpers/item-card";
 import { useApiClientContext } from "../../jellyfin-api-provider";
 import { usePlayerContext } from "../../../player/provider";
 
@@ -18,7 +18,7 @@ export default function RecentlyPlayed(): React.JSX.Element {
             <ScrollView horizontal>
                 { recentTracks && recentTracks.map((recentlyPlayedTrack, index) => {
                     return (
-                        <Card
+                        <ItemCard
                             caption={recentlyPlayedTrack.Name}
                             subCaption={`${recentlyPlayedTrack.Artists?.join(", ")}`}
                             cornered

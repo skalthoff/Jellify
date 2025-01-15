@@ -1,18 +1,12 @@
-import { H3, ScrollView, Separator, XStack, YStack } from "tamagui";
 import _ from "lodash";
-import RecentlyPlayed from "./helpers/recently-played";
 import { useApiClientContext } from "../jellyfin-api-provider";
-import RecentArtists from "./helpers/recent-artists";
-import { RefreshControl } from "react-native";
-import { HomeProvider, useHomeContext } from "./provider";
+import { HomeProvider } from "./provider";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StackParamList, ProvidedHomeProps } from "../types";
 import { ArtistScreen } from "../Artist/screens";
-import Avatar from "../Global/helpers/avatar";
 import { AlbumScreen } from "../Album/screens";
-import Playlists from "./helpers/playlists";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { PlaylistScreen } from "../Playlist/screens";
+import { ProvidedHome } from "./screens";
 
 const HomeStack = createNativeStackNavigator<StackParamList>();
 
@@ -70,45 +64,5 @@ export default function Home(): React.JSX.Element {
                 />
             </HomeStack.Navigator>
         </HomeProvider>
-    );
-}
-
-function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Element {
-
-    const { user } = useApiClientContext();
-
-    const { refreshing: refetching, onRefresh: onRefetch } = useHomeContext()
-
-    return (
-        <SafeAreaView edges={["top", "right", "left"]}>
-            <ScrollView 
-                contentInsetAdjustmentBehavior="automatic"
-                refreshControl={
-                    <RefreshControl 
-                    refreshing={refetching} 
-                    onRefresh={onRefetch}
-                    />
-                }>
-                <YStack alignContent='flex-start'>
-                    <XStack margin={"$2"}>
-                        <H3>{`Hi, ${user!.name}`}</H3>
-                        <YStack />
-                        <Avatar maxHeight={30} itemId={user!.id} />
-                    </XStack>
-
-                    <Separator marginVertical={"$2"} />
-
-                    <RecentArtists route={route} navigation={navigation} />
-
-                    <Separator marginVertical={"$3"} />
-
-                    <RecentlyPlayed />
-
-                    <Separator marginVertical={"$3"} />
-
-                    <Playlists route={route} navigation={navigation}/>
-                </YStack>
-            </ScrollView>
-        </SafeAreaView>
     );
 }

@@ -1,0 +1,51 @@
+import { useApiClientContext } from "@/components/jellyfin-api-provider";
+import { ProvidedHomeProps } from "@/components/types";
+import { ScrollView, RefreshControl } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { YStack, XStack, Separator } from "tamagui";
+import Playlists from "../helpers/playlists";
+import RecentArtists from "../helpers/recent-artists";
+import RecentlyPlayed from "../helpers/recently-played";
+import { useHomeContext } from "../provider";
+import { H3 } from "@/components/Global/helpers/text";
+import Avatar from "@/components/Global/helpers/avatar";
+
+export function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Element {
+
+    const { user } = useApiClientContext();
+
+    const { refreshing: refetching, onRefresh: onRefetch } = useHomeContext()
+
+    return (
+        <SafeAreaView edges={["top", "right", "left"]}>
+            <ScrollView 
+                contentInsetAdjustmentBehavior="automatic"
+                refreshControl={
+                    <RefreshControl 
+                    refreshing={refetching} 
+                    onRefresh={onRefetch}
+                    />
+                }>
+                <YStack alignContent='flex-start'>
+                    <XStack margin={"$2"}>
+                        <H3>{`Hi, ${user!.name}`}</H3>
+                        <YStack />
+                        <Avatar maxHeight={30} itemId={user!.id!} />
+                    </XStack>
+
+                    <Separator marginVertical={"$2"} />
+
+                    <RecentArtists route={route} navigation={navigation} />
+
+                    <Separator marginVertical={"$3"} />
+
+                    <RecentlyPlayed />
+
+                    <Separator marginVertical={"$3"} />
+
+                    <Playlists route={route} navigation={navigation}/>
+                </YStack>
+            </ScrollView>
+        </SafeAreaView>
+    );
+}

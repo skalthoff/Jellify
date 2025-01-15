@@ -1,5 +1,5 @@
 import { useUserPlaylists } from "@/api/queries/playlist";
-import { Card } from "@/components/Global/helpers/card";
+import { ItemCard } from "@/components/Global/helpers/item-card";
 import { H2 } from "@/components/Global/helpers/text";
 import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import { ProvidedHomeProps } from "@/components/types";
@@ -20,7 +20,7 @@ export default function Playlists({ navigation }: ProvidedHomeProps) : React.JSX
                 data={playlists}
                 renderItem={({ item: playlist }) => {
                     return (
-                        <Card
+                        <ItemCard
                             itemId={playlist.Id!}
                             caption={playlist.Name ?? "Untitled Playlist"}
                             onPress={() => {
