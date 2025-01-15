@@ -24,7 +24,7 @@ export default function IconCard({
             <Card 
                 elevate 
                 size="$4" 
-                borderRadius={25}
+                borderRadius={40}
                 animation="bouncy"
                 hoverStyle={{ scale: 0.925 }}
                 pressStyle={{ scale: 0.875 }}

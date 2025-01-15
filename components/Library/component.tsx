@@ -5,6 +5,7 @@ import LibraryScreen from "./screens";
 import { ArtistScreen } from "../Artist/screens";
 import { AlbumScreen } from "../Album/screens";
 import { PlaylistScreen } from "../Playlist/screens";
+import ArtistsScreen from "../Artists/screen";
 
 const LibraryStack = createNativeStackNavigator<StackParamList>();
 
@@ -36,6 +37,18 @@ export default function Library(): React.JSX.Element {
                     }
                 })}
             />
+
+            <LibraryStack.Screen 
+                name="Artists" 
+                component={ArtistsScreen} 
+                options={({ route }) => ({
+                    headerLargeTitle: true,
+                    headerLargeTitleStyle: {
+                        fontFamily: 'Aileron-Bold'
+                    }
+                })}
+            />
+
             <LibraryStack.Screen
                 name="Album"
                 component={AlbumScreen}
