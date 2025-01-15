@@ -108,9 +108,9 @@ const PlayerContextInitializer = () => {
     });
 
     const useSkip = useMutation({
-        mutationFn: async (index?: number) => {
+        mutationFn: async (index?: number | undefined) => {
             trigger("impactLight")
-            if (isNumber(index))
+            if (!isUndefined(index))
                 skip(index)
             else
                 skipToNext();
