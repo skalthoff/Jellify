@@ -107,7 +107,11 @@ export default function Track({
                     )}
                 </YStack>
 
-                <XStack alignContent="center" flex={1}>
+                <XStack 
+                    justifyContent="center" 
+                    alignContent="center" 
+                    flex={1}
+                >
                     <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
                 </XStack>
             </XStack>

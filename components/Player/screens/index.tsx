@@ -62,7 +62,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         <CachedImage
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
-                                    nowPlaying!.AlbumId,
+                                    nowPlaying!.item.AlbumId ?? "",
                                     ImageType.Primary,
                                     { ...queryConfig.playerArtwork }
                                 )

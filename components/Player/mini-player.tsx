@@ -41,7 +41,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         <CachedImage
                             source={getImageApi(apiClient!)
                                 .getItemImageUrlById(
-                                    nowPlaying!.AlbumId,
+                                    nowPlaying!.item.AlbumId ?? "",
                                     ImageType.Primary,
                                     { ...queryConfig.images }
                                 )
