@@ -28,7 +28,7 @@ export default function Tracks({ navigation }: TracksProps) : React.JSX.Element 
                         <Track
                             showArtwork
                             track={track}
-                            tracklist={tracks ?? []}
+                            tracklist={tracks?.slice(index, index + 50) ?? []}
                             index={index}
                             queueName="Favorite Tracks"
                         />
