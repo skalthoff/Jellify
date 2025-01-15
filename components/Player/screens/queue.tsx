@@ -5,12 +5,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Queue(): React.JSX.Element {
 
-    const { queue, useSkip } = usePlayerContext();
+    const { queue, useSkip, nowPlaying } = usePlayerContext();
 
     return (
         <SafeAreaView edges={["right", "left"]}>
             <FlatList
                 data={queue}
+                extraData={nowPlaying}
                 numColumns={1}
                 renderItem={({ item: queueItem, index }) => {
                     return (
@@ -20,6 +21,7 @@ export default function Queue(): React.JSX.Element {
                             index={index}
                             showArtwork
                             onPress={() => {
+                                console.debug(`Skipping to index ${index}`)
                                 useSkip.mutate(index);
                             }}
                         />
