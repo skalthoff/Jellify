@@ -18,7 +18,7 @@ export function fetchFavoriteArtists(api: Api, musicLibraryId: string): Promise<
                     ItemSortBy.SortName
                 ],
                 sortOrder: [
-                    SortOrder.Descending
+                    SortOrder.Ascending
                 ]
             })
             .then((response) => {

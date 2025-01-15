@@ -1,5 +1,5 @@
 import { useFavoriteArtists } from "@/api/queries/favorites";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import React from "react";
 import { FlatList } from "react-native";
@@ -11,9 +11,12 @@ export default function Artists({ navigation }: ArtistsProps): React.JSX.Element
     const { apiClient, library } = useApiClientContext();
     const { data: artists } = useFavoriteArtists(apiClient!, library!.musicLibraryId);
 
+    const { width } = useSafeAreaFrame();
+
     return (
         <SafeAreaView edges={["left", "right"]}>
             <FlatList
+                numColumns={2}
                 data={artists}
                 renderItem={({ index, item: artist}) => {
                     return (
@@ -29,6 +32,7 @@ export default function Artists({ navigation }: ArtistsProps): React.JSX.Element
                                     }
                                 )
                             }}
+                            width={width / 2.1}
                         />
                     )
                 }}
