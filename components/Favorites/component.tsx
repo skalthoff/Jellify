@@ -1,24 +1,25 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { StackParamList } from "../types";
-import LibraryScreen from "./screens";
+import FavoritesScreen from "./screens";
 import { ArtistScreen } from "../Artist/screens";
 import { AlbumScreen } from "../Album/screens";
 import { PlaylistScreen } from "../Playlist/screens";
 import ArtistsScreen from "../Artists/screen";
 import AlbumsScreen from "../Albums/screen";
+import TracksScreen from "../Tracks/screen";
 
 const LibraryStack = createNativeStackNavigator<StackParamList>();
 
 export default function Library(): React.JSX.Element {
     return (
         <LibraryStack.Navigator
-            id="Library"
-            initialRouteName="Library"
+            id="Favorites"
+            initialRouteName="Favorites"
         >
             <LibraryStack.Screen
-                name="Library"
-                component={LibraryScreen}
+                name="Favorites"
+                component={FavoritesScreen}
                 options={{
                     headerLargeTitle: true,
                     headerLargeTitleStyle: {
@@ -62,6 +63,17 @@ export default function Library(): React.JSX.Element {
             <LibraryStack.Screen
                 name="Albums"
                 component={AlbumsScreen}
+                options={{
+                    headerLargeTitle: true,
+                    headerLargeTitleStyle: {
+                        fontFamily: 'Aileron-Bold'
+                    }
+                }}
+            />
+
+            <LibraryStack.Screen
+                name="Tracks"
+                component={TracksScreen}
                 options={{
                     headerLargeTitle: true,
                     headerLargeTitleStyle: {

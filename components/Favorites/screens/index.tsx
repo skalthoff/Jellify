@@ -6,11 +6,11 @@ import { StackParamList } from "@/components/types";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export default function LibraryScreen({ 
+export default function FavoritesScreen({ 
     route, 
     navigation 
 } : {
-    route: RouteProp<StackParamList, "Library">,
+    route: RouteProp<StackParamList, "Favorites">,
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 

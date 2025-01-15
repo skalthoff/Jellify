@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useColorScheme } from "react-native";
 import { Colors } from "../enums/colors";
 import Search from "./Search/component";
-import Library from "./Library/component";
+import Favorites from "./Favorites/component";
 import Settings from "./Settings/component";
 import { Discover } from "./Discover/component";
 import { Miniplayer } from "./Player/mini-player";
@@ -51,8 +51,8 @@ export function Tabs() : React.JSX.Element {
                 />
 
                 <Tab.Screen
-                    name="Library"
-                    component={Library}
+                    name="Favorites"
+                    component={Favorites}
                     options={{
                         headerShown: false,
                         tabBarIcon: ({color, size }) => (
