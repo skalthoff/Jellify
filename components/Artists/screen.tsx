@@ -9,9 +9,9 @@ export default function ArtistsScreen({
     navigation
 } : {
     route: RouteProp<StackParamList, "Artists">,
-    navigation: NativeStackNavigationProp<StackParamList>
+    navigation: NativeStackNavigationProp<StackParamList, "Artists", undefined>
 }) : React.JSX.Element {
     return (
-        <Artists />
+        <Artists route={route} navigation={navigation}/>
     )
 }
