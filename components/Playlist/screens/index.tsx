@@ -4,7 +4,7 @@ import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 
-export function HomePlaylistScreen({ route, navigation }: { 
+export function PlaylistScreen({ route, navigation }: { 
     route: RouteProp<StackParamList, "Playlist">, 
     navigation: NativeStackNavigationProp<StackParamList>
 }) : React.JSX.Element {

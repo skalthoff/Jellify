@@ -7,12 +7,12 @@ import { RefreshControl } from "react-native";
 import { HomeProvider, useHomeContext } from "./provider";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StackParamList, ProvidedHomeProps } from "../types";
-import { HomeArtistScreen } from "./screens/artist";
+import { ArtistScreen } from "../Artist/screens";
 import Avatar from "../Global/helpers/avatar";
-import { HomeAlbumScreen } from "./screens/album";
+import { AlbumScreen } from "../Album/screens";
 import Playlists from "./helpers/playlists";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { HomePlaylistScreen } from "./screens/playlist";
+import { PlaylistScreen } from "../Playlist/screens";
 
 const HomeStack = createNativeStackNavigator<StackParamList>();
 
@@ -41,7 +41,7 @@ export default function Home(): React.JSX.Element {
 
                 <HomeStack.Screen 
                     name="Artist" 
-                    component={HomeArtistScreen} 
+                    component={ArtistScreen} 
                     options={({ route }) => ({
                         title: route.params.artistName,
                         headerLargeTitle: true,
@@ -53,7 +53,7 @@ export default function Home(): React.JSX.Element {
 
                 <HomeStack.Screen
                     name="Album"
-                    component={HomeAlbumScreen}
+                    component={AlbumScreen}
                     options={({ route }) => ({
                         headerShown: true,
                         headerTitle: ""
@@ -62,7 +62,7 @@ export default function Home(): React.JSX.Element {
 
                 <HomeStack.Screen
                     name="Playlist"
-                    component={HomePlaylistScreen}
+                    component={PlaylistScreen}
                     options={({ route }) => ({
                         headerShown: true,
                         headerTitle: ""

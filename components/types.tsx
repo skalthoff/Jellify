@@ -5,6 +5,14 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 export type StackParamList = {
     Home: undefined;
     Discover: undefined;
+    Library: undefined,
+    Artists: undefined,
+    Albums: undefined,
+    Tracks: undefined,
+    Genres: undefined,
+    Playlists: undefined,
+    Search: undefined,
+    Settings: undefined,
     Tabs: undefined,
     Player: undefined,
     Queue: undefined,
@@ -35,3 +43,13 @@ export type HomeAlbumProps = NativeStackScreenProps<StackParamList, 'Album'>;
 export type HomePlaylistProps = NativeStackScreenProps<StackParamList, "Playlist">;
 
 export type QueueProps = NativeStackScreenProps<StackParamList, "Queue">;
+
+export type LibraryProps = NativeStackScreenProps<StackParamList, "Library">;
+
+export type ArtistsProps = NativeStackScreenProps<StackParamList, "Artists">;
+
+export type AlbumsProps = NativeStackScreenProps<StackParamList, "Albums">;
+
+export type TracksProps = NativeStackScreenProps<StackParamList, "Tracks">;
+
+export type GenresProps = NativeStackScreenProps<StackParamList, "Genres">;
