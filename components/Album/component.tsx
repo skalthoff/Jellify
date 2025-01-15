@@ -31,7 +31,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
     return (
         <SafeAreaView edges={["right", "left"]}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <YStack alignItems="center">
+                <YStack alignItems="center" minHeight={width / 1.1}>
                     <CachedImage
                         source={getImageApi(apiClient!)
                             .getItemImageUrlById(
