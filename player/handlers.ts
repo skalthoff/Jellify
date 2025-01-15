@@ -10,7 +10,7 @@ export async function handlePlaybackState(sessionId: string, playstateApi: Plays
             await playstateApi.reportPlaybackStart({
                 playbackStartInfo: {
                     SessionId: sessionId,
-                    ItemId: track.ItemId,
+                    ItemId: track.item.Id,
                     PositionTicks: convertSecondsToRunTimeTicks(progress.position)
                 }
             });
@@ -24,7 +24,7 @@ export async function handlePlaybackState(sessionId: string, playstateApi: Plays
             await playstateApi.reportPlaybackStopped({
                 playbackStopInfo: {
                     SessionId: sessionId,
-                    ItemId: track.ItemId,
+                    ItemId: track.item.Id,
                     PositionTicks: convertSecondsToRunTimeTicks(progress.position)
                 }
             });
@@ -43,7 +43,7 @@ export async function handlePlaybackProgressUpdated(sessionId: string, playstate
         await playstateApi.reportPlaybackStopped({
             playbackStopInfo: {
                 SessionId: sessionId,
-                ItemId: track.ItemId,
+                ItemId: track.item.Id,
                 PositionTicks: convertSecondsToRunTimeTicks(track.duration!)
             }
         });
