@@ -23,18 +23,20 @@ interface ArtistProps {
 
 export default function Artist(props: ArtistProps): React.JSX.Element {
 
+    const toggleFavorite = () => {
+        if (props.artist.UserData?.IsFavorite ?? false)
+            useRemoveFavorite().mutate({ item: props.artist, api: apiClient!})
+        else
+            useSetFavorite().mutate({ item: props.artist, api: apiClient! })
+    }
+
     props.navigation.setOptions({
         headerRight: () => { 
             return (
                 <Icon
                     name={props.artist.UserData?.IsFavorite ?? false ? "heart" : "heart-outline"}
                     color={Colors.Primary}
-                    onPress={() => {
-                        if (props.artist.UserData?.IsFavorite ?? false)
-                            useRemoveFavorite().mutate({ item: props.artist, api: apiClient!})
-                        else
-                            useSetFavorite().mutate({ item: props.artist, api: apiClient! })
-                    }}
+                    onPress={toggleFavorite}
                 />
             )
         }
