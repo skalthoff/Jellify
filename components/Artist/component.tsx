@@ -8,18 +8,33 @@ import { StackParamList } from "../types";
 import { H2 } from "../Global/helpers/text";
 import { useState } from "react";
 import { CachedImage } from "@georstat/react-native-image-cache";
-import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
+import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "@/api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import Icon from "../Global/helpers/icon";
+import { Colors } from "@/enums/colors";
 
 interface ArtistProps {
-    artistId: string,
-    artistName: string,
+    artist: BaseItemDto
     navigation: NativeStackNavigationProp<StackParamList>
 }
 
 export default function Artist(props: ArtistProps): React.JSX.Element {
+
+    props.navigation.setOptions({
+        headerRight: () => { 
+            return (
+                <Icon
+                    name={props.artist.UserData?.IsFavorite ?? false ? "heart" : "heart-outline"}
+                    color={Colors.Primary}
+                    onPress={() => {
+                        
+                    }}
+                />
+            )
+        }
+    });
 
     const [columns, setColumns] = useState<number>(2);
 
@@ -27,7 +42,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
 
-    const { data: albums } = useArtistAlbums(props.artistId, apiClient!);
+    const { data: albums } = useArtistAlbums(props.artist.Id!, apiClient!);
 
     return (
         <SafeAreaView edges={["top", "right", "left"]}>
@@ -37,7 +52,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                 <CachedImage
                     source={getImageApi(apiClient!)
                         .getItemImageUrlById(
-                            props.artistId,
+                            props.artist.Id!,
                             ImageType.Primary,
                             { ...queryConfig.banners})
                         } 

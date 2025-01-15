@@ -32,7 +32,7 @@ export default function Library(): React.JSX.Element {
                 name="Artist" 
                 component={ArtistScreen} 
                 options={({ route }) => ({
-                    title: route.params.artistName,
+                    title: route.params.artist.Name ?? "Unknown Artist",
                     headerLargeTitle: true,
                     headerLargeTitleStyle: {
                         fontFamily: 'Aileron-Bold'

@@ -17,8 +17,7 @@ export type StackParamList = {
     Player: undefined,
     Queue: undefined,
     Artist: { 
-        artistId: string,
-        artistName: string
+        artist: BaseItemDto
     };
     Album: {
         album: BaseItemDto

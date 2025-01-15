@@ -32,12 +32,7 @@ export default function Artists({ navigation }: ArtistsProps): React.JSX.Element
                             itemId={artist.Id!}
                             caption={artist.Name ?? "Unknown Artist"}
                             onPress={() => {
-                                navigation.navigate("Artist",
-                                    {
-                                        artistId: artist.Id!,
-                                        artistName: artist.Name!
-                                    }
-                                )
+                                navigation.navigate("Artist", { artist })
                             }}
                             width={width / 2.1}
                         />

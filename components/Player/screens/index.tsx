@@ -92,8 +92,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 onPress={() => {
                                     navigation.goBack(); // Dismiss player modal
                                     navigation.push("Artist", {
-                                        artistName: nowPlaying!.item.ArtistItems![0].Name ?? "Untitled",
-                                        artistId: nowPlaying!.item.ArtistItems![0].Id!,
+                                        artist: nowPlaying!.item.ArtistItems![0],
                                     })
                                 }}
                             >

@@ -26,8 +26,7 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                             onPress={() => {
                                 navigation.navigate('Artist', 
                                     { 
-                                        artistId: recentArtist.Id!, 
-                                        artistName: recentArtist.Name ?? "Unknown Artist" 
+                                        artist: recentArtist, 
                                     }
                                 )}
                             }>

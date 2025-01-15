@@ -10,10 +10,10 @@ export function ArtistScreen({
     route: RouteProp<StackParamList, "Artist">, 
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
+
     return (
         <Artist 
-            artistId={route.params.artistId}
-            artistName={route.params.artistName}
+            artist={route.params.artist}
             navigation={navigation}
         />
     );
