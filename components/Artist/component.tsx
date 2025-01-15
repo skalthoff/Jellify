@@ -31,9 +31,9 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                     color={Colors.Primary}
                     onPress={() => {
                         if (props.artist.UserData?.IsFavorite ?? false)
-                            useRemoveFavorite.mutate({ item: props.artist, api: apiClient!})
+                            useRemoveFavorite().mutate({ item: props.artist, api: apiClient!})
                         else
-                            useSetFavorite.mutate({ item: props.artist, api: apiClient! })
+                            useSetFavorite().mutate({ item: props.artist, api: apiClient! })
                     }}
                 />
             )

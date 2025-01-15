@@ -8,7 +8,7 @@ interface SetFavoriteMutation {
     api: Api
 }
 
-export const useSetFavorite = useMutation({
+export const useSetFavorite = () => useMutation({
     mutationFn: async (mutation: SetFavoriteMutation) => {
         return getUserLibraryApi(mutation.api)
             .markFavoriteItem({
@@ -17,7 +17,7 @@ export const useSetFavorite = useMutation({
     }
 })
 
-export const useRemoveFavorite = useMutation({
+export const useRemoveFavorite = () => useMutation({
     mutationFn: async (mutation: SetFavoriteMutation) => {
         return getUserLibraryApi(mutation.api)
             .unmarkFavoriteItem({
