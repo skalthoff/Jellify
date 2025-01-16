@@ -25,7 +25,7 @@ export default function FavoriteHeaderButton({
     
     const { apiClient } = useApiClientContext();
 
-    const [isFavorite, setIsFavorite] = useState<boolean>(useUserData(apiClient!, item.Id!).data!.IsFavorite!)
+    const [isFavorite, setIsFavorite] = useState<boolean>(item.UserData!.IsFavorite!)
 
     const useSetFavorite = useMutation({
         mutationFn: async (mutation: SetFavoriteMutation) => {
@@ -61,7 +61,7 @@ export default function FavoriteHeaderButton({
     }
 
     useEffect(() => {
-        setIsFavorite(useUserData(apiClient!, item.Id!).data?.IsFavorite!)
+        setIsFavorite(useUserData(apiClient!, item.Id!).data!.IsFavorite!)
     }, [
         item
     ]);
