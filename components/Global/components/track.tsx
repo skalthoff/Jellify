@@ -110,12 +110,12 @@ export default function Track({
 
                 <XStack 
                     alignItems="center"
-                    justifyContent="center" 
+                    justifyContent="flex-end" 
                     alignContent="center" 
                     flex={1}
                 >
                     { track.UserData?.IsFavorite && (
-                        <Icon name="heart" color={Colors.Primary} />
+                        <Icon small name="heart" color={Colors.Primary} />
                     )}
                     <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
                 </XStack>
