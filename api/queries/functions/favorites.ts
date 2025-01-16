@@ -1,5 +1,5 @@
 import { Api } from "@jellyfin/sdk";
-import { BaseItemDto, BaseItemKind, ItemSortBy, SortOrder } from "@jellyfin/sdk/lib/generated-client/models";
+import { BaseItemDto, BaseItemKind, ItemSortBy, SortOrder, UserItemDataDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 
 export function fetchFavoriteArtists(api: Api, musicLibraryId: string): Promise<BaseItemDto[]> {
@@ -99,4 +99,18 @@ export function fetchFavoriteTracks(api: Api, musicLibraryId: string): Promise<B
                 reject(error);
             })
     })
+}
+
+export function fetchUserData(api: Api, itemId: string): Promise<UserItemDataDto> {
+    return new Promise(async (resolve, reject) => {
+        getItemsApi(api)
+            .getItemUserData({
+                itemId
+            }).then((response) => {
+                resolve(response.data)
+            }).catch((error) => {
+                console.error(error);
+                reject(error);
+            })
+    });
 }
