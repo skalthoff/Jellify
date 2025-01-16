@@ -27,6 +27,8 @@ export default function FavoriteHeaderButton({
 
     const [isFavorite, setIsFavorite] = useState<boolean>(item.UserData!.IsFavorite!)
 
+    const { data, isFetching, isFetched, refetch } = useUserData(apiClient!, item.Id!);
+
     const useSetFavorite = useMutation({
         mutationFn: async (mutation: SetFavoriteMutation) => {
             return getUserLibraryApi(mutation.api)
@@ -61,10 +63,15 @@ export default function FavoriteHeaderButton({
     }
 
     useEffect(() => {
-        setIsFavorite(useUserData(apiClient!, item.Id!).data!.IsFavorite!)
+        if (isFetched && data && data.IsFavorite)
+            setIsFavorite(data.IsFavorite)
+    })
+
+    useEffect(() => {
+        refetch()
     }, [
         item
-    ]);
+    ])
 
     return (
         <Icon
