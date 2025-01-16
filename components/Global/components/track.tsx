@@ -110,7 +110,7 @@ export default function Track({
 
                 <XStack 
                     alignItems="center"
-                    justifyContent="flex-end" 
+                    justifyContent="space-between" 
                     alignContent="center" 
                     flex={1}
                 >
