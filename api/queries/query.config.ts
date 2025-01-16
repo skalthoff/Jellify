@@ -23,5 +23,6 @@ export const queryConfig = {
         fillHeight: 1000,
         fillWidth: 1000,
         format: ImageFormat.Jpg
-    }
+    },
+    staleTime: 1000 * 60
 }

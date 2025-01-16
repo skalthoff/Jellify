@@ -3,6 +3,7 @@ import { Api } from "@jellyfin/sdk";
 import { ItemSortBy } from "@jellyfin/sdk/lib/generated-client/models/item-sort-by";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { useQuery } from "@tanstack/react-query";
+import { queryConfig } from "./query.config";
 
 export const useItemTracks = (itemId: string, api: Api, sort: boolean = false) => useQuery({
     queryKey: [QueryKeys.ItemTracks, itemId, api, sort],
@@ -29,5 +30,6 @@ export const useItemTracks = (itemId: string, api: Api, sort: boolean = false) =
         .then((response) => {
             return response.data.Items ? response.data.Items! : [];
         })
-    }
+    },
+    staleTime: queryConfig.staleTime
 })
