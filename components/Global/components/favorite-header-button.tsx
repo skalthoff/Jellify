@@ -1,5 +1,5 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Icon from "../helpers/icon";
 import { Colors } from "@/enums/colors";
 import { useApiClientContext } from "@/components/jellyfin-api-provider";
@@ -69,6 +69,13 @@ export default function FavoriteHeaderButton({
         else
             useSetFavorite.mutate({ item, api: apiClient! })
     }
+
+    useEffect(() => {
+        if (!isUndefined(isFavoriteItem))
+            setIsFavorite(isFavoriteItem);
+    }, [
+        isFavoriteItem
+    ])
 
     return (
         <Icon
