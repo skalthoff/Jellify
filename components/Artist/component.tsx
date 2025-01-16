@@ -14,7 +14,7 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../Global/helpers/icon";
 import { Colors } from "@/enums/colors";
-import { useRemoveFavorite, useSetFavorite } from "@/api/mutations/favorites";
+import FavoriteHeaderButton from "../Global/components/favorite-header-button";
 
 interface ArtistProps {
     artist: BaseItemDto
@@ -23,21 +23,10 @@ interface ArtistProps {
 
 export default function Artist(props: ArtistProps): React.JSX.Element {
 
-    const toggleFavorite = () => {
-        if (props.artist.UserData?.IsFavorite ?? false)
-            useRemoveFavorite().mutate({ item: props.artist, api: apiClient!})
-        else
-            useSetFavorite().mutate({ item: props.artist, api: apiClient! })
-    }
-
     props.navigation.setOptions({
         headerRight: () => { 
             return (
-                <Icon
-                    name={props.artist.UserData?.IsFavorite ?? false ? "heart" : "heart-outline"}
-                    color={Colors.Primary}
-                    onPress={toggleFavorite}
-                />
+                <FavoriteHeaderButton item={props.artist} />
             )
         }
     });
