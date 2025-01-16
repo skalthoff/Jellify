@@ -14,7 +14,7 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 interface TrackProps {
     track: BaseItemDto;
     tracklist: BaseItemDto[];
-    index: number;
+    index: number | undefined;
     showArtwork?: boolean | undefined;
     onPress?: () => void | undefined
 }
@@ -29,7 +29,7 @@ export default function Track({
 } : {
     track: BaseItemDto,
     tracklist: BaseItemDto[],
-    index: number,
+    index?: number | undefined,
     queueName?: string | undefined,
     showArtwork?: boolean | undefined,
     onPress?: () => void | undefined
