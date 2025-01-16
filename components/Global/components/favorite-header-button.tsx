@@ -6,6 +6,7 @@ import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import { Api } from "@jellyfin/sdk";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
 import { useMutation } from "@tanstack/react-query";
+import { isUndefined } from "lodash";
 
 interface SetFavoriteMutation {
     item: BaseItemDto,
@@ -25,7 +26,13 @@ export default function FavoriteHeaderButton({
     const [
         isFavorite, 
         setIsFavorite
-    ] = useState<boolean>(isFavoriteItem ?? item.UserData?.IsFavorite ?? false);
+    ] = useState<boolean>(
+        !isUndefined(isFavoriteItem) ? 
+        isFavoriteItem : 
+        !isUndefined(item.UserData) ?
+        item.UserData.IsFavorite ?? false : 
+        false
+    );
 
     const { apiClient } = useApiClientContext()
 

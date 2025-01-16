@@ -4,7 +4,7 @@ import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./helpers/index";
 import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
-import _, { isUndefined } from "lodash";
+import _, { isEqual, isUndefined } from "lodash";
 import { useApiClientContext } from "../components/jellyfin-api-provider";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
@@ -183,9 +183,15 @@ const PlayerContextInitializer = () => {
 
             case (Event.PlaybackActiveTrackChanged) : {
 
-                if ((await TrackPlayer.getActiveTrack() as JellifyTrack | undefined) !== nowPlaying) {    
-                    setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack | undefined);
-                    setNowPlayingIsFavorite((await fetchUserData(apiClient!, nowPlaying!.item.Id!)).IsFavorite ?? false);
+                const activeTrack = event.track as JellifyTrack | undefined;
+                if (activeTrack && !isEqual(activeTrack, nowPlaying)) {    
+                    setNowPlaying(activeTrack);
+                    setNowPlayingIsFavorite((await fetchUserData(apiClient!, activeTrack!.item.Id!)).IsFavorite ?? false);
+                } else if (!!!activeTrack) {
+                    setNowPlaying(undefined)
+                    setNowPlayingIsFavorite(false);
+                } else {
+                    // Do nothing
                 }
             }
         }
