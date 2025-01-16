@@ -24,6 +24,8 @@ interface PlayerContext {
     setShowPlayer: React.Dispatch<SetStateAction<boolean>>;
     showMiniplayer: boolean;
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
+    nowPlayingIsFavorite: boolean;
+    setNowPlayingIsFavorite: React.Dispatch<SetStateAction<boolean>>;
     nowPlaying: JellifyTrack | undefined;
     queue: JellifyTrack[];
     queueName: string | undefined;
@@ -47,6 +49,7 @@ const PlayerContextInitializer = () => {
     const [showPlayer, setShowPlayer] = useState<boolean>(false);
     const [showMiniplayer, setShowMiniplayer] = useState<boolean>(false);
 
+    const [nowPlayingIsFavorite, setNowPlayingIsFavorite] = useState<boolean>(false);
     const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(undefined);
     const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
     const [queueName, setQueueName] = useState<string | undefined>(undefined);
@@ -211,6 +214,8 @@ const PlayerContextInitializer = () => {
         setShowPlayer,
         showMiniplayer,
         setShowMiniplayer,
+        nowPlayingIsFavorite,
+        setNowPlayingIsFavorite,
         nowPlaying,
         queue,
         queueName,
@@ -231,6 +236,8 @@ export const PlayerContext = createContext<PlayerContext>({
     setShowPlayer: () => {},
     showMiniplayer: false,
     setShowMiniplayer: () => {},
+    nowPlayingIsFavorite: false,
+    setNowPlayingIsFavorite: () => {},
     nowPlaying: undefined,
     queue: [],
     queueName: undefined,
@@ -335,6 +342,8 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowPlayer, 
         showMiniplayer, 
         setShowMiniplayer, 
+        nowPlayingIsFavorite,
+        setNowPlayingIsFavorite,
         nowPlaying,
         queue, 
         queueName,
@@ -352,6 +361,8 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowPlayer,
         showMiniplayer,
         setShowMiniplayer,
+        nowPlayingIsFavorite,
+        setNowPlayingIsFavorite,
         nowPlaying,
         queue,
         queueName,

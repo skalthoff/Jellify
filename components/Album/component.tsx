@@ -14,6 +14,7 @@ import Track from "../Global/components/track";
 import { useItemTracks } from "@/api/queries/tracks";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteHeaderButton from "../Global/components/favorite-header-button";
+import { useEffect } from "react";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -31,11 +32,17 @@ export default function Album(props: AlbumProps): React.JSX.Element {
     })
 
     const { apiClient } = useApiClientContext();
-    const { nowPlaying } = usePlayerContext();
+    const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
 
     const { width } = useSafeAreaFrame();
 
-    const { data: tracks, isLoading } = useItemTracks(props.album.Id!, apiClient!, true);
+    const { data: tracks, isLoading, refetch } = useItemTracks(props.album.Id!, apiClient!, true);
+
+    useEffect(() => {
+        refetch();
+    }, [
+        nowPlayingIsFavorite
+    ])
 
     return (
         <SafeAreaView edges={["right", "left"]}>

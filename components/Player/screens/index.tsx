@@ -22,7 +22,19 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
     
     const { apiClient } = useApiClientContext();
-    const { useTogglePlayback, playbackState, nowPlaying, progress, useSeekTo, useSkip, usePrevious, queueName } = usePlayerContext();
+
+    const { 
+        useTogglePlayback, 
+        playbackState, 
+        nowPlayingIsFavorite,
+        setNowPlayingIsFavorite,
+        nowPlaying, 
+        progress, 
+        useSeekTo, 
+        useSkip, 
+        usePrevious, 
+        queueName,
+    } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
     const [progressState, setProgressState] = useState<number>(progress!.position);
@@ -118,7 +130,11 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             flex={1}
                         >
                             {/* Buttons for favorites, song menu go here */}
-                            <FavoriteHeaderButton item={nowPlaying!.item} />
+                            <FavoriteHeaderButton 
+                                item={nowPlaying!.item} 
+                                isFavoriteItem={nowPlayingIsFavorite}
+                                onToggle={() => setNowPlayingIsFavorite(!nowPlayingIsFavorite)}
+                            />
                         </XStack>
                     </XStack>
 

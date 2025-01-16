@@ -12,9 +12,20 @@ interface SetFavoriteMutation {
     api: Api
 }
 
-export default function FavoriteHeaderButton({ item }: { item: BaseItemDto }) : React.JSX.Element {
+export default function FavoriteHeaderButton({ 
+    item,
+    isFavoriteItem,
+    onToggle
+}: {
+    item: BaseItemDto;
+    isFavoriteItem?: boolean | undefined;
+    onToggle?: () => void
+}) : React.JSX.Element {
 
-    const [isFavorite, setIsFavorite] = useState<boolean>(item.UserData?.IsFavorite ?? false);
+    const [
+        isFavorite, 
+        setIsFavorite
+    ] = useState<boolean>(isFavoriteItem ?? item.UserData?.IsFavorite ?? false);
 
     const { apiClient } = useApiClientContext()
 
@@ -28,6 +39,8 @@ export default function FavoriteHeaderButton({ item }: { item: BaseItemDto }) : 
         },
         onSuccess: () => {
             setIsFavorite(true);
+            if (onToggle)
+                onToggle();
         }
     })
     
