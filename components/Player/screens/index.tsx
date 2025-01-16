@@ -16,6 +16,7 @@ import { H5, Text } from "@/components/Global/helpers/text";
 import Icon from "@/components/Global/helpers/icon";
 import { Colors } from "@/enums/colors";
 import { State } from "react-native-track-player";
+import FavoriteHeaderButton from "@/components/Global/components/favorite-header-button";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -107,9 +108,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             </Text>
                         </YStack>
 
-                        <XStack alignItems="center" flex={1}>
+                        <XStack 
+                            justifyContent="flex-end" 
+                            alignItems="center" 
+                            flex={1}
+                        >
                             {/* Buttons for favorites, song menu go here */}
-
+                            <FavoriteHeaderButton item={nowPlaying!.item} />
                         </XStack>
                     </XStack>
 
