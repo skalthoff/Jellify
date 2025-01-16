@@ -114,7 +114,8 @@ const PlayerContextInitializer = () => {
                 await skip(index);
             }
             else {
-                setNowPlaying(queue[queue.indexOf(nowPlaying!) + 1])
+                const nowPlayingIndex = queue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
+                setNowPlaying(queue[nowPlayingIndex + 1])
                 await skipToNext();
             }
         }
@@ -124,10 +125,10 @@ const PlayerContextInitializer = () => {
         mutationFn: async () => {
             trigger("impactLight");
 
-            const nowPlayingIndex = queue.indexOf(nowPlaying!);
+            const nowPlayingIndex = queue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
 
             if (nowPlayingIndex > 0) {
-                setNowPlaying(queue[queue.indexOf(nowPlaying!) - 1])
+                setNowPlaying(queue[nowPlayingIndex - 1])
                 await skipToPrevious();
             }
         }
