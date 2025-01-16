@@ -183,7 +183,8 @@ const PlayerContextInitializer = () => {
 
             case (Event.PlaybackActiveTrackChanged) : {
 
-                const activeTrack = event.track as JellifyTrack | undefined;
+                // Use await instead of event value to prevent flickering in UI
+                const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack | undefined;
                 if (activeTrack && !isEqual(activeTrack, nowPlaying)) {    
                     setNowPlaying(activeTrack);
                     setNowPlayingIsFavorite((await fetchUserData(apiClient!, activeTrack!.item.Id!)).IsFavorite ?? false);
