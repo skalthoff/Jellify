@@ -56,8 +56,9 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     </YStack>
 
                     <XStack 
-                        animation={"quick"} 
+                        animation={"bouncy"} 
                         justifyContent="center"
+                        alignContent="center"
                         minHeight={width / 1.1}
                     >
                         <CachedImage
@@ -94,7 +95,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                     navigation.goBack(); // Dismiss player modal
                                     navigation.push("Artist", {
                                         artist: nowPlaying!.item.ArtistItems![0],
-                                    })
+                                    });
                                 }}
                             >
                                 {nowPlaying.artist ?? "Unknown Artist"}
@@ -163,7 +164,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     <XStack justifyContent="space-evenly" marginVertical={"$3"}>
                         <Icon
                             name="rewind-15"
-                            onPress={() => useSeekTo.mutate(progress!.position - 15)}
+                            onPress={() => {
+
+                                setSeeking(true);
+                                setProgressState(progressState - 15);
+                                useSeekTo.mutate(progress!.position - 15);
+                                setSeeking(false);
+                            }}
                         />
                         
                         <Icon
@@ -182,7 +189,12 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                         <Icon
                             name="fast-forward-15"
-                            onPress={() => useSeekTo.mutate(progress!.position + 15)}  
+                            onPress={() => { 
+                                setSeeking(true);
+                                setProgressState(progressState + 15);
+                                useSeekTo.mutate(progress!.position + 15);
+                                setSeeking(false);
+                            }}  
                         />              
                     </XStack>
 
