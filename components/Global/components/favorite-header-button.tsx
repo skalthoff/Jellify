@@ -5,8 +5,9 @@ import { Colors } from "@/enums/colors";
 import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import { Api } from "@jellyfin/sdk";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { isUndefined } from "lodash";
+import { useUserData } from "@/api/queries/favorites";
 
 interface SetFavoriteMutation {
     item: BaseItemDto,
@@ -15,28 +16,17 @@ interface SetFavoriteMutation {
 
 export default function FavoriteHeaderButton({ 
     item,
-    isFavoriteItem,
     onToggle
 }: {
     item: BaseItemDto;
-    isFavoriteItem?: boolean | undefined;
     onToggle?: () => void
 }) : React.JSX.Element {
 
-    const [
-        isFavorite, 
-        setIsFavorite
-    ] = useState<boolean>(
-        !isUndefined(isFavoriteItem) ? 
-        isFavoriteItem : 
-        !isUndefined(item.UserData) ?
-        item.UserData.IsFavorite ?? false : 
-        false
-    );
-
-    const { apiClient } = useApiClientContext()
-
     
+    const { apiClient } = useApiClientContext();
+
+    const [isFavorite, setIsFavorite] = useState<boolean>(useUserData(apiClient!, item.Id!).data!.IsFavorite!)
+
     const useSetFavorite = useMutation({
         mutationFn: async (mutation: SetFavoriteMutation) => {
             return getUserLibraryApi(mutation.api)
@@ -71,11 +61,10 @@ export default function FavoriteHeaderButton({
     }
 
     useEffect(() => {
-        if (!isUndefined(isFavoriteItem))
-            setIsFavorite(isFavoriteItem);
+        setIsFavorite(useUserData(apiClient!, item.Id!).data?.IsFavorite!)
     }, [
-        isFavoriteItem
-    ])
+        item
+    ]);
 
     return (
         <Icon

@@ -1,7 +1,7 @@
 import { QueryKeys } from "@/enums/query-keys";
 import { Api } from "@jellyfin/sdk";
 import { useQuery } from "@tanstack/react-query";
-import { fetchFavoriteAlbums, fetchFavoriteArtists, fetchFavoriteTracks } from "./functions/favorites";
+import { fetchFavoriteAlbums, fetchFavoriteArtists, fetchFavoriteTracks, fetchUserData } from "./functions/favorites";
 
 export const useFavoriteArtists = (api: Api, libraryId: string) => useQuery({
     queryKey: [QueryKeys.FavoriteArtists, api, libraryId],
@@ -32,3 +32,13 @@ export const useFavoriteTracks = (api: Api, libraryId: string) => useQuery({
         return fetchFavoriteTracks(api, libraryId)
     }
 });
+
+export const useUserData = (api: Api, itemId: string) => useQuery({
+    queryKey: [QueryKeys.UserData, api, itemId],
+    queryFn: ({ queryKey }) => {
+        const api: Api = queryKey[1] as Api;
+        const itemId: string = queryKey[2] as string;
+
+        return fetchUserData(api, itemId)
+    }
+})

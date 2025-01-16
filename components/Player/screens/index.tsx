@@ -132,7 +132,6 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             {/* Buttons for favorites, song menu go here */}
                             <FavoriteHeaderButton 
                                 item={nowPlaying!.item} 
-                                isFavoriteItem={nowPlayingIsFavorite}
                                 onToggle={() => setNowPlayingIsFavorite(!nowPlayingIsFavorite)}
                             />
                         </XStack>

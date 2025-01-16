@@ -33,4 +33,5 @@ export enum QueryKeys {
     FavoriteArtists = "FavoriteArtists",
     FavoriteAlbums = "FavoriteAlbums",
     FavoriteTracks = "FavoriteTracks",
+    UserData = "UserData",
 }
