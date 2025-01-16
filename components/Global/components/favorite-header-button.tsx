@@ -1,5 +1,5 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
-import React from "react";
+import React, { useState } from "react";
 import Icon from "../helpers/icon";
 import { Colors } from "@/enums/colors";
 import { useApiClientContext } from "@/components/jellyfin-api-provider";
@@ -14,6 +14,7 @@ interface SetFavoriteMutation {
 
 export default function FavoriteHeaderButton({ item }: { item: BaseItemDto }) : React.JSX.Element {
 
+    const [isFavorite, setIsFavorite] = useState<boolean>(item.UserData?.IsFavorite ?? false);
 
     const { apiClient } = useApiClientContext()
 
@@ -26,7 +27,7 @@ export default function FavoriteHeaderButton({ item }: { item: BaseItemDto }) : 
                 })
         },
         onSuccess: () => {
-            item.UserData!.IsFavorite = true;
+            setIsFavorite(true);
         }
     })
     
@@ -38,12 +39,12 @@ export default function FavoriteHeaderButton({ item }: { item: BaseItemDto }) : 
                 })
         },
         onSuccess: () => {
-            item.UserData!.IsFavorite = true;
+            setIsFavorite(false);
         }
     })
 
     const toggleFavorite = () => {
-        if (item.UserData?.IsFavorite ?? false)
+        if (isFavorite)
             useRemoveFavorite.mutate({ item, api: apiClient!})
         else
             useSetFavorite.mutate({ item, api: apiClient! })
@@ -51,7 +52,7 @@ export default function FavoriteHeaderButton({ item }: { item: BaseItemDto }) : 
 
     return (
         <Icon
-            name={item.UserData?.IsFavorite ?? false ? "heart" : "heart-outline"}
+            name={isFavorite ? "heart" : "heart-outline"}
             color={Colors.Primary}
             onPress={toggleFavorite}
         /> 
