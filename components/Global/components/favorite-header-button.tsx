@@ -69,6 +69,7 @@ export default function FavoriteHeaderButton({
 
     useEffect(() => {
         refetch()
+        setIsFavorite(item.UserData!.IsFavorite!)
     }, [
         item
     ])
