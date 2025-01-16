@@ -10,6 +10,7 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
 import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import { queryConfig } from "@/api/queries/query.config";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
+import Icon from "../helpers/icon";
 
 interface TrackProps {
     track: BaseItemDto;
@@ -108,10 +109,14 @@ export default function Track({
                 </YStack>
 
                 <XStack 
+                    alignItems="center"
                     justifyContent="center" 
                     alignContent="center" 
                     flex={1}
                 >
+                    { track.UserData?.IsFavorite && (
+                        <Icon name="heart" color={Colors.Primary} />
+                    )}
                     <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
                 </XStack>
             </XStack>

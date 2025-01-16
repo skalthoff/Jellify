@@ -13,6 +13,7 @@ import { RunTimeTicks } from "../Global/helpers/time-codes";
 import Track from "../Global/components/track";
 import { useItemTracks } from "@/api/queries/tracks";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import FavoriteHeaderButton from "../Global/components/favorite-header-button";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -20,6 +21,14 @@ interface AlbumProps {
 }
 
 export default function Album(props: AlbumProps): React.JSX.Element {
+
+    props.navigation.setOptions({
+        headerRight: () => {
+            return (
+                <FavoriteHeaderButton item={props.album} />
+            )
+        }
+    })
 
     const { apiClient } = useApiClientContext();
     const { nowPlaying } = usePlayerContext();
