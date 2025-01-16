@@ -109,17 +109,27 @@ const PlayerContextInitializer = () => {
     const useSkip = useMutation({
         mutationFn: async (index?: number | undefined) => {
             trigger("impactLight")
-            if (!isUndefined(index))
-                skip(index)
-            else
-                skipToNext();
+            if (!isUndefined(index)) {
+                setNowPlaying(queue[index]);
+                await skip(index);
+            }
+            else {
+                setNowPlaying(queue[queue.indexOf(nowPlaying!) + 1])
+                await skipToNext();
+            }
         }
     });
 
     const usePrevious = useMutation({
         mutationFn: async () => {
-            trigger("impactLight")
-            await skipToPrevious();
+            trigger("impactLight");
+
+            const nowPlayingIndex = queue.indexOf(nowPlaying!);
+
+            if (nowPlayingIndex > 0) {
+                setNowPlaying(queue[queue.indexOf(nowPlaying!) - 1])
+                await skipToPrevious();
+            }
         }
     })
 
