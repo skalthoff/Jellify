@@ -22,7 +22,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
     
     const { apiClient } = useApiClientContext();
-    const { playbackState, nowPlaying, progress, useSeekTo, useSkip, usePrevious, queueName } = usePlayerContext();
+    const { useTogglePlayback, playbackState, nowPlaying, progress, useSeekTo, useSkip, usePrevious, queueName } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
     const [progressState, setProgressState] = useState<number>(progress!.position);
@@ -60,6 +60,9 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         justifyContent="center"
                         alignContent="center"
                         minHeight={width / 1.1}
+                        onPress={() => {
+                            useTogglePlayback.mutate(undefined)
+                        }}
                     >
                         <CachedImage
                             source={getImageApi(apiClient!)
