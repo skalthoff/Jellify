@@ -185,6 +185,7 @@ const PlayerContextInitializer = () => {
 
                 if ((await TrackPlayer.getActiveTrack() as JellifyTrack | undefined) !== nowPlaying) {    
                     setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack | undefined);
+                    setNowPlayingIsFavorite(nowPlaying?.item.UserData?.IsFavorite ?? false);
                 }
             }
         }

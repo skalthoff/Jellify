@@ -1,6 +1,6 @@
 import { usePlayerContext } from "@/player/provider";
 import React from "react";
-import { Separator, View, XStack, YStack } from "tamagui";
+import { Separator, Spacer, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
@@ -114,10 +114,23 @@ export default function Track({
                     alignContent="center" 
                     flex={1}
                 >
-                    { track.UserData?.IsFavorite && (
-                        <Icon small name="heart" color={Colors.Primary} />
-                    )}
-                    <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
+                    <YStack
+                        alignContent="center"
+                        justifyContent="center"
+                    >
+                        { track.UserData?.IsFavorite ? (
+                            <Icon small name="heart" color={Colors.Primary} />
+                        ) : (
+                            <Spacer />
+                        )}
+                    </YStack>
+
+                    <YStack
+                        alignContent="center"
+                        justifyContent="center"
+                    >
+                        <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
+                    </YStack>
                 </XStack>
             </XStack>
         </View>
