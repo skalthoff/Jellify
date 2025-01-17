@@ -1,4 +1,5 @@
 import React from "react"
+import { trigger } from "react-native-haptic-feedback";
 import { Popover as TamaguiPopover, View } from "tamagui"
 
 interface PopoverProps {
@@ -9,8 +10,11 @@ interface PopoverProps {
 
 export default function Popover(props: PopoverProps) : React.JSX.Element {
     return (
-        <TamaguiPopover open={props.open}>
-            <TamaguiPopover.Anchor asChild>
+        <TamaguiPopover 
+            onOpenChange={() => trigger("impactLight")} 
+            open={props.open}
+        >
+            <TamaguiPopover.Anchor>
                 { props.anchor }
             </TamaguiPopover.Anchor>
       
