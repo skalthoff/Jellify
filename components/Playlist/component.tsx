@@ -13,6 +13,7 @@ import { queryConfig } from "@/api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useEffect } from "react";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
@@ -23,9 +24,15 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
 
     const { apiClient, sessionId } = useApiClientContext();
 
-    const { nowPlaying } = usePlayerContext();
+    const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
 
-    const { data: tracks, isLoading } = useItemTracks(props.playlist.Id!, apiClient!);
+    const { data: tracks, isLoading, refetch } = useItemTracks(props.playlist.Id!, apiClient!);
+
+    useEffect(() => {
+        refetch();
+    }, [
+        nowPlayingIsFavorite
+    ]);
 
     return (
         <SafeAreaView edges={["right", "left"]}>
