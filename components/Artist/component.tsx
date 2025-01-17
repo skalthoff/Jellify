@@ -54,6 +54,8 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                     imageStyle={{
                         width: 500,
                         height: 350,
+                        top: -width,
+                        left: width / 2,
                         resizeMode: "cover",
                         position: "relative"
                     }}

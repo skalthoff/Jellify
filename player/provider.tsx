@@ -144,6 +144,9 @@ const PlayerContextInitializer = () => {
     const usePlayNewQueue = useMutation({
         mutationFn: async (mutation: QueueMutation) => {
             trigger("impactLight");
+
+            setIsSkipping(true);
+
             // Optimistically set now playing
             setNowPlaying(mapDtoToTrack(apiClient!, sessionId, mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection));
 
@@ -155,9 +158,11 @@ const PlayerContextInitializer = () => {
             setQueueName(mutation.queueName);
         },
         onSuccess: async (data, mutation: QueueMutation) => {
+            setIsSkipping(false);
             await play(mutation.index)
         },
         onError: async () => {
+            setIsSkipping(false);
             setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack)
         }
     });
