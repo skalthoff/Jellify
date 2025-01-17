@@ -23,12 +23,7 @@ export default function Popover(props: PopoverProps) : React.JSX.Element {
             <TamaguiPopover.Content>
                 <TamaguiPopover.Arrow />
                 <TamaguiPopover.Close />
-                <View 
-                    backgroundColor={Colors.Background}
-                    borderColor={Colors.Secondary}
-                >
                     { props.children }
-                </View>
             </TamaguiPopover.Content>
       </TamaguiPopover>
     )
