@@ -1,7 +1,7 @@
 import { Colors } from "@/enums/colors";
 import React from "react"
 import { trigger } from "react-native-haptic-feedback";
-import { Popover as TamaguiPopover, View } from "tamagui"
+import { Adapt, Popover as TamaguiPopover, View } from "tamagui"
 
 interface PopoverProps {
     children: React.ReactNode;
@@ -14,12 +14,23 @@ export default function Popover(props: PopoverProps) : React.JSX.Element {
             size="$5"
             stayInFrame
             offset={1}
-            onOpenChange={() => trigger("impactLight")} 
         >
             <TamaguiPopover.Trigger asChild>
                 { props.trigger }
             </TamaguiPopover.Trigger>
       
+            { /* Tamagui doesn't support Popovers on Native, so we adapt it to a sheet */ }
+            <Adapt when="sm" platform="touch">
+                <TamaguiPopover.Sheet modal dismissOnSnapToBottom>
+                    <TamaguiPopover.Sheet.Frame>
+                        <Adapt.Contents />
+                    </TamaguiPopover.Sheet.Frame>
+
+                    <TamaguiPopover.Sheet.Overlay
+                        animation="lazy"
+                    />
+                </TamaguiPopover.Sheet>
+            </Adapt>
             <TamaguiPopover.Content>
                 <TamaguiPopover.Arrow />
                 <TamaguiPopover.Close />
