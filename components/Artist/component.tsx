@@ -55,7 +55,6 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                         imageStyle={{
                             width: width,
                             height: bannerHeight,
-                            top: -(bannerHeight),
                             alignSelf: "center",
                             resizeMode: "cover",
                             position: "relative"
