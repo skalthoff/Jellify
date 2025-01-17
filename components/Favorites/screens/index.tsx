@@ -17,7 +17,7 @@ export default function FavoritesScreen({
     const { width } = useSafeAreaFrame();
 
     return (
-        <SafeAreaView edges={["top", "right", "left"]}>
+        <SafeAreaView style={{ flex: 1 }} edges={["top", "right", "left"]}>
             <FlatList
                 contentInsetAdjustmentBehavior="automatic"
                 data={Categories}
