@@ -35,6 +35,8 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
 
+    const bannerHeight = width / 4;
+
     const { data: albums } = useArtistAlbums(props.artist.Id!, apiClient!);
 
     return (
@@ -42,7 +44,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
             <ScrollView 
                 contentInsetAdjustmentBehavior="automatic"
                 alignContent="center">
-                <YStack alignContent="center" justifyContent="center" minHeight={width / 5}>
+                <YStack alignContent="center" justifyContent="center" minHeight={bannerHeight}>
                     <CachedImage
                         source={getImageApi(apiClient!)
                             .getItemImageUrlById(
@@ -52,8 +54,8 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                             } 
                         imageStyle={{
                             width: width,
-                            height: width / 5,
-                            left: width / 2,
+                            height: bannerHeight,
+                            left: -(bannerHeight),
                             resizeMode: "cover",
                             position: "relative"
                         }}
