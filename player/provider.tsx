@@ -51,6 +51,7 @@ const PlayerContextInitializer = () => {
 
     const [nowPlayingIsFavorite, setNowPlayingIsFavorite] = useState<boolean>(false);
     const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(undefined);
+    const [isSkipping, setIsSkipping] = useState<boolean>(false);
     const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
     const [queueName, setQueueName] = useState<string | undefined>(undefined);
     //#endregion State
@@ -59,8 +60,9 @@ const PlayerContextInitializer = () => {
     //#region Functions
     const play = async (index?: number | undefined) => {
 
-        if (index && index > 0)
-            TrackPlayer.skip(index)
+        if (index && index > 0) {
+            TrackPlayer.skip(index);
+        }
 
         TrackPlayer.play();
     }
@@ -113,8 +115,10 @@ const PlayerContextInitializer = () => {
         mutationFn: async (index?: number | undefined) => {
             trigger("impactLight")
             if (!isUndefined(index)) {
+                setIsSkipping(true);
                 setNowPlaying(queue[index]);
                 await skip(index);
+                setIsSkipping(false);
             }
             else {
                 const nowPlayingIndex = queue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
@@ -183,16 +187,26 @@ const PlayerContextInitializer = () => {
 
             case (Event.PlaybackActiveTrackChanged) : {
 
-                // Use await instead of event value to prevent flickering in UI
-                const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack | undefined;
-                if (activeTrack && !isEqual(activeTrack, nowPlaying)) {    
-                    setNowPlaying(activeTrack);
-                    setNowPlayingIsFavorite(activeTrack.item.UserData!.IsFavorite!);
-                } else if (!!!activeTrack) {
-                    setNowPlaying(undefined)
-                    setNowPlayingIsFavorite(false);
-                } else {
-                    // Do nothing
+                if (!isSkipping) {
+                    const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack | undefined;
+                    if (activeTrack && !isEqual(activeTrack, nowPlaying)) {    
+                        setNowPlaying(activeTrack);
+
+                        // Set player favorite state to user data IsFavorite
+                        // This is super nullish so we need to do a lot of 
+                        // checks on the fields
+                        // TODO: Turn this check into a helper function
+                        setNowPlayingIsFavorite(
+                            isUndefined(activeTrack) ? false 
+                            : isUndefined(activeTrack!.item.UserData) ? false 
+                            : activeTrack.item.UserData.IsFavorite ?? false
+                        );
+                    } else if (!!!activeTrack) {
+                        setNowPlaying(undefined)
+                        setNowPlayingIsFavorite(false);
+                    } else {
+                        // Do nothing
+                    }
                 }
             }
         }
