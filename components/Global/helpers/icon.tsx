@@ -9,7 +9,7 @@ const regularSize = 36;
 
 const largeSize = 48
 
-export default function Icon({ name, onPress, small, large, color }: { name: string, onPress?: Function, small?: boolean, large?: boolean, color?: Colors }) : React.JSX.Element {
+export default function Icon({ name, onPress, small, large, color }: { name: string, onPress?: () => void, small?: boolean, large?: boolean, color?: Colors }) : React.JSX.Element {
     
     const isDarkMode = useColorScheme() === "dark"
     let size = large ? largeSize : small ? smallSize : regularSize
@@ -18,10 +18,7 @@ export default function Icon({ name, onPress, small, large, color }: { name: str
         <MaterialCommunityIcons 
             color={color ? color : isDarkMode ? Colors.White : Colors.Background}
             name={name} 
-            onPress={() => {
-                if (onPress)
-                    onPress();
-            }}
+            onPress={onPress}
             size={size}
         />
     )

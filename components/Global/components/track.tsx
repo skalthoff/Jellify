@@ -128,7 +128,7 @@ export default function Track({
 
                     <YStack
                         alignContent="center"
-                        justifyContent="center"
+                        justifyContent="flex-end"
                     >
                         <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
                     </YStack>
