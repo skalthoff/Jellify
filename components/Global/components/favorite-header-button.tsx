@@ -8,6 +8,7 @@ import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { isUndefined } from "lodash";
 import { useUserData } from "@/api/queries/favorites";
+import { Spinner } from "tamagui";
 
 interface SetFavoriteMutation {
     item: BaseItemDto,
@@ -25,10 +26,7 @@ export default function FavoriteHeaderButton({
     
     const { apiClient } = useApiClientContext();
 
-    const [isFavorite, setIsFavorite] = useState<boolean>(
-        isUndefined(item.UserData) ? false 
-        : item.UserData.IsFavorite ?? false
-    );
+    const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteItem(item));
 
     const { data, isFetching, isFetched, refetch } = useUserData(apiClient!, item.Id!);
 
@@ -81,10 +79,21 @@ export default function FavoriteHeaderButton({
     ]);
 
     return (
-        <Icon
-            name={isFavorite ? "heart" : "heart-outline"}
-            color={Colors.Primary}
-            onPress={toggleFavorite}
-        /> 
+        isFetching && isUndefined(item.UserData) ? (
+            <Spinner />
+        ) : (
+            <Icon
+                name={isFavorite ? "heart" : "heart-outline"}
+                color={Colors.Primary}
+                onPress={toggleFavorite}
+            /> 
+
+        )
     )
+}
+
+export function isFavoriteItem(item: BaseItemDto) : boolean {
+    return isUndefined(item.UserData) ? false 
+        : isUndefined(item.UserData.IsFavorite) ? false
+        : item.UserData.IsFavorite
 }
