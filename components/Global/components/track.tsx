@@ -26,14 +26,16 @@ export default function Track({
     index,
     queueName,
     showArtwork,
-    onPress
+    onPress,
+    onLongPress,
 } : {
     track: BaseItemDto,
     tracklist: BaseItemDto[],
     index?: number | undefined,
     queueName?: string | undefined,
     showArtwork?: boolean | undefined,
-    onPress?: () => void | undefined
+    onPress?: () => void | undefined,
+    onLongPress?: () => void | undefined,
 }) : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
@@ -48,6 +50,13 @@ export default function Track({
             <XStack 
                 alignContent="center"
                 flex={1}
+                onLongPress={() => {
+                    if (onLongPress) {
+                        onLongPress();
+                    } else {
+                        
+                    }
+                }}
                 onPress={() => {
                     if (onPress) {
                         onPress();

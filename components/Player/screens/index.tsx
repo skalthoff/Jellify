@@ -100,17 +100,19 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 bold 
                                 fontSize={"$6"}
                             >
-                                {nowPlaying?.title ?? "Untitled Track"}
+                                {nowPlaying!.title ?? "Untitled Track"}
                             </Text>
 
                             <Text 
                                 fontSize={"$6"}
                                 color={Colors.Primary}
                                 onPress={() => {
-                                    navigation.goBack(); // Dismiss player modal
-                                    navigation.push("Artist", {
-                                        artist: nowPlaying!.item.ArtistItems![0],
-                                    });
+                                    if (nowPlaying!.item.ArtistItems) {
+                                        navigation.goBack(); // Dismiss player modal
+                                        navigation.push("Artist", {
+                                            artist: nowPlaying!.item.ArtistItems![0],
+                                        });
+                                    }
                                 }}
                             >
                                 {nowPlaying.artist ?? "Unknown Artist"}
