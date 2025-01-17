@@ -35,12 +35,12 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
 
-    const bannerHeight = width / 4;
+    const bannerHeight = width / 3;
 
     const { data: albums } = useArtistAlbums(props.artist.Id!, apiClient!);
 
     return (
-        <SafeAreaView edges={["top", "right", "left"]}>
+        <SafeAreaView style={{ flex: 1 }} edges={["top", "right", "left"]}>
             <ScrollView 
                 contentInsetAdjustmentBehavior="automatic"
                 alignContent="center">
@@ -55,7 +55,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                         imageStyle={{
                             width: width,
                             height: bannerHeight,
-                            left: -(bannerHeight),
+                            left: -(bannerHeight / 3),
                             resizeMode: "cover",
                             position: "relative"
                         }}
@@ -67,7 +67,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                     contentContainerStyle={{
                         flexGrow: 1,
                         justifyContent: 'center',
-                        alignItems: "center"
+                        // alignItems: "center"
                     }}
                     data={albums}
                     numColumns={columns} // TODO: Make this adjustable
