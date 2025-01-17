@@ -1,7 +1,7 @@
 import { usePlayerContext } from "@/player/provider";
 import React from "react";
 import { Separator, Spacer, View, XStack, YStack } from "tamagui";
-import { Text } from "../helpers/text";
+import { H5, Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { Colors } from "@/enums/colors";
@@ -11,6 +11,7 @@ import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import { queryConfig } from "@/api/queries/query.config";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
+import Popover from "../helpers/popover";
 
 interface TrackProps {
     track: BaseItemDto;
@@ -130,6 +131,23 @@ export default function Track({
                         justifyContent="center"
                     >
                         <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
+                    </YStack>
+
+                    <YStack
+                        alignContent="center"
+                        justifyContent="center"
+                    >
+                        <Popover
+                            trigger={(
+                                <Icon small name="dots-vertical" />
+                            )}>
+                                <XStack justifyContent="space-between">
+                                    <YStack alignContent="flex-start">
+                                        <H5>{ track.Name ?? "Untitled Track" }</H5>
+                                    </YStack>
+                                </XStack>
+                        </Popover>
+
                     </YStack>
                 </XStack>
             </XStack>

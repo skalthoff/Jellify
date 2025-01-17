@@ -5,8 +5,7 @@ import { Popover as TamaguiPopover, View } from "tamagui"
 
 interface PopoverProps {
     children: React.ReactNode;
-    anchor: React.ReactNode;
-    open: boolean
+    trigger: React.ReactNode;
 }
 
 export default function Popover(props: PopoverProps) : React.JSX.Element {
@@ -15,11 +14,10 @@ export default function Popover(props: PopoverProps) : React.JSX.Element {
             placement="top"
             size="$5"
             onOpenChange={() => trigger("impactLight")} 
-            open={props.open}
         >
-            <TamaguiPopover.Anchor>
-                { props.anchor }
-            </TamaguiPopover.Anchor>
+            <TamaguiPopover.Trigger>
+                { props.trigger }
+            </TamaguiPopover.Trigger>
       
             <TamaguiPopover.Content>
             <TamaguiPopover.Arrow />
