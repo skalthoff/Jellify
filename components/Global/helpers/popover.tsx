@@ -11,8 +11,7 @@ interface PopoverProps {
 export default function Popover(props: PopoverProps) : React.JSX.Element {
     return (
         <TamaguiPopover 
-            placement="top"
-            size="$5"
+            size="$7"
             onOpenChange={() => trigger("impactLight")} 
         >
             <TamaguiPopover.Trigger asChild>
