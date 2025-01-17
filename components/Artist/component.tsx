@@ -1,4 +1,4 @@
-import { ScrollView, useWindowDimensions } from "tamagui";
+import { ScrollView, YStack } from "tamagui";
 import { useArtistAlbums } from "../../api/queries/artist";
 import { useApiClientContext } from "../jellyfin-api-provider";
 import { FlatList } from "react-native";
@@ -12,8 +12,6 @@ import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { queryConfig } from "@/api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import Icon from "../Global/helpers/icon";
-import { Colors } from "@/enums/colors";
 import FavoriteHeaderButton from "../Global/components/favorite-header-button";
 
 interface ArtistProps {
@@ -44,22 +42,23 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
             <ScrollView 
                 contentInsetAdjustmentBehavior="automatic"
                 alignContent="center">
-                <CachedImage
-                    source={getImageApi(apiClient!)
-                        .getItemImageUrlById(
-                            props.artist.Id!,
-                            ImageType.Primary,
-                            { ...queryConfig.banners})
-                        } 
-                    imageStyle={{
-                        width: 500,
-                        height: 350,
-                        top: -width,
-                        left: width / 2,
-                        resizeMode: "cover",
-                        position: "relative"
-                    }}
-                />
+                <YStack alignContent="center" justifyContent="center" minHeight={width / 5}>
+                    <CachedImage
+                        source={getImageApi(apiClient!)
+                            .getItemImageUrlById(
+                                props.artist.Id!,
+                                ImageType.Primary,
+                                { ...queryConfig.banners})
+                            } 
+                        imageStyle={{
+                            width: width,
+                            height: width / 5,
+                            left: width / 2,
+                            resizeMode: "cover",
+                            position: "relative"
+                        }}
+                    />
+                </YStack>
 
                 <H2>Albums</H2>
                 <FlatList
