@@ -63,7 +63,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                 </YStack>
 
                 <H2>Albums</H2>
-                    <YStack alignItems="center">
+                    <YStack alignItems="flex-start" justifyContent="center">
                         <FlatList
                             contentContainerStyle={{
                                 flexGrow: 1,
