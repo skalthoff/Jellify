@@ -71,11 +71,14 @@ export default function FavoriteHeaderButton({
     })
 
     useEffect(() => {
-        refetch()
-        setIsFavorite(item.UserData!.IsFavorite!)
+        refetch();
+        setIsFavorite(
+            isUndefined(item.UserData) ? false 
+            : item.UserData.IsFavorite ?? false
+        );
     }, [
         item
-    ])
+    ]);
 
     return (
         <Icon
