@@ -25,7 +25,7 @@ export default function FavoriteHeaderButton({
     
     const { apiClient } = useApiClientContext();
 
-    const [isFavorite, setIsFavorite] = useState<boolean>(item.UserData!.IsFavorite!)
+    const [isFavorite, setIsFavorite] = useState<boolean>(item.UserData?.IsFavorite ?? false)
 
     const { data, isFetching, isFetched, refetch } = useUserData(apiClient!, item.Id!);
 
