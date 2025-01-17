@@ -5,9 +5,7 @@ import { fetchFavoriteAlbums, fetchFavoriteArtists, fetchFavoriteTracks, fetchUs
 
 export const useFavoriteArtists = (api: Api, libraryId: string) => useQuery({
     queryKey: [QueryKeys.FavoriteArtists, api, libraryId],
-    queryFn: ({ queryKey }) => {
-        const api: Api = queryKey[1] as Api;
-        const libraryId : string = queryKey[2] as string;
+    queryFn: () => {
 
         return fetchFavoriteArtists(api, libraryId)
     }
@@ -16,8 +14,6 @@ export const useFavoriteArtists = (api: Api, libraryId: string) => useQuery({
 export const useFavoriteAlbums = (api: Api, libraryId: string) => useQuery({
     queryKey: [QueryKeys.FavoriteAlbums, api, libraryId],
     queryFn: ({ queryKey }) => {
-        const api: Api = queryKey[1] as Api;
-        const libraryId : string = queryKey[2] as string;
 
         return fetchFavoriteAlbums(api, libraryId)
     }
@@ -26,8 +22,6 @@ export const useFavoriteAlbums = (api: Api, libraryId: string) => useQuery({
 export const useFavoriteTracks = (api: Api, libraryId: string) => useQuery({
     queryKey: [QueryKeys.FavoriteTracks, api, libraryId],
     queryFn: ({ queryKey }) => {
-        const api: Api = queryKey[1] as Api;
-        const libraryId : string = queryKey[2] as string;
 
         return fetchFavoriteTracks(api, libraryId)
     }
@@ -36,8 +30,6 @@ export const useFavoriteTracks = (api: Api, libraryId: string) => useQuery({
 export const useUserData = (api: Api, itemId: string) => useQuery({
     queryKey: [QueryKeys.UserData, api, itemId],
     queryFn: ({ queryKey }) => {
-        const api: Api = queryKey[1] as Api;
-        const itemId: string = queryKey[2] as string;
 
         return fetchUserData(api, itemId)
     }

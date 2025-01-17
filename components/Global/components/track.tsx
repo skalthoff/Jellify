@@ -11,7 +11,6 @@ import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import { queryConfig } from "@/api/queries/query.config";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
-import Popover from "../helpers/popover";
 
 interface TrackProps {
     track: BaseItemDto;
@@ -118,6 +117,7 @@ export default function Track({
                     <YStack
                         alignContent="center"
                         justifyContent="center"
+                        minWidth={24}
                     >
                         { track.UserData?.IsFavorite ? (
                             <Icon small name="heart" color={Colors.Primary} />
@@ -128,7 +128,7 @@ export default function Track({
 
                     <YStack
                         alignContent="center"
-                        justifyContent="flex-end"
+                        justifyContent="space-around"
                     >
                         <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
                     </YStack>
@@ -137,16 +137,7 @@ export default function Track({
                         alignContent="center"
                         justifyContent="center"
                     >
-                        <Popover
-                            trigger={(
-                                <Icon small name="dots-vertical" />
-                            )}>
-                                <XStack justifyContent="space-between">
-                                    <YStack alignContent="flex-start">
-                                        <H5>{ track.Name ?? "Untitled Track" }</H5>
-                                    </YStack>
-                                </XStack>
-                        </Popover>
+                        <Icon small name="dots-vertical" />
 
                     </YStack>
                 </XStack>

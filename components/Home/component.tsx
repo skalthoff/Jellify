@@ -1,8 +1,7 @@
 import _ from "lodash";
-import { useApiClientContext } from "../jellyfin-api-provider";
 import { HomeProvider } from "./provider";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StackParamList, ProvidedHomeProps } from "../types";
+import { StackParamList } from "../types";
 import { ArtistScreen } from "../Artist/screens";
 import { AlbumScreen } from "../Album/screens";
 import { PlaylistScreen } from "../Playlist/screens";
@@ -11,8 +10,6 @@ import { ProvidedHome } from "./screens";
 const HomeStack = createNativeStackNavigator<StackParamList>();
 
 export default function Home(): React.JSX.Element {
-
-    const { user } = useApiClientContext();
 
     return (
         <HomeProvider>

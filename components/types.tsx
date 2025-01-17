@@ -24,6 +24,9 @@ export type StackParamList = {
     };
     Playlist: {
         playlist: BaseItemDto
+    };
+    Details: {
+        item: BaseItemDto
     }
 }
 
@@ -52,3 +55,5 @@ export type AlbumsProps = NativeStackScreenProps<StackParamList, "Albums">;
 export type TracksProps = NativeStackScreenProps<StackParamList, "Tracks">;
 
 export type GenresProps = NativeStackScreenProps<StackParamList, "Genres">;
+
+export type DetailsProps = NativeStackScreenProps<StackParamList, "Details">;
