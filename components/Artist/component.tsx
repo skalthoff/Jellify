@@ -33,9 +33,9 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
 
     const { apiClient } = useApiClientContext();
 
-    const { width } = useSafeAreaFrame();
+    const { height, width } = useSafeAreaFrame();
 
-    const bannerHeight = width / 3;
+    const bannerHeight = height / 6;
 
     const { data: albums } = useArtistAlbums(props.artist.Id!, apiClient!);
 
@@ -55,7 +55,8 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                         imageStyle={{
                             width: width,
                             height: bannerHeight,
-                            left: -(bannerHeight / 3),
+                            top: -(bannerHeight),
+                            alignSelf: "center",
                             resizeMode: "cover",
                             position: "relative"
                         }}
