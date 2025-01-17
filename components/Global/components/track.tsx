@@ -12,6 +12,7 @@ import { queryConfig } from "@/api/queries/query.config";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
 import Popover from "../helpers/popover";
+import OutsidePressHandler from "react-native-outside-press";
 
 interface TrackProps {
     track: BaseItemDto;
@@ -48,7 +49,7 @@ export default function Track({
     const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
 
     return (
-        <View>
+        <OutsidePressHandler onOutsidePress={() => setPopoverOpen(false)}>
             <Separator />
 
             <Popover 
@@ -57,6 +58,7 @@ export default function Track({
                     <XStack 
                         alignContent="center"
                         flex={1}
+                        
                         onLongPress={() => {
 
                             setPopoverOpen(true)
@@ -157,6 +159,6 @@ export default function Track({
                     <H5>{ track.Name ?? "Untitled Track" }</H5>
                 </XStack>
             </Popover>
-        </View>
+        </OutsidePressHandler>
     )
 }

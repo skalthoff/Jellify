@@ -12,6 +12,7 @@ import { clientPersister } from './constants/storage';
 import { queryClient } from './constants/query-client';
 import { CacheManager } from '@georstat/react-native-image-cache';
 import { Dirs } from "react-native-file-access";
+import { EventProvider } from "react-native-outside-press";
 
 CacheManager.config = {
   baseDir: `${Dirs.CacheDir}/images_cache/`,
@@ -39,7 +40,9 @@ export default function App(): React.JSX.Element {
             swipeDirection='down'
             native={false}
             >
-            <Jellify />
+              <EventProvider>
+                <Jellify />
+              </EventProvider>
           </ToastProvider>
         </Theme>
       </TamaguiProvider>

@@ -1,3 +1,4 @@
+import { Colors } from "@/enums/colors";
 import React from "react"
 import { trigger } from "react-native-haptic-feedback";
 import { Popover as TamaguiPopover, View } from "tamagui"
@@ -23,7 +24,12 @@ export default function Popover(props: PopoverProps) : React.JSX.Element {
             <TamaguiPopover.Content>
             <TamaguiPopover.Arrow />
             <TamaguiPopover.Close />
-            { props.children }
+            <View 
+                backgroundColor={Colors.Background}
+                borderColor={Colors.Secondary}
+            >
+                { props.children }
+            </View>
           </TamaguiPopover.Content>
       </TamaguiPopover>
     )
