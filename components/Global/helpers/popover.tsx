@@ -11,7 +11,7 @@ interface PopoverProps {
 export default function Popover(props: PopoverProps) : React.JSX.Element {
     return (
         <TamaguiPopover 
-            size="$7"
+            size="$5"
             onOpenChange={() => trigger("impactLight")} 
         >
             <TamaguiPopover.Trigger asChild>
@@ -19,15 +19,15 @@ export default function Popover(props: PopoverProps) : React.JSX.Element {
             </TamaguiPopover.Trigger>
       
             <TamaguiPopover.Content>
-            <TamaguiPopover.Arrow />
-            <TamaguiPopover.Close />
-            <View 
-                backgroundColor={Colors.Background}
-                borderColor={Colors.Secondary}
-            >
-                { props.children }
-            </View>
-          </TamaguiPopover.Content>
+                <TamaguiPopover.Arrow />
+                <TamaguiPopover.Close />
+                <View 
+                    backgroundColor={Colors.Background}
+                    borderColor={Colors.Secondary}
+                >
+                    { props.children }
+                </View>
+            </TamaguiPopover.Content>
       </TamaguiPopover>
     )
 }

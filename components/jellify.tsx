@@ -9,12 +9,15 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { JellifyDarkTheme, JellifyLightTheme } from "./theme";
 import { PlayerProvider } from "../player/provider";
 import { useColorScheme } from "react-native";
+import { PortalProvider } from "tamagui";
 
 export default function Jellify(): React.JSX.Element {
 
   return (
     <JellyfinApiClientProvider>
-      <App />
+      <PortalProvider shouldAddRootHost>
+        <App />
+      </PortalProvider>
     </JellyfinApiClientProvider>
   );
 }
