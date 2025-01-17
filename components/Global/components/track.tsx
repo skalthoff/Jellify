@@ -1,7 +1,7 @@
 import { usePlayerContext } from "@/player/provider";
 import React, { useState } from "react";
 import { Separator, Spacer, View, XStack, YStack } from "tamagui";
-import { Text } from "../helpers/text";
+import { H5, Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { Colors } from "@/enums/colors";
@@ -153,9 +153,9 @@ export default function Track({
                         </XStack>
                     </XStack>
             )}>
-                <View>
-
-                </View>
+                <XStack backgroundColor={Colors.Background}>
+                    <H5>{ track.Name ?? "Untitled Track" }</H5>
+                </XStack>
             </Popover>
         </View>
     )
