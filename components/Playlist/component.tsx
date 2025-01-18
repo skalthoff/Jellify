@@ -63,6 +63,7 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
 
                         return (
                             <Track
+                                navigation={props.navigation}
                                 track={track}
                                 tracklist={tracks!}
                                 index={index}

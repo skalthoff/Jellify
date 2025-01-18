@@ -76,6 +76,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                 track={track}
                                 tracklist={tracks!}
                                 index={index}
+                                navigation={props.navigation}
                             />
                         )
                         
