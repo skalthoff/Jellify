@@ -6,6 +6,7 @@ import { ArtistScreen } from "../Artist/screens";
 import { AlbumScreen } from "../Album/screens";
 import { PlaylistScreen } from "../Playlist/screens";
 import { ProvidedHome } from "./screens";
+import DetailsScreen from "../ItemDetail/screen";
 
 const HomeStack = createNativeStackNavigator<StackParamList>();
 
@@ -58,6 +59,14 @@ export default function Home(): React.JSX.Element {
                         headerShown: true,
                         headerTitle: ""
                     })}
+                />
+
+                <HomeStack.Screen
+                    name="Details"
+                    component={DetailsScreen}
+                    options={{
+                        headerTitle: ""
+                    }}
                 />
             </HomeStack.Navigator>
         </HomeProvider>

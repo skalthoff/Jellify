@@ -8,6 +8,7 @@ import { PlaylistScreen } from "../Playlist/screens";
 import ArtistsScreen from "../Artists/screen";
 import AlbumsScreen from "../Albums/screen";
 import TracksScreen from "../Tracks/screen";
+import DetailsScreen from "../ItemDetail/screen";
 
 const LibraryStack = createNativeStackNavigator<StackParamList>();
 
@@ -89,6 +90,14 @@ export default function Library(): React.JSX.Element {
                     headerShown: true,
                     headerTitle: ""
                 })}
+            />
+
+            <LibraryStack.Screen
+                name="Details"
+                component={DetailsScreen}
+                options={{
+                    headerTitle: ""
+                }}
             />
         </LibraryStack.Navigator>
     )

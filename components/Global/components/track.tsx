@@ -11,18 +11,22 @@ import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import { queryConfig } from "@/api/queries/query.config";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamList } from "@/components/types";
 
 interface TrackProps {
     track: BaseItemDto;
     tracklist: BaseItemDto[];
+    navigation: NativeStackNavigationProp<StackParamList>;
     index: number | undefined;
     showArtwork?: boolean | undefined;
-    onPress?: () => void | undefined
+    onPress?: () => void | undefined;
 }
 
 export default function Track({
     track,
     tracklist,
+    navigation,
     index,
     queueName,
     showArtwork,
@@ -30,6 +34,7 @@ export default function Track({
 } : {
     track: BaseItemDto,
     tracklist: BaseItemDto[],
+    navigation: NativeStackNavigationProp<StackParamList>;
     index?: number | undefined,
     queueName?: string | undefined,
     showArtwork?: boolean | undefined,
@@ -137,7 +142,11 @@ export default function Track({
                         alignContent="center"
                         justifyContent="center"
                     >
-                        <Icon small name="dots-vertical" />
+                        <Icon small name="dots-vertical" onPress={() => {
+                            navigation.push("Details", {
+                                item: track
+                            })
+                        }} />
 
                     </YStack>
                 </XStack>

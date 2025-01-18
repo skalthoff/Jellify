@@ -3,7 +3,7 @@ import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-na
 import { StackParamList } from "../types";
 import PlayerScreen from "./screens";
 import Queue from "./screens/queue";
-import DetailsScreen from "./screens/details";
+import DetailsScreen from "../ItemDetail/screen";
 
 export const PlayerStack = createNativeStackNavigator<StackParamList>();
 
