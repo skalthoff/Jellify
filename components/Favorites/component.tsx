@@ -96,7 +96,8 @@ export default function Library(): React.JSX.Element {
                 name="Details"
                 component={DetailsScreen}
                 options={{
-                    headerTitle: ""
+                    headerTitle: "",
+                    presentation: "modal"
                 }}
             />
         </LibraryStack.Navigator>

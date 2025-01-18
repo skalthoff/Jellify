@@ -65,7 +65,8 @@ export default function Home(): React.JSX.Element {
                     name="Details"
                     component={DetailsScreen}
                     options={{
-                        headerTitle: ""
+                        headerTitle: "",
+                        presentation: "modal"
                     }}
                 />
             </HomeStack.Navigator>
