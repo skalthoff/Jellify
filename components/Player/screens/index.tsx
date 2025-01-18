@@ -135,13 +135,14 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                             <Icon
                                 name="menu-open"
-                                color={Colors.Primary}
                                 onPress={() => {
                                     navigation.navigate("Details", {
                                         item: nowPlaying!.item
                                     });
                                 }}
                             />
+
+                            <Spacer />
 
                             <FavoriteHeaderButton 
                                 item={nowPlaying!.item} 
