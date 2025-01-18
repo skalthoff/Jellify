@@ -132,6 +132,17 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             flex={1}
                         >
                             {/* Buttons for favorites, song menu go here */}
+
+                            <Icon
+                                name="menu-open"
+                                color={Colors.Primary}
+                                onPress={() => {
+                                    navigation.navigate("Details", {
+                                        item: nowPlaying!.item
+                                    });
+                                }}
+                            />
+
                             <FavoriteHeaderButton 
                                 item={nowPlaying!.item} 
                                 onToggle={() => setNowPlayingIsFavorite(!nowPlayingIsFavorite)}

@@ -5,7 +5,7 @@ export const JellifyDarkTheme = {
     colors: {
       ...DarkTheme.colors,
       card: Colors.Background,
-      border: Colors.Secondary,
+      border: Colors.Borders,
       background: Colors.Background,
       primary: Colors.Primary,
     },  
