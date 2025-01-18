@@ -20,55 +20,60 @@ export default function Home(): React.JSX.Element {
                 screenOptions={{
                 }}
             >
-                <HomeStack.Screen 
-                    name="Home" 
-                    component={ProvidedHome} 
-                    options={{
-                        headerLargeTitle: true,
-                        headerLargeTitleStyle: {
-                            fontFamily: 'Aileron-Bold'
-                        }
-                    }}
-                />
+                <HomeStack.Group>
+                    <HomeStack.Screen 
+                        name="Home" 
+                        component={ProvidedHome} 
+                        options={{
+                            headerLargeTitle: true,
+                            headerLargeTitleStyle: {
+                                fontFamily: 'Aileron-Bold'
+                            }
+                        }}
+                    />
 
-                <HomeStack.Screen 
-                    name="Artist" 
-                    component={ArtistScreen} 
-                    options={({ route }) => ({
-                        title: route.params.artist.Name ?? "Unknown Artist",
-                        headerLargeTitle: true,
-                        headerLargeTitleStyle: {
-                            fontFamily: 'Aileron-Bold'
-                        }
-                    })}
-                />
+                    <HomeStack.Screen 
+                        name="Artist" 
+                        component={ArtistScreen} 
+                        options={({ route }) => ({
+                            title: route.params.artist.Name ?? "Unknown Artist",
+                            headerLargeTitle: true,
+                            headerLargeTitleStyle: {
+                                fontFamily: 'Aileron-Bold'
+                            }
+                        })}
+                    />
 
-                <HomeStack.Screen
-                    name="Album"
-                    component={AlbumScreen}
-                    options={({ route }) => ({
-                        headerShown: true,
-                        headerTitle: ""
-                    })}
-                />
+                    <HomeStack.Screen
+                        name="Album"
+                        component={AlbumScreen}
+                        options={({ route }) => ({
+                            headerShown: true,
+                            headerTitle: ""
+                        })}
+                    />
 
-                <HomeStack.Screen
-                    name="Playlist"
-                    component={PlaylistScreen}
-                    options={({ route }) => ({
-                        headerShown: true,
-                        headerTitle: ""
-                    })}
-                />
+                    <HomeStack.Screen
+                        name="Playlist"
+                        component={PlaylistScreen}
+                        options={({ route }) => ({
+                            headerShown: true,
+                            headerTitle: ""
+                        })}
+                    />
 
-                <HomeStack.Screen
-                    name="Details"
-                    component={DetailsScreen}
-                    options={{
-                        headerTitle: "",
-                        presentation: "modal"
-                    }}
-                />
+                </HomeStack.Group>
+
+                <HomeStack.Group screenOptions={{ presentation: "modal"}}>
+                    <HomeStack.Screen
+                        name="Details"
+                        component={DetailsScreen}
+                        options={{
+                            headerTitle: "",
+                            presentation: "modal"
+                        }}
+                        />
+                </HomeStack.Group>
             </HomeStack.Navigator>
         </HomeProvider>
     );
