@@ -1,11 +1,12 @@
 import { useFavoriteTracks } from "@/api/queries/favorites";
 import { useApiClientContext } from "../jellyfin-api-provider";
-import { TracksProps } from "../types";
+import { StackParamList, TracksProps } from "../types";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { FlatList, RefreshControl } from "react-native";
 import Track from "../Global/components/track";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export default function Tracks({ navigation }: TracksProps) : React.JSX.Element {
+export default function Tracks({ navigation }: { navigation: NativeStackNavigationProp<StackParamList> }) : React.JSX.Element {
     const { apiClient, library } = useApiClientContext();
     const { data: tracks, refetch, isPending } = useFavoriteTracks(apiClient!, library!.musicLibraryId);
 
@@ -26,6 +27,7 @@ export default function Tracks({ navigation }: TracksProps) : React.JSX.Element 
                 renderItem={({ index, item: track}) => {
                     return (
                         <Track
+                            navigation={navigation}
                             showArtwork
                             track={track}
                             tracklist={tracks?.slice(index, index + 50) ?? []}

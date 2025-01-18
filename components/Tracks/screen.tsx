@@ -9,9 +9,9 @@ export default function TracksScreen({
     navigation
 } : {
     route: RouteProp<StackParamList, "Tracks">,
-    navigation: NativeStackNavigationProp<StackParamList, "Tracks", undefined>
+    navigation: NativeStackNavigationProp<StackParamList>
 }) : React.JSX.Element {
     return (
-        <Tracks route={route} navigation={navigation} />
+        <Tracks navigation={navigation} />
     )
 }
