@@ -134,7 +134,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             {/* Buttons for favorites, song menu go here */}
 
                             <Icon
-                                name="menu-open"
+                                name="dots-horizontal-circle-outline"
                                 onPress={() => {
                                     navigation.navigate("Details", {
                                         item: nowPlaying!.item
