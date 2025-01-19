@@ -1,6 +1,6 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { JellifyTrack } from "../types/JellifyTrack";
-import { TrackType } from "react-native-track-player";
+import { RatingType, TrackType } from "react-native-track-player";
 import { Api } from "@jellyfin/sdk";
 import { QueuingType } from "../enums/queuing-type";
 import querystring from "querystring"
@@ -36,6 +36,7 @@ export function mapDtoToTrack(api: Api, sessionId: string, item: BaseItemDto, qu
         duration: item.RunTimeTicks,
         artwork: getImageApi(api).getItemImageUrlById(item.Id!),
 
+        rating: item.UserData?.IsFavorite ? RatingType.Heart : undefined,
         item,
         QueuingType: queuingType ?? QueuingType.DirectlyQueued
     } as JellifyTrack
