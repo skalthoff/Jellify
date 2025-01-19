@@ -4,7 +4,7 @@ import { fetchRecentlyPlayed } from "./functions/recents";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api"
 import Client from "../client";
 
-export const useRecentlyPlayed = useQuery({
+export const useRecentlyPlayed = () => useQuery({
     queryKey: [QueryKeys.RecentlyPlayed],
     queryFn: () => {
 
@@ -12,7 +12,7 @@ export const useRecentlyPlayed = useQuery({
     }
 });
 
-export const useRecentlyPlayedArtists = useQuery({
+export const useRecentlyPlayedArtists = () => useQuery({
     queryKey: [QueryKeys.RecentlyPlayedArtists],
     queryFn: () => {
         return fetchRecentlyPlayed()

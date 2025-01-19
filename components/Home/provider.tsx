@@ -1,5 +1,4 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { useApiClientContext } from "../jellyfin-api-provider";
 import { useRecentlyPlayed, useRecentlyPlayedArtists } from "../../api/queries/recently-played";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
@@ -13,10 +12,8 @@ interface HomeContext {
 const HomeContextInitializer = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
-    const { apiClient, library } = useApiClientContext();
-
-    const { data : recentTracks, refetch : refetchRecentTracks } = useRecentlyPlayed;
-    const { data : recentArtists, refetch : refetchRecentArtists } = useRecentlyPlayedArtists;
+    const { data : recentTracks, refetch : refetchRecentTracks } = useRecentlyPlayed();
+    const { data : recentArtists, refetch : refetchRecentArtists } = useRecentlyPlayedArtists();
 
     const onRefresh = async () => {
         await Promise.all([
