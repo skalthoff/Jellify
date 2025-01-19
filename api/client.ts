@@ -29,23 +29,26 @@ export default class Client {
         const libraryJson = storage.getString(MMKVStorageKeys.Library);
 
         
-        if (api)
-            this.api = api
-
+        
         if (user)
             this.setAndPersistUser
         else if (userJson)
             this.user = JSON.parse(userJson)
-
+        
         if (server) 
             this.setAndPersistServer(server)
         else if (serverJson)
             this.server = JSON.parse(serverJson);
-
+        
         if (library)
             this.setAndPersistLibrary(library)
         else if (libraryJson)
             this.library = JSON.parse(libraryJson)
+
+        if (api)
+            this.api = api
+        else if (this.user && this.server)
+            this.api = new Api(this.server.url, JellyfinInfo.clientInfo, JellyfinInfo.deviceInfo, this.user.accessToken);
     }
 
     public static get instance(): Client {
