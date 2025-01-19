@@ -9,7 +9,9 @@ const CAPABILITIES: Capability[] = [
     Capability.PlayFromId,
     Capability.SeekTo,
     Capability.SkipToNext,
-    Capability.SkipToPrevious
+    Capability.SkipToPrevious,
+    Capability.Like,
+    Capability.Dislike
 ]
   
 export const useSetupPlayer = () => useQuery({
