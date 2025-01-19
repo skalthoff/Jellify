@@ -11,7 +11,7 @@ import Input from "../../Global/helpers/input";
 import Button from "../../Global/helpers/button";
 import { http, https } from "../utils/constants";
 import { storage } from "../../../constants/storage";
-import { jellifyClient } from "../../../api/client";
+import { JellyfinInfo } from "../../../api/info";
 import { Jellyfin } from "@jellyfin/sdk/lib/jellyfin";
 import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -25,7 +25,7 @@ export default function ServerAddress(): React.JSX.Element {
 
     const useServerMutation = useMutation({
         mutationFn: async () => {
-            let jellyfin = new Jellyfin(jellifyClient);
+            let jellyfin = new JellyfinInfo(JellyfinInfo);
 
             if (!!!serverAddress) 
                 throw new Error("Server address was empty");

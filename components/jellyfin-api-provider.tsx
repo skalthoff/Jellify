@@ -8,7 +8,7 @@ import { JellifyServer } from '../types/JellifyServer';
 import { JellifyLibrary } from '../types/JellifyLibrary';
 import { JellifyUser } from '../types/JellifyUser';
 import uuid from 'react-native-uuid';
-import { buildAuthenticatedApiClient, buildPublicApiClient } from '@/api/client';
+import Client from '@/api/client';
 
 interface JellyfinApiClientContext {
   apiClient: Api | undefined;
@@ -24,19 +24,17 @@ interface JellyfinApiClientContext {
 
 const JellyfinApiClientContextInitializer = () => {
 
-    const userJson = storage.getString(MMKVStorageKeys.User)
-    const serverJson = storage.getString(MMKVStorageKeys.Server);
-    const libraryJson = storage.getString(MMKVStorageKeys.Library);
-
-    const [sessionId, setSessionId] = useState<string>(uuid.v4())
-    const [user, setUser] = useState<JellifyUser | undefined>(userJson ? (JSON.parse(userJson) as JellifyUser) : undefined);
-    const [server, setServer] = useState<JellifyServer | undefined>(serverJson ? (JSON.parse(serverJson) as JellifyServer) : undefined);
-    const [library, setLibrary] = useState<JellifyLibrary | undefined>(libraryJson ? (JSON.parse(libraryJson) as JellifyLibrary) : undefined);
-
-    const [apiClient, setApiClient] = useState<Api | undefined>(!isUndefined(server) && !isUndefined(user) ? buildAuthenticatedApiClient(server!.url, user!.accessToken) : undefined);
+    const [apiClient, setApiClient] = useState<Api | undefined>(Client.instance.api);
+    const [sessionId, setSessionId] = useState<string>(Client.instance.sessionId);
+    const [user, setUser] = useState<JellifyUser | undefined>(Client.instance.user);
+    const [server, setServer] = useState<JellifyServer | undefined>(Client.instance.server);
+    const [library, setLibrary] = useState<JellifyLibrary | undefined>(Client.instance.library);
     
     const signOut = () => {
       console.debug("Signing out of Jellify");
+
+      Client.signOut();
+
       setUser(undefined);
       setServer(undefined);
       setLibrary(undefined);
@@ -44,11 +42,11 @@ const JellyfinApiClientContextInitializer = () => {
 
     useEffect(() => {
       if (server && user)
-        setApiClient(buildAuthenticatedApiClient(server.url, user.accessToken));
+        Client.setPrivateApiClient(server, user)
       else if (server)
-        setApiClient(buildPublicApiClient(server.url));
+        Client.setPublicApiClient(server)
       else
-        setApiClient(undefined);
+        Client.signOut();
     }, [
       server,
       user
