@@ -7,12 +7,12 @@ import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { Colors } from "@/enums/colors";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
-import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import { queryConfig } from "@/api/queries/query.config";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "@/components/types";
+import Client from "@/api/client";
 
 interface TrackProps {
     track: BaseItemDto;
@@ -42,7 +42,6 @@ export default function Track({
 }) : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
-    const { apiClient } = useApiClientContext();
     const { nowPlaying, usePlayNewQueue } = usePlayerContext();
 
     const isPlaying = nowPlaying?.item.Id === track.Id;
@@ -76,7 +75,7 @@ export default function Track({
                 >
                     { showArtwork ? (
                         <CachedImage
-                            source={getImageApi(apiClient!)
+                            source={getImageApi(Client.api!)
                                 .getItemImageUrlById(
                                     track.AlbumId ?? "",
                                     ImageType.Primary,

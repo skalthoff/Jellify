@@ -1,6 +1,5 @@
 import _ from "lodash";
-import { JellyfinApiClientProvider, useApiClientContext } from "./jellyfin-api-provider";
-import React from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Navigation from "./navigation";
 import Login from "./Login/component";
@@ -10,29 +9,31 @@ import { JellifyDarkTheme, JellifyLightTheme } from "./theme";
 import { PlayerProvider } from "../player/provider";
 import { useColorScheme } from "react-native";
 import { PortalProvider } from "tamagui";
+import Client from "@/api/client";
 
 export default function Jellify(): React.JSX.Element {
 
   return (
-    <JellyfinApiClientProvider>
-      <PortalProvider shouldAddRootHost>
-        <App />
-      </PortalProvider>
-    </JellyfinApiClientProvider>
+    <PortalProvider shouldAddRootHost>
+      <App />
+    </PortalProvider>
   );
 }
 
 function App(): React.JSX.Element {
 
-  // If library hasn't been set, we haven't completed the auth flow
-  const { server, library } = useApiClientContext();
-
   const isDarkMode = useColorScheme() === "dark";
   
+  useEffect(() => {
+    console.debug("Client instance changed")
+  }, [
+    Client.instance
+  ])
+
   return (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
       <SafeAreaProvider>
-        { server && library ? (
+        { Client.user && Client.user ? (
           <PlayerProvider>
             <Navigation />
           </PlayerProvider>

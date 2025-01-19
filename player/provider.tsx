@@ -17,6 +17,7 @@ import { QueuingType } from "@/enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
 import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
 import { convertRunTimeTicksToSeconds } from "@/helpers/runtimeticks";
+import Client from "@/api/client";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -41,8 +42,7 @@ const PlayerContextInitializer = () => {
 
     const queueJson = storage.getString(MMKVStorageKeys.PlayQueue);
 
-    const { apiClient, sessionId } = useApiClientContext();
-    const playStateApi = getPlaystateApi(apiClient!)
+    const playStateApi = getPlaystateApi(Client.api!)
     
     //#region State
     const [showPlayer, setShowPlayer] = useState<boolean>(false);
@@ -147,11 +147,11 @@ const PlayerContextInitializer = () => {
             setIsSkipping(true);
 
             // Optimistically set now playing
-            setNowPlaying(mapDtoToTrack(apiClient!, sessionId, mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection));
+            setNowPlaying(mapDtoToTrack(Client.api!, sessionId, mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection));
 
             await resetQueue(false);
             await addToQueue(mutation.tracklist.map((track) => {
-                return mapDtoToTrack(apiClient!, sessionId, track, QueuingType.FromSelection)
+                return mapDtoToTrack(Co!, sessionId, track, QueuingType.FromSelection)
             }));
             
             setQueueName(mutation.queueName);

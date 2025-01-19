@@ -1,18 +1,18 @@
-import { Api } from "@jellyfin/sdk";
+import Client from "@/api/client";
 import { BaseItemDto, BaseItemKind, ItemSortBy, SortOrder, UserItemDataDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 
-export function fetchFavoriteArtists(api: Api, musicLibraryId: string): Promise<BaseItemDto[]> {
+export function fetchFavoriteArtists(): Promise<BaseItemDto[]> {
     console.debug(`Fetching user's favorite artists`);
 
     return new Promise(async (resolve, reject) => {
-        getItemsApi(api)
+        getItemsApi(Client.api!)
             .getItems({
                 includeItemTypes: [
                     BaseItemKind.MusicArtist
                 ],
                 isFavorite: true,
-                parentId: musicLibraryId,
+                parentId: Client.library!.musicLibraryId,
                 recursive: true,
                 sortBy: [
                     ItemSortBy.SortName
@@ -35,17 +35,17 @@ export function fetchFavoriteArtists(api: Api, musicLibraryId: string): Promise<
     })
 }
 
-export function fetchFavoriteAlbums(api: Api, musicLibraryId: string): Promise<BaseItemDto[]> {
+export function fetchFavoriteAlbums(): Promise<BaseItemDto[]> {
     console.debug(`Fetching user's favorite albums`);
 
     return new Promise(async (resolve, reject) => {
-        getItemsApi(api)
+        getItemsApi(Client.api!)
             .getItems({
                 includeItemTypes: [
                     BaseItemKind.MusicAlbum
                 ],
                 isFavorite: true,
-                parentId: musicLibraryId,
+                parentId: Client.library!.musicLibraryId!,
                 recursive: true,
                 sortBy: [
                     ItemSortBy.SortName
@@ -68,17 +68,17 @@ export function fetchFavoriteAlbums(api: Api, musicLibraryId: string): Promise<B
     })
 }
 
-export function fetchFavoriteTracks(api: Api, musicLibraryId: string): Promise<BaseItemDto[]> {
+export function fetchFavoriteTracks(): Promise<BaseItemDto[]> {
     console.debug(`Fetching user's favorite artists`);
 
     return new Promise(async (resolve, reject) => {
-        getItemsApi(api)
+        getItemsApi(Client.api!)
             .getItems({
                 includeItemTypes: [
                     BaseItemKind.Audio
                 ],
                 isFavorite: true,
-                parentId: musicLibraryId,
+                parentId: Client.library!.musicLibraryId,
                 recursive: true,
                 sortBy: [
                     ItemSortBy.SortName
@@ -101,9 +101,9 @@ export function fetchFavoriteTracks(api: Api, musicLibraryId: string): Promise<B
     })
 }
 
-export function fetchUserData(api: Api, itemId: string): Promise<UserItemDataDto> {
+export function fetchUserData(itemId: string): Promise<UserItemDataDto> {
     return new Promise(async (resolve, reject) => {
-        getItemsApi(api)
+        getItemsApi(Client.api!)
             .getItemUserData({
                 itemId
             }).then((response) => {

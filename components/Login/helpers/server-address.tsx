@@ -3,7 +3,6 @@ import _ from "lodash";
 import { useMutation } from "@tanstack/react-query";
 import { MMKVStorageKeys } from "../../../enums/mmkv-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
-import { useApiClientContext } from "../../jellyfin-api-provider";
 import { Spacer, Spinner, View, XStack, ZStack } from "tamagui";
 import { SwitchWithLabel } from "../../Global/helpers/switch-with-label";
 import { H1 } from "../../Global/helpers/text";
@@ -15,22 +14,21 @@ import { JellyfinInfo } from "../../../api/info";
 import { Jellyfin } from "@jellyfin/sdk/lib/jellyfin";
 import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Client from "@/api/client";
 
 export default function ServerAddress(): React.JSX.Element {
-
-    const { setServer } = useApiClientContext();
 
     const [useHttps, setUseHttps] = useState<boolean>(true);
     const [serverAddress, setServerAddress] = useState<string | undefined>(undefined);
 
     const useServerMutation = useMutation({
         mutationFn: async () => {
-            let jellyfin = new JellyfinInfo(JellyfinInfo);
+            let jellyfin = new Jellyfin(JellyfinInfo);
 
             if (!!!serverAddress) 
                 throw new Error("Server address was empty");
 
-            let api  = jellyfin.createApi(`${useHttps ? https : http}${serverAddress}`);
+            let api = jellyfin.createApi(`${useHttps ? https : http}${serverAddress}`);
 
             return getSystemApi(api).getPublicSystemInfo();
         },
@@ -41,7 +39,7 @@ export default function ServerAddress(): React.JSX.Element {
             console.debug("REMOVE THIS::onSuccess variable", publicSystemInfoResponse.data);
             console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
     
-            let jellifyServer: JellifyServer = {
+            const server: JellifyServer = {
                 url: `${useHttps ? https : http}${serverAddress!}`,
                 address: serverAddress!,
                 name: publicSystemInfoResponse.data.ServerName!,
@@ -49,11 +47,11 @@ export default function ServerAddress(): React.JSX.Element {
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
 
-            setServer(jellifyServer);
+            Client.setPublicApiClient(server);
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
-            return storage.set(MMKVStorageKeys.Server, "");
+            Client.signOut();
         }
     });
 

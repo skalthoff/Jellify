@@ -1,6 +1,5 @@
 import { ScrollView, YStack } from "tamagui";
 import { useArtistAlbums } from "../../api/queries/artist";
-import { useApiClientContext } from "../jellyfin-api-provider";
 import { FlatList } from "react-native";
 import { ItemCard } from "../Global/helpers/item-card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -13,6 +12,7 @@ import { queryConfig } from "@/api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteHeaderButton from "../Global/components/favorite-header-button";
+import Client from "@/api/client";
 
 interface ArtistProps {
     artist: BaseItemDto
@@ -31,13 +31,11 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
 
     const [columns, setColumns] = useState<number>(2);
 
-    const { apiClient } = useApiClientContext();
-
     const { height, width } = useSafeAreaFrame();
 
     const bannerHeight = height / 6;
 
-    const { data: albums } = useArtistAlbums(props.artist.Id!, apiClient!);
+    const { data: albums } = useArtistAlbums(props.artist.Id!);
 
     return (
         <SafeAreaView style={{ flex: 1 }} edges={["top", "right", "left"]}>
@@ -46,7 +44,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                 alignContent="center">
                 <YStack alignContent="center" justifyContent="center" minHeight={bannerHeight}>
                     <CachedImage
-                        source={getImageApi(apiClient!)
+                        source={getImageApi(Client.api!)
                             .getItemImageUrlById(
                                 props.artist.Id!,
                                 ImageType.Primary,

@@ -8,7 +8,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function Tracks({ navigation }: { navigation: NativeStackNavigationProp<StackParamList> }) : React.JSX.Element {
     const { apiClient, library } = useApiClientContext();
-    const { data: tracks, refetch, isPending } = useFavoriteTracks(apiClient!, library!.musicLibraryId);
+    const { data: tracks, refetch, isPending } = useFavoriteTracks();
 
     const { width } = useSafeAreaFrame();
 

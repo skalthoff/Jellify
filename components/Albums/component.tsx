@@ -1,13 +1,11 @@
 import { useFavoriteAlbums } from "@/api/queries/favorites";
 import { AlbumsProps } from "../types";
-import { useApiClientContext } from "../jellyfin-api-provider";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { ItemCard } from "../Global/helpers/item-card";
 import { FlatList, RefreshControl } from "react-native";
 
 export default function Albums({ navigation }: AlbumsProps) : React.JSX.Element {
-    const { apiClient, library } = useApiClientContext();
-    const { data: albums, refetch, isPending } = useFavoriteAlbums(apiClient!, library!.musicLibraryId);
+    const { data: albums, refetch, isPending } = useFavoriteAlbums();
 
     const { width } = useSafeAreaFrame();
 

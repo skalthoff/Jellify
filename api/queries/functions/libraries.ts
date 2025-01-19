@@ -1,14 +1,14 @@
-import { Api } from "@jellyfin/sdk";
+import Client from "@/api/client";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { isUndefined } from "lodash";
 
 
-export function fetchMusicLibraries(api: Api): Promise<BaseItemDto[]> {
+export function fetchMusicLibraries(): Promise<BaseItemDto[]> {
     return new Promise(async (resolve, reject) => {
         console.debug("Fetching music libraries from Jellyfin");
         
-        let libraries = await getItemsApi(api).getItems({ 
+        let libraries = await getItemsApi(Client.api!).getItems({ 
             includeItemTypes: ['CollectionFolder'] 
         });
 
@@ -24,11 +24,11 @@ export function fetchMusicLibraries(api: Api): Promise<BaseItemDto[]> {
     });
 }
 
-export function fetchPlaylistLibrary(api: Api): Promise<BaseItemDto> {
+export function fetchPlaylistLibrary(): Promise<BaseItemDto> {
     return new Promise(async (resolve, reject) => {
         console.debug("Fetching playlist library from Jellyfin");
         
-        let libraries = await getItemsApi(api).getItems({ 
+        let libraries = await getItemsApi(Client.api!).getItems({ 
             includeItemTypes: ['ManualPlaylistsFolder'], 
             excludeItemTypes: ['CollectionFolder'] 
         });

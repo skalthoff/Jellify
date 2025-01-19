@@ -1,12 +1,33 @@
+import Client from "@/api/client";
+import { useItemImage } from "@/api/queries/image";
 import { Blurhash } from "react-native-blurhash";
-import { ImageSourcePropType } from "react-native/Libraries/Image/Image";
+import { Image, View } from "tamagui";
 
-const BlurhashLoading = (props: any) => {
-    return (
-        <Blurhash blurhash={props}>
-
-        </Blurhash>
-    )
+interface BlurhashLoadingProps {
+    itemId: string;
+    blurhash: string;
+    size: number
 }
 
-export default BlurhashLoading;
+export default function BlurhashLoading(props: BlurhashLoadingProps) : React.JSX.Element {
+
+    const { data: image, isSuccess } = useItemImage(Client.api!, props.itemId);
+
+    return (
+        <View minHeight={props.size}>
+
+            { isSuccess ? (
+                <Image 
+                    src={image}
+                    style={{
+                        height: props.size,
+                        width: props.size,
+                    }} 
+                />
+            ) : (
+                <Blurhash blurhash={props.blurhash} style={{ flex: 1 }} />
+            )
+        }
+        </View>
+    )
+}

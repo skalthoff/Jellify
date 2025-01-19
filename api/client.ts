@@ -7,15 +7,14 @@ import { MMKVStorageKeys } from "@/enums/mmkv-storage-keys";
 import uuid from 'react-native-uuid';
 import { JellifyLibrary } from "@/types/JellifyLibrary";
 
-
 export default class Client {
     static #instance: Client;
 
-    public api : Api | undefined;
-    public user : JellifyUser | undefined;
-    public server : JellifyServer | undefined;
-    public library : JellifyLibrary | undefined;
-    public sessionId : string = uuid.v4();
+    private api : Api | undefined;
+    private user : JellifyUser | undefined;
+    private server : JellifyServer | undefined;
+    private library : JellifyLibrary | undefined;
+    private sessionId : string = uuid.v4();
 
     private constructor(
         api?: Api | undefined, 
@@ -31,7 +30,7 @@ export default class Client {
         
         
         if (user)
-            this.setAndPersistUser
+            this.setAndPersistUser(user)
         else if (userJson)
             this.user = JSON.parse(userJson)
         
@@ -59,19 +58,36 @@ export default class Client {
         return Client.#instance;
     }
 
-    public static signOut(): void {
-        if (!Client.#instance) {
-            Client.instance;
-        }
+    public static get api(): Api | undefined {
+        return Client.#instance.api;
+    }
 
-        Client.instance.removeCredentials()
+    public static get server(): JellifyServer | undefined {
+        return Client.#instance.server;
+    }
+
+    public static get user(): JellifyUser | undefined {
+        return Client.#instance.user;
+    }
+
+    public static get library(): JellifyLibrary | undefined {
+        return Client.#instance.library;
+    }
+
+    public static signOut(): void {
+        Client.#instance.removeCredentials()
+    }
+
+    public static switchServer() : void {
+        Client.#instance.removeServer();
     }
 
     public static switchUser(): void {
-        if (!Client.#instance)
-            Client.instance;
+        Client.#instance.removeUser();
+    }
 
-        Client.instance.removeUser();
+    public static setUser(user: JellifyUser): void {
+        Client.#instance.setAndPersistUser(user);
     }
 
     private setAndPersistUser(user: JellifyUser) {
@@ -104,6 +120,12 @@ export default class Client {
         storage.delete(MMKVStorageKeys.User)
     }
 
+    private removeServer() {
+        this.server = undefined;
+
+        storage.delete(MMKVStorageKeys.Server)
+    }
+
     private removeUser() {
         this.user = undefined;
 
@@ -129,6 +151,10 @@ export default class Client {
     public static setPrivateApiClient(server : JellifyServer, user : JellifyUser) : void {
         const api = JellyfinInfo.createApi(server.url, user.accessToken);
 
-        Client.#instance = new Client(api, user, server, undefined)
+        Client.#instance = new Client(api, user, server, undefined);
+    }
+
+    public static setLibrary(library : JellifyLibrary) : void {
+        Client.instance.library = library
     }
 }

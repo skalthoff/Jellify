@@ -26,7 +26,7 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
 
     const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
 
-    const { data: tracks, isLoading, refetch } = useItemTracks(props.playlist.Id!, apiClient!);
+    const { data: tracks, isLoading, refetch } = useItemTracks(props.playlist.Id!);
 
     useEffect(() => {
         refetch();
@@ -39,7 +39,7 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
             <ScrollView contentInsetAdjustmentBehavior="automatic">
                 <YStack alignItems="center">
                     <CachedImage
-                        source={getImageApi(apiClient!)
+                        source={getImageApi(Client.api!)
                             .getItemImageUrlById(
                                 props.playlist.Id!,
                                 ImageType.Primary,

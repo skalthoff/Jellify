@@ -39,7 +39,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         alignContent="center"
                         flex={1}>
                         <CachedImage
-                            source={getImageApi(apiClient!)
+                            source={getImageApi(Client.api!)
                                 .getItemImageUrlById(
                                     nowPlaying!.item.AlbumId ?? "",
                                     ImageType.Primary,

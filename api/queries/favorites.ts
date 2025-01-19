@@ -3,34 +3,28 @@ import { Api } from "@jellyfin/sdk";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoriteAlbums, fetchFavoriteArtists, fetchFavoriteTracks, fetchUserData } from "./functions/favorites";
 
-export const useFavoriteArtists = (api: Api, libraryId: string) => useQuery({
-    queryKey: [QueryKeys.FavoriteArtists, api, libraryId],
+export const useFavoriteArtists = () => useQuery({
+    queryKey: [QueryKeys.FavoriteArtists],
     queryFn: () => {
 
-        return fetchFavoriteArtists(api, libraryId)
+        return fetchFavoriteArtists()
     }
 });
 
-export const useFavoriteAlbums = (api: Api, libraryId: string) => useQuery({
-    queryKey: [QueryKeys.FavoriteAlbums, api, libraryId],
-    queryFn: ({ queryKey }) => {
+export const useFavoriteAlbums = () => useQuery({
+    queryKey: [QueryKeys.FavoriteAlbums],
+    queryFn: () => {
 
-        return fetchFavoriteAlbums(api, libraryId)
+        return fetchFavoriteAlbums()
     }
 });
 
-export const useFavoriteTracks = (api: Api, libraryId: string) => useQuery({
-    queryKey: [QueryKeys.FavoriteTracks, api, libraryId],
-    queryFn: ({ queryKey }) => {
-
-        return fetchFavoriteTracks(api, libraryId)
-    }
+export const useFavoriteTracks = () => useQuery({
+    queryKey: [QueryKeys.FavoriteTracks],
+    queryFn: () => fetchFavoriteTracks()
 });
 
-export const useUserData = (api: Api, itemId: string) => useQuery({
-    queryKey: [QueryKeys.UserData, api, itemId],
-    queryFn: ({ queryKey }) => {
-
-        return fetchUserData(api, itemId)
-    }
-})
+export const useUserData = (itemId: string) => useQuery({
+    queryKey: [QueryKeys.UserData, itemId],
+    queryFn: () => fetchUserData(itemId)
+});

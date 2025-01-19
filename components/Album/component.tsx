@@ -3,7 +3,6 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ScrollView, YStack, XStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import { useApiClientContext } from "../jellyfin-api-provider";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
 import { H4, H5, Text } from "../Global/helpers/text";
@@ -15,6 +14,7 @@ import { useItemTracks } from "@/api/queries/tracks";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteHeaderButton from "../Global/components/favorite-header-button";
 import { useEffect } from "react";
+import Client from "@/api/client";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -31,12 +31,11 @@ export default function Album(props: AlbumProps): React.JSX.Element {
         }
     })
 
-    const { apiClient } = useApiClientContext();
     const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
 
     const { width } = useSafeAreaFrame();
 
-    const { data: tracks, isLoading, refetch } = useItemTracks(props.album.Id!, apiClient!, true);
+    const { data: tracks, isLoading, refetch } = useItemTracks(props.album.Id!, true);
 
     useEffect(() => {
         refetch();
@@ -49,7 +48,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
             <ScrollView contentInsetAdjustmentBehavior="automatic">
                 <YStack alignItems="center" minHeight={width / 1.1}>
                     <CachedImage
-                        source={getImageApi(apiClient!)
+                        source={getImageApi(Client.api!)
                             .getItemImageUrlById(
                                 props.album.Id!,
                                 ImageType.Primary,

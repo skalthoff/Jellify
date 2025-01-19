@@ -14,14 +14,14 @@ export default function ServerDetails() : React.JSX.Element {
                 <H5>Access Token</H5>
                 <XStack>
                     <Icon name="hand-coin-outline" />
-                    <Text>{apiClient!.accessToken}</Text>
+                    <Text>{Client.api!!.accessToken}</Text>
                 </XStack>
             </YStack>
             <YStack>
                 <H5>Jellyfin Server</H5>
                 <XStack>
                     <Icon name="server-network" />
-                    <Text>{apiClient!.basePath}</Text>
+                    <Text>{Client.api!.basePath}</Text>
                 </XStack>
             </YStack>
         </YStack>

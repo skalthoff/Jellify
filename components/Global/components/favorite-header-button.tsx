@@ -2,17 +2,16 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import React, { useEffect, useState } from "react";
 import Icon from "../helpers/icon";
 import { Colors } from "@/enums/colors";
-import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import { Api } from "@jellyfin/sdk";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { isUndefined } from "lodash";
 import { useUserData } from "@/api/queries/favorites";
 import { Spinner } from "tamagui";
+import Client from "@/api/client";
 
 interface SetFavoriteMutation {
     item: BaseItemDto,
-    api: Api
 }
 
 export default function FavoriteHeaderButton({ 
@@ -23,16 +22,13 @@ export default function FavoriteHeaderButton({
     onToggle?: () => void
 }) : React.JSX.Element {
 
-    
-    const { apiClient } = useApiClientContext();
-
     const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteItem(item));
 
-    const { data, isFetching, isFetched, refetch } = useUserData(apiClient!, item.Id!);
+    const { data, isFetching, isFetched, refetch } = useUserData(item.Id!);
 
     const useSetFavorite = useMutation({
         mutationFn: async (mutation: SetFavoriteMutation) => {
-            return getUserLibraryApi(mutation.api)
+            return getUserLibraryApi(Client.api!)
                 .markFavoriteItem({
                     itemId: mutation.item.Id!
                 })
@@ -46,7 +42,7 @@ export default function FavoriteHeaderButton({
     
     const useRemoveFavorite = useMutation({
         mutationFn: async (mutation: SetFavoriteMutation) => {
-            return getUserLibraryApi(mutation.api)
+            return getUserLibraryApi(Client.api!)
                 .unmarkFavoriteItem({
                     itemId: mutation.item.Id!
                 })
@@ -58,9 +54,9 @@ export default function FavoriteHeaderButton({
 
     const toggleFavorite = () => {
         if (isFavorite)
-            useRemoveFavorite.mutate({ item, api: apiClient!})
+            useRemoveFavorite.mutate({ item })
         else
-            useSetFavorite.mutate({ item, api: apiClient! })
+            useSetFavorite.mutate({ item })
     }
 
     useEffect(() => {

@@ -8,13 +8,13 @@ export function fetchRecentlyPlayed(): Promise<BaseItemDto[]> {
     console.debug("Fetching recently played items");
 
     return new Promise(async (resolve, reject) => {
-        getItemsApi(Client.instance.api!)
+        getItemsApi(Client.api!)
         .getItems({ 
             includeItemTypes: [
                 BaseItemKind.Audio
             ],
             limit: queryConfig.limits.recents,
-            parentId: Client.instance.library!.musicLibraryId, 
+            parentId: Client.library!.musicLibraryId, 
             recursive: true,
             sortBy: [ 
                 ItemSortBy.DatePlayed 
@@ -37,4 +37,17 @@ export function fetchRecentlyPlayed(): Promise<BaseItemDto[]> {
             reject(error);
         })
     })
+}
+
+export function fetchRecentlyPlayedArtists() : Promise<BaseItemDto[]> {
+    return fetchRecentlyPlayed()
+        .then((tracks) => {
+            return getItemsApi(Client.api!)
+                .getItems({ 
+                    ids: tracks.map(track => track.ArtistItems![0].Id!) 
+                })
+                .then((recentArtists) => {
+                    return recentArtists.data.Items!
+                });
+        });
 }
