@@ -64,6 +64,13 @@ export default class Client {
         Client.instance.removeCredentials()
     }
 
+    public static switchUser(): void {
+        if (!Client.#instance)
+            Client.instance;
+
+        Client.instance.removeUser();
+    }
+
     private setAndPersistUser(user: JellifyUser) {
         this.user = user;
 
@@ -91,6 +98,12 @@ export default class Client {
 
         storage.delete(MMKVStorageKeys.Server)
         storage.delete(MMKVStorageKeys.Library)
+        storage.delete(MMKVStorageKeys.User)
+    }
+
+    private removeUser() {
+        this.user = undefined;
+
         storage.delete(MMKVStorageKeys.User)
     }
 
