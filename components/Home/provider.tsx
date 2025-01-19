@@ -15,8 +15,8 @@ const HomeContextInitializer = () => {
 
     const { apiClient, library } = useApiClientContext();
 
-    const { data : recentTracks, refetch : refetchRecentTracks } = useRecentlyPlayed(apiClient!, library!.musicLibraryId);
-    const { data : recentArtists, refetch : refetchRecentArtists } = useRecentlyPlayedArtists(apiClient!, library!.musicLibraryId);
+    const { data : recentTracks, refetch : refetchRecentTracks } = useRecentlyPlayed;
+    const { data : recentArtists, refetch : refetchRecentArtists } = useRecentlyPlayedArtists;
 
     const onRefresh = async () => {
         await Promise.all([
