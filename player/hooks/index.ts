@@ -33,7 +33,7 @@ export const useSetupPlayer = () => useQuery({
                 compactCapabilities: CAPABILITIES,
                 ratingType: RatingType.Heart,
                 likeOptions: {
-                    isActive: true,
+                    isActive: false,
                     title: "Favorite"
                 },
                 dislikeOptions: {

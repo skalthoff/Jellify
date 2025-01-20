@@ -218,6 +218,7 @@ const PlayerContextInitializer = () => {
                             : isUndefined(activeTrack!.item.UserData) ? false 
                             : activeTrack.item.UserData.IsFavorite ?? false
                         );
+
                     } else if (!!!activeTrack) {
                         setNowPlaying(undefined)
                         setNowPlayingIsFavorite(false);
