@@ -13,7 +13,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  self.moduleName = @"YourModuleName";
+  self.moduleName = @"Jellify";
   self.initialProps = @{}; // Add any initial props as needed
   
   // Call the base class method for any common initialization
