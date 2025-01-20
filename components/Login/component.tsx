@@ -9,18 +9,18 @@ import Client from "@/api/client";
 
 export default function Login(): React.JSX.Element {
 
-    const { triggerAuth, setTriggerAuth } = useAuthenticationContext();
+    const { user, server, library, triggerAuth, setTriggerAuth } = useAuthenticationContext();
 
     const Stack = createStackNavigator();
 
     useEffect(() => {
         setTriggerAuth(false);
-    })
+    });
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             {
-                (_.isUndefined(Client.server)) ? (
+                (_.isUndefined(server)) ? (
                     <Stack.Screen
                         name="ServerAddress"
                         options={{
@@ -31,7 +31,7 @@ export default function Login(): React.JSX.Element {
                         />
                     ) : (
                     
-                    (_.isUndefined(Client.user)) ? (
+                    (_.isUndefined(user)) ? (
                         <Stack.Screen 
                             name="ServerAuthentication" 
                             options={{ 

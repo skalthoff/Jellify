@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner, Text, ToggleGroup, View } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { H1, Label } from "../../Global/helpers/text";
@@ -10,7 +10,9 @@ import Client from "@/api/client";
 
 export default function ServerLibrary(): React.JSX.Element {
 
-    const { libraryId, setLibraryId } = useAuthenticationContext();
+    const { setLibrary, setUser } = useAuthenticationContext();
+
+    const [libraryId, setLibraryId] = useState<string | undefined>(undefined);
 
     const { data : libraries, isError, isPending, refetch: refetchMusicLibraries } = useMusicLibraries();
     const { data : playlistLibrary, refetch: refetchPlaylistLibrary } = usePlaylistLibrary();
@@ -26,7 +28,7 @@ export default function ServerLibrary(): React.JSX.Element {
                     orientation="vertical"
                     type="single"
                     disableDeactivation={true}
-                    value={libraryId}
+                    value={Client.library!.musicLibraryId}
                     onValueChange={setLibraryId}
                 >
                     { libraries!.map((library) => {
@@ -56,7 +58,10 @@ export default function ServerLibrary(): React.JSX.Element {
                 Let's Go!
             </Button>
 
-            <Button onPress={() => Client.switchUser()}>
+            <Button onPress={() => {
+                setUser(undefined);
+                Client.switchUser();
+            }}>
                 Switch User
             </Button>
         </SafeAreaView>

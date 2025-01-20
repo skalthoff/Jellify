@@ -33,7 +33,7 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
       <SafeAreaProvider>
-        { Client.user && Client.user ? (
+        { Client.user && Client.server ? (
           <PlayerProvider>
             <Navigation />
           </PlayerProvider>

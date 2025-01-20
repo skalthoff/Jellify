@@ -15,11 +15,14 @@ import { Jellyfin } from "@jellyfin/sdk/lib/jellyfin";
 import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "@/api/client";
+import { useAuthenticationContext } from "../provider";
 
 export default function ServerAddress(): React.JSX.Element {
 
     const [useHttps, setUseHttps] = useState<boolean>(true);
     const [serverAddress, setServerAddress] = useState<string | undefined>(undefined);
+
+    const { server, setServer } = useAuthenticationContext();
 
     const useServerMutation = useMutation({
         mutationFn: async () => {
@@ -47,10 +50,12 @@ export default function ServerAddress(): React.JSX.Element {
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
 
+            setServer(server);
             Client.setPublicApiClient(server);
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
+            setServer(undefined);
             Client.signOut();
         }
     });
