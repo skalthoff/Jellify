@@ -7,7 +7,7 @@ import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, use
 import _, { isEqual, isUndefined } from "lodash";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
-import { useSetupPlayer } from "../player/hooks";
+import { useSetupPlayer, useUpdateOptions } from "../player/hooks";
 import { UPDATE_INTERVAL } from "./config";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { QueueMutation } from "./interfaces";
@@ -218,6 +218,8 @@ const PlayerContextInitializer = () => {
                             : isUndefined(activeTrack!.item.UserData) ? false 
                             : activeTrack.item.UserData.IsFavorite ?? false
                         );
+
+                        useUpdateOptions(nowPlayingIsFavorite);
 
                     } else if (!!!activeTrack) {
                         setNowPlaying(undefined)
