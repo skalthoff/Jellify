@@ -32,6 +32,14 @@ export const useSetupPlayer = () => useQuery({
                 notificationCapabilities: CAPABILITIES,
                 compactCapabilities: CAPABILITIES,
                 ratingType: RatingType.Heart,
+                likeOptions: {
+                    isActive: true,
+                    title: "Favorite"
+                },
+                dislikeOptions: {
+                    isActive: true,
+                    title: "Unfavorite"
+                }
             });
         });
     }
