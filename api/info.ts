@@ -1,5 +1,5 @@
-import { Api, Jellyfin } from "@jellyfin/sdk";
-import { getDeviceNameSync, getUniqueIdSync } from "react-native-device-info";
+import { Jellyfin } from "@jellyfin/sdk";
+import { getModel, getUniqueIdSync } from "react-native-device-info";
 import { name, version } from "../package.json"
 import { capitalize } from "lodash";
 
@@ -12,7 +12,7 @@ export const JellyfinInfo: Jellyfin = new Jellyfin({
         version: version
     },
     deviceInfo: {
-        name: getDeviceNameSync(),
+        name: getModel(),
         id: getUniqueIdSync()
     }
 });

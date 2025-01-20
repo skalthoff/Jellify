@@ -3,7 +3,7 @@ import { JellyfinInfo } from "./info";
 import { JellifyServer } from "@/types/JellifyServer";
 import { JellifyUser } from "@/types/JellifyUser";
 import { storage } from '../constants/storage';
-import { MMKVStorageKeys } from "@/enums/mmkv-storage-keys";
+import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import uuid from 'react-native-uuid';
 import { JellifyLibrary } from "@/types/JellifyLibrary";
 
