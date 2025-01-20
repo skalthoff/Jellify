@@ -61,11 +61,10 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                 </YStack>
 
                 <H2>Albums</H2>
-                    <YStack alignItems="flex-start" justifyContent="center">
+                    <YStack>
                         <FlatList
                             contentContainerStyle={{
                                 flexGrow: 1,
-                                justifyContent: 'center',
                             }}
                             data={albums}
                             numColumns={columns} // TODO: Make this adjustable
