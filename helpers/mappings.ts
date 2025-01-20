@@ -5,13 +5,14 @@ import { Api } from "@jellyfin/sdk";
 import { QueuingType } from "../enums/queuing-type";
 import querystring from "querystring"
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
+import Client from "@/api/client";
 
 const container = "opus,mp3,aac,m4a,flac,webma,webm,wav,ogg,mpa,wma";
 
 // TODO: Make this configurable
 const transcodingContainer = "m4a";
 
-export function mapDtoToTrack(api: Api, sessionId: string, item: BaseItemDto, queuingType?: QueuingType) {
+export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) {
 
     const urlParams = {
         "Container": container,
@@ -19,22 +20,22 @@ export function mapDtoToTrack(api: Api, sessionId: string, item: BaseItemDto, qu
         "TranscodingProtocol": "hls",
         "EnableRemoteMedia": true,
         "EnableRedirection": true,
-        "api_key": api.accessToken,
+        "api_key": Client.api!.accessToken,
         "StartTimeTicks": 0,
-        "PlaySessionId": sessionId,
+        "PlaySessionId": Client.sessionId,
     }
 
     return {
-        url: `${api.basePath}/Audio/${item.Id!}/universal?${querystring.stringify(urlParams)}`,
+        url: `${Client.api!.basePath}/Audio/${item.Id!}/universal?${querystring.stringify(urlParams)}`,
         type: TrackType.HLS,
         headers: {
-            "X-Emby-Token": api.accessToken
+            "X-Emby-Token": Client.api!.accessToken
         },
         title: item.Name,
         album: item.Album,
         artist: item.Artists?.join(", "),
         duration: item.RunTimeTicks,
-        artwork: getImageApi(api).getItemImageUrlById(item.Id!),
+        artwork: getImageApi(Client.api!).getItemImageUrlById(item.Id!),
 
         rating: item.UserData?.IsFavorite ? RatingType.Heart : undefined,
         item,

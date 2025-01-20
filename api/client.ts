@@ -74,6 +74,10 @@ export default class Client {
         return Client.#instance.library;
     }
 
+    public static get sessionId(): string {
+        return Client.#instance.sessionId;
+    }
+
     public static signOut(): void {
         Client.#instance.removeCredentials()
     }
