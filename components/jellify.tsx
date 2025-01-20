@@ -7,11 +7,12 @@ import { JellyfinAuthenticationProvider } from "./Login/provider";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { JellifyDarkTheme, JellifyLightTheme } from "./theme";
 import { PlayerProvider } from "../player/provider";
-import { useColorScheme } from "react-native";
+import { Text, useColorScheme, View } from "react-native";
 import { PortalProvider } from "tamagui";
 import Client from "../api/client";
 import { JellifyProvider, useJellifyContext } from "./provider";
 import { CarPlay } from "react-native-carplay"
+import JellifyCarplay from "./carplay";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -56,7 +57,17 @@ function App(): React.JSX.Element {
     };
   });
 
-  return (
+  return carPlayConnected ? (
+    <NavigationContainer>
+      { loggedIn ? (
+        <JellifyCarplay />
+      ) : (
+        <View>
+          <Text>Please login in the app before using CarPlay</Text>
+        </View>
+      )}
+    </NavigationContainer>
+  ) : (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
       <SafeAreaProvider>
         { loggedIn ? (
@@ -70,5 +81,5 @@ function App(): React.JSX.Element {
         )}
       </SafeAreaProvider>
     </NavigationContainer>
-  );
+  )
 }
