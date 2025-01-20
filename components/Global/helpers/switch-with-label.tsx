@@ -1,5 +1,6 @@
 import { SizeTokens, XStack, Separator, Switch, ColorTokens } from "tamagui";
 import { Label } from "./text";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 interface SwitchWithLabelProps {
   onCheckedChange: (value: boolean) => void,
@@ -26,7 +27,7 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
           size={props.size} 
           checked={props.checked} 
           onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
-          backgroundColor={props.backgroundColor}
+          backgroundColor={props.backgroundColor ?? Colors.Primary}
         >
           <Switch.Thumb animation="quicker" />
         </Switch>

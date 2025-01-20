@@ -1,3 +1,4 @@
+import { Colors } from '@/enums/colors';
 import React, { SetStateAction } from 'react';
 import { StyleProp } from 'react-native';
 import { Input as TamaguiInput, TextStyle} from 'tamagui';
@@ -14,6 +15,8 @@ export default function Input(props: InputProps): React.JSX.Element {
 
     return (
         <TamaguiInput 
+            backgroundColor={Colors.Background}
+            borderColor={Colors.Borders}
             placeholder={props.placeholder}
             onChangeText={props.onChangeText} 
             value={props.value}
