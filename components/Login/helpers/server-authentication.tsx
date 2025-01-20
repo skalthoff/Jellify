@@ -54,7 +54,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     return (
         <SafeAreaView>
             <H1>
-                { `Sign in to ${server!.name ?? "Jellyfin"}`}
+                { `Sign in to ${server?.name ?? "Jellyfin"}`}
             </H1>
             <Button onPress={() => { 
                 Client.switchServer()
