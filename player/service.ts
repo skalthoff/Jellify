@@ -51,7 +51,6 @@ export async function PlaybackService() {
 
         await TrackPlayer.updateMetadataForTrack(
             nowPlayingIndex!, { 
-                ...nowPlaying,
                 rating: RatingType.Heart 
             }
         );
@@ -69,7 +68,6 @@ export async function PlaybackService() {
 
         await TrackPlayer.updateMetadataForTrack(
             nowPlayingIndex!, { 
-                ...nowPlaying,
                 rating: undefined 
             }
         )

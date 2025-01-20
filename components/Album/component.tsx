@@ -12,7 +12,7 @@ import { RunTimeTicks } from "../Global/helpers/time-codes";
 import Track from "../Global/components/track";
 import { useItemTracks } from "../../api/queries/tracks";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import FavoriteHeaderButton from "../Global/components/favorite-header-button";
+import FavoriteHeaderButton from "../Global/components/favorite-button";
 import { useEffect } from "react";
 import Client from "../../api/client";
 

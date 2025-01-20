@@ -173,11 +173,25 @@ const PlayerContextInitializer = () => {
     const progress = useProgress(UPDATE_INTERVAL);
 
     useTrackPlayerEvents([
+        Event.RemoteLike,
+        Event.RemoteDislike,
         Event.PlaybackProgressUpdated,
         Event.PlaybackState,
         Event.PlaybackActiveTrackChanged,
     ], async (event) => {
         switch (event.type) {
+
+            case (Event.RemoteLike) : {
+
+                setNowPlayingIsFavorite(true);
+                break;
+            }
+
+            case (Event.RemoteDislike) : {
+
+                setNowPlayingIsFavorite(false);
+                break;
+            }
 
             case (Event.PlaybackState) : {
                 handlePlaybackState(Client.sessionId, playStateApi, await TrackPlayer.getActiveTrack() as JellifyTrack, event.state, progress);

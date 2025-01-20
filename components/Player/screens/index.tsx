@@ -15,7 +15,7 @@ import { H5, Text } from "../../../components/Global/helpers/text";
 import Icon from "../../../components/Global/helpers/icon";
 import { Colors } from "../../../enums/colors";
 import { State } from "react-native-track-player";
-import FavoriteHeaderButton from "../../../components/Global/components/favorite-header-button";
+import FavoriteHeaderButton from "../../Global/components/favorite-button";
 import Client from "../../../api/client";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
@@ -36,7 +36,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
     const [seeking, setSeeking] = useState<boolean>(false);
     const [progressState, setProgressState] = useState<number>(progress!.position);
 
-    const { width, height } = useSafeAreaFrame();
+    const { width } = useSafeAreaFrame();
 
     // Prevent gesture event to close player if we're seeking
     useEffect(() => {
