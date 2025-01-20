@@ -4,7 +4,6 @@ import "react-native-url-polyfill/auto";
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import Jellify from './components/jellify';
 import { TamaguiProvider, Theme } from 'tamagui';
-import { ToastProvider } from '@tamagui/toast'
 import { useColorScheme } from 'react-native';
 import jellifyConfig from './tamagui.config';
 import { clientPersister } from './constants/storage';
@@ -35,14 +34,9 @@ export default function App(): React.JSX.Element {
     }}>
       <TamaguiProvider config={jellifyConfig}>
         <Theme name={isDarkMode ? 'dark' : 'light'}>
-          <ToastProvider
-            swipeDirection='down'
-            native={false}
-            >
-              <EventProvider>
-                <Jellify />
-              </EventProvider>
-          </ToastProvider>
+            <EventProvider>
+              <Jellify />
+            </EventProvider>
         </Theme>
       </TamaguiProvider>
     </PersistQueryClientProvider>
