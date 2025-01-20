@@ -101,7 +101,7 @@ const PlayerContextInitializer = () => {
             trigger('impactLight');
             await seekTo(position);
 
-            handlePlaybackProgressUpdated(sessionId, playStateApi, nowPlaying!, { 
+            handlePlaybackProgressUpdated(Client.sessionId, playStateApi, nowPlaying!, { 
                 buffered: 0, 
                 position, 
                 duration: convertRunTimeTicksToSeconds(nowPlaying!.duration!) 
@@ -146,11 +146,11 @@ const PlayerContextInitializer = () => {
             setIsSkipping(true);
 
             // Optimistically set now playing
-            setNowPlaying(mapDtoToTrack(Client.api!, sessionId, mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection));
+            setNowPlaying(mapDtoToTrack(mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection));
 
             await resetQueue(false);
             await addToQueue(mutation.tracklist.map((track) => {
-                return mapDtoToTrack(Co!, sessionId, track, QueuingType.FromSelection)
+                return mapDtoToTrack(track, QueuingType.FromSelection)
             }));
             
             setQueueName(mutation.queueName);
@@ -180,11 +180,11 @@ const PlayerContextInitializer = () => {
         switch (event.type) {
 
             case (Event.PlaybackState) : {
-                handlePlaybackState(sessionId, playStateApi, await TrackPlayer.getActiveTrack() as JellifyTrack, event.state, progress);
+                handlePlaybackState(Client.sessionId, playStateApi, await TrackPlayer.getActiveTrack() as JellifyTrack, event.state, progress);
                 break;
             }
             case (Event.PlaybackProgressUpdated) : {
-                handlePlaybackProgressUpdated(sessionId, playStateApi, nowPlaying!, event);
+                handlePlaybackProgressUpdated(Client.sessionId, playStateApi, nowPlaying!, event);
                 break;
             }
 
