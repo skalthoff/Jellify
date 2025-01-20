@@ -44,12 +44,17 @@ export async function PlaybackService() {
         const nowPlayingIndex = await getActiveTrackIndex()
         const nowPlaying = await getActiveTrack() as JellifyTrack;
 
-        await getUserLibraryApi(Client.instance.api!)
+        await getUserLibraryApi(Client.api!)
             .markFavoriteItem({
-                itemId: (await getActiveTrack() as JellifyTrack).item.Id!
+                itemId: nowPlaying.item.Id!
             });
 
-        TrackPlayer.updateMetadataForTrack(nowPlayingIndex!, { rating: RatingType.Heart })
+        await TrackPlayer.updateMetadataForTrack(
+            nowPlayingIndex!, { 
+                ...nowPlaying,
+                rating: RatingType.Heart 
+            }
+        );
     });
 
     TrackPlayer.addEventListener(Event.RemoteDislike, async () => {
@@ -57,11 +62,16 @@ export async function PlaybackService() {
         const nowPlayingIndex = await getActiveTrackIndex()
         const nowPlaying = await getActiveTrack() as JellifyTrack;
 
-        await getUserLibraryApi(Client.instance.api!)
+        await getUserLibraryApi(Client.api!)
             .markFavoriteItem({
                 itemId: nowPlaying.item.Id!
             });
 
-        TrackPlayer.updateMetadataForTrack(nowPlayingIndex!, { rating: undefined })
+        await TrackPlayer.updateMetadataForTrack(
+            nowPlayingIndex!, { 
+                ...nowPlaying,
+                rating: undefined 
+            }
+        )
     });
 }

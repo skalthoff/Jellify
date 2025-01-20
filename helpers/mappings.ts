@@ -12,7 +12,7 @@ const container = "opus,mp3,aac,m4a,flac,webma,webm,wav,ogg,mpa,wma";
 // TODO: Make this configurable
 const transcodingContainer = "m4a";
 
-export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) {
+export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) : JellifyTrack {
 
     const urlParams = {
         "Container": container,
