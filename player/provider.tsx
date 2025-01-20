@@ -219,7 +219,7 @@ const PlayerContextInitializer = () => {
                             : activeTrack.item.UserData.IsFavorite ?? false
                         );
 
-                        useUpdateOptions(nowPlayingIsFavorite);
+                        await useUpdateOptions(nowPlayingIsFavorite);
 
                     } else if (!!!activeTrack) {
                         setNowPlaying(undefined)
