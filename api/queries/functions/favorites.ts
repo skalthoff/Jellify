@@ -69,7 +69,7 @@ export function fetchFavoriteAlbums(): Promise<BaseItemDto[]> {
 }
 
 export function fetchFavoriteTracks(): Promise<BaseItemDto[]> {
-    console.debug(`Fetching user's favorite artists`);
+    console.debug(`Fetching user's favorite tracks`);
 
     return new Promise(async (resolve, reject) => {
         getItemsApi(Client.api!)

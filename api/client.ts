@@ -27,8 +27,6 @@ export default class Client {
         const serverJson = storage.getString(MMKVStorageKeys.Server);
         const libraryJson = storage.getString(MMKVStorageKeys.Library);
 
-        
-        
         if (user)
             this.setAndPersistUser(user)
         else if (userJson)
@@ -159,6 +157,7 @@ export default class Client {
     }
 
     public static setLibrary(library : JellifyLibrary) : void {
-        Client.#instance.library = library
+
+        Client.#instance = new Client(undefined, undefined, undefined, library);
     }
 }
