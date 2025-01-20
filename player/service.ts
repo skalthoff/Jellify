@@ -49,7 +49,6 @@ export async function PlaybackService() {
             });
 
         await TrackPlayer.updateNowPlayingMetadata({
-            ...nowPlaying,
             rating: RatingType.Heart
         });
     });
@@ -64,7 +63,6 @@ export async function PlaybackService() {
             });
 
         await TrackPlayer.updateNowPlayingMetadata({
-            ...nowPlaying,
             rating: undefined
         });
     });
