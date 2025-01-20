@@ -1,5 +1,4 @@
 import './gesture-handler';
-import "./global.css";
 import React from 'react';
 import "react-native-url-polyfill/auto";
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
