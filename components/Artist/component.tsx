@@ -61,32 +61,30 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                 </YStack>
 
                 <H2>Albums</H2>
-                    <YStack>
-                        <FlatList
-                            contentContainerStyle={{
-                                flexGrow: 1,
-                                alignContent: 'center'
-                            }}
-                            data={albums}
-                            numColumns={columns} // TODO: Make this adjustable
-                            renderItem={({ item: album }) => {
-                                return (
-                                    <ItemCard
-                                        caption={album.Name}
-                                        subCaption={album.ProductionYear?.toString()}
-                                        width={(width / 1.1) / columns}
-                                        cornered 
-                                        itemId={album.Id!}
-                                        onPress={() => {
-                                            props.navigation.navigate('Album', {
-                                                album
-                                            })
-                                        }}
-                                    />
-                                )
-                            }}
-                        />
-                    </YStack>
+                    <FlatList
+                        contentContainerStyle={{
+                            flexGrow: 1,
+                            alignContent: 'center'
+                        }}
+                        data={albums}
+                        numColumns={columns} // TODO: Make this adjustable
+                        renderItem={({ item: album }) => {
+                            return (
+                                <ItemCard
+                                    caption={album.Name}
+                                    subCaption={album.ProductionYear?.toString()}
+                                    width={(width / 1.1) / columns}
+                                    cornered 
+                                    itemId={album.Id!}
+                                    onPress={() => {
+                                        props.navigation.navigate('Album', {
+                                            album
+                                        })
+                                    }}
+                                />
+                            )
+                        }}
+                    />
             </ScrollView>
         </SafeAreaView>
     )
