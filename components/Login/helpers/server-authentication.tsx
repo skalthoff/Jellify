@@ -16,7 +16,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     const [username, setUsername] = useState<string | undefined>(undefined);
     const [password, setPassword] = React.useState<string | undefined>(undefined);
 
-    const { setUser, setServer } = useAuthenticationContext();
+    const { setUser, server, setServer } = useAuthenticationContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
@@ -54,7 +54,7 @@ export default function ServerAuthentication(): React.JSX.Element {
     return (
         <SafeAreaView>
             <H1>
-                { `Sign in to ${Client.server!.name ?? "Jellyfin"}`}
+                { `Sign in to ${server!.name ?? "Jellyfin"}`}
             </H1>
             <Button onPress={() => { 
                 setServer(undefined);
@@ -87,7 +87,7 @@ export default function ServerAuthentication(): React.JSX.Element {
                     onPress={() => {
                         
                         if (!_.isUndefined(username)) {
-                            console.log(`Signing in to ${Client.server!.name}`);
+                            console.log(`Signing in to ${server!.name}`);
                             useApiMutation.mutate({ username, password });
                         }
                     }}
