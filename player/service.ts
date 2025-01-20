@@ -48,15 +48,9 @@ export async function PlaybackService() {
                 itemId: nowPlaying.item.Id!
             });
 
-        await TrackPlayer.updateOptions({
-            likeOptions: {
-                isActive: true,
-                title: "Favorite"
-            },
-            dislikeOptions: {
-                isActive: false,
-                title: "Unfavorite"
-            }
+        await TrackPlayer.updateNowPlayingMetadata({
+            ...nowPlaying,
+            rating: RatingType.Heart
         });
     });
 
@@ -69,15 +63,9 @@ export async function PlaybackService() {
                 itemId: nowPlaying.item.Id!
             });
 
-        await TrackPlayer.updateOptions({
-            likeOptions: {
-                isActive: false,
-                title: "Favorite"
-            },
-            dislikeOptions: {
-                isActive: true,
-                title: "Unfavorite"
-            }
+        await TrackPlayer.updateNowPlayingMetadata({
+            ...nowPlaying,
+            rating: undefined
         });
     });
 }
