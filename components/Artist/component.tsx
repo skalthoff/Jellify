@@ -65,7 +65,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                         <FlatList
                             contentContainerStyle={{
                                 flexGrow: 1,
-                                justifyContent: 'center'
+                                alignContent: 'center'
                             }}
                             data={albums}
                             numColumns={columns} // TODO: Make this adjustable
