@@ -1,4 +1,4 @@
-import { ProvidedHomeProps } from "@/components/types";
+import { ProvidedHomeProps } from "../../../components/types";
 import { ScrollView, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { YStack, XStack, Separator } from "tamagui";
@@ -6,8 +6,8 @@ import Playlists from "../helpers/playlists";
 import RecentArtists from "../helpers/recent-artists";
 import RecentlyPlayed from "../helpers/recently-played";
 import { useHomeContext } from "../provider";
-import { H3 } from "@/components/Global/helpers/text";
-import Avatar from "@/components/Global/helpers/avatar";
+import { H3 } from "../../../components/Global/helpers/text";
+import Avatar from "../../../components/Global/helpers/avatar";
 import Client from "../../../api/client";
 
 export function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Element {

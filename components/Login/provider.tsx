@@ -1,9 +1,9 @@
 import React, { createContext, ReactNode, SetStateAction, useContext, useState } from "react";
 import _ from "lodash";
-import { JellifyServer } from "@/types/JellifyServer";
+import { JellifyServer } from "../../types/JellifyServer";
 import Client from "../../api/client";
-import { JellifyUser } from "@/types/JellifyUser";
-import { JellifyLibrary } from "@/types/JellifyLibrary";
+import { JellifyUser } from "../../types/JellifyUser";
+import { JellifyLibrary } from "../../types/JellifyLibrary";
 
 interface JellyfinAuthenticationContext {
     server: JellifyServer | undefined;

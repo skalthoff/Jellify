@@ -9,7 +9,7 @@ import Button from "../../Global/helpers/button";
 import Input from "../../Global/helpers/input";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
-import { JellifyUser } from "@/types/JellifyUser";
+import { JellifyUser } from "../../../types/JellifyUser";
 
 export default function ServerAuthentication(): React.JSX.Element {
 

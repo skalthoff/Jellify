@@ -7,15 +7,15 @@ import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, use
 import _, { isEqual, isUndefined } from "lodash";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
-import { useSetupPlayer } from "@/player/hooks";
+import { useSetupPlayer } from "../player/hooks";
 import { UPDATE_INTERVAL } from "./config";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { QueueMutation } from "./interfaces";
-import { mapDtoToTrack } from "@/helpers/mappings";
-import { QueuingType } from "@/enums/queuing-type";
+import { mapDtoToTrack } from "../helpers/mappings";
+import { QueuingType } from "../enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
 import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
-import { convertRunTimeTicksToSeconds } from "@/helpers/runtimeticks";
+import { convertRunTimeTicksToSeconds } from "..//helpers/runtimeticks";
 import Client from "../api/client";
 
 interface PlayerContext {

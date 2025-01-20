@@ -1,11 +1,11 @@
 import { Api } from "@jellyfin/sdk/lib/api";
 import { JellyfinInfo } from "./info";
-import { JellifyServer } from "@/types/JellifyServer";
-import { JellifyUser } from "@/types/JellifyUser";
+import { JellifyServer } from "../types/JellifyServer";
+import { JellifyUser } from "../types/JellifyUser";
 import { storage } from '../constants/storage';
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import uuid from 'react-native-uuid';
-import { JellifyLibrary } from "@/types/JellifyLibrary";
+import { JellifyLibrary } from "../types/JellifyLibrary";
 
 export default class Client {
     static #instance: Client;

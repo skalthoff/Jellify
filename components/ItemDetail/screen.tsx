@@ -1,5 +1,5 @@
-import ItemDetail from "@/components/ItemDetail/component";
-import { StackParamList } from "@/components/types";
+import ItemDetail from "../../components/ItemDetail/component";
+import { StackParamList } from "../../components/types";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";

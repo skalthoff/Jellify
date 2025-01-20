@@ -1,7 +1,7 @@
 import React from "react";
 import { XStack, YStack } from "tamagui";
 import Icon from "../../Global/helpers/icon";
-import { H5, Text } from "@/components/Global/helpers/text";
+import { H5, Text } from "../../../components/Global/helpers/text";
 import Client from "../../../api/client";
 
 export default function ServerDetails() : React.JSX.Element {

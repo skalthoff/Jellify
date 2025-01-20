@@ -1,6 +1,6 @@
-import Track from "@/components/Global/components/track";
-import { StackParamList } from "@/components/types";
-import { usePlayerContext } from "@/player/provider";
+import Track from "../../../components/Global/components/track";
+import { StackParamList } from "../../../components/types";
+import { usePlayerContext } from "../../../player/provider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FlatList } from "react-native";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";

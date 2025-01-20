@@ -1,4 +1,4 @@
-import { QueryKeys } from "@/enums/query-keys";
+import { QueryKeys } from "../../enums/query-keys";
 import { ItemSortBy } from "@jellyfin/sdk/lib/generated-client/models/item-sort-by";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { useQuery } from "@tanstack/react-query";

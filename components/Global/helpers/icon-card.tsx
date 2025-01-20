@@ -1,6 +1,6 @@
 import { Card, View } from "tamagui";
-import { H2, H5, Text } from "./text";
-import { Colors } from "@/enums/colors";
+import { H2 } from "./text";
+import { Colors } from "../../../enums/colors";
 import Icon from "./icon";
 
 export default function IconCard({ 

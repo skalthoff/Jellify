@@ -10,7 +10,7 @@ import { FlatList } from "react-native";
 import { usePlayerContext } from "../../player/provider";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import Track from "../Global/components/track";
-import { useItemTracks } from "@/api/queries/tracks";
+import { useItemTracks } from "../../api/queries/tracks";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteHeaderButton from "../Global/components/favorite-header-button";
 import { useEffect } from "react";

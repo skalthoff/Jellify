@@ -1,4 +1,4 @@
-import { useFavoriteArtists } from "@/api/queries/favorites";
+import { useFavoriteArtists } from "../../api/queries/favorites";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import React from "react";
 import { FlatList, RefreshControl } from "react-native";

@@ -1,4 +1,4 @@
-import { useFavoriteAlbums } from "@/api/queries/favorites";
+import { useFavoriteAlbums } from "../../api/queries/favorites";
 import { AlbumsProps } from "../types";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { ItemCard } from "../Global/helpers/item-card";

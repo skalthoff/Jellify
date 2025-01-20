@@ -1,4 +1,4 @@
-import { Colors } from "@/enums/colors";
+import { Colors } from "../../../enums/colors";
 import React from "react";
 import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider } from "tamagui";
 

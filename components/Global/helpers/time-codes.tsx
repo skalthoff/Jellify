@@ -1,5 +1,5 @@
+import { convertRunTimeTicksToSeconds } from "../../../helpers/runtimeticks";
 import { Text } from "./text";
-import { convertRunTimeTicksToSeconds } from "@/helpers/runtimeticks";
 import React from "react";
 
 export function RunTimeSeconds({ children }: { children: number }) : React.JSX.Element {

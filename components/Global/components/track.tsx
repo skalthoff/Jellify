@@ -1,17 +1,17 @@
-import { usePlayerContext } from "@/player/provider";
+import { usePlayerContext } from "../../../player/provider";
 import React from "react";
 import { Separator, Spacer, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { Colors } from "@/enums/colors";
+import { Colors } from "../../../enums/colors";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
-import { queryConfig } from "@/api/queries/query.config";
+import { queryConfig } from "../../../api/queries/query.config";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StackParamList } from "@/components/types";
+import { StackParamList } from "../../../components/types";
 import Client from "../../../api/client";
 
 interface TrackProps {

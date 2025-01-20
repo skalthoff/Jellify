@@ -1,5 +1,5 @@
 import Client from "../api/client";
-import { JellifyTrack } from "@/types/JellifyTrack";
+import { JellifyTrack } from "../types/JellifyTrack";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
 import TrackPlayer, { Event, RatingType } from "react-native-track-player";
 import { getActiveTrack, getActiveTrackIndex } from "react-native-track-player/lib/src/trackPlayer";

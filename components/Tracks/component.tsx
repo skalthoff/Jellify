@@ -1,4 +1,4 @@
-import { useFavoriteTracks } from "@/api/queries/favorites";
+import { useFavoriteTracks } from "../../api/queries/favorites";
 import { StackParamList } from "../types";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { FlatList, RefreshControl } from "react-native";

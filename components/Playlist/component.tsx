@@ -2,13 +2,13 @@ import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
 import { ScrollView, XStack, YStack } from "tamagui";
-import { usePlayerContext } from "@/player/provider";
-import { useItemTracks } from "@/api/queries/tracks";
+import { usePlayerContext } from "../../player/provider";
+import { useItemTracks } from "../../api/queries/tracks";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
 import { FlatList } from "react-native";
-import { queryConfig } from "@/api/queries/query.config";
+import { queryConfig } from "../../api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { SafeAreaView } from "react-native-safe-area-context";

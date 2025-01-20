@@ -1,7 +1,7 @@
-import { useUserPlaylists } from "@/api/queries/playlist";
-import { ItemCard } from "@/components/Global/helpers/item-card";
-import { H2 } from "@/components/Global/helpers/text";
-import { ProvidedHomeProps } from "@/components/types";
+import { useUserPlaylists } from "../../../api/queries/playlist";
+import { ItemCard } from "../../../components/Global/helpers/item-card";
+import { H2 } from "../../../components/Global/helpers/text";
+import { ProvidedHomeProps } from "../../../components/types";
 import React from "react";
 import { FlatList } from "react-native";
 import { View } from "tamagui";

@@ -1,4 +1,4 @@
-import { QueryKeys } from "@/enums/query-keys";
+import { QueryKeys } from "../../enums/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoriteAlbums, fetchFavoriteArtists, fetchFavoriteTracks, fetchUserData } from "./functions/favorites";
 

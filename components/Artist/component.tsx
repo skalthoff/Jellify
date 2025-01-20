@@ -8,7 +8,7 @@ import { H2 } from "../Global/helpers/text";
 import { useState } from "react";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { queryConfig } from "@/api/queries/query.config";
+import { queryConfig } from "../../api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteHeaderButton from "../Global/components/favorite-header-button";
