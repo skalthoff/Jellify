@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import { useMutation } from "@tanstack/react-query";
-import { MMKVStorageKeys } from "../../../enums/mmkv-storage-keys";
 import { JellifyServer } from "../../../types/JellifyServer";
-import { Spacer, Spinner, View, XStack, ZStack } from "tamagui";
+import { Spacer, Spinner, XStack, ZStack } from "tamagui";
 import { SwitchWithLabel } from "../../Global/helpers/switch-with-label";
 import { H1 } from "../../Global/helpers/text";
 import Input from "../../Global/helpers/input";
 import Button from "../../Global/helpers/button";
 import { http, https } from "../utils/constants";
-import { storage } from "../../../constants/storage";
 import { JellyfinInfo } from "../../../api/info";
 import { Jellyfin } from "@jellyfin/sdk/lib/jellyfin";
 import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 import { useAuthenticationContext } from "../provider";
 
 export default function ServerAddress(): React.JSX.Element {

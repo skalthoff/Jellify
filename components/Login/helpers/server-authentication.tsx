@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { Spinner, View, YStack, ZStack } from "tamagui";
+import { Spinner, YStack, ZStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { H1 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
 import Input from "../../Global/helpers/input";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 import { JellifyUser } from "@/types/JellifyUser";
 
 export default function ServerAuthentication(): React.JSX.Element {

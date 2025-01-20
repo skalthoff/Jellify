@@ -1,4 +1,3 @@
-import { StackParamList } from "@/components/types";
 
 interface CategoryRoute {
     name: any; // ¯\_(ツ)_/¯

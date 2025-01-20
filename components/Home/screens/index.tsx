@@ -8,7 +8,7 @@ import RecentlyPlayed from "../helpers/recently-played";
 import { useHomeContext } from "../provider";
 import { H3 } from "@/components/Global/helpers/text";
 import Avatar from "@/components/Global/helpers/avatar";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 
 export function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Element {
 

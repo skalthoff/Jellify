@@ -14,7 +14,7 @@ import { queryConfig } from "../../api/queries/query.config";
 import TextTicker from 'react-native-text-ticker';
 import PlayPauseButton from "./helpers/buttons";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
-import Client from "@/api/client";
+import Client from "../../api/client";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 

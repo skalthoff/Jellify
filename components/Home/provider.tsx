@@ -1,7 +1,6 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { useRecentlyPlayed, useRecentlyPlayedArtists } from "../../api/queries/recently-played";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
-import { useQueries } from "@tanstack/react-query";
 
 interface HomeContext {
     refreshing: boolean;

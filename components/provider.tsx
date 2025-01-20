@@ -1,4 +1,4 @@
-import Client from "@/api/client";
+import Client from "../api/client";
 import { isUndefined } from "lodash";
 import { createContext, ReactNode, useContext, useState } from "react";
 

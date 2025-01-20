@@ -16,7 +16,7 @@ import Icon from "@/components/Global/helpers/icon";
 import { Colors } from "@/enums/colors";
 import { State } from "react-native-track-player";
 import FavoriteHeaderButton from "@/components/Global/components/favorite-header-button";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 

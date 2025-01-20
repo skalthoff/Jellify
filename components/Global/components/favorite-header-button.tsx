@@ -2,13 +2,12 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import React, { useEffect, useState } from "react";
 import Icon from "../helpers/icon";
 import { Colors } from "@/enums/colors";
-import { Api } from "@jellyfin/sdk";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { isUndefined } from "lodash";
 import { useUserData } from "@/api/queries/favorites";
 import { Spinner } from "tamagui";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 
 interface SetFavoriteMutation {
     item: BaseItemDto,

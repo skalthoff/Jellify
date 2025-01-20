@@ -9,7 +9,7 @@ import { JellifyDarkTheme, JellifyLightTheme } from "./theme";
 import { PlayerProvider } from "../player/provider";
 import { useColorScheme } from "react-native";
 import { PortalProvider } from "tamagui";
-import Client from "@/api/client";
+import Client from "../api/client";
 import { JellifyProvider, useJellifyContext } from "./provider";
 import { CarPlay } from "react-native-carplay"
 

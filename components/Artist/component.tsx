@@ -12,7 +12,7 @@ import { queryConfig } from "@/api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteHeaderButton from "../Global/components/favorite-header-button";
-import Client from "@/api/client";
+import Client from "../../api/client";
 
 interface ArtistProps {
     artist: BaseItemDto

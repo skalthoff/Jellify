@@ -8,7 +8,7 @@ import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
 import { queryConfig } from "../../../api/queries/query.config";
 import { Text } from "./text";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 
 interface CardProps extends TamaguiCardProps {
     artistName?: string;

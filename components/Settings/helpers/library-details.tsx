@@ -1,4 +1,4 @@
-import Client from "@/api/client";
+import Client from "../../../api/client";
 import { Text } from "@/components/Global/helpers/text";
 import React from "react";
 import { View } from "tamagui";

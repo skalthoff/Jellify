@@ -1,7 +1,7 @@
 import { usePlayerContext } from "@/player/provider";
 import React from "react";
 import { Separator, Spacer, View, XStack, YStack } from "tamagui";
-import { H5, Text } from "../helpers/text";
+import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { Colors } from "@/enums/colors";
@@ -12,7 +12,7 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "@/components/types";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 
 interface TrackProps {
     track: BaseItemDto;

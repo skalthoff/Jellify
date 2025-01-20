@@ -1,4 +1,4 @@
-import Client from "@/api/client";
+import Client from "../api/client";
 import { JellifyTrack } from "@/types/JellifyTrack";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
 import TrackPlayer, { Event, RatingType } from "react-native-track-player";

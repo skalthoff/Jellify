@@ -6,7 +6,7 @@ import Button from "../../Global/helpers/button";
 import _ from "lodash";
 import { useMusicLibraries, usePlaylistLibrary } from "@/api/queries/libraries";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 import { useJellifyContext } from "@/components/provider";
 
 export default function ServerLibrary(): React.JSX.Element {

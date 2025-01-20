@@ -5,7 +5,7 @@ import { Api } from "@jellyfin/sdk";
 import { QueuingType } from "../enums/queuing-type";
 import querystring from "querystring"
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import Client from "@/api/client";
+import Client from "../api/client";
 
 const container = "opus,mp3,aac,m4a,flac,webma,webm,wav,ogg,mpa,wma";
 

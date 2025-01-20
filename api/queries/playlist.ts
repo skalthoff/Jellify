@@ -1,5 +1,4 @@
-import { QueryKeys } from "@/enums/query-keys";
-import { Api } from "@jellyfin/sdk";
+import { QueryKeys } from "../../enums/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserPlaylists } from "./functions/playlists";
 

@@ -1,4 +1,4 @@
-import Client from "@/api/client";
+import Client from "../../../api/client";
 import { useItemImage } from "@/api/queries/image";
 import { Blurhash } from "react-native-blurhash";
 import { Image, View } from "tamagui";

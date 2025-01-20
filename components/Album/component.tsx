@@ -14,7 +14,7 @@ import { useItemTracks } from "@/api/queries/tracks";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteHeaderButton from "../Global/components/favorite-header-button";
 import { useEffect } from "react";
-import Client from "@/api/client";
+import Client from "../../api/client";
 
 interface AlbumProps {
     album: BaseItemDto,

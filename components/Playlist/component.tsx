@@ -13,7 +13,7 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
-import Client from "@/api/client";
+import Client from "../../api/client";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;

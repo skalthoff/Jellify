@@ -16,7 +16,7 @@ import { QueuingType } from "@/enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
 import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
 import { convertRunTimeTicksToSeconds } from "@/helpers/runtimeticks";
-import Client from "@/api/client";
+import Client from "../api/client";
 
 interface PlayerContext {
     showPlayer: boolean;
