@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Navigation from "./navigation";
 import Login from "./Login/component";
@@ -11,6 +11,7 @@ import { useColorScheme } from "react-native";
 import { PortalProvider } from "tamagui";
 import Client from "@/api/client";
 import { JellifyProvider, useJellifyContext } from "./provider";
+import { CarPlay } from "react-native-carplay"
 
 export default function Jellify(): React.JSX.Element {
 
@@ -28,12 +29,32 @@ function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === "dark";
 
   const { loggedIn } = useJellifyContext();
+
+  const [carPlayConnected, setCarPlayConnected] = useState(CarPlay.connected);
   
   useEffect(() => {
     console.debug("Client instance changed")
   }, [
     Client.instance
   ])
+
+  useEffect(() => {
+
+    function onConnect() {
+      setCarPlayConnected(true)
+    }
+
+    function onDisconnect() {
+      setCarPlayConnected(false)
+    }
+
+    CarPlay.registerOnConnect(onConnect);
+    CarPlay.registerOnDisconnect(onDisconnect);
+    return () => {
+      CarPlay.unregisterOnConnect(onConnect)
+      CarPlay.unregisterOnDisconnect(onDisconnect)
+    };
+  });
 
   return (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
