@@ -7,10 +7,9 @@ import Client from "../client";
 
 export const useItemTracks = (itemId: string, sort: boolean = false) => useQuery({
     queryKey: [QueryKeys.ItemTracks, itemId, sort],
-    queryFn: ({ queryKey }) => {
+    queryFn: () => {
 
-        const itemId : string = queryKey[1] as string;
-        const sort : boolean = queryKey[3] as boolean;
+        console.debug(`Fetching item tracks ${sort ? "sorted" : "unsorted"}`)
 
         let sortBy: ItemSortBy[] = [];
 
