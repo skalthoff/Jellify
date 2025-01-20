@@ -6,6 +6,7 @@ import { QueuingType } from "../enums/queuing-type";
 import querystring from "querystring"
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../api/client";
+import { isUndefined } from "lodash";
 
 const container = "opus,mp3,aac,m4a,flac,webma,webm,wav,ogg,mpa,wma";
 
@@ -25,6 +26,8 @@ export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) : Je
         "PlaySessionId": Client.sessionId,
     }
 
+    const isFavorite = !isUndefined(item.UserData) && (item.UserData.IsFavorite ?? false);
+
     return {
         url: `${Client.api!.basePath}/Audio/${item.Id!}/universal?${querystring.stringify(urlParams)}`,
         type: TrackType.HLS,
@@ -37,7 +40,7 @@ export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) : Je
         duration: item.RunTimeTicks,
         artwork: getImageApi(Client.api!).getItemImageUrlById(item.Id!),
 
-        rating: item.UserData?.IsFavorite ? RatingType.Heart : undefined,
+        rating: isFavorite ? RatingType.Heart : undefined,
         item,
         QueuingType: queuingType ?? QueuingType.DirectlyQueued
     } as JellifyTrack
