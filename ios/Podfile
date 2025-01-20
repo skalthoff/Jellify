@@ -13,6 +13,9 @@ end
 target 'Jellify' do
   config = use_native_modules!
 
+    # This has to come before use_react_native or you get AppDelegate or RCTEventEmitter not found
+  use_frameworks! :linkage => :static
+
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
