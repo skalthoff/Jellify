@@ -42,8 +42,8 @@ export default function ServerAuthentication(): React.JSX.Element {
                 accessToken: (authResult.data.AccessToken as string) 
             }
 
-            setUser(user)
-            return Client.setUser(user)
+            Client.setUser(user);
+            return setUser(user);
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
@@ -57,8 +57,8 @@ export default function ServerAuthentication(): React.JSX.Element {
                 { `Sign in to ${server!.name ?? "Jellyfin"}`}
             </H1>
             <Button onPress={() => { 
-                setServer(undefined);
                 Client.switchServer()
+                setServer(undefined);
             }}>
                     Switch Server
             </Button>

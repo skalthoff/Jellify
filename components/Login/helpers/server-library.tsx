@@ -7,10 +7,12 @@ import _ from "lodash";
 import { useMusicLibraries, usePlaylistLibrary } from "@/api/queries/libraries";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "@/api/client";
+import { useJellifyContext } from "@/components/provider";
 
 export default function ServerLibrary(): React.JSX.Element {
 
-    const { setLibrary, setUser } = useAuthenticationContext();
+    const { setLoggedIn } = useJellifyContext()
+    const { setUser } = useAuthenticationContext();
 
     const [libraryId, setLibraryId] = useState<string | undefined>(undefined);
 
@@ -54,13 +56,14 @@ export default function ServerLibrary(): React.JSX.Element {
                         playlistLibraryId: playlistLibrary!.Id!,
                         playlistLibraryPrimaryImageId: playlistLibrary!.ImageTags!.Primary,
                     });
+                    setLoggedIn(true);
                 }}>
                 Let's Go!
             </Button>
 
             <Button onPress={() => {
-                setUser(undefined);
                 Client.switchUser();
+                setUser(undefined);
             }}>
                 Switch User
             </Button>

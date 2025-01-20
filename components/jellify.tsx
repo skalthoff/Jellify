@@ -10,12 +10,15 @@ import { PlayerProvider } from "../player/provider";
 import { useColorScheme } from "react-native";
 import { PortalProvider } from "tamagui";
 import Client from "@/api/client";
+import { JellifyProvider, useJellifyContext } from "./provider";
 
 export default function Jellify(): React.JSX.Element {
 
   return (
     <PortalProvider shouldAddRootHost>
-      <App />
+      <JellifyProvider>
+        <App />
+      </JellifyProvider>
     </PortalProvider>
   );
 }
@@ -23,6 +26,8 @@ export default function Jellify(): React.JSX.Element {
 function App(): React.JSX.Element {
 
   const isDarkMode = useColorScheme() === "dark";
+
+  const { loggedIn } = useJellifyContext();
   
   useEffect(() => {
     console.debug("Client instance changed")
@@ -33,7 +38,7 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
       <SafeAreaProvider>
-        { Client.user && Client.server ? (
+        { loggedIn ? (
           <PlayerProvider>
             <Navigation />
           </PlayerProvider>

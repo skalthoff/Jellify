@@ -50,13 +50,13 @@ export default function ServerAddress(): React.JSX.Element {
                 startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!
             }
 
-            setServer(server);
             Client.setPublicApiClient(server);
+            setServer(server);
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
-            setServer(undefined);
             Client.signOut();
+            setServer(undefined);
         }
     });
 
