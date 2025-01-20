@@ -1,13 +1,12 @@
 import { useFavoriteTracks } from "@/api/queries/favorites";
-import { useApiClientContext } from "../jellyfin-api-provider";
-import { StackParamList, TracksProps } from "../types";
+import { StackParamList } from "../types";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { FlatList, RefreshControl } from "react-native";
 import Track from "../Global/components/track";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function Tracks({ navigation }: { navigation: NativeStackNavigationProp<StackParamList> }) : React.JSX.Element {
-    const { apiClient, library } = useApiClientContext();
+
     const { data: tracks, refetch, isPending } = useFavoriteTracks();
 
     const { width } = useSafeAreaFrame();

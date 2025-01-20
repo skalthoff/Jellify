@@ -1,6 +1,5 @@
 import { XStack } from "@tamagui/stacks";
 import React from "react";
-import { useApiClientContext } from "../../jellyfin-api-provider";
 import Avatar from "@/components/Global/helpers/avatar";
 import { Text } from "@/components/Global/helpers/text";
 import Icon from "@/components/Global/helpers/icon";

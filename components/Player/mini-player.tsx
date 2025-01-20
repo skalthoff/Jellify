@@ -11,16 +11,14 @@ import { CachedImage } from "@georstat/react-native-image-cache";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { queryConfig } from "../../api/queries/query.config";
-import { useApiClientContext } from "../jellyfin-api-provider";
 import TextTicker from 'react-native-text-ticker';
 import PlayPauseButton from "./helpers/buttons";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
+import Client from "@/api/client";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
     const { nowPlaying, useSkip } = usePlayerContext();
-
-    const { apiClient } = useApiClientContext();
 
     const { width } = useSafeAreaFrame();
 

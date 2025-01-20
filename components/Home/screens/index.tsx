@@ -1,4 +1,3 @@
-import { useApiClientContext } from "@/components/jellyfin-api-provider";
 import { ProvidedHomeProps } from "@/components/types";
 import { ScrollView, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,10 +8,9 @@ import RecentlyPlayed from "../helpers/recently-played";
 import { useHomeContext } from "../provider";
 import { H3 } from "@/components/Global/helpers/text";
 import Avatar from "@/components/Global/helpers/avatar";
+import Client from "@/api/client";
 
 export function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Element {
-
-    const { user } = useApiClientContext();
 
     const { refreshing: refetching, onRefresh: onRefetch } = useHomeContext()
 
@@ -28,9 +26,9 @@ export function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JS
                 }>
                 <YStack alignContent='flex-start'>
                     <XStack margin={"$2"}>
-                        <H3>{`Hi, ${user!.name}`}</H3>
+                        <H3>{`Hi, ${Client.user!.name}`}</H3>
                         <YStack />
-                        <Avatar maxHeight={30} itemId={user!.id!} />
+                        <Avatar maxHeight={30} itemId={Client.user!.id!} />
                     </XStack>
 
                     <Separator marginVertical={"$2"} />

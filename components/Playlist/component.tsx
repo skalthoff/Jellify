@@ -2,7 +2,6 @@ import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
 import { ScrollView, XStack, YStack } from "tamagui";
-import { useApiClientContext } from "../jellyfin-api-provider";
 import { usePlayerContext } from "@/player/provider";
 import { useItemTracks } from "@/api/queries/tracks";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
@@ -14,6 +13,7 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
+import Client from "@/api/client";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
@@ -21,8 +21,6 @@ interface PlaylistProps {
 }
 
 export default function Playlist(props: PlaylistProps): React.JSX.Element {
-
-    const { apiClient, sessionId } = useApiClientContext();
 
     const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
 

@@ -3,13 +3,11 @@ import { ScrollView, View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import { ItemCard } from "../../Global/helpers/item-card";
-import { useApiClientContext } from "../../jellyfin-api-provider";
 import { usePlayerContext } from "../../../player/provider";
 
 export default function RecentlyPlayed(): React.JSX.Element {
 
     const { usePlayNewQueue } = usePlayerContext();
-    const { apiClient, sessionId } = useApiClientContext();
     const { recentTracks } = useHomeContext();
 
     return (
