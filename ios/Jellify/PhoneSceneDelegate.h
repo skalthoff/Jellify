@@ -2,6 +2,8 @@
 
 @interface PhoneSceneDelegate : UIResponder <UIWindowSceneDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) UIWindow *window;
+
+- (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions;
 
 @end
