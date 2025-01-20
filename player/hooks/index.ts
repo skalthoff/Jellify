@@ -57,7 +57,7 @@ export const useUpdateOptions = async (isFavorite?: boolean) => {
             title: "Favorite"
         },
         dislikeOptions: {
-            isActive: !isFavorite,
+            isActive: !!!isFavorite,
             title: "Unfavorite"
         }
     });
