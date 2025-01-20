@@ -8,6 +8,7 @@ import { isUndefined } from "lodash";
 import { useUserData } from "../../../api/queries/favorites";
 import { Spinner } from "tamagui";
 import Client from "../../../api/client";
+import { usePlayerContext } from "../../..//player/provider";
 
 interface SetFavoriteMutation {
     item: BaseItemDto,
@@ -20,6 +21,8 @@ export default function FavoriteHeaderButton({
     item: BaseItemDto;
     onToggle?: () => void
 }) : React.JSX.Element {
+
+    const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
 
     const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteItem(item));
 
@@ -72,6 +75,14 @@ export default function FavoriteHeaderButton({
     }, [
         item
     ]);
+
+    useEffect(() => {
+        if (nowPlayingIsFavorite !== isFavorite && nowPlaying?.item.Id === item.Id) {
+            setIsFavorite(nowPlayingIsFavorite);
+        }
+    }, [
+        nowPlayingIsFavorite
+    ])
 
     return (
         isFetching && isUndefined(item.UserData) ? (
