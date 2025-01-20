@@ -28,7 +28,7 @@ export default function ServerLibrary(): React.JSX.Element {
                     orientation="vertical"
                     type="single"
                     disableDeactivation={true}
-                    value={Client.library!.musicLibraryId}
+                    value={libraryId}
                     onValueChange={setLibraryId}
                 >
                     { libraries!.map((library) => {

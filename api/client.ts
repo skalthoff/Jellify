@@ -155,6 +155,6 @@ export default class Client {
     }
 
     public static setLibrary(library : JellifyLibrary) : void {
-        Client.instance.library = library
+        Client.#instance.library = library
     }
 }
