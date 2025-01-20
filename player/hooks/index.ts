@@ -45,7 +45,7 @@ export const useSetupPlayer = () => useQuery({
     }
 });
 
-export const useUpdateOptions = async (isFavorite?: boolean) => {
+export const useUpdateOptions = async (isFavorite: boolean = false) => {
     return await TrackPlayer.updateOptions({
         progressUpdateEventInterval: 1,
         capabilities: CAPABILITIES,
@@ -53,11 +53,11 @@ export const useUpdateOptions = async (isFavorite?: boolean) => {
         compactCapabilities: CAPABILITIES,
         ratingType: RatingType.Heart,
         likeOptions: {
-            isActive: isFavorite ?? false,
+            isActive: isFavorite,
             title: "Favorite"
         },
         dislikeOptions: {
-            isActive: !!!isFavorite,
+            isActive: !isFavorite,
             title: "Unfavorite"
         }
     });
