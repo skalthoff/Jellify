@@ -45,7 +45,7 @@ export const useSetupPlayer = () => useQuery({
     }
 });
 
-export const useUpdateOptions = async (isFavorite: boolean = false) => {
+export const useUpdateOptions = async (isFavorite: boolean) => {
     return await TrackPlayer.updateOptions({
         progressUpdateEventInterval: 1,
         capabilities: CAPABILITIES,
