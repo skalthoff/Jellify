@@ -36,7 +36,7 @@ export function fetchItemImage(itemId: string, imageType?: ImageType, width?: nu
             format: ImageFormat.Jpg
         })
         .then((response) => {
-            console.log(convertFileToBase64(response.data))
+            console.log(response.data)
             return convertFileToBase64(response.data);
         });
 }
