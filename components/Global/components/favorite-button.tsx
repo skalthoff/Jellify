@@ -64,7 +64,10 @@ export default function FavoriteHeaderButton({
     useEffect(() => {
         if (isFetched && data && data.IsFavorite)
             setIsFavorite(data.IsFavorite)
-    })
+    }, [
+        isFetched,
+        data
+    ])
 
     useEffect(() => {
         refetch();
