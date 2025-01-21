@@ -3,6 +3,7 @@ import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 import { queryConfig } from "../query.config"
+import Client from "@/api/client"
 
 
 
@@ -26,35 +27,18 @@ export function fetchImage(api: Api, itemId: string, imageType?: ImageType) : Pr
     });
 }
 
-
-export function fetchArtistImage(api: Api, artistId: string, imageType?: ImageType) : Promise<string> {
-    return new Promise(async (resolve, reject) => {
-        let response = await getImageApi(api).getArtistImage({ 
-            name: "",
-            imageIndex: 1,
-            imageType: imageType ? imageType : ImageType.Primary 
-        })
-
-        console.log(response.data)
-
-        if (_.isEmpty(response.data))
-            reject(new Error("No image for artist"))
-        
-        resolve(convertFileToBase64(response.data));
-    });
-}
-
-export function fetchItemImage(api: Api, itemId: string, imageType?: ImageType, width?: number) {
+export function fetchItemImage(itemId: string, imageType?: ImageType, width?: number) {
     
-    return getImageApi(api).getItemImage({ 
-        itemId, 
-        imageType: imageType ? imageType : ImageType.Primary,
-        format: ImageFormat.Jpg
-    })
-    .then((response) => {
-        console.log(convertFileToBase64(response.data))
-        return convertFileToBase64(response.data);
-    })
+    return getImageApi(Client.api!)
+        .getItemImage({ 
+            itemId, 
+            imageType: imageType ? imageType : ImageType.Primary,
+            format: ImageFormat.Jpg
+        })
+        .then((response) => {
+            console.log(convertFileToBase64(response.data))
+            return convertFileToBase64(response.data);
+        });
 }
 
 function base64toJpeg(encode: string) : string {

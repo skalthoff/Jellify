@@ -96,7 +96,7 @@ export default function Library(): React.JSX.Element {
                 name="Details"
                 component={DetailsScreen}
                 options={{
-                    headerTitle: "",
+                    headerShown: false,
                     presentation: "modal"
                 }}
             />

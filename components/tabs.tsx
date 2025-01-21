@@ -6,7 +6,7 @@ import { useColorScheme } from "react-native";
 import { Colors } from "../enums/colors";
 import Search from "./Search/component";
 import Favorites from "./Favorites/component";
-import Settings from "./Settings/component";
+import Settings from "./Settings/stack";
 import { Discover } from "./Discover/component";
 import { Miniplayer } from "./Player/mini-player";
 import { Separator } from "tamagui";
