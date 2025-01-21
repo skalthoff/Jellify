@@ -9,7 +9,7 @@ import { useHomeContext } from "../provider";
 import { H3 } from "../../../components/Global/helpers/text";
 import Avatar from "../../../components/Global/helpers/avatar";
 import Client from "../../../api/client";
-import { usePlayerContext } from "@/player/provider";
+import { usePlayerContext } from "../../../player/provider";
 import { useEffect } from "react";
 
 export function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Element {
