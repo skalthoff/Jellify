@@ -3,7 +3,7 @@ import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 import { queryConfig } from "../query.config"
-import Client from "@/api/client"
+import Client from "../../../api/client"
 
 
 
