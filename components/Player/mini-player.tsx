@@ -55,7 +55,12 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </YStack>
 
 
-                    <YStack alignContent="flex-start" flex={4} maxWidth={"$20"}>
+                    <YStack 
+                        alignContent="flex-start" 
+                        marginLeft={"$1"}
+                        flex={4} 
+                        maxWidth={"$15"}
+                    >
                         <TextTicker 
                             duration={5000}
                             loop
