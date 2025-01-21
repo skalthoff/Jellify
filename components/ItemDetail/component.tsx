@@ -64,6 +64,7 @@ export default function ItemDetail({
                         color={Colors.Primary}
                         onPress={() => {
                             if (item.ArtistItems) {
+                                navigation.goBack() // Dismiss menu
                                 navigation.navigate("Artist", {
                                     artist: item.ArtistItems[0]
                                 });
