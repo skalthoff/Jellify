@@ -11,8 +11,8 @@ const CAPABILITIES: Capability[] = [
     // Capability.JumpBackward,
     Capability.SkipToNext,
     Capability.SkipToPrevious,
-    Capability.Like,
-    Capability.Dislike
+    // Capability.Like,
+    // Capability.Dislike
 ]
   
 export const useSetupPlayer = () => useQuery({
@@ -31,15 +31,15 @@ export const useSetupPlayer = () => useQuery({
                 capabilities: CAPABILITIES,
                 notificationCapabilities: CAPABILITIES,
                 compactCapabilities: CAPABILITIES,
-                ratingType: RatingType.Heart,
-                likeOptions: {
-                    isActive: false,
-                    title: "Favorite"
-                },
-                dislikeOptions: {
-                    isActive: true,
-                    title: "Unfavorite"
-                }
+                // ratingType: RatingType.Heart,
+                // likeOptions: {
+                //     isActive: false,
+                //     title: "Favorite"
+                // },
+                // dislikeOptions: {
+                //     isActive: true,
+                //     title: "Unfavorite"
+                // }
             });
         });
     }
