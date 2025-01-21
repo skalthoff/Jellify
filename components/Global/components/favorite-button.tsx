@@ -14,7 +14,7 @@ interface SetFavoriteMutation {
     item: BaseItemDto,
 }
 
-export default function FavoriteHeaderButton({ 
+export default function FavoriteButton({ 
     item,
     onToggle
 }: {
@@ -37,8 +37,7 @@ export default function FavoriteHeaderButton({
         },
         onSuccess: () => {
             setIsFavorite(true);
-            if (onToggle)
-                onToggle();
+            onToggle ? onToggle() : {};
         }
     })
     
@@ -51,6 +50,7 @@ export default function FavoriteHeaderButton({
         },
         onSuccess: () => {
             setIsFavorite(false);
+            onToggle ? onToggle(): {};
         }
     })
 
@@ -62,7 +62,10 @@ export default function FavoriteHeaderButton({
     }
 
     useEffect(() => {
-        if (isFetched && data && data.IsFavorite)
+        if (isFetched 
+            && !isUndefined(data) 
+            && !isUndefined(data.IsFavorite)
+        )
             setIsFavorite(data.IsFavorite)
     }, [
         isFetched,
@@ -82,6 +85,10 @@ export default function FavoriteHeaderButton({
     useEffect(() => {
         if (nowPlayingIsFavorite !== isFavorite && nowPlaying?.item.Id === item.Id) {
             setIsFavorite(nowPlayingIsFavorite);
+
+            // Trigger toggle event if player controls performed
+            // the favoriting
+            onToggle ? onToggle(): {};
         }
     }, [
         nowPlayingIsFavorite

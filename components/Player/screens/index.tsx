@@ -15,7 +15,7 @@ import { H5, Text } from "../../../components/Global/helpers/text";
 import Icon from "../../../components/Global/helpers/icon";
 import { Colors } from "../../../enums/colors";
 import { State } from "react-native-track-player";
-import FavoriteHeaderButton from "../../Global/components/favorite-button";
+import FavoriteButton from "../../Global/components/favorite-button";
 import Client from "../../../api/client";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
@@ -141,7 +141,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                             <Spacer />
 
-                            <FavoriteHeaderButton 
+                            <FavoriteButton 
                                 item={nowPlaying!.item} 
                                 onToggle={() => setNowPlayingIsFavorite(!nowPlayingIsFavorite)}
                             />
