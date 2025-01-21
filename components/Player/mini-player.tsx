@@ -59,9 +59,9 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         alignContent="flex-start" 
                         marginLeft={"$0.5"}
                         flex={4} 
-                        maxWidth={"$15"}
+                        maxWidth={"$20"}
                     >
-                        <TextTicker 
+                        <TextTicker
                             duration={5000}
                             loop
                             repeatSpacer={20} 
