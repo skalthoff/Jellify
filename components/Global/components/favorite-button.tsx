@@ -78,18 +78,6 @@ export default function FavoriteButton({
         item
     ]);
 
-    useEffect(() => {
-        if (nowPlayingIsFavorite !== isFavorite && nowPlaying?.item.Id === item.Id) {
-            setIsFavorite(nowPlayingIsFavorite);
-
-            // Trigger toggle event if player controls performed
-            // the favoriting
-            onToggle ? onToggle(): {};
-        }
-    }, [
-        nowPlayingIsFavorite
-    ])
-
     return (
         isFetching && isUndefined(item.UserData) ? (
             <Spinner />
