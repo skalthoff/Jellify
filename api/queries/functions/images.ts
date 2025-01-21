@@ -34,6 +34,8 @@ export function fetchItemImage(itemId: string, imageType?: ImageType, width?: nu
             itemId, 
             imageType: imageType ? imageType : ImageType.Primary,
             format: ImageFormat.Jpg
+        }, {
+            responseType: "arraybuffer"
         })
         .then((response) => {
             console.log(response.data)
