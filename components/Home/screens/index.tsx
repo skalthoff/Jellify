@@ -9,10 +9,20 @@ import { useHomeContext } from "../provider";
 import { H3 } from "../../../components/Global/helpers/text";
 import Avatar from "../../../components/Global/helpers/avatar";
 import Client from "../../../api/client";
+import { usePlayerContext } from "@/player/provider";
+import { useEffect } from "react";
 
 export function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JSX.Element {
 
     const { refreshing: refetching, onRefresh: onRefetch } = useHomeContext()
+
+    const { nowPlayingIsFavorite } = usePlayerContext();
+
+    useEffect(() => {
+        onRefetch()
+    }, [
+        nowPlayingIsFavorite
+    ])
 
     return (
         <SafeAreaView edges={["top", "right", "left"]}>
@@ -20,8 +30,8 @@ export function ProvidedHome({ route, navigation }: ProvidedHomeProps): React.JS
                 contentInsetAdjustmentBehavior="automatic"
                 refreshControl={
                     <RefreshControl 
-                    refreshing={refetching} 
-                    onRefresh={onRefetch}
+                        refreshing={refetching} 
+                        onRefresh={onRefetch}
                     />
                 }>
                 <YStack alignContent='flex-start'>
