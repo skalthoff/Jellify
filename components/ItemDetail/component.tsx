@@ -6,7 +6,7 @@ import TrackOptions from "./helpers/TrackOptions";
 import { View, XStack, YStack } from "tamagui";
 import BlurhashedImage from "../Global/helpers/blurhashed-image";
 import { Text } from "../Global/helpers/text";
-import { Colors } from "@/enums/colors";
+import { Colors } from "../../enums/colors";
 
 export default function ItemDetail({ 
     item, 
