@@ -31,16 +31,17 @@ export async function PlaybackService() {
         await TrackPlayer.seekTo(event.position);
     });
 
-    TrackPlayer.addEventListener(Event.RemoteJumpForward, async (event) => {
-        await TrackPlayer.seekBy(event.interval)
-    });
+    // TrackPlayer.addEventListener(Event.RemoteJumpForward, async (event) => {
+    //     await TrackPlayer.seekBy(event.interval)
+    // });
 
-    TrackPlayer.addEventListener(Event.RemoteJumpBackward, async (event) => {
-        await TrackPlayer.seekBy(-event.interval)
-    });
+    // TrackPlayer.addEventListener(Event.RemoteJumpBackward, async (event) => {
+    //     await TrackPlayer.seekBy(-event.interval)
+    // });
 
     TrackPlayer.addEventListener(Event.RemoteLike, async () => {
 
+        const progress = await TrackPlayer.getProgress();
         const nowPlaying = await getActiveTrack() as JellifyTrack;
 
         await getUserLibraryApi(Client.api!)
@@ -48,13 +49,21 @@ export async function PlaybackService() {
                 itemId: nowPlaying.item.Id!
             });
 
-        await TrackPlayer.updateNowPlayingMetadata({
-            rating: RatingType.Heart
+        await TrackPlayer.updateOptions({
+            likeOptions: {
+                isActive: false,
+                title: "Favorite"
+            },
+            dislikeOptions: {
+                isActive: true,
+                title: "Unfavorite"
+            }
         });
     });
 
     TrackPlayer.addEventListener(Event.RemoteDislike, async () => {
 
+        const progress = await TrackPlayer.getProgress();
         const nowPlaying = await getActiveTrack() as JellifyTrack;
 
         await getUserLibraryApi(Client.api!)
@@ -63,7 +72,19 @@ export async function PlaybackService() {
             });
 
         await TrackPlayer.updateNowPlayingMetadata({
+            elapsedTime: progress.position,
             rating: undefined
+        });
+
+        await TrackPlayer.updateOptions({
+            likeOptions: {
+                isActive: true,
+                title: "Favorite"
+            },
+            dislikeOptions: {
+                isActive: false,
+                title: "Unfavorite"
+            }
         });
     });
 }
