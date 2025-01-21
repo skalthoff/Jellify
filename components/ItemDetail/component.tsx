@@ -65,7 +65,7 @@ export default function ItemDetail({
                         onPress={() => {
                             if (item.ArtistItems) {
                                 navigation.goBack(); // Dismiss modal if exists
-                                navigation.navigate("Artist", {
+                                navigation.getParent()!.navigate("Artist", {
                                     artist: item.ArtistItems[0]
                                 });
                             }
