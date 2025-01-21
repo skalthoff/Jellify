@@ -34,12 +34,11 @@ export function fetchItemImage(itemId: string, imageType?: ImageType, width?: nu
             itemId, 
             imageType: imageType ? imageType : ImageType.Primary,
             format: ImageFormat.Jpg
-        }, {
-            responseType: "arraybuffer"
         })
-        .then((response) => {
+        .then(async (response) => {
             console.log(response.data)
-            return convertFileToBase64(response.data);
+
+            return convertFileToBase64(response.data)
         });
 }
 
@@ -47,7 +46,7 @@ function base64toJpeg(encode: string) : string {
     return `data:image/jpeg;base64,${encode}`;
 }
 
-function convertFileToBase64(file: any): string {
+function convertFileToBase64(file: string): string {
     console.debug("Converting file to base64", file)
     let encode =  base64toJpeg(Buffer.from(file, 'binary').toString('base64'));
 
