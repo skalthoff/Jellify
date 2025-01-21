@@ -74,10 +74,6 @@ export default function FavoriteButton({
 
     useEffect(() => {
         refetch();
-        setIsFavorite(
-            isUndefined(item.UserData) ? false 
-            : item.UserData.IsFavorite ?? false
-        );
     }, [
         item
     ]);
