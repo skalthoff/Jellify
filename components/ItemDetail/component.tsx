@@ -7,6 +7,7 @@ import { View, XStack, YStack } from "tamagui";
 import BlurhashedImage from "../Global/helpers/blurhashed-image";
 import { Text } from "../Global/helpers/text";
 import { Colors } from "../../enums/colors";
+import FavoriteButton from "../Global/components/favorite-button";
 
 export default function ItemDetail({ 
     item, 
@@ -51,7 +52,7 @@ export default function ItemDetail({
             <XStack>
                 <BlurhashedImage
                     item={item}
-                    size={width / 3}
+                    size={width / 2}
                 />
 
                 <YStack 
@@ -82,6 +83,8 @@ export default function ItemDetail({
                     >
                         { item.Album ?? "" }
                     </Text>
+
+                    <FavoriteButton item={item} />
                 </YStack>
 
             </XStack>
