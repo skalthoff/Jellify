@@ -1,12 +1,13 @@
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useUserPlaylists } from "../../../api/queries/playlist";
 import { ItemCard } from "../../../components/Global/helpers/item-card";
 import { H2 } from "../../../components/Global/helpers/text";
-import { ProvidedHomeProps } from "../../../components/types";
+import { StackParamList } from "../../../components/types";
 import React from "react";
 import { FlatList } from "react-native";
 import { View } from "tamagui";
 
-export default function Playlists({ navigation }: ProvidedHomeProps) : React.JSX.Element {
+export default function Playlists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
 
     const { data: playlists } = useUserPlaylists();
 

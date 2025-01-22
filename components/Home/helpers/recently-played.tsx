@@ -4,8 +4,14 @@ import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import { ItemCard } from "../../Global/helpers/item-card";
 import { usePlayerContext } from "../../../player/provider";
+import { StackParamList } from "../../../components/types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export default function RecentlyPlayed(): React.JSX.Element {
+export default function RecentlyPlayed({ 
+    navigation 
+} : { 
+    navigation: NativeStackNavigationProp<StackParamList>
+}): React.JSX.Element {
 
     const { usePlayNewQueue } = usePlayerContext();
     const { recentTracks } = useHomeContext();
@@ -29,6 +35,11 @@ export default function RecentlyPlayed(): React.JSX.Element {
                                     tracklist: recentTracks,
                                     queueName: "Recently Played"
                                 });
+                            }}
+                            onLongPress={() => {
+                                navigation.push("Details", {
+                                    item: recentlyPlayedTrack
+                                })
                             }}
                         />                                
                     )
