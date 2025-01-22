@@ -48,7 +48,7 @@ export default function ItemDetail({
     }
 
     return (
-        <SafeAreaView edges={["right", "left"]}>
+        <SafeAreaView edges={["top", "right", "left"]}>
             <XStack>
                 <BlurhashedImage
                     item={item}
