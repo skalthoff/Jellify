@@ -2,7 +2,7 @@ import { State } from "react-native-track-player";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Spinner, View } from "tamagui";
 import Icon from "../../Global/helpers/icon";
-import { usePlayerContext } from "@/player/provider";
+import { usePlayerContext } from "../../../player/provider";
 
 export default function PlayPauseButton() : React.JSX.Element {
 

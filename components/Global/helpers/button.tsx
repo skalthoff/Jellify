@@ -4,6 +4,7 @@ interface ButtonProps {
     children?: Element | string | undefined;
     onPress?: () => void | undefined;
     disabled?: boolean | undefined;
+    danger?: boolean | undefined;
 }
 
 export default function Button(props: ButtonProps): React.JSX.Element {

@@ -1,9 +1,8 @@
 import React, {  } from "react";
-import { XStack, YStack } from "tamagui";
+import { View, XStack, YStack } from "tamagui";
 import { usePlayerContext } from "../../player/provider";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
-import { BlurView } from "@react-native-community/blur";
 import Icon from "../Global/helpers/icon";
 import { Text } from "../Global/helpers/text";
 import { Colors } from "../../enums/colors";
@@ -11,21 +10,19 @@ import { CachedImage } from "@georstat/react-native-image-cache";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { queryConfig } from "../../api/queries/query.config";
-import { useApiClientContext } from "../jellyfin-api-provider";
 import TextTicker from 'react-native-text-ticker';
 import PlayPauseButton from "./helpers/buttons";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
+import Client from "../../api/client";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
     const { nowPlaying, useSkip } = usePlayerContext();
 
-    const { apiClient } = useApiClientContext();
-
     const { width } = useSafeAreaFrame();
 
     return (
-        <BlurView overlayColor={Colors.Background}>
+        <View style={{ backgroundColor: Colors.Background, borderColor: Colors.Borders }}>
             { nowPlaying && (
 
                 <XStack 
@@ -39,7 +36,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         alignContent="center"
                         flex={1}>
                         <CachedImage
-                            source={getImageApi(apiClient!)
+                            source={getImageApi(Client.api!)
                                 .getItemImageUrlById(
                                     nowPlaying!.item.AlbumId ?? "",
                                     ImageType.Primary,
@@ -57,8 +54,13 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </YStack>
 
 
-                    <YStack alignContent="flex-start" flex={4} maxWidth={"$20"}>
-                        <TextTicker 
+                    <YStack 
+                        alignContent="flex-start" 
+                        marginLeft={"$0.5"}
+                        flex={4} 
+                        maxWidth={"$20"}
+                    >
+                        <TextTicker
                             duration={5000}
                             loop
                             repeatSpacer={20} 
@@ -91,6 +93,6 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </XStack>
                 </XStack>
             )}
-        </BlurView>
+        </View>
     )
 }

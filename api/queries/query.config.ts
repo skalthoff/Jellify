@@ -5,8 +5,8 @@ export const queryConfig = {
         recents: 50 // TODO: Adjust this when we add a list navigator to the end of the recents
     },
     images: {
-        fillHeight: 300,
-        fillWidth: 300,
+        height: 300,
+        width: 300,
         format: ImageFormat.Jpg
     },
     banners: {
@@ -23,5 +23,6 @@ export const queryConfig = {
         fillHeight: 1000,
         fillWidth: 1000,
         format: ImageFormat.Jpg
-    }
+    },
+    staleTime: 1000 * 60
 }

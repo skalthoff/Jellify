@@ -1,27 +1,32 @@
-import { usePlayerContext } from "@/player/provider";
+import { usePlayerContext } from "../../../player/provider";
 import React from "react";
-import { Separator, View, XStack, YStack } from "tamagui";
+import { Separator, Spacer, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { Colors } from "@/enums/colors";
+import { Colors } from "../../../enums/colors";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
-import { useApiClientContext } from "@/components/jellyfin-api-provider";
-import { queryConfig } from "@/api/queries/query.config";
+import { queryConfig } from "../../../api/queries/query.config";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
+import Icon from "../helpers/icon";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamList } from "../../../components/types";
+import Client from "../../../api/client";
 
 interface TrackProps {
     track: BaseItemDto;
     tracklist: BaseItemDto[];
-    index: number;
+    navigation: NativeStackNavigationProp<StackParamList>;
+    index: number | undefined;
     showArtwork?: boolean | undefined;
-    onPress?: () => void | undefined
+    onPress?: () => void | undefined;
 }
 
 export default function Track({
     track,
     tracklist,
+    navigation,
     index,
     queueName,
     showArtwork,
@@ -29,14 +34,14 @@ export default function Track({
 } : {
     track: BaseItemDto,
     tracklist: BaseItemDto[],
-    index: number,
+    navigation: NativeStackNavigationProp<StackParamList>;
+    index?: number | undefined,
     queueName?: string | undefined,
     showArtwork?: boolean | undefined,
     onPress?: () => void | undefined
 }) : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
-    const { apiClient } = useApiClientContext();
     const { nowPlaying, usePlayNewQueue } = usePlayerContext();
 
     const isPlaying = nowPlaying?.item.Id === track.Id;
@@ -70,7 +75,7 @@ export default function Track({
                 >
                     { showArtwork ? (
                         <CachedImage
-                            source={getImageApi(apiClient!)
+                            source={getImageApi(Client.api!)
                                 .getItemImageUrlById(
                                     track.AlbumId ?? "",
                                     ImageType.Primary,
@@ -92,7 +97,7 @@ export default function Track({
                 )}
                 </XStack>
 
-                <YStack alignContent="center" justifyContent="flex-start" flex={6}>
+                <YStack alignContent="center" justifyContent="flex-start" flex={5}>
                     <Text 
                         bold
                         color={isPlaying ? Colors.Primary : Colors.White}
@@ -108,11 +113,41 @@ export default function Track({
                 </YStack>
 
                 <XStack 
-                    justifyContent="center" 
+                    alignItems="center"
+                    justifyContent="space-between" 
                     alignContent="center" 
-                    flex={1}
+                    flex={2}
                 >
-                    <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
+                    <YStack
+                        alignContent="center"
+                        justifyContent="center"
+                        minWidth={24}
+                    >
+                        { track.UserData?.IsFavorite ? (
+                            <Icon small name="heart" color={Colors.Primary} />
+                        ) : (
+                            <Spacer />
+                        )}
+                    </YStack>
+
+                    <YStack
+                        alignContent="center"
+                        justifyContent="space-around"
+                    >
+                        <RunTimeTicks>{ track.RunTimeTicks }</RunTimeTicks>
+                    </YStack>
+
+                    <YStack
+                        alignContent="center"
+                        justifyContent="center"
+                    >
+                        <Icon small name="dots-vertical" onPress={() => {
+                            navigation.push("Details", {
+                                item: track
+                            })
+                        }} />
+
+                    </YStack>
                 </XStack>
             </XStack>
         </View>

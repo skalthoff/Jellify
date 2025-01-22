@@ -1,16 +1,18 @@
 import React from "react";
 import Button from "../../Global/helpers/button";
-import { useApiClientContext } from "../../jellyfin-api-provider";
 import { stop } from "react-native-track-player/lib/src/trackPlayer";
+import Client from "../../../api/client";
+import { useJellifyContext } from "../../../components/provider";
 
 export default function SignOut(): React.JSX.Element {
 
-    const { signOut } = useApiClientContext();
+    const { setLoggedIn } = useJellifyContext()
 
     return (
         <Button onPress={() => {
             stop();
-            signOut();
+            Client.signOut();
+            setLoggedIn(false);
         }}>
             Sign Out
         </Button>

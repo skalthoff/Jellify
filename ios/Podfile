@@ -1,10 +1,5 @@
-require File.join(File.dirname(`node --print "require.resolve('expo/package.json')"`), "scripts/autolinking")
-# Resolve react_native_pods.rb with node to allow for hoisting
-require Pod::Executable.execute_command('node', ['-p',
-  'require.resolve(
-    "react-native/scripts/react_native_pods.rb",
-    {paths: [process.argv[1]]},
-  )', __dir__]).strip
+require_relative '../../../node_modules/react-native/scripts/react_native_pods'
+require_relative '../../../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 platform :ios, '16'
 prepare_react_native_project!
@@ -16,14 +11,6 @@ if linkage != nil
 end
 
 target 'Jellify' do
-  use_expo_modules!
-  post_integrate do |installer|
-    begin
-      expo_patch_react_imports!(installer)
-    rescue => e
-      Pod::UI.warn e
-    end
-  end
   config = use_native_modules!
 
   use_react_native!(

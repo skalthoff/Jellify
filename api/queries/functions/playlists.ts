@@ -1,15 +1,16 @@
+import Client from "../../client";
 import { Api } from "@jellyfin/sdk";
 import { BaseItemDto, ItemSortBy, SortOrder } from "@jellyfin/sdk/lib/generated-client/models";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 
-export function fetchUserPlaylists(api: Api, userId: string, playlistLibraryId: string): Promise<BaseItemDto[]> {
+export function fetchUserPlaylists(): Promise<BaseItemDto[]> {
     console.debug("Fetching user playlists");
 
     return new Promise(async (resolve, reject) => {
-        getItemsApi(api)
+        getItemsApi(Client.api!)
             .getItems({
-                userId: userId,
-                parentId: playlistLibraryId,
+                userId: Client.user!.id,
+                parentId: Client.library!.playlistLibraryId!,
                 fields: [
                     "Path"
                 ],
@@ -36,13 +37,13 @@ export function fetchUserPlaylists(api: Api, userId: string, playlistLibraryId: 
     })
 }
 
-export function fetchPublicPlaylists(api: Api, playlistLibraryId: string): Promise<BaseItemDto[]> {
+export function fetchPublicPlaylists(): Promise<BaseItemDto[]> {
     console.debug("Fetching public playlists");
 
     return new Promise(async (resolve, reject) => {
-        getItemsApi(api)
+        getItemsApi(Client.api!)
             .getItems({
-                parentId: playlistLibraryId,
+                parentId: Client.library!.playlistLibraryId!,
                 sortBy: [
                     ItemSortBy.IsFolder,
                     ItemSortBy.SortName

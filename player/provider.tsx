@@ -4,27 +4,27 @@ import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayQueueIndexStart } from "./helpers/index";
 import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
-import _, { isNumber, isUndefined } from "lodash";
-import { buildNewQueue } from "./helpers/queue";
-import { useApiClientContext } from "../components/jellyfin-api-provider";
+import _, { isEqual, isUndefined } from "lodash";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
-import { useSetupPlayer } from "@/player/hooks";
+import { useSetupPlayer, useUpdateOptions } from "../player/hooks";
 import { UPDATE_INTERVAL } from "./config";
-import { sleep } from "@/helpers/sleep";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { QueueMutation } from "./interfaces";
-import { mapDtoToTrack } from "@/helpers/mappings";
-import { QueuingType } from "@/enums/queuing-type";
+import { mapDtoToTrack } from "../helpers/mappings";
+import { QueuingType } from "../enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
 import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
-import { convertRunTimeTicksToSeconds } from "@/helpers/runtimeticks";
+import { convertRunTimeTicksToSeconds } from "..//helpers/runtimeticks";
+import Client from "../api/client";
 
 interface PlayerContext {
     showPlayer: boolean;
     setShowPlayer: React.Dispatch<SetStateAction<boolean>>;
     showMiniplayer: boolean;
     setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
+    nowPlayingIsFavorite: boolean;
+    setNowPlayingIsFavorite: React.Dispatch<SetStateAction<boolean>>;
     nowPlaying: JellifyTrack | undefined;
     queue: JellifyTrack[];
     queueName: string | undefined;
@@ -41,14 +41,15 @@ const PlayerContextInitializer = () => {
 
     const queueJson = storage.getString(MMKVStorageKeys.PlayQueue);
 
-    const { apiClient, sessionId } = useApiClientContext();
-    const playStateApi = getPlaystateApi(apiClient!)
+    const playStateApi = getPlaystateApi(Client.api!)
     
     //#region State
     const [showPlayer, setShowPlayer] = useState<boolean>(false);
     const [showMiniplayer, setShowMiniplayer] = useState<boolean>(false);
 
+    const [nowPlayingIsFavorite, setNowPlayingIsFavorite] = useState<boolean>(false);
     const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(undefined);
+    const [isSkipping, setIsSkipping] = useState<boolean>(false);
     const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
     const [queueName, setQueueName] = useState<string | undefined>(undefined);
     //#endregion State
@@ -57,8 +58,9 @@ const PlayerContextInitializer = () => {
     //#region Functions
     const play = async (index?: number | undefined) => {
 
-        if (index && index > 0)
-            TrackPlayer.skip(index)
+        if (index && index > 0) {
+            TrackPlayer.skip(index);
+        }
 
         TrackPlayer.play();
     }
@@ -99,7 +101,7 @@ const PlayerContextInitializer = () => {
             trigger('impactLight');
             await seekTo(position);
 
-            handlePlaybackProgressUpdated(sessionId, playStateApi, nowPlaying!, { 
+            handlePlaybackProgressUpdated(Client.sessionId, playStateApi, nowPlaying!, { 
                 buffered: 0, 
                 position, 
                 duration: convertRunTimeTicksToSeconds(nowPlaying!.duration!) 
@@ -110,30 +112,56 @@ const PlayerContextInitializer = () => {
     const useSkip = useMutation({
         mutationFn: async (index?: number | undefined) => {
             trigger("impactLight")
-            if (!isUndefined(index))
-                skip(index)
-            else
-                skipToNext();
+            if (!isUndefined(index)) {
+                setIsSkipping(true);
+                setNowPlaying(queue[index]);
+                await skip(index);
+                setIsSkipping(false);
+            }
+            else {
+                const nowPlayingIndex = queue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
+                setNowPlaying(queue[nowPlayingIndex + 1])
+                await skipToNext();
+            }
         }
     });
 
     const usePrevious = useMutation({
         mutationFn: async () => {
-            trigger("impactLight")
-            await skipToPrevious();
+            trigger("impactLight");
+
+            const nowPlayingIndex = queue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
+
+            if (nowPlayingIndex > 0) {
+                setNowPlaying(queue[nowPlayingIndex - 1])
+                await skipToPrevious();
+            }
         }
     })
 
     const usePlayNewQueue = useMutation({
         mutationFn: async (mutation: QueueMutation) => {
             trigger("impactLight");
+
+            setIsSkipping(true);
+
+            // Optimistically set now playing
+            setNowPlaying(mapDtoToTrack(mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection));
+
             await resetQueue(false);
             await addToQueue(mutation.tracklist.map((track) => {
-                return mapDtoToTrack(apiClient!, sessionId, track, QueuingType.FromSelection)
+                return mapDtoToTrack(track, QueuingType.FromSelection)
             }));
             
             setQueueName(mutation.queueName);
-            await play(mutation.index);
+        },
+        onSuccess: async (data, mutation: QueueMutation) => {
+            setIsSkipping(false);
+            await play(mutation.index)
+        },
+        onError: async () => {
+            setIsSkipping(false);
+            setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack)
         }
     });
 
@@ -145,28 +173,60 @@ const PlayerContextInitializer = () => {
     const progress = useProgress(UPDATE_INTERVAL);
 
     useTrackPlayerEvents([
+        Event.RemoteLike,
+        Event.RemoteDislike,
         Event.PlaybackProgressUpdated,
         Event.PlaybackState,
         Event.PlaybackActiveTrackChanged,
     ], async (event) => {
         switch (event.type) {
 
+            case (Event.RemoteLike) : {
+
+                setNowPlayingIsFavorite(true);
+                break;
+            }
+
+            case (Event.RemoteDislike) : {
+
+                setNowPlayingIsFavorite(false);
+                break;
+            }
+
             case (Event.PlaybackState) : {
-                handlePlaybackState(sessionId, playStateApi, await TrackPlayer.getActiveTrack() as JellifyTrack, event.state, progress);
+                handlePlaybackState(Client.sessionId, playStateApi, await TrackPlayer.getActiveTrack() as JellifyTrack, event.state, progress);
                 break;
             }
             case (Event.PlaybackProgressUpdated) : {
-                handlePlaybackProgressUpdated(sessionId, playStateApi, nowPlaying!, event);
+                handlePlaybackProgressUpdated(Client.sessionId, playStateApi, nowPlaying!, event);
                 break;
             }
 
             case (Event.PlaybackActiveTrackChanged) : {
 
-                if ((await TrackPlayer.getActiveTrack() as JellifyTrack | undefined) !== nowPlaying) {    
-                    // Sleep to prevent flickering in players when skipping to a queue index
-                    sleep(100).then(async () => {
-                        setNowPlaying(await TrackPlayer.getActiveTrack() as JellifyTrack | undefined);
-                    });
+                if (!isSkipping) {
+                    const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack | undefined;
+                    if (activeTrack && !isEqual(activeTrack, nowPlaying)) {    
+                        setNowPlaying(activeTrack);
+
+                        // Set player favorite state to user data IsFavorite
+                        // This is super nullish so we need to do a lot of 
+                        // checks on the fields
+                        // TODO: Turn this check into a helper function
+                        setNowPlayingIsFavorite(
+                            isUndefined(activeTrack) ? false 
+                            : isUndefined(activeTrack!.item.UserData) ? false 
+                            : activeTrack.item.UserData.IsFavorite ?? false
+                        );
+
+                        await useUpdateOptions(nowPlayingIsFavorite);
+
+                    } else if (!!!activeTrack) {
+                        setNowPlaying(undefined)
+                        setNowPlayingIsFavorite(false);
+                    } else {
+                        // Do nothing
+                    }
                 }
             }
         }
@@ -196,6 +256,8 @@ const PlayerContextInitializer = () => {
         setShowPlayer,
         showMiniplayer,
         setShowMiniplayer,
+        nowPlayingIsFavorite,
+        setNowPlayingIsFavorite,
         nowPlaying,
         queue,
         queueName,
@@ -216,6 +278,8 @@ export const PlayerContext = createContext<PlayerContext>({
     setShowPlayer: () => {},
     showMiniplayer: false,
     setShowMiniplayer: () => {},
+    nowPlayingIsFavorite: false,
+    setNowPlayingIsFavorite: () => {},
     nowPlaying: undefined,
     queue: [],
     queueName: undefined,
@@ -320,6 +384,8 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowPlayer, 
         showMiniplayer, 
         setShowMiniplayer, 
+        nowPlayingIsFavorite,
+        setNowPlayingIsFavorite,
         nowPlaying,
         queue, 
         queueName,
@@ -337,6 +403,8 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         setShowPlayer,
         showMiniplayer,
         setShowMiniplayer,
+        nowPlayingIsFavorite,
+        setNowPlayingIsFavorite,
         nowPlaying,
         queue,
         queueName,

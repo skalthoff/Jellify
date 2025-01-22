@@ -1,5 +1,5 @@
 import { Api } from "@jellyfin/sdk";
-import { jellifyClient } from "../../client";
+import { JellyfinInfo } from "../../info";
 import _ from "lodash";
 
 export function createApi(serverUrl?: string, username?: string, password?: string, accessToken?: string): Promise<Api> {
@@ -12,22 +12,22 @@ export function createApi(serverUrl?: string, username?: string, password?: stri
 
         if (!_.isUndefined(accessToken)) {
             console.info("Creating API with accessToken")
-            return resolve(jellifyClient.createApi(serverUrl, accessToken));
+            return resolve(JellyfinInfo.createApi(serverUrl, accessToken));
         }
                 
 
         if (_.isUndefined(username) && _.isUndefined(password)) {
 
             console.info("Creating public API for server url")
-            return resolve(jellifyClient.createApi(serverUrl));
+            return resolve(JellyfinInfo.createApi(serverUrl));
         }
 
         console.log("Signing into Jellyfin")
-        let authResult = await jellifyClient.createApi(serverUrl).authenticateUserByName(username!, password);
+        let authResult = await JellyfinInfo.createApi(serverUrl).authenticateUserByName(username!, password);
 
         if (authResult.data.AccessToken) {
             console.info("Signed into Jellyfin successfully")
-            return resolve(jellifyClient.createApi(serverUrl, authResult.data.AccessToken));
+            return resolve(JellyfinInfo.createApi(serverUrl, authResult.data.AccessToken));
         }
 
         return reject("Unable to sign in");

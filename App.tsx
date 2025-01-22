@@ -1,17 +1,16 @@
 import './gesture-handler';
-import "./global.css";
 import React from 'react';
 import "react-native-url-polyfill/auto";
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import Jellify from './components/jellify';
 import { TamaguiProvider, Theme } from 'tamagui';
-import { ToastProvider } from '@tamagui/toast'
 import { useColorScheme } from 'react-native';
 import jellifyConfig from './tamagui.config';
 import { clientPersister } from './constants/storage';
 import { queryClient } from './constants/query-client';
 import { CacheManager } from '@georstat/react-native-image-cache';
 import { Dirs } from "react-native-file-access";
+import { EventProvider } from "react-native-outside-press";
 
 CacheManager.config = {
   baseDir: `${Dirs.CacheDir}/images_cache/`,
@@ -35,12 +34,9 @@ export default function App(): React.JSX.Element {
     }}>
       <TamaguiProvider config={jellifyConfig}>
         <Theme name={isDarkMode ? 'dark' : 'light'}>
-          <ToastProvider
-            swipeDirection='down'
-            native={false}
-            >
-            <Jellify />
-          </ToastProvider>
+            <EventProvider>
+              <Jellify />
+            </EventProvider>
         </Theme>
       </TamaguiProvider>
     </PersistQueryClientProvider>

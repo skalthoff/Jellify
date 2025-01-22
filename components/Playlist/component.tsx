@@ -2,17 +2,18 @@ import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
 import { ScrollView, XStack, YStack } from "tamagui";
-import { useApiClientContext } from "../jellyfin-api-provider";
-import { usePlayerContext } from "@/player/provider";
-import { useItemTracks } from "@/api/queries/tracks";
+import { usePlayerContext } from "../../player/provider";
+import { useItemTracks } from "../../api/queries/tracks";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
 import { FlatList } from "react-native";
-import { queryConfig } from "@/api/queries/query.config";
+import { queryConfig } from "../../api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useEffect } from "react";
+import Client from "../../api/client";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
@@ -21,18 +22,22 @@ interface PlaylistProps {
 
 export default function Playlist(props: PlaylistProps): React.JSX.Element {
 
-    const { apiClient, sessionId } = useApiClientContext();
+    const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
 
-    const { nowPlaying } = usePlayerContext();
+    const { data: tracks, isLoading, refetch } = useItemTracks(props.playlist.Id!);
 
-    const { data: tracks, isLoading } = useItemTracks(props.playlist.Id!, apiClient!);
+    useEffect(() => {
+        refetch();
+    }, [
+        nowPlayingIsFavorite
+    ]);
 
     return (
         <SafeAreaView edges={["right", "left"]}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
                 <YStack alignItems="center">
                     <CachedImage
-                        source={getImageApi(apiClient!)
+                        source={getImageApi(Client.api!)
                             .getItemImageUrlById(
                                 props.playlist.Id!,
                                 ImageType.Primary,
@@ -56,6 +61,7 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
 
                         return (
                             <Track
+                                navigation={props.navigation}
                                 track={track}
                                 tracklist={tracks!}
                                 index={index}

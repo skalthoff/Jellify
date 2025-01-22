@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import { QueryKeys } from "../../enums/query-keys"
-import { Api } from "@jellyfin/sdk"
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api"
 import { BaseItemKind, ItemSortBy, SortOrder } from "@jellyfin/sdk/lib/generated-client/models"
+import Client from "../client"
 
-export const useArtistAlbums = (artistId: string, api: Api) => useQuery({
-    queryKey: [QueryKeys.ArtistAlbums, artistId, api],
+export const useArtistAlbums = (artistId: string) => useQuery({
+    queryKey: [QueryKeys.ArtistAlbums, artistId],
     queryFn: ({ queryKey }) => {
-        return getItemsApi(queryKey[2] as Api).getItems({
+        return getItemsApi(Client.api!).getItems({
             includeItemTypes: [BaseItemKind.MusicAlbum],
             recursive: true,
             excludeItemIds: [queryKey[1] as string],
@@ -26,10 +26,10 @@ export const useArtistAlbums = (artistId: string, api: Api) => useQuery({
 })
 
 
-export const useArtistFeaturedOnAlbums = (artistId: string, api: Api) => useQuery({
-    queryKey: [QueryKeys.ArtistFeaturedAlbums, artistId, api],
+export const useArtistFeaturedOnAlbums = (artistId: string) => useQuery({
+    queryKey: [QueryKeys.ArtistFeaturedAlbums, artistId],
     queryFn: ({ queryKey }) => {
-        return getItemsApi(queryKey[2] as Api).getItems({
+        return getItemsApi(Client.api!).getItems({
             includeItemTypes: [BaseItemKind.MusicAlbum],
             recursive: true,
             excludeItemIds: [queryKey[1] as string],

@@ -5,19 +5,16 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ServerLibrary from "./helpers/server-library";
 import { useAuthenticationContext } from "./provider";
 import { useEffect } from "react";
-import { useApiClientContext } from "../jellyfin-api-provider";
 
 export default function Login(): React.JSX.Element {
 
-    const { triggerAuth, setTriggerAuth } = useAuthenticationContext();
-
-    const { server, user } = useApiClientContext();
+    const { user, server, triggerAuth, setTriggerAuth } = useAuthenticationContext();
 
     const Stack = createStackNavigator();
 
     useEffect(() => {
         setTriggerAuth(false);
-    })
+    });
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>

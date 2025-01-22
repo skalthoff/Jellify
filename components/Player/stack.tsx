@@ -3,6 +3,7 @@ import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-na
 import { StackParamList } from "../types";
 import PlayerScreen from "./screens";
 import Queue from "./screens/queue";
+import DetailsScreen from "../ItemDetail/screen";
 
 export const PlayerStack = createNativeStackNavigator<StackParamList>();
 
@@ -25,6 +26,14 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
             <PlayerStack.Screen
                 name="Queue"
                 component={Queue}
+                options={{
+                    headerTitle: ""
+                }}
+            />
+
+            <PlayerStack.Screen
+                name="Details"
+                component={DetailsScreen}
                 options={{
                     headerTitle: ""
                 }}

@@ -37,3 +37,6 @@ Designed to be lightweight, fast, and support ***extremely*** large music librar
 
 ### Love
 This is undoubtedly a passion project of [mine](https://github.com/anultravioletaurora), and I've learned a lot from working on it (and the many failed attempts before it). I hope you enjoy using it! Feature requests and bug reports are welcome :)
+
+## Running Locally
+Clone the repository and run ```npm i``` to install the dependencies

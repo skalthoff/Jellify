@@ -1,17 +1,15 @@
-import { useUserPlaylists } from "@/api/queries/playlist";
-import { Card } from "@/components/Global/helpers/card";
-import { H2 } from "@/components/Global/helpers/text";
-import { useApiClientContext } from "@/components/jellyfin-api-provider";
-import { ProvidedHomeProps } from "@/components/types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useUserPlaylists } from "../../../api/queries/playlist";
+import { ItemCard } from "../../../components/Global/helpers/item-card";
+import { H2 } from "../../../components/Global/helpers/text";
+import { StackParamList } from "../../../components/types";
 import React from "react";
 import { FlatList } from "react-native";
 import { View } from "tamagui";
 
-export default function Playlists({ navigation }: ProvidedHomeProps) : React.JSX.Element {
+export default function Playlists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
 
-    const { apiClient, user, library } = useApiClientContext();
-
-    const { data: playlists } = useUserPlaylists(apiClient!, user!.id, library!.playlistLibraryId);
+    const { data: playlists } = useUserPlaylists();
 
     return (
         <View>
@@ -20,7 +18,7 @@ export default function Playlists({ navigation }: ProvidedHomeProps) : React.JSX
                 data={playlists}
                 renderItem={({ item: playlist }) => {
                     return (
-                        <Card
+                        <ItemCard
                             itemId={playlist.Id!}
                             caption={playlist.Name ?? "Untitled Playlist"}
                             onPress={() => {

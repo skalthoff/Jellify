@@ -3,7 +3,6 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ScrollView, YStack, XStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import { useApiClientContext } from "../jellyfin-api-provider";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { queryConfig } from "../../api/queries/query.config";
 import { H4, H5, Text } from "../Global/helpers/text";
@@ -11,8 +10,11 @@ import { FlatList } from "react-native";
 import { usePlayerContext } from "../../player/provider";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import Track from "../Global/components/track";
-import { useItemTracks } from "@/api/queries/tracks";
+import { useItemTracks } from "../../api/queries/tracks";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import FavoriteButton from "../Global/components/favorite-button";
+import { useEffect } from "react";
+import Client from "../../api/client";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -21,19 +23,32 @@ interface AlbumProps {
 
 export default function Album(props: AlbumProps): React.JSX.Element {
 
-    const { apiClient } = useApiClientContext();
-    const { nowPlaying } = usePlayerContext();
+    props.navigation.setOptions({
+        headerRight: () => {
+            return (
+                <FavoriteButton item={props.album} />
+            )
+        }
+    })
+
+    const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
 
     const { width } = useSafeAreaFrame();
 
-    const { data: tracks, isLoading } = useItemTracks(props.album.Id!, apiClient!, true);
+    const { data: tracks, isLoading, refetch } = useItemTracks(props.album.Id!, true);
+
+    useEffect(() => {
+        refetch();
+    }, [
+        nowPlayingIsFavorite
+    ])
 
     return (
         <SafeAreaView edges={["right", "left"]}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
                 <YStack alignItems="center" minHeight={width / 1.1}>
                     <CachedImage
-                        source={getImageApi(apiClient!)
+                        source={getImageApi(Client.api!)
                             .getItemImageUrlById(
                                 props.album.Id!,
                                 ImageType.Primary,
@@ -60,6 +75,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                                 track={track}
                                 tracklist={tracks!}
                                 index={index}
+                                navigation={props.navigation}
                             />
                         )
                         

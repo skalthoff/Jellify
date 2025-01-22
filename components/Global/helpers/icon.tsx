@@ -1,23 +1,24 @@
 import React from "react"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { Colors } from "../../../enums/colors"
+import { useColorScheme } from "react-native";
+
+const smallSize = 24;
 
 const regularSize = 36;
 
 const largeSize = 48
 
-export default function Icon({ name, onPress, large }: { name: string, onPress?: Function, large?: boolean }) : React.JSX.Element {
+export default function Icon({ name, onPress, small, large, color }: { name: string, onPress?: () => void, small?: boolean, large?: boolean, color?: Colors }) : React.JSX.Element {
     
-    let size = large ? largeSize : regularSize
+    const isDarkMode = useColorScheme() === "dark"
+    let size = large ? largeSize : small ? smallSize : regularSize
     
     return (
         <MaterialCommunityIcons 
-            color={Colors.White}
+            color={color ? color : isDarkMode ? Colors.White : Colors.Background}
             name={name} 
-            onPress={() => {
-                if (onPress)
-                    onPress();
-            }}
+            onPress={onPress}
             size={size}
         />
     )

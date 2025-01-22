@@ -1,7 +1,6 @@
 import React, {  } from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
 import { H5, Card as TamaguiCard, View } from "tamagui";
-import { useApiClientContext } from "../../jellyfin-api-provider";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { CachedImage } from "@georstat/react-native-image-cache";
@@ -9,6 +8,7 @@ import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
 import { queryConfig } from "../../../api/queries/query.config";
 import { Text } from "./text";
+import Client from "../../../api/client";
 
 interface CardProps extends TamaguiCardProps {
     artistName?: string;
@@ -19,16 +19,14 @@ interface CardProps extends TamaguiCardProps {
     cornered?: boolean;
 }
 
-export function Card(props: CardProps) {
-
-    const { apiClient } = useApiClientContext();
+export function ItemCard(props: CardProps) {
 
     const dimensions = props.width && typeof(props.width) === "number" ? { width: props.width, height: props.width } : { width: 150, height: 150 };
 
     const cardTextColor = props.blurhash ? invert(Blurhash.getAverageColor(props.blurhash)!, true) : undefined;
 
     const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 2, height: props.width / 2 }: { width: 100, height: 100 };
-    const cardLogoSource = getImageApi(apiClient!).getItemImageUrlById(props.itemId, ImageType.Logo);
+    const cardLogoSource = getImageApi(Client.api!).getItemImageUrlById(props.itemId, ImageType.Logo);
 
     return (
         <View 
@@ -50,7 +48,7 @@ export function Card(props: CardProps) {
                 </TamaguiCard.Header>
                 <TamaguiCard.Footer padded>
                     <CachedImage 
-                            source={getImageApi(apiClient!)
+                            source={getImageApi(Client.api!)
                                 .getItemImageUrlById(
                                     props.itemId, 
                                     ImageType.Logo, 
@@ -70,7 +68,7 @@ export function Card(props: CardProps) {
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
                     <CachedImage 
-                        source={getImageApi(apiClient!)
+                        source={getImageApi(Client.api!)
                             .getItemImageUrlById(
                                 props.itemId, 
                                 ImageType.Primary, 

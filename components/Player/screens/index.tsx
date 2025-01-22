@@ -1,32 +1,37 @@
-import { queryConfig } from "@/api/queries/query.config";
-import { HorizontalSlider } from "@/components/Global/helpers/slider";
-import { RunTimeSeconds } from "@/components/Global/helpers/time-codes";
-import { useApiClientContext } from "@/components/jellyfin-api-provider";
-import { StackParamList } from "@/components/types";
-import { usePlayerContext } from "@/player/provider";
-import { CachedImage } from "@georstat/react-native-image-cache";
-import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
+import { HorizontalSlider } from "../../../components/Global/helpers/slider";
+import { RunTimeSeconds } from "../../../components/Global/helpers/time-codes";
+import { StackParamList } from "../../../components/types";
+import { usePlayerContext } from "../../../player/provider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { YStack, XStack, Spacer } from "tamagui";
 import PlayPauseButton from "../helpers/buttons";
-import { H5, Text } from "@/components/Global/helpers/text";
-import Icon from "@/components/Global/helpers/icon";
-import { Colors } from "@/enums/colors";
-import { State } from "react-native-track-player";
+import { H5, Text } from "../../../components/Global/helpers/text";
+import Icon from "../../../components/Global/helpers/icon";
+import { Colors } from "../../../enums/colors";
+import FavoriteButton from "../../Global/components/favorite-button";
+import BlurhashedImage from "../../../components/Global/helpers/blurhashed-image";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
-    
-    const { apiClient } = useApiClientContext();
-    const { playbackState, nowPlaying, progress, useSeekTo, useSkip, usePrevious, queueName } = usePlayerContext();
+    const { 
+        useTogglePlayback, 
+        playbackState, 
+        nowPlayingIsFavorite,
+        setNowPlayingIsFavorite,
+        nowPlaying, 
+        progress, 
+        useSeekTo, 
+        useSkip, 
+        usePrevious, 
+        queueName,
+    } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
     const [progressState, setProgressState] = useState<number>(progress!.position);
 
-    const { width, height } = useSafeAreaFrame();
+    const { width } = useSafeAreaFrame();
 
     // Prevent gesture event to close player if we're seeking
     useEffect(() => {
@@ -55,12 +60,19 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     </YStack>
 
                     <XStack 
-                        animation={"quick"} 
                         justifyContent="center"
+                        alignContent="center"
                         minHeight={width / 1.1}
+                        onPress={() => {
+                            useTogglePlayback.mutate(undefined)
+                        }}
                     >
-                        <CachedImage
-                            source={getImageApi(apiClient!)
+                        <BlurhashedImage
+                            item={nowPlaying!.item}
+                            size={width / 1.1}
+                            />
+                        {/* <CachedImage
+                            source={getImageApi(Client.api!)
                                 .getItemImageUrlById(
                                     nowPlaying!.item.AlbumId ?? "",
                                     ImageType.Primary,
@@ -74,7 +86,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 height: playbackState === State.Playing ? width / 1.1 : width / 1.4,
                                 borderRadius: 2
                             }}
-                            />
+                            /> */}
                     </XStack>
 
                     <XStack marginHorizontal={20} paddingVertical={5}>
@@ -83,18 +95,18 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 bold 
                                 fontSize={"$6"}
                             >
-                                {nowPlaying?.title ?? "Untitled Track"}
+                                {nowPlaying!.title ?? "Untitled Track"}
                             </Text>
 
                             <Text 
                                 fontSize={"$6"}
                                 color={Colors.Primary}
                                 onPress={() => {
-                                    navigation.goBack(); // Dismiss player modal
-                                    navigation.push("Artist", {
-                                        artistName: nowPlaying!.item.ArtistItems![0].Name ?? "Untitled",
-                                        artistId: nowPlaying!.item.ArtistItems![0].Id!,
-                                    })
+                                    if (nowPlaying!.item.ArtistItems) {
+                                        navigation.navigate("Artist", {
+                                            artist: nowPlaying!.item.ArtistItems![0],
+                                        });
+                                    }
                                 }}
                             >
                                 {nowPlaying.artist ?? "Unknown Artist"}
@@ -108,9 +120,28 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             </Text>
                         </YStack>
 
-                        <XStack alignItems="center" flex={1}>
+                        <XStack 
+                            justifyContent="flex-end" 
+                            alignItems="center" 
+                            flex={1}
+                        >
                             {/* Buttons for favorites, song menu go here */}
 
+                            <Icon
+                                name="dots-horizontal-circle-outline"
+                                onPress={() => {
+                                    navigation.navigate("Details", {
+                                        item: nowPlaying!.item
+                                    });
+                                }}
+                            />
+
+                            <Spacer />
+
+                            <FavoriteButton 
+                                item={nowPlaying!.item} 
+                                onToggle={() => setNowPlayingIsFavorite(!nowPlayingIsFavorite)}
+                            />
                         </XStack>
                     </XStack>
 
@@ -159,7 +190,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     <XStack justifyContent="space-evenly" marginVertical={"$3"}>
                         <Icon
                             name="rewind-15"
-                            onPress={() => useSeekTo.mutate(progress!.position - 15)}
+                            onPress={() => {
+
+                                setSeeking(true);
+                                setProgressState(progressState - 15);
+                                useSeekTo.mutate(progress!.position - 15);
+                                setSeeking(false);
+                            }}
                         />
                         
                         <Icon
@@ -178,7 +215,12 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                         <Icon
                             name="fast-forward-15"
-                            onPress={() => useSeekTo.mutate(progress!.position + 15)}  
+                            onPress={() => { 
+                                setSeeking(true);
+                                setProgressState(progressState + 15);
+                                useSeekTo.mutate(progress!.position + 15);
+                                setSeeking(false);
+                            }}  
                         />              
                     </XStack>
 

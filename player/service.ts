@@ -1,4 +1,8 @@
-import TrackPlayer, { Event } from "react-native-track-player";
+import Client from "../api/client";
+import { JellifyTrack } from "../types/JellifyTrack";
+import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
+import TrackPlayer, { Event, RatingType } from "react-native-track-player";
+import { getActiveTrack, getActiveTrackIndex } from "react-native-track-player/lib/src/trackPlayer";
 
 /**
  * Jellify Playback Service.
@@ -25,5 +29,43 @@ export async function PlaybackService() {
 
     TrackPlayer.addEventListener(Event.RemoteSeek, async (event) => {
         await TrackPlayer.seekTo(event.position);
+    });
+
+    // TrackPlayer.addEventListener(Event.RemoteJumpForward, async (event) => {
+    //     await TrackPlayer.seekBy(event.interval)
+    // });
+
+    // TrackPlayer.addEventListener(Event.RemoteJumpBackward, async (event) => {
+    //     await TrackPlayer.seekBy(-event.interval)
+    // });
+
+    TrackPlayer.addEventListener(Event.RemoteLike, async () => {
+
+        const nowPlaying = await getActiveTrack() as JellifyTrack;
+        const nowPlayingIndex = await getActiveTrackIndex();
+
+        await getUserLibraryApi(Client.api!)
+            .markFavoriteItem({
+                itemId: nowPlaying.item.Id!
+            });
+
+        await TrackPlayer.updateMetadataForTrack(nowPlayingIndex!, {
+            rating: RatingType.Heart
+        })
+    });
+
+    TrackPlayer.addEventListener(Event.RemoteDislike, async () => {
+
+        const nowPlaying = await getActiveTrack() as JellifyTrack;
+        const nowPlayingIndex = await getActiveTrackIndex();
+
+        await getUserLibraryApi(Client.api!)
+            .markFavoriteItem({
+                itemId: nowPlaying.item.Id!
+            });
+
+        await TrackPlayer.updateMetadataForTrack(nowPlayingIndex!, {
+            rating: undefined
+        });
     });
 }

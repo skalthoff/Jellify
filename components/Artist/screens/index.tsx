@@ -1,16 +1,19 @@
 import { RouteProp } from "@react-navigation/native";
-import Artist from "../../Artist/component";
+import Artist from "../component";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../types";
 
-export function HomeArtistScreen({ route, navigation } : { 
+export function ArtistScreen({ 
+    route, 
+    navigation 
+} : { 
     route: RouteProp<StackParamList, "Artist">, 
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
+
     return (
         <Artist 
-            artistId={route.params.artistId}
-            artistName={route.params.artistName}
+            artist={route.params.artist}
             navigation={navigation}
         />
     );

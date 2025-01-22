@@ -1,7 +1,7 @@
 import { Progress, State } from "react-native-track-player";
 import { JellifyTrack } from "../types/JellifyTrack";
 import { PlaystateApi } from "@jellyfin/sdk/lib/generated-client/api/playstate-api";
-import { convertSecondsToRunTimeTicks } from "@/helpers/runtimeticks";
+import { convertSecondsToRunTimeTicks } from "../helpers/runtimeticks";
 
 export async function handlePlaybackState(sessionId: string, playstateApi: PlaystateApi, track: JellifyTrack, state: State, progress: Progress) {
     switch (state) {            

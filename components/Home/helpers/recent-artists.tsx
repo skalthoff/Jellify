@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
-import { ProvidedHomeProps } from "../../types";
+import { StackParamList } from "../../types";
 import { FlatList } from "react-native";
-import { Card } from "../../Global/helpers/card";
+import { ItemCard } from "../../Global/helpers/item-card";
 import { getPrimaryBlurhashFromDto } from "../../../helpers/blurhash";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export default function RecentArtists({ navigation }: ProvidedHomeProps): React.JSX.Element {
+export default function RecentArtists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
     const { recentArtists } = useHomeContext();
 
@@ -18,7 +19,7 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                 data={recentArtists}   
                 renderItem={({ item: recentArtist}) => {
                     return (
-                        <Card 
+                        <ItemCard 
                             artistName={recentArtist.Name!}
                             blurhash={getPrimaryBlurhashFromDto(recentArtist)}
                             itemId={recentArtist.Id!}
@@ -26,12 +27,11 @@ export default function RecentArtists({ navigation }: ProvidedHomeProps): React.
                             onPress={() => {
                                 navigation.navigate('Artist', 
                                     { 
-                                        artistId: recentArtist.Id!, 
-                                        artistName: recentArtist.Name ?? "Unknown Artist" 
+                                        artist: recentArtist, 
                                     }
                                 )}
                             }>
-                        </Card>
+                        </ItemCard>
                     )
                 }}
             />

@@ -1,4 +1,4 @@
-import { Colors } from "@/enums/colors";
+import { Colors } from "../../../enums/colors";
 import React from "react";
 import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider } from "tamagui";
 
@@ -11,11 +11,11 @@ interface SliderProps {
 
 const JellifySliderThumb = styled(Slider.Thumb, {
     backgroundColor: Colors.Primary,
-    borderColor: Colors.Background
+    borderColor: Colors.Background,
 })
 
 const JellifySliderTrack = styled(Slider.Track, {
-    backgroundColor: Colors.Secondary
+    backgroundColor: Colors.Borders
 });
 
 const JellifyActiveSliderTrack = styled(Slider.TrackActive, {
