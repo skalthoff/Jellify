@@ -13,7 +13,7 @@ export default function TrackOptions({
 }) : React.JSX.Element {
     
     return (
-        <XStack>
+        <XStack justifyContent="space-evenly">
             <Icon name="table-column-plus-before" />
 
             <Icon name="table-column-plus-after" />

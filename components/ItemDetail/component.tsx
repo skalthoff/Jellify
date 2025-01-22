@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { StackParamList } from "../types";
 import TrackOptions from "./helpers/TrackOptions";
-import { View, XStack, YStack } from "tamagui";
+import { Spacer, View, XStack, YStack } from "tamagui";
 import BlurhashedImage from "../Global/helpers/blurhashed-image";
 import { Text } from "../Global/helpers/text";
 import { Colors } from "../../enums/colors";
@@ -58,7 +58,7 @@ export default function ItemDetail({
                 <YStack 
                     marginLeft={"$0.5"} 
                     justifyContent="flex-start"
-                    alignItems="stretch"
+                    alignContent="space-between"
                 >
                     <Text bold fontSize={"$6"}>
                         { item.Name ?? "Untitled Track" }
@@ -85,7 +85,11 @@ export default function ItemDetail({
                         { item.Album ?? "" }
                     </Text>
 
+                    <Spacer />
+
                     <FavoriteButton item={item} />
+                    
+                    <Spacer />
                     
                     { options ?? <View /> }
                 </YStack>
