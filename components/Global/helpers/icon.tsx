@@ -16,7 +16,7 @@ export default function Icon({ name, onPress, small, large, color }: { name: str
     
     return (
         <MaterialCommunityIcons 
-            color={color ? color : isDarkMode ? Colors.White : Colors.Background}
+            color={color ? color : isDarkMode ? Colors.Secondary : Colors.Background}
             name={name} 
             onPress={onPress}
             size={size}
