@@ -6,6 +6,7 @@ import { ItemCard } from "../../Global/helpers/item-card";
 import { usePlayerContext } from "../../../player/provider";
 import { StackParamList } from "../../../components/types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { trigger } from "react-native-haptic-feedback";
 
 export default function RecentlyPlayed({ 
     navigation 
@@ -37,6 +38,7 @@ export default function RecentlyPlayed({
                                 });
                             }}
                             onLongPress={() => {
+                                trigger("impactLight");
                                 navigation.push("Details", {
                                     item: recentlyPlayedTrack
                                 })
