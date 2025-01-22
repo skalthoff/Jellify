@@ -58,6 +58,7 @@ export default function ItemDetail({
                 <YStack 
                     marginLeft={"$0.5"} 
                     justifyContent="flex-start"
+                    alignItems="stretch"
                 >
                     <Text bold fontSize={"$6"}>
                         { item.Name ?? "Untitled Track" }
@@ -85,10 +86,11 @@ export default function ItemDetail({
                     </Text>
 
                     <FavoriteButton item={item} />
+                    
+                    { options ?? <View /> }
                 </YStack>
 
             </XStack>
-            { options ?? <View /> }
         </SafeAreaView>
     )
 }
