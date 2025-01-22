@@ -13,20 +13,8 @@ export function fetchItemImage(itemId: string, imageType?: ImageType, width?: nu
         }, {
             responseType: 'blob'
         })
-        .then(async (response) => {
-            console.log(response.data)
+        .then((response) => {
+            console.log(response)
             return URL.createObjectURL(response.data)
-        })
+        });
 }
-
-function base64toJpeg(encode: string) : string {
-    return `data:image/jpeg;base64,${encode}`;
-}
-
-function blobToBase64(blob : Blob) : Promise<string> {
-    return new Promise((resolve, _) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result.toString());
-      reader.readAsDataURL(blob);
-    });
-  }
