@@ -1,3 +1,4 @@
+import { useItem } from "../../../api/queries/item";
 import Icon from "../../../components/Global/helpers/icon";
 import { StackParamList } from "../../../components/types";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
@@ -11,12 +12,30 @@ export default function TrackOptions({
     item: BaseItemDto, 
     navigation: NativeStackNavigationProp<StackParamList> 
 }) : React.JSX.Element {
+
+    const { data: album, isSuccess } = useItem(item.AlbumId ?? "")
     
     return (
-        <XStack justifyContent="space-evenly">
-            <Icon name="table-column-plus-before" />
+        <XStack justifyContent="space-between">
 
-            <Icon name="table-column-plus-after" />
+            { isSuccess && (
+                <Icon 
+                    name="music-box"
+                    onPress={() => {
+                        navigation.navigate("Album", {
+                            album
+                        })
+                    }}
+                />
+            )}
+
+            <Icon 
+                name="table-column-plus-before" 
+            />
+
+            <Icon 
+                name="table-column-plus-after" 
+            />
         </XStack>
     )
 }
