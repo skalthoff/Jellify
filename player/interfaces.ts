@@ -1,3 +1,4 @@
+import { QueuingType } from "../enums/queuing-type";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 export interface QueueMutation { 
@@ -5,4 +6,5 @@ export interface QueueMutation {
     index?: number | undefined;
     tracklist: BaseItemDto[];
     queueName: string;
+    queuingType?: QueuingType | undefined;
 }

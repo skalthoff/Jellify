@@ -16,15 +16,15 @@ export default function TrackOptions({
     const { data: album, isSuccess } = useItem(item.AlbumId ?? "")
     
     return (
-        <XStack justifyContent="space-between">
-
+        <XStack alignContent="flex-end" justifyContent="space-between">
             { isSuccess && (
                 <Icon 
                     name="music-box"
                     onPress={() => {
-                        navigation.navigate("Album", {
+                        navigation.goBack() // Dismiss modal if it exists
+                        navigation.getParent()!.navigate("Album", {
                             album
-                        })
+                        });
                     }}
                 />
             )}

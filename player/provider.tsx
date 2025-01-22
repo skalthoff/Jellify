@@ -2,7 +2,7 @@ import { createContext, ReactNode, SetStateAction, useContext, useEffect, useSta
 import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
-import { findPlayQueueIndexStart } from "./helpers/index";
+import { findPlayNextIndexStart, findPlayQueueIndexStart } from "./helpers/index";
 import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
 import _, { isEqual, isUndefined } from "lodash";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
@@ -10,13 +10,13 @@ import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
 import { useSetupPlayer, useUpdateOptions } from "../player/hooks";
 import { UPDATE_INTERVAL } from "./config";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { QueueMutation } from "./interfaces";
 import { mapDtoToTrack } from "../helpers/mappings";
 import { QueuingType } from "../enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
 import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
-import { convertRunTimeTicksToSeconds } from "..//helpers/runtimeticks";
+import { convertRunTimeTicksToSeconds } from "../helpers/runtimeticks";
 import Client from "../api/client";
+import { QueueMutation } from "./interfaces";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -74,7 +74,7 @@ const PlayerContextInitializer = () => {
     }
     
     const addToQueue = async (tracks: JellifyTrack[]) => {
-        let insertIndex = findPlayQueueIndexStart(queue);
+        const insertIndex = findPlayQueueIndexStart(queue);
         console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`)
         
         await TrackPlayer.add(tracks, insertIndex);
@@ -83,9 +83,33 @@ const PlayerContextInitializer = () => {
         
         setShowMiniplayer(true);
     }
+
+    const addToNext = async (tracks: JellifyTrack[]) => {
+        const insertIndex = findPlayNextIndexStart(queue);
+
+        console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`);
+
+        await TrackPlayer.add(tracks, insertIndex);
+
+        setQueue(await getQueue() as JellifyTrack[]);
+
+        setShowMiniplayer(true);
+    }
     //#endregion Functions
     
     //#region Hooks
+    const useQueueMutation = useMutation({
+        mutationFn: async (mutation: QueueMutation) => {
+            trigger("impactLight");
+
+            if (mutation.queuingType === QueuingType.PlayingNext)
+                return addToNext([mapDtoToTrack(mutation.track)]);
+
+            else
+                return addToQueue([mapDtoToTrack(mutation.track)])
+        }
+    })
+
     const useTogglePlayback = useMutation({
         mutationFn: async (index?: number | undefined) => {
             trigger("impactLight");
