@@ -17,7 +17,9 @@ export function fetchItemImage(itemId: string, imageType?: ImageType, width?: nu
             console.log(response.data)
             return new Blob(response.data)
         }).then(async (blob) => {
-            return await blobToBase64(blob)
+            const encoding = await blobToBase64(blob)
+            console.debug(encoding);
+            return encoding;
         });
 }
 
