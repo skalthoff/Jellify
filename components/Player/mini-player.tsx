@@ -1,9 +1,8 @@
 import React, {  } from "react";
-import { XStack, YStack } from "tamagui";
+import { View, XStack, YStack } from "tamagui";
 import { usePlayerContext } from "../../player/provider";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
-import { BlurView } from "@react-native-community/blur";
 import Icon from "../Global/helpers/icon";
 import { Text } from "../Global/helpers/text";
 import { Colors } from "../../enums/colors";
@@ -23,7 +22,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
     const { width } = useSafeAreaFrame();
 
     return (
-        <BlurView overlayColor={Colors.Background}>
+        <View style={{ backgroundColor: Colors.Background, borderColor: Colors.Borders }}>
             { nowPlaying && (
 
                 <XStack 
@@ -94,6 +93,6 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     </XStack>
                 </XStack>
             )}
-        </BlurView>
+        </View>
     )
 }
