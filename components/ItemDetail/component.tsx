@@ -54,7 +54,10 @@ export default function ItemDetail({
                     size={width / 3}
                 />
 
-                <YStack justifyContent="flex-start">
+                <YStack 
+                    marginLeft={"$0.5"} 
+                    justifyContent="flex-start"
+                >
                     <Text bold fontSize={"$6"}>
                         { item.Name ?? "Untitled Track" }
                     </Text>

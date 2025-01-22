@@ -17,6 +17,7 @@ import { Colors } from "../../../enums/colors";
 import { State } from "react-native-track-player";
 import FavoriteButton from "../../Global/components/favorite-button";
 import Client from "../../../api/client";
+import BlurhashedImage from "@/components/Global/helpers/blurhashed-image";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -65,7 +66,6 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     </YStack>
 
                     <XStack 
-                        animation={"bouncy"} 
                         justifyContent="center"
                         alignContent="center"
                         minHeight={width / 1.1}
@@ -73,7 +73,11 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             useTogglePlayback.mutate(undefined)
                         }}
                     >
-                        <CachedImage
+                        <BlurhashedImage
+                            item={nowPlaying!.item}
+                            size={width / 1.1}
+                            />
+                        {/* <CachedImage
                             source={getImageApi(Client.api!)
                                 .getItemImageUrlById(
                                     nowPlaying!.item.AlbumId ?? "",
@@ -88,7 +92,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 height: playbackState === State.Playing ? width / 1.1 : width / 1.4,
                                 borderRadius: 2
                             }}
-                            />
+                            /> */}
                     </XStack>
 
                     <XStack marginHorizontal={20} paddingVertical={5}>
