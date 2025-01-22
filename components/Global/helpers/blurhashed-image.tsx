@@ -19,11 +19,13 @@ export default function BlurhashedImage({ item, size, type }: { item: BaseItemDt
         : undefined;
 
     return (
-        <View minHeight={size}>
+        <View minHeight={size} minWidth={size}>
 
             { isSuccess ? (
                 <Image 
-                    src={image}
+                    source={{
+                        uri: image
+                    }}
                     style={{
                         height: size,
                         width: size,

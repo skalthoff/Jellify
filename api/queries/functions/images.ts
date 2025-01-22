@@ -15,12 +15,8 @@ export function fetchItemImage(itemId: string, imageType?: ImageType, width?: nu
         })
         .then(async (response) => {
             console.log(response.data)
-            return new Blob(response.data)
-        }).then(async (blob) => {
-            const encoding = await blobToBase64(blob)
-            console.debug(encoding);
-            return encoding;
-        });
+            return URL.createObjectURL(response.data)
+        })
 }
 
 function base64toJpeg(encode: string) : string {
