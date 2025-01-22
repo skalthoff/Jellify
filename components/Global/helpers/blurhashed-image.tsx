@@ -11,7 +11,7 @@ interface BlurhashLoadingProps {
 
 export default function BlurhashedImage({ item, size, type }: { item: BaseItemDto, size: number, type?: ImageType }) : React.JSX.Element {
 
-    const { data: image, isSuccess } = useItemImage(item.Id!, type);
+    const { data: image, isSuccess } = useItemImage(item.Id!, type, size);
 
     const blurhash = !isEmpty(item.ImageBlurHashes) 
         && !isEmpty(item.ImageBlurHashes.Primary) 
