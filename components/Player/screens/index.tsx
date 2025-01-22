@@ -1,11 +1,7 @@
-import { queryConfig } from "../../../api/queries/query.config";
 import { HorizontalSlider } from "../../../components/Global/helpers/slider";
 import { RunTimeSeconds } from "../../../components/Global/helpers/time-codes";
 import { StackParamList } from "../../../components/types";
 import { usePlayerContext } from "../../../player/provider";
-import { CachedImage } from "@georstat/react-native-image-cache";
-import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
@@ -14,10 +10,8 @@ import PlayPauseButton from "../helpers/buttons";
 import { H5, Text } from "../../../components/Global/helpers/text";
 import Icon from "../../../components/Global/helpers/icon";
 import { Colors } from "../../../enums/colors";
-import { State } from "react-native-track-player";
 import FavoriteButton from "../../Global/components/favorite-button";
-import Client from "../../../api/client";
-import BlurhashedImage from "@/components/Global/helpers/blurhashed-image";
+import BlurhashedImage from "../../../components/Global/helpers/blurhashed-image";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
