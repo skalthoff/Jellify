@@ -20,9 +20,9 @@ export const queryConfig = {
         format: ImageFormat.Png
     },
     playerArtwork: {
-        fillHeight: 1000,
-        fillWidth: 1000,
+        height: 1000,
+        width: 1000,
         format: ImageFormat.Jpg
     },
-    staleTime: 1000 * 60
+    staleTime: 1000 * 60 * 60 * 24 // 1 Day
 }
