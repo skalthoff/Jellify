@@ -22,7 +22,7 @@ export default function TrackOptions({
                     name="music-box"
                     onPress={() => {
                         navigation.goBack() // Dismiss modal if it exists
-                        navigation.getParent()!.navigate("Album", {
+                        navigation.push("Album", {
                             album
                         });
                     }}
