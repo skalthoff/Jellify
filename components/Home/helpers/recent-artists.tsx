@@ -25,7 +25,7 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
                             itemId={recentArtist.Id!}
                             caption={recentArtist.Name ?? "Unknown Artist"}
                             onPress={() => {
-                                navigation.navigate('Artist', 
+                                navigation.push('Artist', 
                                     { 
                                         artist: recentArtist, 
                                     }

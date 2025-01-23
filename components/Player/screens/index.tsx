@@ -103,7 +103,8 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 color={Colors.Primary}
                                 onPress={() => {
                                     if (nowPlaying!.item.ArtistItems) {
-                                        navigation.navigate("Artist", {
+                                        navigation.goBack();
+                                        navigation.push("Artist", {
                                             artist: nowPlaying!.item.ArtistItems![0],
                                         });
                                     }

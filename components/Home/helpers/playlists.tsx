@@ -22,7 +22,7 @@ export default function Playlists({ navigation }: { navigation: NativeStackNavig
                             itemId={playlist.Id!}
                             caption={playlist.Name ?? "Untitled Playlist"}
                             onPress={() => {
-                                navigation.navigate('Playlist', {
+                                navigation.push('Playlist', {
                                     playlist
                                 })
                             }} />

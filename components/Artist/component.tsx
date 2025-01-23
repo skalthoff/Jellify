@@ -77,7 +77,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                                     cornered 
                                     itemId={album.Id!}
                                     onPress={() => {
-                                        props.navigation.navigate('Album', {
+                                        props.navigation.push('Album', {
                                             album
                                         })
                                     }}
