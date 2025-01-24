@@ -6,7 +6,6 @@ import { useSearch } from "../../api/queries/search";
 import Item from "../Global/components/item";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { ScrollView } from "tamagui";
 import { FlatList } from "react-native";
 
 export default function Search({ 
@@ -29,22 +28,25 @@ export default function Search({
 
     return (
         <SafeAreaView edges={["top", "right", "left"]}>
-            <Input
-                placeholder="The Seeker"
-                onChangeText={(value) => setSearchString(value)}
-                value={searchString}
+            <FlatList
+                contentInsetAdjustmentBehavior="automatic"
+                ListHeaderComponent={() => {
+                    return (
+                        <Input
+                            placeholder="The Seeker"
+                            onChangeText={(value) => setSearchString(value)}
+                            value={searchString}
+                        />
+                    )
+                }}
+                data={items}
+                refreshing={isFetching}
+                renderItem={({ index, item }) => {
+                    return (
+                        <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
+                    )
+                }} 
             />
-
-            { !isFetching && isFetched && (
-                <FlatList
-                    data={items}
-                    renderItem={({ index, item }) => {
-                        return (
-                            <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
-                        )
-                    }} 
-                />
-            )}
         </SafeAreaView>
     )
 }

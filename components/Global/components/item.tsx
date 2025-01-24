@@ -2,7 +2,7 @@ import { usePlayerContext } from "../../../player/provider";
 import { StackParamList } from "../../../components/types";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Separator, Spacer, View, XStack } from "tamagui";
+import { Separator, Spacer, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import BlurhashedImage from "../helpers/blurhashed-image";
@@ -66,7 +66,15 @@ export default function Item({
                 }}
             >
                 <BlurhashedImage item={item} size={width / 9} />
-                <Text>{ item.Name ?? ""}</Text>
+
+                <YStack justifyContent="flex-start">
+                    <Text>{ item.Name ?? ""}</Text>
+                    { item.Type === 'Audio' || item.Type === 'MusicAlbum' ? (
+                        <Text>{ item.AlbumArtist ?? "Untitled Artist" }</Text>
+                    ) : (
+                        <Spacer />
+                    )}
+                </YStack>
 
                 { item.UserData?.IsFavorite ? (
                     <Icon 
