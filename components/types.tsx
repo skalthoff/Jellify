@@ -35,7 +35,7 @@ export type StackParamList = {
     };
     Details: {
         item: BaseItemDto,
-        onNavigate?: () => void | undefined
+        isModal: boolean
     }
 }
 

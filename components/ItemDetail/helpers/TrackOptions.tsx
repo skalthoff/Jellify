@@ -7,11 +7,12 @@ import { XStack } from "tamagui";
 
 export default function TrackOptions({ 
     item, 
-    navigation 
+    navigation,
+    isModal = false,
 } : { 
     item: BaseItemDto, 
     navigation: NativeStackNavigationProp<StackParamList>,
-    onNavigate?: () => void | undefined
+    isModal: boolean
 }) : React.JSX.Element {
 
     const { data: album, isSuccess } = useItem(item.AlbumId ?? "")
@@ -22,10 +23,18 @@ export default function TrackOptions({
                 <Icon 
                     name="music-box"
                     onPress={() => {
-                        navigation.goBack() // Dismiss modal if it exists
-                        navigation.push("Album", {
-                            album
-                        });
+
+                        if (isModal) {
+                            navigation.navigate("Album", {
+                                album
+                            });
+                        } else {
+
+                            navigation.goBack();
+                            navigation.push("Album", {
+                                album
+                            });
+                        }
                     }}
                 />
             )}

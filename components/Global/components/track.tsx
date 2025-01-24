@@ -30,7 +30,7 @@ export default function Track({
     index,
     queueName,
     showArtwork,
-    onPress
+    onPress,
 } : {
     track: BaseItemDto,
     tracklist: BaseItemDto[],
@@ -38,7 +38,7 @@ export default function Track({
     index?: number | undefined,
     queueName?: string | undefined,
     showArtwork?: boolean | undefined,
-    onPress?: () => void | undefined
+    onPress?: () => void | undefined,
 }) : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
@@ -63,6 +63,12 @@ export default function Track({
                             queueName: queueName ? queueName : track.Album ? track.Album! : "Queue"
                         });
                     }
+                }}
+                onLongPress={() => {
+                    navigation.push("Details", {
+                        item: track,
+                        isModal: false
+                    })
                 }}
                 paddingVertical={"$2"}
                 marginHorizontal={"$1"}
@@ -143,8 +149,9 @@ export default function Track({
                     >
                         <Icon small name="dots-vertical" onPress={() => {
                             navigation.push("Details", {
-                                item: track
-                            })
+                                item: track,
+                                isModal: false
+                            });
                         }} />
 
                     </YStack>

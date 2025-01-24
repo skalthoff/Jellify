@@ -12,11 +12,11 @@ import FavoriteButton from "../Global/components/favorite-button";
 export default function ItemDetail({ 
     item, 
     navigation,
-    onNavigate
+    isModal = false
 } : { 
     item: BaseItemDto, 
     navigation: NativeStackNavigationProp<StackParamList>,
-    onNavigate?: () => void | undefined
+    isModal: boolean
 }) : React.JSX.Element {
 
     let options: React.JSX.Element | undefined = undefined;
@@ -25,7 +25,7 @@ export default function ItemDetail({
 
     switch (item.Type) {
         case "Audio": {
-            options = TrackOptions({ item, navigation, onNavigate });
+            options = TrackOptions({ item, navigation, isModal });
             break;
         }
 
@@ -51,7 +51,7 @@ export default function ItemDetail({
 
     return (
         <SafeAreaView edges={["top", "right", "left"]}>
-            <XStack>
+            <YStack alignContent="center" justifyContent="flex-start">
                 <BlurhashedImage
                     item={item}
                     size={width / 2}
@@ -59,7 +59,7 @@ export default function ItemDetail({
 
                 <YStack 
                     marginLeft={"$0.5"} 
-                    justifyContent="flex-start"
+                    justifyContent="center"
                     alignContent="space-between"
                 >
                     <Text bold fontSize={"$6"}>
@@ -72,13 +72,17 @@ export default function ItemDetail({
                         onPress={() => {
                             if (item.ArtistItems) {
 
-                                if (onNavigate)
-                                    onNavigate();
+                                if (isModal)
+                                    navigation.navigate("Artist", {
+                                        artist: item.ArtistItems[0]
+                                    })
 
-                                navigation.goBack();
-                                navigation.push("Artist", {
-                                    artist: item.ArtistItems[0]
-                                });
+                                else {
+                                    navigation.goBack();
+                                    navigation.push("Artist", {
+                                        artist: item.ArtistItems[0]
+                                    });
+                                }
                             }
                         }}>
                         { item.Artists?.join(", ") ?? "Unknown Artist"}
@@ -100,7 +104,7 @@ export default function ItemDetail({
                     { options ?? <View /> }
                 </YStack>
 
-            </XStack>
+            </YStack>
         </SafeAreaView>
     )
 }

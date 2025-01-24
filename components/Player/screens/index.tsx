@@ -103,8 +103,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 color={Colors.Primary}
                                 onPress={() => {
                                     if (nowPlaying!.item.ArtistItems) {
-                                        navigation.goBack();
-                                        navigation.push("Artist", {
+                                        navigation.navigate("Artist", {
                                             artist: nowPlaying!.item.ArtistItems![0],
                                         });
                                     }
@@ -133,9 +132,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 onPress={() => {
                                     navigation.navigate("Details", {
                                         item: nowPlaying!.item,
-                                        onNavigate: () => {
-                                            navigation.goBack();
-                                        }
+                                        isModal: true
                                     });
                                 }}
                             />
