@@ -1,9 +1,9 @@
 import { Colors } from '../../../enums/colors';
-import React, { SetStateAction } from 'react';
+import React from 'react';
 import { Input as TamaguiInput} from 'tamagui';
 
 interface InputProps {
-    onChangeText: React.Dispatch<SetStateAction<string | undefined>>,
+    onChangeText: (value: string | undefined) => void,
     placeholder: string
     value: string | undefined;
     secureTextEntry?: boolean | undefined;

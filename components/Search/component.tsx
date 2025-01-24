@@ -36,7 +36,7 @@ export default function Search({
                 return (
                     <Input
                         placeholder="The Seeker"
-                        onChangeText={(value) => setSearchString(value)}
+                        onChangeText={(value) => handleSearchStringUpdate(value)}
                         value={searchString}
                     />
                 )
