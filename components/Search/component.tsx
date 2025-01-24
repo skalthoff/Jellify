@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Input from "../Global/helpers/input";
 import { debounce } from "lodash";
 import { useSearch } from "../../api/queries/search";
@@ -27,22 +26,24 @@ export default function Search({
     ])
 
     return (
-        <SafeAreaView>
-            <Input
-                placeholder="The Seeker"
-                onChangeText={(value) => setSearchString(value)}
-                value={searchString}
-            />
-            <FlatList
-                contentInsetAdjustmentBehavior="automatic"
-                data={items}
-                refreshing={isFetching}
-                renderItem={({ index, item }) => {
-                    return (
-                        <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
-                    )
-                }} 
-            />
-        </SafeAreaView>
+        <FlatList
+            contentInsetAdjustmentBehavior="automatic"
+            ListHeaderComponent={() => {
+                return (
+                    <Input
+                        placeholder="The Seeker"
+                        onChangeText={(value) => setSearchString(value)}
+                        value={searchString}
+                    />
+                )
+            }}
+            data={items}
+            refreshing={isFetching}
+            renderItem={({ index, item }) => {
+                return (
+                    <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
+                )
+            }} 
+        />
     )
 }
