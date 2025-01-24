@@ -8,24 +8,32 @@ import BlurhashedImage from "../Global/helpers/blurhashed-image";
 import { Text } from "../Global/helpers/text";
 import { Colors } from "../../enums/colors";
 import FavoriteButton from "../Global/components/favorite-button";
+import { useEffect } from "react";
+import { trigger } from "react-native-haptic-feedback";
 
 export default function ItemDetail({ 
     item, 
     navigation,
-    isModal = false
+    isNested
 } : { 
     item: BaseItemDto, 
     navigation: NativeStackNavigationProp<StackParamList>,
-    isModal: boolean
+    isNested?: boolean | undefined
 }) : React.JSX.Element {
 
     let options: React.JSX.Element | undefined = undefined;
+
+    useEffect(() => {
+        trigger("impactMedium");
+    }, [
+        item
+    ]);
 
     const { width } = useSafeAreaFrame();
 
     switch (item.Type) {
         case "Audio": {
-            options = TrackOptions({ item, navigation, isModal });
+            options = TrackOptions({ item, navigation, isNested });
             break;
         }
 
@@ -72,17 +80,13 @@ export default function ItemDetail({
                         onPress={() => {
                             if (item.ArtistItems) {
 
-                                if (isModal)
-                                    navigation.navigate("Artist", {
-                                        artist: item.ArtistItems[0]
-                                    })
-
-                                else {
+                                if (isNested)
                                     navigation.goBack();
-                                    navigation.push("Artist", {
-                                        artist: item.ArtistItems[0]
-                                    });
-                                }
+
+                                navigation.goBack();
+                                navigation.push("Artist", {
+                                    artist: item.ArtistItems[0]
+                                });
                             }
                         }}>
                         { item.Artists?.join(", ") ?? "Unknown Artist"}

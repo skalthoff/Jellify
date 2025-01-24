@@ -8,11 +8,11 @@ import { XStack } from "tamagui";
 export default function TrackOptions({ 
     item, 
     navigation,
-    isModal = false,
+    isNested
 } : { 
     item: BaseItemDto, 
     navigation: NativeStackNavigationProp<StackParamList>,
-    isModal: boolean
+    isNested: boolean | undefined// Whether this is nested in the player modal
 }) : React.JSX.Element {
 
     const { data: album, isSuccess } = useItem(item.AlbumId ?? "")
@@ -24,17 +24,13 @@ export default function TrackOptions({
                     name="music-box"
                     onPress={() => {
 
-                        if (isModal) {
-                            navigation.navigate("Album", {
-                                album
-                            });
-                        } else {
-
+                        if (isNested)
                             navigation.goBack();
-                            navigation.push("Album", {
-                                album
-                            });
-                        }
+
+                        navigation.goBack();
+                        navigation.push("Album", {
+                            album
+                        });
                     }}
                 />
             )}

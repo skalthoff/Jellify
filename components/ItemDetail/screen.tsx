@@ -15,7 +15,7 @@ export default function DetailsScreen({
         <ItemDetail
             item={route.params.item}
             navigation={navigation}
-            isModal={route.params.isModal}
+            isNested={route.params.isNested}
         />
     )
 }

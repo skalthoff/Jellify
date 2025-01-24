@@ -35,7 +35,7 @@ export type StackParamList = {
     };
     Details: {
         item: BaseItemDto,
-        isModal: boolean
+        isNested: boolean | undefined
     }
 }
 

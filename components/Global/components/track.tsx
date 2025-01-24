@@ -67,7 +67,7 @@ export default function Track({
                 onLongPress={() => {
                     navigation.push("Details", {
                         item: track,
-                        isModal: false
+                        isNested: false
                     })
                 }}
                 paddingVertical={"$2"}
@@ -150,7 +150,7 @@ export default function Track({
                         <Icon small name="dots-vertical" onPress={() => {
                             navigation.push("Details", {
                                 item: track,
-                                isModal: false
+                                isNested: false
                             });
                         }} />
 

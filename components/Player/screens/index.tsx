@@ -132,7 +132,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 onPress={() => {
                                     navigation.navigate("Details", {
                                         item: nowPlaying!.item,
-                                        isModal: true
+                                        isNested: true
                                     });
                                 }}
                             />
