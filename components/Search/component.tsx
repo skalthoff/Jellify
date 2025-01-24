@@ -15,7 +15,7 @@ export default function Search({
 
     const [searchString, setSearchString] = useState<string | undefined>(undefined);
 
-    const { data: items, refetch } = useSearch(searchString)
+    const { data: items, refetch, isFetched, isFetching } = useSearch(searchString)
 
     useEffect(() => {
         debounce(() => {
@@ -33,7 +33,7 @@ export default function Search({
                 value={searchString}
             />
 
-            { items?.map(item => {
+            { !isFetching && isFetched && items!.map(item => {
                 return (
                     <Item item={item} navigation={navigation} queueName={searchString ?? "Search"} />
                 )
