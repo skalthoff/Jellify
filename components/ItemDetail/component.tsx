@@ -11,10 +11,12 @@ import FavoriteButton from "../Global/components/favorite-button";
 
 export default function ItemDetail({ 
     item, 
-    navigation 
+    navigation,
+    onNavigate
 } : { 
     item: BaseItemDto, 
-    navigation: NativeStackNavigationProp<StackParamList> 
+    navigation: NativeStackNavigationProp<StackParamList>,
+    onNavigate?: () => void | undefined
 }) : React.JSX.Element {
 
     let options: React.JSX.Element | undefined = undefined;
@@ -23,7 +25,7 @@ export default function ItemDetail({
 
     switch (item.Type) {
         case "Audio": {
-            options = TrackOptions({ item, navigation });
+            options = TrackOptions({ item, navigation, onNavigate });
             break;
         }
 
@@ -69,7 +71,11 @@ export default function ItemDetail({
                         color={Colors.Primary}
                         onPress={() => {
                             if (item.ArtistItems) {
-                                navigation.goBack(); // Dismiss modal if exists
+
+                                if (onNavigate)
+                                    onNavigate();
+
+                                navigation.goBack();
                                 navigation.push("Artist", {
                                     artist: item.ArtistItems[0]
                                 });

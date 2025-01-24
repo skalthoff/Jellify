@@ -10,7 +10,8 @@ export default function TrackOptions({
     navigation 
 } : { 
     item: BaseItemDto, 
-    navigation: NativeStackNavigationProp<StackParamList> 
+    navigation: NativeStackNavigationProp<StackParamList>,
+    onNavigate?: () => void | undefined
 }) : React.JSX.Element {
 
     const { data: album, isSuccess } = useItem(item.AlbumId ?? "")

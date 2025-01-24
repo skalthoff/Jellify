@@ -6,15 +6,18 @@ import React from "react";
 
 export default function DetailsScreen({
     route,
-    navigation
+    navigation,
+    onNavigate,
 } : {
     route: RouteProp<StackParamList, "Details">,
     navigation: NativeStackNavigationProp<StackParamList>
+    onNavigate?: () => void | undefined
 }) : React.JSX.Element {
     return (
         <ItemDetail
             item={route.params.item}
             navigation={navigation}
+            onNavigate={onNavigate}
         />
     )
 }

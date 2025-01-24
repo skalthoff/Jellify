@@ -132,7 +132,10 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 name="dots-horizontal-circle-outline"
                                 onPress={() => {
                                     navigation.navigate("Details", {
-                                        item: nowPlaying!.item
+                                        item: nowPlaying!.item,
+                                        onNavigate: () => {
+                                            navigation.goBack();
+                                        }
                                     });
                                 }}
                             />

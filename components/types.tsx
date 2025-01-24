@@ -34,7 +34,8 @@ export type StackParamList = {
         playlist: BaseItemDto
     };
     Details: {
-        item: BaseItemDto
+        item: BaseItemDto,
+        onNavigate?: () => void | undefined
     }
 }
 
