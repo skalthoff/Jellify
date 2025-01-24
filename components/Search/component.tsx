@@ -6,6 +6,8 @@ import { useSearch } from "../../api/queries/search";
 import Item from "../Global/components/item";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
+import { ScrollView } from "tamagui";
+import { FlatList } from "react-native";
 
 export default function Search({ 
     navigation
@@ -33,11 +35,16 @@ export default function Search({
                 value={searchString}
             />
 
-            { !isFetching && isFetched && items!.map(item => {
-                return (
-                    <Item item={item} navigation={navigation} queueName={searchString ?? "Search"} />
-                )
-            })}
+            { !isFetching && isFetched && (
+                <FlatList
+                    data={items}
+                    renderItem={({ index, item }) => {
+                        return (
+                            <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
+                        )
+                    }} 
+                />
+            )}
         </SafeAreaView>
     )
 }
