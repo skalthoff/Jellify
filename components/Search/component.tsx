@@ -27,7 +27,7 @@ export default function Search({
     ])
 
     return (
-        <SafeAreaView edges={["top", "right", "left"]}>
+        <SafeAreaView>
             <Input
                 placeholder="The Seeker"
                 onChangeText={(value) => setSearchString(value)}

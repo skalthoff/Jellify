@@ -13,18 +13,18 @@ export default function SearchStack() : React.JSX.Element {
         <Stack.Navigator
             id="Search"
             >
-            <Stack.Screen
-                name="Search"
-                component={SearchScreen}
-                options={{
-                    headerLargeTitle: true,
-                    headerLargeTitleStyle: {
-                        fontFamily: 'Aileron-Bold'
-                    }
-                }}
-            />
-
             <Stack.Group>
+                <Stack.Screen
+                    name="Search"
+                    component={SearchScreen}
+                    options={{
+                        headerLargeTitle: true,
+                        headerLargeTitleStyle: {
+                            fontFamily: 'Aileron-Bold'
+                        }
+                    }}
+                />
+
                 <Stack.Screen 
                     name="Artist" 
                     component={ArtistScreen} 
