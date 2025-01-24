@@ -13,6 +13,8 @@ import { QueryConfig } from "../query.config";
 export async function search(searchString: string | undefined) : Promise<BaseItemDto[]> {
     return new Promise((resolve, reject) => {
 
+        console.debug("Searching Jellyfin for items")
+
         if (isEmpty(searchString))
             resolve([]);
 
