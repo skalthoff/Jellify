@@ -36,4 +36,6 @@ export enum QueryKeys {
     UserData = "UserData",
     UpdatePlayerOptions = "UpdatePlayerOptions",
     Item = "Item",
+    Search = "Search",
+    SearchSuggestions = "SearchSuggestions",
 }
