@@ -76,15 +76,17 @@ export default function Item({
                     )}
                 </YStack>
 
-                { item.UserData?.IsFavorite ? (
-                    <Icon 
+                <XStack justifyContent="flex-end">
+                    { item.UserData?.IsFavorite ? (
+                        <Icon 
                         small
                         color={Colors.Primary}
                         name="heart"
-                    />
-                ) : (
-                    <Spacer />
-                )}
+                        />
+                    ) : (
+                        <Spacer />
+                    )}
+                </XStack>
             </XStack>
         </View>
     )

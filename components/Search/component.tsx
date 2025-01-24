@@ -17,15 +17,17 @@ export default function Search({
 
     const { data: items, refetch, isFetched, isFetching } = useSearch(searchString)
 
-    const search = debounce(() => {
+    const search = useCallback(
+        debounce(() => {
             refetch();
-        }, 750);
+        }, 750),
+        []
+    );
 
-    useEffect(() => {
+    const handleSearchStringUpdate = (value: string | undefined) => {
+        setSearchString(value)
         search();
-    }, [
-        searchString
-    ])
+    }
 
     return (
         <FlatList
