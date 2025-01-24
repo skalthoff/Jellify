@@ -4,13 +4,13 @@ import Home from "./Home/component";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useColorScheme } from "react-native";
 import { Colors } from "../enums/colors";
-import Search from "./Search/component";
 import Favorites from "./Favorites/component";
 import Settings from "./Settings/stack";
 import { Discover } from "./Discover/component";
 import { Miniplayer } from "./Player/mini-player";
 import { Separator } from "tamagui";
 import { usePlayerContext } from "../player/provider";
+import SearchStack from "./Search/stack";
 
 const Tab = createBottomTabNavigator();
 
@@ -63,7 +63,7 @@ export function Tabs() : React.JSX.Element {
 
                 <Tab.Screen
                     name="Search"
-                    component={Search}
+                    component={SearchStack}
                     options={{
                         tabBarIcon: ({color, size }) => (
                             <MaterialCommunityIcons name="magnify" color={color} size={size} />
