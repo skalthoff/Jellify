@@ -13,7 +13,6 @@ export default function SearchStack() : React.JSX.Element {
         <Stack.Navigator
             id="Search"
             >
-            <Stack.Group>
                 <Stack.Screen
                     name="Search"
                     component={SearchScreen}
@@ -55,9 +54,6 @@ export default function SearchStack() : React.JSX.Element {
                     })}
                 />
 
-            </Stack.Group>
-
-            <Stack.Group screenOptions={{ presentation: "modal"}}>
                 <Stack.Screen
                     name="Details"
                     component={DetailsScreen}
@@ -66,7 +62,6 @@ export default function SearchStack() : React.JSX.Element {
                         presentation: "modal"
                     }}
                 />
-            </Stack.Group>
         </Stack.Navigator>
     )
 }
