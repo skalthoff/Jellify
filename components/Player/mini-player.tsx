@@ -9,7 +9,7 @@ import { Colors } from "../../enums/colors";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import { queryConfig } from "../../api/queries/query.config";
+import { QueryConfig } from "../../api/queries/query.config";
 import TextTicker from 'react-native-text-ticker';
 import PlayPauseButton from "./helpers/buttons";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
@@ -40,7 +40,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                                 .getItemImageUrlById(
                                     nowPlaying!.item.AlbumId ?? "",
                                     ImageType.Primary,
-                                    { ...queryConfig.images }
+                                    { ...QueryConfig.images }
                                 )
                             }
                             imageStyle={{

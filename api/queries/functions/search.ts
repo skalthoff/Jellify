@@ -2,6 +2,7 @@ import Client from "../../../api/client";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import { isEmpty, trim } from "lodash";
+import { QueryConfig } from "../query.config";
 
 /**
  * Performs a search for items against the Jellyfin server, trimming whitespace
@@ -24,7 +25,8 @@ export async function search(searchString: string | undefined) : Promise<BaseIte
                     'MusicAlbum',
                     'MusicArtist',
                     'Playlist'
-                ]
+                ],
+                limit: QueryConfig.limits.search
             })
             .then((response) => {
                 if (response.data.Items)

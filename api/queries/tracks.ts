@@ -2,7 +2,7 @@ import { QueryKeys } from "../../enums/query-keys";
 import { ItemSortBy } from "@jellyfin/sdk/lib/generated-client/models/item-sort-by";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { useQuery } from "@tanstack/react-query";
-import { queryConfig } from "./query.config";
+import { QueryConfig } from "./query.config";
 import Client from "../client";
 
 export const useItemTracks = (itemId: string, sort: boolean = false) => useQuery({
@@ -29,5 +29,5 @@ export const useItemTracks = (itemId: string, sort: boolean = false) => useQuery
             return response.data.Items ? response.data.Items! : [];
         })
     },
-    staleTime: queryConfig.staleTime
+    staleTime: QueryConfig.staleTime.oneDay
 })

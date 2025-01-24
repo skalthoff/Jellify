@@ -7,7 +7,7 @@ import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { Colors } from "../../../enums/colors";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
-import { queryConfig } from "../../../api/queries/query.config";
+import { QueryConfig } from "../../../api/queries/query.config";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -85,7 +85,7 @@ export default function Track({
                                 .getItemImageUrlById(
                                     track.AlbumId ?? "",
                                     ImageType.Primary,
-                                    { ...queryConfig.images }
+                                    { ...QueryConfig.images }
                                 )
                             }
                             imageStyle={{

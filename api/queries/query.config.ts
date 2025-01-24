@@ -1,8 +1,9 @@
 import { ImageFormat } from "@jellyfin/sdk/lib/generated-client/models";
 
-export const queryConfig = {
+export const QueryConfig = {
     limits: {
-        recents: 50 // TODO: Adjust this when we add a list navigator to the end of the recents
+        recents: 50, // TODO: Adjust this when we add a list navigator to the end of the recents
+        search: 25,
     },
     images: {
         height: 300,
@@ -24,5 +25,9 @@ export const queryConfig = {
         width: 1000,
         format: ImageFormat.Jpg
     },
-    staleTime: 1000 * 60 * 60 * 24 // 1 Day
+    staleTime: {
+        oneDay: 1000 * 60 * 60 * 24, // 1 Day
+        oneWeek: 1000 * 60 * 60 * 24 * 7, // 7 Days
+        oneFortnight: 1000 * 60 * 60 * 24 * 7 * 14 // 14 Days
+    }
 }

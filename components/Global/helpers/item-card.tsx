@@ -6,7 +6,7 @@ import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
-import { queryConfig } from "../../../api/queries/query.config";
+import { QueryConfig } from "../../../api/queries/query.config";
 import { Text } from "./text";
 import Client from "../../../api/client";
 
@@ -52,7 +52,7 @@ export function ItemCard(props: CardProps) {
                                 .getItemImageUrlById(
                                     props.itemId, 
                                     ImageType.Logo, 
-                                    { ...queryConfig.logos})
+                                    { ...QueryConfig.logos})
                                 } 
                             imageStyle={{
                                 ...logoDimensions,
@@ -72,7 +72,7 @@ export function ItemCard(props: CardProps) {
                             .getItemImageUrlById(
                                 props.itemId, 
                                 ImageType.Primary, 
-                                { ...queryConfig.images})
+                                { ...QueryConfig.images})
                             } 
                         imageStyle={{
                             ...dimensions,

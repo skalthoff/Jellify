@@ -2,7 +2,7 @@ import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 import Client from "../../../api/client"
-import { queryConfig } from "../query.config";
+import { QueryConfig } from "../query.config";
 
 export function fetchItemImage(itemId: string, imageType?: ImageType, size?: number) {
     
@@ -10,7 +10,7 @@ export function fetchItemImage(itemId: string, imageType?: ImageType, size?: num
         .getItemImage({ 
             itemId, 
             imageType: imageType ? imageType : ImageType.Primary,
-            ...queryConfig.playerArtwork,
+            ...QueryConfig.playerArtwork,
         }, {
             responseType: 'blob'
         })

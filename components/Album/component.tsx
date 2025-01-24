@@ -4,7 +4,7 @@ import { ScrollView, YStack, XStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { queryConfig } from "../../api/queries/query.config";
+import { QueryConfig } from "../../api/queries/query.config";
 import { H4, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
 import { usePlayerContext } from "../../player/provider";
@@ -52,7 +52,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                             .getItemImageUrlById(
                                 props.album.Id!,
                                 ImageType.Primary,
-                                { ...queryConfig.playerArtwork})}
+                                { ...QueryConfig.playerArtwork})}
                                 imageStyle={{
                                     position: "relative",
                                     width: width / 1.1,

@@ -8,7 +8,7 @@ import { H2 } from "../Global/helpers/text";
 import { useState } from "react";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { queryConfig } from "../../api/queries/query.config";
+import { QueryConfig } from "../../api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
@@ -48,7 +48,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                             .getItemImageUrlById(
                                 props.artist.Id!,
                                 ImageType.Primary,
-                                { ...queryConfig.banners})
+                                { ...QueryConfig.banners})
                             } 
                         imageStyle={{
                             width: width,
