@@ -17,12 +17,9 @@ export default function Search({
 
     const { data: items, refetch, isFetched, isFetching } = useSearch(searchString)
 
-    const search = useCallback(
-        debounce(() => {
+    const search = debounce(() => {
             refetch();
-        }, 750),
-        []
-    );
+        }, 750);
 
     useEffect(() => {
         search();
