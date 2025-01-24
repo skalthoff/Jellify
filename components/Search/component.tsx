@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Input from "../Global/helpers/input";
 import { debounce } from "lodash";
 import { useSearch } from "../../api/queries/search";
@@ -17,10 +17,15 @@ export default function Search({
 
     const { data: items, refetch, isFetched, isFetching } = useSearch(searchString)
 
-    useEffect(() => {
+    const search = useCallback(
         debounce(() => {
-            refetch()
-        }, 750)
+            refetch();
+        }, 750),
+        []
+    );
+
+    useEffect(() => {
+        search();
     }, [
         searchString
     ])
