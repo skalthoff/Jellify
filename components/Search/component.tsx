@@ -20,7 +20,7 @@ export default function Search({
     useEffect(() => {
         debounce(() => {
             refetch()
-        }, 500)
+        }, 750)
     }, [
         searchString
     ])
