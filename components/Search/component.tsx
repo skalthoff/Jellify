@@ -28,17 +28,13 @@ export default function Search({
 
     return (
         <SafeAreaView edges={["top", "right", "left"]}>
+            <Input
+                placeholder="The Seeker"
+                onChangeText={(value) => setSearchString(value)}
+                value={searchString}
+            />
             <FlatList
                 contentInsetAdjustmentBehavior="automatic"
-                ListHeaderComponent={() => {
-                    return (
-                        <Input
-                            placeholder="The Seeker"
-                            onChangeText={(value) => setSearchString(value)}
-                            value={searchString}
-                        />
-                    )
-                }}
                 data={items}
                 refreshing={isFetching}
                 renderItem={({ index, item }) => {
