@@ -65,6 +65,7 @@ export function Tabs() : React.JSX.Element {
                     name="Search"
                     component={SearchStack}
                     options={{
+                        headerShown: false,
                         tabBarIcon: ({color, size }) => (
                             <MaterialCommunityIcons name="magnify" color={color} size={size} />
                         )
