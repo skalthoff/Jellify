@@ -1,5 +1,5 @@
 import React, {  } from "react";
-import { View, XStack, YStack } from "tamagui";
+import { useTheme, View, XStack, YStack } from "tamagui";
 import { usePlayerContext } from "../../player/provider";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
@@ -17,12 +17,17 @@ import Client from "../../api/client";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
+    const theme = useTheme();
+
     const { nowPlaying, useSkip } = usePlayerContext();
 
     const { width } = useSafeAreaFrame();
 
     return (
-        <View style={{ backgroundColor: Colors.Background, borderColor: Colors.Borders }}>
+        <View style={{ 
+            backgroundColor: theme.background.val, 
+            borderColor: theme.borderColor.val
+        }}>
             { nowPlaying && (
 
                 <XStack 
