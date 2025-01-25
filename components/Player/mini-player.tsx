@@ -14,6 +14,7 @@ import TextTicker from 'react-native-text-ticker';
 import PlayPauseButton from "./helpers/buttons";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Client from "../../api/client";
+import { TextTickerConfig } from "./component.config";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
@@ -65,21 +66,11 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         flex={4} 
                         maxWidth={"$20"}
                     >
-                        <TextTicker
-                            duration={5000}
-                            loop
-                            repeatSpacer={20} 
-                            marqueeDelay={1000}
-                        >
+                        <TextTicker {...TextTickerConfig}>
                             <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
                         </TextTicker>
 
-                        <TextTicker 
-                            duration={5000}
-                            loop
-                            repeatSpacer={20}
-                            marqueeDelay={1000} 
-                        >
+                        <TextTicker {...TextTickerConfig}>
                             <Text color={Colors.Primary}>{nowPlaying?.artist ?? ""}</Text>
                         </TextTicker>
                     </YStack>

@@ -12,6 +12,8 @@ import Icon from "../../../components/Global/helpers/icon";
 import { Colors } from "../../../enums/colors";
 import FavoriteButton from "../../Global/components/favorite-button";
 import BlurhashedImage from "../../../components/Global/helpers/blurhashed-image";
+import TextTicker from "react-native-text-ticker";
+import { TextTickerConfig } from "../component.config";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -54,9 +56,14 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
             <>
                 <YStack>
 
-                    <YStack alignItems="center">
+                    <YStack 
+                        alignItems="center"
+                        alignContent="center"
+                    >
                         <Text>Playing from</Text>
-                        <H5>{ queueName ?? "Queue"}</H5>
+                        <TextTicker {...TextTickerConfig}>
+                            <H5>{ queueName ?? "Queue"}</H5>
+                        </TextTicker>
                     </YStack>
 
                     <XStack 
@@ -71,53 +78,43 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             item={nowPlaying!.item}
                             size={width / 1.1}
                             />
-                        {/* <CachedImage
-                            source={getImageApi(Client.api!)
-                                .getItemImageUrlById(
-                                    nowPlaying!.item.AlbumId ?? "",
-                                    ImageType.Primary,
-                                    { ...queryConfig.playerArtwork }
-                                )
-                            }
-                            imageStyle={{
-                                position: "relative",
-                                alignSelf: "center",
-                                width: playbackState === State.Playing ? width / 1.1 : width / 1.4,
-                                height: playbackState === State.Playing ? width / 1.1 : width / 1.4,
-                                borderRadius: 2
-                            }}
-                            /> */}
                     </XStack>
 
                     <XStack marginHorizontal={20} paddingVertical={5}>
                         <YStack justifyContent="flex-start" flex={4}>
-                            <Text 
-                                bold 
-                                fontSize={"$6"}
-                            >
-                                {nowPlaying!.title ?? "Untitled Track"}
-                            </Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text 
+                                    bold 
+                                    fontSize={"$6"}
+                                    >
+                                    {nowPlaying!.title ?? "Untitled Track"}
+                                </Text>
+                            </TextTicker>
 
-                            <Text 
-                                fontSize={"$6"}
-                                color={Colors.Primary}
-                                onPress={() => {
-                                    if (nowPlaying!.item.ArtistItems) {
-                                        navigation.navigate("Artist", {
-                                            artist: nowPlaying!.item.ArtistItems![0],
-                                        });
-                                    }
-                                }}
-                            >
-                                {nowPlaying.artist ?? "Unknown Artist"}
-                            </Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text 
+                                    fontSize={"$6"}
+                                    color={Colors.Primary}
+                                    onPress={() => {
+                                        if (nowPlaying!.item.ArtistItems) {
+                                            navigation.navigate("Artist", {
+                                                artist: nowPlaying!.item.ArtistItems![0],
+                                            });
+                                        }
+                                    }}
+                                    >
+                                    {nowPlaying.artist ?? "Unknown Artist"}
+                                </Text>
+                            </TextTicker>
 
-                            <Text 
-                                fontSize={"$6"} 
-                                color={"$purpleGray"}
-                            >
-                                { nowPlaying!.album ?? "" }
-                            </Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text 
+                                    fontSize={"$6"} 
+                                    color={"$purpleGray"}
+                                    >
+                                    { nowPlaying!.album ?? "" }
+                                </Text>
+                            </TextTicker>
                         </YStack>
 
                         <XStack 
