@@ -19,7 +19,7 @@ export default function Playlists({ navigation }: { navigation: NativeStackNavig
                 renderItem={({ item: playlist }) => {
                     return (
                         <ItemCard
-                            itemId={playlist.Id!}
+                            item={playlist}
                             caption={playlist.Name ?? "Untitled Playlist"}
                             onPress={() => {
                                 navigation.push('Playlist', {
