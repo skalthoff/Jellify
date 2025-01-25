@@ -3,7 +3,7 @@ import { Text } from "./text";
 import React from "react";
 
 export function RunTimeSeconds({ children }: { children: number }) : React.JSX.Element {
-    return <Text>{ calculateRunTimeFromSeconds(children) }</Text>
+    return <Text bold>{ calculateRunTimeFromSeconds(children) }</Text>
 }
 
 export function RunTimeTicks({ children } : { children?: number | null | undefined }) : React.JSX.Element {
@@ -12,7 +12,7 @@ export function RunTimeTicks({ children } : { children?: number | null | undefin
 
     let time = calculateRunTimeFromTicks(children);
 
-    return <Text color="$amethyst">{ time }</Text>
+    return <Text color="$borderColor">{ time }</Text>
 }
 
 function calculateRunTimeFromSeconds(seconds: number) : string {

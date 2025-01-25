@@ -106,7 +106,7 @@ export default function ItemDetail({
                     <Text 
                         textAlign="center"
                         fontSize={"$6"} 
-                        color={"$amethyst"}
+                        color={"$borderColor"}
                     >
                         { item.Album ?? "" }
                     </Text>

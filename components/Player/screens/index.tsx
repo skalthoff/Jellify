@@ -110,7 +110,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             <TextTicker {...TextTickerConfig}>
                                 <Text 
                                     fontSize={"$6"} 
-                                    color={"$amethyst"}
+                                    color={"$borderColor"}
                                     >
                                     { nowPlaying!.album ?? "" }
                                 </Text>
