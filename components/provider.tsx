@@ -2,6 +2,7 @@ import Client from "../api/client";
 import { isUndefined } from "lodash";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { CarPlay } from "react-native-carplay";
+import CarPlayNavigation from "./CarPlay/Navigation";
 
 interface JellifyContext {
     loggedIn: boolean;
@@ -21,11 +22,12 @@ const JellifyContextInitializer = () => {
     useEffect(() => {
   
       function onConnect() {
-        setCarPlayConnected(true)
+        setCarPlayConnected(true);
+        CarPlay.setRootTemplate(CarPlayNavigation)
       }
   
       function onDisconnect() {
-        setCarPlayConnected(false)
+        setCarPlayConnected(false);
       }
   
       CarPlay.registerOnConnect(onConnect);
