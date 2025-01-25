@@ -17,7 +17,7 @@ export default function IconButton({
 } : IconButtonProps) : React.JSX.Element {
 
     return (
-        <Theme name={"purple"}>
+        <Theme name={"inverted_purple"}>
 
             <Square
                 animation={"quick"}

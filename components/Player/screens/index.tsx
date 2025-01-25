@@ -125,6 +125,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             {/* Buttons for favorites, song menu go here */}
 
                             <Icon
+                                color="$white"
                                 name="dots-horizontal-circle-outline"
                                 onPress={() => {
                                     navigation.navigate("Details", {
@@ -235,6 +236,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         <Spacer />
 
                         <Icon
+                            color="$white"
                             name="arrow-down-drop-circle"
                             onPress={() => {
                                 navigation.goBack();
