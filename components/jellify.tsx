@@ -32,12 +32,12 @@ function App(): React.JSX.Element {
 
   const { loggedIn } = useJellifyContext();
 
-  useEffect(() => {
-    if (carPlayConnected)
-      CarPlay.setRootTemplate(CarPlayNavigation)
-  }, [
-    carPlayConnected
-  ])
+  // useEffect(() => {
+  //   if (carPlayConnected)
+  //     CarPlay.setRootTemplate(CarPlayNavigation)
+  // }, [
+  //   carPlayConnected
+  // ])
 
   return (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
