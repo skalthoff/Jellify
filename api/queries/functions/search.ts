@@ -10,7 +10,7 @@ import { QueryConfig } from "../query.config";
  * @param searchString The search term to look up against
  * @returns A promise of a BaseItemDto array, be it empty or not
  */
-export async function search(searchString: string | undefined) : Promise<BaseItemDto[]> {
+export async function fetchSearchResults(searchString: string | undefined) : Promise<BaseItemDto[]> {
     return new Promise((resolve, reject) => {
 
         console.debug("Searching Jellyfin for items")
