@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { StackParamList } from "../types";
 import TrackOptions from "./helpers/TrackOptions";
-import { Spacer, View, XStack, YStack } from "tamagui";
+import { ScrollView, Spacer, View, XStack, YStack } from "tamagui";
 import BlurhashedImage from "../Global/helpers/blurhashed-image";
 import { Text } from "../Global/helpers/text";
 import { Colors } from "../../enums/colors";
@@ -58,17 +58,22 @@ export default function ItemDetail({
     }
 
     return (
-        <SafeAreaView edges={["top", "right", "left"]}>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
             <YStack justifyContent="center" flex={1}>
-                <BlurhashedImage
-                    item={item}
-                    size={width / 1.5}
-                />
+
+                <XStack alignContent="center">
+
+                    <BlurhashedImage
+                        item={item}
+                        size={width / 1.5}
+                        />
+                </XStack>
 
                 <YStack 
                     marginLeft={"$0.5"} 
                     justifyContent="center"
                     alignContent="space-between"
+                    flex={2}
                 >
                     <Text bold fontSize={"$6"}>
                         { item.Name ?? "Untitled Track" }
@@ -109,6 +114,6 @@ export default function ItemDetail({
                 </YStack>
 
             </YStack>
-        </SafeAreaView>
+        </ScrollView>
     )
 }

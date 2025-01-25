@@ -24,6 +24,7 @@ export default function Settings(): React.JSX.Element {
                 name="AccountDetails"
                 component={AccountDetails}
                 options={{
+                    title: "Account",
                     headerLargeTitle: true,
                     headerLargeTitleStyle: {
                         fontFamily: 'Aileron-Bold'
