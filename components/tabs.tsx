@@ -32,9 +32,9 @@ export function Tabs() : React.JSX.Element {
                             <>
                                 <Separator />
                                 <Miniplayer navigation={props.navigation} />
+                                <Separator />
                             </>
                         )}
-                        <Separator />
                         <BottomTabBar {...props} />
                     </>
                 )}

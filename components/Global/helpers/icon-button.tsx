@@ -27,7 +27,7 @@ export default function IconButton({
                 height={size}
                 alignContent="center"
                 justifyContent="center"
-                backgroundColor={"$borderColor"}
+                backgroundColor={"$backgroundColor"}
                 >
                     <Icon 
                         large

@@ -87,7 +87,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
 
                 <XStack marginTop={"$3"} justifyContent="flex-end">
                     <Text 
-                        color={"$purpleGray"} 
+                        color={"$amethyst"} 
                         style={{ display: "block"}}
                         marginRight={"$1"}
                         >

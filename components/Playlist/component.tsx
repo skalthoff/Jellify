@@ -74,7 +74,7 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
 
                 <XStack justifyContent="flex-end">
                     <Text 
-                        color={"$purpleGray"} 
+                        color={"$amethyst"} 
                         style={{ display: "block"}}
                     >
                         Total Runtime:

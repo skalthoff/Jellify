@@ -5,7 +5,7 @@ export const JellifyDarkTheme = {
     colors: {
       ...DarkTheme.colors,
       card: getTokens().color.$purpleDark.val,
-      border: getTokens().color.$purpleGray.val,
+      border: getTokens().color.$amethyst.val,
       background: getTokens().color.$purpleDark.val,
       primary: getTokens().color.$telemagenta.val,
     },  

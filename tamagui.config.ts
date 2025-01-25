@@ -8,6 +8,7 @@ const tokens = createTokens({
     purpleDark: "#0C0622",
     purple: "#100538",
     purpleGray: "#66617B",
+    amethyst: "#7E72AF",
     grape: "#5638BB",
     telemagenta: "#cc2f71",
     white: "#ffffff",
@@ -27,13 +28,13 @@ const jellifyConfig = createTamagui({
     themes: {
       dark: {
         background: tokens.color.purpleDark,
-        borderColor: tokens.color.purpleGray,
+        borderColor: tokens.color.amethyst,
         color: tokens.color.white
       },
       dark_purple: {
         color: tokens.color.purpleDark,
         borderColor: tokens.color.grape,
-        background: tokens.color.purpleGray
+        background: tokens.color.amethyst
       },
       light: {
         background: tokens.color.white,
