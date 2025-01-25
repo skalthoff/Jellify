@@ -13,7 +13,7 @@ import FavoriteButton from "../../Global/components/favorite-button";
 import BlurhashedImage from "../../Global/components/blurhashed-image";
 import TextTicker from "react-native-text-ticker";
 import { TextTickerConfig } from "../component.config";
-import IconButton from "@/components/Global/helpers/icon-button";
+import IconButton from "../../../components/Global/helpers/icon-button";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
