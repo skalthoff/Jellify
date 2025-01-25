@@ -13,6 +13,7 @@ import FavoriteButton from "../../Global/components/favorite-button";
 import BlurhashedImage from "../../Global/components/blurhashed-image";
 import TextTicker from "react-native-text-ticker";
 import { TextTickerConfig } from "../component.config";
+import IconButton from "@/components/Global/helpers/icon-button";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -125,7 +126,6 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             {/* Buttons for favorites, song menu go here */}
 
                             <Icon
-                                color={theme.color.val}
                                 name="dots-horizontal-circle-outline"
                                 onPress={() => {
                                     navigation.navigate("Details", {
@@ -191,7 +191,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         justifyContent="space-evenly" 
                         marginVertical={"$3"}
                     >
-                        <Icon
+                        <IconButton
                             name="rewind-15"
                             onPress={() => {
 
@@ -200,24 +200,22 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 useSeekTo.mutate(progress!.position - 15);
                                 setSeeking(false);
                             }}
-                        />
+                            />
                         
-                        <Icon
-                            large
+                        <IconButton
                             name="skip-previous"
                             onPress={() => usePrevious.mutate()}
                         />
 
                         {/* I really wanted a big clunky play button */}
-                        <PlayPauseButton size={width / 7} />
+                        <PlayPauseButton size={width / 6} />
 
-                        <Icon 
-                            large
+                        <IconButton
                             name="skip-next" 
                             onPress={() => useSkip.mutate(undefined)}
                         />    
 
-                        <Icon
+                        <IconButton
                             name="fast-forward-15"
                             onPress={() => { 
                                 setSeeking(true);
@@ -230,7 +228,6 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                     <XStack justifyContent="space-evenly" marginVertical={"$7"}>
                         <Icon
-                            color={theme.color.val}
                             name="speaker-multiple"
                             large
                         />
@@ -238,7 +235,6 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         <Spacer />
 
                         <Icon
-                            color={theme.color.val}
                             name="arrow-down-drop-circle"
                             onPress={() => {
                                 navigation.goBack();
@@ -250,7 +246,6 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
 
                         <Icon
-                            color={theme.color.val}
                             name="playlist-music"
                             onPress={() => {
                                 navigation.navigate("Queue");
