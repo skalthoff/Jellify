@@ -3,12 +3,11 @@ import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom
 import Home from "./Home/component";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useColorScheme } from "react-native";
-import { Colors } from "../enums/colors";
 import Favorites from "./Favorites/component";
 import Settings from "./Settings/stack";
 import { Discover } from "./Discover/component";
 import { Miniplayer } from "./Player/mini-player";
-import { Separator } from "tamagui";
+import { Separator, useTheme } from "tamagui";
 import { usePlayerContext } from "../player/provider";
 import SearchStack from "./Search/stack";
 
@@ -16,6 +15,7 @@ const Tab = createBottomTabNavigator();
 
 export function Tabs() : React.JSX.Element {
 
+    const theme = useTheme();
     const isDarkMode = useColorScheme() === 'dark';
 
     const { showMiniplayer } = usePlayerContext();
@@ -23,7 +23,7 @@ export function Tabs() : React.JSX.Element {
     return (
             <Tab.Navigator
                 screenOptions={{
-                    tabBarActiveTintColor: isDarkMode ? Colors.Primary : Colors.Secondary
+                    tabBarActiveTintColor: theme.telemagenta.val
                 }}
                 tabBar={(props) => (
                     <>

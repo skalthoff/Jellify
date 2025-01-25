@@ -1,12 +1,11 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import React, { useEffect, useState } from "react";
 import Icon from "../helpers/icon";
-import { Colors } from "../../../enums/colors";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
 import { useMutation } from "@tanstack/react-query";
 import { isUndefined } from "lodash";
 import { useUserData } from "../../../api/queries/favorites";
-import { Spinner } from "tamagui";
+import { Spinner, useTheme } from "tamagui";
 import Client from "../../../api/client";
 import { usePlayerContext } from "../../..//player/provider";
 
@@ -27,6 +26,8 @@ export default function FavoriteButton({
     const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteItem(item));
 
     const { data, isFetching, isFetched, refetch } = useUserData(item.Id!);
+
+    const theme = useTheme();
 
     const useSetFavorite = useMutation({
         mutationFn: async (mutation: SetFavoriteMutation) => {
@@ -84,7 +85,7 @@ export default function FavoriteButton({
         ) : (
             <Icon
                 name={isFavorite ? "heart" : "heart-outline"}
-                color={Colors.Primary}
+                color={theme.telemagenta.val}
                 onPress={toggleFavorite}
             /> 
 

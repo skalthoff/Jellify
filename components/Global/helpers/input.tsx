@@ -1,6 +1,5 @@
-import { Colors } from '../../../enums/colors';
 import React from 'react';
-import { Input as TamaguiInput} from 'tamagui';
+import { Input as TamaguiInput, useTheme} from 'tamagui';
 
 interface InputProps {
     onChangeText: (value: string | undefined) => void,
@@ -12,10 +11,10 @@ interface InputProps {
 
 export default function Input(props: InputProps): React.JSX.Element {
 
+    const theme = useTheme();
+
     return (
         <TamaguiInput 
-            backgroundColor={Colors.Background}
-            borderColor={Colors.Borders}
             placeholder={props.placeholder}
             onChangeText={props.onChangeText} 
             value={props.value}

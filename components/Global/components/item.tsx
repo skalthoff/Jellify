@@ -2,12 +2,11 @@ import { usePlayerContext } from "../../../player/provider";
 import { StackParamList } from "../../../components/types";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Separator, Spacer, View, XStack, YStack } from "tamagui";
+import { Separator, Spacer, useTheme, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import BlurhashedImage from "../helpers/blurhashed-image";
 import Icon from "../helpers/icon";
-import { Colors } from "../../../enums/colors";
 import { QueuingType } from "../../../enums/queuing-type";
 
 export default function Item({ 
@@ -23,6 +22,8 @@ export default function Item({
     const { usePlayNewQueue } = usePlayerContext();
 
     const { width } = useSafeAreaFrame();
+
+    const theme = useTheme();
 
     return (
         <View flex={1}>
@@ -87,9 +88,9 @@ export default function Item({
                 <XStack alignContent="flex-end" flex={2}>
                     { item.UserData?.IsFavorite ? (
                         <Icon 
-                        small
-                        color={Colors.Primary}
-                        name="heart"
+                            small
+                            color={theme.telemagenta.val}
+                            name="heart"
                         />
                     ) : (
                         <Spacer />
