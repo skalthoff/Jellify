@@ -24,7 +24,7 @@ const JellifyContextInitializer = () => {
   
       function onConnect() {
         setCarPlayConnected(true);
-        CarPlay.setRootTemplate(CarPlayNowPlaying);
+        // CarPlay.setRootTemplate(CarPlayNowPlaying, true);
         CarPlay.enableNowPlaying(true);
       }
   
