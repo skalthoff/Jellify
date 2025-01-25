@@ -40,7 +40,7 @@ export default function Search({
             progressViewOffset={10}
             ListHeaderComponent={(
                 <Input
-                    placeholder="The Seeker"
+                    placeholder="Seek and ye shall find..."
                     onChangeText={(value) => handleSearchStringUpdate(value)}
                     value={searchString}
                 />
