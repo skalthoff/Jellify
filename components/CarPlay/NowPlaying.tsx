@@ -6,10 +6,13 @@ export function NowPlaying() {
   useEffect(() => {
     const template = new NowPlayingTemplate({
       albumArtistButtonEnabled: true,
+      buttons: [
+        {
+          id: "favorite",
+          type: "add-to-library"
+        }
+      ],
       upNextButtonEnabled: false,
-      onUpNextButtonPressed() {
-        console.log('up next was pressed');
-      },
       onButtonPressed(e) {
         console.log(e);
       },
