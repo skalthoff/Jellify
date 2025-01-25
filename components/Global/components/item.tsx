@@ -100,12 +100,11 @@ export default function Item({
 
                 <XStack 
                     justifyContent="space-between"
-                    alignItems="flex-end" 
+                    alignItems="center" 
                     flex={1}
                 >
                     { item.UserData?.IsFavorite ? (
                         <Icon 
-                            small
                             color={theme.telemagenta.val}
                             name="heart"
                         />
@@ -119,8 +118,7 @@ export default function Item({
                         <Spacer />
                     )}
 
-                    <Icon 
-                        small 
+                    <Icon  
                         name="dots-vertical"
                         onPress={() => {
                             navigation.push("Details", {
