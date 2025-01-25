@@ -104,7 +104,7 @@ export default function ItemDetail({
                         
                     <Text 
                         fontSize={"$6"} 
-                        color={"$gray10"}
+                        color={"$purpleGray"}
                     >
                         { item.Album ?? "" }
                     </Text>

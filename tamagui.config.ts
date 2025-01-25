@@ -1,6 +1,17 @@
-import { animations, tokens, themes, media, shorthands } from '@tamagui/config/v3'
-import { createTamagui } from 'tamagui' // or '@tamagui/core'
+import { animations, tokens as TamaguiTokens, media, shorthands } from '@tamagui/config/v3'
+import { createTamagui, createTokens } from 'tamagui' // or '@tamagui/core'
 import { headingFont, bodyFont } from './fonts.config'
+
+const tokens = createTokens({
+  ...TamaguiTokens,
+  color: {
+    purpleDark: "#070217",
+    purple: "#100538",
+    purpleGray: "#B5AADC",
+    white: "#ffffff",
+    black: "#000000"
+  },
+})
 
 const jellifyConfig = createTamagui({
     animations,
@@ -11,7 +22,16 @@ const jellifyConfig = createTamagui({
     media,
     shorthands,
     tokens,
-    themes,
+    themes: {
+      dark: {
+        background: tokens.color.purpleDark,
+        color: tokens.color.white
+      },
+      light: {
+        background: tokens.color.white,
+        color: tokens.color.purpleDark
+      }
+    }
 });
 
 export type JellifyConfig = typeof jellifyConfig

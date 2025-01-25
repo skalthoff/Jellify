@@ -83,7 +83,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
 
                 <XStack justifyContent="flex-end">
                     <Text 
-                        color={"$gray10"} 
+                        color={"$purpleGray"} 
                         style={{ display: "block"}}
                         >
                         Total Runtime: 
