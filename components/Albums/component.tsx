@@ -24,7 +24,7 @@ export default function Albums({ navigation }: AlbumsProps) : React.JSX.Element 
                     renderItem={({ index, item: album}) => {
                         return (
                             <ItemCard
-                                itemId={album.Id!}
+                                item={album}
                                 caption={album.Name ?? "Untitled Album"}
                                 subCaption={album.ProductionYear?.toString() ?? ""}
                                 cornered
