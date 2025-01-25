@@ -29,10 +29,20 @@ const jellifyConfig = createTamagui({
         borderColor: tokens.color.purpleGray,
         color: tokens.color.white
       },
+      dark_purple: {
+        color: tokens.color.purpleDark,
+        borderColor: tokens.color.purpleGray,
+        background: tokens.color.white
+      },
       light: {
         background: tokens.color.white,
         borderColor: tokens.color.purpleGray,
         color: tokens.color.purpleDark
+      },
+      light_purple: {
+        color: tokens.color.white,
+        borderColor: tokens.color.purpleGray,
+        background: tokens.color.purpleDark
       }
     }
 });

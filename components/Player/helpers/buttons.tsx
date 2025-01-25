@@ -3,6 +3,7 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Spinner, View } from "tamagui";
 import Icon from "../../Global/helpers/icon";
 import { usePlayerContext } from "../../../player/provider";
+import IconButton from "@/components/Global/helpers/icon-button";
 
 export default function PlayPauseButton() : React.JSX.Element {
 
@@ -12,7 +13,7 @@ export default function PlayPauseButton() : React.JSX.Element {
 
     switch (playbackState) {
         case (State.Playing) : {
-            button = <Icon name="pause" large onPress={() => useTogglePlayback.mutate(undefined)} />;
+            button = <IconButton name="pause" onPress={() => useTogglePlayback.mutate(undefined)} />;
             break;
         }
     
@@ -23,7 +24,7 @@ export default function PlayPauseButton() : React.JSX.Element {
         }
         
         default : {
-            button = <Icon name="play" large onPress={() => useTogglePlayback.mutate(undefined)} />
+            button = <IconButton name="play" onPress={() => useTogglePlayback.mutate(undefined)} />
             break;
         }
     }

@@ -19,7 +19,6 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
     const { 
         useTogglePlayback, 
-        playbackState, 
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying, 
