@@ -64,11 +64,16 @@ export default function Item({
                         isNested: false
                     })
                 }}
+                paddingVertical={"$2"}
+                marginHorizontal={"$1"}
             >
                 <BlurhashedImage item={item} size={width / 9} />
 
-                <YStack justifyContent="flex-start">
-                    <Text>{ item.Name ?? ""}</Text>
+                <YStack 
+                    marginLeft={"$1"}
+                    justifyContent="flex-start"
+                >
+                    <Text bold>{ item.Name ?? ""}</Text>
                     { item.Type === 'Audio' || item.Type === 'MusicAlbum' ? (
                         <Text>{ item.AlbumArtist ?? "Untitled Artist" }</Text>
                     ) : (
@@ -76,7 +81,7 @@ export default function Item({
                     )}
                 </YStack>
 
-                <XStack justifyContent="flex-end">
+                <XStack alignContent="flex-end">
                     { item.UserData?.IsFavorite ? (
                         <Icon 
                         small

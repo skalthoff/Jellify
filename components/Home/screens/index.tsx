@@ -1,4 +1,4 @@
-import { ProvidedHomeProps, StackParamList } from "../../../components/types";
+import { StackParamList } from "../../../components/types";
 import { ScrollView, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { YStack, XStack, Separator } from "tamagui";
