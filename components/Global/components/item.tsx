@@ -77,15 +77,20 @@ export default function Item({
                     marginLeft={"$1"}
                     alignContent="center"
                     justifyContent="flex-start"
-                    flex={5}
+                    flex={4}
                 >
                     <Text bold>{ item.Name ?? ""}</Text>
-                    { item.Type === 'Audio' || item.Type === 'MusicAlbum' && (
+                    { (item.Type === 'Audio' || item.Type === 'MusicAlbum') && (
                         <Text>{ item.AlbumArtist ?? "Untitled Artist" }</Text>
                     )}
                 </YStack>
 
-                <YStack alignContent="flex-end">
+                {/* Runtime ticks for Songs */}
+                <YStack 
+                    justifyContent="center" 
+                    alignContent="flex-end"
+                    flex={2}
+                >
                     { item.Type ==='Audio' ? (
                         <RunTimeTicks>{item.RunTimeTicks}</RunTimeTicks>
                     ) : (
@@ -94,7 +99,11 @@ export default function Item({
                 </YStack>
 
 
-                <XStack alignItems="flex-end" flex={2}>
+                <XStack 
+                    justifyContent="center"
+                    alignItems="flex-end" 
+                    flex={2}
+                >
                     { item.UserData?.IsFavorite ? (
                         <Icon 
                             small
