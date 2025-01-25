@@ -131,12 +131,15 @@ export default function Track({
                         alignContent="center"
                         justifyContent="center"
                     >
-                        <Icon name="dots-vertical" onPress={() => {
-                            navigation.push("Details", {
-                                item: track,
-                                isNested: isNested
-                            });
-                        }} />
+                        <Icon 
+                            name="dots-vertical" 
+                            onPress={() => {
+                                navigation.push("Details", {
+                                    item: track,
+                                    isNested: isNested
+                                });
+                            }} 
+                        />
 
                     </YStack>
                 </XStack>
