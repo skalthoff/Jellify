@@ -21,6 +21,7 @@ interface TrackProps {
     index: number | undefined;
     showArtwork?: boolean | undefined;
     onPress?: () => void | undefined;
+    isNested?: boolean | undefined
 }
 
 export default function Track({
@@ -31,6 +32,7 @@ export default function Track({
     queueName,
     showArtwork,
     onPress,
+    isNested
 } : {
     track: BaseItemDto,
     tracklist: BaseItemDto[],
@@ -39,6 +41,7 @@ export default function Track({
     queueName?: string | undefined,
     showArtwork?: boolean | undefined,
     onPress?: () => void | undefined,
+    isNested?: boolean | undefined
 }) : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
@@ -67,7 +70,7 @@ export default function Track({
                 onLongPress={() => {
                     navigation.push("Details", {
                         item: track,
-                        isNested: false
+                        isNested: isNested
                     })
                 }}
                 paddingVertical={"$2"}
@@ -150,7 +153,7 @@ export default function Track({
                         <Icon small name="dots-vertical" onPress={() => {
                             navigation.push("Details", {
                                 item: track,
-                                isNested: false
+                                isNested: isNested
                             });
                         }} />
 
