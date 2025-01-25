@@ -3,7 +3,7 @@ import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayNextIndexStart, findPlayQueueIndexStart } from "./helpers/index";
-import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
+import TrackPlayer, { Event, Progress, State, Track, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
 import _, { isEqual, isUndefined } from "lodash";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
@@ -75,7 +75,7 @@ const PlayerContextInitializer = () => {
     }
     
     const addToQueue = async (tracks: JellifyTrack[]) => {
-        const insertIndex = findPlayQueueIndexStart(queue);
+        const insertIndex = await findPlayQueueIndexStart(queue);
         console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`)
         
         await TrackPlayer.add(tracks, insertIndex);
@@ -86,7 +86,7 @@ const PlayerContextInitializer = () => {
     }
 
     const addToNext = async (tracks: JellifyTrack[]) => {
-        const insertIndex = findPlayNextIndexStart(queue);
+        const insertIndex = await findPlayNextIndexStart(queue);
 
         console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`);
 
