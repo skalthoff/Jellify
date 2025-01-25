@@ -1,10 +1,12 @@
 import { View } from "tamagui";
 import { Text } from "../Global/helpers/text";
+import { GridTemplate } from "react-native-carplay";
 
-export default function CarPlayHome() : React.JSX.Element {
-    return (
-        <View>
-            <Text>Yeet</Text>
-        </View>
-    )
-}
+const CarPlayHome : GridTemplate = new GridTemplate({
+    title: "Home",
+    buttons: [
+
+    ]
+});
+
+export default CarPlayHome;
