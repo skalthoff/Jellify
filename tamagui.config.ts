@@ -8,6 +8,7 @@ const tokens = createTokens({
     purpleDark: "#070217",
     purple: "#100538",
     purpleGray: "#B5AADC",
+    telemagenta: "#cc2f71",
     white: "#ffffff",
     black: "#000000"
   },

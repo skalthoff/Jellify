@@ -1,10 +1,9 @@
 import { usePlayerContext } from "../../../player/provider";
 import React from "react";
-import { Separator, Spacer, View, XStack, YStack } from "tamagui";
+import { Separator, Spacer, useTheme, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { Colors } from "../../../enums/colors";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
 import { QueryConfig } from "../../../api/queries/query.config";
@@ -49,6 +48,8 @@ export default function Track({
     const { nowPlaying, usePlayNewQueue } = usePlayerContext();
 
     const isPlaying = nowPlaying?.item.Id === track.Id;
+
+    const theme = useTheme();
 
     return (
         <View>
@@ -102,7 +103,7 @@ export default function Track({
                         />
                 
                     ) : (
-                    <Text color={isPlaying ? Colors.Primary : Colors.White}>
+                    <Text color={isPlaying ? theme.telemagenta : theme.color}>
                         { track.IndexNumber?.toString() ?? "" }
                     </Text>
                 )}
@@ -111,7 +112,7 @@ export default function Track({
                 <YStack alignContent="center" justifyContent="flex-start" flex={5}>
                     <Text 
                         bold
-                        color={isPlaying ? Colors.Primary : Colors.White}
+                        color={isPlaying ? theme.telemagenta : theme.color}
                         lineBreakStrategyIOS="standard"
                         numberOfLines={1}
                     >
@@ -135,7 +136,7 @@ export default function Track({
                         minWidth={24}
                     >
                         { track.UserData?.IsFavorite ? (
-                            <Icon small name="heart" color={Colors.Primary} />
+                            <Icon small name="heart" color={theme.telemagenta.val} />
                         ) : (
                             <Spacer />
                         )}
