@@ -67,6 +67,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
                         <Icon 
                             large
+                            color={theme.borderColor.val}
                             name="skip-next" 
                             onPress={() => useSkip.mutate(undefined)}
                             />
