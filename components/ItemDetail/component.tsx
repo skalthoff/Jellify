@@ -1,6 +1,6 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { StackParamList } from "../types";
 import TrackOptions from "./helpers/TrackOptions";
 import { ScrollView, Spacer, View, XStack, YStack } from "tamagui";
@@ -59,10 +59,11 @@ export default function ItemDetail({
 
     return (
         <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <YStack alignContent="center" flex={1}>
+            <YStack alignItems="center" flex={1}>
 
                 <XStack 
                     justifyContent="center"
+                    alignItems="center"
                     maxHeight={width / 1.5}
                     maxWidth={width / 1.5}
                 >
@@ -76,6 +77,7 @@ export default function ItemDetail({
                 <YStack 
                     marginLeft={"$0.5"} 
                     alignContent="center"
+                    justifyContent="center"
                     flex={2}
                 >
                     <Text bold fontSize={"$6"}>

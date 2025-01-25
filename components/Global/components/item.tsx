@@ -25,7 +25,7 @@ export default function Item({
     const { width } = useSafeAreaFrame();
 
     return (
-        <View>
+        <View flex={1}>
             <Separator />
 
             <XStack
@@ -74,6 +74,7 @@ export default function Item({
                 <YStack 
                     marginLeft={"$1"}
                     justifyContent="flex-start"
+                    flex={5}
                 >
                     <Text bold>{ item.Name ?? ""}</Text>
                     { item.Type === 'Audio' || item.Type === 'MusicAlbum' ? (
@@ -83,7 +84,7 @@ export default function Item({
                     )}
                 </YStack>
 
-                <XStack alignContent="flex-end">
+                <XStack alignContent="flex-end" flex={2}>
                     { item.UserData?.IsFavorite ? (
                         <Icon 
                         small
@@ -93,6 +94,17 @@ export default function Item({
                     ) : (
                         <Spacer />
                     )}
+
+                    <Icon 
+                        small 
+                        name="dots-vertical"
+                        onPress={() => {
+                            navigation.push("Details", {
+                                item,
+                                isNested: false
+                            })
+                        }} 
+                    />
                 </XStack>
             </XStack>
         </View>
