@@ -6,7 +6,7 @@ const Stack = createStackNavigator();
 export default function JellifyCarplay(): React.JSX.Element {
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="NowPlaying">
             <Stack.Screen name="NowPlaying" component={NowPlaying} />
         </Stack.Navigator>
     )

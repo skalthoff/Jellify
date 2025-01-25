@@ -58,15 +58,15 @@ function App(): React.JSX.Element {
   });
 
   return carPlayConnected ? (
-    <NavigationContainer>
-      { loggedIn ? (
-        <JellifyCarplay />
+    loggedIn ? (
+        <NavigationContainer>
+          <JellifyCarplay />
+        </NavigationContainer>
       ) : (
         <View>
           <Text>Please login in the app before using CarPlay</Text>
         </View>
-      )}
-    </NavigationContainer>
+      )
   ) : (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
       <SafeAreaProvider>
