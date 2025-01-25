@@ -3,6 +3,7 @@ import { isUndefined } from "lodash";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { CarPlay } from "react-native-carplay";
 import CarPlayNavigation from "./CarPlay/Navigation";
+import CarPlayNowPlaying from "./CarPlay/NowPlaying";
 
 interface JellifyContext {
     loggedIn: boolean;
@@ -23,7 +24,9 @@ const JellifyContextInitializer = () => {
   
       function onConnect() {
         setCarPlayConnected(true);
-        CarPlay.setRootTemplate(CarPlayNavigation)
+        CarPlay.setRootTemplate(CarPlayNavigation);
+        CarPlay.enableNowPlaying(true);
+        CarPlay.pushTemplate(CarPlayNowPlaying)
       }
   
       function onDisconnect() {
