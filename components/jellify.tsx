@@ -26,53 +26,13 @@ export default function Jellify(): React.JSX.Element {
   );
 }
 
-const CarPlayStack = createStackNavigator();
-
 function App(): React.JSX.Element {
 
   const isDarkMode = useColorScheme() === "dark";
 
   const { loggedIn } = useJellifyContext();
 
-  const [carPlayConnected, setCarPlayConnected] = useState(CarPlay.connected);
-  
-  useEffect(() => {
-    console.debug("Client instance changed")
-  }, [
-    Client.instance
-  ])
-
-  useEffect(() => {
-
-    function onConnect() {
-      setCarPlayConnected(true)
-    }
-
-    function onDisconnect() {
-      setCarPlayConnected(false)
-    }
-
-    CarPlay.registerOnConnect(onConnect);
-    CarPlay.registerOnDisconnect(onDisconnect);
-    return () => {
-      CarPlay.unregisterOnConnect(onConnect)
-      CarPlay.unregisterOnDisconnect(onDisconnect)
-    };
-  });
-
-  return carPlayConnected ? (
-    <NavigationContainer>
-        { loggedIn ? (
-            <CarPlayStack.Navigator initialRouteName="Home">
-              <CarPlayStack.Screen name="Home" component={CarPlayHome} />
-            </CarPlayStack.Navigator>
-          ) : (
-            <View>
-              <Text>Please login in the app before using CarPlay</Text>
-            </View>
-          )}
-      </NavigationContainer>
-  ) : (
+  return (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
       <SafeAreaProvider>
         { loggedIn ? (

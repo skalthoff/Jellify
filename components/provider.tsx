@@ -1,10 +1,11 @@
 import Client from "../api/client";
 import { isUndefined } from "lodash";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { CarPlay } from "react-native-carplay";
 
 interface JellifyContext {
     loggedIn: boolean;
-    setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+    carPlayConnected: boolean;
 }
 
 const JellifyContextInitializer = () => {
@@ -15,15 +16,35 @@ const JellifyContextInitializer = () => {
         !isUndefined(Client.server)
     );
 
+    const [carPlayConnected, setCarPlayConnected] = useState(CarPlay.connected);
+
+    useEffect(() => {
+  
+      function onConnect() {
+        setCarPlayConnected(true)
+      }
+  
+      function onDisconnect() {
+        setCarPlayConnected(false)
+      }
+  
+      CarPlay.registerOnConnect(onConnect);
+      CarPlay.registerOnDisconnect(onDisconnect);
+      return () => {
+        CarPlay.unregisterOnConnect(onConnect)
+        CarPlay.unregisterOnDisconnect(onDisconnect)
+      };
+    });
+
     return {
         loggedIn,
-        setLoggedIn,
+        carPlayConnected
     }
 }
 
 const JellifyContext = createContext<JellifyContext>({
     loggedIn: false,
-    setLoggedIn: () => {}
+    carPlayConnected: false
 });
 
 export const JellifyProvider: ({ children }: {
@@ -31,14 +52,14 @@ export const JellifyProvider: ({ children }: {
 }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
     const {
         loggedIn,
-        setLoggedIn
+        carPlayConnected
     } = JellifyContextInitializer();
 
     return (
         <JellifyContext.Provider
             value={{
                 loggedIn,
-                setLoggedIn
+                carPlayConnected
             }}
             >
                 {children}
