@@ -10,7 +10,8 @@ const CarPlayHome : GridTemplate = new GridTemplate({
         id: `BUTTON_${i}`,
         image: require("../../assets/icon_60pt_3x.jpg"),
         titleVariants: [`Item ${i}`]
-    }))
+    })),
+    id: 'Home'
 });
 
 export default CarPlayHome;
