@@ -185,7 +185,11 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="space-evenly" marginVertical={"$3"}>
+                    <XStack 
+                        alignContent="center" 
+                        justifyContent="space-evenly" 
+                        marginVertical={"$3"}
+                    >
                         <Icon
                             name="rewind-15"
                             onPress={() => {
@@ -204,7 +208,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         />
 
                         {/* I really wanted a big clunky play button */}
-                        <PlayPauseButton size={width / 10} />
+                        <PlayPauseButton size={width / 8} />
 
                         <Icon 
                             large
