@@ -35,4 +35,7 @@ export enum QueryKeys {
     FavoriteTracks = "FavoriteTracks",
     UserData = "UserData",
     UpdatePlayerOptions = "UpdatePlayerOptions",
+    Item = "Item",
+    Search = "Search",
+    SearchSuggestions = "SearchSuggestions",
 }

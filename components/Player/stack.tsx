@@ -35,7 +35,7 @@ export default function Player({ navigation }: { navigation: NativeStackNavigati
                 name="Details"
                 component={DetailsScreen}
                 options={{
-                    headerShown: false
+                    headerTitle: ""
                 }}
             />
 

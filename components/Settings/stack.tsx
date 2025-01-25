@@ -21,9 +21,10 @@ export default function Settings(): React.JSX.Element {
             />
 
             <SettingsStack.Screen
-                name="Account"
+                name="AccountDetails"
                 component={AccountDetails}
                 options={{
+                    title: "Account",
                     headerLargeTitle: true,
                     headerLargeTitleStyle: {
                         fontFamily: 'Aileron-Bold'

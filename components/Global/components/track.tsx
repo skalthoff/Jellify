@@ -1,18 +1,18 @@
 import { usePlayerContext } from "../../../player/provider";
 import React from "react";
-import { Separator, Spacer, View, XStack, YStack } from "tamagui";
+import { Separator, Spacer, useTheme, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { Colors } from "../../../enums/colors";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
-import { queryConfig } from "../../../api/queries/query.config";
+import { QueryConfig } from "../../../api/queries/query.config";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../../components/types";
 import Client from "../../../api/client";
+import { QueuingType } from "../../../enums/queuing-type";
 
 interface TrackProps {
     track: BaseItemDto;
@@ -21,6 +21,7 @@ interface TrackProps {
     index: number | undefined;
     showArtwork?: boolean | undefined;
     onPress?: () => void | undefined;
+    isNested?: boolean | undefined
 }
 
 export default function Track({
@@ -30,7 +31,8 @@ export default function Track({
     index,
     queueName,
     showArtwork,
-    onPress
+    onPress,
+    isNested
 } : {
     track: BaseItemDto,
     tracklist: BaseItemDto[],
@@ -38,13 +40,16 @@ export default function Track({
     index?: number | undefined,
     queueName?: string | undefined,
     showArtwork?: boolean | undefined,
-    onPress?: () => void | undefined
+    onPress?: () => void | undefined,
+    isNested?: boolean | undefined
 }) : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
     const { nowPlaying, usePlayNewQueue } = usePlayerContext();
 
     const isPlaying = nowPlaying?.item.Id === track.Id;
+
+    const theme = useTheme();
 
     return (
         <View>
@@ -60,9 +65,16 @@ export default function Track({
                             track,
                             index,
                             tracklist,
-                            queueName: queueName ? queueName : track.Album ? track.Album! : "Queue"
+                            queueName: queueName ? queueName : track.Album ? track.Album! : "Queue",
+                            queuingType: QueuingType.FromSelection
                         });
                     }
+                }}
+                onLongPress={() => {
+                    navigation.push("Details", {
+                        item: track,
+                        isNested: isNested
+                    })
                 }}
                 paddingVertical={"$2"}
                 marginHorizontal={"$1"}
@@ -79,7 +91,7 @@ export default function Track({
                                 .getItemImageUrlById(
                                     track.AlbumId ?? "",
                                     ImageType.Primary,
-                                    { ...queryConfig.images }
+                                    { ...QueryConfig.images }
                                 )
                             }
                             imageStyle={{
@@ -91,7 +103,7 @@ export default function Track({
                         />
                 
                     ) : (
-                    <Text color={isPlaying ? Colors.Primary : Colors.White}>
+                    <Text color={isPlaying ? theme.telemagenta : theme.color}>
                         { track.IndexNumber?.toString() ?? "" }
                     </Text>
                 )}
@@ -100,7 +112,7 @@ export default function Track({
                 <YStack alignContent="center" justifyContent="flex-start" flex={5}>
                     <Text 
                         bold
-                        color={isPlaying ? Colors.Primary : Colors.White}
+                        color={isPlaying ? theme.telemagenta : theme.color}
                         lineBreakStrategyIOS="standard"
                         numberOfLines={1}
                     >
@@ -124,7 +136,7 @@ export default function Track({
                         minWidth={24}
                     >
                         { track.UserData?.IsFavorite ? (
-                            <Icon small name="heart" color={Colors.Primary} />
+                            <Icon small name="heart" color={theme.telemagenta.val} />
                         ) : (
                             <Spacer />
                         )}
@@ -143,8 +155,9 @@ export default function Track({
                     >
                         <Icon small name="dots-vertical" onPress={() => {
                             navigation.push("Details", {
-                                item: track
-                            })
+                                item: track,
+                                isNested: isNested
+                            });
                         }} />
 
                     </YStack>

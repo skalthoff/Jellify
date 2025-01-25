@@ -1,6 +1,6 @@
 import { Colors } from "../../../enums/colors";
 import React from "react";
-import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider } from "tamagui";
+import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider, getTokens } from "tamagui";
 
 interface SliderProps {
     value?: number | undefined;
@@ -10,16 +10,16 @@ interface SliderProps {
 }
 
 const JellifySliderThumb = styled(Slider.Thumb, {
-    backgroundColor: Colors.Primary,
-    borderColor: Colors.Background,
+    backgroundColor: getTokens().color.$telemagenta,
+    borderColor: getTokens().color.$purpleGray,
 })
 
 const JellifySliderTrack = styled(Slider.Track, {
-    backgroundColor: Colors.Borders
+    backgroundColor: getTokens().color.$purpleGray
 });
 
 const JellifyActiveSliderTrack = styled(Slider.TrackActive, {
-    backgroundColor: Colors.Primary
+    backgroundColor: getTokens().color.$telemagenta
 })
 
 export function HorizontalSlider({ 

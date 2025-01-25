@@ -1,9 +1,9 @@
 import { Colors } from '../../../enums/colors';
-import React, { SetStateAction } from 'react';
+import React from 'react';
 import { Input as TamaguiInput} from 'tamagui';
 
 interface InputProps {
-    onChangeText: React.Dispatch<SetStateAction<string | undefined>>,
+    onChangeText: (value: string | undefined) => void,
     placeholder: string
     value: string | undefined;
     secureTextEntry?: boolean | undefined;
@@ -21,6 +21,7 @@ export default function Input(props: InputProps): React.JSX.Element {
             value={props.value}
             flexGrow={props.flexGrow ? 1 : "unset"}
             secureTextEntry={props.secureTextEntry}
+            clearButtonMode="always"
         />
     )
 }

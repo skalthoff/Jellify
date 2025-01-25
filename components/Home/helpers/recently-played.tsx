@@ -4,8 +4,16 @@ import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import { ItemCard } from "../../Global/helpers/item-card";
 import { usePlayerContext } from "../../../player/provider";
+import { StackParamList } from "../../../components/types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { trigger } from "react-native-haptic-feedback";
+import { QueuingType } from "../../../enums/queuing-type";
 
-export default function RecentlyPlayed(): React.JSX.Element {
+export default function RecentlyPlayed({ 
+    navigation 
+} : { 
+    navigation: NativeStackNavigationProp<StackParamList>
+}): React.JSX.Element {
 
     const { usePlayNewQueue } = usePlayerContext();
     const { recentTracks } = useHomeContext();
@@ -27,8 +35,16 @@ export default function RecentlyPlayed(): React.JSX.Element {
                                     track: recentlyPlayedTrack, 
                                     index: index,
                                     tracklist: recentTracks,
-                                    queueName: "Recently Played"
+                                    queueName: "Recently Played",
+                                    queuingType: QueuingType.FromSelection
                                 });
+                            }}
+                            onLongPress={() => {
+                                trigger("impactMedium");
+                                navigation.push("Details", {
+                                    item: recentlyPlayedTrack,
+                                    isNested: false
+                                })
                             }}
                         />                                
                     )

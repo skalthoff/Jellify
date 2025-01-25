@@ -2,21 +2,21 @@ import { createContext, ReactNode, SetStateAction, useContext, useEffect, useSta
 import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
-import { findPlayQueueIndexStart } from "./helpers/index";
-import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
+import { findPlayNextIndexStart, findPlayQueueIndexStart } from "./helpers/index";
+import TrackPlayer, { Event, Progress, State, Track, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
 import _, { isEqual, isUndefined } from "lodash";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
 import { useSetupPlayer, useUpdateOptions } from "../player/hooks";
 import { UPDATE_INTERVAL } from "./config";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { QueueMutation } from "./interfaces";
 import { mapDtoToTrack } from "../helpers/mappings";
 import { QueuingType } from "../enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
 import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
-import { convertRunTimeTicksToSeconds } from "..//helpers/runtimeticks";
+import { convertRunTimeTicksToSeconds } from "../helpers/runtimeticks";
 import Client from "../api/client";
+import { AddToQueueMutation, QueueMutation } from "./interfaces";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -28,6 +28,7 @@ interface PlayerContext {
     nowPlaying: JellifyTrack | undefined;
     queue: JellifyTrack[];
     queueName: string | undefined;
+    useAddToQueue: UseMutationResult<void, Error, AddToQueueMutation, unknown>;
     useTogglePlayback: UseMutationResult<void, Error, number | undefined, unknown>;
     useSeekTo: UseMutationResult<void, Error, number, unknown>;
     useSkip: UseMutationResult<void, Error, number | undefined, unknown>;
@@ -74,7 +75,7 @@ const PlayerContextInitializer = () => {
     }
     
     const addToQueue = async (tracks: JellifyTrack[]) => {
-        let insertIndex = findPlayQueueIndexStart(queue);
+        const insertIndex = await findPlayQueueIndexStart(queue);
         console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`)
         
         await TrackPlayer.add(tracks, insertIndex);
@@ -83,12 +84,36 @@ const PlayerContextInitializer = () => {
         
         setShowMiniplayer(true);
     }
+
+    const addToNext = async (tracks: JellifyTrack[]) => {
+        const insertIndex = await findPlayNextIndexStart(queue);
+
+        console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`);
+
+        await TrackPlayer.add(tracks, insertIndex);
+
+        setQueue(await getQueue() as JellifyTrack[]);
+
+        setShowMiniplayer(true);
+    }
     //#endregion Functions
     
     //#region Hooks
+    const useAddToQueue = useMutation({
+        mutationFn: async (mutation: AddToQueueMutation) => {
+            trigger("impactMedium");
+
+            if (mutation.queuingType === QueuingType.PlayingNext)
+                return addToNext([mapDtoToTrack(mutation.track, mutation.queuingType)]);
+
+            else
+                return addToQueue([mapDtoToTrack(mutation.track, mutation.queuingType)])
+        }
+    })
+
     const useTogglePlayback = useMutation({
         mutationFn: async (index?: number | undefined) => {
-            trigger("impactLight");
+            trigger("impactMedium");
             if (playbackState === State.Playing)
                 await pause();
             else 
@@ -98,7 +123,7 @@ const PlayerContextInitializer = () => {
 
     const useSeekTo = useMutation({
         mutationFn: async (position: number) => {
-            trigger('impactLight');
+            trigger('impactMedium');
             await seekTo(position);
 
             handlePlaybackProgressUpdated(Client.sessionId, playStateApi, nowPlaying!, { 
@@ -111,7 +136,7 @@ const PlayerContextInitializer = () => {
 
     const useSkip = useMutation({
         mutationFn: async (index?: number | undefined) => {
-            trigger("impactLight")
+            trigger("impactMedium")
             if (!isUndefined(index)) {
                 setIsSkipping(true);
                 setNowPlaying(queue[index]);
@@ -128,7 +153,7 @@ const PlayerContextInitializer = () => {
 
     const usePrevious = useMutation({
         mutationFn: async () => {
-            trigger("impactLight");
+            trigger("impactMedium");
 
             const nowPlayingIndex = queue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
 
@@ -141,7 +166,7 @@ const PlayerContextInitializer = () => {
 
     const usePlayNewQueue = useMutation({
         mutationFn: async (mutation: QueueMutation) => {
-            trigger("impactLight");
+            trigger("impactMedium");
 
             setIsSkipping(true);
 
@@ -261,6 +286,7 @@ const PlayerContextInitializer = () => {
         nowPlaying,
         queue,
         queueName,
+        useAddToQueue,
         useTogglePlayback,
         useSeekTo,
         useSkip,
@@ -283,6 +309,24 @@ export const PlayerContext = createContext<PlayerContext>({
     nowPlaying: undefined,
     queue: [],
     queueName: undefined,
+    useAddToQueue: {
+        mutate: () => {},
+        mutateAsync: async () => {},
+        data: undefined,
+        error: null,
+        variables: undefined,
+        isError: false,
+        isIdle: true,
+        isPaused: false,
+        isPending: false,
+        isSuccess: false,
+        status: "idle",
+        reset: () => {},
+        context: {},
+        failureCount: 0,
+        failureReason: null,
+        submittedAt: 0
+    },
     useTogglePlayback: {
         mutate: () => {},
         mutateAsync: async () => {},
@@ -389,6 +433,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         nowPlaying,
         queue, 
         queueName,
+        useAddToQueue,
         useTogglePlayback,
         useSeekTo,
         useSkip,
@@ -408,6 +453,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         nowPlaying,
         queue,
         queueName,
+        useAddToQueue,
         useTogglePlayback,
         useSeekTo,
         useSkip,

@@ -1,11 +1,7 @@
-import { queryConfig } from "../../../api/queries/query.config";
 import { HorizontalSlider } from "../../../components/Global/helpers/slider";
 import { RunTimeSeconds } from "../../../components/Global/helpers/time-codes";
 import { StackParamList } from "../../../components/types";
 import { usePlayerContext } from "../../../player/provider";
-import { CachedImage } from "@georstat/react-native-image-cache";
-import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
@@ -14,9 +10,10 @@ import PlayPauseButton from "../helpers/buttons";
 import { H5, Text } from "../../../components/Global/helpers/text";
 import Icon from "../../../components/Global/helpers/icon";
 import { Colors } from "../../../enums/colors";
-import { State } from "react-native-track-player";
-import FavoriteHeaderButton from "../../Global/components/favorite-button";
-import Client from "../../../api/client";
+import FavoriteButton from "../../Global/components/favorite-button";
+import BlurhashedImage from "../../../components/Global/helpers/blurhashed-image";
+import TextTicker from "react-native-text-ticker";
+import { TextTickerConfig } from "../component.config";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -59,13 +56,17 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
             <>
                 <YStack>
 
-                    <YStack alignItems="center">
+                    <YStack 
+                        alignItems="center"
+                        alignContent="center"
+                    >
                         <Text>Playing from</Text>
-                        <H5>{ queueName ?? "Queue"}</H5>
+                        <TextTicker {...TextTickerConfig}>
+                            <H5>{ queueName ?? "Queue"}</H5>
+                        </TextTicker>
                     </YStack>
 
                     <XStack 
-                        animation={"bouncy"} 
                         justifyContent="center"
                         alignContent="center"
                         minHeight={width / 1.1}
@@ -73,60 +74,53 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             useTogglePlayback.mutate(undefined)
                         }}
                     >
-                        <CachedImage
-                            source={getImageApi(Client.api!)
-                                .getItemImageUrlById(
-                                    nowPlaying!.item.AlbumId ?? "",
-                                    ImageType.Primary,
-                                    { ...queryConfig.playerArtwork }
-                                )
-                            }
-                            imageStyle={{
-                                position: "relative",
-                                alignSelf: "center",
-                                width: playbackState === State.Playing ? width / 1.1 : width / 1.4,
-                                height: playbackState === State.Playing ? width / 1.1 : width / 1.4,
-                                borderRadius: 2
-                            }}
+                        <BlurhashedImage
+                            item={nowPlaying!.item}
+                            size={width / 1.1}
                             />
                     </XStack>
 
                     <XStack marginHorizontal={20} paddingVertical={5}>
                         <YStack justifyContent="flex-start" flex={4}>
-                            <Text 
-                                bold 
-                                fontSize={"$6"}
-                            >
-                                {nowPlaying!.title ?? "Untitled Track"}
-                            </Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text 
+                                    bold 
+                                    fontSize={"$6"}
+                                    >
+                                    {nowPlaying!.title ?? "Untitled Track"}
+                                </Text>
+                            </TextTicker>
 
-                            <Text 
-                                fontSize={"$6"}
-                                color={Colors.Primary}
-                                onPress={() => {
-                                    if (nowPlaying!.item.ArtistItems) {
-                                        navigation.goBack(); // Dismiss player modal
-                                        navigation.push("Artist", {
-                                            artist: nowPlaying!.item.ArtistItems![0],
-                                        });
-                                    }
-                                }}
-                            >
-                                {nowPlaying.artist ?? "Unknown Artist"}
-                            </Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text 
+                                    fontSize={"$6"}
+                                    color={Colors.Primary}
+                                    onPress={() => {
+                                        if (nowPlaying!.item.ArtistItems) {
+                                            navigation.navigate("Artist", {
+                                                artist: nowPlaying!.item.ArtistItems![0],
+                                            });
+                                        }
+                                    }}
+                                    >
+                                    {nowPlaying.artist ?? "Unknown Artist"}
+                                </Text>
+                            </TextTicker>
 
-                            <Text 
-                                fontSize={"$6"} 
-                                color={"$gray10"}
-                            >
-                                { nowPlaying!.album ?? "" }
-                            </Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text 
+                                    fontSize={"$6"} 
+                                    color={"$purpleGray"}
+                                    >
+                                    { nowPlaying!.album ?? "" }
+                                </Text>
+                            </TextTicker>
                         </YStack>
 
                         <XStack 
                             justifyContent="flex-end" 
                             alignItems="center" 
-                            flex={1}
+                            flex={2}
                         >
                             {/* Buttons for favorites, song menu go here */}
 
@@ -134,14 +128,15 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 name="dots-horizontal-circle-outline"
                                 onPress={() => {
                                     navigation.navigate("Details", {
-                                        item: nowPlaying!.item
+                                        item: nowPlaying!.item,
+                                        isNested: true
                                     });
                                 }}
                             />
 
                             <Spacer />
 
-                            <FavoriteHeaderButton 
+                            <FavoriteButton 
                                 item={nowPlaying!.item} 
                                 onToggle={() => setNowPlayingIsFavorite(!nowPlayingIsFavorite)}
                             />

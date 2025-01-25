@@ -12,7 +12,8 @@ import { PortalProvider } from "tamagui";
 import Client from "../api/client";
 import { JellifyProvider, useJellifyContext } from "./provider";
 import { CarPlay } from "react-native-carplay"
-import JellifyCarplay from "./carplay";
+import { createStackNavigator } from "@react-navigation/stack";
+import CarPlayHome from "./CarPlay/Home";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -31,43 +32,7 @@ function App(): React.JSX.Element {
 
   const { loggedIn } = useJellifyContext();
 
-  const [carPlayConnected, setCarPlayConnected] = useState(CarPlay.connected);
-  
-  useEffect(() => {
-    console.debug("Client instance changed")
-  }, [
-    Client.instance
-  ])
-
-  useEffect(() => {
-
-    function onConnect() {
-      setCarPlayConnected(true)
-    }
-
-    function onDisconnect() {
-      setCarPlayConnected(false)
-    }
-
-    CarPlay.registerOnConnect(onConnect);
-    CarPlay.registerOnDisconnect(onDisconnect);
-    return () => {
-      CarPlay.unregisterOnConnect(onConnect)
-      CarPlay.unregisterOnDisconnect(onDisconnect)
-    };
-  });
-
-  return carPlayConnected ? (
-    <NavigationContainer>
-      { loggedIn ? (
-        <JellifyCarplay />
-      ) : (
-        <View>
-          <Text>Please login in the app before using CarPlay</Text>
-        </View>
-      )}
-    </NavigationContainer>
-  ) : (
+  return (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
       <SafeAreaProvider>
         { loggedIn ? (

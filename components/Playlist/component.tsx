@@ -8,7 +8,7 @@ import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
 import { FlatList } from "react-native";
-import { queryConfig } from "../../api/queries/query.config";
+import { QueryConfig } from "../../api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -41,7 +41,7 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
                             .getItemImageUrlById(
                                 props.playlist.Id!,
                                 ImageType.Primary,
-                                { ...queryConfig.images})}
+                                { ...QueryConfig.images})}
                         imageStyle={{
                             position: "relative",
                             width: 300,
@@ -74,7 +74,7 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
 
                 <XStack justifyContent="flex-end">
                     <Text 
-                        color={"$gray10"} 
+                        color={"$purpleGray"} 
                         style={{ display: "block"}}
                     >
                         Total Runtime:

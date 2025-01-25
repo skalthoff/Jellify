@@ -4,7 +4,7 @@ import { ScrollView, YStack, XStack } from "tamagui";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { queryConfig } from "../../api/queries/query.config";
+import { QueryConfig } from "../../api/queries/query.config";
 import { H4, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
 import { usePlayerContext } from "../../player/provider";
@@ -12,7 +12,7 @@ import { RunTimeTicks } from "../Global/helpers/time-codes";
 import Track from "../Global/components/track";
 import { useItemTracks } from "../../api/queries/tracks";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import FavoriteHeaderButton from "../Global/components/favorite-button";
+import FavoriteButton from "../Global/components/favorite-button";
 import { useEffect } from "react";
 import Client from "../../api/client";
 
@@ -26,7 +26,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
     props.navigation.setOptions({
         headerRight: () => {
             return (
-                <FavoriteHeaderButton item={props.album} />
+                <FavoriteButton item={props.album} />
             )
         }
     })
@@ -46,13 +46,17 @@ export default function Album(props: AlbumProps): React.JSX.Element {
     return (
         <SafeAreaView edges={["right", "left"]}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <YStack alignItems="center" minHeight={width / 1.1}>
+                <YStack 
+                    alignItems="center" 
+                    alignContent="center"
+                    minHeight={width / 1.1}
+                >
                     <CachedImage
                         source={getImageApi(Client.api!)
                             .getItemImageUrlById(
                                 props.album.Id!,
                                 ImageType.Primary,
-                                { ...queryConfig.playerArtwork})}
+                                { ...QueryConfig.playerArtwork})}
                                 imageStyle={{
                                     position: "relative",
                                     width: width / 1.1,
@@ -81,10 +85,11 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                         
                     }}/>
 
-                <XStack justifyContent="flex-end">
+                <XStack marginTop={"$3"} justifyContent="flex-end">
                     <Text 
-                        color={"$gray10"} 
+                        color={"$purpleGray"} 
                         style={{ display: "block"}}
+                        marginRight={"$1"}
                         >
                         Total Runtime: 
                     </Text>

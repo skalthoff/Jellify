@@ -2,7 +2,7 @@ import Client from "../api/client";
 import { JellifyTrack } from "../types/JellifyTrack";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
 import TrackPlayer, { Event, RatingType } from "react-native-track-player";
-import { getActiveTrack } from "react-native-track-player/lib/src/trackPlayer";
+import { getActiveTrack, getActiveTrackIndex } from "react-native-track-player/lib/src/trackPlayer";
 
 /**
  * Jellify Playback Service.
@@ -41,50 +41,31 @@ export async function PlaybackService() {
 
     TrackPlayer.addEventListener(Event.RemoteLike, async () => {
 
-        const progress = await TrackPlayer.getProgress();
         const nowPlaying = await getActiveTrack() as JellifyTrack;
+        const nowPlayingIndex = await getActiveTrackIndex();
 
         await getUserLibraryApi(Client.api!)
             .markFavoriteItem({
                 itemId: nowPlaying.item.Id!
             });
 
-        await TrackPlayer.updateOptions({
-            likeOptions: {
-                isActive: false,
-                title: "Favorite"
-            },
-            dislikeOptions: {
-                isActive: true,
-                title: "Unfavorite"
-            }
-        });
+        await TrackPlayer.updateMetadataForTrack(nowPlayingIndex!, {
+            rating: RatingType.Heart
+        })
     });
 
     TrackPlayer.addEventListener(Event.RemoteDislike, async () => {
 
-        const progress = await TrackPlayer.getProgress();
         const nowPlaying = await getActiveTrack() as JellifyTrack;
+        const nowPlayingIndex = await getActiveTrackIndex();
 
         await getUserLibraryApi(Client.api!)
             .markFavoriteItem({
                 itemId: nowPlaying.item.Id!
             });
 
-        await TrackPlayer.updateNowPlayingMetadata({
-            elapsedTime: progress.position,
+        await TrackPlayer.updateMetadataForTrack(nowPlayingIndex!, {
             rating: undefined
-        });
-
-        await TrackPlayer.updateOptions({
-            likeOptions: {
-                isActive: true,
-                title: "Favorite"
-            },
-            dislikeOptions: {
-                isActive: false,
-                title: "Unfavorite"
-            }
         });
     });
 }

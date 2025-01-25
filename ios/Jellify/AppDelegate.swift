@@ -47,6 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RCTBridgeDelegate {
   func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
   }
 
+  override func bundleURL() -> URL? {
+    return RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index");
+  }
+
   private func initializeFlipper(with application: UIApplication) {
     #if DEBUG
     #if FB_SONARKIT_ENABLED

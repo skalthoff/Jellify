@@ -8,10 +8,10 @@ import { H2 } from "../Global/helpers/text";
 import { useState } from "react";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { queryConfig } from "../../api/queries/query.config";
+import { QueryConfig } from "../../api/queries/query.config";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import FavoriteHeaderButton from "../Global/components/favorite-button";
+import FavoriteButton from "../Global/components/favorite-button";
 import Client from "../../api/client";
 
 interface ArtistProps {
@@ -24,7 +24,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
     props.navigation.setOptions({
         headerRight: () => { 
             return (
-                <FavoriteHeaderButton item={props.artist} />
+                <FavoriteButton item={props.artist} />
             )
         }
     });
@@ -48,7 +48,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                             .getItemImageUrlById(
                                 props.artist.Id!,
                                 ImageType.Primary,
-                                { ...queryConfig.banners})
+                                { ...QueryConfig.banners})
                             } 
                         imageStyle={{
                             width: width,
@@ -77,7 +77,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
                                     cornered 
                                     itemId={album.Id!}
                                     onPress={() => {
-                                        props.navigation.navigate('Album', {
+                                        props.navigation.push('Album', {
                                             album
                                         })
                                     }}
