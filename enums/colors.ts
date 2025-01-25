@@ -1,6 +1,6 @@
 export enum Colors {
     Primary     = "#cc2f71",    // Telemagenta
-    Secondary   = "#B5AADC",    // Wisteria
+    Secondary   = "#66617B",    // Wisteria
     Borders     = "#100538",    // Russian Violet
     Background  = "#070217",    // Rich Black
     
