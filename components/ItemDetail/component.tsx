@@ -81,7 +81,7 @@ export default function ItemDetail({
                             if (item.ArtistItems) {
 
                                 if (isNested)
-                                    navigation.goBack();
+                                    navigation.getParent()!.goBack();
 
                                 navigation.goBack();
                                 navigation.push("Artist", {
