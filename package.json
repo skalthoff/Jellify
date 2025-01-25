@@ -31,6 +31,7 @@
     "nativewind": "4.0.36",
     "react": "18.3.1",
     "react-native": "0.75.2",
+    "react-native-background-actions": "^4.0.1",
     "react-native-blurhash": "^2.1.0",
     "react-native-carplay": "^2.4.1-beta.0",
     "react-native-device-info": "^11.1.0",
