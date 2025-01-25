@@ -19,7 +19,7 @@ export default function Icon({
     onPress?: () => void, 
     small?: boolean, 
     large?: boolean, 
-    color?: ColorTokens
+    color?: string | undefined
 }) : React.JSX.Element {
     
     const isDarkMode = useColorScheme() === "dark"
