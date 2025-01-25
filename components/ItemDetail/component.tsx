@@ -59,9 +59,13 @@ export default function ItemDetail({
 
     return (
         <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <YStack justifyContent="center" flex={1}>
+            <YStack alignContent="center" flex={1}>
 
-                <XStack alignContent="center">
+                <XStack 
+                    justifyContent="center"
+                    maxHeight={width / 1.5}
+                    maxWidth={width / 1.5}
+                >
 
                     <BlurhashedImage
                         item={item}
@@ -71,8 +75,7 @@ export default function ItemDetail({
 
                 <YStack 
                     marginLeft={"$0.5"} 
-                    justifyContent="center"
-                    alignContent="space-between"
+                    alignContent="center"
                     flex={2}
                 >
                     <Text bold fontSize={"$6"}>
