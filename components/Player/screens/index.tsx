@@ -201,21 +201,24 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 useSeekTo.mutate(progress!.position - 15);
                                 setSeeking(false);
                             }}
-                            />
+                            size={width / 7}
+                        />
                         
                         <IconButton
                             circular
                             name="skip-previous"
                             onPress={() => usePrevious.mutate()}
+                            size={width / 7}
                         />
 
                         {/* I really wanted a big clunky play button */}
-                        <PlayPauseButton size={width / 6} />
+                        <PlayPauseButton size={width / 5} />
 
                         <IconButton
                             circular
                             name="skip-next" 
                             onPress={() => useSkip.mutate(undefined)}
+                            size={width / 7}
                         />    
 
                         <IconButton
@@ -227,6 +230,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 useSeekTo.mutate(progress!.position + 15);
                                 setSeeking(false);
                             }}  
+                            size={width / 7}
                         />              
                     </XStack>
 

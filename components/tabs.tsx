@@ -23,7 +23,8 @@ export function Tabs() : React.JSX.Element {
     return (
             <Tab.Navigator
                 screenOptions={{
-                    tabBarActiveTintColor: theme.telemagenta.val
+                    tabBarActiveTintColor: theme.telemagenta.val,
+                    tabBarInactiveTintColor: theme.borderColor.val
                 }}
                 tabBar={(props) => (
                     <>
