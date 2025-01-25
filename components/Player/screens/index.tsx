@@ -76,7 +76,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     >
                         <BlurhashedImage
                             item={nowPlaying!.item}
-                            size={width / 1.1}
+                            width={width / 1.1}
                             />
                     </XStack>
 

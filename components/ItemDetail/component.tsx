@@ -70,7 +70,7 @@ export default function ItemDetail({
 
                     <BlurhashedImage
                         item={item}
-                        size={width / 1.5}
+                        width={width / 1.5}
                         />
                 </XStack>
 

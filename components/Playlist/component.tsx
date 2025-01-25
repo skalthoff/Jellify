@@ -30,46 +30,44 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
     ]);
 
     return (
-        <SafeAreaView edges={["right", "left"]}>
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <YStack alignItems="center">
-                    <BlurhashedImage
-                        item={props.playlist}
-                        size={300}
-                    />
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <YStack alignItems="center">
+                <BlurhashedImage
+                    item={props.playlist}
+                    width={300}
+                />
 
-                    <H4>{ props.playlist.Name ?? "Untitled Playlist" }</H4>
-                    <H5>{ props.playlist.ProductionYear?.toString() ?? "" }</H5>
-                </YStack>
-                <FlatList
-                    data={tracks}
-                    extraData={nowPlaying}
-                    numColumns={1}
-                    renderItem={({ item: track, index }) => {
+                <H4>{ props.playlist.Name ?? "Untitled Playlist" }</H4>
+                <H5>{ props.playlist.ProductionYear?.toString() ?? "" }</H5>
+            </YStack>
+            <FlatList
+                data={tracks}
+                extraData={nowPlaying}
+                numColumns={1}
+                renderItem={({ item: track, index }) => {
 
-                        return (
-                            <Track
-                                navigation={props.navigation}
-                                track={track}
-                                tracklist={tracks!}
-                                index={index}
-                                queueName={props.playlist.Name ?? "Untitled Playlist"}
-                                showArtwork
-                            />
-                        )
+                    return (
+                        <Track
+                            navigation={props.navigation}
+                            track={track}
+                            tracklist={tracks!}
+                            index={index}
+                            queueName={props.playlist.Name ?? "Untitled Playlist"}
+                            showArtwork
+                        />
+                    )
 
-                }}/>
+            }}/>
 
-                <XStack justifyContent="flex-end">
-                    <Text 
-                        color={"$borderColor"} 
-                        style={{ display: "block"}}
-                    >
-                        Total Runtime:
-                    </Text>
-                    <RunTimeTicks>{ props.playlist.RunTimeTicks }</RunTimeTicks>
-                </XStack>
-            </ScrollView>
-        </SafeAreaView>
+            <XStack justifyContent="flex-end">
+                <Text 
+                    color={"$borderColor"} 
+                    style={{ display: "block"}}
+                >
+                    Total Runtime:
+                </Text>
+                <RunTimeTicks>{ props.playlist.RunTimeTicks }</RunTimeTicks>
+            </XStack>
+        </ScrollView>
     )
 }

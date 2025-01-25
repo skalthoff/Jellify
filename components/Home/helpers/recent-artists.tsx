@@ -5,7 +5,6 @@ import { H2 } from "../../Global/helpers/text";
 import { StackParamList } from "../../types";
 import { FlatList } from "react-native";
 import { ItemCard } from "../../Global/helpers/item-card";
-import { getPrimaryBlurhashFromDto } from "../../../helpers/blurhash";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function RecentArtists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
@@ -20,8 +19,6 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
                 renderItem={({ item: recentArtist}) => {
                     return (
                         <ItemCard 
-                            artistName={recentArtist.Name!}
-                            blurhash={getPrimaryBlurhashFromDto(recentArtist)}
                             item={recentArtist}
                             caption={recentArtist.Name ?? "Unknown Artist"}
                             onPress={() => {

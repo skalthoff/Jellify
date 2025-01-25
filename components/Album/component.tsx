@@ -50,7 +50,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                 >
                     <BlurhashedImage
                         item={props.album}
-                        size={width / 1.1}
+                        width={width / 1.1}
                     />
 
                     <H4>{ props.album.Name ?? "Untitled Album" }</H4>

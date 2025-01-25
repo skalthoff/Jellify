@@ -41,7 +41,7 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
             <YStack alignContent="center" justifyContent="center" minHeight={bannerHeight}>
                 <BlurhashedImage
                     item={props.artist}
-                    size={width}
+                    width={width}
                 />
             </YStack>
 

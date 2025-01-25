@@ -71,7 +71,7 @@ export default function Item({
                 paddingVertical={"$2"}
                 marginHorizontal={"$1"}
             >
-                <BlurhashedImage item={item} size={width / 9} />
+                <BlurhashedImage item={item} width={width / 9} />
 
                 <YStack 
                     marginLeft={"$1"}

@@ -8,8 +8,6 @@ import { Text } from "./text";
 import BlurhashedImage from "./blurhashed-image";
 
 interface CardProps extends TamaguiCardProps {
-    artistName?: string;
-    blurhash?: string;
     caption?: string | null | undefined;
     subCaption?: string | null | undefined;
     item: BaseItemDto;
@@ -19,8 +17,6 @@ interface CardProps extends TamaguiCardProps {
 export function ItemCard(props: CardProps) {
 
     const dimensions = props.width && typeof(props.width) === "number" ? { width: props.width, height: props.width } : { width: 150, height: 150 };
-
-    const cardTextColor = props.blurhash ? invert(Blurhash.getAverageColor(props.blurhash)!, true) : undefined;
 
     const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 2, height: props.width / 2 }: { width: 100, height: 100 };
 
@@ -42,16 +38,21 @@ export function ItemCard(props: CardProps) {
                 <TamaguiCard.Header>
                 </TamaguiCard.Header>
                 <TamaguiCard.Footer padded>
-                    <BlurhashedImage
-                        item={props.item}
-                        type={ImageType.Logo}
-                        size={logoDimensions.width}
-                    />
+                    { props.item.Type === 'MusicArtist' && (
+                        <BlurhashedImage
+                            item={props.item}
+                            type={ImageType.Logo}
+                            width={logoDimensions.width}
+                            height={logoDimensions.height}
+
+                        />
+                    )}
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
                 <BlurhashedImage
                         item={props.item}
-                        size={dimensions.width}
+                        width={dimensions.width}
+                        height={dimensions.height}
                     />
                 </TamaguiCard.Background>
             </TamaguiCard>

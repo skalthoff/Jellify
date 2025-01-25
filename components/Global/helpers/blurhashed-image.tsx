@@ -6,20 +6,27 @@ import { isEmpty } from "lodash";
 
 interface BlurhashLoadingProps {
     item: BaseItemDto;
-    size: number
+    width: number;
+    height?: number;
+    type?: ImageType; 
 }
 
-export default function BlurhashedImage({ item, size, type }: { item: BaseItemDto, size: number, type?: ImageType }) : React.JSX.Element {
+export default function BlurhashedImage({ 
+    item, 
+    width, 
+    height,
+    type 
+} : BlurhashLoadingProps) : React.JSX.Element {
 
-    const { data: image, isSuccess } = useItemImage(item.Id!, type, size);
+    const { data: image, isSuccess } = useItemImage(item.Id!, type, width, height ?? width);
 
     const blurhash = !isEmpty(item.ImageBlurHashes) 
-        && !isEmpty(item.ImageBlurHashes.Primary) 
-        ? Object.values(item.ImageBlurHashes.Primary)[0] 
+        && !isEmpty(type ? item.ImageBlurHashes[type] : item.ImageBlurHashes.Primary) 
+        ? Object.values(type ? item.ImageBlurHashes[type]! : item.ImageBlurHashes.Primary!)[0]
         : undefined;
 
     return (
-        <View minHeight={size} minWidth={size}>
+        <View minHeight={height ?? width} minWidth={width}>
 
             { isSuccess ? (
                 <Image 
@@ -27,8 +34,8 @@ export default function BlurhashedImage({ item, size, type }: { item: BaseItemDt
                         uri: image
                     }}
                     style={{
-                        height: size,
-                        width: size,
+                        height: height ?? width,
+                        width,
                     }} 
                 />
             ) : blurhash && (

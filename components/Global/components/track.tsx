@@ -77,7 +77,7 @@ export default function Track({
                     { showArtwork ? (
                         <BlurhashedImage
                             item={track}
-                            size={width / 9}
+                            width={width / 9}
                         />
                     ) : (
                     <Text color={isPlaying ? theme.telemagenta : theme.color}>
