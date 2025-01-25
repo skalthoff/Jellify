@@ -125,7 +125,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             {/* Buttons for favorites, song menu go here */}
 
                             <Icon
-                                color="$white"
+                                color={theme.white.val}
                                 name="dots-horizontal-circle-outline"
                                 onPress={() => {
                                     navigation.navigate("Details", {
@@ -230,13 +230,14 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                     <XStack justifyContent="space-evenly" marginVertical={"$7"}>
                         <Icon
+                            color={theme.white.val}
                             name="speaker-multiple"
                         />
 
                         <Spacer />
 
                         <Icon
-                            color="$white"
+                            color={theme.white.val}
                             name="arrow-down-drop-circle"
                             onPress={() => {
                                 navigation.goBack();
@@ -247,6 +248,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
 
                         <Icon
+                            color={theme.white.val}
                             name="playlist-music"
                             onPress={() => {
                                 navigation.navigate("Queue");

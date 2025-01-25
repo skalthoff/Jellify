@@ -34,7 +34,7 @@ const jellifyConfig = createTamagui({
       dark_inverted_purple: {
         color: tokens.color.purpleDark,
         borderColor: tokens.color.amethyst,
-        background: tokens.color.white
+        background: tokens.color.amethyst
       },
       light: {
         background: tokens.color.white,
@@ -42,7 +42,7 @@ const jellifyConfig = createTamagui({
         color: tokens.color.purpleDark
       },
       light_inverted_purple: {
-        color: tokens.color.purpleDark,
+        color: tokens.color.amethyst,
         borderColor: tokens.color.purpleGray,
         background: tokens.color.amethyst
       }
