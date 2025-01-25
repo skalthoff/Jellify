@@ -12,7 +12,8 @@ import { PortalProvider } from "tamagui";
 import Client from "../api/client";
 import { JellifyProvider, useJellifyContext } from "./provider";
 import { CarPlay } from "react-native-carplay"
-import JellifyCarplay from "./carplay";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NowPlaying } from "./CarPlay/NowPlaying";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -24,6 +25,8 @@ export default function Jellify(): React.JSX.Element {
     </PortalProvider>
   );
 }
+
+const CarPlayStack = createStackNavigator();
 
 function App(): React.JSX.Element {
 
@@ -60,8 +63,10 @@ function App(): React.JSX.Element {
   return carPlayConnected ? (
     <NavigationContainer>
         { loggedIn ? (
-              <></>
-            ) : (
+            <CarPlayStack.Navigator initialRouteName="NowPlaying">
+              <CarPlayStack.Screen name="NowPlaying" component={NowPlaying} />
+            </CarPlayStack.Navigator>
+          ) : (
             <View>
               <Text>Please login in the app before using CarPlay</Text>
             </View>
