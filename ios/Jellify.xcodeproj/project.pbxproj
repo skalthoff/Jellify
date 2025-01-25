@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* JellifyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* JellifyTests.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		172B159DEECEA03B59A47B38 /* Pods_Jellify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B09B5C902A2F3CC48BD0A0 /* Pods_Jellify.framework */; };
+		1A54BD4268E3B9223ACD0ACE /* libPods-Jellify-JellifyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3FC2EF41A48FB4677060580 /* libPods-Jellify-JellifyTests.a */; };
 		217EBE16A3E8C5FBF476C905 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F757EB73303E0AC21EF34F64 /* PrivacyInfo.xcprivacy */; };
+		445DD5C8B4E05137BA74B472 /* libPods-Jellify.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35BDC69D4A828E041848E705 /* libPods-Jellify.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		881EBE3FE9362EB8E8594837 /* Pods_Jellify_JellifyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E68D0EA500FA5AB01EC4D6E6 /* Pods_Jellify_JellifyTests.framework */; };
 		CF620D0C2CF2BB210045E433 /* Aileron-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFC2CF2BB1F0045E433 /* Aileron-Italic.otf */; };
 		CF620D0D2CF2BB210045E433 /* Aileron-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFD2CF2BB1F0045E433 /* Aileron-Thin.otf */; };
 		CF620D0E2CF2BB210045E433 /* Aileron-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620CFE2CF2BB1F0045E433 /* Aileron-HeavyItalic.otf */; };
@@ -29,6 +29,32 @@
 		CF620D192CF2BB210045E433 /* Aileron-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D092CF2BB200045E433 /* Aileron-Black.otf */; };
 		CF620D1A2CF2BB210045E433 /* Aileron-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D0A2CF2BB200045E433 /* Aileron-ThinItalic.otf */; };
 		CF620D1B2CF2BB210045E433 /* Aileron-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D0B2CF2BB200045E433 /* Aileron-SemiBold.otf */; };
+		CF68914D2D45316A00F1279C /* Aileron-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891312D45316A00F1279C /* Aileron-Black.otf */; };
+		CF68914E2D45316A00F1279C /* icon_1024pt_1x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF68914A2D45316A00F1279C /* icon_1024pt_1x.jpg */; };
+		CF68914F2D45316A00F1279C /* Aileron-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891382D45316A00F1279C /* Aileron-Light.otf */; };
+		CF6891502D45316A00F1279C /* Aileron-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913A2D45316A00F1279C /* Aileron-Regular.otf */; };
+		CF6891512D45316A00F1279C /* Aileron-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891372D45316A00F1279C /* Aileron-Italic.otf */; };
+		CF6891522D45316A00F1279C /* Aileron-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891352D45316A00F1279C /* Aileron-Heavy.otf */; };
+		CF6891532D45316A00F1279C /* Aileron-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891342D45316A00F1279C /* Aileron-BoldItalic.otf */; };
+		CF6891542D45316A00F1279C /* icon_20pt_2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891422D45316A00F1279C /* icon_20pt_2x.jpg */; };
+		CF6891552D45316A00F1279C /* Aileron-UltraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913F2D45316A00F1279C /* Aileron-UltraLight.otf */; };
+		CF6891562D45316A00F1279C /* icon_29pt_2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891442D45316A00F1279C /* icon_29pt_2x.jpg */; };
+		CF6891572D45316A00F1279C /* Aileron-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891362D45316A00F1279C /* Aileron-HeavyItalic.otf */; };
+		CF6891582D45316A00F1279C /* icon_40pt_3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891472D45316A00F1279C /* icon_40pt_3x.jpg */; };
+		CF6891592D45316A00F1279C /* icon_40pt_2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891462D45316A00F1279C /* icon_40pt_2x.jpg */; };
+		CF68915A2D45316A00F1279C /* icon_original.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = CF68914B2D45316A00F1279C /* icon_original.jpeg */; };
+		CF68915B2D45316A00F1279C /* Aileron-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913C2D45316A00F1279C /* Aileron-SemiBoldItalic.otf */; };
+		CF68915C2D45316A00F1279C /* Aileron-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891332D45316A00F1279C /* Aileron-Bold.otf */; };
+		CF68915D2D45316A00F1279C /* icon_60pt_3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891492D45316A00F1279C /* icon_60pt_3x.jpg */; };
+		CF68915E2D45316A00F1279C /* icon_60pt_2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891482D45316A00F1279C /* icon_60pt_2x.jpg */; };
+		CF68915F2D45316A00F1279C /* Aileron-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891322D45316A00F1279C /* Aileron-BlackItalic.otf */; };
+		CF6891602D45316A00F1279C /* icon_20pt_3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891432D45316A00F1279C /* icon_20pt_3x.jpg */; };
+		CF6891612D45316A00F1279C /* Aileron-UltraLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891402D45316A00F1279C /* Aileron-UltraLightItalic.otf */; };
+		CF6891622D45316A00F1279C /* icon_29pt_3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891452D45316A00F1279C /* icon_29pt_3x.jpg */; };
+		CF6891632D45316A00F1279C /* Aileron-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891392D45316A00F1279C /* Aileron-LightItalic.otf */; };
+		CF6891642D45316A00F1279C /* Aileron-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913E2D45316A00F1279C /* Aileron-ThinItalic.otf */; };
+		CF6891652D45316A00F1279C /* Aileron-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913D2D45316A00F1279C /* Aileron-Thin.otf */; };
+		CF6891662D45316A00F1279C /* Aileron-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913B2D45316A00F1279C /* Aileron-SemiBold.otf */; };
 		CF71790B2CBC486C0021BCA3 /* dummy-rntp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF71790A2CBC486C0021BCA3 /* dummy-rntp.swift */; };
 		CF98CA472D3E99E0003D88B7 /* CarScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF98CA452D3E99DF003D88B7 /* CarScene.swift */; };
 		CF98CA482D3E99E0003D88B7 /* PhoneScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF98CA462D3E99DF003D88B7 /* PhoneScene.swift */; };
@@ -53,7 +79,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Jellify/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Jellify/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = Jellify/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		38B09B5C902A2F3CC48BD0A0 /* Pods_Jellify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jellify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		35BDC69D4A828E041848E705 /* libPods-Jellify.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Jellify.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B6622EAB81CD73F7F18C4A4 /* Pods-Jellify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jellify.debug.xcconfig"; path = "Target Support Files/Pods-Jellify/Pods-Jellify.debug.xcconfig"; sourceTree = "<group>"; };
 		47F8F23DBB1E6482816F1E11 /* Pods-Jellify-JellifyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jellify-JellifyTests.debug.xcconfig"; path = "Target Support Files/Pods-Jellify-JellifyTests/Pods-Jellify-JellifyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		61D59F7A2E3DAFA5DF396506 /* Pods-Jellify-JellifyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jellify-JellifyTests.release.xcconfig"; path = "Target Support Files/Pods-Jellify-JellifyTests/Pods-Jellify-JellifyTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -75,13 +101,39 @@
 		CF620D0A2CF2BB200045E433 /* Aileron-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-ThinItalic.otf"; path = "../assets/fonts/Aileron-ThinItalic.otf"; sourceTree = "<group>"; };
 		CF620D0B2CF2BB200045E433 /* Aileron-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Aileron-SemiBold.otf"; path = "../assets/fonts/Aileron-SemiBold.otf"; sourceTree = "<group>"; };
 		CF6588752D25C12400AECE18 /* Jellify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Jellify.entitlements; path = Jellify/Jellify.entitlements; sourceTree = "<group>"; };
+		CF6891312D45316A00F1279C /* Aileron-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-Black.otf"; sourceTree = "<group>"; };
+		CF6891322D45316A00F1279C /* Aileron-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-BlackItalic.otf"; sourceTree = "<group>"; };
+		CF6891332D45316A00F1279C /* Aileron-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-Bold.otf"; sourceTree = "<group>"; };
+		CF6891342D45316A00F1279C /* Aileron-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-BoldItalic.otf"; sourceTree = "<group>"; };
+		CF6891352D45316A00F1279C /* Aileron-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-Heavy.otf"; sourceTree = "<group>"; };
+		CF6891362D45316A00F1279C /* Aileron-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-HeavyItalic.otf"; sourceTree = "<group>"; };
+		CF6891372D45316A00F1279C /* Aileron-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-Italic.otf"; sourceTree = "<group>"; };
+		CF6891382D45316A00F1279C /* Aileron-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-Light.otf"; sourceTree = "<group>"; };
+		CF6891392D45316A00F1279C /* Aileron-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-LightItalic.otf"; sourceTree = "<group>"; };
+		CF68913A2D45316A00F1279C /* Aileron-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-Regular.otf"; sourceTree = "<group>"; };
+		CF68913B2D45316A00F1279C /* Aileron-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-SemiBold.otf"; sourceTree = "<group>"; };
+		CF68913C2D45316A00F1279C /* Aileron-SemiBoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-SemiBoldItalic.otf"; sourceTree = "<group>"; };
+		CF68913D2D45316A00F1279C /* Aileron-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-Thin.otf"; sourceTree = "<group>"; };
+		CF68913E2D45316A00F1279C /* Aileron-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-ThinItalic.otf"; sourceTree = "<group>"; };
+		CF68913F2D45316A00F1279C /* Aileron-UltraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-UltraLight.otf"; sourceTree = "<group>"; };
+		CF6891402D45316A00F1279C /* Aileron-UltraLightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-UltraLightItalic.otf"; sourceTree = "<group>"; };
+		CF6891422D45316A00F1279C /* icon_20pt_2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_20pt_2x.jpg; sourceTree = "<group>"; };
+		CF6891432D45316A00F1279C /* icon_20pt_3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_20pt_3x.jpg; sourceTree = "<group>"; };
+		CF6891442D45316A00F1279C /* icon_29pt_2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_29pt_2x.jpg; sourceTree = "<group>"; };
+		CF6891452D45316A00F1279C /* icon_29pt_3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_29pt_3x.jpg; sourceTree = "<group>"; };
+		CF6891462D45316A00F1279C /* icon_40pt_2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_40pt_2x.jpg; sourceTree = "<group>"; };
+		CF6891472D45316A00F1279C /* icon_40pt_3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_40pt_3x.jpg; sourceTree = "<group>"; };
+		CF6891482D45316A00F1279C /* icon_60pt_2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_60pt_2x.jpg; sourceTree = "<group>"; };
+		CF6891492D45316A00F1279C /* icon_60pt_3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_60pt_3x.jpg; sourceTree = "<group>"; };
+		CF68914A2D45316A00F1279C /* icon_1024pt_1x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_1024pt_1x.jpg; sourceTree = "<group>"; };
+		CF68914B2D45316A00F1279C /* icon_original.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_original.jpeg; sourceTree = "<group>"; };
 		CF7179092CBC486C0021BCA3 /* Jellify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jellify-Bridging-Header.h"; sourceTree = "<group>"; };
 		CF71790A2CBC486C0021BCA3 /* dummy-rntp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "dummy-rntp.swift"; sourceTree = "<group>"; };
 		CF98CA442D3E99DF003D88B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF98CA452D3E99DF003D88B7 /* CarScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarScene.swift; sourceTree = "<group>"; };
 		CF98CA462D3E99DF003D88B7 /* PhoneScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneScene.swift; sourceTree = "<group>"; };
 		D0DF149772F72EE36A16DED9 /* Pods-Jellify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jellify.release.xcconfig"; path = "Target Support Files/Pods-Jellify/Pods-Jellify.release.xcconfig"; sourceTree = "<group>"; };
-		E68D0EA500FA5AB01EC4D6E6 /* Pods_Jellify_JellifyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jellify_JellifyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3FC2EF41A48FB4677060580 /* libPods-Jellify-JellifyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Jellify-JellifyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F757EB73303E0AC21EF34F64 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Jellify/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,7 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				881EBE3FE9362EB8E8594837 /* Pods_Jellify_JellifyTests.framework in Frameworks */,
+				1A54BD4268E3B9223ACD0ACE /* libPods-Jellify-JellifyTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,7 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				172B159DEECEA03B59A47B38 /* Pods_Jellify.framework in Frameworks */,
+				445DD5C8B4E05137BA74B472 /* libPods-Jellify.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,8 +197,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				38B09B5C902A2F3CC48BD0A0 /* Pods_Jellify.framework */,
-				E68D0EA500FA5AB01EC4D6E6 /* Pods_Jellify_JellifyTests.framework */,
+				35BDC69D4A828E041848E705 /* libPods-Jellify.a */,
+				E3FC2EF41A48FB4677060580 /* libPods-Jellify-JellifyTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -161,6 +213,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				CF68914C2D45316A00F1279C /* assets */,
 				CF620D092CF2BB200045E433 /* Aileron-Black.otf */,
 				CF620D062CF2BB200045E433 /* Aileron-BlackItalic.otf */,
 				CF620D082CF2BB200045E433 /* Aileron-Bold.otf */,
@@ -208,6 +261,48 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		CF6891412D45316A00F1279C /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				CF6891312D45316A00F1279C /* Aileron-Black.otf */,
+				CF6891322D45316A00F1279C /* Aileron-BlackItalic.otf */,
+				CF6891332D45316A00F1279C /* Aileron-Bold.otf */,
+				CF6891342D45316A00F1279C /* Aileron-BoldItalic.otf */,
+				CF6891352D45316A00F1279C /* Aileron-Heavy.otf */,
+				CF6891362D45316A00F1279C /* Aileron-HeavyItalic.otf */,
+				CF6891372D45316A00F1279C /* Aileron-Italic.otf */,
+				CF6891382D45316A00F1279C /* Aileron-Light.otf */,
+				CF6891392D45316A00F1279C /* Aileron-LightItalic.otf */,
+				CF68913A2D45316A00F1279C /* Aileron-Regular.otf */,
+				CF68913B2D45316A00F1279C /* Aileron-SemiBold.otf */,
+				CF68913C2D45316A00F1279C /* Aileron-SemiBoldItalic.otf */,
+				CF68913D2D45316A00F1279C /* Aileron-Thin.otf */,
+				CF68913E2D45316A00F1279C /* Aileron-ThinItalic.otf */,
+				CF68913F2D45316A00F1279C /* Aileron-UltraLight.otf */,
+				CF6891402D45316A00F1279C /* Aileron-UltraLightItalic.otf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		CF68914C2D45316A00F1279C /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				CF6891412D45316A00F1279C /* fonts */,
+				CF6891422D45316A00F1279C /* icon_20pt_2x.jpg */,
+				CF6891432D45316A00F1279C /* icon_20pt_3x.jpg */,
+				CF6891442D45316A00F1279C /* icon_29pt_2x.jpg */,
+				CF6891452D45316A00F1279C /* icon_29pt_3x.jpg */,
+				CF6891462D45316A00F1279C /* icon_40pt_2x.jpg */,
+				CF6891472D45316A00F1279C /* icon_40pt_3x.jpg */,
+				CF6891482D45316A00F1279C /* icon_60pt_2x.jpg */,
+				CF6891492D45316A00F1279C /* icon_60pt_3x.jpg */,
+				CF68914A2D45316A00F1279C /* icon_1024pt_1x.jpg */,
+				CF68914B2D45316A00F1279C /* icon_original.jpeg */,
+			);
+			name = assets;
+			path = ../assets;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -320,6 +415,32 @@
 				CF620D1B2CF2BB210045E433 /* Aileron-SemiBold.otf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				CF68914D2D45316A00F1279C /* Aileron-Black.otf in Resources */,
+				CF68914E2D45316A00F1279C /* icon_1024pt_1x.jpg in Resources */,
+				CF68914F2D45316A00F1279C /* Aileron-Light.otf in Resources */,
+				CF6891502D45316A00F1279C /* Aileron-Regular.otf in Resources */,
+				CF6891512D45316A00F1279C /* Aileron-Italic.otf in Resources */,
+				CF6891522D45316A00F1279C /* Aileron-Heavy.otf in Resources */,
+				CF6891532D45316A00F1279C /* Aileron-BoldItalic.otf in Resources */,
+				CF6891542D45316A00F1279C /* icon_20pt_2x.jpg in Resources */,
+				CF6891552D45316A00F1279C /* Aileron-UltraLight.otf in Resources */,
+				CF6891562D45316A00F1279C /* icon_29pt_2x.jpg in Resources */,
+				CF6891572D45316A00F1279C /* Aileron-HeavyItalic.otf in Resources */,
+				CF6891582D45316A00F1279C /* icon_40pt_3x.jpg in Resources */,
+				CF6891592D45316A00F1279C /* icon_40pt_2x.jpg in Resources */,
+				CF68915A2D45316A00F1279C /* icon_original.jpeg in Resources */,
+				CF68915B2D45316A00F1279C /* Aileron-SemiBoldItalic.otf in Resources */,
+				CF68915C2D45316A00F1279C /* Aileron-Bold.otf in Resources */,
+				CF68915D2D45316A00F1279C /* icon_60pt_3x.jpg in Resources */,
+				CF68915E2D45316A00F1279C /* icon_60pt_2x.jpg in Resources */,
+				CF68915F2D45316A00F1279C /* Aileron-BlackItalic.otf in Resources */,
+				CF6891602D45316A00F1279C /* icon_20pt_3x.jpg in Resources */,
+				CF6891612D45316A00F1279C /* Aileron-UltraLightItalic.otf in Resources */,
+				CF6891622D45316A00F1279C /* icon_29pt_3x.jpg in Resources */,
+				CF6891632D45316A00F1279C /* Aileron-LightItalic.otf in Resources */,
+				CF6891642D45316A00F1279C /* Aileron-ThinItalic.otf in Resources */,
+				CF6891652D45316A00F1279C /* Aileron-Thin.otf in Resources */,
+				CF6891662D45316A00F1279C /* Aileron-SemiBold.otf in Resources */,
 				217EBE16A3E8C5FBF476C905 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -690,10 +811,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -778,10 +896,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
