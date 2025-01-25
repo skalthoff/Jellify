@@ -22,7 +22,6 @@ export default function IconCard({
             margin={5}
             >
             <Card 
-                elevate 
                 borderRadius={"$7"}
                 animation="bouncy"
                 hoverStyle={{ scale: 0.925 }}

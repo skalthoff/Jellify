@@ -34,7 +34,6 @@ export function ItemCard(props: CardProps) {
             margin={5}
             >
             <TamaguiCard 
-                elevate 
                 size="$4" 
                 borderRadius={props.cornered ? 2 : 25}
                 animation="bouncy"

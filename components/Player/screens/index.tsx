@@ -209,7 +209,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         />
 
                         {/* I really wanted a big clunky play button */}
-                        <PlayPauseButton size={width / 8} />
+                        <PlayPauseButton size={width / 7} />
 
                         <Icon 
                             large
@@ -232,6 +232,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         <Icon
                             color={theme.color.val}
                             name="speaker-multiple"
+                            large
                         />
 
                         <Spacer />
@@ -242,6 +243,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             onPress={() => {
                                 navigation.goBack();
                             }}
+                            large
                         />
 
                         <Spacer />
@@ -253,6 +255,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             onPress={() => {
                                 navigation.navigate("Queue");
                             }}
+                            large
                         />
                     </XStack>
                 </YStack>
