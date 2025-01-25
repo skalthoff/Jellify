@@ -8,6 +8,7 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 import BlurhashedImage from "../helpers/blurhashed-image";
 import Icon from "../helpers/icon";
 import { QueuingType } from "../../../enums/queuing-type";
+import { RunTimeTicks } from "../helpers/time-codes";
 
 export default function Item({ 
     item,
@@ -74,18 +75,26 @@ export default function Item({
 
                 <YStack 
                     marginLeft={"$1"}
+                    alignContent="center"
                     justifyContent="flex-start"
                     flex={5}
                 >
                     <Text bold>{ item.Name ?? ""}</Text>
-                    { item.Type === 'Audio' || item.Type === 'MusicAlbum' ? (
+                    { item.Type === 'Audio' || item.Type === 'MusicAlbum' && (
                         <Text>{ item.AlbumArtist ?? "Untitled Artist" }</Text>
+                    )}
+                </YStack>
+
+                <YStack alignContent="flex-end">
+                    { item.Type ==='Audio' ? (
+                        <RunTimeTicks>{item.RunTimeTicks}</RunTimeTicks>
                     ) : (
                         <Spacer />
                     )}
                 </YStack>
 
-                <XStack alignContent="flex-end" flex={2}>
+
+                <XStack alignItems="flex-end" flex={2}>
                     { item.UserData?.IsFavorite ? (
                         <Icon 
                             small
