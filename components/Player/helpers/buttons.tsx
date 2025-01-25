@@ -12,7 +12,7 @@ export default function PlayPauseButton() : React.JSX.Element {
 
     switch (playbackState) {
         case (State.Playing) : {
-            button = <IconButton name="pause" onPress={() => useTogglePlayback.mutate(undefined)} />;
+            button = <IconButton circular name="pause" onPress={() => useTogglePlayback.mutate(undefined)} />;
             break;
         }
     
@@ -23,7 +23,7 @@ export default function PlayPauseButton() : React.JSX.Element {
         }
         
         default : {
-            button = <IconButton name="play" onPress={() => useTogglePlayback.mutate(undefined)} />
+            button = <IconButton circular name="play" onPress={() => useTogglePlayback.mutate(undefined)} />
             break;
         }
     }

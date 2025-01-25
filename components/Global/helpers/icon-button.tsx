@@ -5,12 +5,14 @@ import Icon from "./icon";
 interface IconButtonProps {
     onPress: () => void;
     name: string;
+    circular?: boolean | undefined;
     size?: number;
 }
 
 export default function IconButton({
     name,
     onPress,
+    circular,
     size
 } : IconButtonProps) : React.JSX.Element {
 
@@ -19,6 +21,7 @@ export default function IconButton({
 
             <Square
                 animation={"quick"}
+                circular={circular}
                 elevate
                 hoverStyle={{ scale: 0.925 }}
                 pressStyle={{ scale: 0.875 }}
@@ -27,7 +30,7 @@ export default function IconButton({
                 height={size}
                 alignContent="center"
                 justifyContent="center"
-                backgroundColor={"$backgroundColor"}
+                backgroundColor={"$background"}
                 >
                     <Icon 
                         large

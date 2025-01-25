@@ -28,7 +28,7 @@ export default function Icon({
     return (
         <MaterialCommunityIcons 
             color={color ? color 
-                : isDarkMode ? getTokens().color.$white.val 
+                : isDarkMode ? getTokens().color.$amethyst.val 
                 : getTokens().color.$purpleDark.val
             }
             name={name} 
