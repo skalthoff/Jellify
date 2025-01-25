@@ -11,7 +11,7 @@ import { useItemTracks } from "../../api/queries/tracks";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
 import { useEffect } from "react";
-import BlurhashedImage from "../Global/helpers/blurhashed-image";
+import BlurhashedImage from "../Global/components/blurhashed-image";
 
 interface AlbumProps {
     album: BaseItemDto,

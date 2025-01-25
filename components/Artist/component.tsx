@@ -1,7 +1,7 @@
 import { ScrollView, YStack } from "tamagui";
 import { useArtistAlbums } from "../../api/queries/artist";
 import { FlatList } from "react-native";
-import { ItemCard } from "../Global/helpers/item-card";
+import { ItemCard } from "../Global/components/item-card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
 import { H2 } from "../Global/helpers/text";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
-import BlurhashedImage from "../Global/helpers/blurhashed-image";
+import BlurhashedImage from "../Global/components/blurhashed-image";
 
 interface ArtistProps {
     artist: BaseItemDto

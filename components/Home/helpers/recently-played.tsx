@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
-import { ItemCard } from "../../Global/helpers/item-card";
+import { ItemCard } from "../../Global/components/item-card";
 import { usePlayerContext } from "../../../player/provider";
 import { StackParamList } from "../../../components/types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";

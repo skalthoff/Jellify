@@ -10,7 +10,7 @@ import Track from "../Global/components/track";
 import { FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
-import BlurhashedImage from "../Global/helpers/blurhashed-image";
+import BlurhashedImage from "../Global/components/blurhashed-image";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;

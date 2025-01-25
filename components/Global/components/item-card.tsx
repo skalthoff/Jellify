@@ -4,7 +4,7 @@ import { H5, Card as TamaguiCard, View } from "tamagui";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
-import { Text } from "./text";
+import { Text } from "../helpers/text";
 import BlurhashedImage from "./blurhashed-image";
 
 interface CardProps extends TamaguiCardProps {

@@ -4,7 +4,7 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { StackParamList } from "../types";
 import TrackOptions from "./helpers/TrackOptions";
 import { ScrollView, Spacer, useTheme, View, XStack, YStack } from "tamagui";
-import BlurhashedImage from "../Global/helpers/blurhashed-image";
+import BlurhashedImage from "../Global/components/blurhashed-image";
 import { Text } from "../Global/helpers/text";
 import FavoriteButton from "../Global/components/favorite-button";
 import { useEffect } from "react";

@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Separator, Spacer, useTheme, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
-import BlurhashedImage from "../helpers/blurhashed-image";
+import BlurhashedImage from "./blurhashed-image";
 import Icon from "../helpers/icon";
 import { QueuingType } from "../../../enums/queuing-type";
 import { RunTimeTicks } from "../helpers/time-codes";
@@ -79,28 +79,27 @@ export default function Item({
                     justifyContent="flex-start"
                     flex={3}
                 >
-                    <Text bold>{ item.Name ?? ""}</Text>
+                    <Text 
+                        bold
+                        lineBreakStrategyIOS="standard"
+                        numberOfLines={1}
+                    >
+                        { item.Name ?? ""}
+                    </Text>
                     { (item.Type === 'Audio' || item.Type === 'MusicAlbum') && (
-                        <Text>{ item.AlbumArtist ?? "Untitled Artist" }</Text>
+                        <Text
+                            lineBreakStrategyIOS="standard"
+                            numberOfLines={1}
+                        >
+                            { item.AlbumArtist ?? "Untitled Artist" }
+                        </Text>
                     )}
                 </YStack>
 
-                {/* Runtime ticks for Songs */}
-                <YStack 
-                    justifyContent="center" 
-                    alignItems="flex-end"
-                    flex={1}
-                >
-                    { item.Type ==='Audio' ? (
-                        <RunTimeTicks>{item.RunTimeTicks}</RunTimeTicks>
-                    ) : (
-                        <Spacer />
-                    )}
-                </YStack>
 
 
                 <XStack 
-                    justifyContent="center"
+                    justifyContent="space-between"
                     alignItems="flex-end" 
                     flex={1}
                 >
@@ -110,6 +109,12 @@ export default function Item({
                             color={theme.telemagenta.val}
                             name="heart"
                         />
+                    ) : (
+                        <Spacer />
+                    )}
+                    {/* Runtime ticks for Songs */}
+                    { item.Type ==='Audio' ? (
+                        <RunTimeTicks>{item.RunTimeTicks}</RunTimeTicks>
                     ) : (
                         <Spacer />
                     )}

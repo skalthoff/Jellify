@@ -2,7 +2,7 @@ import { useFavoriteArtists } from "../../api/queries/favorites";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import React from "react";
 import { FlatList, RefreshControl } from "react-native";
-import { ItemCard } from "../Global/helpers/item-card";
+import { ItemCard } from "../Global/components/item-card";
 import { ArtistsProps } from "../types";
 
 export default function Artists({ navigation }: ArtistsProps): React.JSX.Element {

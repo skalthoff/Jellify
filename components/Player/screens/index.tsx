@@ -10,7 +10,7 @@ import PlayPauseButton from "../helpers/buttons";
 import { H5, Text } from "../../../components/Global/helpers/text";
 import Icon from "../../../components/Global/helpers/icon";
 import FavoriteButton from "../../Global/components/favorite-button";
-import BlurhashedImage from "../../../components/Global/helpers/blurhashed-image";
+import BlurhashedImage from "../../Global/components/blurhashed-image";
 import TextTicker from "react-native-text-ticker";
 import { TextTickerConfig } from "../component.config";
 

@@ -9,7 +9,7 @@ import TextTicker from 'react-native-text-ticker';
 import PlayPauseButton from "./helpers/buttons";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { TextTickerConfig } from "./component.config";
-import BlurhashedImage from "../Global/helpers/blurhashed-image";
+import BlurhashedImage from "../Global/components/blurhashed-image";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 

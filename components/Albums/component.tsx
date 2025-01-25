@@ -1,7 +1,7 @@
 import { useFavoriteAlbums } from "../../api/queries/favorites";
 import { AlbumsProps } from "../types";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { ItemCard } from "../Global/helpers/item-card";
+import { ItemCard } from "../Global/components/item-card";
 import { FlatList, RefreshControl } from "react-native";
 
 export default function Albums({ navigation }: AlbumsProps) : React.JSX.Element {

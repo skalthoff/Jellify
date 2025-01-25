@@ -4,7 +4,7 @@ import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import { StackParamList } from "../../types";
 import { FlatList } from "react-native";
-import { ItemCard } from "../../Global/helpers/item-card";
+import { ItemCard } from "../../Global/components/item-card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function RecentArtists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {

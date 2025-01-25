@@ -9,7 +9,7 @@ import Icon from "../helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../../components/types";
 import { QueuingType } from "../../../enums/queuing-type";
-import BlurhashedImage from "../helpers/blurhashed-image";
+import BlurhashedImage from "./blurhashed-image";
 
 interface TrackProps {
     track: BaseItemDto;
