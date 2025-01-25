@@ -8,6 +8,7 @@ import { FlatList } from "react-native";
 import { QueryKeys } from "../../enums/query-keys";
 import { fetchSearchResults } from "../../api/queries/functions/search";
 import { useQuery } from "@tanstack/react-query";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Search({ 
     navigation
@@ -35,23 +36,22 @@ export default function Search({
     }
 
     return (
-        <FlatList
-            contentInsetAdjustmentBehavior="automatic"
-            ListHeaderComponent={() => {
-                return (
-                    <Input
-                        placeholder="The Seeker"
-                        onChangeText={(value) => handleSearchStringUpdate(value)}
-                        value={searchString}
-                    />
-                )
-            }}
-            data={items}
-            renderItem={({ index, item }) => {
-                return (
-                    <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
-                )
-            }} 
-        />
+        <SafeAreaView>
+            <Input
+            placeholder="Search and ye shall find..."
+            onChangeText={(value) => handleSearchStringUpdate(value)}
+            value={searchString}
+            />
+
+            <FlatList
+                contentInsetAdjustmentBehavior="automatic"
+                data={items}
+                renderItem={({ index, item }) => {
+                    return (
+                        <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
+                    )
+                }} 
+                />
+        </SafeAreaView>
     )
 }
