@@ -1,4 +1,4 @@
-import { fetchRecentlyPlayedArtists } from "@/api/queries/functions/recents";
+import { fetchRecentlyPlayedArtists } from "../../api/queries/functions/recents";
 import { GridTemplate } from "react-native-carplay";
 
 const recentArtists = fetchRecentlyPlayedArtists()
