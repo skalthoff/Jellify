@@ -59,10 +59,10 @@ export default function ItemDetail({
 
     return (
         <SafeAreaView edges={["top", "right", "left"]}>
-            <YStack alignContent="center" justifyContent="flex-start">
+            <YStack justifyContent="center" flex={1}>
                 <BlurhashedImage
                     item={item}
-                    size={width / 2}
+                    size={width / 1.5}
                 />
 
                 <YStack 
