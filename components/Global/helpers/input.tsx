@@ -21,6 +21,7 @@ export default function Input(props: InputProps): React.JSX.Element {
             value={props.value}
             flexGrow={props.flexGrow ? 1 : "unset"}
             secureTextEntry={props.secureTextEntry}
+            clearButtonMode="always"
         />
     )
 }
