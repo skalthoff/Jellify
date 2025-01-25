@@ -120,7 +120,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         <XStack 
                             justifyContent="flex-end" 
                             alignItems="center" 
-                            flex={1}
+                            flex={2}
                         >
                             {/* Buttons for favorites, song menu go here */}
 
