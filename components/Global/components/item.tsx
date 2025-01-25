@@ -105,6 +105,7 @@ export default function Item({
                 >
                     { item.UserData?.IsFavorite ? (
                         <Icon 
+                            small
                             color={theme.telemagenta.val}
                             name="heart"
                         />

@@ -130,7 +130,7 @@ export default function Track({
                         alignContent="center"
                         justifyContent="center"
                     >
-                        <Icon small name="dots-vertical" onPress={() => {
+                        <Icon name="dots-vertical" onPress={() => {
                             navigation.push("Details", {
                                 item: track,
                                 isNested: isNested
