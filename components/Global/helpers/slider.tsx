@@ -11,11 +11,11 @@ interface SliderProps {
 
 const JellifySliderThumb = styled(Slider.Thumb, {
     backgroundColor: getTokens().color.$telemagenta,
-    borderColor: getTokens().color.$purpleGray,
+    borderColor: getTokens().color.$grape,
 })
 
 const JellifySliderTrack = styled(Slider.Track, {
-    backgroundColor: getTokens().color.$purpleGray
+    backgroundColor: getTokens().color.$grape
 });
 
 const JellifyActiveSliderTrack = styled(Slider.TrackActive, {

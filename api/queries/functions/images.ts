@@ -10,8 +10,8 @@ export function fetchItemImage(itemId: string, imageType?: ImageType, size?: num
         .getItemImage({ 
             itemId, 
             imageType: imageType ? imageType : ImageType.Primary,
-            width: size ?? QueryConfig.playerArtwork.width,
-            height: size ?? QueryConfig.playerArtwork.height
+            width: size ? Math.floor(size) : QueryConfig.playerArtwork.width,
+            height: size ? Math.floor(size) : QueryConfig.playerArtwork.height
         }, {
             responseType: 'blob'
         })
