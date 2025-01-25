@@ -187,7 +187,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     </XStack>
 
                     <XStack 
-                        alignContent="center" 
+                        alignItems="center" 
                         justifyContent="space-evenly" 
                         marginVertical={"$3"}
                     >
