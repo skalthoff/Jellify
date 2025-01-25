@@ -1,11 +1,11 @@
-import { usePlayerContext } from "@/player/provider";
+import { usePlayerContext } from "../../../player/provider";
 import { useItem } from "../../../api/queries/item";
 import Icon from "../../../components/Global/helpers/icon";
 import { StackParamList } from "../../../components/types";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { XStack } from "tamagui";
-import { QueuingType } from "@/enums/queuing-type";
+import { QueuingType } from "../../../enums/queuing-type";
 
 export default function TrackOptions({ 
     item, 
