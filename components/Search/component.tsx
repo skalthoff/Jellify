@@ -7,7 +7,7 @@ import { StackParamList } from "../types";
 import { QueryKeys } from "../../enums/query-keys";
 import { fetchSearchResults } from "../../api/queries/functions/search";
 import { useQuery } from "@tanstack/react-query";
-import { FlatList } from "react-native";
+import { FlatList, useColorScheme } from "react-native";
 
 export default function Search({ 
     navigation
@@ -15,6 +15,7 @@ export default function Search({
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 
+    const isDarkMode = useColorScheme() === 'dark';
     const [searchString, setSearchString] = useState<string | undefined>(undefined);
 
     const { data: items, refetch, isFetched, isFetching } = useQuery({
@@ -38,6 +39,7 @@ export default function Search({
         <FlatList
             contentInsetAdjustmentBehavior="automatic"
             progressViewOffset={10}
+            indicatorStyle={isDarkMode ? 'white' : 'default'}
             ListHeaderComponent={(
                 <Input
                     placeholder="Seek and ye shall find..."

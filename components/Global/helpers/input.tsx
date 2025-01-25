@@ -1,17 +1,10 @@
 import React from 'react';
-import { Input as TamaguiInput, useTheme} from 'tamagui';
+import { Input as TamaguiInput, InputProps as TamaguiInputProps} from 'tamagui';
 
-interface InputProps {
-    onChangeText: (value: string | undefined) => void,
-    placeholder: string
-    value: string | undefined;
-    secureTextEntry?: boolean | undefined;
-    flexGrow?: boolean | undefined
+interface InputProps extends TamaguiInputProps {
 }
 
 export default function Input(props: InputProps): React.JSX.Element {
-
-    const theme = useTheme();
 
     return (
         <TamaguiInput 

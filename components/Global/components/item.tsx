@@ -76,6 +76,7 @@ export default function Item({
                 <YStack 
                     marginLeft={"$1"}
                     alignContent="center"
+                    alignItems="center"
                     justifyContent="flex-start"
                     flex={3}
                 >
