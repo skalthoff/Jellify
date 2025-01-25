@@ -112,12 +112,12 @@ const PlayerContextInitializer = () => {
     })
 
     const useTogglePlayback = useMutation({
-        mutationFn: async (index?: number | undefined) => {
+        mutationFn: (index?: number | undefined) => {
             trigger("impactMedium");
             if (playbackState === State.Playing)
-                await pause();
+                return pause();
             else 
-                await play(index);
+                return play(index);
         }
     });
 

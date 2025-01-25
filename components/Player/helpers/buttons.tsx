@@ -4,7 +4,7 @@ import { Spinner, View } from "tamagui";
 import { usePlayerContext } from "../../../player/provider";
 import IconButton from "../../../components/Global/helpers/icon-button";
 
-export default function PlayPauseButton() : React.JSX.Element {
+export default function PlayPauseButton({ size }: { size?: number | undefined }) : React.JSX.Element {
 
     const { playbackState, useTogglePlayback } = usePlayerContext();
 
@@ -12,7 +12,14 @@ export default function PlayPauseButton() : React.JSX.Element {
 
     switch (playbackState) {
         case (State.Playing) : {
-            button = <IconButton circular name="pause" onPress={() => useTogglePlayback.mutate(undefined)} />;
+            button = (
+                <IconButton 
+                    circular 
+                    size={size}
+                    name="pause" 
+                    onPress={() => useTogglePlayback.mutate(undefined)} 
+                />
+            );
             break;
         }
     
@@ -23,7 +30,14 @@ export default function PlayPauseButton() : React.JSX.Element {
         }
         
         default : {
-            button = <IconButton circular name="play" onPress={() => useTogglePlayback.mutate(undefined)} />
+            button = (
+                <IconButton 
+                    circular 
+                    size={size}
+                    name="play" 
+                    onPress={() => useTogglePlayback.mutate(undefined)} 
+                />
+            );
             break;
         }
     }

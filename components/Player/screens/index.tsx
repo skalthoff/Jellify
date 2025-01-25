@@ -203,7 +203,8 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             onPress={() => usePrevious.mutate()}
                         />
 
-                        <PlayPauseButton />
+                        {/* I really wanted a big clunky play button */}
+                        <PlayPauseButton size={width / 10} />
 
                         <Icon 
                             large
