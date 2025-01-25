@@ -17,7 +17,6 @@ import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react
 import { convertRunTimeTicksToSeconds } from "../helpers/runtimeticks";
 import Client from "../api/client";
 import { AddToQueueMutation, QueueMutation } from "./interfaces";
-import BackgroundService from 'react-native-background-actions';
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -75,11 +74,7 @@ const PlayerContextInitializer = () => {
         setShowMiniplayer(!hideMiniplayer)
     }
     
-    const addToQueue = async (tracks: JellifyTrack[] | undefined) => {
-
-        if (isUndefined(tracks)) 
-            return;
-        
+    const addToQueue = async (tracks: JellifyTrack[]) => {
         const insertIndex = await findPlayQueueIndexStart(queue);
         console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`)
         
@@ -90,11 +85,7 @@ const PlayerContextInitializer = () => {
         setShowMiniplayer(true);
     }
 
-    const addToNext = async (tracks: JellifyTrack[] | undefined) => {
-
-        if (isUndefined(tracks))
-            return;
-
+    const addToNext = async (tracks: JellifyTrack[]) => {
         const insertIndex = await findPlayNextIndexStart(queue);
 
         console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`);
@@ -112,20 +103,8 @@ const PlayerContextInitializer = () => {
         mutationFn: async (mutation: AddToQueueMutation) => {
             trigger("impactMedium");
 
-            if (mutation.queuingType === QueuingType.PlayingNext) {
-                await BackgroundService.start<JellifyTrack[]>(addToNext, {
-                    parameters: [mapDtoToTrack(mutation.track, mutation.queuingType)],
-                    taskName: "",
-                    taskTitle: "",
-                    taskDesc: "",
-                    taskIcon: {
-                        name: "",
-                        type: "",
-                        package: undefined
-                    }
-                });
-                await BackgroundService.stop();
-            }
+            if (mutation.queuingType === QueuingType.PlayingNext)
+                return addToNext([mapDtoToTrack(mutation.track, mutation.queuingType)]);
 
             else
                 return addToQueue([mapDtoToTrack(mutation.track, mutation.queuingType)])
@@ -195,21 +174,9 @@ const PlayerContextInitializer = () => {
             setNowPlaying(mapDtoToTrack(mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection));
 
             await resetQueue(false);
-
-            await BackgroundService.start(addToQueue, {
-                parameters: mutation.tracklist.map((track) => {
-                    return mapDtoToTrack(track, QueuingType.FromSelection);
-                }),
-                taskName: "",
-                taskTitle: "",
-                taskDesc: "",
-                taskIcon: {
-                    name: "",
-                    type: "",
-                    package: undefined
-                }
-            });
-            await BackgroundService.stop();
+            await addToQueue(mutation.tracklist.map((track) => {
+                return mapDtoToTrack(track, QueuingType.FromSelection)
+            }));
             
             setQueueName(mutation.queueName);
         },
