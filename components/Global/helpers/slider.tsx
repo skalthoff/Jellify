@@ -1,4 +1,3 @@
-import { Colors } from "../../../enums/colors";
 import React from "react";
 import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider, getTokens } from "tamagui";
 
@@ -10,7 +9,7 @@ interface SliderProps {
 }
 
 const JellifySliderThumb = styled(Slider.Thumb, {
-    backgroundColor: getTokens().color.$telemagenta,
+    backgroundColor: getTokens().color.$purpleDark,
     borderColor: getTokens().color.$grape,
 })
 
@@ -48,7 +47,7 @@ export function HorizontalSlider({
             <JellifySliderTrack>
                 <JellifyActiveSliderTrack />
             </JellifySliderTrack>
-            <TamaguiSlider.Thumb circular index={0} size={"$3"} />
+            <JellifySliderThumb circular index={0} size={"$3"} />
         </TamaguiSlider>
     )
 }

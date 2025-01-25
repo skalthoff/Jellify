@@ -5,7 +5,7 @@ import { headingFont, bodyFont } from './fonts.config'
 const tokens = createTokens({
   ...TamaguiTokens,
   color: {
-    purpleDark: "#070217",
+    purpleDark: "#0C0622",
     purple: "#100538",
     purpleGray: "#66617B",
     grape: "#5638BB",
@@ -32,8 +32,8 @@ const jellifyConfig = createTamagui({
       },
       dark_purple: {
         color: tokens.color.purpleDark,
-        borderColor: tokens.color.purpleGray,
-        background: tokens.color.white
+        borderColor: tokens.color.grape,
+        background: tokens.color.purpleGray
       },
       light: {
         background: tokens.color.white,

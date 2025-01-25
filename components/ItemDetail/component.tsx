@@ -3,10 +3,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { StackParamList } from "../types";
 import TrackOptions from "./helpers/TrackOptions";
-import { ScrollView, Spacer, View, XStack, YStack } from "tamagui";
+import { ScrollView, Spacer, useTheme, View, XStack, YStack } from "tamagui";
 import BlurhashedImage from "../Global/helpers/blurhashed-image";
 import { Text } from "../Global/helpers/text";
-import { Colors } from "../../enums/colors";
 import FavoriteButton from "../Global/components/favorite-button";
 import { useEffect } from "react";
 import { trigger } from "react-native-haptic-feedback";
@@ -30,6 +29,7 @@ export default function ItemDetail({
     ]);
 
     const { width } = useSafeAreaFrame();
+    const theme = useTheme();
 
     switch (item.Type) {
         case "Audio": {
@@ -87,7 +87,7 @@ export default function ItemDetail({
                     <Text 
                         textAlign="center"
                         fontSize={"$6"} 
-                        color={Colors.Primary}
+                        color={theme.telemagenta}
                         onPress={() => {
                             if (item.ArtistItems) {
 

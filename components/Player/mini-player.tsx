@@ -5,7 +5,6 @@ import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 import Icon from "../Global/helpers/icon";
 import { Text } from "../Global/helpers/text";
-import { Colors } from "../../enums/colors";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
@@ -71,7 +70,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                         </TextTicker>
 
                         <TextTicker {...TextTickerConfig}>
-                            <Text color={Colors.Primary}>{nowPlaying?.artist ?? ""}</Text>
+                            <Text color={theme.telemagenta}>{nowPlaying?.artist ?? ""}</Text>
                         </TextTicker>
                     </YStack>
                     
