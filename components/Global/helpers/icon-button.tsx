@@ -1,5 +1,5 @@
 import React from "react";
-import { Square, Theme, useTheme } from "tamagui";
+import { Square, Theme } from "tamagui";
 import Icon from "./icon";
 
 interface IconButtonProps {
