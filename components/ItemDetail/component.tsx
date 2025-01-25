@@ -80,11 +80,12 @@ export default function ItemDetail({
                     justifyContent="center"
                     flex={2}
                 >
-                    <Text bold fontSize={"$6"}>
+                    <Text textAlign="center" bold fontSize={"$6"}>
                         { item.Name ?? "Untitled Track" }
                     </Text>
 
                     <Text 
+                        textAlign="center"
                         fontSize={"$6"} 
                         color={Colors.Primary}
                         onPress={() => {
@@ -103,6 +104,7 @@ export default function ItemDetail({
                     </Text>
                         
                     <Text 
+                        textAlign="center"
                         fontSize={"$6"} 
                         color={"$purpleGray"}
                     >

@@ -46,7 +46,11 @@ export default function Album(props: AlbumProps): React.JSX.Element {
     return (
         <SafeAreaView edges={["right", "left"]}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <YStack alignItems="center" minHeight={width / 1.1}>
+                <YStack 
+                    alignItems="center" 
+                    alignContent="center"
+                    minHeight={width / 1.1}
+                >
                     <CachedImage
                         source={getImageApi(Client.api!)
                             .getItemImageUrlById(
@@ -81,10 +85,11 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                         
                     }}/>
 
-                <XStack justifyContent="flex-end">
+                <XStack marginTop={"$3"} justifyContent="flex-end">
                     <Text 
                         color={"$purpleGray"} 
                         style={{ display: "block"}}
+                        marginRight={"$1"}
                         >
                         Total Runtime: 
                     </Text>
