@@ -192,6 +192,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         marginVertical={"$3"}
                     >
                         <IconButton
+                            circular
                             name="rewind-15"
                             onPress={() => {
 
@@ -203,6 +204,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             />
                         
                         <IconButton
+                            circular
                             name="skip-previous"
                             onPress={() => usePrevious.mutate()}
                         />
@@ -211,11 +213,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         <PlayPauseButton size={width / 6} />
 
                         <IconButton
+                            circular
                             name="skip-next" 
                             onPress={() => useSkip.mutate(undefined)}
                         />    
 
                         <IconButton
+                            circular
                             name="fast-forward-15"
                             onPress={() => { 
                                 setSeeking(true);
