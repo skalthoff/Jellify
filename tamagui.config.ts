@@ -25,6 +25,7 @@ const jellifyConfig = createTamagui({
     themes: {
       dark: {
         background: tokens.color.purpleDark,
+        borderColor: tokens.color.purple,
         color: tokens.color.white
       },
       light: {
