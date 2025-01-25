@@ -8,3 +8,8 @@ export interface QueueMutation {
     queueName: string;
     queuingType?: QueuingType | undefined;
 }
+
+export interface AddToQueueMutation {
+    track: BaseItemDto,
+    queuingType?: QueuingType | undefined;
+}

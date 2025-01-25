@@ -38,7 +38,7 @@ export default function RecentlyPlayed({
                                 });
                             }}
                             onLongPress={() => {
-                                trigger("impactLight");
+                                trigger("impactMedium");
                                 navigation.push("Details", {
                                     item: recentlyPlayedTrack
                                 })
