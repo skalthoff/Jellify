@@ -14,6 +14,7 @@ import BlurhashedImage from "../../Global/components/blurhashed-image";
 import TextTicker from "react-native-text-ticker";
 import { TextTickerConfig } from "../component.config";
 import IconButton from "../../../components/Global/helpers/icon-button";
+import { toUpper } from "lodash";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -172,13 +173,19 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                     </XStack>
 
-                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$5"}>
+                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$3"}>
                         <XStack flex={1} justifyContent="flex-start">
                             <RunTimeSeconds>{progressState}</RunTimeSeconds>
                         </XStack>
 
-                        <XStack flex={1} justifyContent="center">
+                        <XStack flex={1} justifyContent="space-between">
                             { /** Track metadata can go here */}
+                            { nowPlaying!.item.MediaSources && (
+                                <>
+                                <Text>{toUpper(nowPlaying!.item.MediaSources[0].Container ?? "")}</Text>
+                                <Text>{nowPlaying!.item.MediaSources[0].Bitrate?.toString() ?? ""}</Text>
+                                </>
+                            )}
                         </XStack>
 
                         <XStack flex={1} justifyContent="flex-end">
