@@ -5,15 +5,11 @@ import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
 import Icon from "../Global/helpers/icon";
 import { Text } from "../Global/helpers/text";
-import { CachedImage } from "@georstat/react-native-image-cache";
-import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import { QueryConfig } from "../../api/queries/query.config";
 import TextTicker from 'react-native-text-ticker';
 import PlayPauseButton from "./helpers/buttons";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
-import Client from "../../api/client";
 import { TextTickerConfig } from "./component.config";
+import BlurhashedImage from "../Global/helpers/blurhashed-image";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
@@ -40,21 +36,10 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     <YStack
                         alignContent="center"
                         flex={1}>
-                        <CachedImage
-                            source={getImageApi(Client.api!)
-                                .getItemImageUrlById(
-                                    nowPlaying!.item.AlbumId ?? "",
-                                    ImageType.Primary,
-                                    { ...QueryConfig.images }
-                                )
-                            }
-                            imageStyle={{
-                                position: "relative",
-                                width: width / 7,
-                                height: width / 7,
-                                borderRadius: 2,
-                            }}
-                        />
+                            <BlurhashedImage
+                                item={nowPlaying!.item}
+                                size={width / 7}
+                            />
 
                     </YStack>
 

@@ -12,7 +12,7 @@ export function RunTimeTicks({ children } : { children?: number | null | undefin
 
     let time = calculateRunTimeFromTicks(children);
 
-    return <Text color="$borderColor">{ time }</Text>
+    return <Text style={{display: "block"}} color="$borderColor">{ time }</Text>
 }
 
 function calculateRunTimeFromSeconds(seconds: number) : string {

@@ -1,10 +1,7 @@
 import { StackParamList } from "../types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ScrollView, YStack, XStack } from "tamagui";
-import { CachedImage } from "@georstat/react-native-image-cache";
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { QueryConfig } from "../../api/queries/query.config";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { H4, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
 import { usePlayerContext } from "../../player/provider";
@@ -14,7 +11,7 @@ import { useItemTracks } from "../../api/queries/tracks";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
 import { useEffect } from "react";
-import Client from "../../api/client";
+import BlurhashedImage from "../Global/helpers/blurhashed-image";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -51,19 +48,10 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                     alignContent="center"
                     minHeight={width / 1.1}
                 >
-                    <CachedImage
-                        source={getImageApi(Client.api!)
-                            .getItemImageUrlById(
-                                props.album.Id!,
-                                ImageType.Primary,
-                                { ...QueryConfig.playerArtwork})}
-                                imageStyle={{
-                                    position: "relative",
-                                    width: width / 1.1,
-                                    height: width / 1.1,
-                                    borderRadius: 2
-                                }}
-                                />
+                    <BlurhashedImage
+                        item={props.album}
+                        size={width / 1.1}
+                    />
 
                     <H4>{ props.album.Name ?? "Untitled Album" }</H4>
                     <H5>{ props.album.ProductionYear?.toString() ?? "" }</H5>

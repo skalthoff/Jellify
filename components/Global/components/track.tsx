@@ -3,22 +3,20 @@ import React from "react";
 import { Separator, Spacer, useTheme, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
-import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { CachedImage } from "@georstat/react-native-image-cache";
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
-import { QueryConfig } from "../../../api/queries/query.config";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../../components/types";
-import Client from "../../../api/client";
 import { QueuingType } from "../../../enums/queuing-type";
+import BlurhashedImage from "../helpers/blurhashed-image";
 
 interface TrackProps {
     track: BaseItemDto;
     tracklist: BaseItemDto[];
     navigation: NativeStackNavigationProp<StackParamList>;
-    index: number | undefined;
+    index?: number | undefined;
+    queueName?: string | undefined;
     showArtwork?: boolean | undefined;
     onPress?: () => void | undefined;
     isNested?: boolean | undefined
@@ -33,16 +31,7 @@ export default function Track({
     showArtwork,
     onPress,
     isNested
-} : {
-    track: BaseItemDto,
-    tracklist: BaseItemDto[],
-    navigation: NativeStackNavigationProp<StackParamList>;
-    index?: number | undefined,
-    queueName?: string | undefined,
-    showArtwork?: boolean | undefined,
-    onPress?: () => void | undefined,
-    isNested?: boolean | undefined
-}) : React.JSX.Element {
+} : TrackProps) : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
     const { nowPlaying, usePlayNewQueue } = usePlayerContext();
@@ -86,22 +75,10 @@ export default function Track({
                     minHeight={showArtwork ? width / 9 : "unset"}
                 >
                     { showArtwork ? (
-                        <CachedImage
-                            source={getImageApi(Client.api!)
-                                .getItemImageUrlById(
-                                    track.AlbumId ?? "",
-                                    ImageType.Primary,
-                                    { ...QueryConfig.images }
-                                )
-                            }
-                            imageStyle={{
-                                position: "relative",
-                                width: width / 9,
-                                height: width / 9,
-                                borderRadius: 2,
-                            }}
+                        <BlurhashedImage
+                            item={track}
+                            size={width / 9}
                         />
-                
                     ) : (
                     <Text color={isPlaying ? theme.telemagenta : theme.color}>
                         { track.IndexNumber?.toString() ?? "" }

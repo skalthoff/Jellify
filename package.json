@@ -12,7 +12,6 @@
   "dependencies": {
     "@animatereactnative/marquee": "^0.2.0",
     "@gcores/react-native-carplay": "^1.1.12",
-    "@georstat/react-native-image-cache": "^3.1.0",
     "@jellyfin/sdk": "^0.10.0",
     "@react-native-community/blur": "^4.4.1",
     "@react-native-community/masked-view": "^0.1.11",

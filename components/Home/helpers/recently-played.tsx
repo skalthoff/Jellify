@@ -29,7 +29,7 @@ export default function RecentlyPlayed({
                             subCaption={`${recentlyPlayedTrack.Artists?.join(", ")}`}
                             cornered
                             width={150}
-                            itemId={recentlyPlayedTrack.AlbumId!}
+                            item={recentlyPlayedTrack}
                             onPress={() => {
                                 usePlayNewQueue.mutate({ 
                                     track: recentlyPlayedTrack, 

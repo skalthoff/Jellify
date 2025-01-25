@@ -22,7 +22,7 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
                         <ItemCard 
                             artistName={recentArtist.Name!}
                             blurhash={getPrimaryBlurhashFromDto(recentArtist)}
-                            itemId={recentArtist.Id!}
+                            item={recentArtist}
                             caption={recentArtist.Name ?? "Unknown Artist"}
                             onPress={() => {
                                 navigation.push('Artist', 

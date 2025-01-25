@@ -1,21 +1,18 @@
-import React, {  } from "react";
+import React from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
 import { H5, Card as TamaguiCard, View } from "tamagui";
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { CachedImage } from "@georstat/react-native-image-cache";
+import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
-import { QueryConfig } from "../../../api/queries/query.config";
 import { Text } from "./text";
-import Client from "../../../api/client";
+import BlurhashedImage from "./blurhashed-image";
 
 interface CardProps extends TamaguiCardProps {
     artistName?: string;
     blurhash?: string;
     caption?: string | null | undefined;
     subCaption?: string | null | undefined;
-    itemId: string;
+    item: BaseItemDto;
     cornered?: boolean;
 }
 
@@ -26,7 +23,6 @@ export function ItemCard(props: CardProps) {
     const cardTextColor = props.blurhash ? invert(Blurhash.getAverageColor(props.blurhash)!, true) : undefined;
 
     const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 2, height: props.width / 2 }: { width: 100, height: 100 };
-    const cardLogoSource = getImageApi(Client.api!).getItemImageUrlById(props.itemId, ImageType.Logo);
 
     return (
         <View 
@@ -46,37 +42,16 @@ export function ItemCard(props: CardProps) {
                 <TamaguiCard.Header>
                 </TamaguiCard.Header>
                 <TamaguiCard.Footer padded>
-                    <CachedImage 
-                            source={getImageApi(Client.api!)
-                                .getItemImageUrlById(
-                                    props.itemId, 
-                                    ImageType.Logo, 
-                                    { ...QueryConfig.logos})
-                                } 
-                            imageStyle={{
-                                ...logoDimensions,
-                                position: "relative",
-                                shadowRadius: 2,
-                                shadowOffset: {
-                                    width: 2,
-                                    height: 2,
-                                },
-                                borderRadius: props.cornered ? 2 : 25
-                            }}
+                    <BlurhashedImage
+                        item={props.item}
+                        type={ImageType.Logo}
+                        size={logoDimensions.width}
                     />
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
-                    <CachedImage 
-                        source={getImageApi(Client.api!)
-                            .getItemImageUrlById(
-                                props.itemId, 
-                                ImageType.Primary, 
-                                { ...QueryConfig.images})
-                            } 
-                        imageStyle={{
-                            ...dimensions,
-                            borderRadius: props.cornered ? 2 : 25
-                        }}
+                <BlurhashedImage
+                        item={props.item}
+                        size={dimensions.width}
                     />
                 </TamaguiCard.Background>
             </TamaguiCard>

@@ -43,23 +43,26 @@ Designed to be lightweight and scalable, *Jellify* caters to those who want a mu
 
 ## Built with:
 ### Frontend
-[Tamagui]()
-[React Navigation]()
+[Tamagui](https://tamagui.dev/)\
+[React Navigation](https://reactnavigation.org/)\
 [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
 - Specifically Material Community Icons
-[React Native CarPlay](https://github.com/birkir/react-native-carplay)
+
+[React Native CarPlay](https://github.com/birkir/react-native-carplay)\
+[React Native Blurhash](https://github.com/mrousavy/react-native-blurhash)
 
 ### Backend
 [Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)\
 [React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
-[React Native MMKV]()
+[React Native MMKV](https://github.com/mrousavy/react-native-mmkv)
 
 ### Love from Wisconsin 🧀
 This is undoubtedly a passion project of [mine](https://github.com/anultravioletaurora), and I've learned a lot from working on it (and the many failed attempts before it). I hope you enjoy using it! Feature requests and bug reports are welcome :)
 
-## Special Thanks
-- 
+## Special Thanks To
+- The [Jellyfin Team](https://jellyfin.org/) for their amazing server software
+- Tony, Alyssa for their contributions
 
 ## Running Locally
 Clone the repository and run ```npm i``` to install the dependencies
