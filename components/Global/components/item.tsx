@@ -8,6 +8,7 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 import BlurhashedImage from "../helpers/blurhashed-image";
 import Icon from "../helpers/icon";
 import { Colors } from "../../../enums/colors";
+import { QueuingType } from "../../../enums/queuing-type";
 
 export default function Item({ 
     item,
@@ -51,7 +52,8 @@ export default function Item({
                             usePlayNewQueue.mutate({
                                 track: item,
                                 tracklist: [item],
-                                queueName
+                                queueName,
+                                queuingType: QueuingType.FromSelection
                             })
                             break;
                         }

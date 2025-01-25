@@ -13,6 +13,7 @@ import Icon from "../helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../../components/types";
 import Client from "../../../api/client";
+import { QueuingType } from "../../../enums/queuing-type";
 
 interface TrackProps {
     track: BaseItemDto;
@@ -63,7 +64,8 @@ export default function Track({
                             track,
                             index,
                             tracklist,
-                            queueName: queueName ? queueName : track.Album ? track.Album! : "Queue"
+                            queueName: queueName ? queueName : track.Album ? track.Album! : "Queue",
+                            queuingType: QueuingType.FromSelection
                         });
                     }
                 }}

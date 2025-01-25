@@ -7,6 +7,7 @@ import { usePlayerContext } from "../../../player/provider";
 import { StackParamList } from "../../../components/types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { trigger } from "react-native-haptic-feedback";
+import { QueuingType } from "../../../enums/queuing-type";
 
 export default function RecentlyPlayed({ 
     navigation 
@@ -34,13 +35,15 @@ export default function RecentlyPlayed({
                                     track: recentlyPlayedTrack, 
                                     index: index,
                                     tracklist: recentTracks,
-                                    queueName: "Recently Played"
+                                    queueName: "Recently Played",
+                                    queuingType: QueuingType.FromSelection
                                 });
                             }}
                             onLongPress={() => {
                                 trigger("impactMedium");
                                 navigation.push("Details", {
-                                    item: recentlyPlayedTrack
+                                    item: recentlyPlayedTrack,
+                                    isNested: false
                                 })
                             }}
                         />                                

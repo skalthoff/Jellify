@@ -104,10 +104,10 @@ const PlayerContextInitializer = () => {
             trigger("impactMedium");
 
             if (mutation.queuingType === QueuingType.PlayingNext)
-                return addToNext([mapDtoToTrack(mutation.track)]);
+                return addToNext([mapDtoToTrack(mutation.track, mutation.queuingType)]);
 
             else
-                return addToQueue([mapDtoToTrack(mutation.track)])
+                return addToQueue([mapDtoToTrack(mutation.track, mutation.queuingType)])
         }
     })
 
