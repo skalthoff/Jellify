@@ -37,6 +37,7 @@ export default function Search({
     return (
         <FlatList
             contentInsetAdjustmentBehavior="automatic"
+            progressViewOffset={10}
             ListHeaderComponent={(
                 <Input
                     placeholder="The Seeker"
