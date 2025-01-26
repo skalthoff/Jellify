@@ -83,7 +83,6 @@ export default function Track({
                         />
                     ) : (
                     <Text 
-                        userSelect="none"
                         color={isPlaying ? theme.telemagenta : theme.color}
                     >
                         { track.IndexNumber?.toString() ?? "" }
@@ -97,14 +96,12 @@ export default function Track({
                         color={isPlaying ? theme.telemagenta : theme.color}
                         lineBreakStrategyIOS="standard"
                         numberOfLines={1}
-                        userSelect="none"
                     >
                         { track.Name ?? "Untitled Track" }
                     </Text>
 
                     { (showArtwork || (track.ArtistCount ?? 0 > 1)) && (
                         <Text 
-                            userSelect="none"
                             lineBreakStrategyIOS="standard" 
                             numberOfLines={1}
                         >

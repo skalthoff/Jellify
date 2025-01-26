@@ -65,6 +65,7 @@ export function Text(props: TextProps): React.JSX.Element {
             textAlign={props.textAlign}
             fontSize="$4"
             lineBreakMode="clip"
+            userSelect="none"
             {...props}
         >
             { props.children }

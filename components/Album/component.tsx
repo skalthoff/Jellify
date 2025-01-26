@@ -19,12 +19,15 @@ interface AlbumProps {
     navigation: NativeStackNavigationProp<StackParamList>;
 }
 
-export default function Album(props: AlbumProps): React.JSX.Element {
+export default function Album({
+    album,
+    navigation
+}: AlbumProps): React.JSX.Element {
 
-    props.navigation.setOptions({
+    navigation.setOptions({
         headerRight: () => {
             return (
-                <FavoriteButton item={props.album} />
+                <FavoriteButton item={album} />
             )
         }
     })
@@ -33,7 +36,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
 
-    const { data: tracks, isLoading, refetch } = useItemTracks(props.album.Id!, true);
+    const { data: tracks, isLoading, refetch } = useItemTracks(album.Id!, true);
 
     useEffect(() => {
         refetch();
@@ -49,12 +52,12 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                 minHeight={width / 1.1}
             >
                 <BlurhashedImage
-                    item={props.album}
+                    item={album}
                     width={width / 1.1}
                 />
 
-                <H4>{ props.album.Name ?? "Untitled Album" }</H4>
-                <H5>{ props.album.ProductionYear?.toString() ?? "" }</H5>
+                <H4>{ album.Name ?? "Untitled Album" }</H4>
+                <H5>{ album.ProductionYear?.toString() ?? "" }</H5>
             </YStack>
             <FlatList
                 data={tracks}
@@ -67,7 +70,7 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                             track={track}
                             tracklist={tracks!}
                             index={index}
-                            navigation={props.navigation}
+                            navigation={navigation}
                         />
                     )
                     
@@ -81,18 +84,25 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                     >
                     Total Runtime: 
                 </Text>
-                <RunTimeTicks>{ props.album.RunTimeTicks }</RunTimeTicks>
+                <RunTimeTicks>{ album.RunTimeTicks }</RunTimeTicks>
             </XStack>
 
             <YStack justifyContent="flex-start">
                 <H3>Album Artists</H3>
                 <FlatList
                     horizontal
-                    data={props.album.ArtistItems}
+                    data={album.ArtistItems}
                     renderItem={({ index, item: artist }) => {
                         return (
                             <Avatar
-                            itemId={artist.Id!}
+                                item={artist}
+                                width={width / 5}
+                                onPress={() => {
+                                    navigation.push("Artist", {
+                                        artist
+                                    });
+                                }}
+                                subheading={artist.Name ?? "Unknown Artist"}
                             />
                         )
                     }}
