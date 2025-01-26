@@ -12,13 +12,10 @@ export async function fetchItemImage(
     height?: number
 ) : Promise<string> {
     
-    return new Promise<string>((resolve, reject) => {
-        FileSystem.exists(`${Dirs.CacheDir}/Images/${imageType}/${itemId}`)
-            .then(async (imageExists) => {
-                console.debug(`Item image ${imageExists ? 'exists' : 'does not exist'} in storage`);
-                if (imageExists)
-                    resolve(await fetchItemImageFromStorage(itemId, imageType, width, height));
-            });
+    return new Promise<string>(async (resolve, reject) => {
+        const imageExistsInStorage = await FileSystem.exists(`${Dirs.CacheDir}/Images/${imageType}/${itemId}`)
+        if (imageExistsInStorage)
+            resolve(await fetchItemImageFromStorage(itemId, imageType, width, height));
 
         getImageApi(Client.api!)
             .getItemImage({
