@@ -44,15 +44,15 @@ export function ItemCard(props: CardProps) {
                             type={ImageType.Logo}
                             width={logoDimensions.width}
                             height={logoDimensions.height}
-
-                        />
-                    )}
+                            />
+                        )}
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
                 <BlurhashedImage
                         item={props.item}
                         width={dimensions.width}
                         height={dimensions.height}
+                        cornered={props.cornered}
                     />
                 </TamaguiCard.Background>
             </TamaguiCard>

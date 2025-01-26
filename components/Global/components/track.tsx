@@ -81,7 +81,7 @@ export default function Track({
                             width={width / 9}
                         />
                     ) : (
-                    <Text color={isPlaying ? theme.telemagenta : theme.color}>
+                    <Text onLongPress={(e) => e.preventDefault()} color={isPlaying ? theme.telemagenta : theme.color}>
                         { track.IndexNumber?.toString() ?? "" }
                     </Text>
                 )}
@@ -93,12 +93,19 @@ export default function Track({
                         color={isPlaying ? theme.telemagenta : theme.color}
                         lineBreakStrategyIOS="standard"
                         numberOfLines={1}
+                        onLongPress={(e) => e.preventDefault()}
                     >
                         { track.Name ?? "Untitled Track" }
                     </Text>
 
                     { (showArtwork || (track.ArtistCount ?? 0 > 1)) && (
-                        <Text lineBreakStrategyIOS="standard" numberOfLines={1}>{ track.Artists?.join(", ") ?? "" }</Text>
+                        <Text 
+                            onLongPress={(e) => e.preventDefault()}
+                            lineBreakStrategyIOS="standard" 
+                            numberOfLines={1}
+                        >
+                            { track.Artists?.join(", ") ?? "" }
+                        </Text>
                     )}
                 </YStack>
 

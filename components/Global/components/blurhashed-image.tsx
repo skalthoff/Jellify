@@ -9,13 +9,15 @@ interface BlurhashLoadingProps {
     width: number;
     height?: number;
     type?: ImageType; 
+    cornered?: boolean | undefined
 }
 
 export default function BlurhashedImage({ 
     item, 
     width, 
     height,
-    type 
+    type,
+    cornered
 } : BlurhashLoadingProps) : React.JSX.Element {
 
     const { data: image, isSuccess } = useItemImage(item.Id!, type, width, height ?? width);
@@ -36,10 +38,11 @@ export default function BlurhashedImage({
                     style={{
                         height: height ?? width,
                         width,
+                        borderRadius: cornered ? 2 : 25
                     }} 
                 />
             ) : blurhash && (
-                <Blurhash blurhash={blurhash!} style={{ flex: 1 }} />
+                <Blurhash blurhash={blurhash!} style={{ flex: 1, borderRadius: cornered ? 2 : 25 }} />
             )
         }
         </View>

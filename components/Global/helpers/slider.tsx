@@ -1,5 +1,5 @@
 import React from "react";
-import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider, getTokens } from "tamagui";
+import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider, getTokens, useTheme } from "tamagui";
 
 interface SliderProps {
     value?: number | undefined;
@@ -7,15 +7,6 @@ interface SliderProps {
     width?: number | undefined
     props: TamaguiSliderProps
 }
-
-const JellifySliderThumb = styled(Slider.Thumb, {
-    backgroundColor: getTokens().color.$purpleDark,
-    borderColor: getTokens().color.$amethyst,
-})
-
-const JellifySliderTrack = styled(Slider.Track, {
-    backgroundColor: getTokens().color.$amethyst
-});
 
 const JellifyActiveSliderTrack = styled(Slider.TrackActive, {
     backgroundColor: getTokens().color.$telemagenta
@@ -32,6 +23,17 @@ export function HorizontalSlider({
     width?: number | undefined, 
     props?: TamaguiSliderProps | undefined
 }) : React.JSX.Element {
+    
+    const theme = useTheme()
+
+    const JellifySliderThumb = styled(Slider.Thumb, {
+        backgroundColor: theme.background,
+        borderColor: theme.borderColor,
+    })
+    
+    const JellifySliderTrack = styled(Slider.Track, {
+        backgroundColor: theme.borderColor
+    });
     
     return (
         <TamaguiSlider 
@@ -53,6 +55,17 @@ export function HorizontalSlider({
 }
   
 export function VerticalSlider(props: SliderVerticalProps) : React.JSX.Element {
+
+    const theme = useTheme()
+
+    const JellifySliderThumb = styled(Slider.Thumb, {
+        backgroundColor: theme.background,
+        borderColor: theme.borderColor,
+    })
+    
+    const JellifySliderTrack = styled(Slider.Track, {
+        backgroundColor: theme.borderColor
+    });
 
     return ( 
         <TamaguiSlider 

@@ -41,49 +41,47 @@ export default function Album(props: AlbumProps): React.JSX.Element {
     ])
 
     return (
-        <SafeAreaView edges={["right", "left"]}>
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <YStack 
-                    alignItems="center" 
-                    alignContent="center"
-                    minHeight={width / 1.1}
-                >
-                    <BlurhashedImage
-                        item={props.album}
-                        width={width / 1.1}
-                    />
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <YStack 
+                alignItems="center" 
+                alignContent="center"
+                minHeight={width / 1.1}
+            >
+                <BlurhashedImage
+                    item={props.album}
+                    width={width / 1.1}
+                />
 
-                    <H4>{ props.album.Name ?? "Untitled Album" }</H4>
-                    <H5>{ props.album.ProductionYear?.toString() ?? "" }</H5>
-                </YStack>
-                <FlatList
-                    data={tracks}
-                    extraData={nowPlaying}
-                    numColumns={1}
-                    renderItem={({ item: track, index }) => {
-                        
-                        return (
-                            <Track
-                                track={track}
-                                tracklist={tracks!}
-                                index={index}
-                                navigation={props.navigation}
-                            />
-                        )
-                        
-                    }}/>
+                <H4>{ props.album.Name ?? "Untitled Album" }</H4>
+                <H5>{ props.album.ProductionYear?.toString() ?? "" }</H5>
+            </YStack>
+            <FlatList
+                data={tracks}
+                extraData={nowPlaying}
+                numColumns={1}
+                renderItem={({ item: track, index }) => {
+                    
+                    return (
+                        <Track
+                            track={track}
+                            tracklist={tracks!}
+                            index={index}
+                            navigation={props.navigation}
+                        />
+                    )
+                    
+                }}/>
 
-                <XStack marginTop={"$3"} justifyContent="flex-end">
-                    <Text 
-                        color={"$amethyst"} 
-                        style={{ display: "block"}}
-                        marginRight={"$1"}
-                        >
-                        Total Runtime: 
-                    </Text>
-                    <RunTimeTicks>{ props.album.RunTimeTicks }</RunTimeTicks>
-                </XStack>
-            </ScrollView>
-        </SafeAreaView>
+            <XStack marginTop={"$3"} justifyContent="flex-end">
+                <Text 
+                    color={"$borderColor"} 
+                    style={{ display: "block"}}
+                    marginRight={"$1"}
+                    >
+                    Total Runtime: 
+                </Text>
+                <RunTimeTicks>{ props.album.RunTimeTicks }</RunTimeTicks>
+            </XStack>
+        </ScrollView>
     )
 }
