@@ -48,10 +48,12 @@ export function fetchFavoriteAlbums(): Promise<BaseItemDto[]> {
                 parentId: Client.library!.musicLibraryId!,
                 recursive: true,
                 sortBy: [
+                    ItemSortBy.DatePlayed,
                     ItemSortBy.SortName
                 ],
                 sortOrder: [
-                    SortOrder.Ascending
+                    SortOrder.Descending,
+                    SortOrder.Ascending,
                 ]
             })
             .then((response) => {

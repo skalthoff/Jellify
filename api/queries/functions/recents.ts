@@ -1,6 +1,6 @@
 import { BaseItemDto, BaseItemKind, ItemSortBy, SortOrder } from "@jellyfin/sdk/lib/generated-client/models";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
-import { queryConfig } from "../query.config";
+import { QueryConfig } from "../query.config";
 import Client from "../../client";
 
 export function fetchRecentlyPlayed(): Promise<BaseItemDto[]> {
@@ -13,7 +13,7 @@ export function fetchRecentlyPlayed(): Promise<BaseItemDto[]> {
             includeItemTypes: [
                 BaseItemKind.Audio
             ],
-            limit: queryConfig.limits.recents,
+            limit: QueryConfig.limits.recents,
             parentId: Client.library!.musicLibraryId, 
             recursive: true,
             sortBy: [ 

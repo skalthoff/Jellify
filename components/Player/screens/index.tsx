@@ -5,19 +5,21 @@ import { usePlayerContext } from "../../../player/provider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { YStack, XStack, Spacer } from "tamagui";
+import { YStack, XStack, Spacer, useTheme } from "tamagui";
 import PlayPauseButton from "../helpers/buttons";
 import { H5, Text } from "../../../components/Global/helpers/text";
 import Icon from "../../../components/Global/helpers/icon";
-import { Colors } from "../../../enums/colors";
 import FavoriteButton from "../../Global/components/favorite-button";
-import BlurhashedImage from "../../../components/Global/helpers/blurhashed-image";
+import BlurhashedImage from "../../Global/components/blurhashed-image";
+import TextTicker from "react-native-text-ticker";
+import { TextTickerConfig } from "../component.config";
+import IconButton from "../../../components/Global/helpers/icon-button";
+import { toUpper } from "lodash";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
     const { 
         useTogglePlayback, 
-        playbackState, 
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying, 
@@ -32,6 +34,8 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
     const [progressState, setProgressState] = useState<number>(progress!.position);
 
     const { width } = useSafeAreaFrame();
+
+    const theme = useTheme();
 
     // Prevent gesture event to close player if we're seeking
     useEffect(() => {
@@ -54,9 +58,14 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
             <>
                 <YStack>
 
-                    <YStack alignItems="center">
+                    <YStack 
+                        alignItems="center"
+                        alignContent="center"
+                    >
                         <Text>Playing from</Text>
-                        <H5>{ queueName ?? "Queue"}</H5>
+                        <TextTicker {...TextTickerConfig}>
+                            <H5>{ queueName ?? "Queue"}</H5>
+                        </TextTicker>
                     </YStack>
 
                     <XStack 
@@ -69,61 +78,51 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     >
                         <BlurhashedImage
                             item={nowPlaying!.item}
-                            size={width / 1.1}
+                            width={width / 1.1}
                             />
-                        {/* <CachedImage
-                            source={getImageApi(Client.api!)
-                                .getItemImageUrlById(
-                                    nowPlaying!.item.AlbumId ?? "",
-                                    ImageType.Primary,
-                                    { ...queryConfig.playerArtwork }
-                                )
-                            }
-                            imageStyle={{
-                                position: "relative",
-                                alignSelf: "center",
-                                width: playbackState === State.Playing ? width / 1.1 : width / 1.4,
-                                height: playbackState === State.Playing ? width / 1.1 : width / 1.4,
-                                borderRadius: 2
-                            }}
-                            /> */}
                     </XStack>
 
                     <XStack marginHorizontal={20} paddingVertical={5}>
                         <YStack justifyContent="flex-start" flex={4}>
-                            <Text 
-                                bold 
-                                fontSize={"$6"}
-                            >
-                                {nowPlaying!.title ?? "Untitled Track"}
-                            </Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text 
+                                    bold 
+                                    fontSize={"$6"}
+                                    >
+                                    {nowPlaying!.title ?? "Untitled Track"}
+                                </Text>
+                            </TextTicker>
 
-                            <Text 
-                                fontSize={"$6"}
-                                color={Colors.Primary}
-                                onPress={() => {
-                                    if (nowPlaying!.item.ArtistItems) {
-                                        navigation.navigate("Artist", {
-                                            artist: nowPlaying!.item.ArtistItems![0],
-                                        });
-                                    }
-                                }}
-                            >
-                                {nowPlaying.artist ?? "Unknown Artist"}
-                            </Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text 
+                                    fontSize={"$6"}
+                                    color={theme.telemagenta}
+                                    onPress={() => {
+                                        if (nowPlaying!.item.ArtistItems) {
+                                            navigation.navigate("Artist", {
+                                                artist: nowPlaying!.item.ArtistItems![0],
+                                            });
+                                        }
+                                    }}
+                                    >
+                                    {nowPlaying.artist ?? "Unknown Artist"}
+                                </Text>
+                            </TextTicker>
 
-                            <Text 
-                                fontSize={"$6"} 
-                                color={"$gray10"}
-                            >
-                                { nowPlaying!.album ?? "" }
-                            </Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text 
+                                    fontSize={"$6"} 
+                                    color={"$borderColor"}
+                                    >
+                                    { nowPlaying!.album ?? "" }
+                                </Text>
+                            </TextTicker>
                         </YStack>
 
                         <XStack 
                             justifyContent="flex-end" 
                             alignItems="center" 
-                            flex={1}
+                            flex={2}
                         >
                             {/* Buttons for favorites, song menu go here */}
 
@@ -131,7 +130,8 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 name="dots-horizontal-circle-outline"
                                 onPress={() => {
                                     navigation.navigate("Details", {
-                                        item: nowPlaying!.item
+                                        item: nowPlaying!.item,
+                                        isNested: true
                                     });
                                 }}
                             />
@@ -173,13 +173,19 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                     </XStack>
 
-                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$5"}>
+                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$3"}>
                         <XStack flex={1} justifyContent="flex-start">
                             <RunTimeSeconds>{progressState}</RunTimeSeconds>
                         </XStack>
 
-                        <XStack flex={1} justifyContent="center">
+                        <XStack flex={1} justifyContent="space-between">
                             { /** Track metadata can go here */}
+                            { nowPlaying!.item.MediaSources && (
+                                <>
+                                <Text>{toUpper(nowPlaying!.item.MediaSources[0].Container ?? "")}</Text>
+                                <Text>{nowPlaying!.item.MediaSources[0].Bitrate?.toString() ?? ""}</Text>
+                                </>
+                            )}
                         </XStack>
 
                         <XStack flex={1} justifyContent="flex-end">
@@ -187,8 +193,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="space-evenly" marginVertical={"$3"}>
-                        <Icon
+                    <XStack 
+                        alignItems="center" 
+                        justifyContent="space-evenly" 
+                        marginVertical={"$3"}
+                    >
+                        <IconButton
+                            circular
                             name="rewind-15"
                             onPress={() => {
 
@@ -197,23 +208,28 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 useSeekTo.mutate(progress!.position - 15);
                                 setSeeking(false);
                             }}
+                            size={width / 7}
                         />
                         
-                        <Icon
-                            large
+                        <IconButton
+                            circular
                             name="skip-previous"
                             onPress={() => usePrevious.mutate()}
+                            size={width / 7}
                         />
 
-                        <PlayPauseButton />
+                        {/* I really wanted a big clunky play button */}
+                        <PlayPauseButton size={width / 5} />
 
-                        <Icon 
-                            large
+                        <IconButton
+                            circular
                             name="skip-next" 
                             onPress={() => useSkip.mutate(undefined)}
+                            size={width / 7}
                         />    
 
-                        <Icon
+                        <IconButton
+                            circular
                             name="fast-forward-15"
                             onPress={() => { 
                                 setSeeking(true);
@@ -221,12 +237,14 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 useSeekTo.mutate(progress!.position + 15);
                                 setSeeking(false);
                             }}  
+                            size={width / 7}
                         />              
                     </XStack>
 
                     <XStack justifyContent="space-evenly" marginVertical={"$7"}>
                         <Icon
                             name="speaker-multiple"
+                            large
                         />
 
                         <Spacer />
@@ -236,6 +254,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             onPress={() => {
                                 navigation.goBack();
                             }}
+                            large
                         />
 
                         <Spacer />
@@ -246,6 +265,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             onPress={() => {
                                 navigation.navigate("Queue");
                             }}
+                            large
                         />
                     </XStack>
                 </YStack>

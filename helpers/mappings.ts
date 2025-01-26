@@ -1,14 +1,11 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { JellifyTrack } from "../types/JellifyTrack";
 import { RatingType, TrackType } from "react-native-track-player";
-import { Api } from "@jellyfin/sdk";
 import { QueuingType } from "../enums/queuing-type";
 import querystring from "querystring"
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../api/client";
 import { isUndefined } from "lodash";
-
-const container = "opus,mp3,aac,m4a,flac,webma,webm,wav,ogg,mpa,wma";
 
 // TODO: Make this configurable
 const transcodingContainer = "m4a";
@@ -16,7 +13,7 @@ const transcodingContainer = "m4a";
 export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) : JellifyTrack {
 
     const urlParams = {
-        "Container": container,
+        "Container": item.Container,
         "TranscodingContainer": transcodingContainer,
         "TranscodingProtocol": "hls",
         "EnableRemoteMedia": true,

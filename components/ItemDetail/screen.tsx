@@ -6,7 +6,7 @@ import React from "react";
 
 export default function DetailsScreen({
     route,
-    navigation
+    navigation,
 } : {
     route: RouteProp<StackParamList, "Details">,
     navigation: NativeStackNavigationProp<StackParamList>
@@ -15,6 +15,7 @@ export default function DetailsScreen({
         <ItemDetail
             item={route.params.item}
             navigation={navigation}
+            isNested={route.params.isNested}
         />
     )
 }

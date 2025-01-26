@@ -1,6 +1,5 @@
-import { Colors } from "../../../enums/colors";
 import React from "react";
-import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider } from "tamagui";
+import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider, getTokens, useTheme } from "tamagui";
 
 interface SliderProps {
     value?: number | undefined;
@@ -9,17 +8,8 @@ interface SliderProps {
     props: TamaguiSliderProps
 }
 
-const JellifySliderThumb = styled(Slider.Thumb, {
-    backgroundColor: Colors.Primary,
-    borderColor: Colors.Background,
-})
-
-const JellifySliderTrack = styled(Slider.Track, {
-    backgroundColor: Colors.Borders
-});
-
 const JellifyActiveSliderTrack = styled(Slider.TrackActive, {
-    backgroundColor: Colors.Primary
+    backgroundColor: getTokens().color.$telemagenta
 })
 
 export function HorizontalSlider({ 
@@ -33,6 +23,17 @@ export function HorizontalSlider({
     width?: number | undefined, 
     props?: TamaguiSliderProps | undefined
 }) : React.JSX.Element {
+    
+    const theme = useTheme()
+
+    const JellifySliderThumb = styled(Slider.Thumb, {
+        backgroundColor: theme.background,
+        borderColor: theme.borderColor,
+    })
+    
+    const JellifySliderTrack = styled(Slider.Track, {
+        backgroundColor: theme.borderColor
+    });
     
     return (
         <TamaguiSlider 
@@ -48,12 +49,23 @@ export function HorizontalSlider({
             <JellifySliderTrack>
                 <JellifyActiveSliderTrack />
             </JellifySliderTrack>
-            <TamaguiSlider.Thumb circular index={0} size={"$3"} />
+            <JellifySliderThumb circular index={0} size={"$3"} />
         </TamaguiSlider>
     )
 }
   
 export function VerticalSlider(props: SliderVerticalProps) : React.JSX.Element {
+
+    const theme = useTheme()
+
+    const JellifySliderThumb = styled(Slider.Thumb, {
+        backgroundColor: theme.background,
+        borderColor: theme.borderColor,
+    })
+    
+    const JellifySliderTrack = styled(Slider.Track, {
+        backgroundColor: theme.borderColor
+    });
 
     return ( 
         <TamaguiSlider 

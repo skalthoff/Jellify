@@ -11,8 +11,9 @@ import { useJellifyContext } from "../../../components/provider";
 
 export default function ServerLibrary(): React.JSX.Element {
 
-    const { setLoggedIn } = useJellifyContext()
     const { setUser } = useAuthenticationContext();
+
+    const { setLoggedIn } = useJellifyContext();
 
     const [libraryId, setLibraryId] = useState<string | undefined>(undefined);
 

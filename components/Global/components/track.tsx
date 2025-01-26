@@ -1,26 +1,25 @@
 import { usePlayerContext } from "../../../player/provider";
 import React from "react";
-import { Separator, Spacer, View, XStack, YStack } from "tamagui";
+import { Separator, Spacer, useTheme, View, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
-import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { Colors } from "../../../enums/colors";
-import { CachedImage } from "@georstat/react-native-image-cache";
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api/image-api";
-import { queryConfig } from "../../../api/queries/query.config";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Icon from "../helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../../components/types";
-import Client from "../../../api/client";
+import { QueuingType } from "../../../enums/queuing-type";
+import BlurhashedImage from "./blurhashed-image";
 
 interface TrackProps {
     track: BaseItemDto;
     tracklist: BaseItemDto[];
     navigation: NativeStackNavigationProp<StackParamList>;
-    index: number | undefined;
+    index?: number | undefined;
+    queueName?: string | undefined;
     showArtwork?: boolean | undefined;
     onPress?: () => void | undefined;
+    isNested?: boolean | undefined
 }
 
 export default function Track({
@@ -30,27 +29,23 @@ export default function Track({
     index,
     queueName,
     showArtwork,
-    onPress
-} : {
-    track: BaseItemDto,
-    tracklist: BaseItemDto[],
-    navigation: NativeStackNavigationProp<StackParamList>;
-    index?: number | undefined,
-    queueName?: string | undefined,
-    showArtwork?: boolean | undefined,
-    onPress?: () => void | undefined
-}) : React.JSX.Element {
+    onPress,
+    isNested
+} : TrackProps) : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
     const { nowPlaying, usePlayNewQueue } = usePlayerContext();
 
     const isPlaying = nowPlaying?.item.Id === track.Id;
 
+    const theme = useTheme();
+
     return (
         <View>
             <Separator />
             <XStack 
                 alignContent="center"
+                alignItems="center"
                 flex={1}
                 onPress={() => {
                     if (onPress) {
@@ -60,9 +55,16 @@ export default function Track({
                             track,
                             index,
                             tracklist,
-                            queueName: queueName ? queueName : track.Album ? track.Album! : "Queue"
+                            queueName: queueName ? queueName : track.Album ? track.Album! : "Queue",
+                            queuingType: QueuingType.FromSelection
                         });
                     }
+                }}
+                onLongPress={() => {
+                    navigation.push("Details", {
+                        item: track,
+                        isNested: isNested
+                    })
                 }}
                 paddingVertical={"$2"}
                 marginHorizontal={"$1"}
@@ -74,24 +76,15 @@ export default function Track({
                     minHeight={showArtwork ? width / 9 : "unset"}
                 >
                     { showArtwork ? (
-                        <CachedImage
-                            source={getImageApi(Client.api!)
-                                .getItemImageUrlById(
-                                    track.AlbumId ?? "",
-                                    ImageType.Primary,
-                                    { ...queryConfig.images }
-                                )
-                            }
-                            imageStyle={{
-                                position: "relative",
-                                width: width / 9,
-                                height: width / 9,
-                                borderRadius: 2,
-                            }}
+                        <BlurhashedImage
+                            item={track}
+                            width={width / 9}
+                            cornered
                         />
-                
                     ) : (
-                    <Text color={isPlaying ? Colors.Primary : Colors.White}>
+                    <Text 
+                        color={isPlaying ? theme.telemagenta : theme.color}
+                    >
                         { track.IndexNumber?.toString() ?? "" }
                     </Text>
                 )}
@@ -100,7 +93,7 @@ export default function Track({
                 <YStack alignContent="center" justifyContent="flex-start" flex={5}>
                     <Text 
                         bold
-                        color={isPlaying ? Colors.Primary : Colors.White}
+                        color={isPlaying ? theme.telemagenta : theme.color}
                         lineBreakStrategyIOS="standard"
                         numberOfLines={1}
                     >
@@ -108,7 +101,12 @@ export default function Track({
                     </Text>
 
                     { (showArtwork || (track.ArtistCount ?? 0 > 1)) && (
-                        <Text lineBreakStrategyIOS="standard" numberOfLines={1}>{ track.Artists?.join(", ") ?? "" }</Text>
+                        <Text 
+                            lineBreakStrategyIOS="standard" 
+                            numberOfLines={1}
+                        >
+                            { track.Artists?.join(", ") ?? "" }
+                        </Text>
                     )}
                 </YStack>
 
@@ -124,7 +122,7 @@ export default function Track({
                         minWidth={24}
                     >
                         { track.UserData?.IsFavorite ? (
-                            <Icon small name="heart" color={Colors.Primary} />
+                            <Icon small name="heart" color={theme.telemagenta.val} />
                         ) : (
                             <Spacer />
                         )}
@@ -141,11 +139,15 @@ export default function Track({
                         alignContent="center"
                         justifyContent="center"
                     >
-                        <Icon small name="dots-vertical" onPress={() => {
-                            navigation.push("Details", {
-                                item: track
-                            })
-                        }} />
+                        <Icon 
+                            name="dots-vertical" 
+                            onPress={() => {
+                                navigation.push("Details", {
+                                    item: track,
+                                    isNested: isNested
+                                });
+                            }} 
+                        />
 
                     </YStack>
                 </XStack>

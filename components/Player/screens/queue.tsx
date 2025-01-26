@@ -34,6 +34,7 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                                 console.debug(`Skipping to index ${index}`)
                                 useSkip.mutate(index);
                             }}
+                            isNested
                         />
                     )
                 }}

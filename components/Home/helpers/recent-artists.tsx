@@ -4,8 +4,7 @@ import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import { StackParamList } from "../../types";
 import { FlatList } from "react-native";
-import { ItemCard } from "../../Global/helpers/item-card";
-import { getPrimaryBlurhashFromDto } from "../../../helpers/blurhash";
+import { ItemCard } from "../../Global/components/item-card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function RecentArtists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
@@ -20,12 +19,10 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
                 renderItem={({ item: recentArtist}) => {
                     return (
                         <ItemCard 
-                            artistName={recentArtist.Name!}
-                            blurhash={getPrimaryBlurhashFromDto(recentArtist)}
-                            itemId={recentArtist.Id!}
+                            item={recentArtist}
                             caption={recentArtist.Name ?? "Unknown Artist"}
                             onPress={() => {
-                                navigation.navigate('Artist', 
+                                navigation.push('Artist', 
                                     { 
                                         artist: recentArtist, 
                                     }

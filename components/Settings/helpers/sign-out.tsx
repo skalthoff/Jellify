@@ -6,13 +6,13 @@ import { useJellifyContext } from "../../../components/provider";
 
 export default function SignOut(): React.JSX.Element {
 
-    const { setLoggedIn } = useJellifyContext()
+    const { setLoggedIn } = useJellifyContext();
 
     return (
         <Button onPress={() => {
             stop();
-            Client.signOut();
             setLoggedIn(false);
+            Client.signOut();
         }}>
             Sign Out
         </Button>

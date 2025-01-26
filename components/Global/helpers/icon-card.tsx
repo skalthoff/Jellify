@@ -1,6 +1,5 @@
-import { Card, View } from "tamagui";
+import { Card, useTheme, View } from "tamagui";
 import { H2 } from "./text";
-import { Colors } from "../../../enums/colors";
 import Icon from "./icon";
 
 export default function IconCard({ 
@@ -14,13 +13,15 @@ export default function IconCard({
     width?: number | undefined,
     caption?: string | undefined,
 }) : React.JSX.Element {
+
+    const theme = useTheme();
+
     return (
         <View 
             alignItems="center"
             margin={5}
             >
             <Card 
-                elevate 
                 borderRadius={"$7"}
                 animation="bouncy"
                 hoverStyle={{ scale: 0.925 }}
@@ -30,12 +31,12 @@ export default function IconCard({
                 onPress={onPress}
             >
                 <Card.Header>
-                    <Icon color={Colors.Background} name={name} large />
+                    <Icon color={theme.purpleDark.val} name={name} large />
                 </Card.Header>
                 <Card.Footer padded>
-                    <H2 color={Colors.Background}>{ caption }</H2>
+                    <H2 color={theme.purpleDark.val}>{ caption }</H2>
                 </Card.Footer>
-                <Card.Background backgroundColor={Colors.Primary}>
+                <Card.Background backgroundColor={theme.telemagenta.val}>
 
                 </Card.Background>
             </Card>

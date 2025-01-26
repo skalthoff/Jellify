@@ -2,11 +2,12 @@ import React from "react";
 import { ScrollView, View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
-import { ItemCard } from "../../Global/helpers/item-card";
+import { ItemCard } from "../../Global/components/item-card";
 import { usePlayerContext } from "../../../player/provider";
 import { StackParamList } from "../../../components/types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { trigger } from "react-native-haptic-feedback";
+import { QueuingType } from "../../../enums/queuing-type";
 
 export default function RecentlyPlayed({ 
     navigation 
@@ -28,19 +29,21 @@ export default function RecentlyPlayed({
                             subCaption={`${recentlyPlayedTrack.Artists?.join(", ")}`}
                             cornered
                             width={150}
-                            itemId={recentlyPlayedTrack.AlbumId!}
+                            item={recentlyPlayedTrack}
                             onPress={() => {
                                 usePlayNewQueue.mutate({ 
                                     track: recentlyPlayedTrack, 
                                     index: index,
                                     tracklist: recentTracks,
-                                    queueName: "Recently Played"
+                                    queueName: "Recently Played",
+                                    queuingType: QueuingType.FromSelection
                                 });
                             }}
                             onLongPress={() => {
-                                trigger("impactLight");
+                                trigger("impactMedium");
                                 navigation.push("Details", {
-                                    item: recentlyPlayedTrack
+                                    item: recentlyPlayedTrack,
+                                    isNested: false
                                 })
                             }}
                         />                                

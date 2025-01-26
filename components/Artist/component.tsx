@@ -1,18 +1,15 @@
 import { ScrollView, YStack } from "tamagui";
 import { useArtistAlbums } from "../../api/queries/artist";
 import { FlatList } from "react-native";
-import { ItemCard } from "../Global/helpers/item-card";
+import { ItemCard } from "../Global/components/item-card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
 import { H2 } from "../Global/helpers/text";
 import { useState } from "react";
-import { CachedImage } from "@georstat/react-native-image-cache";
-import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { queryConfig } from "../../api/queries/query.config";
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
-import Client from "../../api/client";
+import BlurhashedImage from "../Global/components/blurhashed-image";
 
 interface ArtistProps {
     artist: BaseItemDto
@@ -38,54 +35,41 @@ export default function Artist(props: ArtistProps): React.JSX.Element {
     const { data: albums } = useArtistAlbums(props.artist.Id!);
 
     return (
-        <SafeAreaView style={{ flex: 1 }} edges={["top", "right", "left"]}>
-            <ScrollView 
-                contentInsetAdjustmentBehavior="automatic"
-                alignContent="center">
-                <YStack alignContent="center" justifyContent="center" minHeight={bannerHeight}>
-                    <CachedImage
-                        source={getImageApi(Client.api!)
-                            .getItemImageUrlById(
-                                props.artist.Id!,
-                                ImageType.Primary,
-                                { ...queryConfig.banners})
-                            } 
-                        imageStyle={{
-                            width: width,
-                            height: bannerHeight,
-                            alignSelf: "center",
-                            resizeMode: "cover",
-                            position: "relative"
-                        }}
-                    />
-                </YStack>
+        <ScrollView 
+            contentInsetAdjustmentBehavior="automatic"
+            alignContent="center">
+            <YStack alignContent="center" justifyContent="center" minHeight={bannerHeight}>
+                <BlurhashedImage
+                    item={props.artist}
+                    width={width}
+                />
+            </YStack>
 
-                <H2>Albums</H2>
-                    <FlatList
-                        contentContainerStyle={{
-                            flexGrow: 1,
-                            alignContent: 'center'
-                        }}
-                        data={albums}
-                        numColumns={columns} // TODO: Make this adjustable
-                        renderItem={({ item: album }) => {
-                            return (
-                                <ItemCard
-                                    caption={album.Name}
-                                    subCaption={album.ProductionYear?.toString()}
-                                    width={(width / 1.1) / columns}
-                                    cornered 
-                                    itemId={album.Id!}
-                                    onPress={() => {
-                                        props.navigation.navigate('Album', {
-                                            album
-                                        })
-                                    }}
-                                />
-                            )
-                        }}
-                    />
-            </ScrollView>
-        </SafeAreaView>
+            <H2>Albums</H2>
+                <FlatList
+                    contentContainerStyle={{
+                        flexGrow: 1,
+                        alignContent: 'center'
+                    }}
+                    data={albums}
+                    numColumns={columns} // TODO: Make this adjustable
+                    renderItem={({ item: album }) => {
+                        return (
+                            <ItemCard
+                                caption={album.Name}
+                                subCaption={album.ProductionYear?.toString()}
+                                width={(width / 1.1) / columns}
+                                cornered 
+                                item={album}
+                                onPress={() => {
+                                    props.navigation.push('Album', {
+                                        album
+                                    })
+                                }}
+                            />
+                        )
+                    }}
+                />
+        </ScrollView>
     )
 }

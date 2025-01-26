@@ -1,13 +1,13 @@
 import { DarkTheme, DefaultTheme } from "@react-navigation/native";
-import { Colors } from "../enums/colors";
+import { getTokens } from "tamagui";
 
 export const JellifyDarkTheme = {
     colors: {
       ...DarkTheme.colors,
-      card: Colors.Background,
-      border: Colors.Borders,
-      background: Colors.Background,
-      primary: Colors.Primary,
+      card: getTokens().color.$purpleDark.val,
+      border: getTokens().color.$amethyst.val,
+      background: getTokens().color.$purpleDark.val,
+      primary: getTokens().color.$telemagenta.val,
     },  
     dark: true
 };
@@ -16,6 +16,6 @@ export const JellifyLightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: Colors.Primary
+    primary: getTokens().color.$telemagenta.val
   }
 };

@@ -1,4 +1,4 @@
-import { ProvidedHomeProps, StackParamList } from "../../../components/types";
+import { StackParamList } from "../../../components/types";
 import { ScrollView, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { YStack, XStack, Separator } from "tamagui";
@@ -7,7 +7,7 @@ import RecentArtists from "../helpers/recent-artists";
 import RecentlyPlayed from "../helpers/recently-played";
 import { useHomeContext } from "../provider";
 import { H3 } from "../../../components/Global/helpers/text";
-import Avatar from "../../../components/Global/helpers/avatar";
+import Avatar from "../../Global/components/avatar";
 import Client from "../../../api/client";
 import { usePlayerContext } from "../../../player/provider";
 import { useEffect } from "react";
@@ -42,8 +42,6 @@ export function ProvidedHome({
                 <YStack alignContent='flex-start'>
                     <XStack margin={"$2"}>
                         <H3>{`Hi, ${Client.user!.name}`}</H3>
-                        <YStack />
-                        <Avatar maxHeight={30} itemId={Client.user!.id!} />
                     </XStack>
 
                     <Separator marginVertical={"$2"} />

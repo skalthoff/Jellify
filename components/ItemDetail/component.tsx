@@ -1,29 +1,39 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { StackParamList } from "../types";
 import TrackOptions from "./helpers/TrackOptions";
-import { Spacer, View, XStack, YStack } from "tamagui";
-import BlurhashedImage from "../Global/helpers/blurhashed-image";
+import { ScrollView, Spacer, useTheme, View, XStack, YStack } from "tamagui";
+import BlurhashedImage from "../Global/components/blurhashed-image";
 import { Text } from "../Global/helpers/text";
-import { Colors } from "../../enums/colors";
 import FavoriteButton from "../Global/components/favorite-button";
+import { useEffect } from "react";
+import { trigger } from "react-native-haptic-feedback";
 
 export default function ItemDetail({ 
     item, 
-    navigation 
+    navigation,
+    isNested
 } : { 
     item: BaseItemDto, 
-    navigation: NativeStackNavigationProp<StackParamList> 
+    navigation: NativeStackNavigationProp<StackParamList>,
+    isNested?: boolean | undefined
 }) : React.JSX.Element {
 
     let options: React.JSX.Element | undefined = undefined;
 
+    useEffect(() => {
+        trigger("impactMedium");
+    }, [
+        item
+    ]);
+
     const { width } = useSafeAreaFrame();
+    const theme = useTheme();
 
     switch (item.Type) {
         case "Audio": {
-            options = TrackOptions({ item, navigation });
+            options = TrackOptions({ item, navigation, isNested });
             break;
         }
 
@@ -48,29 +58,44 @@ export default function ItemDetail({
     }
 
     return (
-        <SafeAreaView edges={["top", "right", "left"]}>
-            <XStack>
-                <BlurhashedImage
-                    item={item}
-                    size={width / 2}
-                />
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <YStack alignItems="center" flex={1}>
+
+                <XStack 
+                    justifyContent="center"
+                    alignItems="center"
+                    maxHeight={width / 1.5}
+                    maxWidth={width / 1.5}
+                >
+
+                    <BlurhashedImage
+                        item={item}
+                        width={width / 1.5}
+                        />
+                </XStack>
 
                 <YStack 
                     marginLeft={"$0.5"} 
-                    justifyContent="flex-start"
-                    alignContent="space-between"
+                    alignContent="center"
+                    justifyContent="center"
+                    flex={2}
                 >
-                    <Text bold fontSize={"$6"}>
+                    <Text textAlign="center" bold fontSize={"$6"}>
                         { item.Name ?? "Untitled Track" }
                     </Text>
 
                     <Text 
+                        textAlign="center"
                         fontSize={"$6"} 
-                        color={Colors.Primary}
+                        color={theme.telemagenta}
                         onPress={() => {
                             if (item.ArtistItems) {
-                                navigation.goBack(); // Dismiss modal if exists
-                                navigation.getParent()!.navigate("Artist", {
+
+                                if (isNested)
+                                    navigation.getParent()!.goBack();
+
+                                navigation.goBack();
+                                navigation.push("Artist", {
                                     artist: item.ArtistItems[0]
                                 });
                             }
@@ -79,8 +104,9 @@ export default function ItemDetail({
                     </Text>
                         
                     <Text 
+                        textAlign="center"
                         fontSize={"$6"} 
-                        color={"$gray10"}
+                        color={"$borderColor"}
                     >
                         { item.Album ?? "" }
                     </Text>
@@ -94,7 +120,7 @@ export default function ItemDetail({
                     { options ?? <View /> }
                 </YStack>
 
-            </XStack>
-        </SafeAreaView>
+            </YStack>
+        </ScrollView>
     )
 }

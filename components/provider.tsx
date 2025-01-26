@@ -1,10 +1,12 @@
 import Client from "../api/client";
 import { isUndefined } from "lodash";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
+import { CarPlay } from "react-native-carplay";
 
 interface JellifyContext {
     loggedIn: boolean;
-    setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+    setLoggedIn: React.Dispatch<SetStateAction<boolean>>;
+    carPlayConnected: boolean;
 }
 
 const JellifyContextInitializer = () => {
@@ -12,18 +14,44 @@ const JellifyContextInitializer = () => {
     const [loggedIn, setLoggedIn] = useState<boolean>(
         !isUndefined(Client.api) && 
         !isUndefined(Client.user) &&
-        !isUndefined(Client.server)
+        !isUndefined(Client.server) &&
+        !isUndefined(Client.library)
     );
+
+
+    const [carPlayConnected, setCarPlayConnected] = useState(CarPlay.connected);
+
+    useEffect(() => {
+  
+      function onConnect() {
+        setCarPlayConnected(true);
+        // CarPlay.setRootTemplate(CarPlayNowPlaying, true);
+        CarPlay.enableNowPlaying(true);
+      }
+  
+      function onDisconnect() {
+        setCarPlayConnected(false);
+      }
+  
+      CarPlay.registerOnConnect(onConnect);
+      CarPlay.registerOnDisconnect(onDisconnect);
+      return () => {
+        CarPlay.unregisterOnConnect(onConnect)
+        CarPlay.unregisterOnDisconnect(onDisconnect)
+      };
+    });
 
     return {
         loggedIn,
         setLoggedIn,
+        carPlayConnected
     }
 }
 
 const JellifyContext = createContext<JellifyContext>({
     loggedIn: false,
-    setLoggedIn: () => {}
+    setLoggedIn: () => {},
+    carPlayConnected: false
 });
 
 export const JellifyProvider: ({ children }: {
@@ -31,14 +59,16 @@ export const JellifyProvider: ({ children }: {
 }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
     const {
         loggedIn,
-        setLoggedIn
+        setLoggedIn,
+        carPlayConnected
     } = JellifyContextInitializer();
 
     return (
         <JellifyContext.Provider
             value={{
                 loggedIn,
-                setLoggedIn
+                setLoggedIn,
+                carPlayConnected
             }}
             >
                 {children}

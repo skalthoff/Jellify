@@ -68,11 +68,15 @@ export default function ServerAuthentication(): React.JSX.Element {
                     placeholder="Username"
                     value={username}
                     onChangeText={(value) => setUsername(value)}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     />
                 <Input
                     placeholder="Password"
                     value={password}
                     onChangeText={(value) => setPassword(value)}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     secureTextEntry
                     />
             </YStack>

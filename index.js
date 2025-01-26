@@ -6,6 +6,7 @@ import { PlaybackService } from './player/service'
 import TrackPlayer from 'react-native-track-player';
 import Client from './api/client';
 
-AppRegistry.registerComponent(appName, () => App);
-TrackPlayer.registerPlaybackService(() => PlaybackService);
 Client.instance;
+AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent('RNCarPlayScene', () => App)
+TrackPlayer.registerPlaybackService(() => PlaybackService);

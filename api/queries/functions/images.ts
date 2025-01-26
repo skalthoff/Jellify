@@ -1,18 +1,18 @@
-import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/models"
+import { ImageType } from "@jellyfin/sdk/lib/generated-client/models"
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 import Client from "../../../api/client"
-import { queryConfig } from "../query.config";
+import { QueryConfig } from "../query.config";
+import { Dirs, FileSystem } from 'react-native-file-access'
 
-export function fetchItemImage(itemId: string, imageType?: ImageType, size?: number) {
+export function fetchItemImage(itemId: string, imageType?: ImageType, width?: number, height?: number) {
     
     return getImageApi(Client.api!)
         .getItemImage({ 
             itemId, 
             imageType: imageType ? imageType : ImageType.Primary,
-            format: ImageFormat.Jpg,
-            height: size ?? queryConfig.images.height,
-            width: size ?? queryConfig.images.width
+            width: width ? Math.ceil(width * 2) : QueryConfig.playerArtwork.width,
+            height: height ? Math.ceil(height * 2) : QueryConfig.playerArtwork.height
         }, {
             responseType: 'blob'
         })
