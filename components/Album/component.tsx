@@ -8,7 +8,7 @@ import { usePlayerContext } from "../../player/provider";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import Track from "../Global/components/track";
 import { useItemTracks } from "../../api/queries/tracks";
-import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import { useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
 import { useEffect } from "react";
 import BlurhashedImage from "../Global/components/blurhashed-image";

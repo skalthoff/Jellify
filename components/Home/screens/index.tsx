@@ -42,8 +42,6 @@ export function ProvidedHome({
                 <YStack alignContent='flex-start'>
                     <XStack margin={"$2"}>
                         <H3>{`Hi, ${Client.user!.name}`}</H3>
-                        <YStack />
-                        <Avatar maxHeight={30} itemId={Client.user!.id!} />
                     </XStack>
 
                     <Separator marginVertical={"$2"} />
