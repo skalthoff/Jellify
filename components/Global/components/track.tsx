@@ -60,9 +60,7 @@ export default function Track({
                         });
                     }
                 }}
-                onLongPress={(e) => {
-                    e.preventDefault();
-
+                onLongPress={() => {
                     navigation.push("Details", {
                         item: track,
                         isNested: isNested
@@ -84,7 +82,10 @@ export default function Track({
                             cornered
                         />
                     ) : (
-                    <Text onLongPress={(e) => e.preventDefault()} color={isPlaying ? theme.telemagenta : theme.color}>
+                    <Text 
+                        userSelect="none"
+                        color={isPlaying ? theme.telemagenta : theme.color}
+                    >
                         { track.IndexNumber?.toString() ?? "" }
                     </Text>
                 )}
@@ -96,14 +97,14 @@ export default function Track({
                         color={isPlaying ? theme.telemagenta : theme.color}
                         lineBreakStrategyIOS="standard"
                         numberOfLines={1}
-                        onLongPress={(e) => e.preventDefault()}
+                        userSelect="none"
                     >
                         { track.Name ?? "Untitled Track" }
                     </Text>
 
                     { (showArtwork || (track.ArtistCount ?? 0 > 1)) && (
                         <Text 
-                            onLongPress={(e) => e.preventDefault()}
+                            userSelect="none"
                             lineBreakStrategyIOS="standard" 
                             numberOfLines={1}
                         >
