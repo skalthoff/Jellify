@@ -1,8 +1,7 @@
 import type { AvatarProps as TamaguiAvatarProps } from "tamagui";
 import { Avatar as TamaguiAvatar, YStack } from "tamagui"
 import { Text } from "./text"
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { useItemImage } from "@/api/queries/image";
+import { useItemImage } from "../../../api/queries/image";
 
 interface AvatarProps extends TamaguiAvatarProps {
     itemId: string;
