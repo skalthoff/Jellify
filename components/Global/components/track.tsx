@@ -60,7 +60,9 @@ export default function Track({
                         });
                     }
                 }}
-                onLongPress={() => {
+                onLongPress={(e) => {
+                    e.preventDefault();
+
                     navigation.push("Details", {
                         item: track,
                         isNested: isNested
@@ -79,6 +81,7 @@ export default function Track({
                         <BlurhashedImage
                             item={track}
                             width={width / 9}
+                            cornered
                         />
                     ) : (
                     <Text onLongPress={(e) => e.preventDefault()} color={isPlaying ? theme.telemagenta : theme.color}>
