@@ -1,12 +1,11 @@
 import Client from "../api/client";
 import { isUndefined } from "lodash";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 import { CarPlay } from "react-native-carplay";
-import CarPlayNavigation from "./CarPlay/Navigation";
-import CarPlayNowPlaying from "./CarPlay/NowPlaying";
 
 interface JellifyContext {
     loggedIn: boolean;
+    setLoggedIn: React.Dispatch<SetStateAction<boolean>>;
     carPlayConnected: boolean;
 }
 
@@ -15,22 +14,9 @@ const JellifyContextInitializer = () => {
     const [loggedIn, setLoggedIn] = useState<boolean>(
         !isUndefined(Client.api) && 
         !isUndefined(Client.user) &&
-        !isUndefined(Client.server)
+        !isUndefined(Client.server) &&
+        !isUndefined(Client.library)
     );
-
-    useEffect(() => {
-        setLoggedIn(
-            !isUndefined(Client.api) && 
-            !isUndefined(Client.user) &&
-            !isUndefined(Client.server) &&
-            !isUndefined(Client.library)
-        )
-    }, [
-        Client.api,
-        Client.user,
-        Client.library,
-        Client.server,
-    ]);
 
 
     const [carPlayConnected, setCarPlayConnected] = useState(CarPlay.connected);
@@ -57,12 +43,14 @@ const JellifyContextInitializer = () => {
 
     return {
         loggedIn,
+        setLoggedIn,
         carPlayConnected
     }
 }
 
 const JellifyContext = createContext<JellifyContext>({
     loggedIn: false,
+    setLoggedIn: () => {},
     carPlayConnected: false
 });
 
@@ -71,6 +59,7 @@ export const JellifyProvider: ({ children }: {
 }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
     const {
         loggedIn,
+        setLoggedIn,
         carPlayConnected
     } = JellifyContextInitializer();
 
@@ -78,6 +67,7 @@ export const JellifyProvider: ({ children }: {
         <JellifyContext.Provider
             value={{
                 loggedIn,
+                setLoggedIn,
                 carPlayConnected
             }}
             >
