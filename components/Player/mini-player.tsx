@@ -39,6 +39,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                             <BlurhashedImage
                                 item={nowPlaying!.item}
                                 width={width / 7}
+                                cornered
                             />
 
                     </YStack>
