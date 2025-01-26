@@ -17,7 +17,7 @@ export async function fetchItemImage(
             .then(async (imageExists) => {
                 console.debug(`Item image ${imageExists ? 'exists' : 'does not exist'} in storage`);
                 if (imageExists)
-                    resolve(await fetchItemImageFromStorage(itemId, imageType, width, height))
+                    resolve(await fetchItemImageFromStorage(itemId, imageType, width, height));
             });
 
         getImageApi(Client.api!)
@@ -39,13 +39,18 @@ export async function fetchItemImage(
                             text
                         ).then(() => {
                             resolve(URL.createObjectURL(data));
-                        })
+                        }).catch(() => {
+                            resolve(URL.createObjectURL(data));
+                        });
                     })
+                    .catch(() => {
+                        resolve(URL.createObjectURL(data));
+                    });
             })
             .catch(error => {
-                reject(error)
-            })
-    })
+                reject(error);
+            });
+    });
 }
 
 async function fetchItemImageFromStorage(itemId: string, imageType: ImageType, width?: number, height?: number) {
