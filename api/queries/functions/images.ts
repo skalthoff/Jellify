@@ -32,14 +32,15 @@ export async function fetchItemImage(
             })
             .then(async ({ data } : { data: Blob }) => {
 
-                console.debug(URL.createObjectURL(data));
-                FileSystem.writeFile(
-                    getImagePath(itemId, imageType, width, height),
-                    await data.text()
-                ).then(() => {
-                    resolve(URL.createObjectURL(data));
-                })
-
+                data.text()
+                    .then((text) => {
+                        FileSystem.writeFile(
+                            getImagePath(itemId, imageType, width, height),
+                            text
+                        ).then(() => {
+                            resolve(URL.createObjectURL(data));
+                        })
+                    })
             })
             .catch(error => {
                 reject(error)
