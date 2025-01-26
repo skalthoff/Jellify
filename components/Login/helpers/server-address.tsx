@@ -81,6 +81,7 @@ export default function ServerAddress(): React.JSX.Element {
                     onChangeText={setServerAddress}
                     autoCapitalize="none"
                     autoCorrect={false}
+                    flexGrow={1}
                 />
             </XStack>
 
