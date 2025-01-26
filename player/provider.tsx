@@ -17,6 +17,7 @@ import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react
 import { convertRunTimeTicksToSeconds } from "../helpers/runtimeticks";
 import Client from "../api/client";
 import { AddToQueueMutation, QueueMutation } from "./interfaces";
+import { Section } from "../components/Player/types";
 
 interface PlayerContext {
     showPlayer: boolean;
@@ -28,6 +29,7 @@ interface PlayerContext {
     nowPlaying: JellifyTrack | undefined;
     queue: JellifyTrack[];
     queueName: string | undefined;
+    getQueueSectionData: () => Section[];
     useAddToQueue: UseMutationResult<void, Error, AddToQueueMutation, unknown>;
     useTogglePlayback: UseMutationResult<void, Error, number | undefined, unknown>;
     useSeekTo: UseMutationResult<void, Error, number, unknown>;
@@ -64,6 +66,15 @@ const PlayerContextInitializer = () => {
         }
 
         TrackPlayer.play();
+    }
+
+    const getQueueSectionData : () => Section[] = () => {
+        return Object.keys(QueuingType).map((type) => {
+            return {
+                title: type,
+                data: queue.filter(track => track.QueuingType === type)
+            } as Section
+        });
     }
     
     const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
@@ -286,6 +297,7 @@ const PlayerContextInitializer = () => {
         nowPlaying,
         queue,
         queueName,
+        getQueueSectionData,
         useAddToQueue,
         useTogglePlayback,
         useSeekTo,
@@ -309,6 +321,7 @@ export const PlayerContext = createContext<PlayerContext>({
     nowPlaying: undefined,
     queue: [],
     queueName: undefined,
+    getQueueSectionData: () => [],
     useAddToQueue: {
         mutate: () => {},
         mutateAsync: async () => {},
@@ -433,6 +446,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         nowPlaying,
         queue, 
         queueName,
+        getQueueSectionData,
         useAddToQueue,
         useTogglePlayback,
         useSeekTo,
@@ -453,6 +467,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         nowPlaying,
         queue,
         queueName,
+        getQueueSectionData,
         useAddToQueue,
         useTogglePlayback,
         useSeekTo,
