@@ -12,7 +12,7 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
 import { useEffect } from "react";
 import BlurhashedImage from "../Global/components/blurhashed-image";
-import Avatar from "../Global/helpers/avatar";
+import Avatar from "../Global/components/avatar";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -95,8 +95,9 @@ export default function Album({
                     renderItem={({ index, item: artist }) => {
                         return (
                             <Avatar
+                                circular
                                 item={artist}
-                                width={width / 5}
+                                width={width / 4}
                                 onPress={() => {
                                     navigation.push("Artist", {
                                         artist

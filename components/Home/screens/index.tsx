@@ -7,7 +7,7 @@ import RecentArtists from "../helpers/recent-artists";
 import RecentlyPlayed from "../helpers/recently-played";
 import { useHomeContext } from "../provider";
 import { H3 } from "../../../components/Global/helpers/text";
-import Avatar from "../../../components/Global/helpers/avatar";
+import Avatar from "../../Global/components/avatar";
 import Client from "../../../api/client";
 import { usePlayerContext } from "../../../player/provider";
 import { useEffect } from "react";

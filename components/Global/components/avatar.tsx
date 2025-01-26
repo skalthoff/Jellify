@@ -1,6 +1,6 @@
 import type { AvatarProps as TamaguiAvatarProps } from "tamagui";
 import { Avatar as TamaguiAvatar, YStack } from "tamagui"
-import { Text } from "./text"
+import { Text } from "../helpers/text"
 import { useItemImage } from "../../../api/queries/image";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 
@@ -17,7 +17,7 @@ export default function Avatar({
     ...props
 }: AvatarProps): React.JSX.Element {
 
-    const { data } = useItemImage(item.Id!)
+    const { data } = useItemImage(item.Id!, imageType, typeof (props.width) === 'number' ? props.width : 100)
 
     return (
         <YStack alignItems="center" marginHorizontal={10}>
