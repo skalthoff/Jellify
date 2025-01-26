@@ -15,6 +15,7 @@ export async function fetchItemImage(
     return new Promise<string>((resolve, reject) => {
         FileSystem.exists(`${Dirs.CacheDir}/Images/${imageType}/${itemId}`)
             .then((imageExists) => {
+                console.debug(`Item image ${imageExists ? 'exists' : 'does not exist'} in storage`);
                 if (imageExists)
                     resolve(fetchItemImageFromStorage(itemId, imageType, width, height))
             });
@@ -33,8 +34,10 @@ export async function fetchItemImage(
                 console.debug(URL.createObjectURL(response.data));
                 FileSystem.writeFile(
                     getImagePath(itemId, imageType, width, height),
-                    URL.createObjectURL(response.data)
+                    response.data
                 )
+
+                resolve(URL.createObjectURL(response.data));
             })
             .catch(error => {
                 reject(error)
