@@ -22,10 +22,14 @@ const JellifyContextInitializer = () => {
         setLoggedIn(
             !isUndefined(Client.api) && 
             !isUndefined(Client.user) &&
-            !isUndefined(Client.server)    
+            !isUndefined(Client.server) &&
+            !isUndefined(Client.library)
         )
     }, [
-        Client.instance
+        Client.api,
+        Client.user,
+        Client.library,
+        Client.server,
     ]);
 
 
