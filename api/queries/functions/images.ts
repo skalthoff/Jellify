@@ -30,11 +30,13 @@ export async function fetchItemImage(
             }, {
                 responseType: 'blob'
             })
-            .then((response) => {
-                console.debug(URL.createObjectURL(response.data));
+            .then(async (response) => {
+                const imageBlob = response.data as Blob
+
+                console.debug(URL.createObjectURL(imageBlob));
                 FileSystem.writeFile(
                     getImagePath(itemId, imageType, width, height),
-                    response.data
+                    await imageBlob.text()
                 )
 
                 resolve(URL.createObjectURL(response.data));
