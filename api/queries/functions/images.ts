@@ -34,16 +34,20 @@ export async function fetchItemImage(
 
                 data.text()
                     .then((text) => {
+                        console.debug("Writing image to file")
                         FileSystem.writeFile(
                             getImagePath(itemId, imageType, width, height),
                             text
                         ).then(() => {
+                            console.debug("Successfully wrote image to file")
                             resolve(URL.createObjectURL(data));
                         }).catch(() => {
+                            console.debug("Unable to write image to file, exiting...")
                             resolve(URL.createObjectURL(data));
                         });
                     })
                     .catch(() => {
+                        console.debug("Unable to read blob, not storing")
                         resolve(URL.createObjectURL(data));
                     });
             })
