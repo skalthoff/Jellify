@@ -2,7 +2,7 @@ import { StackParamList } from "../types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ScrollView, YStack, XStack } from "tamagui";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
-import { H4, H5, Text } from "../Global/helpers/text";
+import { H3, H4, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
 import { usePlayerContext } from "../../player/provider";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
@@ -12,6 +12,7 @@ import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
 import { useEffect } from "react";
 import BlurhashedImage from "../Global/components/blurhashed-image";
+import Avatar from "../Global/helpers/avatar";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -82,6 +83,21 @@ export default function Album(props: AlbumProps): React.JSX.Element {
                 </Text>
                 <RunTimeTicks>{ props.album.RunTimeTicks }</RunTimeTicks>
             </XStack>
+
+            <YStack justifyContent="flex-start">
+                <H3>Album Artists</H3>
+                <FlatList
+                    horizontal
+                    data={props.album.ArtistItems}
+                    renderItem={({ index, item: artist }) => {
+                        return (
+                            <Avatar
+                            itemId={artist.Id!}
+                            />
+                        )
+                    }}
+                    />
+            </YStack>
         </ScrollView>
     )
 }
