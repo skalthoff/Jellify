@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useEffect } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Navigation from "./navigation";
 import Login from "./Login/component";
@@ -10,7 +10,6 @@ import { PlayerProvider } from "../player/provider";
 import { useColorScheme } from "react-native";
 import { PortalProvider } from "tamagui";
 import { JellifyProvider, useJellifyContext } from "./provider";
-import Client from "../api/client";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -27,9 +26,7 @@ function App(): React.JSX.Element {
 
   const isDarkMode = useColorScheme() === "dark";
   const { loggedIn } = useJellifyContext();
-
-  useEffect(() => {}, [Client.instance])
-
+  
   return (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
       <SafeAreaProvider>

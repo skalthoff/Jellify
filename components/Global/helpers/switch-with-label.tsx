@@ -1,4 +1,4 @@
-import { SizeTokens, XStack, Separator, Switch, ColorTokens } from "tamagui";
+import { SizeTokens, XStack, Separator, Switch, ColorTokens, Theme } from "tamagui";
 import { Label } from "./text";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
@@ -14,24 +14,27 @@ interface SwitchWithLabelProps {
 export function SwitchWithLabel(props: SwitchWithLabelProps) {
     const id = `switch-${props.size.toString().slice(1)}-${props.checked ?? ''}}`
     return (
-      <XStack alignItems="center" gap="$3">
-        <Label
+      <Theme name={"inverted_purple"}>
+        <XStack alignItems="center" gap="$3">
+          <Label
+          
           size={props.size}
           htmlFor={id}
-        >
-          {props.label}
-        </Label>
-        <Separator minHeight={20} vertical />
-        <Switch 
-          id={id} 
-          size={props.size} 
-          checked={props.checked} 
-          onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
-          backgroundColor={props.backgroundColor ?? Colors.Primary}
-        >
-          <Switch.Thumb animation="quicker" />
-        </Switch>
-      </XStack>
+          >
+            {props.label}
+          </Label>
+          <Separator minHeight={20} vertical />
+          <Switch 
+            id={id} 
+            size={props.size} 
+            checked={props.checked} 
+            onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
+            backgroundColor={props.backgroundColor ?? Colors.Primary}
+            >
+            <Switch.Thumb animation="quicker" />
+          </Switch>
+        </XStack>
+      </Theme>
     )
   }
   

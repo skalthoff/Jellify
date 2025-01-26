@@ -36,9 +36,10 @@ export async function fetchItemImage(
                 FileSystem.writeFile(
                     getImagePath(itemId, imageType, width, height),
                     await data.text()
-                )
+                ).then(() => {
+                    resolve(URL.createObjectURL(data));
+                })
 
-                resolve(URL.createObjectURL(data));
             })
             .catch(error => {
                 reject(error)

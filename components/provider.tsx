@@ -18,6 +18,17 @@ const JellifyContextInitializer = () => {
         !isUndefined(Client.server)
     );
 
+    useEffect(() => {
+        setLoggedIn(
+            !isUndefined(Client.api) && 
+            !isUndefined(Client.user) &&
+            !isUndefined(Client.server)    
+        )
+    }, [
+        Client.instance
+    ]);
+
+
     const [carPlayConnected, setCarPlayConnected] = useState(CarPlay.connected);
 
     useEffect(() => {
