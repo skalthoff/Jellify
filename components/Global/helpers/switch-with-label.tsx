@@ -14,8 +14,7 @@ interface SwitchWithLabelProps {
 export function SwitchWithLabel(props: SwitchWithLabelProps) {
     const id = `switch-${props.size.toString().slice(1)}-${props.checked ?? ''}}`
     return (
-      <Theme name={"inverted_purple"}>
-        <XStack alignItems="center" gap="$3">
+      <XStack alignItems="center" gap="$3">
           <Label
           
           size={props.size}
@@ -23,18 +22,19 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
           >
             {props.label}
           </Label>
-          <Separator minHeight={20} vertical />
-          <Switch 
-            id={id} 
-            size={props.size} 
-            checked={props.checked} 
-            onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
-            backgroundColor={props.backgroundColor ?? Colors.Primary}
-            >
-            <Switch.Thumb animation="quicker" />
-          </Switch>
+          <Theme name={"inverted_purple"}>
+            <Separator minHeight={20} vertical />
+            <Switch 
+              id={id} 
+              size={props.size} 
+              checked={props.checked} 
+              onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
+              backgroundColor={props.backgroundColor ?? Colors.Primary}
+              >
+              <Switch.Thumb animation="quicker" />
+            </Switch>
+          </Theme>
         </XStack>
-      </Theme>
     )
   }
   
