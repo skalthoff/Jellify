@@ -8,5 +8,6 @@ export const useItemImage = (itemId: string, imageType?: ImageType, width?: numb
     queryKey: [QueryKeys.ItemImage, itemId, imageType, width, height],
     queryFn: () => fetchItemImage(itemId, imageType, width, height),
     staleTime: QueryConfig.staleTime.oneWeek,
-    gcTime: Infinity
+    gcTime: Infinity,
+    retry: 3
 });
