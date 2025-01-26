@@ -26,6 +26,8 @@ export async function fetchItemImage(
                 width: width ? Math.ceil(width * 2) : QueryConfig.playerArtwork.width,
                 height: height ? Math.ceil(height * 2) : QueryConfig.playerArtwork.height,
                 format: ImageFormat.Jpg,
+            }, {
+                responseType: 'blob'
             })
             .then((response) => {
                 console.debug(URL.createObjectURL(response.data));
