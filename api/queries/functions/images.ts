@@ -17,30 +17,26 @@ export async function fetchItemImage(
             .then((imageExists) => {
                 if (imageExists)
                     resolve(fetchItemImageFromStorage(itemId, imageType, width, height))
-            }) 
+            });
 
-        FileSystem.fetch(
-            getImageApi(Client.api!)
-                .getItemImageUrlById(
-                    itemId, 
-                    imageType, 
-                    { 
-                        format: ImageFormat.Jpg,
-                        width: width ? Math.ceil(width * 2) : QueryConfig.playerArtwork.width,
-                        height: height ? Math.ceil(height * 2) : QueryConfig.playerArtwork.height
-                    }
-                ),
-                {
-                    path: getImagePath(itemId, imageType, width, height),
-                }
-        ).then((result) => {
-            if (result.ok)
-                resolve(result.url)
-            else 
-                reject(result.headers)
-        }).catch(error => {
-            reject(error)
-        })
+        getImageApi(Client.api!)
+            .getItemImage({
+                itemId,
+                imageType,
+                width: width ? Math.ceil(width * 2) : QueryConfig.playerArtwork.width,
+                height: height ? Math.ceil(height * 2) : QueryConfig.playerArtwork.height,
+                format: ImageFormat.Jpg,
+            })
+            .then((response) => {
+                console.debug(URL.createObjectURL(response.data));
+                FileSystem.writeFile(
+                    getImagePath(itemId, imageType, width, height),
+                    URL.createObjectURL(response.data)
+                )
+            })
+            .catch(error => {
+                reject(error)
+            })
     })
 }
 
