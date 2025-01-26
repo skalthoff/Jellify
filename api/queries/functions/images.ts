@@ -14,10 +14,10 @@ export async function fetchItemImage(
     
     return new Promise<string>((resolve, reject) => {
         FileSystem.exists(`${Dirs.CacheDir}/Images/${imageType}/${itemId}`)
-            .then((imageExists) => {
+            .then(async (imageExists) => {
                 console.debug(`Item image ${imageExists ? 'exists' : 'does not exist'} in storage`);
                 if (imageExists)
-                    resolve(fetchItemImageFromStorage(itemId, imageType, width, height))
+                    resolve(await fetchItemImageFromStorage(itemId, imageType, width, height))
             });
 
         getImageApi(Client.api!)
@@ -30,16 +30,15 @@ export async function fetchItemImage(
             }, {
                 responseType: 'blob'
             })
-            .then(async (response) => {
-                const imageBlob = response.data as Blob
+            .then(async ({ data } : { data: Blob }) => {
 
-                console.debug(URL.createObjectURL(imageBlob));
+                console.debug(URL.createObjectURL(data));
                 FileSystem.writeFile(
                     getImagePath(itemId, imageType, width, height),
-                    await imageBlob.text()
+                    await data.text()
                 )
 
-                resolve(URL.createObjectURL(response.data));
+                resolve(URL.createObjectURL(data));
             })
             .catch(error => {
                 reject(error)
