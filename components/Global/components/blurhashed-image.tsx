@@ -28,7 +28,7 @@ export default function BlurhashedImage({
         : undefined;
 
     return (
-        <View minHeight={height ?? width} minWidth={width}>
+        <View minHeight={height ?? width} minWidth={width} borderRadius={cornered ? 2: 25}>
 
             { isSuccess ? (
                 <Image 
