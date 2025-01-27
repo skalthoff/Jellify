@@ -23,19 +23,19 @@ export default function Search({
         queryFn: () => fetchSearchResults(searchString)
     })
 
-    const search = (func : () => void, delay : number) => useCallback(() => {
+    const search = useCallback(() => {
 
         let timeout : NodeJS.Timeout;
         
         return () => {
             clearTimeout(timeout);
-            timeout = setTimeout(() => func(), delay)
+            timeout = setTimeout(() => refetch, 1000)
         }
     }, []);
 
     const handleSearchStringUpdate = (value: string | undefined) => {
         setSearchString(value)
-        search(refetch, 1000);
+        search();
     }
 
     return (
