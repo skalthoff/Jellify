@@ -119,7 +119,9 @@ export default function Item({
                         <Spacer />
                     )}
 
-                    <Icon  
+                    {(item.Type === 'Audio' || item.Type === 'MusicAlbum') ? (
+
+                        <Icon  
                         name="dots-vertical"
                         onPress={() => {
                             navigation.push("Details", {
@@ -127,7 +129,10 @@ export default function Item({
                                 isNested: false
                             })
                         }} 
-                    />
+                        />
+                    ) : (
+                        <Spacer />
+                    )}
                 </XStack>
             </XStack>
         </View>
