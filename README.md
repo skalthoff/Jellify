@@ -1,4 +1,4 @@
-# Jellify
+# Jellify (verb) - to make gelatinous
 ![Jellify App Icon](assets/icon_60pt_3x.jpg)
 
 A music player for [Jellyfin](https://jellyfin.org/) built with [React Native](https://reactnative.dev/). 
