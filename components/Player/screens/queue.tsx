@@ -21,6 +21,9 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                     { length: width / 9, offset: width / 9 * index, index}
                 )}
                 initialScrollIndex={scrollIndex !== -1 ? scrollIndex: 0}
+                keyExtractor={({ item }, index) => {
+                    return `${index}-${item.Id}`
+                }}
                 numColumns={1}
                 renderItem={({ item: queueItem, index }) => {
                     return (
