@@ -31,6 +31,7 @@ interface PlayerContext {
     queueName: string | undefined;
     getQueueSectionData: () => Section[];
     useAddToQueue: UseMutationResult<void, Error, AddToQueueMutation, unknown>;
+    useClearQueue: UseMutationResult<void, Error, void, unknown>;
     useTogglePlayback: UseMutationResult<void, Error, number | undefined, unknown>;
     useSeekTo: UseMutationResult<void, Error, number, unknown>;
     useSkip: UseMutationResult<void, Error, number | undefined, unknown>;
@@ -112,13 +113,23 @@ const PlayerContextInitializer = () => {
     //#region Hooks
     const useAddToQueue = useMutation({
         mutationFn: async (mutation: AddToQueueMutation) => {
-            trigger("impactMedium");
+            trigger("effectDoubleClick");
 
             if (mutation.queuingType === QueuingType.PlayingNext)
                 return addToNext([mapDtoToTrack(mutation.track, mutation.queuingType)]);
 
             else
                 return addToQueue([mapDtoToTrack(mutation.track, mutation.queuingType)])
+        }
+    });
+
+    const useClearQueue = useMutation({
+        mutationFn: async () => {
+            trigger("effectDoubleClick")
+
+            await TrackPlayer.removeUpcomingTracks();
+
+            setQueue(await getQueue() as JellifyTrack[]);
         }
     })
 
@@ -134,7 +145,7 @@ const PlayerContextInitializer = () => {
 
     const useSeekTo = useMutation({
         mutationFn: async (position: number) => {
-            trigger('impactMedium');
+            trigger('impactLight');
             await seekTo(position);
 
             handlePlaybackProgressUpdated(Client.sessionId, playStateApi, nowPlaying!, { 
@@ -177,7 +188,7 @@ const PlayerContextInitializer = () => {
 
     const usePlayNewQueue = useMutation({
         mutationFn: async (mutation: QueueMutation) => {
-            trigger("impactMedium");
+            trigger("effectDoubleClick");
 
             setIsSkipping(true);
 
@@ -299,6 +310,7 @@ const PlayerContextInitializer = () => {
         queueName,
         getQueueSectionData,
         useAddToQueue,
+        useClearQueue,
         useTogglePlayback,
         useSeekTo,
         useSkip,
@@ -323,6 +335,24 @@ export const PlayerContext = createContext<PlayerContext>({
     queueName: undefined,
     getQueueSectionData: () => [],
     useAddToQueue: {
+        mutate: () => {},
+        mutateAsync: async () => {},
+        data: undefined,
+        error: null,
+        variables: undefined,
+        isError: false,
+        isIdle: true,
+        isPaused: false,
+        isPending: false,
+        isSuccess: false,
+        status: "idle",
+        reset: () => {},
+        context: {},
+        failureCount: 0,
+        failureReason: null,
+        submittedAt: 0
+    },
+    useClearQueue: {
         mutate: () => {},
         mutateAsync: async () => {},
         data: undefined,
@@ -448,6 +478,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         queueName,
         getQueueSectionData,
         useAddToQueue,
+        useClearQueue,
         useTogglePlayback,
         useSeekTo,
         useSkip,
@@ -469,6 +500,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         queueName,
         getQueueSectionData,
         useAddToQueue,
+        useClearQueue,
         useTogglePlayback,
         useSeekTo,
         useSkip,

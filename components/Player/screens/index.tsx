@@ -39,7 +39,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
     // Prevent gesture event to close player if we're seeking
     useEffect(() => {
-        navigation.setOptions({ gestureEnabled: !seeking });
+        navigation.getParent()!.setOptions({ gestureEnabled: !seeking });
     }, [
         navigation,
         seeking
