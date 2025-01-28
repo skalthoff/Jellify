@@ -66,7 +66,6 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                             }}
                             onLongPress={drag}
                             isNested
-                            invertedColors={isActive}
                             />
                     </SwipeableItem>
                 )
