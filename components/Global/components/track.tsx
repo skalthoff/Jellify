@@ -13,8 +13,8 @@ import BlurhashedImage from "./blurhashed-image";
 
 interface TrackProps {
     track: BaseItemDto;
-    tracklist: BaseItemDto[];
     navigation: NativeStackNavigationProp<StackParamList>;
+    tracklist?: BaseItemDto[] | undefined;
     index?: number | undefined;
     queueName?: string | undefined;
     showArtwork?: boolean | undefined;
@@ -38,7 +38,7 @@ export default function Track({
 } : TrackProps) : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
-    const { nowPlaying, usePlayNewQueue } = usePlayerContext();
+    const { nowPlaying, queue, usePlayNewQueue } = usePlayerContext();
 
     const isPlaying = nowPlaying?.item.Id === track.Id;
 
@@ -58,7 +58,7 @@ export default function Track({
                         usePlayNewQueue.mutate({
                             track,
                             index,
-                            tracklist,
+                            tracklist: tracklist ?? queue.map((track) => track.item),
                             queueName: queueName ? queueName : track.Album ? track.Album! : "Queue",
                             queuingType: QueuingType.FromSelection
                         });

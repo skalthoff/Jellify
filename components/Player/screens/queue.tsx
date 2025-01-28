@@ -10,7 +10,7 @@ import SwipeableItem from "react-native-swipeable-item";
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
-    const { queue, useClearQueue, useReorderQueue, useSkip, nowPlaying,  } = usePlayerContext();
+    const { queue, useClearQueue, useReorderQueue, useSkip, nowPlaying } = usePlayerContext();
 
     navigation.setOptions({
         headerRight: () => {
@@ -48,7 +48,6 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                     <Track
                         navigation={navigation}
                         track={queueItem.item}
-                        tracklist={queue.map((track) => track.item)}
                         index={getIndex()}
                         showArtwork
                         onPress={() => {
