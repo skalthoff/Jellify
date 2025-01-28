@@ -3,8 +3,8 @@ import Track from "../../../components/Global/components/track";
 import { StackParamList } from "../../../components/types";
 import { usePlayerContext } from "../../../player/provider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FlatList } from "react-native";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
+import DraggableFlatList from "react-native-draggable-flatlist";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -24,7 +24,7 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
     const scrollIndex = queue.findIndex(queueItem => queueItem.item.Id! === nowPlaying!.item.Id!)
 
     return (
-        <FlatList
+        <DraggableFlatList
             contentInsetAdjustmentBehavior="automatic"
             data={queue}
             extraData={nowPlaying}
@@ -36,18 +36,23 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                 return `${index}-${item.Id}`
             }}
             numColumns={1}
-            renderItem={({ item: queueItem, index }) => {
+            onRelease={(index) => }
+            renderItem={({ item: queueItem, getIndex, drag, isActive }) => {
+
+                const index = getIndex();
+
                 return (
                     <Track
                         navigation={navigation}
                         track={queueItem.item}
                         tracklist={queue.map((track) => track.item)}
-                        index={index}
+                        index={getIndex()}
                         showArtwork
                         onPress={() => {
                             console.debug(`Skipping to index ${index}`)
                             useSkip.mutate(index);
                         }}
+                        onLongPress={drag}
                         isNested
                     />
                 )

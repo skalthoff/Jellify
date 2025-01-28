@@ -19,6 +19,7 @@ interface TrackProps {
     queueName?: string | undefined;
     showArtwork?: boolean | undefined;
     onPress?: () => void | undefined;
+    onLongPress?: () => void | undefined;
     isNested?: boolean | undefined
 }
 
@@ -30,6 +31,7 @@ export default function Track({
     queueName,
     showArtwork,
     onPress,
+    onLongPress,
     isNested
 } : TrackProps) : React.JSX.Element {
 
@@ -60,12 +62,15 @@ export default function Track({
                         });
                     }
                 }}
-                onLongPress={() => {
-                    navigation.push("Details", {
-                        item: track,
-                        isNested: isNested
-                    })
-                }}
+                onLongPress={
+                    onLongPress ? () => onLongPress() 
+                    : () => {
+                        navigation.push("Details", {
+                            item: track,
+                            isNested: isNested
+                        })
+                    }
+                }
                 paddingVertical={"$2"}
                 marginHorizontal={"$1"}
             >
