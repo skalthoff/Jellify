@@ -17,11 +17,14 @@ interface PlaylistProps {
     navigation: NativeStackNavigationProp<StackParamList>
 }
 
-export default function Playlist(props: PlaylistProps): React.JSX.Element {
+export default function Playlist({
+    playlist,
+    navigation
+}: PlaylistProps): React.JSX.Element {
 
     const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
 
-    const { data: tracks, isLoading, refetch } = useItemTracks(props.playlist.Id!);
+    const { data: tracks, isLoading, refetch } = useItemTracks(playlist.Id!);
 
     useEffect(() => {
         refetch();
@@ -33,12 +36,12 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
         <ScrollView contentInsetAdjustmentBehavior="automatic">
             <YStack alignItems="center">
                 <BlurhashedImage
-                    item={props.playlist}
+                    item={playlist}
                     width={300}
                 />
 
-                <H4>{ props.playlist.Name ?? "Untitled Playlist" }</H4>
-                <H5>{ props.playlist.ProductionYear?.toString() ?? "" }</H5>
+                <H4>{ playlist.Name ?? "Untitled Playlist" }</H4>
+                <H5>{ playlist.ProductionYear?.toString() ?? "" }</H5>
             </YStack>
             <FlatList
                 data={tracks}
@@ -48,11 +51,11 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
 
                     return (
                         <Track
-                            navigation={props.navigation}
+                            navigation={navigation}
                             track={track}
                             tracklist={tracks!}
                             index={index}
-                            queueName={props.playlist.Name ?? "Untitled Playlist"}
+                            queueName={playlist.Name ?? "Untitled Playlist"}
                             showArtwork
                         />
                     )
@@ -66,7 +69,7 @@ export default function Playlist(props: PlaylistProps): React.JSX.Element {
                 >
                     Total Runtime:
                 </Text>
-                <RunTimeTicks>{ props.playlist.RunTimeTicks }</RunTimeTicks>
+                <RunTimeTicks>{ playlist.RunTimeTicks }</RunTimeTicks>
             </XStack>
         </ScrollView>
     )

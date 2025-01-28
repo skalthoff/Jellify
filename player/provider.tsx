@@ -136,9 +136,8 @@ const PlayerContextInitializer = () => {
 
     const useReorderQueue = useMutation({
         mutationFn: async (mutation : QueueOrderMutation) => {
-            await TrackPlayer.move(mutation.from, mutation.to);
-
             setQueue(mutation.newOrder);
+            await TrackPlayer.move(mutation.from, mutation.to);
         }
     })
 
