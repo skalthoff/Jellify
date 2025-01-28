@@ -31,18 +31,9 @@ export default function Album({
             )
         }
     })
-
-    const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
-
     const { width } = useSafeAreaFrame();
 
-    const { data: tracks, isLoading, refetch } = useItemTracks(album.Id!, true);
-
-    useEffect(() => {
-        refetch();
-    }, [
-        nowPlayingIsFavorite
-    ])
+    const { data: tracks } = useItemTracks(album.Id!, true);
 
     return (
             <FlatList
