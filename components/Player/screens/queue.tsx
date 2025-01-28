@@ -36,7 +36,6 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                 return `${index}-${item.Id}`
             }}
             numColumns={1}
-            onRelease={(index) => }
             renderItem={({ item: queueItem, getIndex, drag, isActive }) => {
 
                 const index = getIndex();
