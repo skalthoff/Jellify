@@ -157,6 +157,7 @@ export default function Track({
                     </YStack>
                 </XStack>
             </XStack>
+            <Separator />
         </View>
     )
 }

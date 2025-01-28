@@ -9,7 +9,7 @@ import DraggableFlatList from "react-native-draggable-flatlist";
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
-    const { queue, useClearQueue, useSkip, nowPlaying,  } = usePlayerContext();
+    const { queue, useClearQueue, useReorderQueue, useSkip, nowPlaying,  } = usePlayerContext();
 
     navigation.setOptions({
         headerRight: () => {
@@ -37,7 +37,7 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
             }}
             numColumns={1}
             onDragEnd={({ data, from, to}) => {
-                
+                useReorderQueue.mutate({ newOrder: data, from, to });
             }}
             renderItem={({ item: queueItem, getIndex, drag, isActive }) => {
 
