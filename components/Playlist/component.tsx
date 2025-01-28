@@ -1,15 +1,12 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { ScrollView, XStack, YStack } from "tamagui";
-import { usePlayerContext } from "../../player/provider";
+import { XStack, YStack } from "tamagui";
 import { useItemTracks } from "../../api/queries/tracks";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
 import { FlatList } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useEffect } from "react";
 import BlurhashedImage from "../Global/components/blurhashed-image";
 
 interface PlaylistProps { 
@@ -22,21 +19,12 @@ export default function Playlist({
     navigation
 }: PlaylistProps): React.JSX.Element {
 
-    const { nowPlaying, nowPlayingIsFavorite } = usePlayerContext();
-
-    const { data: tracks, isLoading, refetch } = useItemTracks(playlist.Id!);
-
-    useEffect(() => {
-        refetch();
-    }, [
-        nowPlayingIsFavorite
-    ]);
+    const { data: tracks, isLoading } = useItemTracks(playlist.Id!);
 
     return (
         <FlatList
             contentInsetAdjustmentBehavior="automatic"
             data={tracks}
-            extraData={nowPlaying}
             ListHeaderComponent={() => (
                 <YStack alignItems="center">
                     <BlurhashedImage
