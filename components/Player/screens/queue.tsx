@@ -45,29 +45,18 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                 const index = getIndex();
 
                 return (
-                    <SwipeableItem
-                        key={index}
-                        item={queueItem}
-                        renderUnderlayLeft={() => (
-                            <Icon name="close" onPress={() => {
-
-                            }} />
-                        )}
-                        >
-
-                        <Track
-                            navigation={navigation}
-                            track={queueItem.item}
-                            tracklist={queue.map((track) => track.item)}
-                            index={getIndex()}
-                            showArtwork
-                            onPress={() => {
-                                useSkip.mutate(index);
-                            }}
-                            onLongPress={drag}
-                            isNested
-                            />
-                    </SwipeableItem>
+                    <Track
+                        navigation={navigation}
+                        track={queueItem.item}
+                        tracklist={queue.map((track) => track.item)}
+                        index={getIndex()}
+                        showArtwork
+                        onPress={() => {
+                            useSkip.mutate(index);
+                        }}
+                        onLongPress={drag}
+                        isNested
+                        />
                 )
             }}
         />

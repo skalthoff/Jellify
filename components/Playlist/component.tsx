@@ -33,44 +33,46 @@ export default function Playlist({
     ]);
 
     return (
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <YStack alignItems="center">
-                <BlurhashedImage
-                    item={playlist}
-                    width={300}
-                />
+        <FlatList
+            contentInsetAdjustmentBehavior="automatic"
+            data={tracks}
+            extraData={nowPlaying}
+            ListHeaderComponent={() => (
+                <YStack alignItems="center">
+                    <BlurhashedImage
+                        item={playlist}
+                        width={300}
+                    />
 
-                <H4>{ playlist.Name ?? "Untitled Playlist" }</H4>
-                <H5>{ playlist.ProductionYear?.toString() ?? "" }</H5>
-            </YStack>
-            <FlatList
-                data={tracks}
-                extraData={nowPlaying}
-                numColumns={1}
-                renderItem={({ item: track, index }) => {
+                    <H4>{ playlist.Name ?? "Untitled Playlist" }</H4>
+                    <H5>{ playlist.ProductionYear?.toString() ?? "" }</H5>
+                </YStack>
+            )}
+            numColumns={1}
+            renderItem={({ item: track, index }) => {
 
-                    return (
-                        <Track
-                            navigation={navigation}
-                            track={track}
-                            tracklist={tracks!}
-                            index={index}
-                            queueName={playlist.Name ?? "Untitled Playlist"}
-                            showArtwork
-                        />
-                    )
-
-            }}/>
-
-            <XStack justifyContent="flex-end">
-                <Text 
-                    color={"$borderColor"} 
-                    style={{ display: "block"}}
-                >
-                    Total Runtime:
-                </Text>
-                <RunTimeTicks>{ playlist.RunTimeTicks }</RunTimeTicks>
-            </XStack>
-        </ScrollView>
+                return (
+                    <Track
+                        navigation={navigation}
+                        track={track}
+                        tracklist={tracks!}
+                        index={index}
+                        queueName={playlist.Name ?? "Untitled Playlist"}
+                        showArtwork
+                    />
+                )    
+            }}
+            ListFooterComponent={() => (
+                <XStack justifyContent="flex-end">
+                    <Text 
+                        color={"$borderColor"} 
+                        style={{ display: "block"}}
+                    >
+                        Total Runtime:
+                    </Text>
+                    <RunTimeTicks>{ playlist.RunTimeTicks }</RunTimeTicks>
+                </XStack>
+            )}
+        />
     )
 }
