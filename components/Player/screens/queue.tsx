@@ -5,6 +5,7 @@ import { usePlayerContext } from "../../../player/provider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
+import SwipeableItem from "react-native-swipeable-item";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -44,19 +45,30 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                 const index = getIndex();
 
                 return (
-                    <Track
-                        navigation={navigation}
-                        track={queueItem.item}
-                        tracklist={queue.map((track) => track.item)}
-                        index={getIndex()}
-                        showArtwork
-                        onPress={() => {
-                            console.debug(`Skipping to index ${index}`)
-                            useSkip.mutate(index);
-                        }}
-                        onLongPress={drag}
-                        isNested
-                    />
+                    <SwipeableItem
+                        key={index}
+                        item={queueItem}
+                        renderUnderlayLeft={() => (
+                            <Icon name="close" onPress={() => {
+                                
+                            }} />
+                        )}
+                        >
+
+                        <Track
+                            navigation={navigation}
+                            track={queueItem.item}
+                            tracklist={queue.map((track) => track.item)}
+                            index={getIndex()}
+                            showArtwork
+                            onPress={() => {
+                                console.debug(`Skipping to index ${index}`)
+                                useSkip.mutate(index);
+                            }}
+                            onLongPress={drag}
+                            isNested
+                            />
+                    </SwipeableItem>
                 )
             }}
         />
