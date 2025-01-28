@@ -26,6 +26,7 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
 
     return (
         <DraggableFlatList
+            activationDistance={20}
             contentInsetAdjustmentBehavior="automatic"
             data={queue}
             extraData={nowPlaying}
@@ -50,7 +51,7 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                         item={queueItem}
                         renderUnderlayLeft={() => (
                             <Icon name="close" onPress={() => {
-                                
+
                             }} />
                         )}
                         >
@@ -67,6 +68,7 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                             }}
                             onLongPress={drag}
                             isNested
+                            invertedColors={isActive}
                             />
                     </SwipeableItem>
                 )

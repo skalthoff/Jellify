@@ -1,6 +1,6 @@
 import { usePlayerContext } from "../../../player/provider";
 import React from "react";
-import { Separator, Spacer, useTheme, View, XStack, YStack } from "tamagui";
+import { Separator, Spacer, Theme, useTheme, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
@@ -20,7 +20,8 @@ interface TrackProps {
     showArtwork?: boolean | undefined;
     onPress?: () => void | undefined;
     onLongPress?: () => void | undefined;
-    isNested?: boolean | undefined
+    isNested?: boolean | undefined;
+    invertedColors?: boolean | undefined;
 }
 
 export default function Track({
@@ -32,7 +33,8 @@ export default function Track({
     showArtwork,
     onPress,
     onLongPress,
-    isNested
+    isNested,
+    invertedColors,
 } : TrackProps) : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
@@ -43,7 +45,7 @@ export default function Track({
     const theme = useTheme();
 
     return (
-        <View>
+        <Theme name={invertedColors ? "inverted_purple" : undefined}>
             <Separator />
             <XStack 
                 alignContent="center"
@@ -158,6 +160,6 @@ export default function Track({
                 </XStack>
             </XStack>
             <Separator />
-        </View>
+        </Theme>
     )
 }
