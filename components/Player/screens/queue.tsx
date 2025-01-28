@@ -26,7 +26,6 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
 
     return (
         <DraggableFlatList
-            activationDistance={20}
             contentInsetAdjustmentBehavior="automatic"
             data={queue}
             extraData={nowPlaying}
@@ -63,7 +62,6 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                             index={getIndex()}
                             showArtwork
                             onPress={() => {
-                                console.debug(`Skipping to index ${index}`)
                                 useSkip.mutate(index);
                             }}
                             onLongPress={drag}
