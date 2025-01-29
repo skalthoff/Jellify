@@ -49,6 +49,7 @@ export default function Album({
                         <BlurhashedImage
                             item={album}
                             width={width / 1.1}
+                            height={width / 1.1}
                         />
 
                         <H4>{ album.Name ?? "Untitled Album" }</H4>
