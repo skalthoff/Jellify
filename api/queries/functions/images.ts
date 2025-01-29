@@ -28,12 +28,12 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
                 {
                     responseType: 'blob',
                 })
-            .then(async ({ data }: { data : Blob }) => {
+            .then(async (response) => {
 
-                if (data.size > 0) {
+                if (response.status < 300) {
 
 
-                    FileSystem.writeFile(getImageFilePath(itemId, width, height, imageType), await blobToBase64(data))
+                    FileSystem.writeFile(getImageFilePath(itemId, width, height, imageType), await blobToBase64(response.data))
                     .then(async () => {
                         resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType), 'base64'));
                     })
