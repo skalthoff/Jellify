@@ -15,7 +15,7 @@ export function fetchItemImage(itemId: string, imageType?: ImageType | undefined
         const existingImage = await FileSystem.exists(getImageFilePath(itemId, width, height, imageType))
 
         if (existingImage)
-            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
+            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType), 'base64'));
         else
             FileSystem.fetch(getImageApi(Client.api!)
                 .getItemImageUrlById(
@@ -29,7 +29,7 @@ export function fetchItemImage(itemId: string, imageType?: ImageType | undefined
                 ), {
                 headers: {
                     "X-Emby-Token": Client.api!.accessToken,
-                    "responseType": 'blob'
+                    "Content-Type": "application/octet-stream"
                 },
                 path: getImageFilePath(itemId, width, height, imageType)
             }).then(async (result) => {
@@ -37,7 +37,7 @@ export function fetchItemImage(itemId: string, imageType?: ImageType | undefined
                 console.debug(result);
 
                 if (result.ok)
-                    resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
+                    resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType), 'base64'));
                 else
                     reject(result.statusText);
             }).catch((error) => {
