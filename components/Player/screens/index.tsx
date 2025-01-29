@@ -47,7 +47,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
     useEffect(() => {
         if (!seeking)
-            setProgressState(Math.floor(progress!.position))
+            setProgressState(Math.round(progress!.position))
     }, [
         progress
     ]);
