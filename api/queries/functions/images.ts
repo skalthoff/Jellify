@@ -48,7 +48,7 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
 }
 
 function getImageFilePath(itemId: string, width: number, height: number, imageType?: ImageType | undefined) {
-    return `${Dirs.CacheDir}/images/${itemId}_${imageType ? `${imageType}_` : ''}${width}x${height}.${ImageFormat.Jpg}`
+    return `${Dirs.CacheDir}/images/${itemId}_${imageType ? `${imageType}_` : ''}${width}x${height}.Jpg`
 }
 
 function blobToBase64(blob : Blob) {
