@@ -24,7 +24,7 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
                     imageType,
                     width: Math.ceil(width),
                     height: Math.ceil(width),
-                    format: ImageFormat.Png
+                    format: ImageFormat.Jpg
                 },
                 {
                     responseType: 'blob',
@@ -46,5 +46,5 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
 }
 
 function getImageFilePath(itemId: string, width: number, height: number, imageType?: ImageType | undefined) {
-    return `${Dirs.CacheDir}/images/${itemId}_${imageType ? `${imageType}_` : ''}${width}x${height}.${ImageFormat.Png}`
+    return `${Dirs.CacheDir}/images/${itemId}_${imageType ? `${imageType}_` : ''}${width}x${height}.${ImageFormat.Jpg}`
 }
