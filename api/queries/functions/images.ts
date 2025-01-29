@@ -15,7 +15,7 @@ export function fetchItemImage(itemId: string, imageType?: ImageType | undefined
         const existingImage = await FileSystem.exists(getImageFilePath(itemId, width, height, imageType))
 
         if (existingImage)
-            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType), 'base64'));
+            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
         else
             FileSystem.fetch(getImageApi(Client.api!)
                 .getItemImageUrlById(
@@ -36,7 +36,7 @@ export function fetchItemImage(itemId: string, imageType?: ImageType | undefined
                 console.debug(result);
 
                 if (result.ok)
-                    resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType), 'base64'));
+                    resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
                 else
                     reject(result.statusText);
             }).catch((error) => {
