@@ -29,6 +29,8 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
                 path: getImageFilePath(itemId, imageType, width, height)
             }).then(async (result) => {
 
+                console.debug(result);
+
                 if (result.ok)
                     resolve(await FileSystem.readFile(getImageFilePath(itemId, imageType, width, height)));
                 else
