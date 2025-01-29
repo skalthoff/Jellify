@@ -3,7 +3,6 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 import Client from "../../../api/client"
 import { Dirs, FileSystem } from 'react-native-file-access'
-import BlobCourier from "react-native-blob-courier";
 
 export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.Primary, width: number = 150, height: number = 150) {
     
