@@ -3,8 +3,9 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 import Client from "../../../api/client"
 import { Dirs, FileSystem } from 'react-native-file-access'
+import BlobCourier from "react-native-blob-courier";
 
-export function fetchItemImage(itemId: string, imageType?: ImageType | undefined, width: number = 150, height: number = 150) {
+export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.Primary, width: number = 150, height: number = 150) {
     
     return new Promise<string>(async (resolve, reject) => {
 
@@ -17,28 +18,26 @@ export function fetchItemImage(itemId: string, imageType?: ImageType | undefined
         if (existingImage)
             resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
         else
-            FileSystem.fetch(getImageApi(Client.api!)
-                .getItemImageUrlById(
+            getImageApi(Client.api!)
+                .getItemImage({
                     itemId,
                     imageType,
-                    {
-                        width: Math.ceil(width),
-                        height: Math.ceil(width),
-                        format: ImageFormat.Png
-                    }
-                ), {
-                headers: {
-                    "X-Emby-Token": Client.api!.accessToken,
+                    width: Math.ceil(width),
+                    height: Math.ceil(width),
+                    format: ImageFormat.Png
                 },
-                path: getImageFilePath(itemId, width, height, imageType)
-            }).then(async (result) => {
+                {
+                    responseType: 'blob',
+                })
+            .then(async ({ data }: { data : Blob }) => {
 
-                console.debug(result);
-
-                if (result.ok)
-                    resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
+                if (data.size > 0)
+                    FileSystem.writeFile(getImageFilePath(itemId, width, height, imageType), await data.text())
+                        .then(async () => {
+                            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
+                        })
                 else
-                    reject(result.statusText);
+                    reject();
             }).catch((error) => {
                 console.error(error);
                 reject(error);
