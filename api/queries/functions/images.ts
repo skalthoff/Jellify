@@ -12,10 +12,10 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
         if (!(await FileSystem.exists(`${Dirs.CacheDir}/images`)))
             await FileSystem.mkdir(`${Dirs.CacheDir}/images`)
 
-        const existingImage = await FileSystem.exists(getImageFilePath(itemId, width, height, imageType))
+        const existingImage = await FileSystem.exists(getImageFilePath(itemId, width, height, imageType));
 
         if (existingImage)
-            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
+            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType), 'base64'));
         else
             getImageApi(Client.api!)
                 .getItemImage({
@@ -30,13 +30,16 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
                 })
             .then(async ({ data }: { data : Blob }) => {
 
-                if (data.size > 0)
-                    FileSystem.writeFile(getImageFilePath(itemId, width, height, imageType), await data.text())
-                        .then(async () => {
-                            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
-                        })
-                else
+                if (data.size > 0) {
+
+
+                    FileSystem.writeFile(getImageFilePath(itemId, width, height, imageType), await blobToBase64(data), 'base64')
+                    .then(async () => {
+                        resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
+                    })
+                } else {
                     reject();
+                }
             }).catch((error) => {
                 console.error(error);
                 reject(error);
@@ -47,3 +50,11 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
 function getImageFilePath(itemId: string, width: number, height: number, imageType?: ImageType | undefined) {
     return `${Dirs.CacheDir}/images/${itemId}_${imageType ? `${imageType}_` : ''}${width}x${height}.${ImageFormat.Jpg}`
 }
+
+function blobToBase64(blob : Blob) {
+    return new Promise<string>((resolve, _) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.readAsDataURL(blob);
+    });
+  }
