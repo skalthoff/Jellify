@@ -33,7 +33,7 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
                 if (response.status < 300) {
 
 
-                    FileSystem.writeFile(getImageFilePath(itemId, width, height, imageType), await blobToBase64(response.data))
+                    FileSystem.writeFile(getImageFilePath(itemId, width, height, imageType), await blobToBase64(response.data), 'base64')
                     .then(async () => {
                         resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType), 'base64'));
                     })
