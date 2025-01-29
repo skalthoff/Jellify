@@ -8,6 +8,10 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
     
     return new Promise<string>(async (resolve, reject) => {
 
+        // Make sure images folder exists in cache, create if it doesn't
+        if (!(await FileSystem.exists(`${Dirs.CacheDir}/images`)))
+            await FileSystem.mkdir(`${Dirs.CacheDir}/images`)
+
         const existingImage = await FileSystem.exists(getImageFilePath(itemId, imageType, width, height))
 
         if (existingImage)
