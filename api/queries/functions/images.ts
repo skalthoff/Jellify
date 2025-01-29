@@ -36,6 +36,7 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
                 else
                     reject(result.statusText);
             }).catch((error) => {
+                console.error(error);
                 reject(error);
             })
     });
