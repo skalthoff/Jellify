@@ -4,7 +4,7 @@ import _ from "lodash"
 import Client from "../../../api/client"
 import { Dirs, FileSystem } from 'react-native-file-access'
 
-export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.Primary, width: number = 150, height: number = 150) {
+export function fetchItemImage(itemId: string, imageType?: ImageType | undefined, width: number = 150, height: number = 150) {
     
     return new Promise<string>(async (resolve, reject) => {
 
@@ -12,31 +12,32 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
         if (!(await FileSystem.exists(`${Dirs.CacheDir}/images`)))
             await FileSystem.mkdir(`${Dirs.CacheDir}/images`)
 
-        const existingImage = await FileSystem.exists(getImageFilePath(itemId, imageType, width, height))
+        const existingImage = await FileSystem.exists(getImageFilePath(itemId, width, height, imageType))
 
         if (existingImage)
-            resolve(await FileSystem.readFile(getImageFilePath(itemId, imageType, width, height)));
+            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
         else
             FileSystem.fetch(getImageApi(Client.api!)
                 .getItemImageUrlById(
                     itemId,
                     imageType,
                     {
-                        width,
-                        height,
+                        width: Math.ceil(width),
+                        height: Math.ceil(width),
                         format: ImageFormat.Jpg
                     }
                 ), {
                 headers: {
-                    "X-Emby-Token": Client.api!.accessToken
+                    "X-Emby-Token": Client.api!.accessToken,
+                    "responseType": 'blob'
                 },
-                path: getImageFilePath(itemId, imageType, width, height)
+                path: getImageFilePath(itemId, width, height, imageType)
             }).then(async (result) => {
 
                 console.debug(result);
 
                 if (result.ok)
-                    resolve(await FileSystem.readFile(getImageFilePath(itemId, imageType, width, height)));
+                    resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
                 else
                     reject(result.statusText);
             }).catch((error) => {
@@ -46,6 +47,6 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
     });
 }
 
-function getImageFilePath(itemId: string, imageType: ImageType, width: number, height: number) {
-    return `${Dirs.CacheDir}/images/${itemId}_${imageType}_${width}x${height}.${ImageFormat.Jpg}`
+function getImageFilePath(itemId: string, width: number, height: number, imageType?: ImageType | undefined) {
+    return `${Dirs.CacheDir}/images/${itemId}_${imageType ? `${imageType}_` : ''}${width}x${height}.${ImageFormat.Jpg}`
 }
