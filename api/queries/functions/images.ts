@@ -15,7 +15,7 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
         const existingImage = await FileSystem.exists(getImageFilePath(itemId, width, height, imageType));
 
         if (existingImage)
-            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType), 'base64'));
+            resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
         else
             getImageApi(Client.api!)
                 .getItemImage({
@@ -33,9 +33,9 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
                 if (response.status < 300) {
 
 
-                    FileSystem.writeFile(getImageFilePath(itemId, width, height, imageType), await blobToBase64(response.data), 'base64')
+                    FileSystem.writeFile(getImageFilePath(itemId, width, height, imageType), await blobToBase64(response.data))
                     .then(async () => {
-                        resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType), 'base64'));
+                        resolve(await FileSystem.readFile(getImageFilePath(itemId, width, height, imageType)));
                     })
                 } else {
                     reject();
