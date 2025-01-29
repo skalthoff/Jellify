@@ -42,7 +42,12 @@ export default function BlurhashedImage({
                     }} 
                 />
             ) : blurhash && (
-                <Blurhash blurhash={blurhash!} style={{ flex: 1, borderRadius: cornered ? 2 : 25 }} />
+                <Blurhash blurhash={blurhash!} style={{ 
+                    flex: 1, 
+                    height: height ?? width, 
+                    width: width,
+                    borderRadius: cornered ? 2 : 25 
+                }} />
             )
         }
         </View>
