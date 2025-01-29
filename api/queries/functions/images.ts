@@ -24,12 +24,11 @@ export function fetchItemImage(itemId: string, imageType?: ImageType | undefined
                     {
                         width: Math.ceil(width),
                         height: Math.ceil(width),
-                        format: ImageFormat.Jpg
+                        format: ImageFormat.Png
                     }
                 ), {
                 headers: {
                     "X-Emby-Token": Client.api!.accessToken,
-                    "Content-Type": "application/octet-stream"
                 },
                 path: getImageFilePath(itemId, width, height, imageType)
             }).then(async (result) => {
@@ -48,5 +47,5 @@ export function fetchItemImage(itemId: string, imageType?: ImageType | undefined
 }
 
 function getImageFilePath(itemId: string, width: number, height: number, imageType?: ImageType | undefined) {
-    return `${Dirs.CacheDir}/images/${itemId}_${imageType ? `${imageType}_` : ''}${width}x${height}.Jpg`
+    return `${Dirs.CacheDir}/images/${itemId}_${imageType ? `${imageType}_` : ''}${width}x${height}.${ImageFormat.Png}`
 }
