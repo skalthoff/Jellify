@@ -21,8 +21,8 @@ export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.
                 .getItemImage({
                     itemId,
                     imageType,
-                    width: Math.ceil(width),
-                    height: Math.ceil(width),
+                    width: Math.ceil(width) * 2,
+                    height: Math.ceil(width) * 2,
                     format: ImageFormat.Png
                 },
                 {
