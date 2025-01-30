@@ -2,7 +2,6 @@ import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { JellifyTrack } from "../types/JellifyTrack";
 import { RatingType, TrackType } from "react-native-track-player";
 import { QueuingType } from "../enums/queuing-type";
-import querystring from "querystring"
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../api/client";
 import { isUndefined } from "lodash";
@@ -13,20 +12,20 @@ const transcodingContainer = "m4a";
 export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) : JellifyTrack {
 
     const urlParams = {
-        "Container": item.Container,
+        "Container": item.Container!,
         "TranscodingContainer": transcodingContainer,
         "TranscodingProtocol": "hls",
-        "EnableRemoteMedia": true,
-        "EnableRedirection": true,
+        "EnableRemoteMedia": "true",
+        "EnableRedirection": "true",
         "api_key": Client.api!.accessToken,
-        "StartTimeTicks": 0,
+        "StartTimeTicks": "0",
         "PlaySessionId": Client.sessionId,
     }
 
     const isFavorite = !isUndefined(item.UserData) && (item.UserData.IsFavorite ?? false);
 
     return {
-        url: `${Client.api!.basePath}/Audio/${item.Id!}/universal?${querystring.stringify(urlParams)}`,
+        url: `${Client.api!.basePath}/Audio/${item.Id!}/universal?${new URLSearchParams(urlParams)}`,
         type: TrackType.HLS,
         headers: {
             "X-Emby-Token": Client.api!.accessToken
