@@ -12,6 +12,7 @@ interface JellifyContext {
 const JellifyContextInitializer = () => {
 
     const [loggedIn, setLoggedIn] = useState<boolean>(
+        !isUndefined(Client) &&
         !isUndefined(Client.api) && 
         !isUndefined(Client.user) &&
         !isUndefined(Client.server) &&
