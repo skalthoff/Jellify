@@ -31,21 +31,29 @@ export default class Client {
             this.setAndPersistUser(user)
         else if (userJson)
             this.user = JSON.parse(userJson)
+        else
+            this.user = undefined;
         
         if (server) 
             this.setAndPersistServer(server)
         else if (serverJson)
             this.server = JSON.parse(serverJson);
+        else 
+            this.server = undefined;
         
         if (library)
             this.setAndPersistLibrary(library)
         else if (libraryJson)
             this.library = JSON.parse(libraryJson)
+        else 
+            this.library = undefined;
 
         if (api)
             this.api = api
         else if (this.user && this.server)
             this.api = new Api(this.server.url, JellyfinInfo.clientInfo, JellyfinInfo.deviceInfo, this.user.accessToken);
+        else
+            this.api = undefined;
     }
 
     public static get instance(): Client {
