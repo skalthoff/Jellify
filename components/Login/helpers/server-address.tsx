@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import _ from "lodash";
 import { useMutation } from "@tanstack/react-query";
 import { JellifyServer } from "../../../types/JellifyServer";
-import { Spacer, Spinner, XStack, ZStack } from "tamagui";
+import { Input, Spacer, Spinner, XStack, ZStack } from "tamagui";
 import { SwitchWithLabel } from "../../Global/helpers/switch-with-label";
 import { H1 } from "../../Global/helpers/text";
-import Input from "../../Global/helpers/input";
 import Button from "../../Global/helpers/button";
 import { http, https } from "../utils/constants";
 import { JellyfinInfo } from "../../../api/info";
@@ -76,8 +75,6 @@ export default function ServerAddress(): React.JSX.Element {
                 <Spacer />
 
                 <Input 
-                    value={serverAddress}
-                    placeholder="jellyfin.org"
                     onChangeText={setServerAddress}
                     autoCapitalize="none"
                     autoCorrect={false}

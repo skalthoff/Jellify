@@ -10,10 +10,10 @@ import { JellifyLibrary } from "../types/JellifyLibrary";
 export default class Client {
     static #instance: Client;
 
-    private api : Api | undefined;
-    private user : JellifyUser | undefined;
-    private server : JellifyServer | undefined;
-    private library : JellifyLibrary | undefined;
+    private api : Api | undefined = undefined;
+    private user : JellifyUser | undefined = undefined;
+    private server : JellifyServer | undefined = undefined;
+    private library : JellifyLibrary | undefined = undefined;
     private sessionId : string = uuid.v4();
 
     private constructor(
