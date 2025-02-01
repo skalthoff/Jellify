@@ -22,7 +22,7 @@ export default function ServerAddress(): React.JSX.Element {
     const { server, setServer } = useAuthenticationContext();
 
     const useServerMutation = useMutation({
-        mutationFn: async () => {
+        mutationFn: () => {
             let jellyfin = new Jellyfin(JellyfinInfo);
 
             if (!!!serverAddress) 
@@ -32,11 +32,10 @@ export default function ServerAddress(): React.JSX.Element {
 
             return getSystemApi(api).getPublicSystemInfo();
         },
-        onSuccess: async (publicSystemInfoResponse) => {
+        onSuccess: (publicSystemInfoResponse) => {
             if (!!!publicSystemInfoResponse.data.Version)
                 throw new Error("Jellyfin instance did not respond");
     
-            console.debug("REMOVE THIS::onSuccess variable", publicSystemInfoResponse.data);
             console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
     
             const server: JellifyServer = {
@@ -59,9 +58,7 @@ export default function ServerAddress(): React.JSX.Element {
 
     return (
         <SafeAreaView>
-            <H1>
-                Connect to Jellyfin
-            </H1>
+            <H1>Connect to Jellyfin</H1>
             <XStack>
                 <SwitchWithLabel 
                     checked={useHttps} 
