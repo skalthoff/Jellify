@@ -1,6 +1,5 @@
 import { fonts } from "@tamagui/config/v4";
 import { createFont } from "tamagui";
-import { fonts } from "@tamagui/config/v4"
 
 const aileronFace = {
     100: { normal: 'Aileron-UltraLight', italic: 'Aileron UltraLight Italic' },
