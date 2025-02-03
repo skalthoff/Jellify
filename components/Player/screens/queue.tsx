@@ -5,8 +5,8 @@ import { usePlayerContext } from "../../../player/provider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
-import SwipeableItem from "react-native-swipeable-item";
 import { trigger } from "react-native-haptic-feedback";
+import { getTokens } from "tamagui";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -60,7 +60,7 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                         }}
                         isNested
                         prependElement={(
-                            <Icon name="close-circle-outline" onPress={() => useRemoveFromQueue.mutate(index!)} />
+                            <Icon color={getTokens().color.amethyst.val} name="close-circle-outline" onPress={() => useRemoveFromQueue.mutate(index!)} />
                         )}
                     />
                 )
