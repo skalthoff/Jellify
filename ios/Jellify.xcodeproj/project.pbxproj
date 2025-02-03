@@ -625,8 +625,8 @@
 				"OTHER_SWIFT_FLAGS[arch=*]" = "DEBUG FB_SONARKIT_ENABLED";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cosmonautical.jellify;
 				PRODUCT_NAME = Jellify;
-				PROVISIONING_PROFILE_SPECIFIER = "match Development com.cosmonautical.jellify";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.cosmonautical.jellify";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Jellify-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -662,8 +662,8 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cosmonautical.jellify;
 				PRODUCT_NAME = Jellify;
-				PROVISIONING_PROFILE_SPECIFIER = "match Development com.cosmonautical.jellify";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.cosmonautical.jellify";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Jellify-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
