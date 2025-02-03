@@ -7,7 +7,6 @@ export const DiscoverStack = createNativeStackNavigator<StackParamList>();
 export function Discover(): React.JSX.Element {
     return (
         <DiscoverStack.Navigator
-            id="Discover"
             initialRouteName="Discover"
             screenOptions={{
 

@@ -87,9 +87,7 @@ interface TextProps extends TamaguiTextProps {
 export function Text(props: TextProps): React.JSX.Element {
     return (
         <Paragraph 
-            width={props.width} 
             fontWeight={props.bold ? 800 : 600} 
-            textAlign={props.textAlign}
             fontSize="$4"
             lineBreakMode="clip"
             userSelect="none"

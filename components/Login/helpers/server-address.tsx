@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import _ from "lodash";
 import { useMutation } from "@tanstack/react-query";
 import { JellifyServer } from "../../../types/JellifyServer";
-import { Spacer, Spinner, XStack, ZStack } from "tamagui";
+import { Input, Spacer, Spinner, XStack, ZStack } from "tamagui";
 import { SwitchWithLabel } from "../../Global/helpers/switch-with-label";
 import { H1 } from "../../Global/helpers/text";
-import Input from "../../Global/helpers/input";
 import Button from "../../Global/helpers/button";
 import { http, https } from "../utils/constants";
 import { JellyfinInfo } from "../../../api/info";
@@ -23,7 +22,7 @@ export default function ServerAddress(): React.JSX.Element {
     const { server, setServer } = useAuthenticationContext();
 
     const useServerMutation = useMutation({
-        mutationFn: async () => {
+        mutationFn: () => {
             let jellyfin = new Jellyfin(JellyfinInfo);
 
             if (!!!serverAddress) 
@@ -33,11 +32,10 @@ export default function ServerAddress(): React.JSX.Element {
 
             return getSystemApi(api).getPublicSystemInfo();
         },
-        onSuccess: async (publicSystemInfoResponse) => {
+        onSuccess: (publicSystemInfoResponse) => {
             if (!!!publicSystemInfoResponse.data.Version)
                 throw new Error("Jellyfin instance did not respond");
     
-            console.debug("REMOVE THIS::onSuccess variable", publicSystemInfoResponse.data);
             console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`);
     
             const server: JellifyServer = {
@@ -60,9 +58,7 @@ export default function ServerAddress(): React.JSX.Element {
 
     return (
         <SafeAreaView>
-            <H1>
-                Connect to Jellyfin
-            </H1>
+            <H1>Connect to Jellyfin</H1>
             <XStack>
                 <SwitchWithLabel 
                     checked={useHttps} 
@@ -76,8 +72,6 @@ export default function ServerAddress(): React.JSX.Element {
                 <Spacer />
 
                 <Input 
-                    value={serverAddress}
-                    placeholder="jellyfin.org"
                     onChangeText={setServerAddress}
                     autoCapitalize="none"
                     autoCorrect={false}

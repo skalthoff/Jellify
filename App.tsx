@@ -8,7 +8,6 @@ import { useColorScheme } from 'react-native';
 import jellifyConfig from './tamagui.config';
 import { clientPersister } from './constants/storage';
 import { queryClient } from './constants/query-client';
-import { EventProvider } from "react-native-outside-press";
 
 export default function App(): React.JSX.Element {
   
@@ -22,9 +21,7 @@ export default function App(): React.JSX.Element {
     }}>
       <TamaguiProvider config={jellifyConfig}>
         <Theme name={isDarkMode ? 'dark' : 'light'}>
-            <EventProvider>
-              <Jellify />
-            </EventProvider>
+            <Jellify />
         </Theme>
       </TamaguiProvider>
     </PersistQueryClientProvider>

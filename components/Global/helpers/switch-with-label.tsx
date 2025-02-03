@@ -31,7 +31,7 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
               onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
               backgroundColor={props.backgroundColor ?? Colors.Primary}
               >
-              <Switch.Thumb animation="quicker" />
+              <Switch.Thumb animation="bouncy" />
             </Switch>
           </Theme>
         </XStack>

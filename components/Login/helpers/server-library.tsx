@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Spinner, Text, ToggleGroup } from "tamagui";
+import { Spinner, ToggleGroup } from "tamagui";
 import { useAuthenticationContext } from "../provider";
-import { H1, Label } from "../../Global/helpers/text";
+import { H1, Label, Text } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
 import _ from "lodash";
 import { useMusicLibraries, usePlaylistLibrary } from "../../../api/queries/libraries";
@@ -27,21 +27,24 @@ export default function ServerLibrary(): React.JSX.Element {
             { isPending ? (
                 <Spinner size="large" />
             ) : (
-                <ToggleGroup
-                    orientation="vertical"
-                    type="single"
-                    disableDeactivation={true}
-                    value={libraryId}
-                    onValueChange={setLibraryId}
-                >
-                    { libraries!.map((library) => {
-                        return (
-                            <ToggleGroup.Item value={library.Id!} aria-label={library.Name!}>
-                                <Label htmlFor={library.Id!} size="$2">{library.Name!}</Label>
-                            </ToggleGroup.Item>
-                        )
-                    })}
-              </ToggleGroup>
+                <>
+                    {/* @ts-ignore */}
+                    <ToggleGroup
+                        orientation="vertical"
+                        type="single"
+                        disableDeactivation={true}
+                        value={libraryId}
+                        onValueChange={setLibraryId}
+                        >
+                        { libraries!.map((library) => {
+                            return (
+                                <ToggleGroup.Item value={library.Id!} aria-label={library.Name!}>
+                                    <Label htmlFor={library.Id!} size="$2">{library.Name!}</Label>
+                                </ToggleGroup.Item>
+                            )
+                        })}
+                    </ToggleGroup>
+                </>
             )}
 
             { isError && (

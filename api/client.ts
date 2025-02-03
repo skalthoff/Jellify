@@ -10,10 +10,10 @@ import { JellifyLibrary } from "../types/JellifyLibrary";
 export default class Client {
     static #instance: Client;
 
-    private api : Api | undefined;
-    private user : JellifyUser | undefined;
-    private server : JellifyServer | undefined;
-    private library : JellifyLibrary | undefined;
+    private api : Api | undefined = undefined;
+    private user : JellifyUser | undefined = undefined;
+    private server : JellifyServer | undefined = undefined;
+    private library : JellifyLibrary | undefined = undefined;
     private sessionId : string = uuid.v4();
 
     private constructor(
@@ -31,21 +31,29 @@ export default class Client {
             this.setAndPersistUser(user)
         else if (userJson)
             this.user = JSON.parse(userJson)
+        else
+            this.user = undefined;
         
         if (server) 
             this.setAndPersistServer(server)
         else if (serverJson)
             this.server = JSON.parse(serverJson);
+        else 
+            this.server = undefined;
         
         if (library)
             this.setAndPersistLibrary(library)
         else if (libraryJson)
             this.library = JSON.parse(libraryJson)
+        else 
+            this.library = undefined;
 
         if (api)
             this.api = api
         else if (this.user && this.server)
             this.api = new Api(this.server.url, JellyfinInfo.clientInfo, JellyfinInfo.deviceInfo, this.user.accessToken);
+        else
+            this.api = undefined;
     }
 
     public static get instance(): Client {

@@ -21,7 +21,7 @@ export default function IconButton({
         <Theme name={"inverted_purple"}>
             <TouchableOpacity>
                 <Square
-                    animation={"quick"}
+                    animation={"bouncy"}
                     circular={circular}
                     elevate
                     hoverStyle={{ scale: 0.925 }}
