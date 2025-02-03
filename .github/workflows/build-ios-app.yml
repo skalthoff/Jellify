@@ -13,6 +13,7 @@ jobs:
         with:
           node-version: 20
       - run: npm run init
+      - run: fastlane match
       - run: fastlane beta
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
