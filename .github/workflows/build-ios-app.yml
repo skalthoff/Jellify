@@ -14,6 +14,10 @@ jobs:
           node-version: 20
       - run: npm run init
       - run: fastlane match
+        working-directory: ./ios
+        # env:
+        #   MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+
       - run: fastlane beta
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
