@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: echo 'BUILD_NUMBER=$(node -p -e "require(./package.json).version")' >> $GITHUB_ENV
+      - run: echo BUILD_NUMBER=$(node -p -e "require('./package.json').version") >> $GITHUB_ENV
       - run: npm run init
       - run: fastlane match development --readonly
         working-directory: ./ios
