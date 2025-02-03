@@ -22,6 +22,7 @@ interface TrackProps {
     onLongPress?: () => void | undefined;
     isNested?: boolean | undefined;
     invertedColors?: boolean | undefined;
+    prependElement?: React.JSX.Element | undefined
 }
 
 export default function Track({
@@ -35,6 +36,7 @@ export default function Track({
     onLongPress,
     isNested,
     invertedColors,
+    prependElement
 } : TrackProps) : React.JSX.Element {
 
     const theme = useTheme();
@@ -75,6 +77,9 @@ export default function Track({
                 paddingVertical={"$2"}
                 marginHorizontal={"$1"}
             >
+                { prependElement && (
+                    prependElement
+                )}
                 <XStack 
                     alignContent="center" 
                     justifyContent="center" 

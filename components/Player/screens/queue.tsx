@@ -11,7 +11,7 @@ import { trigger } from "react-native-haptic-feedback";
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
-    const { queue, useClearQueue, useReorderQueue, useSkip, nowPlaying } = usePlayerContext();
+    const { queue, useClearQueue, useRemoveFromQueue, useReorderQueue, useSkip, nowPlaying } = usePlayerContext();
 
     navigation.setOptions({
         headerRight: () => {
@@ -59,7 +59,10 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                             drag();
                         }}
                         isNested
-                        />
+                        prependElement={(
+                            <Icon name="close-circle-outline" onPress={() => useRemoveFromQueue.mutate(index!)} />
+                        )}
+                    />
                 )
             }}
         />
