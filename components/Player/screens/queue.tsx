@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import SwipeableItem from "react-native-swipeable-item";
+import { trigger } from "react-native-haptic-feedback";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -53,7 +54,10 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                         onPress={() => {
                             useSkip.mutate(index);
                         }}
-                        onLongPress={drag}
+                        onLongPress={() => {
+                            trigger('impactLight');
+                            drag();
+                        }}
                         isNested
                         />
                 )

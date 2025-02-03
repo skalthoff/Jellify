@@ -52,8 +52,8 @@ export default function Album({
                             height={width / 1.1}
                         />
 
-                        <H4>{ album.Name ?? "Untitled Album" }</H4>
-                        <H5>{ album.ProductionYear?.toString() ?? "" }</H5>
+                        <H5>{ album.Name ?? "Untitled Album" }</H5>
+                        <Text>{ album.ProductionYear?.toString() ?? "" }</Text>
                     </YStack>
 
                 )}
