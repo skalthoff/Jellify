@@ -32,6 +32,7 @@ interface PlayerContext {
     getQueueSectionData: () => Section[];
     useAddToQueue: UseMutationResult<void, Error, AddToQueueMutation, unknown>;
     useClearQueue: UseMutationResult<void, Error, void, unknown>;
+    useRemoveFromQueue: UseMutationResult<void, Error, number, unknown>;
     useReorderQueue: UseMutationResult<void, Error, QueueOrderMutation, unknown>;
     useTogglePlayback: UseMutationResult<void, Error, number | undefined, unknown>;
     useSeekTo: UseMutationResult<void, Error, number, unknown>;
@@ -123,6 +124,16 @@ const PlayerContextInitializer = () => {
                 return addToQueue([mapDtoToTrack(mutation.track, mutation.queuingType)])
         }
     });
+
+    const useRemoveFromQueue = useMutation({
+        mutationFn: async (index: number) => {
+            trigger("impactMedium");
+
+            await TrackPlayer.remove([index]);
+
+            setQueue(await TrackPlayer.getQueue() as JellifyTrack[])
+        }
+    })
 
     const useClearQueue = useMutation({
         mutationFn: async () => {
@@ -320,6 +331,7 @@ const PlayerContextInitializer = () => {
         useAddToQueue,
         useClearQueue,
         useReorderQueue,
+        useRemoveFromQueue,
         useTogglePlayback,
         useSeekTo,
         useSkip,
@@ -362,6 +374,24 @@ export const PlayerContext = createContext<PlayerContext>({
         submittedAt: 0
     },
     useClearQueue: {
+        mutate: () => {},
+        mutateAsync: async () => {},
+        data: undefined,
+        error: null,
+        variables: undefined,
+        isError: false,
+        isIdle: true,
+        isPaused: false,
+        isPending: false,
+        isSuccess: false,
+        status: "idle",
+        reset: () => {},
+        context: {},
+        failureCount: 0,
+        failureReason: null,
+        submittedAt: 0
+    },
+    useRemoveFromQueue: {
         mutate: () => {},
         mutateAsync: async () => {},
         data: undefined,
@@ -506,6 +536,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         getQueueSectionData,
         useAddToQueue,
         useClearQueue,
+        useRemoveFromQueue,
         useReorderQueue,
         useTogglePlayback,
         useSeekTo,
@@ -529,6 +560,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         getQueueSectionData,
         useAddToQueue,
         useClearQueue,
+        useRemoveFromQueue,
         useReorderQueue,
         useTogglePlayback,
         useSeekTo,

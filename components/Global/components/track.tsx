@@ -22,6 +22,7 @@ interface TrackProps {
     onLongPress?: () => void | undefined;
     isNested?: boolean | undefined;
     invertedColors?: boolean | undefined;
+    prependElement?: React.JSX.Element | undefined
 }
 
 export default function Track({
@@ -35,6 +36,7 @@ export default function Track({
     onLongPress,
     isNested,
     invertedColors,
+    prependElement
 } : TrackProps) : React.JSX.Element {
 
     const theme = useTheme();
@@ -73,12 +75,21 @@ export default function Track({
                     }
                 }
                 paddingVertical={"$2"}
-                marginHorizontal={"$1"}
+                marginHorizontal={"$2"}
             >
+                { prependElement && (
+                    <YStack 
+                        alignContent="center"
+                        justifyContent="center" 
+                        flex={1}
+                    >
+                        { prependElement }
+                    </YStack>
+                )}
                 <XStack 
                     alignContent="center" 
                     justifyContent="center" 
-                    flex={1}
+                    flex={showArtwork ? 3 : 1}
                     minHeight={showArtwork ? width / 9 : "unset"}
                 >
                     { showArtwork ? (
@@ -96,7 +107,11 @@ export default function Track({
                 )}
                 </XStack>
 
-                <YStack alignContent="center" justifyContent="flex-start" flex={5}>
+                <YStack 
+                    alignContent="center" 
+                    justifyContent="flex-start" 
+                    flex={6}
+                >
                     <Text 
                         bold
                         color={isPlaying ? getTokens().color.telemagenta : theme.color}
@@ -120,7 +135,7 @@ export default function Track({
                     alignItems="center"
                     justifyContent="space-between" 
                     alignContent="center" 
-                    flex={2}
+                    flex={4}
                 >
                     <YStack
                         alignContent="center"

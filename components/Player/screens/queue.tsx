@@ -5,13 +5,14 @@ import { usePlayerContext } from "../../../player/provider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
-import SwipeableItem from "react-native-swipeable-item";
 import { trigger } from "react-native-haptic-feedback";
+import { getTokens } from "tamagui";
+import { FadeIn, FadeOut, ReduceMotion, SequencedTransition } from "react-native-reanimated";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
-    const { queue, useClearQueue, useReorderQueue, useSkip, nowPlaying } = usePlayerContext();
+    const { queue, useClearQueue, useRemoveFromQueue, useReorderQueue, useSkip, nowPlaying } = usePlayerContext();
 
     navigation.setOptions({
         headerRight: () => {
@@ -30,10 +31,14 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
             contentInsetAdjustmentBehavior="automatic"
             data={queue}
             extraData={nowPlaying}
+            // enableLayoutAnimationExperimental
             getItemLayout={(data, index) => (
                 { length: width / 9, offset: width / 9 * index, index}
             )}
             initialScrollIndex={scrollIndex !== -1 ? scrollIndex: 0}
+            // itemEnteringAnimation={FadeIn}
+            // itemExitingAnimation={FadeOut}
+            // itemLayoutAnimation={SequencedTransition}
             keyExtractor={({ item }, index) => {
                 return `${index}-${item.Id}`
             }}
@@ -59,7 +64,15 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                             drag();
                         }}
                         isNested
-                        />
+                        prependElement={(
+                            <Icon 
+                                small 
+                                color={getTokens().color.amethyst.val} 
+                                name="close-circle-outline" 
+                                onPress={() => useRemoveFromQueue.mutate(index!)} 
+                            />
+                        )}
+                    />
                 )
             }}
         />
