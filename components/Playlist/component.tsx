@@ -33,7 +33,7 @@ export default function Playlist({
                         ? getTokens().color.telemagenta.val 
                         : getTokens().color.white.val
                     }
-                    name={editing ? 'done' : 'pencil'} 
+                    name={editing ? 'check' : 'pencil'} 
                     onPress={() => setEditing(!editing)} 
                 />
             )
