@@ -16,7 +16,7 @@ export async function downloadTrack(itemId: string) : Promise<void> {
         })
         .then(async (response) => {
             if (response.status < 300) {
-                await FileSystem.writeFile("", response.data)
+                await FileSystem.writeFile(getTrackFilePath(itemId), response.data)
             }
         })
 }

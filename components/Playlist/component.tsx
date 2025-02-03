@@ -23,7 +23,7 @@ export default function Playlist({
 }: PlaylistProps): React.JSX.Element {
 
     const [editing, setEditing] = useState<boolean>(false);
-    const { data: tracks, isLoading } = useItemTracks(playlist.Id!);
+    const { data: tracks, isLoading, refetch } = useItemTracks(playlist.Id!);
 
     navigation.setOptions({
         headerRight: () => {
@@ -61,6 +61,7 @@ export default function Playlist({
             numColumns={1}
             onDragEnd={({ data, from, to }) => {
                 reorderPlaylist(playlist.Id!, data[to].Id!, to)
+                refetch();
             }}
             renderItem={({ item: track, getIndex, drag }) => {
 
