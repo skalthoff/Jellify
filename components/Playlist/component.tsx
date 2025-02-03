@@ -44,6 +44,7 @@ export default function Playlist({
         <DraggableFlatList
             contentInsetAdjustmentBehavior="automatic"
             data={tracks ?? []}
+            dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
             keyExtractor={({ Id }, index) => {
                 return `${index}-${Id}`
             }}

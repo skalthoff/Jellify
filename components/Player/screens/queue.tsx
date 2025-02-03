@@ -30,6 +30,7 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
         <DraggableFlatList
             contentInsetAdjustmentBehavior="automatic"
             data={queue}
+            dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
             extraData={nowPlaying}
             // enableLayoutAnimationExperimental
             getItemLayout={(data, index) => (
