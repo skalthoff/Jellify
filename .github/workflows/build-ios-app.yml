@@ -11,3 +11,4 @@ jobs:
       - run: fastlane beta
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        working-directory: ./ios
