@@ -75,7 +75,7 @@ export default function Track({
                     }
                 }
                 paddingVertical={"$2"}
-                marginHorizontal={"$1"}
+                marginHorizontal={"$3"}
             >
                 { prependElement && (
                     <YStack 
@@ -89,7 +89,7 @@ export default function Track({
                 <XStack 
                     alignContent="center" 
                     justifyContent="center" 
-                    flex={1}
+                    flex={2}
                     minHeight={showArtwork ? width / 9 : "unset"}
                 >
                     { showArtwork ? (
