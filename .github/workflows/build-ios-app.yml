@@ -1,5 +1,6 @@
 name: build-ios-app
 on:
+  pull_request:
   push:
     branches:
       - 'main'
@@ -12,7 +13,7 @@ jobs:
         with:
           node-version: 20
       - run: npm run init
-      - run: fastlane match import
+      - run: fastlane match
       - run: fastlane beta
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
