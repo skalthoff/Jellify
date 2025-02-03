@@ -1,5 +1,6 @@
 name: build-ios-app
 on:
+  pull_request:
   push:
     branches:
       - 'main'
@@ -12,7 +13,13 @@ jobs:
         with:
           node-version: 20
       - run: npm run init
-      - run: fastlane match import
+      - run: fastlane match development --readonly
+        working-directory: ./ios
+        env:
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_REPO_PAT: "anultravioletaurora:${{ secrets.SIGNING_REPO_PAT }}"
+
       - run: fastlane beta
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
