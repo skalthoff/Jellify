@@ -3,13 +3,13 @@
   "version": "0.1.5",
   "private": true,
   "scripts": {
-    "init": "npm i && bundle install && npm run pod:install",
+    "init": "npm i && npm run pod:install",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "pod:install": "cd ios && RCT_NEW_ARCH_ENABLED=0 pod install",
+    "pod:install": "cd ios && bundle install && RCT_NEW_ARCH_ENABLED=0 pod install",
     "pod:clean": "cd ios && pod deintegrate"
   },
   "dependencies": {
