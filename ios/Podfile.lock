@@ -1284,7 +1284,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-carplay (1.1.12):
+  - react-native-carplay (2.4.1-beta.0):
     - React
   - react-native-mmkv (2.12.2):
     - DoubleConversion
@@ -1798,7 +1798,7 @@ DEPENDENCIES:
   - react-native-background-actions (from `../node_modules/react-native-background-actions`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-blurhash (from `../node_modules/react-native-blurhash`)
-  - "react-native-carplay (from `../node_modules/@gcores/react-native-carplay`)"
+  - react-native-carplay (from `../node_modules/react-native-carplay`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-track-player (from `../node_modules/react-native-track-player`)
@@ -1925,7 +1925,7 @@ EXTERNAL SOURCES:
   react-native-blurhash:
     :path: "../node_modules/react-native-blurhash"
   react-native-carplay:
-    :path: "../node_modules/@gcores/react-native-carplay"
+    :path: "../node_modules/react-native-carplay"
   react-native-mmkv:
     :path: "../node_modules/react-native-mmkv"
   react-native-safe-area-context:
@@ -2044,7 +2044,7 @@ SPEC CHECKSUMS:
   react-native-background-actions: 48e6bad9e2a47e3b04858634c5a05ea11062f680
   react-native-blur: 3d5dd1ed2dd810b304ac3bcee9cf7d460757c89b
   react-native-blurhash: 45bc4c9186ae96666e15d175aa46864ebe53b687
-  react-native-carplay: 4b1df5b94ec842bc845c6baaebeb1ef2634bada1
+  react-native-carplay: 8f388f6f73e5e0f73ed154ad8794371343ee20c0
   react-native-mmkv: f84bf6f48c906911695f9cd16d39d4fb78fcd5a4
   react-native-safe-area-context: 17a482f540310e2209f884fd49472d9e1c0e73d6
   react-native-track-player: 6dc2e2633265704b8ab6d8124b80239d4ed1f911
@@ -2089,4 +2089,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 26cd82b0bbb702ce92fc137036bc8c7d49e3e3d0
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
