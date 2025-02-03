@@ -3,7 +3,7 @@
   "version": "0.1.4",
   "private": true,
   "scripts": {
-    "init": "npm i && npm run pod:install",
+    "init": "npm i && bundle install && npm run pod:install",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
