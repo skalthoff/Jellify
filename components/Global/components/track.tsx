@@ -78,7 +78,9 @@ export default function Track({
                 marginHorizontal={"$1"}
             >
                 { prependElement && (
-                    prependElement
+                    <YStack justifyContent="center" flex={1}>
+                        { prependElement }
+                    </YStack>
                 )}
                 <XStack 
                     alignContent="center" 
