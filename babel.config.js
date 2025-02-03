@@ -3,6 +3,7 @@ module.exports = {
   plugins: [
 
     // react-native-reanimated/plugin has to be listed last
+    '@babel/plugin-proposal-export-namespace-from',
     'react-native-reanimated/plugin',
   ]
 };
