@@ -16,6 +16,7 @@ jobs:
       - run: fastlane match
         working-directory: ./ios
         env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_REPO_PAT: "anultravioletaurora:${{ secrets.SIGNING_REPO_PAT }}"
 
       - run: fastlane beta
