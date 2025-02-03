@@ -62,7 +62,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     >
                         <Text>Playing from</Text>
                         <TextTicker {...TextTickerConfig}>
-                            <H5>{ queueName ?? "Queue"}</H5>
+                            <Text bold>{ queueName ?? "Queue"}</Text>
                         </TextTicker>
                     </YStack>
 

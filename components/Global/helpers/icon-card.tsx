@@ -1,5 +1,5 @@
 import { Card, getTokens, View } from "tamagui";
-import { H2 } from "./text";
+import { H2, H4 } from "./text";
 import Icon from "./icon";
 
 export default function IconCard({ 
@@ -32,7 +32,7 @@ export default function IconCard({
                     <Icon color={getTokens().color.purpleDark.val} name={name} large />
                 </Card.Header>
                 <Card.Footer padded>
-                    <H2 color={getTokens().color.purpleDark.val}>{ caption }</H2>
+                    <H4 color={getTokens().color.purpleDark.val}>{ caption ?? "" }</H4>
                 </Card.Footer>
                 <Card.Background backgroundColor={getTokens().color.telemagenta}>
 

@@ -45,24 +45,25 @@ export function H2(props: TamaguiTextProps): React.JSX.Element {
     )
 }
 
-export function H3({ children }: { children: string }): React.JSX.Element {
+export function H3(props: TamaguiTextProps): React.JSX.Element {
     return (
         <TamaguiH3
             fontWeight={800}
             marginVertical={5}
+            {...props}
         >
-            { children }
+            { props.children }
         </TamaguiH3>
     )
 }
 
-export function H4({ children }: { children: string }): React.JSX.Element {
+export function H4(props: TamaguiTextProps): React.JSX.Element {
     return (
         <TamaguiH4 
             fontWeight={800}
             marginVertical={3}
         >
-            {children}
+            { props.children }
         </TamaguiH4>
     )
 }
