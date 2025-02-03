@@ -32,7 +32,7 @@ export default function IconCard({
                     <Icon color={getTokens().color.purpleDark.val} name={name} large />
                 </Card.Header>
                 <Card.Footer padded>
-                    <H4 color={getTokens().color.purpleDark.val}>{ caption ?? "" }</H4>
+                    <H4 color={getTokens().color.purpleDark}>{ caption ?? "" }</H4>
                 </Card.Footer>
                 <Card.Background backgroundColor={getTokens().color.telemagenta}>
 
