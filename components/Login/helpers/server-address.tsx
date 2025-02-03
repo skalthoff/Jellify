@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import _ from "lodash";
+import { useMutation } from "@tanstack/react-query";
 import { JellifyServer } from "../../../types/JellifyServer";
-import { H1, Input, Spacer, Spinner, XStack, ZStack } from "tamagui";
+import { Input, Spacer, Spinner, XStack, ZStack } from "tamagui";
 import { SwitchWithLabel } from "../../Global/helpers/switch-with-label";
+import { H1 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
 import { http, https } from "../utils/constants";
 import { JellyfinInfo } from "../../../api/info";
@@ -11,7 +13,6 @@ import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
 import { useAuthenticationContext } from "../provider";
-import { useMutation } from "@tanstack/react-query";
 
 export default function ServerAddress(): React.JSX.Element {
 

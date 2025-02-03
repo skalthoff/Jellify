@@ -1,6 +1,19 @@
-import { animations, tokens as TamaguiTokens, media, shorthands } from '@tamagui/config/v3'
-import { createTamagui, createTokens } from 'tamagui' // or '@tamagui/core'
 import { headingFont, bodyFont } from './fonts.config'
+import { media, shorthands, tokens as TamaguiTokens } from '@tamagui/config/v4';
+import { createTamagui, createTokens } from 'tamagui';
+import { createAnimations } from "@tamagui/animations-react-native"
+
+const animations = createAnimations({
+  bouncy: {
+    damping: 9,
+    mass: 0.9,
+    stiffness: 150,
+  },
+  lazy: {
+    damping: 18,
+    stiffness: 50,
+  },
+})
 
 const tokens = createTokens({
   ...TamaguiTokens,
