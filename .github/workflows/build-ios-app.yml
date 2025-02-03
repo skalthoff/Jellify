@@ -5,13 +5,14 @@ on:
     branches:
       - 'main'
 jobs:
-  build:
+  build-ios-beta:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - run: echo 'BUILD_NUMBER=$(node -p -e "require(./package.json).version")' >> $GITHUB_ENV
       - run: npm run init
       - run: fastlane match development --readonly
         working-directory: ./ios

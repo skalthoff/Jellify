@@ -18,7 +18,10 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    increment_build_number(xcodeproj: "Jellify.xcodeproj")
+    increment_build_number(
+      version_number: ENV['BUILD_VERSION'],
+      xcodeproj: "Jellify.xcodeproj"
+    )
     build_app(workspace: "Jellify.xcworkspace", scheme: "Jellify")
     upload_to_testflight
   end
