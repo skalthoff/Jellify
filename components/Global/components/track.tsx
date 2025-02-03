@@ -75,7 +75,7 @@ export default function Track({
                     }
                 }
                 paddingVertical={"$2"}
-                marginHorizontal={"$3"}
+                marginHorizontal={"$2"}
             >
                 { prependElement && (
                     <YStack 
