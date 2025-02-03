@@ -8,7 +8,7 @@ import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
 import BlurhashedImage from "../Global/components/blurhashed-image";
 import DraggableFlatList from "react-native-draggable-flatlist";
-import { reorderPlaylist } from "@/api/mutations/functions/playlists";
+import { reorderPlaylist } from "../../api/mutations/functions/playlists";
 import { useState } from "react";
 import Icon from "../Global/helpers/icon";
 
