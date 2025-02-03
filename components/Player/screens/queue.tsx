@@ -28,26 +28,17 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
 
     return (
         <DraggableFlatList
-            animationConfig={{
-                mass: 1,
-                damping: 10,
-                stiffness: 100,
-                overshootClamping: false,
-                restDisplacementThreshold: 0.01,
-                restSpeedThreshold: 2,
-                reduceMotion: ReduceMotion.System,
-            }}
             contentInsetAdjustmentBehavior="automatic"
             data={queue}
             extraData={nowPlaying}
-            enableLayoutAnimationExperimental
+            // enableLayoutAnimationExperimental
             getItemLayout={(data, index) => (
                 { length: width / 9, offset: width / 9 * index, index}
             )}
             initialScrollIndex={scrollIndex !== -1 ? scrollIndex: 0}
-            itemEnteringAnimation={FadeIn}
-            itemExitingAnimation={FadeOut}
-            itemLayoutAnimation={SequencedTransition}
+            // itemEnteringAnimation={FadeIn}
+            // itemExitingAnimation={FadeOut}
+            // itemLayoutAnimation={SequencedTransition}
             keyExtractor={({ item }, index) => {
                 return `${index}-${item.Id}`
             }}
