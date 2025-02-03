@@ -1,6 +1,6 @@
 import { usePlayerContext } from "../../../player/provider";
 import React from "react";
-import { getToken, getTokens, Separator, Spacer, Theme, useTheme, XStack, YStack } from "tamagui";
+import { getTokens, Separator, Spacer, Theme, useTheme, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
@@ -99,7 +99,7 @@ export default function Track({
                 <YStack alignContent="center" justifyContent="flex-start" flex={5}>
                     <Text 
                         bold
-                        color={isPlaying ? theme.telemagenta : theme.color}
+                        color={isPlaying ? getTokens().color.telemagenta : theme.color}
                         lineBreakStrategyIOS="standard"
                         numberOfLines={1}
                     >
@@ -128,7 +128,7 @@ export default function Track({
                         minWidth={24}
                     >
                         { track.UserData?.IsFavorite ? (
-                            <Icon small name="heart" color={theme.telemagenta.val} />
+                            <Icon small name="heart" color={getTokens().color.telemagenta.val} />
                         ) : (
                             <Spacer />
                         )}
