@@ -60,7 +60,12 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                         }}
                         isNested
                         prependElement={(
-                            <Icon color={getTokens().color.amethyst.val} name="close-circle-outline" onPress={() => useRemoveFromQueue.mutate(index!)} />
+                            <Icon 
+                                small 
+                                color={getTokens().color.amethyst.val} 
+                                name="close-circle-outline" 
+                                onPress={() => useRemoveFromQueue.mutate(index!)} 
+                            />
                         )}
                     />
                 )
