@@ -7,7 +7,7 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { trigger } from "react-native-haptic-feedback";
 import { getTokens } from "tamagui";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import { LinearTransition } from "react-native-reanimated";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -36,6 +36,9 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                 { length: width / 9, offset: width / 9 * index, index}
             )}
             initialScrollIndex={scrollIndex !== -1 ? scrollIndex: 0}
+            itemEnteringAnimation={LinearTransition}
+            itemExitingAnimation={LinearTransition}
+            itemLayoutAnimation={LinearTransition}
             keyExtractor={({ item }, index) => {
                 return `${index}-${item.Id}`
             }}
