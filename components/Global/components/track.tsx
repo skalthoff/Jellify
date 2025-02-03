@@ -89,7 +89,7 @@ export default function Track({
                 <XStack 
                     alignContent="center" 
                     justifyContent="center" 
-                    flex={3}
+                    flex={showArtwork ? 3 : 1}
                     minHeight={showArtwork ? width / 9 : "unset"}
                 >
                     { showArtwork ? (
