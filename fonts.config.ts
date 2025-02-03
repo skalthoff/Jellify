@@ -7,7 +7,7 @@ const aileronFace = {
     300: { normal: 'Aileron-Light', italic: 'Aileron Light Italic' },
     400: { normal: 'Aileron-Regular', italic: 'Aileron Italic'} ,
     500: { normal: 'Aileron-Regular', italic: 'Aileron Italic' },
-    600: { normal: 'Aileron SemiBold', italic: 'Aileron SemiBold Italic' },
+    600: { normal: 'Aileron-SemiBold', italic: 'Aileron SemiBold Italic' },
     700: { normal: 'Aileron-Bold', italic: 'Aileron Bold Italic' },
     800: { normal: 'Aileron-Heavy', italic: 'Aileron Heavy Italic' },
     900: { normal: 'Aileron-Black', italic: 'Aileron-BlackItalic' }
