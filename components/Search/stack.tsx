@@ -10,9 +10,7 @@ const Stack = createNativeStackNavigator<StackParamList>();
 
 export default function SearchStack() : React.JSX.Element {
     return (
-        <Stack.Navigator
-            id="Search"
-            >
+        <Stack.Navigator>
                 <Stack.Screen
                     name="Search"
                     component={SearchScreen}

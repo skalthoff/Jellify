@@ -15,7 +15,6 @@ const LibraryStack = createNativeStackNavigator<StackParamList>();
 export default function Library(): React.JSX.Element {
     return (
         <LibraryStack.Navigator
-            id="Favorites"
             initialRouteName="Favorites"
         >
             <LibraryStack.Screen

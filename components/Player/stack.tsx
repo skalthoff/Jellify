@@ -10,7 +10,6 @@ export const PlayerStack = createNativeStackNavigator<StackParamList>();
 export default function Player({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
     return (
         <PlayerStack.Navigator
-            id="Player"
             initialRouteName="Player"
             screenOptions={{}}
         >

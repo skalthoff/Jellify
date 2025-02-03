@@ -15,7 +15,6 @@ export default function Home(): React.JSX.Element {
     return (
         <HomeProvider>
             <HomeStack.Navigator 
-                id="Home" 
                 initialRouteName="Home"
                 screenOptions={{
                 }}
