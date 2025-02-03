@@ -89,7 +89,7 @@ export default function Track({
                 <XStack 
                     alignContent="center" 
                     justifyContent="center" 
-                    flex={2}
+                    flex={3}
                     minHeight={showArtwork ? width / 9 : "unset"}
                 >
                     { showArtwork ? (
@@ -107,7 +107,11 @@ export default function Track({
                 )}
                 </XStack>
 
-                <YStack alignContent="center" justifyContent="flex-start" flex={5}>
+                <YStack 
+                    alignContent="center" 
+                    justifyContent="flex-start" 
+                    flex={6}
+                >
                     <Text 
                         bold
                         color={isPlaying ? getTokens().color.telemagenta : theme.color}
@@ -131,7 +135,7 @@ export default function Track({
                     alignItems="center"
                     justifyContent="space-between" 
                     alignContent="center" 
-                    flex={2}
+                    flex={4}
                 >
                     <YStack
                         alignContent="center"
