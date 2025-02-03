@@ -1,4 +1,5 @@
 import { createFont } from "tamagui";
+import { fonts } from "@tamagui/config/v4"
 
 const aileronFace = {
     100: { normal: 'Aileron-UltraLight', italic: 'Aileron UltraLight Italic' },
@@ -14,47 +15,18 @@ const aileronFace = {
 
 export const bodyFont = createFont({
     family: "Aileron-Bold",
-    size: {
-        1: 12,
-        2: 14,
-        3: 15,    
-        4: 16
-    },
-    lineHeight: {
-        1: 17,
-        2: 22,
-        3: 25
-    },
-    weight: {
-        4: '300',
-        6: '600'
-    },
-    letterSpacing: {
-        4: 0,
-        8: -1
-    },
+    size: fonts.heading.size,
+    lineHeight: fonts.heading.lineHeight,
+    weight: fonts.heading.weight,
+    letterSpacing: fonts.heading.letterSpacing,
     face: aileronFace
 })
 
 export const headingFont = createFont({
     family: "Aileron-Black",
-    size: {
-        1: 15,
-        2: 17,
-        3: 18,    
-    },
-    lineHeight: {
-        1: 20,
-        2: 25,
-        3: 30
-    },
-    weight: {
-        4: '600',
-        6: '900'
-    },
-    letterSpacing: {
-        4: 0,
-        8: -1
-    },
+    size: fonts.heading.size,
+    lineHeight: fonts.heading.lineHeight,
+    weight: fonts.heading.weight,
+    letterSpacing: fonts.heading.letterSpacing,
     face: aileronFace
 })
