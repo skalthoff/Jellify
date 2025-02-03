@@ -18,6 +18,7 @@ export const bodyFont = createFont({
         1: 12,
         2: 14,
         3: 15,    
+        4: 16
     },
     lineHeight: {
         1: 17,
