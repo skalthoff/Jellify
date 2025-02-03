@@ -7,7 +7,7 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { trigger } from "react-native-haptic-feedback";
 import { getTokens } from "tamagui";
-import { FadeIn, FadeOut, ReduceMotion, SequencedTransition, withSpring } from "react-native-reanimated";
+import { FadeIn, FadeOut, ReduceMotion, SequencedTransition } from "react-native-reanimated";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
