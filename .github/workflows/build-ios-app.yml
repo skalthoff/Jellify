@@ -20,9 +20,7 @@ jobs:
       - run: npm run init
 
       - name: Output App Store Connect API Key JSON to Fastlane
-        run: cat <<'EOF'
-          echo ${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }} > appstore_connect_api_key.json
-          EOF
+        run: echo '${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}' > appstore_connect_api_key.json
         working-directory: ./ios/fastlane
 
       - run: cat appstore_connect_api_key.json
