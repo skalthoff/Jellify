@@ -33,3 +33,5 @@ jobs:
 
       # Commit Fastlane Xcode build number increment
       - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          token: ${{ secrets.SIGNING_REPO_PAT }}
