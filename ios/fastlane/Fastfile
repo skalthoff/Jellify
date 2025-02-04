@@ -20,7 +20,7 @@ platform :ios do
 
   lane :build do 
     match(
-      type: "development",
+      type: "appstore",
       app_identifier: "com.cosmonautical.jellify",
       readonly: true
     )
