@@ -18,7 +18,8 @@ jobs:
 
       - run: npm run init
 
-      - run: echo ${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }} > appstore_connect_api_key.json
+      - name: Output App Store Connect API Key JSON to Fastlane
+        run: echo `${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}` > appstore_connect_api_key.json
         working-directory: ./ios/fastlane
 
       - run: fastlane beta
