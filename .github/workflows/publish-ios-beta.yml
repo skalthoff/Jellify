@@ -1,11 +1,11 @@
-name: build-ios-app
+name: publish-ios-beta
 on:
   pull_request:
   push:
     branches:
       - 'main'
 jobs:
-  build-ios-beta:
+  publish-ios-beta:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,4 +36,5 @@ jobs:
       # Commit Fastlane Xcode build number increment
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
+          commit_message: "[skip actions]"
           file_pattern: "ios/Jellify.xcodeproj/project.pbxproj"
