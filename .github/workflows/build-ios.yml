@@ -1,0 +1,28 @@
+name: build-ios
+on:
+  push:
+    branches-ignore:
+      - "main"
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Echo package.json version to Github ENV
+        run: echo VERISON_NUMBER=$(node -p -e "require('./package.json').version") >> $GITHUB_ENV
+
+      - run: npm run init
+      
+      - run: fastlane build
+        working-directory: ./ios
+        env:
+          # FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          APPSTORE_CONNECT_API_KEY_JSON: ${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_REPO_PAT: "anultravioletaurora:${{ secrets.SIGNING_REPO_PAT }}"
