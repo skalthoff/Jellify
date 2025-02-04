@@ -9,6 +9,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SIGNING_REPO_PAT }}
 
       - uses: actions/setup-node@v4
         with:
@@ -34,4 +36,4 @@ jobs:
       # Commit Fastlane Xcode build number increment
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          token: ${{ secrets.SIGNING_REPO_PAT }}
+          file_pattern: "ios/Jellify.xcodeproj/project.pbxproj"
