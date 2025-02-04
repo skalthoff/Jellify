@@ -31,7 +31,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
     } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
-    const [progressState, setProgressState] = useState<number>(progress!.position);
+    const [progressState, setProgressState] = useState<number>(progress?.position ?? 0);
 
     const { width } = useSafeAreaFrame();
 
@@ -45,7 +45,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
     useEffect(() => {
         if (!seeking)
-            setProgressState(Math.round(progress!.position))
+            setProgressState(Math.round(progress?.position ?? 0))
     }, [
         progress
     ]);
