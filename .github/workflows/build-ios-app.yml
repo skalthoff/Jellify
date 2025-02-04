@@ -14,12 +14,6 @@ jobs:
           node-version: 20
       - run: echo BUILD_NUMBER=$(node -p -e "require('./package.json').version") >> $GITHUB_ENV
       - run: npm run init
-        working-directory: ./ios
-        env:
-          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          MATCH_REPO_PAT: "anultravioletaurora:${{ secrets.SIGNING_REPO_PAT }}"
-
       - run: fastlane beta
         env:
           FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
