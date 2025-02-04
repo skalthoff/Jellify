@@ -17,6 +17,19 @@ default_platform(:ios)
 
 platform :ios do
   desc "Push a new beta build to TestFlight"
+
+  lane :build do 
+    match(
+      type: "development",
+      app_identifier: "com.cosmonautical.jellify",
+      readonly: true
+    )
+    build_app(
+      scheme: "Jellify"
+      workspace: "Jellify.xcworkspace"
+    )
+  end 
+
   lane :beta do
     setup_ci
     match(
@@ -29,7 +42,7 @@ platform :ios do
       xcodeproj: "Jellify.xcodeproj"
     )
     build_app(
-      scheme: "Jellify",
+      scheme: "Jellify - Release",
       workspace: "Jellify.xcworkspace", 
     )
     # http://docs.fastlane.tools/actions/upload_to_testflight/#upload_to_testflight
