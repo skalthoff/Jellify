@@ -16,7 +16,7 @@ jobs:
       - run: npm run init
       - run: fastlane beta
         env:
-          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          # FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_REPO_PAT: "anultravioletaurora:${{ secrets.SIGNING_REPO_PAT }}"
