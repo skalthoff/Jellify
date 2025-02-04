@@ -8,6 +8,7 @@ import { useColorScheme } from 'react-native';
 import jellifyConfig from './tamagui.config';
 import { clientPersister } from './constants/storage';
 import { queryClient } from './constants/query-client';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function App(): React.JSX.Element {
   
@@ -19,11 +20,13 @@ export default function App(): React.JSX.Element {
       persistOptions={{ 
         persister: clientPersister
     }}>
-      <TamaguiProvider config={jellifyConfig}>
-        <Theme name={isDarkMode ? 'dark' : 'light'}>
-            <Jellify />
-        </Theme>
-      </TamaguiProvider>
+      <GestureHandlerRootView>
+        <TamaguiProvider config={jellifyConfig}>
+          <Theme name={isDarkMode ? 'dark' : 'light'}>
+              <Jellify />
+          </Theme>
+        </TamaguiProvider>
+      </GestureHandlerRootView>
     </PersistQueryClientProvider>
   );
 }
