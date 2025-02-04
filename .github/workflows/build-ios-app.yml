@@ -23,6 +23,9 @@ jobs:
         run: echo "${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}" > appstore_connect_api_key.json
         working-directory: ./ios/fastlane
 
+      - run: cat appstore_connect_api_key.json
+        working-directory: ./ios/fastlane
+
       - run: fastlane beta
         working-directory: ./ios
         env:
