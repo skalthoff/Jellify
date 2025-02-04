@@ -15,15 +15,12 @@ jobs:
           node-version: 20
 
       - name: Echo package.json version to Github ENV
-        run: echo BUILD_NUMBER=$(node -p -e "require('./package.json').version") >> $GITHUB_ENV
+        run: echo VERISON_NUMBER=$(node -p -e "require('./package.json').version") >> $GITHUB_ENV
 
       - run: npm run init
 
       - name: Output App Store Connect API Key JSON to Fastlane
         run: echo -e '${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}' > appstore_connect_api_key.json
-        working-directory: ./ios/fastlane
-
-      - run: cat appstore_connect_api_key.json
         working-directory: ./ios/fastlane
 
       - run: fastlane beta
