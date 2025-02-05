@@ -42,7 +42,7 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 ![Album](screenshots/album.png)
 
 ### Player
-![Player with Blurhash](screenshots/blurred_player.png)
+![Player](screenshots/player.png)
 
 ![Queue](screenshots/player_queue.png)
 
