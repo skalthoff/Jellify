@@ -17,7 +17,7 @@ jobs:
           node-version: 20
 
       - name: Echo package.json version to Github ENV
-        run: echo VERISON_NUMBER=$(node -p -e "require('./package.json').version") >> $GITHUB_ENV
+        run: echo VERISON_NUMBER=$(npm version minor --tag-version-prefix="" --no-commit-hooks) >> $GITHUB_ENV
 
       - run: npm run init
 
