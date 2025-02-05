@@ -15,6 +15,8 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 ## Features
 ### Current
 - Available via Private Testflight
+- iOS and Android support
+- Carefully crafted Light and Dark modes
 - Home screen access to previously played tracks, artists, and your playlists
 - Full Last.FM Plugin support
 - Library of Favorited Music, not too dissimilar to how streaming services handle your 'library'
@@ -26,6 +28,7 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 - CarPlay / Android Auto Support
 - Public Testflight
 - Offline Playback
+- Web / Desktop support
 
 ## Lemme see!
 ### Home
