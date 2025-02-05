@@ -62,6 +62,8 @@ export type ArtistsProps = NativeStackScreenProps<StackParamList, "Artists">;
 
 export type AlbumsProps = NativeStackScreenProps<StackParamList, "Albums">;
 
+export type PlaylistsProps = NativeStackScreenProps<StackParamList, "Playlists">;
+
 export type TracksProps = NativeStackScreenProps<StackParamList, "Tracks">;
 
 export type GenresProps = NativeStackScreenProps<StackParamList, "Genres">;

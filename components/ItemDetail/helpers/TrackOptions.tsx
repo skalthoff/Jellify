@@ -4,8 +4,10 @@ import Icon from "../../../components/Global/helpers/icon";
 import { StackParamList } from "../../../components/types";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { XStack } from "tamagui";
+import { Spacer, XStack, YStack } from "tamagui";
 import { QueuingType } from "../../../enums/queuing-type";
+import { useSafeAreaFrame } from "react-native-safe-area-context";
+import IconButton from "@/components/Global/helpers/icon-button";
 
 export default function TrackOptions({ 
     item, 
@@ -20,43 +22,53 @@ export default function TrackOptions({
     const { data: album, isSuccess } = useItem(item.AlbumId ?? "");
 
     const { useAddToQueue } = usePlayerContext();
+
+    const { width } = useSafeAreaFrame();
     
     return (
-        <XStack alignContent="flex-end" justifyContent="space-between">
-            { isSuccess && (
-                <Icon 
-                    name="music-box"
+        <YStack width={width / 1.5}>
+
+            <XStack alignContent="flex-end" justifyContent="space-evenly">
+                { isSuccess ? (
+                    <IconButton 
+                        name="music-box"
+                        title="Go to Album"
+                        onPress={() => {
+                            
+                            if (isNested)
+                                navigation.getParent()!.goBack();
+                            
+                            navigation.goBack();
+                            navigation.push("Album", {
+                                album
+                            });
+                        }}
+                    />
+                ) : (
+                    <Spacer />
+                )}
+
+                <IconButton
+                    name="table-column-plus-before" 
+                    title="Play Next"
                     onPress={() => {
-
-                        if (isNested)
-                            navigation.getParent()!.goBack();
-
-                        navigation.goBack();
-                        navigation.push("Album", {
-                            album
-                        });
+                        useAddToQueue.mutate({
+                            track: item,
+                            queuingType: QueuingType.PlayingNext
+                        })
                     }}
                 />
-            )}
 
-            <Icon 
-                name="table-column-plus-before" 
-                onPress={() => {
-                    useAddToQueue.mutate({
-                        track: item,
-                        queuingType: QueuingType.PlayingNext
-                    })
-                }}
-            />
-
-            <Icon 
-                name="table-column-plus-after" 
-                onPress={() => {
-                    useAddToQueue.mutate({
-                        track: item
-                    })
-                }}
-            />
-        </XStack>
+                <IconButton
+                    name="table-column-plus-after" 
+                    title="Add to Queue"
+                    onPress={() => {
+                        useAddToQueue.mutate({
+                            track: item
+                        })
+                    }}
+                />
+            </XStack>
+        </YStack>
     )
 }

@@ -2,10 +2,12 @@ import React from "react";
 import { Square, Theme } from "tamagui";
 import Icon from "./icon";
 import { TouchableOpacity } from "react-native";
+import { Text } from "./text";
 
 interface IconButtonProps {
     onPress: () => void;
     name: string;
+    title?: string | undefined;
     circular?: boolean | undefined;
     size?: number;
 }
@@ -13,6 +15,7 @@ interface IconButtonProps {
 export default function IconButton({
     name,
     onPress,
+    title,
     circular,
     size
 } : IconButtonProps) : React.JSX.Element {
@@ -37,7 +40,11 @@ export default function IconButton({
                             large
                             name={name} 
                             color={"$color"}
-                            />
+                        />
+
+                        { title && (
+                            <Text>{ title }</Text>
+                        )}
                 </Square>
             </TouchableOpacity>
         </Theme>
