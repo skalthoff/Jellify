@@ -38,3 +38,11 @@ jobs:
         with:
           commit_message: "[skip actions]"
           file_pattern: "ios/Jellify.xcodeproj/project.pbxproj"
+          
+      - name: Create Github Release
+        uses: elgohr/Github-Release-Action@v5
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          title: "Jellify - ${{ env.VERISON_NUMBER }}"
+          tag: ${{ env.VERISON_NUMBER }} 
