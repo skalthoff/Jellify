@@ -1,0 +1,40 @@
+name: publish-ios-beta
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+jobs:
+  publish-ios-beta:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SIGNING_REPO_PAT }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Echo package.json version to Github ENV
+        run: echo VERISON_NUMBER=$(node -p -e "require('./package.json').version") >> $GITHUB_ENV
+
+      - run: npm run init
+
+      - name: Output App Store Connect API Key JSON to Fastlane
+        run: echo -e '${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}' > appstore_connect_api_key.json
+        working-directory: ./ios/fastlane
+
+      - run: fastlane beta
+        working-directory: ./ios
+        env:
+          APPSTORE_CONNECT_API_KEY_JSON: ${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_REPO_PAT: "anultravioletaurora:${{ secrets.SIGNING_REPO_PAT }}"
+
+      # Commit Fastlane Xcode build number increment
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "[skip actions]"
+          file_pattern: "ios/Jellify.xcodeproj/project.pbxproj"

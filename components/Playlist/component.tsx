@@ -1,13 +1,16 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { XStack, YStack } from "tamagui";
+import { getTokens, XStack, YStack } from "tamagui";
 import { useItemTracks } from "../../api/queries/tracks";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
-import { FlatList } from "react-native";
 import BlurhashedImage from "../Global/components/blurhashed-image";
+import DraggableFlatList from "react-native-draggable-flatlist";
+import { reorderPlaylist } from "../../api/mutations/functions/playlists";
+import { useState } from "react";
+import Icon from "../Global/helpers/icon";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
@@ -19,13 +22,33 @@ export default function Playlist({
     navigation
 }: PlaylistProps): React.JSX.Element {
 
-    const { data: tracks, isLoading } = useItemTracks(playlist.Id!);
+    const [editing, setEditing] = useState<boolean>(false);
+    const { data: tracks, isLoading, refetch } = useItemTracks(playlist.Id!);
+
+    navigation.setOptions({
+        headerRight: () => {
+            return (
+                <Icon 
+                    color={editing 
+                        ? getTokens().color.telemagenta.val 
+                        : getTokens().color.white.val
+                    }
+                    name={editing ? 'check' : 'pencil'} 
+                    onPress={() => setEditing(!editing)} 
+                />
+            )
+        }
+    })
 
     return (
-        <FlatList
+        <DraggableFlatList
             contentInsetAdjustmentBehavior="automatic"
-            data={tracks}
-            ListHeaderComponent={() => (
+            data={tracks ?? []}
+            dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
+            keyExtractor={({ Id }, index) => {
+                return `${index}-${Id}`
+            }}
+            ListHeaderComponent={(
                 <YStack alignItems="center">
                     <BlurhashedImage
                         item={playlist}
@@ -37,7 +60,13 @@ export default function Playlist({
                 </YStack>
             )}
             numColumns={1}
-            renderItem={({ item: track, index }) => {
+            onDragEnd={({ data, from, to }) => {
+                reorderPlaylist(playlist.Id!, data[to].Id!, to)
+                refetch();
+            }}
+            renderItem={({ item: track, getIndex, drag }) => {
+
+                const index = getIndex();
 
                 return (
                     <Track
@@ -47,10 +76,11 @@ export default function Playlist({
                         index={index}
                         queueName={playlist.Name ?? "Untitled Playlist"}
                         showArtwork
+                        onLongPress={editing ? drag : undefined}
                     />
                 )    
             }}
-            ListFooterComponent={() => (
+            ListFooterComponent={(
                 <XStack justifyContent="flex-end">
                     <Text 
                         color={"$borderColor"} 

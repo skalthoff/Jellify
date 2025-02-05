@@ -31,7 +31,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
     } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
-    const [progressState, setProgressState] = useState<number>(progress!.position);
+    const [progressState, setProgressState] = useState<number>(progress?.position ?? 0);
 
     const { width } = useSafeAreaFrame();
 
@@ -45,7 +45,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
     useEffect(() => {
         if (!seeking)
-            setProgressState(Math.round(progress!.position))
+            setProgressState(Math.round(progress?.position ?? 0))
     }, [
         progress
     ]);
@@ -147,7 +147,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progressState}
-                            max={progress!.duration}
+                            max={progress?.duration ?? 1}
                             width={width / 1.1}
                             props={{
                                 // If user swipes off of the slider we should seek to the spot
@@ -187,7 +187,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         </XStack>
 
                         <XStack flex={1} justifyContent="flex-end">
-                            <RunTimeSeconds>{progress!.duration}</RunTimeSeconds>
+                            <RunTimeSeconds>{progress?.duration ?? 0}</RunTimeSeconds>
                         </XStack>
                     </XStack>
 

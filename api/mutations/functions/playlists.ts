@@ -1,4 +1,4 @@
-import Client from "@/api/client";
+import Client from "../../../api/client";
 import { getPlaylistsApi } from "@jellyfin/sdk/lib/utils/api";
 
 

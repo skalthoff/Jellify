@@ -17,9 +17,43 @@ default_platform(:ios)
 
 platform :ios do
   desc "Push a new beta build to TestFlight"
+
+  lane :build do 
+    setup_ci
+    match(
+      type: "appstore",
+      app_identifier: "com.cosmonautical.jellify",
+      readonly: true
+    )
+    build_app(
+      scheme: "Jellify",
+      workspace: "Jellify.xcworkspace"
+    )
+  end 
+
   lane :beta do
-    increment_build_number(xcodeproj: "Jellify.xcodeproj")
-    build_app(workspace: "Jellify.xcworkspace", scheme: "Jellify")
-    upload_to_testflight
+    setup_ci
+    match(
+      type: "appstore",
+      app_identifier: "com.cosmonautical.jellify",
+      readonly: true
+    )
+
+    increment_version_number(
+      version_number: ENV['VERISON_NUMBER'],
+      xcodeproj: "Jellify.xcodeproj"
+    )
+
+    increment_build_number(
+      xcodeproj: "Jellify.xcodeproj"
+    )
+    build_app(
+      scheme: "Jellify - Release",
+      workspace: "Jellify.xcworkspace", 
+    )
+    # http://docs.fastlane.tools/actions/upload_to_testflight/#upload_to_testflight
+    upload_to_testflight(
+      api_key_path: "fastlane/appstore_connect_api_key.json"
+    )
   end
 end
