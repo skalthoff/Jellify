@@ -4,7 +4,7 @@ on:
     branches-ignore:
       - "main"
 jobs:
-  build-ios:
+  build-android:
     runs-on: macos-latest
     steps:
       - name: 🛒 Checkout
