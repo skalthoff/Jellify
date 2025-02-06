@@ -76,6 +76,7 @@ export function fetchFavoritePlaylists(): Promise<BaseItemDto[]> {
     return new Promise(async (resolve, reject) => {
         getItemsApi(Client.api!)
             .getItems({
+                userId: Client.user!.id,
                 parentId: Client.library!.playlistLibraryId,
                 fields: [
                     "Path"
