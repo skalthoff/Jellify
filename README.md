@@ -1,6 +1,8 @@
 ![Jellify App Icon](assets/icon_dark_60pt_3x.png)
 # Jellify
 
+[![publish-ios-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-ios-beta.yml/badge.svg)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-ios-beta.yml)
+
 jellify (verb) - to make gelatinous
 
 *Jellify* is a music player for [Jellyfin](https://jellyfin.org/) built with [React Native](https://reactnative.dev/). It has a  UX meant to feel familiar if you’ve used other music streaming apps.
