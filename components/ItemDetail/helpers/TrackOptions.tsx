@@ -145,11 +145,11 @@ export default function TrackOptions({
                                                     />
                                             </YStack>
 
-                                            <XStack justifyContent="space-evenly">
+                                            <YStack alignItems="flex-start">
                                                 <Text bold fontSize={"$6"}>{playlist.Name ?? "Untitled Playlist"}</Text>
 
                                                 <Text color={getTokens().color.amethyst}>{`${playlist.ChildCount ?? 0} tracks`}</Text>
-                                            </XStack>
+                                            </YStack>
                                         </XStack>
                                     </ListItem>
                                 </YGroup.Item>
