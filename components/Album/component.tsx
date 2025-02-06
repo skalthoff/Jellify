@@ -44,6 +44,7 @@ export default function Album({
                     <YStack 
                         alignItems="center" 
                         alignContent="center"
+                        marginTop={"$4"}
                         minHeight={width / 1.1}
                     >
                         <BlurhashedImage

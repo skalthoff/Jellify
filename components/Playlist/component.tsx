@@ -65,7 +65,10 @@ export default function Playlist({
                 return `${index}-${Id}`
             }}
             ListHeaderComponent={(
-                <YStack alignItems="center">
+                <YStack 
+                    alignItems="center"
+                    marginTop={"$4"}
+                >
                     <BlurhashedImage
                         item={playlist}
                         width={300}
