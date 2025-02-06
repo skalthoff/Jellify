@@ -27,7 +27,7 @@ export default function TrackOptions({
     return (
         <YStack width={width}>
 
-            <XStack justifyContent="space-between">
+            <XStack justifyContent="space-evenly">
                 { isSuccess ? (
                     <IconButton 
                         name="music-box"
