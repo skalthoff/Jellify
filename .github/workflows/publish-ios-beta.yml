@@ -1,6 +1,5 @@
 name: publish-ios-beta
 on:
-  # pull_request:
   push:
     branches:
       - 'main'
@@ -21,7 +20,7 @@ jobs:
       - name: 💬 Echo package.json version to Github ENV
         run: echo VERSION_NUMBER=$(npm version minor --tag-version-prefix="" --no-commit-hooks) >> $GITHUB_ENV
 
-      - name: 🔵 Run npm run init
+      - name: 🟢 Run npm run init
         run: npm run init
 
       - name: 🤫 Output App Store Connect API Key JSON to Fastlane
