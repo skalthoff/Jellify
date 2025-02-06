@@ -61,7 +61,7 @@ export default function ItemDetail({
             <YStack 
                 alignItems="center" 
                 flex={1}
-                marginTop={"$3"}
+                marginTop={"$4"}
             >
 
                 <XStack 
