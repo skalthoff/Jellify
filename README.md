@@ -15,7 +15,7 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 ## Features
 ### Current
 - Available via Private Testflight
-- iOS and Android support
+- iOS support
 - Carefully crafted Light and Dark modes
 - Home screen access to previously played tracks, artists, and your playlists
 - Full Last.FM Plugin support
@@ -23,6 +23,7 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 - Full playlist support, including creating, updating, and reordering
 
 ### Roadmap
+- [Android Support](https://github.com/anultravioletaurora/Jellify/issues/54)
 - Quick access to similar artists and items for discovering music in your library
 - Support for Jellyfin mixes
 - CarPlay / Android Auto Support
