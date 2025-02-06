@@ -65,7 +65,7 @@ export default function TrackOptions({
                 <IconButton
                     circular
                     name="table-column-plus-after" 
-                    title="Add to Queue"
+                    title="Queue"
                     onPress={() => {
                         useAddToQueue.mutate({
                             track: item
