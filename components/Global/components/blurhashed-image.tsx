@@ -1,8 +1,9 @@
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { useItemImage } from "../../../api/queries/image";
 import { Blurhash } from "react-native-blurhash";
-import { Image, View } from "tamagui";
+import { View } from "tamagui";
 import { isEmpty } from "lodash";
+import { Image } from "react-native";
 
 interface BlurhashLoadingProps {
     item: BaseItemDto;
@@ -38,7 +39,8 @@ export default function BlurhashedImage({
                     style={{
                         height: height ?? width,
                         width,
-                        borderRadius: cornered ? 2 : 25
+                        borderRadius: cornered ? 2 : 25,
+                        resizeMode: "contain"
                     }} 
                 />
             ) : blurhash && (
