@@ -67,5 +67,5 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 ## Special Thanks To
 - The [Jellyfin Team](https://jellyfin.org/) for their amazing server software
-- Tony and Jordan for their testing and feedback from the early stages of development
-- Alyssa, for your artistic abilities and giving Jellify the flair it needed 
+- Tony, Trevor, and [Jordan](https://github.com/jordanbleu) for their testing and feedback from the early stages of development
+- Alyssa, for your artistic abilities and the artwork you made for *Jellify*. It gave it the flair it undoubtedly needed
