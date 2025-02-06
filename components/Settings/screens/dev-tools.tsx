@@ -1,4 +1,4 @@
-import { StackParamList } from "@/components/types"
+import { StackParamList } from "../../../components/types"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import DevTools from "../helpers/dev-tools"
 

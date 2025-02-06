@@ -1,13 +1,12 @@
 import { usePlayerContext } from "../../../player/provider";
 import { useItem } from "../../../api/queries/item";
-import Icon from "../../../components/Global/helpers/icon";
 import { StackParamList } from "../../../components/types";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Spacer, XStack, YStack } from "tamagui";
 import { QueuingType } from "../../../enums/queuing-type";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
-import IconButton from "@/components/Global/helpers/icon-button";
+import IconButton from "../../../components/Global/helpers/icon-button";
 
 export default function TrackOptions({ 
     item, 

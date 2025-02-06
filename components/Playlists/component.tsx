@@ -1,4 +1,4 @@
-import { useFavoritePlaylists } from "@/api/queries/favorites";
+import { useFavoritePlaylists } from "../../api/queries/favorites";
 import { FlatList, RefreshControl } from "react-native-gesture-handler";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { ItemCard } from "../Global/components/item-card";
