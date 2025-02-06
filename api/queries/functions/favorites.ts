@@ -90,10 +90,10 @@ export function fetchFavoritePlaylists(): Promise<BaseItemDto[]> {
             })
             .then((response) => {
                 if (response.data.Items)
-                    resolve(response.data.Items.filter(item => {
+                    resolve(response.data.Items.filter(item =>
                         item.UserData?.IsFavorite ||
                         item.Path?.includes("/config/data/playlists")
-                    }))
+                    ))
                 else
                     resolve([])
             })
