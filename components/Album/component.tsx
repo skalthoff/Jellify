@@ -1,16 +1,14 @@
 import { StackParamList } from "../types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ScrollView, YStack, XStack } from "tamagui";
+import { YStack, XStack, Separator } from "tamagui";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
-import { H3, H4, H5, Text } from "../Global/helpers/text";
+import { H3, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
-import { usePlayerContext } from "../../player/provider";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import Track from "../Global/components/track";
 import { useItemTracks } from "../../api/queries/tracks";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
-import { useEffect } from "react";
 import BlurhashedImage from "../Global/components/blurhashed-image";
 import Avatar from "../Global/components/avatar";
 
@@ -40,10 +38,12 @@ export default function Album({
                 contentInsetAdjustmentBehavior="automatic"
                 data={tracks}
                 numColumns={1}
+                ItemSeparatorComponent={() => <Separator />}
                 ListHeaderComponent={() => (
                     <YStack 
                         alignItems="center" 
                         alignContent="center"
+                        marginTop={"$4"}
                         minHeight={width / 1.1}
                     >
                         <BlurhashedImage

@@ -1,7 +1,7 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { getTokens, XStack, YStack } from "tamagui";
+import { getTokens, Separator, XStack, YStack } from "tamagui";
 import { useItemTracks } from "../../api/queries/tracks";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
@@ -64,8 +64,12 @@ export default function Playlist({
             keyExtractor={({ Id }, index) => {
                 return `${index}-${Id}`
             }}
+            ItemSeparatorComponent={() => <Separator />}
             ListHeaderComponent={(
-                <YStack alignItems="center">
+                <YStack 
+                    alignItems="center"
+                    marginTop={"$4"}
+                >
                     <BlurhashedImage
                         item={playlist}
                         width={300}
@@ -78,7 +82,6 @@ export default function Playlist({
             numColumns={1}
             onDragEnd={({ data, from, to }) => {
                 reorderPlaylist(playlist.Id!, data[to].Id!, to)
-                refetch();
             }}
             refreshing={isPending}
             renderItem={({ item: track, getIndex, drag }) => {

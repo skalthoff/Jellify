@@ -6,7 +6,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { trigger } from "react-native-haptic-feedback";
-import { getTokens } from "tamagui";
+import { getTokens, Separator } from "tamagui";
 import { FadeIn, FadeOut, ReduceMotion, SequencedTransition } from "react-native-reanimated";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
@@ -37,6 +37,7 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                 { length: width / 9, offset: width / 9 * index, index}
             )}
             initialScrollIndex={scrollIndex !== -1 ? scrollIndex: 0}
+            ItemSeparatorComponent={() => <Separator />}
             // itemEnteringAnimation={FadeIn}
             // itemExitingAnimation={FadeOut}
             // itemLayoutAnimation={SequencedTransition}

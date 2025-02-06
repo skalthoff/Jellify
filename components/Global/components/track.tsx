@@ -1,6 +1,6 @@
 import { usePlayerContext } from "../../../player/provider";
 import React from "react";
-import { getTokens, Separator, Spacer, Theme, useTheme, XStack, YStack } from "tamagui";
+import { getTokens, Spacer, Theme, useTheme, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
@@ -47,7 +47,6 @@ export default function Track({
 
     return (
         <Theme name={invertedColors ? "inverted_purple" : undefined}>
-            <Separator />
             <XStack 
                 alignContent="center"
                 alignItems="center"
@@ -173,7 +172,6 @@ export default function Track({
                     </YStack>
                 </XStack>
             </XStack>
-            <Separator />
         </Theme>
     )
 }
