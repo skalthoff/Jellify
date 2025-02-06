@@ -145,7 +145,7 @@ export default function TrackOptions({
                                                     />
                                             </YStack>
 
-                                            <XStack justifyContent="space-between">
+                                            <XStack justifyContent="space-evenly">
                                                 <Text bold fontSize={"$6"}>{playlist.Name ?? "Untitled Playlist"}</Text>
 
                                                 <Text color={getTokens().color.amethyst}>{`${playlist.ChildCount ?? 0} tracks`}</Text>
