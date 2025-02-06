@@ -60,7 +60,8 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 [Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)\
 [React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
-[React Native MMKV](https://github.com/mrousavy/react-native-mmkv)
+[React Native MMKV](https://github.com/mrousavy/react-native-mmkv)\
+[React Native File Access](https://github.com/alpha0010/react-native-file-access)
 
 ### Love from Wisconsin 🧀
 This is undoubtedly a passion project of [mine](https://github.com/anultravioletaurora), and I've learned a lot from working on it (and the many failed attempts before it). I hope you enjoy using it! Feature requests and bug reports are welcome :)
