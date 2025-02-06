@@ -58,7 +58,11 @@ export default function ItemDetail({
 
     return (
         <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <YStack alignItems="center" flex={1}>
+            <YStack 
+                alignItems="center" 
+                flex={1}
+                marginTop={"$3"}
+            >
 
                 <XStack 
                     justifyContent="center"
@@ -74,7 +78,7 @@ export default function ItemDetail({
                 </XStack>
 
                 {/* Item Name, Artist, Album, and Favorite Button */}
-                <XStack maxWidth={width / 1.5}>
+                <XStack>
                     <YStack 
                         marginLeft={"$0.5"} 
                         alignContent="flex-start"
