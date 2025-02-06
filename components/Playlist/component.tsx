@@ -9,7 +9,7 @@ import Track from "../Global/components/track";
 import BlurhashedImage from "../Global/components/blurhashed-image";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { reorderPlaylist } from "../../api/mutations/functions/playlists";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "../Global/helpers/icon";
 
 interface PlaylistProps { 
@@ -23,7 +23,8 @@ export default function Playlist({
 }: PlaylistProps): React.JSX.Element {
 
     const [editing, setEditing] = useState<boolean>(false);
-    const { data: tracks, isLoading, refetch } = useItemTracks(playlist.Id!);
+    const [playlistTracks, setPlaylistTracks] = useState<BaseItemDto[]>([]);
+    const { data: tracks, isPending, isSuccess, refetch } = useItemTracks(playlist.Id!);
 
     navigation.setOptions({
         headerRight: () => {
@@ -38,12 +39,27 @@ export default function Playlist({
                 />
             )
         }
-    })
+    });
+
+    useEffect(() => {
+        if (!isPending && isSuccess)
+            setPlaylistTracks(tracks);
+    }, [
+        isPending,
+        isSuccess
+    ])
+
+    useEffect(() => {
+        if (!editing)
+            refetch();
+    }, [
+        editing
+    ])
 
     return (
         <DraggableFlatList
             contentInsetAdjustmentBehavior="automatic"
-            data={tracks ?? []}
+            data={playlistTracks}
             dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
             keyExtractor={({ Id }, index) => {
                 return `${index}-${Id}`
@@ -64,6 +80,7 @@ export default function Playlist({
                 reorderPlaylist(playlist.Id!, data[to].Id!, to)
                 refetch();
             }}
+            refreshing={isPending}
             renderItem={({ item: track, getIndex, drag }) => {
 
                 const index = getIndex();
