@@ -3,7 +3,7 @@ import { useItem } from "../../../api/queries/item";
 import { StackParamList } from "../../../components/types";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ListItem, Spacer, Spinner, XStack, YGroup, YStack } from "tamagui";
+import { getToken, getTokens, ListItem, Separator, Spacer, Spinner, XStack, YGroup, YStack } from "tamagui";
 import { QueuingType } from "../../../enums/queuing-type";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import IconButton from "../../../components/Global/helpers/icon-button";
@@ -107,7 +107,7 @@ export default function TrackOptions({
                         Add to Playlist
                     </Text>
 
-                    <YGroup>
+                    <YGroup separator={(<Separator />)}>
                         { playlists.map(playlist => {
 
                             const useAddToPlaylist = useMutation({
@@ -136,13 +136,20 @@ export default function TrackOptions({
                                         })
                                     }}>
                                         <XStack alignItems="center">
-                                            <BlurhashedImage
-                                                cornered
-                                                item={playlist}
-                                                width={width / 6}
-                                            />
+                                            <YStack flex={1}>
 
-                                            <Text bold fontSize={"$6"}>{playlist.Name ?? "Untitled Playlist"}</Text>
+                                                <BlurhashedImage
+                                                    cornered
+                                                    item={playlist}
+                                                    width={width / 6}
+                                                    />
+                                            </YStack>
+
+                                            <XStack justifyContent="space-between">
+                                                <Text bold fontSize={"$6"}>{playlist.Name ?? "Untitled Playlist"}</Text>
+
+                                                <Text color={getTokens().color.amethyst}>{`${playlist.ChildCount ?? 0} tracks`}</Text>
+                                            </XStack>
                                         </XStack>
                                     </ListItem>
                                 </YGroup.Item>
