@@ -42,12 +42,14 @@ export default function TrackOptions({
                                 album
                             });
                         }}
+                        size={width / 4}
                     />
                 ) : (
                     <Spacer />
                 )}
 
                 <IconButton
+                    circular
                     name="table-column-plus-before" 
                     title="Play Next"
                     onPress={() => {
@@ -56,9 +58,11 @@ export default function TrackOptions({
                             queuingType: QueuingType.PlayingNext
                         })
                     }}
+                    size={width / 4}
                 />
 
                 <IconButton
+                    circular
                     name="table-column-plus-after" 
                     title="Add to Queue"
                     onPress={() => {
@@ -66,6 +70,7 @@ export default function TrackOptions({
                             track: item
                         })
                     }}
+                    size={width / 4}
                 />
             </XStack>
         </YStack>

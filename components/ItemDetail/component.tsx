@@ -58,7 +58,7 @@ export default function ItemDetail({
 
     return (
         <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <YStack width={width / 1.5} alignItems="center" flex={1}>
+            <YStack alignItems="center" flex={1}>
 
                 <XStack 
                     justifyContent="center"
@@ -77,7 +77,7 @@ export default function ItemDetail({
                 <XStack maxWidth={width / 1.5}>
                     <YStack 
                         marginLeft={"$0.5"} 
-                        alignContent="center"
+                        alignContent="flex-start"
                         justifyContent="flex-start"
                         flex={3}
                         >
@@ -113,7 +113,11 @@ export default function ItemDetail({
                         </Text>
                     </YStack>
 
-                    <YStack flex={1}>
+                    <YStack 
+                        flex={1}
+                        alignContent="center"
+                        justifyContent="center"
+                    >
                         <FavoriteButton item={item} />
                     </YStack>
                 </XStack>
