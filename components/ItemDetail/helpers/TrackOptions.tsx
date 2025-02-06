@@ -145,7 +145,10 @@ export default function TrackOptions({
                                                     />
                                             </YStack>
 
-                                            <YStack alignItems="flex-start">
+                                            <YStack 
+                                                alignItems="flex-start"
+                                                flex={4} 
+                                            >
                                                 <Text bold fontSize={"$6"}>{playlist.Name ?? "Untitled Playlist"}</Text>
 
                                                 <Text color={getTokens().color.amethyst}>{`${playlist.ChildCount ?? 0} tracks`}</Text>
