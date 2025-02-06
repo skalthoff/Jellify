@@ -18,7 +18,7 @@ export function ItemCard(props: CardProps) {
 
     const dimensions = props.width && typeof(props.width) === "number" ? { width: props.width, height: props.width } : { width: 150, height: 150 };
 
-    const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 2, height: props.width / 6 }: { width: 75, height: 25 };
+    const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 2, height: props.width / 6 }: { width: 75, height: 50 };
 
     return (
         <View 
