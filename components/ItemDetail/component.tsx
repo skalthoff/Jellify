@@ -32,7 +32,7 @@ export default function ItemDetail({
 
     switch (item.Type) {
         case "Audio": {
-            options = TrackOptions({ item, navigation, isNested });
+            options = TrackOptions({ track: item, navigation, isNested });
             break;
         }
 
@@ -58,7 +58,11 @@ export default function ItemDetail({
 
     return (
         <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <YStack alignItems="center" flex={1}>
+            <YStack 
+                alignItems="center" 
+                flex={1}
+                marginTop={"$4"}
+            >
 
                 <XStack 
                     justifyContent="center"
@@ -73,51 +77,58 @@ export default function ItemDetail({
                         />
                 </XStack>
 
-                <YStack 
-                    marginLeft={"$0.5"} 
-                    alignContent="center"
-                    justifyContent="center"
-                    flex={2}
-                >
-                    <Text textAlign="center" bold fontSize={"$6"}>
-                        { item.Name ?? "Untitled Track" }
-                    </Text>
+                {/* Item Name, Artist, Album, and Favorite Button */}
+                <XStack maxWidth={width / 1.5}>
+                    <YStack 
+                        marginLeft={"$0.5"} 
+                        alignItems="flex-start"
+                        justifyContent="flex-start"
+                        flex={3}
+                        >
+                        <Text textAlign="center" bold fontSize={"$6"}>
+                            { item.Name ?? "Untitled Track" }
+                        </Text>
 
-                    <Text 
-                        textAlign="center"
-                        fontSize={"$6"} 
-                        color={getTokens().color.telemagenta}
-                        onPress={() => {
-                            if (item.ArtistItems) {
+                        <Text 
+                            textAlign="center"
+                            fontSize={"$6"} 
+                            color={getTokens().color.telemagenta}
+                            onPress={() => {
+                                if (item.ArtistItems) {
+                                    
+                                    if (isNested)
+                                        navigation.getParent()!.goBack();
+                                    
+                                    navigation.goBack();
+                                    navigation.push("Artist", {
+                                        artist: item.ArtistItems[0]
+                                    });
+                                }
+                            }}>
+                            { item.Artists?.join(", ") ?? "Unknown Artist"}
+                        </Text>
+                            
+                        <Text 
+                            textAlign="center"
+                            fontSize={"$6"} 
+                            color={"$borderColor"}
+                            >
+                            { item.Album ?? "" }
+                        </Text>
+                    </YStack>
 
-                                if (isNested)
-                                    navigation.getParent()!.goBack();
-
-                                navigation.goBack();
-                                navigation.push("Artist", {
-                                    artist: item.ArtistItems[0]
-                                });
-                            }
-                        }}>
-                        { item.Artists?.join(", ") ?? "Unknown Artist"}
-                    </Text>
-                        
-                    <Text 
-                        textAlign="center"
-                        fontSize={"$6"} 
-                        color={"$borderColor"}
+                    <YStack 
+                        flex={1}
+                        alignContent="center"
+                        justifyContent="center"
                     >
-                        { item.Album ?? "" }
-                    </Text>
-
-                    <Spacer />
-
-                    <FavoriteButton item={item} />
+                        <FavoriteButton item={item} />
+                    </YStack>
+                </XStack>
                     
-                    <Spacer />
+                <Spacer />
                     
-                    { options ?? <View /> }
-                </YStack>
+                { options ?? <View /> }
 
             </YStack>
         </ScrollView>

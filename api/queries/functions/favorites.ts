@@ -70,6 +70,40 @@ export function fetchFavoriteAlbums(): Promise<BaseItemDto[]> {
     })
 }
 
+export function fetchFavoritePlaylists(): Promise<BaseItemDto[]> {
+    console.debug(`Fetching user's favorite playlists`);
+
+    return new Promise(async (resolve, reject) => {
+        getItemsApi(Client.api!)
+            .getItems({
+                userId: Client.user!.id,
+                parentId: Client.library!.playlistLibraryId,
+                fields: [
+                    "Path"
+                ],
+                sortBy: [
+                    ItemSortBy.SortName
+                ],
+                sortOrder: [
+                    SortOrder.Ascending
+                ]
+            })
+            .then((response) => {
+                if (response.data.Items)
+                    resolve(response.data.Items.filter(item =>
+                        item.UserData?.IsFavorite ||
+                        item.Path?.includes("/config/data/playlists")
+                    ))
+                else
+                    resolve([])
+            })
+            .catch((error) => {
+                console.error(error);
+                reject(error);
+            });
+    });
+}
+
 export function fetchFavoriteTracks(): Promise<BaseItemDto[]> {
     console.debug(`Fetching user's favorite tracks`);
 

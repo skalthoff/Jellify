@@ -22,10 +22,10 @@ export function fetchUserPlaylists(): Promise<BaseItemDto[]> {
                 ]
             })
             .then((response) => {
-                if (response.data.Items) {
-                    console.log(response.data.Items);
-                    resolve(response.data.Items.filter(playlist => playlist.Path?.includes("/config/data/playlists")))
-                }
+                if (response.data.Items)
+                    resolve(response.data.Items.filter(playlist => 
+                        playlist.Path?.includes("/config/data/playlists")
+                    ))
                 else 
                     resolve([]);
             })
