@@ -73,14 +73,16 @@ export function fetchFavoriteAlbums(): Promise<BaseItemDto[]> {
 export function fetchFavoritePlaylists(): Promise<BaseItemDto[]> {
     console.debug(`Fetching user's favorite playlists`);
 
-    return new Promise(async (resolver, reject) => {
+    return new Promise(async (resolve, reject) => {
         getItemsApi(Client.api!)
             .getItems({
                 parentId: Client.library!.playlistLibraryId,
                 includeItemTypes: [
                     BaseItemKind.Playlist
                 ],
-                isFavorite: true,
+                fields: [
+                    "Path"
+                ],
                 sortBy: [
                     ItemSortBy.SortName
                 ],
@@ -90,10 +92,12 @@ export function fetchFavoritePlaylists(): Promise<BaseItemDto[]> {
             })
             .then((response) => {
                 if (response.data.Items)
-                    resolver(response.data.Items)
-
+                    resolve(response.data.Items.filter(item => {
+                        item.UserData?.IsFavorite ||
+                        item.Path?.includes("/config/data/playlists")
+                    }))
                 else
-                    resolver([])
+                    resolve([])
             })
             .catch((error) => {
                 console.error(error);
