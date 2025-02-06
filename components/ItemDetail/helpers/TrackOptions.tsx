@@ -43,7 +43,7 @@ export default function TrackOptions({
                                 album
                             });
                         }}
-                        size={width / 4}
+                        size={width / 5}
                     />
                 ) : (
                     <Spacer />
@@ -59,7 +59,7 @@ export default function TrackOptions({
                             queuingType: QueuingType.PlayingNext
                         })
                     }}
-                    size={width / 4}
+                    size={width / 5}
                 />
 
                 <IconButton
@@ -71,7 +71,7 @@ export default function TrackOptions({
                             track: item
                         })
                     }}
-                    size={width / 4}
+                    size={width / 5}
                 />
             </XStack>
         </YStack>
