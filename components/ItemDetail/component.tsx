@@ -81,7 +81,6 @@ export default function ItemDetail({
                 <XStack maxWidth={width / 1.5}>
                     <YStack 
                         marginLeft={"$0.5"} 
-                        alignContent="flex-start"
                         alignItems="flex-start"
                         justifyContent="flex-start"
                         flex={3}
