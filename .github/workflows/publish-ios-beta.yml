@@ -46,7 +46,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "ios/Jellify.ipa"
-          name: "Jellify - ${{ env.VERSION_NUMBER }}"
+          name: ${{ env.VERSION_NUMBER }}
           prerelease: true
           tag: ${{ env.VERSION_NUMBER }}
           token: ${{ secrets.SIGNING_REPO_PAT }}

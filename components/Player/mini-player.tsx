@@ -47,7 +47,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
                     <YStack 
                         alignContent="flex-start" 
-                        marginLeft={"$0.5"}
+                        marginLeft={"$2"}
                         flex={4} 
                         maxWidth={"$20"}
                     >

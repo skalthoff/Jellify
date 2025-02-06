@@ -1,7 +1,7 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { getTokens, XStack, YStack } from "tamagui";
+import { getTokens, Separator, XStack, YStack } from "tamagui";
 import { useItemTracks } from "../../api/queries/tracks";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
@@ -11,10 +11,20 @@ import DraggableFlatList from "react-native-draggable-flatlist";
 import { reorderPlaylist } from "../../api/mutations/functions/playlists";
 import { useEffect, useState } from "react";
 import Icon from "../Global/helpers/icon";
+import { useMutation } from "@tanstack/react-query";
+import { trigger } from "react-native-haptic-feedback";
+import { queryClient } from "../../constants/query-client";
+import { QueryKeys } from "../../enums/query-keys";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
     navigation: NativeStackNavigationProp<StackParamList>
+}
+
+interface PlaylistOrderMutation {
+    playlist: BaseItemDto;
+    track: BaseItemDto;
+    to: number
 }
 
 export default function Playlist({
@@ -49,12 +59,18 @@ export default function Playlist({
         isSuccess
     ])
 
-    useEffect(() => {
-        if (!editing)
-            refetch();
-    }, [
-        editing
-    ])
+    const useReorderPlaylist = useMutation({
+        mutationFn: ({ playlist, track, to } : PlaylistOrderMutation) => {
+            return reorderPlaylist(playlist.Id!, track.Id!, to)
+        },
+        onSuccess: () => {
+            trigger("notificationSuccess");
+
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.ItemTracks, playlist.Id]
+            })
+        }
+    });
 
     return (
         <DraggableFlatList
@@ -64,8 +80,12 @@ export default function Playlist({
             keyExtractor={({ Id }, index) => {
                 return `${index}-${Id}`
             }}
+            ItemSeparatorComponent={() => <Separator />}
             ListHeaderComponent={(
-                <YStack alignItems="center">
+                <YStack 
+                    alignItems="center"
+                    marginTop={"$4"}
+                >
                     <BlurhashedImage
                         item={playlist}
                         width={300}
@@ -76,9 +96,16 @@ export default function Playlist({
                 </YStack>
             )}
             numColumns={1}
+            onDragBegin={() => {
+                trigger("impactMedium");
+            }}
             onDragEnd={({ data, from, to }) => {
-                reorderPlaylist(playlist.Id!, data[to].Id!, to)
-                refetch();
+                setPlaylistTracks(data);
+                useReorderPlaylist.mutate({
+                    playlist,
+                    track: data[to],
+                    to
+                });
             }}
             refreshing={isPending}
             renderItem={({ item: track, getIndex, drag }) => {

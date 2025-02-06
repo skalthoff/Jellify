@@ -1,5 +1,5 @@
+![Jellify App Icon](assets/icon_dark_60pt_3x.png)
 # Jellify
-![Jellify App Icon](assets/icon_60pt_3x.jpg)
 
 jellify (verb) - to make gelatinous
 
@@ -60,12 +60,13 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 [Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)\
 [React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
-[React Native MMKV](https://github.com/mrousavy/react-native-mmkv)
+[React Native MMKV](https://github.com/mrousavy/react-native-mmkv)\
+[React Native File Access](https://github.com/alpha0010/react-native-file-access)
 
 ### Love from Wisconsin 🧀
 This is undoubtedly a passion project of [mine](https://github.com/anultravioletaurora), and I've learned a lot from working on it (and the many failed attempts before it). I hope you enjoy using it! Feature requests and bug reports are welcome :)
 
 ## Special Thanks To
 - The [Jellyfin Team](https://jellyfin.org/) for their amazing server software
-- Tony and Jordan for their testing and feedback from the early stages of development
-- Alyssa, for your artistic abilities and giving Jellify the flair it needed 
+- Tony, Trevor, and [Jordan](https://github.com/jordanbleu) for their testing and feedback from the early stages of development
+- Alyssa, for your artistic abilities and the artwork you made for *Jellify*. It gave it the flair it undoubtedly needed
