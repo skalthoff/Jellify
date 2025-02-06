@@ -6,4 +6,4 @@ export const queryClient = new QueryClient({
             gcTime: (1000 * 60 * 24 * 24) * 5 // 5 days
         }
     }
-})
+});

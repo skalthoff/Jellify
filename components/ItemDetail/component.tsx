@@ -32,7 +32,7 @@ export default function ItemDetail({
 
     switch (item.Type) {
         case "Audio": {
-            options = TrackOptions({ item, navigation, isNested });
+            options = TrackOptions({ track: item, navigation, isNested });
             break;
         }
 
