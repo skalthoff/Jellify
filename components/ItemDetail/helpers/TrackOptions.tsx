@@ -10,13 +10,13 @@ import IconButton from "../../../components/Global/helpers/icon-button";
 import { Text } from "../../../components/Global/helpers/text";
 import { useUserPlaylists } from "../../../api/queries/playlist";
 import React from "react";
-import BlurhashedImage from "@/components/Global/components/blurhashed-image";
+import BlurhashedImage from "../../../components/Global/components/blurhashed-image";
 import { useMutation } from "@tanstack/react-query";
 import { AddToPlaylistMutation } from "../types";
 import { addToPlaylist } from "@/api/mutations/functions/playlists";
 import { trigger } from "react-native-haptic-feedback";
-import { queryClient } from "@/constants/query-client";
-import { QueryKeys } from "@/enums/query-keys";
+import { queryClient } from "../../../constants/query-client";
+import { QueryKeys } from "../../../enums/query-keys";
 
 interface TrackOptionsProps {
     track: BaseItemDto;
