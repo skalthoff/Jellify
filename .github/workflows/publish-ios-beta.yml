@@ -49,4 +49,4 @@ jobs:
           name: "Jellify - ${{ env.VERSION_NUMBER }}"
           prerelease: true
           tag: ${{ env.VERSION_NUMBER }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.SIGNING_REPO_PAT }}
