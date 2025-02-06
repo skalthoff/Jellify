@@ -81,6 +81,7 @@ export default function Playlist({
             )}
             numColumns={1}
             onDragEnd={({ data, from, to }) => {
+                setPlaylistTracks(data);
                 reorderPlaylist(playlist.Id!, data[to].Id!, to)
             }}
             refreshing={isPending}
