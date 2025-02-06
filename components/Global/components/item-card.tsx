@@ -40,6 +40,7 @@ export function ItemCard(props: CardProps) {
                 <TamaguiCard.Footer padded>
                     { props.item.Type === 'MusicArtist' && (
                         <BlurhashedImage
+                            cornered
                             item={props.item}
                             type={ImageType.Logo}
                             width={logoDimensions.width}
