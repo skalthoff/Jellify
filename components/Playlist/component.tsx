@@ -11,10 +11,20 @@ import DraggableFlatList from "react-native-draggable-flatlist";
 import { reorderPlaylist } from "../../api/mutations/functions/playlists";
 import { useEffect, useState } from "react";
 import Icon from "../Global/helpers/icon";
+import { useMutation } from "@tanstack/react-query";
+import { trigger } from "react-native-haptic-feedback";
+import { queryClient } from "@/constants/query-client";
+import { QueryKeys } from "@/enums/query-keys";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
     navigation: NativeStackNavigationProp<StackParamList>
+}
+
+interface PlaylistOrderMutation {
+    playlist: BaseItemDto;
+    track: BaseItemDto;
+    to: number
 }
 
 export default function Playlist({
@@ -49,6 +59,19 @@ export default function Playlist({
         isSuccess
     ])
 
+    const useReorderPlaylist = useMutation({
+        mutationFn: ({ playlist, track, to } : PlaylistOrderMutation) => {
+            return reorderPlaylist(playlist.Id!, track.Id!, to)
+        },
+        onSuccess: () => {
+            trigger("notificationSuccess");
+
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.ItemTracks, playlist.Id]
+            })
+        }
+    });
+
     return (
         <DraggableFlatList
             contentInsetAdjustmentBehavior="automatic"
@@ -73,9 +96,16 @@ export default function Playlist({
                 </YStack>
             )}
             numColumns={1}
+            onDragBegin={() => {
+                trigger("impactMedium");
+            }}
             onDragEnd={({ data, from, to }) => {
                 setPlaylistTracks(data);
-                reorderPlaylist(playlist.Id!, data[to].Id!, to)
+                useReorderPlaylist.mutate({
+                    playlist,
+                    track: data[to],
+                    to
+                });
             }}
             refreshing={isPending}
             renderItem={({ item: track, getIndex, drag }) => {
