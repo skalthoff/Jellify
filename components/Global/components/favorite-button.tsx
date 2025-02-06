@@ -9,7 +9,7 @@ import { getTokens, Spinner } from "tamagui";
 import Client from "../../../api/client";
 import { usePlayerContext } from "../../..//player/provider";
 import { queryClient } from "../../../constants/query-client";
-import { QueryKeys } from "@/enums/query-keys";
+import { QueryKeys } from "../../../enums/query-keys";
 
 interface SetFavoriteMutation {
     item: BaseItemDto,
