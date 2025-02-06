@@ -1,4 +1,5 @@
-# ![Jellify App Icon](assets/icon_dark_20pt_2x.png) Jellify
+![Jellify App Icon](assets/icon_dark_original.png)
+#  Jellify
 
 jellify (verb) - to make gelatinous
 
