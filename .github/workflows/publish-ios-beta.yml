@@ -45,7 +45,7 @@ jobs:
       - name: 🎉 Create Github release 
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "Jellify.ipa"
+          artifacts: "ios/Jellify.ipa"
           name: "Jellify - ${{ env.VERSION_NUMBER }}"
           prerelease: true
           tag: ${{ env.VERSION_NUMBER }}
