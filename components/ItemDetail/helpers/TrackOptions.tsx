@@ -28,8 +28,6 @@ export default function TrackOptions({
         <YStack width={width}>
 
             <XStack 
-                alignItems="stretch" 
-                justifyContent="space-between"
             >
                 { isSuccess ? (
                     <IconButton 
