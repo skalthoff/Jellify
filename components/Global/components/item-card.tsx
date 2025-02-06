@@ -18,7 +18,7 @@ export function ItemCard(props: CardProps) {
 
     const dimensions = props.width && typeof(props.width) === "number" ? { width: props.width, height: props.width } : { width: 150, height: 150 };
 
-    const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 2, height: props.width / 6 }: { width: 100, height: 30 };
+    const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 2, height: props.width / 6 }: { width: 100, height: 75 };
 
     return (
         <View 
@@ -40,6 +40,7 @@ export function ItemCard(props: CardProps) {
                 <TamaguiCard.Footer padded>
                     { props.item.Type === 'MusicArtist' && (
                         <BlurhashedImage
+                            cornered
                             item={props.item}
                             type={ImageType.Logo}
                             width={logoDimensions.width}

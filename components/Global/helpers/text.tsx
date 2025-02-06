@@ -62,6 +62,7 @@ export function H4(props: TamaguiTextProps): React.JSX.Element {
         <TamaguiH4 
             fontWeight={800}
             marginVertical={3}
+            {...props}
         >
             { props.children }
         </TamaguiH4>

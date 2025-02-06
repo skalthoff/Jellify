@@ -9,7 +9,6 @@ const Categories : CategoryRoute[] = [
     { name: "Albums", iconName: "music-box-multiple" },
     { name: "Tracks", iconName: "music-note"},
     { name: "Playlists", iconName: "playlist-music"},
-    { name: "Genres", iconName: "guitar-electric"}
 ];
 
 export default Categories;

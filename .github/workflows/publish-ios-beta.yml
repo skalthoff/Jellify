@@ -17,7 +17,7 @@ jobs:
           node-version: 20
 
       - name: Echo package.json version to Github ENV
-        run: echo VERISON_NUMBER=$(npm version minor --tag-version-prefix="" --no-commit-hooks) >> $GITHUB_ENV
+        run: echo VERSION_NUMBER=$(npm version minor --tag-version-prefix="" --no-commit-hooks) >> $GITHUB_ENV
 
       - run: npm run init
 
@@ -38,3 +38,11 @@ jobs:
         with:
           commit_message: "[skip actions]"
           file_pattern: "ios/Jellify.xcodeproj/project.pbxproj"
+          
+      - name: Create Github Release
+        uses: elgohr/Github-Release-Action@v5
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          title: "Jellify - ${{ env.VERSION_NUMBER }}"
+          tag: ${{ env.VERSION_NUMBER }} 
