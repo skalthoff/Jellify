@@ -18,7 +18,7 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 - iOS support
 - Carefully crafted Light and Dark modes
 - Home screen access to previously played tracks, artists, and your playlists
-- Full Last.FM Plugin support
+- [Last.FM Plugin](https://github.com/jesseward/jellyfin-plugin-lastfm) support
 - Library of Favorited Music, not too dissimilar to how streaming services handle your 'library'
 - Full playlist support, including creating, updating, and reordering
 
