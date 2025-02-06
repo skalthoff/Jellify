@@ -13,8 +13,8 @@ import { useEffect, useState } from "react";
 import Icon from "../Global/helpers/icon";
 import { useMutation } from "@tanstack/react-query";
 import { trigger } from "react-native-haptic-feedback";
-import { queryClient } from "@/constants/query-client";
-import { QueryKeys } from "@/enums/query-keys";
+import { queryClient } from "../../constants/query-client";
+import { QueryKeys } from "../../enums/query-keys";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
