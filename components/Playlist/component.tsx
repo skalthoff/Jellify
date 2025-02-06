@@ -82,7 +82,6 @@ export default function Playlist({
             numColumns={1}
             onDragEnd={({ data, from, to }) => {
                 reorderPlaylist(playlist.Id!, data[to].Id!, to)
-                refetch();
             }}
             refreshing={isPending}
             renderItem={({ item: track, getIndex, drag }) => {
