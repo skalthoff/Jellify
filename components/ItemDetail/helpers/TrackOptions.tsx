@@ -25,7 +25,7 @@ export default function TrackOptions({
     const { width } = useSafeAreaFrame();
     
     return (
-        <YStack width={width / 1.5}>
+        <YStack width={width}>
 
             <XStack alignContent="flex-end" justifyContent="space-evenly">
                 { isSuccess ? (
