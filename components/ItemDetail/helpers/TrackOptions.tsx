@@ -135,8 +135,9 @@ export default function TrackOptions({
                                             playlist
                                         })
                                     }}>
-                                        <XStack>
+                                        <XStack alignItems="center">
                                             <BlurhashedImage
+                                                cornered
                                                 item={playlist}
                                                 width={width / 6}
                                             />

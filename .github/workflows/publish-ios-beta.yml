@@ -17,7 +17,7 @@ jobs:
           node-version: 20
 
       - name: Echo package.json version to Github ENV
-        run: echo VERISON_NUMBER=$(npm version minor --tag-version-prefix="" --no-commit-hooks) >> $GITHUB_ENV
+        run: echo VERSION_NUMBER=$(npm version minor --tag-version-prefix="" --no-commit-hooks) >> $GITHUB_ENV
 
       - run: npm run init
 
@@ -44,5 +44,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          title: "Jellify - ${{ env.VERISON_NUMBER }}"
-          tag: ${{ env.VERISON_NUMBER }} 
+          title: "Jellify - ${{ env.VERSION_NUMBER }}"
+          tag: ${{ env.VERSION_NUMBER }} 

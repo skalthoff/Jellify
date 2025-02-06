@@ -40,7 +40,7 @@ platform :ios do
     )
 
     increment_version_number(
-      version_number: ENV['VERISON_NUMBER'],
+      version_number: ENV['VERSION_NUMBER'],
       xcodeproj: "Jellify.xcodeproj"
     )
 
