@@ -49,13 +49,6 @@ export default function Playlist({
         isSuccess
     ])
 
-    useEffect(() => {
-        if (!editing)
-            refetch();
-    }, [
-        editing
-    ])
-
     return (
         <DraggableFlatList
             contentInsetAdjustmentBehavior="automatic"
