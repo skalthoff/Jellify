@@ -41,7 +41,6 @@ jobs:
         with:
           commit_message: "[skip actions]"
           file_pattern: "ios/Jellify.xcodeproj/project.pbxproj"
-          tagging_message: ${{ env.VERSION_NUMBER }}
           
       - name: 🎉 Create Github release 
         uses: ncipollo/release-action@v1
