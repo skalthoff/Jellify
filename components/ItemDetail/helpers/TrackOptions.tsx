@@ -28,7 +28,7 @@ export default function TrackOptions({
         <YStack width={width}>
 
             <XStack 
-                alignContent="flex-end" 
+                alignItems="stretch" 
                 justifyContent="space-between"
             >
                 { isSuccess ? (
