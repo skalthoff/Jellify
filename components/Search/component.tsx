@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
 import Input from "../Global/helpers/input";
-import { debounce } from "lodash";
 import Item from "../Global/components/item";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
@@ -8,6 +7,7 @@ import { QueryKeys } from "../../enums/query-keys";
 import { fetchSearchResults } from "../../api/queries/functions/search";
 import { useQuery } from "@tanstack/react-query";
 import { FlatList, useColorScheme } from "react-native";
+import { Text } from "../Global/helpers/text";
 
 export default function Search({ 
     navigation
@@ -42,13 +42,15 @@ export default function Search({
         <FlatList
             contentInsetAdjustmentBehavior="automatic"
             progressViewOffset={10}
-            indicatorStyle={isDarkMode ? 'white' : 'default'}
             ListHeaderComponent={(
                 <Input
                     placeholder="Seek and ye shall find..."
                     onChangeText={(value) => handleSearchStringUpdate(value)}
                     value={searchString}
                 />
+            )}
+            ListEmptyComponent={(
+                <Text>No results found</Text>
             )}
             data={items}
             refreshing={isFetching}

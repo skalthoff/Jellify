@@ -8,6 +8,8 @@ import { useUserData } from "../../../api/queries/favorites";
 import { getTokens, Spinner } from "tamagui";
 import Client from "../../../api/client";
 import { usePlayerContext } from "../../..//player/provider";
+import { queryClient } from "../../../constants/query-client";
+import { QueryKeys } from "@/enums/query-keys";
 
 interface SetFavoriteMutation {
     item: BaseItemDto,
@@ -37,6 +39,22 @@ export default function FavoriteButton({
         onSuccess: () => {
             setIsFavorite(true);
             onToggle ? onToggle() : {};
+
+            // Force refresh of track user data
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.UserData, item.Id],
+                exact: true
+            });
+
+            if (item.Type === 'Audio') {
+                queryClient.invalidateQueries({
+                    queryKey: [QueryKeys.AlbumTracks]
+                });
+
+                queryClient.invalidateQueries({
+                    queryKey: [QueryKeys.Playlist]
+                });
+            }
         }
     })
     

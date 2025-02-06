@@ -3,22 +3,32 @@ import { useItem } from "../../../api/queries/item";
 import { StackParamList } from "../../../components/types";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Spacer, XStack, YStack } from "tamagui";
+import { Spacer, Spinner, XStack, YGroup, YStack } from "tamagui";
 import { QueuingType } from "../../../enums/queuing-type";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import IconButton from "../../../components/Global/helpers/icon-button";
+import { Text } from "../../../components/Global/helpers/text";
+import { useUserPlaylists } from "../../../api/queries/playlist";
+
+interface TrackOptionsProps {
+    item: BaseItemDto;
+    navigation: NativeStackNavigationProp<StackParamList>;
+    
+    /**
+     * Whether this is nested in the player modal
+     */
+    isNested: boolean | undefined;
+}
 
 export default function TrackOptions({ 
     item, 
     navigation,
     isNested
-} : { 
-    item: BaseItemDto, 
-    navigation: NativeStackNavigationProp<StackParamList>,
-    isNested: boolean | undefined// Whether this is nested in the player modal
-}) : React.JSX.Element {
+} : TrackOptionsProps) : React.JSX.Element {
 
-    const { data: album, isSuccess } = useItem(item.AlbumId ?? "");
+    const { data: album, isSuccess: albumFetchSuccess } = useItem(item.AlbumId ?? "");
+
+    const { data: playlists, isPending : playlistsFetchPending, isSuccess: playlistsFetchSuccess } = useUserPlaylists();
 
     const { useAddToQueue } = usePlayerContext();
 
@@ -28,7 +38,7 @@ export default function TrackOptions({
         <YStack width={width}>
 
             <XStack justifyContent="space-evenly">
-                { isSuccess ? (
+                { albumFetchSuccess ? (
                     <IconButton 
                         name="music-box"
                         title="Go to Album"
@@ -73,6 +83,15 @@ export default function TrackOptions({
                     size={width / 5}
                 />
             </XStack>
+
+            { playlistsFetchPending && (
+                <Spinner />
+            )}
+            <Text bold>Add to Playlist</Text>
+
+            <YGroup>
+                { playlists?.map}
+            </YGroup>
         </YStack>
     )
 }
