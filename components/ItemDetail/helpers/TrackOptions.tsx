@@ -13,7 +13,7 @@ import React from "react";
 import BlurhashedImage from "../../../components/Global/components/blurhashed-image";
 import { useMutation } from "@tanstack/react-query";
 import { AddToPlaylistMutation } from "../types";
-import { addToPlaylist } from "@/api/mutations/functions/playlists";
+import { addToPlaylist } from "../../../api/mutations/functions/playlists";
 import { trigger } from "react-native-haptic-feedback";
 import { queryClient } from "../../../constants/query-client";
 import { QueryKeys } from "../../../enums/query-keys";
