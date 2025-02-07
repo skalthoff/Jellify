@@ -1,0 +1,100 @@
+import { 
+    H1 as TamaguiH1, 
+    H2 as TamaguiH2, 
+    H3 as TamaguiH3,
+    H4 as TamaguiH4,
+    H5 as TamaguiH5, 
+    Label as TamaguiLabel, 
+    SizeTokens, 
+    Paragraph, 
+    TextProps as TamaguiTextProps 
+} from "tamagui"
+
+interface LabelProps {
+    htmlFor: string,
+    children: string,
+    size: SizeTokens
+}
+
+export function Label(props: LabelProps): React.JSX.Element {
+    return (
+        <TamaguiLabel htmlFor={props.htmlFor} justifyContent="flex-end">{ props.children }</TamaguiLabel>
+    )
+}
+
+export function H1({ children }: { children: string }): React.JSX.Element {
+    return (
+        <TamaguiH1 
+            fontWeight={900}
+            marginBottom={10}
+        >
+            { children }
+        </TamaguiH1>
+    )
+}
+
+export function H2(props: TamaguiTextProps): React.JSX.Element {
+    return (
+        <TamaguiH2 
+            fontWeight={900}
+            marginVertical={7} 
+            {...props}
+        >
+            { props.children }
+        </TamaguiH2>
+    )
+}
+
+export function H3(props: TamaguiTextProps): React.JSX.Element {
+    return (
+        <TamaguiH3
+            fontWeight={800}
+            marginVertical={5}
+            {...props}
+        >
+            { props.children }
+        </TamaguiH3>
+    )
+}
+
+export function H4(props: TamaguiTextProps): React.JSX.Element {
+    return (
+        <TamaguiH4 
+            fontWeight={800}
+            marginVertical={3}
+            {...props}
+        >
+            { props.children }
+        </TamaguiH4>
+    )
+}
+
+export function H5({ children }: { children: string }): React.JSX.Element {
+    return (
+        <TamaguiH5 
+            fontWeight={800}
+            marginVertical={2}
+        >
+            { children }
+        </TamaguiH5>
+    )
+}
+
+interface TextProps extends TamaguiTextProps {
+    bold?: boolean | undefined
+    children: string;
+}
+
+export function Text(props: TextProps): React.JSX.Element {
+    return (
+        <Paragraph 
+            fontWeight={props.bold ? 800 : 600} 
+            fontSize="$4"
+            lineBreakMode="clip"
+            userSelect="none"
+            {...props}
+        >
+            { props.children }
+        </Paragraph>
+    )
+}
