@@ -53,7 +53,8 @@ platform :ios do
     )
     # http://docs.fastlane.tools/actions/upload_to_testflight/#upload_to_testflight
     upload_to_testflight(
-      api_key_path: "fastlane/appstore_connect_api_key.json"
+      api_key_path: "fastlane/appstore_connect_api_key.json",
+      expire_previous_builds: true
     )
   end
 end
