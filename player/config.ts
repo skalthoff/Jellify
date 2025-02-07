@@ -1,1 +1,0 @@
-export const UPDATE_INTERVAL: number = 250 // We need to do better rounding in the player scrubber before lowering this value for silky smoothness
