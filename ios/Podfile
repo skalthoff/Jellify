@@ -5,7 +5,7 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
-print(ENV['RCT_NEW_ARCH_ENABLED']);
+puts "RCT_NEW_ARCH_ENABLED = " + ENV['RCT_NEW_ARCH_ENABLED'];
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
