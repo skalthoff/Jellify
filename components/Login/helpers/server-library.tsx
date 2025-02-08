@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner, ToggleGroup } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { H1, Label, Text } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
 import _ from "lodash";
-import { useMusicLibraries, usePlaylistLibrary } from "../../../api/queries/libraries";
+import { useUserViews } from "../../../api/queries/libraries";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
 import { useJellifyContext } from "../../../components/provider";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 export default function ServerLibrary(): React.JSX.Element {
 
@@ -16,9 +17,17 @@ export default function ServerLibrary(): React.JSX.Element {
     const { setLoggedIn } = useJellifyContext();
 
     const [libraryId, setLibraryId] = useState<string | undefined>(undefined);
+    const [playlistLibrary, setPlaylistLibrary] = useState<BaseItemDto | undefined>(undefined);
 
-    const { data : libraries, isError, isPending, refetch: refetchMusicLibraries } = useMusicLibraries();
-    const { data : playlistLibrary, refetch: refetchPlaylistLibrary } = usePlaylistLibrary();
+    const { data : libraries, isError, isPending, isSuccess, refetch } = useUserViews();
+
+    useEffect(() => {
+        if (!isPending && isSuccess)
+            setPlaylistLibrary(libraries.filter(library => library.CollectionType === 'playlists')[0])
+    }, [
+        isPending,
+        isSuccess
+    ])
 
     return (
         <SafeAreaView>

@@ -39,4 +39,5 @@ export enum QueryKeys {
     Search = "Search",
     SearchSuggestions = "SearchSuggestions",
     FavoritePlaylists = "FavoritePlaylists",
+    UserViews = "UserViews",
 }
