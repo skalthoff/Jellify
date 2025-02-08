@@ -3,12 +3,15 @@
 
 [![publish-ios-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-ios-beta.yml/badge.svg)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-ios-beta.yml)
 
-jellify (verb) - to make gelatinous
+> **jellify** (verb) - *to make gelatinous* <br>
+[see also](https://www.merriam-webster.com/dictionary/jellify)
 
-*Jellify* is a music player for [Jellyfin](https://jellyfin.org/) built with [React Native](https://reactnative.dev/). It has a  UX meant to feel familiar if you’ve used other music streaming apps.
+*Jellify* is a music player for [Jellyfin](https://jellyfin.org/) built with [React Native](https://reactnative.dev/). *Jellify* provides a user experience that feels familar to other popular music apps and a has featureset to match
+
+> *Jellify* requires a connection to a [Jellyfin](https://jellyfin.org/) server to work.
 
 ### 🤓 Background
-I was after a music app for Jellyfin that showcased my music with artwork and had the ability to algorithmically curate music (not that you have to use *Jellify* that way). I also wanted to create a music app that could handle my extremely large music libraries (i.e., 100K+ songs) and not get bogged down. The end goal was to build a music streaming app that worked like the big guys, all while being FOSS and powered by self hosting.
+I was after a music app for Jellyfin that showcased my music with artwork, had a user interface congruent with what the big guys do, and had the ability to algorithmically curate music (not that you have to use *Jellify* that way). I also wanted to create a music app that could handle my extremely large music libraries (i.e., 100K+ songs) and not get bogged down. 
 
 This app was designed with me and my dad in mind, since I wanted to give him a sleek, one stop shop for live recordings of bands he likes (read: the Grateful Dead). The UI was designed so that he'd find it instantly familiar and useful. CarPlay / Android Auto support was also a must for us, as we both use CarPlay religiously. 
 
@@ -18,19 +21,20 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 ### ✨ Current
 - Available via Private Testflight
 - iOS support
-- Carefully crafted Light and Dark modes
+- Light and Dark modes
 - Home screen access to previously played tracks, artists, and your playlists
-- [Last.FM Plugin](https://github.com/jesseward/jellyfin-plugin-lastfm) support
+- Jellyfin playback reporting and [Last.FM Plugin](https://github.com/jesseward/jellyfin-plugin-lastfm) support
 - Library of Favorited Music, not too dissimilar to how streaming services handle your 'library'
 - Full playlist support, including creating, updating, and reordering
 
 ### 🛠 Roadmap
 - [Android Support](https://github.com/anultravioletaurora/Jellify/issues/54)
 - Quick access to similar artists and items for discovering music in your library
-- Support for Jellyfin mixes
-- CarPlay / Android Auto Support
+- [Support for Jellyfin Instant Mixes](https://github.com/anultravioletaurora/Jellify/issues/50)
+- [CarPlay / Android Auto Support](https://github.com/anultravioletaurora/Jellify/issues/5)
 - Public Testflight
-- Offline Playback
+- [Offline Playback](https://github.com/anultravioletaurora/Jellify/issues/10)
+- Shared, Public, and Collaborative Playlists
 - Web / Desktop support
 
 ## 👀 Lemme see!
@@ -70,6 +74,8 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 This is undoubtedly a passion project of [mine](https://github.com/anultravioletaurora), and I've learned a lot from working on it (and the many failed attempts before it). I hope you enjoy using it! Feature requests and bug reports are welcome :)
 
 ## 🙏 Special Thanks To
-- The [Jellyfin Team](https://jellyfin.org/) for their amazing server software
+- The [Jellyfin Team](https://jellyfin.org/) for their amazing server software, SDKs, and documentation
+- All contributors of [Finamp](https://github.com/jmshrv/finamp). *Jellify* draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin
+- The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
 - Tony, Trevor, [Laine](https://github.com/lainie-ftw) and [Jordan](https://github.com/jordanbleu) for their testing and feedback from the early stages of development
 - Alyssa, for your artistic abilities and the artwork you made for *Jellify*. It gave it the flair it undoubtedly needed
