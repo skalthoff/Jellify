@@ -1,5 +1,6 @@
 import Client from "../../client";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { getUserViewsApi } from "@jellyfin/sdk/lib/utils/api";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { isUndefined } from "lodash";
 
@@ -51,4 +52,25 @@ export function fetchPlaylistLibrary(): Promise<BaseItemDto> {
         
         return resolve(playlistLibrary);
     })
+}
+
+export function fetchUserViews() : Promise<BaseItemDto[]> {
+    return new Promise(async (resolve, reject) => {
+        console.debug("Fetching user views")
+
+        getUserViewsApi(Client.api!)
+            .getUserViews({
+                userId: Client.user!.id
+            })
+            .then((response) => {
+                if (response.data.Items)
+                    resolve(response.data.Items.filter(library => library.CollectionType === 'music'))
+
+                else
+                    resolve([])
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    });
 }
