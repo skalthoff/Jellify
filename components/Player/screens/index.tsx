@@ -81,7 +81,7 @@ export default function PlayerScreen({
                             alignContent="flex-end"
                             flex={2}
                             justifyContent="center"
-                            marginLeft={"$1"}
+                            marginLeft={"$2"}
                         >
                             <Icon
                                 name="chevron-down"
