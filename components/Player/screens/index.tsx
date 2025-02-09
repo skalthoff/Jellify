@@ -14,6 +14,7 @@ import BlurhashedImage from "../../Global/components/blurhashed-image";
 import TextTicker from "react-native-text-ticker";
 import { ProgressMultiplier, TextTickerConfig } from "../component.config";
 import { toUpper } from "lodash";
+import { trigger } from "react-native-haptic-feedback";
 
 export default function PlayerScreen({ 
     navigation 
@@ -52,6 +53,8 @@ export default function PlayerScreen({
         navigation.setOptions({ 
             gestureEnabled: !seeking 
         });
+
+        trigger("impactLight");
     }, [
         seeking
     ]);
@@ -214,6 +217,9 @@ export default function PlayerScreen({
                                         onPressOut: () => {
                                             setSeeking(false);
                                             useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
+                                        },
+                                        onPressIn: () => {
+                                            setSeeking(true);
                                         },
                                         onSlideStart: () => {
                                             setSeeking(true);
