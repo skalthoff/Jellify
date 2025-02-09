@@ -13,7 +13,6 @@ import FavoriteButton from "../../Global/components/favorite-button";
 import BlurhashedImage from "../../Global/components/blurhashed-image";
 import TextTicker from "react-native-text-ticker";
 import { ProgressMultiplier, TextTickerConfig } from "../component.config";
-import IconButton from "../../../components/Global/helpers/icon-button";
 import { toUpper } from "lodash";
 
 export default function PlayerScreen({ 
@@ -65,8 +64,6 @@ export default function PlayerScreen({
                     progress.position * ProgressMultiplier
                 )
             ) : 0;
-
-        console.debug(progressState);
     }, [
         progress
     ]);
