@@ -12,11 +12,13 @@ import Icon from "../../../components/Global/helpers/icon";
 import FavoriteButton from "../../Global/components/favorite-button";
 import BlurhashedImage from "../../Global/components/blurhashed-image";
 import TextTicker from "react-native-text-ticker";
-import { TextTickerConfig } from "../component.config";
+import { ProgressMultiplier, TextTickerConfig } from "../component.config";
 import IconButton from "../../../components/Global/helpers/icon-button";
 import { toUpper } from "lodash";
 
 export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
+
+
 
     const { 
         useTogglePlayback, 
@@ -31,21 +33,30 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
     } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
-    const [progressState, setProgressState] = useState<number>(progress?.position ?? 0);
+
+    /**
+     * TrackPlayer.getProgress() returns a high sig-fig number. We're going to apply
+     * a multiplier so that the scrubber bar can take advantage of those extra numbers
+     */
+    const [progressState, setProgressState] = useState<number>(
+        progress && progress.position 
+        ? Math.ceil(progress.position * ProgressMultiplier)
+        : 0
+    );
 
     const { width } = useSafeAreaFrame();
 
     // Prevent gesture event to close player if we're seeking
-    useEffect(() => {
-        navigation.getParent()!.setOptions({ gestureEnabled: !seeking });
-    }, [
-        navigation,
-        seeking
-    ])
+    navigation.setOptions({ gestureEnabled: !seeking });
 
     useEffect(() => {
         if (!seeking)
-            setProgressState(Math.round(progress?.position ?? 0))
+            progress && progress.position
+            ? setProgressState(
+                Math.ceil(
+                    progress.position * ProgressMultiplier
+                )
+            ) : 0;
     }, [
         progress
     ]);
@@ -167,7 +178,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 // If user swipes off of the slider we should seek to the spot
                                 onPressOut: () => {
                                     setSeeking(false);
-                                    useSeekTo.mutate(progressState);
+                                    useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
                                 },
                                 onSlideStart: () => {
                                     setSeeking(true);
@@ -178,16 +189,15 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 },
                                 onSlideEnd: (event, value) => {
                                     setSeeking(false);
-                                    useSeekTo.mutate(value);
+                                    useSeekTo.mutate(Math.round(value / ProgressMultiplier));
                                 }
                             }}
-                            />
-
+                        />
                     </XStack>
 
                     <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$3"}>
                         <XStack flex={1} justifyContent="flex-start">
-                            <RunTimeSeconds>{progressState}</RunTimeSeconds>
+                            <RunTimeSeconds>{Math.floor(progressState / ProgressMultiplier)}</RunTimeSeconds>
                         </XStack>
 
                         <XStack flex={1} justifyContent="space-between">
@@ -201,7 +211,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         </XStack>
 
                         <XStack flex={1} justifyContent="flex-end">
-                            <RunTimeSeconds>{progress?.duration ?? 0}</RunTimeSeconds>
+                            <RunTimeSeconds>
+                                {
+                                    progress && progress.duration
+                                    ? Math.ceil(progress.duration) 
+                                    : 0
+                                }
+                            </RunTimeSeconds>
                         </XStack>
                     </XStack>
 
