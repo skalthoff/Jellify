@@ -48,18 +48,6 @@ export default function PlayerScreen({
 
     const { width } = useSafeAreaFrame();
 
-    // Prevent gesture event to close player if we're seeking
-    useEffect(() => {
-        navigation.setOptions({ 
-            gestureEnabled: !seeking,
-            fullScreenGestureEnabled: !seeking 
-        });
-
-        trigger("impactLight");
-    }, [
-        seeking
-    ]);
-
     useEffect(() => {
         if (!seeking)
             progress && progress.position
@@ -217,17 +205,36 @@ export default function PlayerScreen({
                                         // If user swipes off of the slider we should seek to the spot
                                         onPressOut: () => {
                                             setSeeking(false);
+
+                                            navigation.setOptions({
+                                                gestureEnabled: true
+                                            });
+
                                             useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
                                         },
                                         onSlideStart: () => {
                                             setSeeking(true);
+
+                                            navigation.setOptions({
+                                                gestureEnabled: false
+                                            });
                                         },
                                         onSlideMove: (event, value) => {
                                             setSeeking(true);
+
+                                            navigation.setOptions({
+                                                gestureEnabled: false
+                                            });
+
                                             setProgressState(value);
                                         },
                                         onSlideEnd: (event, value) => {
                                             setSeeking(false);
+
+                                            navigation.setOptions({
+                                                gestureEnabled: true
+                                            });
+                                            
                                             useSeekTo.mutate(Math.round(value / ProgressMultiplier));
                                         }
                                     }}
