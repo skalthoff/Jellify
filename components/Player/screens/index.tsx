@@ -154,7 +154,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progressState}
-                            max={progress?.duration ?? 1}
+                            max={progress && progress.duration > 0 ? progress.duration : 1}
                             width={width / 1.1}
                             props={{
                                 // If user swipes off of the slider we should seek to the spot
