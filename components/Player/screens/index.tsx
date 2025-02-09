@@ -79,7 +79,7 @@ export default function PlayerScreen({
 
                         <YStack 
                             alignContent="flex-end"
-                            flex={1}
+                            flex={2}
                             justifyContent="center"
                             marginLeft={"$1"}
                         >
@@ -103,7 +103,7 @@ export default function PlayerScreen({
                             </TextTicker>
                         </YStack>
 
-                        <Spacer flex={1} />
+                        <Spacer flex={2} />
                     </XStack>
 
                     <XStack 
