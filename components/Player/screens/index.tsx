@@ -214,13 +214,10 @@ export default function PlayerScreen({
                                     width={width / 1.1}
                                     props={{
                                         // If user swipes off of the slider we should seek to the spot
-                                        onPressOut: () => {
-                                            setSeeking(false);
-                                            useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
-                                        },
-                                        onPressIn: () => {
-                                            setSeeking(true);
-                                        },
+                                        // onPressOut: () => {
+                                        //     setSeeking(false);
+                                        //     useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
+                                        // },
                                         onSlideStart: () => {
                                             setSeeking(true);
                                         },
