@@ -168,7 +168,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center" marginTop={"$5"}>
+                    <XStack justifyContent="center" marginTop={"$3"}>
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progressState}
@@ -180,10 +180,10 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                             width={width / 1.1}
                             props={{
                                 // If user swipes off of the slider we should seek to the spot
-                                onPressOut: () => {
-                                    setSeeking(false);
-                                    useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
-                                },
+                                // onPressOut: () => {
+                                //     setSeeking(false);
+                                //     useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
+                                // },
                                 onSlideStart: () => {
                                     setSeeking(true);
                                 },
