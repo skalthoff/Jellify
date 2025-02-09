@@ -80,7 +80,7 @@ export default function PlayerScreen({
                         <YStack 
                             alignContent="center"
                             flex={1}
-                            justifyContent="flex-end"
+                            justifyContent="center"
                             marginLeft={"$1"}
                         >
                             <Icon
