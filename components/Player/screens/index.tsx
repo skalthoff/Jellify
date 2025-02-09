@@ -3,7 +3,7 @@ import { RunTimeSeconds } from "../../../components/Global/helpers/time-codes";
 import { StackParamList } from "../../../components/types";
 import { usePlayerContext } from "../../../player/provider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { YStack, XStack, Spacer, getTokens } from "tamagui";
 import PlayPauseButton from "../helpers/buttons";
@@ -81,48 +81,55 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     </XStack>
 
                     <XStack marginHorizontal={20} paddingVertical={5}>
-                        <YStack justifyContent="flex-start" flex={4}>
-                            <TextTicker {...TextTickerConfig}>
-                                <Text 
-                                    bold 
-                                    fontSize={"$6"}
-                                    >
-                                    {nowPlaying!.title ?? "Untitled Track"}
-                                </Text>
-                            </TextTicker>
 
-                            <TextTicker {...TextTickerConfig}>
-                                <Text 
-                                    fontSize={"$6"}
-                                    color={getTokens().color.telemagenta}
-                                    onPress={() => {
-                                        if (nowPlaying!.item.ArtistItems) {
-                                            navigation.goBack(); // Dismiss player modal
-                                            navigation.navigate('Tabs', {
-                                                screen: 'Home', 
-                                                params: {
-                                                    screen: 'Artist',
-                                                    params: {
-                                                        artist: nowPlaying!.item.ArtistItems![0],
-                                                    }
+                        {/** Memoize TextTickers otherwise they won't animate due to the progress being updated in the PlayerContext */}
+                        { useMemo(() => {
+                            return (
+                                <YStack justifyContent="flex-start" flex={5}>
+                                    <TextTicker {...TextTickerConfig}>
+                                        <Text 
+                                            bold 
+                                            fontSize={"$6"}
+                                            >
+                                            {nowPlaying!.title ?? "Untitled Track"}
+                                        </Text>
+                                    </TextTicker>
+
+                                    <TextTicker {...TextTickerConfig}>
+                                        <Text 
+                                            fontSize={"$6"}
+                                            color={getTokens().color.telemagenta}
+                                            onPress={() => {
+                                                if (nowPlaying!.item.ArtistItems) {
+                                                    navigation.goBack(); // Dismiss player modal
+                                                    navigation.navigate('Tabs', {
+                                                        screen: 'Home', 
+                                                        params: {
+                                                            screen: 'Artist',
+                                                            params: {
+                                                                artist: nowPlaying!.item.ArtistItems![0],
+                                                            }
+                                                        }
+                                                    });
                                                 }
-                                            });
-                                        }
-                                    }}
-                                    >
-                                    {nowPlaying.artist ?? "Unknown Artist"}
-                                </Text>
-                            </TextTicker>
+                                            }}
+                                            >
+                                            {nowPlaying.artist ?? "Unknown Artist"}
+                                        </Text>
+                                    </TextTicker>
 
-                            <TextTicker {...TextTickerConfig}>
-                                <Text 
-                                    fontSize={"$6"} 
-                                    color={"$borderColor"}
-                                    >
-                                    { nowPlaying!.album ?? "" }
-                                </Text>
-                            </TextTicker>
-                        </YStack>
+                                    <TextTicker {...TextTickerConfig}>
+                                        <Text 
+                                            fontSize={"$6"} 
+                                            color={"$borderColor"}
+                                            >
+                                            { nowPlaying!.album ?? "" }
+                                        </Text>
+                                    </TextTicker>
+                                </YStack>
+                        )}, [
+                            nowPlaying
+                        ])}
 
                         <XStack 
                             justifyContent="flex-end" 
