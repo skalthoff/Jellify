@@ -76,15 +76,31 @@ export default function PlayerScreen({
             <>
                 <YStack>
 
-                    <YStack 
-                        alignItems="center"
-                        alignContent="center"
-                    >
-                        <Text>Playing from</Text>
-                        <TextTicker {...TextTickerConfig}>
-                            <Text bold>{ queueName ?? "Queue"}</Text>
-                        </TextTicker>
-                    </YStack>
+                    <XStack>
+
+                        <YStack flex={1} justifyContent="center">
+                            <Icon
+                                name="chevron-down"
+                                onPress={() => {
+                                    navigation.goBack();
+                                }}
+                                small
+                            />
+                        </YStack>
+
+                        <YStack 
+                            alignItems="center"
+                            alignContent="center"
+                            flex={4}
+                        >
+                            <Text>Playing from</Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text bold>{ queueName ?? "Queue"}</Text>
+                            </TextTicker>
+                        </YStack>
+
+                        <Spacer flex={1} />
+                    </XStack>
 
                     <XStack 
                         justifyContent="center"
@@ -177,7 +193,7 @@ export default function PlayerScreen({
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center" marginTop={"$3"}>
+                    <XStack justifyContent="center" marginTop={"$2"}>
                         {/* playback progress goes here */}
                         <HorizontalSlider 
                             value={progressState}
@@ -208,7 +224,7 @@ export default function PlayerScreen({
                         />
                     </XStack>
 
-                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$3"}>
+                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$2"}>
                         <XStack flex={1} justifyContent="flex-start">
                             <RunTimeSeconds>{Math.floor(progressState / ProgressMultiplier)}</RunTimeSeconds>
                         </XStack>
@@ -289,17 +305,6 @@ export default function PlayerScreen({
                         />
 
                         <Spacer />
-
-                        <Icon
-                            name="arrow-down-drop-circle"
-                            onPress={() => {
-                                navigation.goBack();
-                            }}
-                            large
-                        />
-
-                        <Spacer />
-
 
                         <Icon
                             name="playlist-music"
