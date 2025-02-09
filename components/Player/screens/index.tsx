@@ -81,7 +81,7 @@ export default function PlayerScreen({
                         <YStack 
                             alignContent="flex-start"
                             flex={1}
-                            justify="flex-end"
+                            justifyContent="flex-end"
                         >
                             <Icon
                                 name="chevron-down"
