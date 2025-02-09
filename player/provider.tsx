@@ -316,6 +316,14 @@ const PlayerContextInitializer = () => {
       ])
     //#endregion RNTP Setup
 
+    //#region useEffects
+    useEffect(() => {
+        storage.set(MMKVStorageKeys.PlayQueue, JSON.stringify(queue))
+    }, [
+        queue
+    ])
+    //#endregion useEffects
+
     //#region return
     return {
         showPlayer,
