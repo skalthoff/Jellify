@@ -36,24 +36,30 @@ export default function ServerLibrary(): React.JSX.Element {
             { isPending ? (
                 <Spinner size="large" />
             ) : (
-                <>
-                    {/* @ts-ignore */}
-                    <ToggleGroup
-                        orientation="vertical"
-                        type="single"
-                        disableDeactivation={true}
-                        value={libraryId}
-                        onValueChange={setLibraryId}
-                        >
-                        { libraries!.map((library) => {
-                            return (
-                                <ToggleGroup.Item value={library.Id!} aria-label={library.Name!}>
-                                    <Label htmlFor={library.Id!} size="$2">{library.Name!}</Label>
-                                </ToggleGroup.Item>
-                            )
-                        })}
-                    </ToggleGroup>
-                </>
+                <ToggleGroup
+                    orientation="vertical"
+                    type="single"
+                    disableDeactivation={true}
+                    value={libraryId}
+                    onValueChange={setLibraryId}
+                    >
+                    { libraries!.map((library) => {
+                        return (
+                            <ToggleGroup.Item 
+                                key={library.Id}
+                                value={library.Id!} 
+                                aria-label={library.Name!}
+                            >
+                                <Label
+                                    htmlFor={library.Id!} 
+                                    size="$2"
+                                >
+                                    {library.Name ?? "Unnamed Library"}
+                                </Label>
+                            </ToggleGroup.Item>
+                        )
+                    })}
+                </ToggleGroup>
             )}
 
             { isError && (
