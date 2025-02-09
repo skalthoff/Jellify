@@ -97,8 +97,14 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                     color={getTokens().color.telemagenta}
                                     onPress={() => {
                                         if (nowPlaying!.item.ArtistItems) {
-                                            navigation.navigate("Artist", {
-                                                artist: nowPlaying!.item.ArtistItems![0],
+                                            navigation.navigate('Tabs', {
+                                                screen: 'Home', 
+                                                params: {
+                                                    screen: 'Artist',
+                                                    params: {
+                                                        artist: nowPlaying!.item.ArtistItems![0],
+                                                    }
+                                                }
                                             });
                                         }
                                     }}

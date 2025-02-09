@@ -21,7 +21,7 @@ export default function Navigation(): React.JSX.Element {
             component={Player} 
             options={{
                headerShown: false,
-               presentation: 'fullScreenModal'
+               presentation: 'modal'
             }}
           />
     </RootStack.Navigator>
