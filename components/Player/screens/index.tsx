@@ -16,9 +16,11 @@ import { ProgressMultiplier, TextTickerConfig } from "../component.config";
 import IconButton from "../../../components/Global/helpers/icon-button";
 import { toUpper } from "lodash";
 
-export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
-
-
+export default function PlayerScreen({ 
+    navigation 
+} : { 
+    navigation: NativeStackNavigationProp<StackParamList>
+}) : React.JSX.Element {
 
     const { 
         useTogglePlayback, 
@@ -47,7 +49,14 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
     const { width } = useSafeAreaFrame();
 
     // Prevent gesture event to close player if we're seeking
-    navigation.setOptions({ gestureEnabled: !seeking });
+    useEffect(() => {
+        navigation.setOptions({ 
+            gestureEnabled: !seeking 
+        });
+    }, [
+        navigation,
+        seeking
+    ]);
 
     useEffect(() => {
         if (!seeking)
