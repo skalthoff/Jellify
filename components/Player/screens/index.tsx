@@ -196,7 +196,7 @@ export default function PlayerScreen({
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center" marginTop={"$2"}>
+                    <XStack justifyContent="center" marginTop={"$3"}>
                         {/* playback progress goes here */}
                         { useMemo(() => {
 
@@ -235,7 +235,7 @@ export default function PlayerScreen({
                         )}
                     </XStack>
 
-                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$2"}>
+                    <XStack marginHorizontal={20} marginTop={"$3"} marginBottom={"$2"}>
                         <XStack flex={1} justifyContent="flex-start">
                             <RunTimeSeconds>{Math.floor(progressState / ProgressMultiplier)}</RunTimeSeconds>
                         </XStack>
