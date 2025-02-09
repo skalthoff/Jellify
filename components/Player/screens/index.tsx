@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { YStack, XStack, Spacer, getTokens } from "tamagui";
 import PlayPauseButton from "../helpers/buttons";
-import { H5, Text } from "../../../components/Global/helpers/text";
+import { Text } from "../../../components/Global/helpers/text";
 import Icon from "../../../components/Global/helpers/icon";
 import FavoriteButton from "../../Global/components/favorite-button";
 import BlurhashedImage from "../../Global/components/blurhashed-image";
@@ -54,7 +54,6 @@ export default function PlayerScreen({
             gestureEnabled: !seeking 
         });
     }, [
-        navigation,
         seeking
     ]);
 
@@ -81,7 +80,7 @@ export default function PlayerScreen({
                         <YStack 
                             alignContent="center"
                             flex={1}
-                            justifyContent="center"
+                            justifyContent="flex-end"
                             marginLeft={"$1"}
                         >
                             <Icon
@@ -214,15 +213,15 @@ export default function PlayerScreen({
                                     width={width / 1.1}
                                     props={{
                                         // If user swipes off of the slider we should seek to the spot
-                                        // onPressOut: () => {
-                                            //     setSeeking(false);
-                                            //     useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
-                                            // },
-                                            onSlideStart: () => {
-                                                setSeeking(true);
-                                            },
-                                            onSlideMove: (event, value) => {
-                                                setSeeking(true);
+                                        onPressOut: () => {
+                                            setSeeking(false);
+                                            useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
+                                        },
+                                        onSlideStart: () => {
+                                            setSeeking(true);
+                                        },
+                                        onSlideMove: (event, value) => {
+                                            setSeeking(true);
                                             setProgressState(value);
                                         },
                                         onSlideEnd: (event, value) => {
