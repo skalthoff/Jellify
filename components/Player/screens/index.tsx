@@ -213,6 +213,7 @@ export default function PlayerScreen({
                                             useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
                                         },
                                         onSlideStart: () => {
+                                            trigger("impactLight");
                                             setSeeking(true);
 
                                             navigation.setOptions({
@@ -234,7 +235,7 @@ export default function PlayerScreen({
                                             navigation.setOptions({
                                                 gestureEnabled: true
                                             });
-                                            
+
                                             useSeekTo.mutate(Math.round(value / ProgressMultiplier));
                                         }
                                     }}
