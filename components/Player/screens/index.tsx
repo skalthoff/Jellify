@@ -233,7 +233,7 @@ export default function PlayerScreen({
                                     }}
                                 />
                             )}, [
-                                progress
+                                progressState
                             ]
                         )}
                     </XStack>

@@ -1,1 +1,1 @@
-export const UPDATE_INTERVAL: number = 100
+export const UPDATE_INTERVAL: number = 200
