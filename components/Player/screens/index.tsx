@@ -84,7 +84,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                         {/** Memoize TextTickers otherwise they won't animate due to the progress being updated in the PlayerContext */}
                         { useMemo(() => {
-                            <YStack justifyContent="flex-start" flex={5}>
+                            <YStack justifyContent="flex-start" flex={4}>
                             <TextTicker {...TextTickerConfig}>
                                 <Text 
                                     bold 
