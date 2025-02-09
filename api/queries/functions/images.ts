@@ -4,7 +4,7 @@ import _ from "lodash"
 import Client from "../../../api/client"
 import { Dirs, FileSystem } from 'react-native-file-access'
 
-export function fetchItemImage(itemId: string, imageType: ImageType = ImageType.Primary, width: number, height: number) {
+export function fetchItemImage(itemId: string, imageType: ImageType, width: number, height: number) {
     
     return new Promise<string>(async (resolve, reject) => {
 

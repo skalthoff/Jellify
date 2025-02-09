@@ -3,7 +3,7 @@ import { QueryKeys } from "../../enums/query-keys";
 import { fetchItemImage } from "./functions/images";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 
-export const useItemImage = (itemId: string, imageType?: ImageType, width: number = 150, height: number = 150) => useQuery({
+export const useItemImage = (itemId: string, imageType: ImageType = ImageType.Primary, width: number = 150, height: number = 150) => useQuery({
     queryKey: [
         QueryKeys.ItemImage, 
         itemId, 
