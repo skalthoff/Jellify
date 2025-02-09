@@ -43,22 +43,25 @@ export default function ServerLibrary(): React.JSX.Element {
                     value={libraryId}
                     onValueChange={setLibraryId}
                     >
-                    { libraries!.map((library) => {
-                        return (
-                            <ToggleGroup.Item 
-                                key={library.Id}
-                                value={library.Id!} 
-                                aria-label={library.Name!}
-                            >
-                                <Label
-                                    htmlFor={library.Id!} 
-                                    size="$2"
+                    { 
+                        libraries!.filter(library => library.CollectionType === 'music')
+                        .map((library) => {
+                            return (
+                                <ToggleGroup.Item 
+                                    key={library.Id}
+                                    value={library.Id!} 
+                                    aria-label={library.Name!}
                                 >
-                                    {library.Name ?? "Unnamed Library"}
-                                </Label>
-                            </ToggleGroup.Item>
-                        )
-                    })}
+                                    <Label
+                                        htmlFor={library.Id!} 
+                                        size="$2"
+                                    >
+                                        {library.Name ?? "Unnamed Library"}
+                                    </Label>
+                                </ToggleGroup.Item>
+                            )
+                        })
+                    }
                 </ToggleGroup>
             )}
 
