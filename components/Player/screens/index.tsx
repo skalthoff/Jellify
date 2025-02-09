@@ -78,7 +78,7 @@ export default function PlayerScreen({
 
                     <XStack>
 
-                        <YStack flex={1} justifyContent="flex-end">
+                        <YStack flex={1}>
                             <Icon
                                 name="chevron-down"
                                 onPress={() => {
