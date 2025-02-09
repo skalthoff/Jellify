@@ -65,6 +65,8 @@ export default function PlayerScreen({
                     progress.position * ProgressMultiplier
                 )
             ) : 0;
+
+        console.debug(progressState);
     }, [
         progress
     ]);
