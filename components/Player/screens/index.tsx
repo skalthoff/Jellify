@@ -50,7 +50,7 @@ export default function PlayerScreen({
 
     // Prevent gesture event to close player if we're seeking
     useEffect(() => {
-        navigation.getParent()!.getParent()!.setOptions({ 
+        navigation.getParent()!.setOptions({ 
             gestureEnabled: !seeking 
         });
 
