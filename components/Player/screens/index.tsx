@@ -75,13 +75,12 @@ export default function PlayerScreen({
             <>
                 <YStack>
 
-                    <XStack>
+                    <XStack marginHorizontal={"$3"}>
 
                         <YStack 
                             alignContent="flex-end"
-                            flex={2}
+                            flex={1}
                             justifyContent="center"
-                            marginLeft={"$2"}
                         >
                             <Icon
                                 name="chevron-down"
@@ -95,7 +94,7 @@ export default function PlayerScreen({
                         <YStack 
                             alignItems="center"
                             alignContent="center"
-                            flex={2}
+                            flex={3}
                         >
                             <Text>Playing from</Text>
                             <TextTicker {...TextTickerConfig}>
@@ -103,7 +102,7 @@ export default function PlayerScreen({
                             </TextTicker>
                         </YStack>
 
-                        <Spacer flex={2} />
+                        <Spacer flex={1} />
                     </XStack>
 
                     <XStack 
