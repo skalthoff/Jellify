@@ -3,7 +3,7 @@ import { RunTimeSeconds } from "../../../components/Global/helpers/time-codes";
 import { StackParamList } from "../../../components/types";
 import { usePlayerContext } from "../../../player/provider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { YStack, XStack, Spacer, getTokens } from "tamagui";
 import PlayPauseButton from "../helpers/buttons";
@@ -81,7 +81,10 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                     </XStack>
 
                     <XStack marginHorizontal={20} paddingVertical={5}>
-                        <YStack justifyContent="flex-start" flex={4}>
+
+                        {/** Memoize TextTickers otherwise they won't animate due to the progress being updated in the PlayerContext */}
+                        { useMemo(() => {
+                            <YStack justifyContent="flex-start" flex={5}>
                             <TextTicker {...TextTickerConfig}>
                                 <Text 
                                     bold 
@@ -123,6 +126,9 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                 </Text>
                             </TextTicker>
                         </YStack>
+                        }, [
+                            nowPlaying
+                        ])}
 
                         <XStack 
                             justifyContent="flex-end" 

@@ -44,7 +44,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
                     </YStack>
 
-
+                        {/** Memoize TextTickers otherwise they won't animate due to the progress being updated in the PlayerContext */}
                         { useMemo(() => {
                             return (
                                 <YStack 
