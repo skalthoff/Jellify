@@ -52,7 +52,7 @@ export function HorizontalSlider({
                 circular
                 index={0}
                 size={"$1"}
-                hitSlop={35}
+                hitSlop={20}
             />
         </TamaguiSlider>
     )
