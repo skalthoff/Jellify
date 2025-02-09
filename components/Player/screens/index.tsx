@@ -50,7 +50,7 @@ export default function PlayerScreen({
 
     // Prevent gesture event to close player if we're seeking
     useEffect(() => {
-        navigation.setOptions({ 
+        navigation.getParent()!.getParent()!.setOptions({ 
             gestureEnabled: !seeking 
         });
 
@@ -214,10 +214,10 @@ export default function PlayerScreen({
                                     width={width / 1.1}
                                     props={{
                                         // If user swipes off of the slider we should seek to the spot
-                                        // onPressOut: () => {
-                                        //     setSeeking(false);
-                                        //     useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
-                                        // },
+                                        onPressOut: () => {
+                                            setSeeking(false);
+                                            useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
+                                        },
                                         onSlideStart: () => {
                                             setSeeking(true);
                                         },
