@@ -272,7 +272,7 @@ export default function PlayerScreen({
                             onPress={() => {
 
                                 setSeeking(true);
-                                setProgressState(progressState - 15 * ProgressMultiplier);
+                                setProgressState(progressState - (15 * ProgressMultiplier));
                                 useSeekTo.mutate(progress!.position - 15);
                                 setSeeking(false);
                             }}
@@ -300,7 +300,7 @@ export default function PlayerScreen({
                             name="fast-forward-15"
                             onPress={() => { 
                                 setSeeking(true);
-                                setProgressState(progressState + 15 * ProgressMultiplier);
+                                setProgressState(progressState + (15 * ProgressMultiplier));
                                 useSeekTo.mutate(progress!.position + 15);
                                 setSeeking(false);
                             }}  
