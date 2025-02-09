@@ -264,7 +264,7 @@ export default function PlayerScreen({
                     <XStack 
                         alignItems="center" 
                         justifyContent="space-evenly" 
-                        marginVertical={"$3"}
+                        marginVertical={"$2"}
                     >
                         <Icon
                             color={getTokens().color.amethyst.val}
