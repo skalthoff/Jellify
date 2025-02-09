@@ -10,6 +10,7 @@ interface IconButtonProps {
     title?: string | undefined;
     circular?: boolean | undefined;
     size?: number;
+    largeIcon?: boolean | undefined;
 }
 
 export default function IconButton({
@@ -17,7 +18,8 @@ export default function IconButton({
     onPress,
     title,
     circular,
-    size
+    size,
+    largeIcon
 } : IconButtonProps) : React.JSX.Element {
 
     return (
@@ -38,7 +40,7 @@ export default function IconButton({
                     backgroundColor={"$background"}
                     >
                         <Icon 
-                            large
+                            large={largeIcon}
                             name={name} 
                             color={"$color"}
                         />
