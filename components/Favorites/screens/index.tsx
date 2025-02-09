@@ -29,7 +29,7 @@ export default function FavoritesScreen({
                             caption={item.name}
                             width={width / 2.1}
                             onPress={() => {
-                                navigation.push(item.name)
+                                navigation.navigate(item.name)
                             }}
                         />
                     )
