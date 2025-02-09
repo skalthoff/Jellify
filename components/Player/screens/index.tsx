@@ -91,7 +91,7 @@ export default function PlayerScreen({
                         <YStack 
                             alignItems="center"
                             alignContent="center"
-                            flex={4}
+                            flex={3}
                         >
                             <Text>Playing from</Text>
                             <TextTicker {...TextTickerConfig}>
@@ -195,33 +195,41 @@ export default function PlayerScreen({
 
                     <XStack justifyContent="center" marginTop={"$2"}>
                         {/* playback progress goes here */}
-                        <HorizontalSlider 
-                            value={progressState}
-                            max={
-                                progress && progress.duration > 0 
-                                ? progress.duration * ProgressMultiplier 
-                                : 1
-                            }
-                            width={width / 1.1}
-                            props={{
-                                // If user swipes off of the slider we should seek to the spot
-                                // onPressOut: () => {
-                                //     setSeeking(false);
-                                //     useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
-                                // },
-                                onSlideStart: () => {
-                                    setSeeking(true);
-                                },
-                                onSlideMove: (event, value) => {
-                                    setSeeking(true);
-                                    setProgressState(value);
-                                },
-                                onSlideEnd: (event, value) => {
-                                    setSeeking(false);
-                                    useSeekTo.mutate(Math.round(value / ProgressMultiplier));
-                                }
-                            }}
-                        />
+                        { useMemo(() => {
+
+                            return (
+
+                                <HorizontalSlider 
+                                    value={progressState}
+                                    max={
+                                        progress && progress.duration > 0 
+                                        ? progress.duration * ProgressMultiplier 
+                                        : 1
+                                    }
+                                    width={width / 1.1}
+                                    props={{
+                                        // If user swipes off of the slider we should seek to the spot
+                                        // onPressOut: () => {
+                                            //     setSeeking(false);
+                                            //     useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
+                                            // },
+                                            onSlideStart: () => {
+                                                setSeeking(true);
+                                            },
+                                            onSlideMove: (event, value) => {
+                                                setSeeking(true);
+                                            setProgressState(value);
+                                        },
+                                        onSlideEnd: (event, value) => {
+                                            setSeeking(false);
+                                            useSeekTo.mutate(Math.round(value / ProgressMultiplier));
+                                        }
+                                    }}
+                                />
+                            )}, [
+                                progressState
+                            ]
+                        )}
                     </XStack>
 
                     <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$2"}>
