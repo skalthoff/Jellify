@@ -79,7 +79,7 @@ export default function PlayerScreen({
                     <XStack>
 
                         <YStack 
-                            alignContent="center"
+                            alignContent="flex-start"
                             flex={1}
                             justify="flex-end"
                         >
