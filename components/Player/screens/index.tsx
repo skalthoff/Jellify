@@ -267,6 +267,7 @@ export default function PlayerScreen({
                         marginVertical={"$3"}
                     >
                         <Icon
+                            color={getTokens().color.amethyst.val}
                             name="rewind-15"
                             onPress={() => {
 
@@ -275,10 +276,10 @@ export default function PlayerScreen({
                                 useSeekTo.mutate(progress!.position - 15);
                                 setSeeking(false);
                             }}
-                            large
                         />
                         
                         <Icon
+                            color={getTokens().color.amethyst.val}
                             name="skip-previous"
                             onPress={() => usePrevious.mutate()}
                             large
@@ -288,12 +289,14 @@ export default function PlayerScreen({
                         <PlayPauseButton size={width / 5} />
 
                         <Icon
+                            color={getTokens().color.amethyst.val}
                             name="skip-next" 
                             onPress={() => useSkip.mutate(undefined)}
                             large
                         />    
 
                         <Icon
+                            color={getTokens().color.amethyst.val}
                             name="fast-forward-15"
                             onPress={() => { 
                                 setSeeking(true);
@@ -301,7 +304,6 @@ export default function PlayerScreen({
                                 useSeekTo.mutate(progress!.position + 15);
                                 setSeeking(false);
                             }}  
-                            large
                         />              
                     </XStack>
 
