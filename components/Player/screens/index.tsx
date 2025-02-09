@@ -12,11 +12,15 @@ import Icon from "../../../components/Global/helpers/icon";
 import FavoriteButton from "../../Global/components/favorite-button";
 import BlurhashedImage from "../../Global/components/blurhashed-image";
 import TextTicker from "react-native-text-ticker";
-import { TextTickerConfig } from "../component.config";
+import { ProgressMultiplier, TextTickerConfig } from "../component.config";
 import IconButton from "../../../components/Global/helpers/icon-button";
 import { toUpper } from "lodash";
 
-export default function PlayerScreen({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
+export default function PlayerScreen({ 
+    navigation 
+} : { 
+    navigation: NativeStackNavigationProp<StackParamList>
+}) : React.JSX.Element {
 
     const { 
         useTogglePlayback, 
@@ -31,21 +35,37 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
     } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
-    const [progressState, setProgressState] = useState<number>(progress?.position ?? 0);
+
+    /**
+     * TrackPlayer.getProgress() returns a high sig-fig number. We're going to apply
+     * a multiplier so that the scrubber bar can take advantage of those extra numbers
+     */
+    const [progressState, setProgressState] = useState<number>(
+        progress && progress.position 
+        ? Math.ceil(progress.position * ProgressMultiplier)
+        : 0
+    );
 
     const { width } = useSafeAreaFrame();
 
     // Prevent gesture event to close player if we're seeking
     useEffect(() => {
-        navigation.getParent()!.setOptions({ gestureEnabled: !seeking });
+        navigation.setOptions({ 
+            gestureEnabled: !seeking 
+        });
     }, [
         navigation,
         seeking
-    ])
+    ]);
 
     useEffect(() => {
         if (!seeking)
-            setProgressState(Math.round(progress?.position ?? 0))
+            progress && progress.position
+            ? setProgressState(
+                Math.ceil(
+                    progress.position * ProgressMultiplier
+                )
+            ) : 0;
     }, [
         progress
     ]);
@@ -56,15 +76,36 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
             <>
                 <YStack>
 
-                    <YStack 
-                        alignItems="center"
-                        alignContent="center"
-                    >
-                        <Text>Playing from</Text>
-                        <TextTicker {...TextTickerConfig}>
-                            <Text bold>{ queueName ?? "Queue"}</Text>
-                        </TextTicker>
-                    </YStack>
+                    <XStack>
+
+                        <YStack 
+                            alignContent="flex-start"
+                            flex={1}
+                            justifyContent="center"
+                            marginLeft={"$1"}
+                        >
+                            <Icon
+                                name="chevron-down"
+                                onPress={() => {
+                                    navigation.goBack();
+                                }}
+                                small
+                            />
+                        </YStack>
+
+                        <YStack 
+                            alignItems="center"
+                            alignContent="center"
+                            flex={3}
+                        >
+                            <Text>Playing from</Text>
+                            <TextTicker {...TextTickerConfig}>
+                                <Text bold>{ queueName ?? "Queue"}</Text>
+                            </TextTicker>
+                        </YStack>
+
+                        <Spacer flex={1} />
+                    </XStack>
 
                     <XStack 
                         justifyContent="center"
@@ -157,37 +198,48 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center" marginTop={"$5"}>
+                    <XStack justifyContent="center" marginTop={"$2"}>
                         {/* playback progress goes here */}
-                        <HorizontalSlider 
-                            value={progressState}
-                            max={progress && progress.duration > 0 ? progress.duration : 1}
-                            width={width / 1.1}
-                            props={{
-                                // If user swipes off of the slider we should seek to the spot
-                                onPressOut: () => {
-                                    setSeeking(false);
-                                    useSeekTo.mutate(progressState);
-                                },
-                                onSlideStart: () => {
-                                    setSeeking(true);
-                                },
-                                onSlideMove: (event, value) => {
-                                    setSeeking(true);
-                                    setProgressState(value);
-                                },
-                                onSlideEnd: (event, value) => {
-                                    setSeeking(false);
-                                    useSeekTo.mutate(value);
-                                }
-                            }}
-                            />
+                        { useMemo(() => {
 
+                            return (
+
+                                <HorizontalSlider 
+                                    value={progressState}
+                                    max={
+                                        progress && progress.duration > 0 
+                                        ? progress.duration * ProgressMultiplier 
+                                        : 1
+                                    }
+                                    width={width / 1.1}
+                                    props={{
+                                        // If user swipes off of the slider we should seek to the spot
+                                        // onPressOut: () => {
+                                            //     setSeeking(false);
+                                            //     useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
+                                            // },
+                                            onSlideStart: () => {
+                                                setSeeking(true);
+                                            },
+                                            onSlideMove: (event, value) => {
+                                                setSeeking(true);
+                                            setProgressState(value);
+                                        },
+                                        onSlideEnd: (event, value) => {
+                                            setSeeking(false);
+                                            useSeekTo.mutate(Math.round(value / ProgressMultiplier));
+                                        }
+                                    }}
+                                />
+                            )}, [
+                                progressState
+                            ]
+                        )}
                     </XStack>
 
-                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$3"}>
+                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$2"}>
                         <XStack flex={1} justifyContent="flex-start">
-                            <RunTimeSeconds>{progressState}</RunTimeSeconds>
+                            <RunTimeSeconds>{Math.floor(progressState / ProgressMultiplier)}</RunTimeSeconds>
                         </XStack>
 
                         <XStack flex={1} justifyContent="space-between">
@@ -201,7 +253,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         </XStack>
 
                         <XStack flex={1} justifyContent="flex-end">
-                            <RunTimeSeconds>{progress?.duration ?? 0}</RunTimeSeconds>
+                            <RunTimeSeconds>
+                                {
+                                    progress && progress.duration
+                                    ? Math.ceil(progress.duration) 
+                                    : 0
+                                }
+                            </RunTimeSeconds>
                         </XStack>
                     </XStack>
 
@@ -260,17 +318,6 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         />
 
                         <Spacer />
-
-                        <Icon
-                            name="arrow-down-drop-circle"
-                            onPress={() => {
-                                navigation.goBack();
-                            }}
-                            large
-                        />
-
-                        <Spacer />
-
 
                         <Icon
                             name="playlist-music"
