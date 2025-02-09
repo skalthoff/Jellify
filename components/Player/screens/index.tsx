@@ -197,7 +197,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                     <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$3"}>
                         <XStack flex={1} justifyContent="flex-start">
-                            <RunTimeSeconds>{progressState}</RunTimeSeconds>
+                            <RunTimeSeconds>{Math.floor(progressState / ProgressMultiplier)}</RunTimeSeconds>
                         </XStack>
 
                         <XStack flex={1} justifyContent="space-between">
@@ -211,7 +211,13 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                         </XStack>
 
                         <XStack flex={1} justifyContent="flex-end">
-                            <RunTimeSeconds>{progress?.duration ?? 0}</RunTimeSeconds>
+                            <RunTimeSeconds>
+                                {
+                                    progress && progress.duration
+                                    ? Math.ceil(progress.duration) 
+                                    : 0
+                                }
+                            </RunTimeSeconds>
                         </XStack>
                     </XStack>
 
