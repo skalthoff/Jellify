@@ -98,8 +98,14 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                     onPress={() => {
                                         if (nowPlaying!.item.ArtistItems) {
                                             navigation.goBack(); // Dismiss player modal
-                                            navigation.navigate('Artist', {
-                                                artist: nowPlaying!.item.ArtistItems![0],
+                                            navigation.navigate('Tabs', {
+                                                screen: 'Home', 
+                                                params: {
+                                                    screen: 'Artist',
+                                                    params: {
+                                                        artist: nowPlaying!.item.ArtistItems![0],
+                                                    }
+                                                }
                                             });
                                         }
                                     }}
