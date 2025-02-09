@@ -84,49 +84,50 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
 
                         {/** Memoize TextTickers otherwise they won't animate due to the progress being updated in the PlayerContext */}
                         { useMemo(() => {
-                            <YStack justifyContent="flex-start" flex={4}>
-                            <TextTicker {...TextTickerConfig}>
-                                <Text 
-                                    bold 
-                                    fontSize={"$6"}
-                                    >
-                                    {nowPlaying!.title ?? "Untitled Track"}
-                                </Text>
-                            </TextTicker>
+                            return (
+                                <YStack justifyContent="flex-start" flex={5}>
+                                    <TextTicker {...TextTickerConfig}>
+                                        <Text 
+                                            bold 
+                                            fontSize={"$6"}
+                                            >
+                                            {nowPlaying!.title ?? "Untitled Track"}
+                                        </Text>
+                                    </TextTicker>
 
-                            <TextTicker {...TextTickerConfig}>
-                                <Text 
-                                    fontSize={"$6"}
-                                    color={getTokens().color.telemagenta}
-                                    onPress={() => {
-                                        if (nowPlaying!.item.ArtistItems) {
-                                            navigation.goBack(); // Dismiss player modal
-                                            navigation.navigate('Tabs', {
-                                                screen: 'Home', 
-                                                params: {
-                                                    screen: 'Artist',
-                                                    params: {
-                                                        artist: nowPlaying!.item.ArtistItems![0],
-                                                    }
+                                    <TextTicker {...TextTickerConfig}>
+                                        <Text 
+                                            fontSize={"$6"}
+                                            color={getTokens().color.telemagenta}
+                                            onPress={() => {
+                                                if (nowPlaying!.item.ArtistItems) {
+                                                    navigation.goBack(); // Dismiss player modal
+                                                    navigation.navigate('Tabs', {
+                                                        screen: 'Home', 
+                                                        params: {
+                                                            screen: 'Artist',
+                                                            params: {
+                                                                artist: nowPlaying!.item.ArtistItems![0],
+                                                            }
+                                                        }
+                                                    });
                                                 }
-                                            });
-                                        }
-                                    }}
-                                    >
-                                    {nowPlaying.artist ?? "Unknown Artist"}
-                                </Text>
-                            </TextTicker>
+                                            }}
+                                            >
+                                            {nowPlaying.artist ?? "Unknown Artist"}
+                                        </Text>
+                                    </TextTicker>
 
-                            <TextTicker {...TextTickerConfig}>
-                                <Text 
-                                    fontSize={"$6"} 
-                                    color={"$borderColor"}
-                                    >
-                                    { nowPlaying!.album ?? "" }
-                                </Text>
-                            </TextTicker>
-                        </YStack>
-                        }, [
+                                    <TextTicker {...TextTickerConfig}>
+                                        <Text 
+                                            fontSize={"$6"} 
+                                            color={"$borderColor"}
+                                            >
+                                            { nowPlaying!.album ?? "" }
+                                        </Text>
+                                    </TextTicker>
+                                </YStack>
+                        )}, [
                             nowPlaying
                         ])}
 
