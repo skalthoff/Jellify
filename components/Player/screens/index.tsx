@@ -266,46 +266,42 @@ export default function PlayerScreen({
                         justifyContent="space-evenly" 
                         marginVertical={"$3"}
                     >
-                        <IconButton
-                            circular
+                        <Icon
                             name="rewind-15"
                             onPress={() => {
 
                                 setSeeking(true);
-                                setProgressState(progressState - 15);
+                                setProgressState(progressState - 15 * ProgressMultiplier);
                                 useSeekTo.mutate(progress!.position - 15);
                                 setSeeking(false);
                             }}
-                            size={width / 7}
+                            large
                         />
                         
-                        <IconButton
-                            circular
+                        <Icon
                             name="skip-previous"
                             onPress={() => usePrevious.mutate()}
-                            size={width / 7}
+                            large
                         />
 
                         {/* I really wanted a big clunky play button */}
                         <PlayPauseButton size={width / 5} />
 
-                        <IconButton
-                            circular
+                        <Icon
                             name="skip-next" 
                             onPress={() => useSkip.mutate(undefined)}
-                            size={width / 7}
+                            large
                         />    
 
-                        <IconButton
-                            circular
+                        <Icon
                             name="fast-forward-15"
                             onPress={() => { 
                                 setSeeking(true);
-                                setProgressState(progressState + 15);
+                                setProgressState(progressState + 15 * ProgressMultiplier);
                                 useSeekTo.mutate(progress!.position + 15);
                                 setSeeking(false);
                             }}  
-                            size={width / 7}
+                            large
                         />              
                     </XStack>
 
