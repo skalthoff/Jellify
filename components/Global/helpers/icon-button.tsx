@@ -25,7 +25,7 @@ export default function IconButton({
             <TouchableOpacity>
                 <Square
                     animation={"bouncy"}
-                    borderRadius={!circular ? 25 : undefined}
+                    borderRadius={!circular ? "$4" : undefined}
                     circular={circular}
                     elevate
                     hoverStyle={{ scale: 0.925 }}
