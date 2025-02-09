@@ -30,7 +30,7 @@ export default function Root({
                         title="Account Details"
                         subTitle="Everything is about you, man"
                         onPress={() => {
-                            navigation.push("AccountDetails")
+                            navigation.navigate("AccountDetails")
                         }}
                     />
                 </YGroup.Item>
@@ -41,7 +41,7 @@ export default function Root({
                         title="Developer Tools"
                         subTitle="Nerds rule!"
                         onPress={() => {
-                            navigation.push("DevTools");
+                            navigation.navigate("DevTools");
                         }}
                     />
                 </YGroup.Item>

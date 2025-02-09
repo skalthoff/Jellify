@@ -56,7 +56,7 @@ export default function TrackOptions({
                                 navigation.getParent()!.goBack();
                             
                             navigation.goBack();
-                            navigation.push("Album", {
+                            navigation.navigate("Album", {
                                 album
                             });
                         }}
