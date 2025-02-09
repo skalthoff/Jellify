@@ -78,7 +78,7 @@ export default function PlayerScreen({
                     <XStack>
 
                         <YStack 
-                            alignContent="center"
+                            alignContent="flex-end"
                             flex={1}
                             justifyContent="center"
                             marginLeft={"$1"}
