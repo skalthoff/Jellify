@@ -50,8 +50,9 @@ export default function PlayerScreen({
 
     // Prevent gesture event to close player if we're seeking
     useEffect(() => {
-        navigation.getParent()!.setOptions({ 
-            gestureEnabled: !seeking 
+        navigation.setOptions({ 
+            gestureEnabled: !seeking,
+            fullScreenGestureEnabled: !seeking 
         });
 
         trigger("impactLight");
@@ -232,7 +233,7 @@ export default function PlayerScreen({
                                     }}
                                 />
                             )}, [
-                                progressState
+                                progress
                             ]
                         )}
                     </XStack>
