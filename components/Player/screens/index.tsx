@@ -97,6 +97,7 @@ export default function PlayerScreen({ navigation }: { navigation: NativeStackNa
                                     color={getTokens().color.telemagenta}
                                     onPress={() => {
                                         if (nowPlaying!.item.ArtistItems) {
+                                            navigation.goBack(); // Dismiss player modal
                                             navigation.navigate('Tabs', {
                                                 screen: 'Home', 
                                                 params: {
