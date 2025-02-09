@@ -37,6 +37,7 @@ export default function IconCard({
                         color={getTokens().color.purpleDark.val} 
                         name={name} 
                         large={largeIcon}
+                        small={!largeIcon}
                     />
                 </Card.Header>
                 <Card.Footer padded>
