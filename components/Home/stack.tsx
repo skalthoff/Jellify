@@ -63,24 +63,6 @@ export default function Home(): React.JSX.Element {
                     />
 
                 </HomeStack.Group>
-
-                <HomeStack.Group screenOptions={{ presentation: "modal"}}>
-                    <HomeStack.Screen
-                        name="Player" 
-                        component={Player} 
-                        options={{
-                        headerShown: false
-                        }}
-                    />
-
-                    <HomeStack.Screen
-                        name="Details"
-                        component={DetailsScreen}
-                        options={{
-                            headerShown: false,
-                        }}
-                    />
-                </HomeStack.Group>
             </HomeStack.Navigator>
         </HomeProvider>
     );

@@ -46,25 +46,6 @@ export default function Settings(): React.JSX.Element {
                     }    
                 }}
             />
-
-            <SettingsStack.Group screenOptions={{ presentation: "modal"}}>
-                <SettingsStack.Screen
-                    name="Player" 
-                    component={Player} 
-                    options={{
-                    headerShown: false
-                    }}
-                />
-
-                <SettingsStack.Screen
-                    name="Details"
-                    component={DetailsScreen}
-                    options={{
-                        headerShown: false,
-                    }}
-                />
-            </SettingsStack.Group>
-
         </SettingsStack.Navigator>
     )
 }

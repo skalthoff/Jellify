@@ -9,7 +9,6 @@ export default function Navigation(): React.JSX.Element {
   
     return (
       <RootStack.Navigator>
-        <RootStack.Group>
           <RootStack.Screen 
             name="Tabs" 
             component={Tabs}
@@ -17,7 +16,14 @@ export default function Navigation(): React.JSX.Element {
               headerShown: false
             }}
           />
-        </RootStack.Group>
+          <RootStack.Screen 
+            name="Player" 
+            component={Player} 
+            options={{
+               headerShown: false,
+               presentation: 'fullScreenModal'
+            }}
+          />
     </RootStack.Navigator>
     )
 }
