@@ -8,7 +8,7 @@ import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
 import BlurhashedImage from "../Global/components/blurhashed-image";
 import DraggableFlatList from "react-native-draggable-flatlist";
-import { reorderPlaylist } from "../../api/mutations/functions/playlists";
+import { reorderPlaylist, updatePlaylist } from "../../api/mutations/functions/playlists";
 import { useEffect, useState } from "react";
 import Icon from "../Global/helpers/icon";
 import { useMutation } from "@tanstack/react-query";
@@ -59,6 +59,15 @@ export default function Playlist({
         isSuccess
     ])
 
+    const useUpdatePlaylist = useMutation({
+        mutationFn: ({ playlist, tracks }: { playlist: BaseItemDto, tracks: BaseItemDto[] }) => {
+            return updatePlaylist(playlist.Id!, playlist.Name!, tracks.map(track => track.Id!))
+        }
+    })
+
+    /**
+     * @deprecated this doesn't reorder the playlist reliably enough
+     */
     const useReorderPlaylist = useMutation({
         mutationFn: ({ playlist, track, to } : PlaylistOrderMutation) => {
             return reorderPlaylist(playlist.Id!, track.Id!, to)
@@ -107,11 +116,7 @@ export default function Playlist({
                 console.debug(`Moving playlist item from ${from} to ${to}`);
 
                 setPlaylistTracks(data);
-                useReorderPlaylist.mutate({
-                    playlist,
-                    track: data[to],
-                    to: to == 0 ? -1 : to
-                });
+                useUpdatePlaylist
             }}
             refreshing={isPending}
             renderItem={({ item: track, getIndex, drag }) => {

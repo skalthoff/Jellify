@@ -59,14 +59,15 @@ export async function createPlaylist(name: string) {
  * @param playlistId The Jellyfin ID of the playlist to update
  * @returns 
  */
-export async function updatePlaylist(playlistId: string, name: string) {
+export async function updatePlaylist(playlistId: string, name: string, trackIds: string[]) {
     console.debug("Updating playlist");
 
     return getPlaylistsApi(Client.api!)
         .updatePlaylist({
             playlistId,
             updatePlaylistDto: {
-                Name: name
+                Name: name,
+                Ids: trackIds
             }
         });
 }
