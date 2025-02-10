@@ -1,3 +1,4 @@
+import { QueryKeys } from "../../enums/query-keys";
 import Client from "../../api/client";
 import { fetchRecentlyPlayedArtists } from "../../api/queries/functions/recents";
 import { ListTemplate } from "react-native-carplay";
@@ -12,9 +13,9 @@ const CarPlayHome : ListTemplate = new ListTemplate({
         {
             header: Client.user!.name,
             items: [
-                { text: 'Recent Artists' },
-                { text: 'Recently Played'},
-                { text: 'Your Playlists'}
+                { id: QueryKeys.RecentlyPlayedArtists, text: 'Recent Artists' },
+                { id: QueryKeys.RecentlyPlayed, text: 'Recently Played'},
+                { id: QueryKeys.UserPlaylists, text: 'Your Playlists'}
             ]
         }
     ],
