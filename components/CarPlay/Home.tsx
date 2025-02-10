@@ -1,17 +1,26 @@
+import Client from "../../api/client";
 import { fetchRecentlyPlayedArtists } from "../../api/queries/functions/recents";
-import { GridTemplate } from "react-native-carplay";
+import { ListTemplate } from "react-native-carplay";
 
 const recentArtists = fetchRecentlyPlayedArtists()
 
-const CarPlayHome : GridTemplate = new GridTemplate({
+const CarPlayHome : ListTemplate = new ListTemplate({
+    id: 'Home',
     title: "Home",
     tabTitle: "Home",
-    buttons: Array.from({ length: 8 }).map((_, i) => ({
-        id: `BUTTON_${i}`,
-        image: require("../../assets/icon_60pt_3x.jpg"),
-        titleVariants: [`Item ${i}`]
-    })),
-    id: 'Home'
+    sections: [
+        {
+            header: Client.user!.name,
+            items: [
+                { text: 'Recent Artists' },
+                { text: 'Recently Played'},
+                { text: 'Your Playlists'}
+            ]
+        }
+    ],
+    // onItemSelect: (item) => {
+
+    // }
 });
 
 export default CarPlayHome;
