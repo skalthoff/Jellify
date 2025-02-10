@@ -15,6 +15,9 @@ import TextTicker from "react-native-text-ticker";
 import { ProgressMultiplier, TextTickerConfig } from "../component.config";
 import { toUpper } from "lodash";
 import { trigger } from "react-native-haptic-feedback";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+
+const scrubGesture = Gesture.Pan();
 
 export default function PlayerScreen({ 
     navigation 
@@ -192,54 +195,55 @@ export default function PlayerScreen({
                         { useMemo(() => {
 
                             return (
-
-                                <HorizontalSlider 
-                                    value={progressState}
-                                    max={
-                                        progress && progress.duration > 0 
-                                        ? progress.duration * ProgressMultiplier 
-                                        : 1
-                                    }
-                                    width={width / 1.1}
-                                    props={{
-                                        // If user swipes off of the slider we should seek to the spot
-                                        onPressOut: () => {
-                                            setSeeking(false);
-
-                                            navigation.setOptions({
-                                                gestureEnabled: true
-                                            });
-
-                                            useSeekTo.mutate(Math.floor(progressState / ProgressMultiplier));
-                                        },
-                                        onSlideStart: () => {
-                                            trigger("impactLight");
-                                            setSeeking(true);
-
-                                            navigation.setOptions({
-                                                gestureEnabled: false
-                                            });
-                                        },
-                                        onSlideMove: (event, value) => {
-                                            setSeeking(true);
-
-                                            navigation.setOptions({
-                                                gestureEnabled: false
-                                            });
-
-                                            setProgressState(value);
-                                        },
-                                        onSlideEnd: (event, value) => {
-                                            setSeeking(false);
-
-                                            navigation.setOptions({
-                                                gestureEnabled: true
-                                            });
-
-                                            useSeekTo.mutate(Math.floor(value / ProgressMultiplier));
+                                <GestureDetector gesture={scrubGesture}>
+                                    <HorizontalSlider 
+                                        value={progressState}
+                                        max={
+                                            progress && progress.duration > 0 
+                                            ? progress.duration * ProgressMultiplier 
+                                            : 1
                                         }
-                                    }}
-                                />
+                                        width={width / 1.1}
+                                        props={{
+                                            // If user swipes off of the slider we should seek to the spot
+                                            onPressOut: () => {
+                                                setSeeking(false);
+
+                                                navigation.setOptions({
+                                                    gestureEnabled: true
+                                                });
+
+                                                useSeekTo.mutate(Math.floor(progressState / ProgressMultiplier));
+                                            },
+                                            onSlideStart: () => {
+                                                trigger("impactLight");
+                                                setSeeking(true);
+
+                                                navigation.setOptions({
+                                                    gestureEnabled: false
+                                                });
+                                            },
+                                            onSlideMove: (event, value) => {
+                                                setSeeking(true);
+
+                                                navigation.setOptions({
+                                                    gestureEnabled: false
+                                                });
+
+                                                setProgressState(value);
+                                            },
+                                            onSlideEnd: (event, value) => {
+                                                setSeeking(false);
+                                                
+                                                navigation.setOptions({
+                                                    gestureEnabled: true
+                                                });
+                                                
+                                                useSeekTo.mutate(Math.floor(value / ProgressMultiplier));
+                                            }
+                                        }}
+                                    />
+                                </GestureDetector>
                             )}, [
                                 progressState
                             ]
