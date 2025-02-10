@@ -20,7 +20,10 @@ export type StackParamList = {
     AccountDetails: undefined;
     DevTools: undefined;
 
-    Tabs: undefined;
+    Tabs: {
+        screen: string;
+        params: any
+    };
 
     Player: undefined;
     Queue: undefined;
@@ -73,3 +76,5 @@ export type DetailsProps = NativeStackScreenProps<StackParamList, "Details">;
 export type AccountDetailsProps = NativeStackScreenProps<StackParamList, "AccountDetails">;
 
 export type DevToolsProps = NativeStackScreenProps<StackParamList, 'DevTools'>;
+
+export type useState<T> = [T, React.Dispatch<T>];

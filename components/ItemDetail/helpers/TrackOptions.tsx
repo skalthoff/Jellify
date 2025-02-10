@@ -3,7 +3,7 @@ import { useItem } from "../../../api/queries/item";
 import { StackParamList } from "../../../components/types";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { getToken, getTokens, ListItem, Separator, Spacer, Spinner, XStack, YGroup, YStack } from "tamagui";
+import { getTokens, ListItem, Separator, Spacer, Spinner, XStack, YGroup, YStack } from "tamagui";
 import { QueuingType } from "../../../enums/queuing-type";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import IconButton from "../../../components/Global/helpers/icon-button";
@@ -56,11 +56,11 @@ export default function TrackOptions({
                                 navigation.getParent()!.goBack();
                             
                             navigation.goBack();
-                            navigation.push("Album", {
+                            navigation.navigate("Album", {
                                 album
                             });
                         }}
-                        size={width / 5}
+                        size={width / 6}
                     />
                 ) : (
                     <Spacer />
@@ -76,7 +76,7 @@ export default function TrackOptions({
                             queuingType: QueuingType.PlayingNext
                         })
                     }}
-                    size={width / 5}
+                    size={width / 6}
                 />
 
                 <IconButton
@@ -88,7 +88,7 @@ export default function TrackOptions({
                             track: track
                         })
                     }}
-                    size={width / 5}
+                    size={width / 6}
                 />
             </XStack>
 
