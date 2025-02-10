@@ -116,7 +116,10 @@ export default function Playlist({
                 console.debug(`Moving playlist item from ${from} to ${to}`);
 
                 setPlaylistTracks(data);
-                useUpdatePlaylist
+                useUpdatePlaylist.mutate({ 
+                    playlist,
+                    tracks: data
+                });
             }}
             refreshing={isPending}
             renderItem={({ item: track, getIndex, drag }) => {
