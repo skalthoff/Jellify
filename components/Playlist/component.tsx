@@ -69,6 +69,9 @@ export default function Playlist({
             queryClient.invalidateQueries({
                 queryKey: [QueryKeys.ItemTracks, playlist.Id]
             })
+        },
+        onError: () => {
+            trigger("notificationError");
         }
     });
 
@@ -107,7 +110,7 @@ export default function Playlist({
                 useReorderPlaylist.mutate({
                     playlist,
                     track: data[to],
-                    to
+                    to: to == 0 ? -1 : to
                 });
             }}
             refreshing={isPending}
