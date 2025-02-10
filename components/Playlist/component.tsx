@@ -100,11 +100,14 @@ export default function Playlist({
                 trigger("impactMedium");
             }}
             onDragEnd={({ data, from, to }) => {
+
+                console.debug(`Moving playlist item from ${from} to ${to}`);
+
                 setPlaylistTracks(data);
                 useReorderPlaylist.mutate({
                     playlist,
                     track: data[to],
-                    to: to - 1
+                    to
                 });
             }}
             refreshing={isPending}
