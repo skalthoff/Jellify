@@ -7,14 +7,14 @@ import React, { useState, useEffect, useMemo } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { YStack, XStack, Spacer, getTokens } from "tamagui";
 import PlayPauseButton from "../helpers/buttons";
-import { H5, Text } from "../../../components/Global/helpers/text";
+import { Text } from "../../../components/Global/helpers/text";
 import Icon from "../../../components/Global/helpers/icon";
 import FavoriteButton from "../../Global/components/favorite-button";
 import BlurhashedImage from "../../Global/components/blurhashed-image";
 import TextTicker from "react-native-text-ticker";
 import { ProgressMultiplier, TextTickerConfig } from "../component.config";
-import IconButton from "../../../components/Global/helpers/icon-button";
 import { toUpper } from "lodash";
+import { trigger } from "react-native-haptic-feedback";
 
 export default function PlayerScreen({ 
     navigation 
@@ -48,16 +48,6 @@ export default function PlayerScreen({
 
     const { width } = useSafeAreaFrame();
 
-    // Prevent gesture event to close player if we're seeking
-    useEffect(() => {
-        navigation.setOptions({ 
-            gestureEnabled: !seeking 
-        });
-    }, [
-        navigation,
-        seeking
-    ]);
-
     useEffect(() => {
         if (!seeking)
             progress && progress.position
@@ -76,13 +66,12 @@ export default function PlayerScreen({
             <>
                 <YStack>
 
-                    <XStack>
+                    <XStack marginHorizontal={"$2"}>
 
                         <YStack 
-                            alignContent="flex-start"
+                            alignContent="flex-end"
                             flex={1}
                             justifyContent="center"
-                            marginLeft={"$1"}
                         >
                             <Icon
                                 name="chevron-down"
@@ -198,7 +187,7 @@ export default function PlayerScreen({
                         </XStack>
                     </XStack>
 
-                    <XStack justifyContent="center" marginTop={"$2"}>
+                    <XStack justifyContent="center" marginTop={"$3"}>
                         {/* playback progress goes here */}
                         { useMemo(() => {
 
@@ -214,20 +203,40 @@ export default function PlayerScreen({
                                     width={width / 1.1}
                                     props={{
                                         // If user swipes off of the slider we should seek to the spot
-                                        // onPressOut: () => {
-                                            //     setSeeking(false);
-                                            //     useSeekTo.mutate(Math.round(progressState / ProgressMultiplier));
-                                            // },
-                                            onSlideStart: () => {
-                                                setSeeking(true);
-                                            },
-                                            onSlideMove: (event, value) => {
-                                                setSeeking(true);
+                                        onPressOut: () => {
+                                            setSeeking(false);
+
+                                            navigation.setOptions({
+                                                gestureEnabled: true
+                                            });
+
+                                            useSeekTo.mutate(Math.floor(progressState / ProgressMultiplier));
+                                        },
+                                        onSlideStart: () => {
+                                            trigger("impactLight");
+                                            setSeeking(true);
+
+                                            navigation.setOptions({
+                                                gestureEnabled: false
+                                            });
+                                        },
+                                        onSlideMove: (event, value) => {
+                                            setSeeking(true);
+
+                                            navigation.setOptions({
+                                                gestureEnabled: false
+                                            });
+
                                             setProgressState(value);
                                         },
                                         onSlideEnd: (event, value) => {
                                             setSeeking(false);
-                                            useSeekTo.mutate(Math.round(value / ProgressMultiplier));
+
+                                            navigation.setOptions({
+                                                gestureEnabled: true
+                                            });
+
+                                            useSeekTo.mutate(Math.floor(value / ProgressMultiplier));
                                         }
                                     }}
                                 />
@@ -237,7 +246,7 @@ export default function PlayerScreen({
                         )}
                     </XStack>
 
-                    <XStack marginHorizontal={20} marginTop={"$4"} marginBottom={"$2"}>
+                    <XStack marginHorizontal={20} marginTop={"$3"} marginBottom={"$2"}>
                         <XStack flex={1} justifyContent="flex-start">
                             <RunTimeSeconds>{Math.floor(progressState / ProgressMultiplier)}</RunTimeSeconds>
                         </XStack>
@@ -266,48 +275,46 @@ export default function PlayerScreen({
                     <XStack 
                         alignItems="center" 
                         justifyContent="space-evenly" 
-                        marginVertical={"$3"}
+                        marginVertical={"$2"}
                     >
-                        <IconButton
-                            circular
+                        <Icon
+                            color={getTokens().color.amethyst.val}
                             name="rewind-15"
                             onPress={() => {
 
                                 setSeeking(true);
-                                setProgressState(progressState - 15);
+                                setProgressState(progressState - (15 * ProgressMultiplier));
                                 useSeekTo.mutate(progress!.position - 15);
                                 setSeeking(false);
                             }}
-                            size={width / 7}
                         />
                         
-                        <IconButton
-                            circular
+                        <Icon
+                            color={getTokens().color.amethyst.val}
                             name="skip-previous"
                             onPress={() => usePrevious.mutate()}
-                            size={width / 7}
+                            large
                         />
 
                         {/* I really wanted a big clunky play button */}
                         <PlayPauseButton size={width / 5} />
 
-                        <IconButton
-                            circular
+                        <Icon
+                            color={getTokens().color.amethyst.val}
                             name="skip-next" 
                             onPress={() => useSkip.mutate(undefined)}
-                            size={width / 7}
+                            large
                         />    
 
-                        <IconButton
-                            circular
+                        <Icon
+                            color={getTokens().color.amethyst.val}
                             name="fast-forward-15"
                             onPress={() => { 
                                 setSeeking(true);
-                                setProgressState(progressState + 15);
+                                setProgressState(progressState + (15 * ProgressMultiplier));
                                 useSeekTo.mutate(progress!.position + 15);
                                 setSeeking(false);
                             }}  
-                            size={width / 7}
                         />              
                     </XStack>
 
