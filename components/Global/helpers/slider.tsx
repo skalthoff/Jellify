@@ -53,10 +53,10 @@ export function HorizontalSlider({
                 index={0}
                 size={"$2"}
                 hitSlop={{
-                    top: 20,
-                    right: 50,
-                    bottom: 50,
-                    left: 50
+                    top: 35,
+                    right: 70,
+                    bottom: 70,
+                    left: 70
                 }}
             />
         </TamaguiSlider>
