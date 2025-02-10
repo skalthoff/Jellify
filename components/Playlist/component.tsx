@@ -104,7 +104,7 @@ export default function Playlist({
                 useReorderPlaylist.mutate({
                     playlist,
                     track: data[to],
-                    to
+                    to: to - 1
                 });
             }}
             refreshing={isPending}
