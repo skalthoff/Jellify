@@ -1,18 +1,32 @@
-import { backgroundRuntime } from "@/App";
+// import { backgroundRuntime } from "@/App";
 import { runOnRuntime } from "react-native-reanimated";
 
+/**
+ * Converts the run time seconds of a track to the RunTimeTicks standard set by Emby / Jellyfin
+ * @param seconds The run time seconds of the item to convert to Jellyfin ticks
+ * @returns the run time seconds of a track converted to Jellyfin runtimeticks
+ * 
+ * @see https://emby.media/community/index.php?/topic/63357-runtimeticks-microseconds-milliseconds-or-nanoseconds/
+ */
 export function convertSecondsToRunTimeTicks(seconds: number) {
-    return runOnRuntime(backgroundRuntime, (runTimeSeconds: number) => {
+    // return runOnRuntime(backgroundRuntime, (runTimeSeconds: number) => {
         const runTimeMilliseconds = seconds * 1000 * 10000;
     
         return runTimeMilliseconds;
-    })(seconds);
+    // })(seconds);
 }
 
+/**
+ * Converts a {@link BaseItemDto}'s RunTimeTicks to seconds
+ * @param ticks The run time ticks of the item to convert to seconds
+ * @returns The run time ticks of a track converted to seconds
+ * 
+ * @see https://emby.media/community/index.php?/topic/63357-runtimeticks-microseconds-milliseconds-or-nanoseconds/
+ */
 export function convertRunTimeTicksToSeconds(ticks: number) {
-    return runOnRuntime(backgroundRuntime, (runTimeTicks : number) => {
-        const runTimeMilliseconds = runTimeTicks / 10000; 
+    // return runOnRuntime(backgroundRuntime, (runTimeTicks : number) => {
+        const runTimeMilliseconds = ticks / 10000; 
         const runTimeTotalSeconds = Math.floor(runTimeMilliseconds / 1000);
         return runTimeTotalSeconds;
-    })(ticks);
+    // })(ticks);
 }

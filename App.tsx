@@ -11,7 +11,7 @@ import { queryClient } from './constants/query-client';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { createWorkletRuntime } from 'react-native-reanimated';
 
-export const backgroundRuntime = createWorkletRuntime('background');
+// export const backgroundRuntime = createWorkletRuntime('background');
 
 export default function App(): React.JSX.Element {
   
