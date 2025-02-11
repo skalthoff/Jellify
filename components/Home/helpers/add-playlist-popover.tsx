@@ -4,7 +4,7 @@ import { Popover, Adapt, YStack, XStack, Input, getToken, Button } from "tamagui
 
 export default function AddPlaylistPopover() : React.JSX.Element {
     return (
-        <Popover size="$5" allowFlip>
+        <Popover size="$5">
         <Popover.Trigger asChild>
             <Icon name="plus-circle-outline" color={getToken("$color.telemagenta")} />
         </Popover.Trigger>
