@@ -4,6 +4,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 export type StackParamList = {
     Home: undefined;
+    AddPlaylist: undefined;
     RecentArtists: {
         artists: BaseItemDto[]
     };
@@ -56,6 +57,7 @@ export type TabProps = NativeStackScreenProps<StackParamList, 'Tabs'>;
 export type PlayerProps = NativeStackScreenProps<StackParamList, 'Player'>;
 
 export type ProvidedHomeProps = NativeStackScreenProps<StackParamList, 'Home'>;
+export type AddPlaylistProps = NativeStackScreenProps<StackParamList, 'AddPlaylist'>;
 export type RecentArtistsProps = NativeStackScreenProps<StackParamList, 'RecentArtists'>;
 export type RecentTracksProps = NativeStackScreenProps<StackParamList, 'RecentTracks'>;
 export type UserPlaylistsProps = NativeStackScreenProps<StackParamList, 'UserPlaylists'>;

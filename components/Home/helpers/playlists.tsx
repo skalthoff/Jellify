@@ -3,15 +3,13 @@ import { useUserPlaylists } from "../../../api/queries/playlist";
 import { ItemCard } from "../../Global/components/item-card";
 import { H2 } from "../../../components/Global/helpers/text";
 import { StackParamList } from "../../../components/types";
-import React, { useState } from "react";
+import React from "react";
 import { FlatList } from "react-native";
 import { getToken, View, XStack, YStack } from "tamagui";
-import AddPlaylistPopover from "./add-playlist-popover";
 import Icon from "../../../components/Global/helpers/icon";
 
 export default function Playlists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
 
-    const [createPlaylist, setCreatePlaylist] = useState<boolean>(false);
     const { data: playlists } = useUserPlaylists();
 
     return (
@@ -20,8 +18,7 @@ export default function Playlists({ navigation }: { navigation: NativeStackNavig
                 <H2>Your Playlists</H2>
 
                 <YStack justifyContent="center" alignContent="flex-end" marginTop={7}>
-                    <Icon name="plus-circle-outline" color={getToken("$color.telemagenta")} onPress={() => setCreatePlaylist(true)}/>
-                    <AddPlaylistPopover open={createPlaylist}/>
+                    <Icon name="plus-circle-outline" color={getToken("$color.telemagenta")} onPress={() => navigation.navigate('AddPlaylist')}/>
                 </YStack>
             </XStack>
             <FlatList horizontal
