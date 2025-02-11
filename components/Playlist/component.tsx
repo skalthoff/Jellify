@@ -76,7 +76,7 @@ export default function Playlist({
             trigger("notificationSuccess");
 
             queryClient.invalidateQueries({
-                queryKey: [QueryKeys.ItemTracks, playlist.Id]
+                queryKey: [QueryKeys.ItemTracks, playlist.Id, false]
             })
         },
         onError: () => {
