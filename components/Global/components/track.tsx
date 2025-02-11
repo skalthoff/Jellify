@@ -95,7 +95,7 @@ export default function Track({
                         <BlurhashedImage
                             item={track}
                             width={width / 9}
-                            cornered
+                            borderRadius={2}
                         />
                     ) : (
                     <Text 

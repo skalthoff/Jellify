@@ -1,9 +1,7 @@
 import React from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
-import { getToken, H5, Card as TamaguiCard, View } from "tamagui";
-import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import invert from "invert-color"
-import { Blurhash } from "react-native-blurhash"
+import { getToken, Card as TamaguiCard, View } from "tamagui";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { Text } from "../helpers/text";
 import BlurhashedImage from "./blurhashed-image";
 
@@ -28,7 +26,7 @@ export function ItemCard(props: CardProps) {
             <TamaguiCard 
                 size="$4" 
                 backgroundColor={getToken("$color.amethyst")}
-                borderRadius={props.squared ? 2 : 100}
+                borderRadius={props.squared ? 2 : dimensions.width}
                 animation="bouncy"
                 hoverStyle={props.onPress ? { scale: 0.925 } : {}}
                 pressStyle={props.onPress ? { scale: 0.875 } : {}}
@@ -54,7 +52,7 @@ export function ItemCard(props: CardProps) {
                         item={props.item}
                         width={dimensions.width}
                         height={dimensions.height}
-                        cornered={props.squared}
+                        borderRadius={props.squared ? 2 : dimensions.width}
                     />
                 </TamaguiCard.Background>
             </TamaguiCard>
