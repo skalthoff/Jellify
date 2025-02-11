@@ -51,6 +51,8 @@ const PlayerContextInitializer = () => {
     const playStateApi = getPlaystateApi(Client.api!)
     
     //#region State
+    const [initialized, setInitialized] = useState<boolean>(false);
+
     const [showPlayer, setShowPlayer] = useState<boolean>(false);
     const [showMiniplayer, setShowMiniplayer] = useState<boolean>(false);
 
@@ -301,14 +303,6 @@ const PlayerContextInitializer = () => {
         }
     });
 
-    if (queue.length > 0 && nowPlaying) {
-        TrackPlayer.setQueue(queue)
-            .then(() => {
-                TrackPlayer.skip(queue.findIndex(track => track.item.Id! === nowPlaying.item.Id!));
-            });
-        setShowMiniplayer(true);
-    }
-
     useEffect(() => {
         if (!showMiniplayer)
             setNowPlaying(undefined);
@@ -332,6 +326,24 @@ const PlayerContextInitializer = () => {
     }, [
         queue
     ])
+
+    useEffect(() => {
+        storage.set(MMKVStorageKeys.NowPlaying, JSON.stringify(nowPlaying))
+    }, [
+        nowPlaying
+    ])
+
+    useEffect(() => {
+        if (!initialized && queue.length > 0 && nowPlaying) {
+            TrackPlayer.setQueue(queue)
+                .then(() => {
+                    TrackPlayer.skip(queue.findIndex(track => track.item.Id! === nowPlaying.item.Id!));
+                });
+            setShowMiniplayer(true);
+        }
+
+        setInitialized(true);
+    })
     //#endregion useEffects
 
     //#region return
