@@ -1,9 +1,8 @@
 import { QueryKeys } from "../../enums/query-keys";
 import Client from "../../api/client";
-import { fetchRecentlyPlayedArtists } from "../../api/queries/functions/recents";
-import { ListTemplate } from "react-native-carplay";
-
-const recentArtists = fetchRecentlyPlayedArtists()
+import { fetchRecentlyPlayed, fetchRecentlyPlayedArtists } from "../../api/queries/functions/recents";
+import { CarPlay, ListTemplate } from "react-native-carplay";
+import { CarPlayRecentlyPlayed } from "./RecentlyPlayed";
 
 const CarPlayHome : ListTemplate = new ListTemplate({
     id: 'Home',
@@ -19,9 +18,13 @@ const CarPlayHome : ListTemplate = new ListTemplate({
             ]
         }
     ],
-    // onItemSelect: (item) => {
+    onItemSelect: async (item) => {
+        console.log(item);
 
-    // }
+        const tracks = await fetchRecentlyPlayed()
+
+        CarPlay.pushTemplate(CarPlayRecentlyPlayed(tracks))
+    }
 });
 
 export default CarPlayHome;
