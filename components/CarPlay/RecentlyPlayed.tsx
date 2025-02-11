@@ -12,7 +12,7 @@ export const CarPlayRecentlyPlayed = (recentTracks : BaseItemDto[]) => new GridT
                 track.Name ? track.Name : "Untitled Track"
             ],
             image: {
-                uri: getImageApi(Client.api!).getItemImageUrlById(track.Id!)
+                uri: Client.api ? getImageApi(Client.api).getItemImageUrlById(track.Id!) : ""
             }
         }
     })     
