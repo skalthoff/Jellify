@@ -322,14 +322,14 @@ const PlayerContextInitializer = () => {
 
     //#region useEffects
     useEffect(() => {
-        if (queue)
+        if (initialized && queue)
             storage.set(MMKVStorageKeys.PlayQueue, JSON.stringify(queue))
     }, [
         queue
     ])
 
     useEffect(() => {
-        if (nowPlaying)
+        if (initialized && nowPlaying)
             storage.set(MMKVStorageKeys.NowPlaying, JSON.stringify(nowPlaying))
     }, [
         nowPlaying
@@ -345,7 +345,10 @@ const PlayerContextInitializer = () => {
         }
 
         setInitialized(true);
-    })
+    }, [
+        queue,
+        nowPlaying
+    ])
     //#endregion useEffects
 
     //#region return
