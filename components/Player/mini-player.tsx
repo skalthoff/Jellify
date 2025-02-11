@@ -28,18 +28,16 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
         }}>
             { nowPlaying && (
 
-                <XStack 
-                    alignItems="center"
-                    margin={0}
-                    padding={0}
-                    height={"$6"} 
-                    onPress={() => navigation.navigate("Player")}
-                >
-                    {/** Memoize TextTickers otherwise they won't animate due to the progress being updated in the PlayerContext */}
-                    { useMemo(() => {
+                    useMemo(() => {
                         return (
-                            <View>
-                                <YStack
+                            <XStack 
+                                alignItems="center"
+                                margin={0}
+                                padding={0}
+                                height={"$6"} 
+                                onPress={() => navigation.navigate("Player")}
+                            >
+                            <YStack
                                     alignContent="center"
                                     flex={1}>
                                         <BlurhashedImage
@@ -79,13 +77,13 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                                         onPress={() => useSkip.mutate(undefined)}
                                         />
                                 </XStack>
-                            </View>
+                            </XStack>
                         )
                     }, [
                         nowPlaying
-                    ])}
-                </XStack>
-            )}
+                    ])
+                )
+            }        
         </View>
     )
 }
