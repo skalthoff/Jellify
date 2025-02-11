@@ -5,7 +5,8 @@ import { H2 } from "../../../components/Global/helpers/text";
 import { StackParamList } from "../../../components/types";
 import React from "react";
 import { FlatList } from "react-native";
-import { View } from "tamagui";
+import { getToken, View, XStack, YStack } from "tamagui";
+import Icon from "../../../components/Global/helpers/icon";
 
 export default function Playlists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
 
@@ -13,13 +14,20 @@ export default function Playlists({ navigation }: { navigation: NativeStackNavig
 
     return (
         <View>
-            <H2 marginLeft={"$2"}>Your Playlists</H2>
+            <XStack justifyContent="space-between" alignContent="center" marginHorizontal={"$2"}>
+                <H2>Your Playlists</H2>
+
+                <YStack justifyContent="center" alignContent="flex-end" marginTop={7}>
+                    <Icon name="plus-circle-outline" color={getToken("$color.telemagenta")} onPress={() => navigation.navigate('AddPlaylist')}/>
+                </YStack>
+            </XStack>
             <FlatList horizontal
                 data={playlists}
                 renderItem={({ item: playlist }) => {
                     return (
                         <ItemCard
                             item={playlist}
+                            squared
                             caption={playlist.Name ?? "Untitled Playlist"}
                             onPress={() => {
                                 navigation.navigate('Playlist', {

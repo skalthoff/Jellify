@@ -74,8 +74,9 @@ export default function Track({
                     }
                 }
                 paddingVertical={"$2"}
-                marginHorizontal={"$2"}
+                marginHorizontal={"$1"}
             >
+
                 { prependElement && (
                     <YStack 
                         alignContent="center"
@@ -85,17 +86,18 @@ export default function Track({
                         { prependElement }
                     </YStack>
                 )}
+
                 <XStack 
                     alignContent="center" 
                     justifyContent="center" 
-                    flex={showArtwork ? 3 : 1}
+                    flex={showArtwork ? 2 : 1}
                     minHeight={showArtwork ? width / 9 : "unset"}
                 >
                     { showArtwork ? (
                         <BlurhashedImage
                             item={track}
                             width={width / 9}
-                            cornered
+                            borderRadius={2}
                         />
                     ) : (
                     <Text 
@@ -134,7 +136,7 @@ export default function Track({
                     alignItems="center"
                     justifyContent="space-between" 
                     alignContent="center" 
-                    flex={4}
+                    flex={3}
                 >
                     <YStack
                         alignContent="center"

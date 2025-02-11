@@ -36,7 +36,7 @@ export function H1({ children }: { children: string }): React.JSX.Element {
 export function H2(props: TamaguiTextProps): React.JSX.Element {
     return (
         <TamaguiH2 
-            fontWeight={900}
+            fontWeight={800}
             marginVertical={7} 
             {...props}
         >

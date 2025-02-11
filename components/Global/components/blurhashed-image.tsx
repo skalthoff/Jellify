@@ -10,7 +10,7 @@ interface BlurhashLoadingProps {
     width: number;
     height?: number;
     type?: ImageType; 
-    cornered?: boolean | undefined
+    borderRadius?: number | undefined
 }
 
 export default function BlurhashedImage({ 
@@ -18,7 +18,7 @@ export default function BlurhashedImage({
     width, 
     height,
     type,
-    cornered
+    borderRadius
 } : BlurhashLoadingProps) : React.JSX.Element {
 
     const { data: image, isSuccess } = useItemImage(item.Id!, type, width, height ?? width);
@@ -29,7 +29,7 @@ export default function BlurhashedImage({
         : undefined;
 
     return (
-        <View minHeight={height ?? width} minWidth={width} borderRadius={cornered ? 2: 25}>
+        <View minHeight={height ?? width} minWidth={width} borderRadius={borderRadius ? borderRadius : 25}>
 
             { isSuccess ? (
                 <Image 
@@ -39,7 +39,7 @@ export default function BlurhashedImage({
                     style={{
                         height: height ?? width,
                         width,
-                        borderRadius: cornered ? 2 : 25,
+                        borderRadius: borderRadius ? borderRadius : 25,
                         resizeMode: "contain"
                     }} 
                 />
@@ -47,7 +47,7 @@ export default function BlurhashedImage({
                 <Blurhash blurhash={blurhash!} style={{ 
                     height: height ?? width, 
                     width: width,
-                    borderRadius: cornered ? 2 : 25 
+                    borderRadius: borderRadius ? borderRadius : 25 
                 }} />
             )
         }

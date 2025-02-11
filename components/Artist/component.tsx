@@ -62,7 +62,7 @@ export default function Artist({
                                 caption={album.Name}
                                 subCaption={album.ProductionYear?.toString()}
                                 width={(width / 1.1) / columns}
-                                cornered 
+                                squared 
                                 item={album}
                                 onPress={() => {
                                     navigation.navigate('Album', {

@@ -139,10 +139,10 @@ export default function TrackOptions({
                                             <YStack flex={1}>
 
                                                 <BlurhashedImage
-                                                    cornered
+                                                    borderRadius={2}
                                                     item={playlist}
                                                     width={width / 6}
-                                                    />
+                                                />
                                             </YStack>
 
                                             <YStack 

@@ -4,6 +4,16 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 export type StackParamList = {
     Home: undefined;
+    AddPlaylist: undefined;
+    RecentArtists: {
+        artists: BaseItemDto[]
+    };
+    RecentTracks: {
+        tracks: BaseItemDto[]
+    };
+    UserPlaylists: {
+        playlists: BaseItemDto[]
+    };
 
     Discover: undefined;
 
@@ -43,13 +53,18 @@ export type StackParamList = {
     }
 }
 
+export type TabProps = NativeStackScreenProps<StackParamList, 'Tabs'>;
+export type PlayerProps = NativeStackScreenProps<StackParamList, 'Player'>;
+
 export type ProvidedHomeProps = NativeStackScreenProps<StackParamList, 'Home'>;
+export type AddPlaylistProps = NativeStackScreenProps<StackParamList, 'AddPlaylist'>;
+export type RecentArtistsProps = NativeStackScreenProps<StackParamList, 'RecentArtists'>;
+export type RecentTracksProps = NativeStackScreenProps<StackParamList, 'RecentTracks'>;
+export type UserPlaylistsProps = NativeStackScreenProps<StackParamList, 'UserPlaylists'>;
 
 export type DiscoverProps = NativeStackScreenProps<StackParamList, 'Discover'>;
 
-export type TabProps = NativeStackScreenProps<StackParamList, 'Tabs'>;
 
-export type PlayerProps = NativeStackScreenProps<StackParamList, 'Player'>;
 
 export type HomeArtistProps = NativeStackScreenProps<StackParamList, 'Artist'>;
 
@@ -65,9 +80,9 @@ export type ArtistsProps = NativeStackScreenProps<StackParamList, "Artists">;
 
 export type AlbumsProps = NativeStackScreenProps<StackParamList, "Albums">;
 
-export type PlaylistsProps = NativeStackScreenProps<StackParamList, "Playlists">;
+export type FavoritePlaylistsProps = NativeStackScreenProps<StackParamList, "Playlists">;
 
-export type TracksProps = NativeStackScreenProps<StackParamList, "Tracks">;
+export type FavoriteTracksProps = NativeStackScreenProps<StackParamList, "Tracks">;
 
 export type GenresProps = NativeStackScreenProps<StackParamList, "Genres">;
 

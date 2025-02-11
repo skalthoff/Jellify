@@ -51,17 +51,39 @@ export default function Playlist({
         }
     });
 
+    // If we've got the playlist tracks, set our component state
     useEffect(() => {
         if (!isPending && isSuccess)
             setPlaylistTracks(tracks);
     }, [
         isPending,
         isSuccess
-    ])
+    ]);
+
+    // Refresh playlist tracks if we've finished editing
+    useEffect(() => {
+        if (!editing)
+            refetch();
+    }, [
+        editing
+    ]);
+
 
     const useUpdatePlaylist = useMutation({
         mutationFn: ({ playlist, tracks }: { playlist: BaseItemDto, tracks: BaseItemDto[] }) => {
             return updatePlaylist(playlist.Id!, playlist.Name!, tracks.map(track => track.Id!))
+        },
+        onSuccess: () => {
+            trigger('notificationSuccess');
+
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.ItemTracks, playlist.Id, false]
+            })
+        },
+        onError: () => {
+            trigger('notificationError');
+
+            setPlaylistTracks(tracks ?? []);
         }
     })
 
@@ -76,7 +98,7 @@ export default function Playlist({
             trigger("notificationSuccess");
 
             queryClient.invalidateQueries({
-                queryKey: [QueryKeys.ItemTracks, playlist.Id]
+                queryKey: [QueryKeys.ItemTracks, playlist.Id, false]
             })
         },
         onError: () => {
