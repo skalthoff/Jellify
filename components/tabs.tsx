@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 
 export function Tabs() : React.JSX.Element {
 
-    const { showMiniplayer } = usePlayerContext();
+    const { nowPlaying } = usePlayerContext();
 
     return (
             <Tab.Navigator
@@ -26,7 +26,7 @@ export function Tabs() : React.JSX.Element {
                 }}
                 tabBar={(props) => (
                     <>
-                        { showMiniplayer && (
+                        { nowPlaying && (
                             /* Hide miniplayer if the queue is empty */
                             <>
                                 <Separator />

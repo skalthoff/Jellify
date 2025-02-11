@@ -20,10 +20,7 @@ import { AddToQueueMutation, QueueMutation, QueueOrderMutation } from "./interfa
 import { Section } from "../components/Player/types";
 
 interface PlayerContext {
-    showPlayer: boolean;
-    setShowPlayer: React.Dispatch<SetStateAction<boolean>>;
-    showMiniplayer: boolean;
-    setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
+    initialized: boolean;
     nowPlayingIsFavorite: boolean;
     setNowPlayingIsFavorite: React.Dispatch<SetStateAction<boolean>>;
     nowPlaying: JellifyTrack | undefined;
@@ -52,9 +49,6 @@ const PlayerContextInitializer = () => {
     
     //#region State
     const [initialized, setInitialized] = useState<boolean>(false);
-
-    const [showPlayer, setShowPlayer] = useState<boolean>(false);
-    const [showMiniplayer, setShowMiniplayer] = useState<boolean>(false);
 
     const [nowPlayingIsFavorite, setNowPlayingIsFavorite] = useState<boolean>(false);
     const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(nowPlayingJson ? JSON.parse(nowPlayingJson) : undefined);
@@ -88,9 +82,7 @@ const PlayerContextInitializer = () => {
     const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
         console.debug("Clearing queue")
         await TrackPlayer.reset();
-        setQueue([]);
-        
-        setShowMiniplayer(!hideMiniplayer)
+        setQueue([]);        
     }
     
     const addToQueue = async (tracks: JellifyTrack[]) => {
@@ -100,8 +92,6 @@ const PlayerContextInitializer = () => {
         await TrackPlayer.add(tracks, insertIndex);
         
         setQueue(await getQueue() as JellifyTrack[])
-        
-        setShowMiniplayer(true);
     }
 
     const addToNext = async (tracks: JellifyTrack[]) => {
@@ -112,8 +102,6 @@ const PlayerContextInitializer = () => {
         await TrackPlayer.add(tracks, insertIndex);
 
         setQueue(await getQueue() as JellifyTrack[]);
-
-        setShowMiniplayer(true);
     }
     //#endregion Functions
     
@@ -304,13 +292,6 @@ const PlayerContextInitializer = () => {
     });
 
     useEffect(() => {
-        if (!showMiniplayer)
-            setNowPlaying(undefined);
-    }, [
-        showMiniplayer
-    ])
-
-    useEffect(() => {
         if (isPlayerReady)
           console.debug("Player is ready")
         else
@@ -341,7 +322,6 @@ const PlayerContextInitializer = () => {
                 .then(() => {
                     TrackPlayer.skip(queue.findIndex(track => track.item.Id! === nowPlaying.item.Id!));
                 });
-            setShowMiniplayer(true);
         }
 
         setInitialized(true);
@@ -353,10 +333,7 @@ const PlayerContextInitializer = () => {
 
     //#region return
     return {
-        showPlayer,
-        setShowPlayer,
-        showMiniplayer,
-        setShowMiniplayer,
+        initialized,
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying,
@@ -380,10 +357,7 @@ const PlayerContextInitializer = () => {
 
 //#region Create PlayerContext
 export const PlayerContext = createContext<PlayerContext>({
-    showPlayer: false,
-    setShowPlayer: () => {},
-    showMiniplayer: false,
-    setShowMiniplayer: () => {},
+    initialized: false,
     nowPlayingIsFavorite: false,
     setNowPlayingIsFavorite: () => {},
     nowPlaying: undefined,
@@ -559,10 +533,7 @@ export const PlayerContext = createContext<PlayerContext>({
 
 export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
     const { 
-        showPlayer, 
-        setShowPlayer, 
-        showMiniplayer, 
-        setShowMiniplayer, 
+        initialized,
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying,
@@ -583,10 +554,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
     } = PlayerContextInitializer();
 
     return <PlayerContext.Provider value={{
-        showPlayer,
-        setShowPlayer,
-        showMiniplayer,
-        setShowMiniplayer,
+        initialized,
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying,
