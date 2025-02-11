@@ -30,6 +30,7 @@ export default function FavoritePlaylists({ navigation }: FavoritePlaylistsProps
                             navigation.navigate("Playlist", { playlist })
                         }}
                         width={width / 2.1}
+                        squared
                     />
                 )
             }}
