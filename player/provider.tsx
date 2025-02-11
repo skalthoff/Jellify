@@ -275,7 +275,7 @@ const PlayerContextInitializer = () => {
 
             case (Event.PlaybackActiveTrackChanged) : {
 
-                if (!isSkipping) {
+                if (initialized && !isSkipping) {
                     const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack | undefined;
                     if (activeTrack && !isEqual(activeTrack, nowPlaying)) {    
                         setNowPlaying(activeTrack);
