@@ -2,12 +2,13 @@ import Icon from "../../../components/Global/helpers/icon";
 import { Label } from "../../../components/Global/helpers/text";
 import { Popover, Adapt, YStack, XStack, Input, getToken, Button } from "tamagui";
 
-export default function AddPlaylistPopover() : React.JSX.Element {
+export default function AddPlaylistPopover({
+    open
+}: {
+    open: boolean
+}) : React.JSX.Element {
     return (
-        <Popover size="$5">
-        <Popover.Trigger asChild>
-            <Icon name="plus-circle-outline" color={getToken("$color.telemagenta")} />
-        </Popover.Trigger>
+        <Popover open={open} size="$5">
   
         {/* {shouldAdapt && (
           <Adapt when="sm" platform="touch">
