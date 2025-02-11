@@ -12,4 +12,5 @@ export const useItemImage = (itemId: string, imageType: ImageType = ImageType.Pr
         Math.ceil(height / 100) * 100 // So these keys need to match
     ],
     queryFn: () => fetchItemImage(itemId, imageType, width, height),
+    retry: 3,
 });
