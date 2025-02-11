@@ -1,4 +1,4 @@
-import { Label } from "@/components/Global/helpers/text";
+import { Label } from "../../../components/Global/helpers/text";
 import Input from "../../../components/Global/helpers/input";
 import React from "react";
 import { View } from "tamagui";
