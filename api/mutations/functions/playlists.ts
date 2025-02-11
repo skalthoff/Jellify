@@ -44,9 +44,11 @@ export async function createPlaylist(name: string) {
 
     return getPlaylistsApi(Client.api!)
         .createPlaylist({
-            name,
             userId: Client.user!.id,
-            mediaType: MediaType.Audio
+            mediaType: MediaType.Audio,
+            createPlaylistDto: {
+                Name: name
+            }
         });
 }
 
