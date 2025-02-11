@@ -17,7 +17,7 @@ export default function Playlists({ navigation }: { navigation: NativeStackNavig
             <XStack justifyContent="space-between" alignContent="center" marginHorizontal={"$2"}>
                 <H2>Your Playlists</H2>
 
-                <XStack justifyContent="center" alignContent="center" marginTop={7}>
+                <XStack justifyContent="center" alignContent="flex-end" marginTop={7}>
                     <Icon name="plus-circle-outline" color={getToken("$color.telemagenta")} />
                 </XStack>
             </XStack>
