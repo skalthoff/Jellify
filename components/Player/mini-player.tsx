@@ -13,8 +13,6 @@ import BlurhashedImage from "../Global/components/blurhashed-image";
 
 export function Miniplayer({ navigation }: { navigation : NavigationHelpers<ParamListBase, BottomTabNavigationEventMap> }) : React.JSX.Element {
 
-    console.debug("Rendering miniplayer");
-
     const theme = useTheme();
 
     const { nowPlaying, useSkip } = usePlayerContext();

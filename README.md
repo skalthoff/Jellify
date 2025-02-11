@@ -48,6 +48,9 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 
 ![Album](screenshots/album.png)
 
+### Search
+![Search](screenshots/search.png)
+
 ### Player
 ![Player](screenshots/player.png)
 
