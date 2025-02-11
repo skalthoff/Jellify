@@ -306,6 +306,7 @@ const PlayerContextInitializer = () => {
             .then(() => {
                 TrackPlayer.skip(queue.findIndex(track => track.item.Id! === nowPlaying.item.Id!));
             });
+        setShowMiniplayer(true);
     }
 
     useEffect(() => {
