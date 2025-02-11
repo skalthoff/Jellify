@@ -66,7 +66,7 @@ export default function Home(): React.JSX.Element {
                 </HomeStack.Group>
 
                 {/* https://www.reddit.com/r/reactnative/comments/1dgktbn/comment/lxd23sj/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button */}
-                <HomeStack.Group screenOptions={{ presentation: 'formSheet', sheetInitialDetentIndex: 0, sheetAllowedDetents: [0.25] }}>
+                <HomeStack.Group screenOptions={{ presentation: 'formSheet', sheetInitialDetentIndex: 1, sheetAllowedDetents: [0.25, 0.5] }}>
                     <HomeStack.Screen
                         name="AddPlaylist"
                         component={AddPlaylist}
