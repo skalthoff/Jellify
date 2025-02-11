@@ -10,7 +10,7 @@ const CarPlayHome : ListTemplate = new ListTemplate({
     tabTitle: "Home",
     sections: [
         {
-            header: Client.user!.name,
+            header: `Hi ${Client.user?.name ?? "there"}`,
             items: [
                 { id: QueryKeys.RecentlyPlayedArtists, text: 'Recent Artists' },
                 { id: QueryKeys.RecentlyPlayed, text: 'Recently Played'},
