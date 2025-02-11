@@ -19,7 +19,6 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
                 renderItem={({ item: recentArtist}) => {
                     return (
                         <ItemCard 
-                            width={150}
                             item={recentArtist}
                             caption={recentArtist.Name ?? "Unknown Artist"}
                             onPress={() => {

@@ -27,8 +27,7 @@ export function ItemCard(props: CardProps) {
             >
             <TamaguiCard 
                 size="$4" 
-                circular={!!!props.squared}
-                borderRadius={props.squared ? 2 : "unset"}
+                borderRadius={props.squared ? 2 : 100}
                 animation="bouncy"
                 hoverStyle={props.onPress ? { scale: 0.925 } : {}}
                 pressStyle={props.onPress ? { scale: 0.875 } : {}}
