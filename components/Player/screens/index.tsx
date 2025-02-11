@@ -103,14 +103,20 @@ export default function PlayerScreen({
                         justifyContent="center"
                         alignContent="center"
                         minHeight={width / 1.1}
-                        onPress={() => {
-                            useTogglePlayback.mutate(undefined)
-                        }}
+                        // onPress={() => {
+                        //     useTogglePlayback.mutate(undefined)
+                        // }}
                     >
-                        <BlurhashedImage
-                            item={nowPlaying!.item}
-                            width={width / 1.1}
+                    { useMemo(() => {
+                        return (
+                            <BlurhashedImage
+                                item={nowPlaying!.item}
+                                width={width / 1.1}
                             />
+                        )
+                    }, [
+                        nowPlaying
+                    ])}
                     </XStack>
 
                     <XStack marginHorizontal={20} paddingVertical={5}>

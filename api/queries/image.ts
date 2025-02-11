@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/query-keys";
 import { fetchItemImage } from "./functions/images";
 import { ImageType } from "@jellyfin/sdk/lib/generated-client/models";
+import { QueryConfig } from "./query.config";
 
 export const useItemImage = (itemId: string, imageType: ImageType = ImageType.Primary, width: number = 150, height: number = 150) => useQuery({
     queryKey: [
@@ -12,5 +13,6 @@ export const useItemImage = (itemId: string, imageType: ImageType = ImageType.Pr
         Math.ceil(height / 100) * 100 // So these keys need to match
     ],
     queryFn: () => fetchItemImage(itemId, imageType, width, height),
-    retry: 3,
+    retry: 2,
+    staleTime: QueryConfig.staleTime.oneDay,
 });
