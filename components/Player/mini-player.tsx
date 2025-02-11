@@ -35,53 +35,55 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                     height={"$6"} 
                     onPress={() => navigation.navigate("Player")}
                 >
-                    <YStack
-                        alignContent="center"
-                        flex={1}>
-                            <BlurhashedImage
-                                item={nowPlaying!.item}
-                                width={width / 7}
-                                borderRadius={2}
-                            />
-
-                    </YStack>
-
-                        {/** Memoize TextTickers otherwise they won't animate due to the progress being updated in the PlayerContext */}
-                        { useMemo(() => {
-                            return (
-                                <YStack 
-                                    alignContent="flex-start" 
-                                    marginLeft={"$2"}
-                                    flex={4} 
-                                    maxWidth={"$20"}
-                                >
-                                    <TextTicker {...TextTickerConfig}>
-                                        <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
-                                    </TextTicker>
-
-                                    <TextTicker {...TextTickerConfig}>
-                                        <Text color={getTokens().color.telemagenta}>{nowPlaying?.artist ?? ""}</Text>
-                                    </TextTicker>
+                    {/** Memoize TextTickers otherwise they won't animate due to the progress being updated in the PlayerContext */}
+                    { useMemo(() => {
+                        return (
+                            <View>
+                                <YStack
+                                    alignContent="center"
+                                    flex={1}>
+                                        <BlurhashedImage
+                                            item={nowPlaying!.item}
+                                            width={width / 7}
+                                            borderRadius={2}
+                                            />
 
                                 </YStack>
-                            )
-                        }, [
-                            nowPlaying
-                        ])}
-                    
-                    <XStack 
-                        justifyContent="flex-end" 
-                        flex={2}
-                    >
-                        <PlayPauseButton />
 
-                        <Icon 
-                            large
-                            color={theme.borderColor.val}
-                            name="skip-next" 
-                            onPress={() => useSkip.mutate(undefined)}
-                            />
-                    </XStack>
+                                            <YStack 
+                                                alignContent="flex-start" 
+                                                marginLeft={"$2"}
+                                                flex={4} 
+                                                maxWidth={"$20"}
+                                                >
+                                                <TextTicker {...TextTickerConfig}>
+                                                    <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
+                                                </TextTicker>
+
+                                                <TextTicker {...TextTickerConfig}>
+                                                    <Text color={getTokens().color.telemagenta}>{nowPlaying?.artist ?? ""}</Text>
+                                                </TextTicker>
+
+                                            </YStack>
+                                
+                                <XStack 
+                                justifyContent="flex-end" 
+                                flex={2}
+                                >
+                                    <PlayPauseButton />
+
+                                    <Icon 
+                                        large
+                                        color={theme.borderColor.val}
+                                        name="skip-next" 
+                                        onPress={() => useSkip.mutate(undefined)}
+                                        />
+                                </XStack>
+                            </View>
+                        )
+                    }, [
+                        nowPlaying
+                    ])}
                 </XStack>
             )}
         </View>
