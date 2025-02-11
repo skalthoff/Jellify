@@ -1,6 +1,6 @@
 import React from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
-import { H5, Card as TamaguiCard, View } from "tamagui";
+import { getToken, H5, Card as TamaguiCard, View } from "tamagui";
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import invert from "invert-color"
 import { Blurhash } from "react-native-blurhash"
@@ -48,7 +48,7 @@ export function ItemCard(props: CardProps) {
                             />
                         )} */}
                 </TamaguiCard.Footer>
-                <TamaguiCard.Background>
+                <TamaguiCard.Background backgroundColor={getToken("$color.amethyst")}>
                 <BlurhashedImage
                         item={props.item}
                         width={dimensions.width}
