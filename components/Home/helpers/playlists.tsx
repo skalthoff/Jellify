@@ -5,7 +5,7 @@ import { H2 } from "../../../components/Global/helpers/text";
 import { StackParamList } from "../../../components/types";
 import React from "react";
 import { FlatList } from "react-native";
-import { getToken, View, XStack } from "tamagui";
+import { getToken, View, XStack, YStack } from "tamagui";
 import Icon from "../../../components/Global/helpers/icon";
 
 export default function Playlists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
@@ -17,9 +17,9 @@ export default function Playlists({ navigation }: { navigation: NativeStackNavig
             <XStack justifyContent="space-between" alignContent="center" marginHorizontal={"$2"}>
                 <H2>Your Playlists</H2>
 
-                <XStack justify="flex-end" alignContent="flex-start" marginTop={7}>
+                <YStack justifyContent="center" alignContent="flex-end" marginTop={7}>
                     <Icon name="plus-circle-outline" color={getToken("$color.telemagenta")} />
-                </XStack>
+                </YStack>
             </XStack>
             <FlatList horizontal
                 data={playlists}
