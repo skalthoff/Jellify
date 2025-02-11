@@ -20,6 +20,7 @@ export default function Playlists({ navigation }: { navigation: NativeStackNavig
                     return (
                         <ItemCard
                             item={playlist}
+                            squared
                             caption={playlist.Name ?? "Untitled Playlist"}
                             onPress={() => {
                                 navigation.navigate('Playlist', {
