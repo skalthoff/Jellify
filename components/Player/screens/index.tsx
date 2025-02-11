@@ -288,8 +288,8 @@ export default function PlayerScreen({
 
                                 setSeeking(true);
                                 setProgressState(progressState - (15 * ProgressMultiplier));
-                                useSeekTo.mutate(progress!.position - 15);
                                 setSeeking(false);
+                                useSeekTo.mutate(progress!.position - 15);
                             }}
                         />
                         
@@ -316,16 +316,14 @@ export default function PlayerScreen({
                             onPress={() => { 
                                 setSeeking(true);
                                 setProgressState(progressState + (15 * ProgressMultiplier));
-                                useSeekTo.mutate(progress!.position + 15);
                                 setSeeking(false);
+                                useSeekTo.mutate(progress!.position + 15);
                             }}  
                         />              
                     </XStack>
 
                     <XStack justifyContent="space-evenly" marginVertical={"$7"}>
-                        <Icon
-                            name="speaker-multiple"
-                            large
+                        <Icon name="speaker-multiple"
                         />
 
                         <Spacer />
@@ -335,7 +333,6 @@ export default function PlayerScreen({
                             onPress={() => {
                                 navigation.navigate("Queue");
                             }}
-                            large
                         />
                     </XStack>
                 </YStack>

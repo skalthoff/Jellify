@@ -27,7 +27,7 @@ export default function RecentlyPlayed({
                         <ItemCard
                             caption={recentlyPlayedTrack.Name}
                             subCaption={`${recentlyPlayedTrack.Artists?.join(", ")}`}
-                            cornered
+                            squared
                             width={150}
                             item={recentlyPlayedTrack}
                             onPress={() => {
