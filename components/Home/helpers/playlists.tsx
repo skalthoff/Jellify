@@ -17,7 +17,7 @@ export default function Playlists({ navigation }: { navigation: NativeStackNavig
             <XStack alignContent="center" marginHorizontal={"$2"}>
                 <H2 flex={4} textAlign="left">Your Playlists</H2>
 
-                <YStack flex={1} justifyContent="center" alignContent="flex-start" marginTop={7}>
+                <YStack flex={1} justifyContent="center" alignContent="center" marginTop={7}>
                     <Icon name="plus-circle-outline" color={getToken("$color.amethyst")} onPress={() => navigation.navigate('AddPlaylist')}/>
                 </YStack>
             </XStack>
