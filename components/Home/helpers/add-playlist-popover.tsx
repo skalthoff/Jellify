@@ -1,7 +1,6 @@
 import Icon from "../../../components/Global/helpers/icon";
-import Button from "../../../components/Global/helpers/button";
 import { Label } from "../../../components/Global/helpers/text";
-import { Popover, Adapt, YStack, XStack, Input, getToken } from "tamagui";
+import { Popover, Adapt, YStack, XStack, Input, getToken, Button } from "tamagui";
 
 export default function AddPlaylistPopover() : React.JSX.Element {
     return (
