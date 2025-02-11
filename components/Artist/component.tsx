@@ -43,6 +43,7 @@ export default function Artist({
             alignContent="center">
             <YStack alignContent="center" justifyContent="center" minHeight={bannerHeight}>
                 <BlurhashedImage
+                    borderRadius={0}
                     item={artist}
                     width={width}
                 />
