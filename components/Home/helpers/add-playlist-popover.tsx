@@ -1,6 +1,6 @@
+import Icon from "../../../components/Global/helpers/icon";
 import Button from "../../../components/Global/helpers/button";
 import { Label } from "../../../components/Global/helpers/text";
-import { Icon } from "react-native-vector-icons/Icon";
 import { Popover, Adapt, YStack, XStack, Input, getToken } from "tamagui";
 
 export default function AddPlaylistPopover() : React.JSX.Element {
