@@ -4,7 +4,7 @@ import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayNextIndexStart, findPlayQueueIndexStart } from "./helpers/index";
 import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
-import _, { isEqual, isUndefined } from "lodash";
+import { isEqual, isUndefined } from "lodash";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
 import { useSetupPlayer, useUpdateOptions } from "../player/hooks";
@@ -20,10 +20,7 @@ import { AddToQueueMutation, QueueMutation, QueueOrderMutation } from "./interfa
 import { Section } from "../components/Player/types";
 
 interface PlayerContext {
-    showPlayer: boolean;
-    setShowPlayer: React.Dispatch<SetStateAction<boolean>>;
-    showMiniplayer: boolean;
-    setShowMiniplayer: React.Dispatch<SetStateAction<boolean>>;
+    initialized: boolean;
     nowPlayingIsFavorite: boolean;
     setNowPlayingIsFavorite: React.Dispatch<SetStateAction<boolean>>;
     nowPlaying: JellifyTrack | undefined;
@@ -51,8 +48,7 @@ const PlayerContextInitializer = () => {
     const playStateApi = getPlaystateApi(Client.api!)
     
     //#region State
-    const [showPlayer, setShowPlayer] = useState<boolean>(false);
-    const [showMiniplayer, setShowMiniplayer] = useState<boolean>(false);
+    const [initialized, setInitialized] = useState<boolean>(false);
 
     const [nowPlayingIsFavorite, setNowPlayingIsFavorite] = useState<boolean>(false);
     const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(nowPlayingJson ? JSON.parse(nowPlayingJson) : undefined);
@@ -86,9 +82,7 @@ const PlayerContextInitializer = () => {
     const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
         console.debug("Clearing queue")
         await TrackPlayer.reset();
-        setQueue([]);
-        
-        setShowMiniplayer(!hideMiniplayer)
+        setQueue([]);        
     }
     
     const addToQueue = async (tracks: JellifyTrack[]) => {
@@ -98,8 +92,6 @@ const PlayerContextInitializer = () => {
         await TrackPlayer.add(tracks, insertIndex);
         
         setQueue(await getQueue() as JellifyTrack[])
-        
-        setShowMiniplayer(true);
     }
 
     const addToNext = async (tracks: JellifyTrack[]) => {
@@ -110,8 +102,6 @@ const PlayerContextInitializer = () => {
         await TrackPlayer.add(tracks, insertIndex);
 
         setQueue(await getQueue() as JellifyTrack[]);
-
-        setShowMiniplayer(true);
     }
     //#endregion Functions
     
@@ -273,7 +263,7 @@ const PlayerContextInitializer = () => {
 
             case (Event.PlaybackActiveTrackChanged) : {
 
-                if (!isSkipping) {
+                if (initialized && !isSkipping) {
                     const activeTrack = await TrackPlayer.getActiveTrack() as JellifyTrack | undefined;
                     if (activeTrack && !isEqual(activeTrack, nowPlaying)) {    
                         setNowPlaying(activeTrack);
@@ -299,15 +289,7 @@ const PlayerContextInitializer = () => {
                 }
             }
         }
-    })
-
-
-    useEffect(() => {
-        if (!showMiniplayer)
-            setNowPlaying(undefined);
-    }, [
-        showMiniplayer
-    ])
+    });
 
     useEffect(() => {
         if (isPlayerReady)
@@ -321,18 +303,37 @@ const PlayerContextInitializer = () => {
 
     //#region useEffects
     useEffect(() => {
-        storage.set(MMKVStorageKeys.PlayQueue, JSON.stringify(queue))
+        if (initialized && queue)
+            storage.set(MMKVStorageKeys.PlayQueue, JSON.stringify(queue))
     }, [
         queue
+    ])
+
+    useEffect(() => {
+        if (initialized && nowPlaying)
+            storage.set(MMKVStorageKeys.NowPlaying, JSON.stringify(nowPlaying))
+    }, [
+        nowPlaying
+    ])
+
+    useEffect(() => {
+        if (!initialized && queue.length > 0 && nowPlaying) {
+            TrackPlayer.setQueue(queue)
+                .then(() => {
+                    TrackPlayer.skip(queue.findIndex(track => track.item.Id! === nowPlaying.item.Id!));
+                });
+        }
+
+        setInitialized(true);
+    }, [
+        queue,
+        nowPlaying
     ])
     //#endregion useEffects
 
     //#region return
     return {
-        showPlayer,
-        setShowPlayer,
-        showMiniplayer,
-        setShowMiniplayer,
+        initialized,
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying,
@@ -356,10 +357,7 @@ const PlayerContextInitializer = () => {
 
 //#region Create PlayerContext
 export const PlayerContext = createContext<PlayerContext>({
-    showPlayer: false,
-    setShowPlayer: () => {},
-    showMiniplayer: false,
-    setShowMiniplayer: () => {},
+    initialized: false,
     nowPlayingIsFavorite: false,
     setNowPlayingIsFavorite: () => {},
     nowPlaying: undefined,
@@ -535,10 +533,7 @@ export const PlayerContext = createContext<PlayerContext>({
 
 export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
     const { 
-        showPlayer, 
-        setShowPlayer, 
-        showMiniplayer, 
-        setShowMiniplayer, 
+        initialized,
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying,
@@ -559,10 +554,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
     } = PlayerContextInitializer();
 
     return <PlayerContext.Provider value={{
-        showPlayer,
-        setShowPlayer,
-        showMiniplayer,
-        setShowMiniplayer,
+        initialized,
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying,

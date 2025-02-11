@@ -28,7 +28,7 @@ const JellifyContextInitializer = () => {
       function onConnect() {
         setCarPlayConnected(true);
         CarPlay.setRootTemplate(CarPlayNavigation, true);
-        CarPlay.enableNowPlaying(true);
+        // CarPlay.enableNowPlaying(true); // https://github.com/birkir/react-native-carplay/issues/185
       }
   
       function onDisconnect() {
