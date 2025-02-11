@@ -5,8 +5,8 @@ import { H2 } from "../../../components/Global/helpers/text";
 import { StackParamList } from "../../../components/types";
 import React from "react";
 import { FlatList } from "react-native";
-import { getToken, View, XStack, YStack } from "tamagui";
-import Icon from "../../../components/Global/helpers/icon";
+import { View, XStack, YStack } from "tamagui";
+import AddPlaylistPopover from "./add-playlist-popover";
 
 export default function Playlists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
 
@@ -18,7 +18,8 @@ export default function Playlists({ navigation }: { navigation: NativeStackNavig
                 <H2>Your Playlists</H2>
 
                 <YStack justifyContent="center" alignContent="flex-end" marginTop={7}>
-                    <Icon name="plus-circle-outline" color={getToken("$color.telemagenta")} />
+                    {/* <Icon name="plus-circle-outline" color={getToken("$color.telemagenta")} /> */}
+                    <AddPlaylistPopover />
                 </YStack>
             </XStack>
             <FlatList horizontal
