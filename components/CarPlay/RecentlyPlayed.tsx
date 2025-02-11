@@ -1,4 +1,4 @@
-import Client from "@/api/client";
+import Client from "../../api/client";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import { GridTemplate } from "react-native-carplay";
