@@ -71,7 +71,11 @@ export default function Home(): React.JSX.Element {
                         name="AddPlaylist"
                         component={AddPlaylist}
                         options={{
-
+                            title: "Add Playlist",
+                            headerLargeTitle: true,
+                            headerLargeTitleStyle: {
+                                fontFamily: 'Aileron-Bold'
+                            }
                         }}
                     />
                 </HomeStack.Group>
