@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { FlatList } from "react-native";
 import { getToken, View, XStack, YStack } from "tamagui";
 import AddPlaylistPopover from "./add-playlist-popover";
-import Icon from "@/components/Global/helpers/icon";
+import Icon from "../../../components/Global/helpers/icon";
 
 export default function Playlists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
 
