@@ -10,14 +10,17 @@ import { PlayerProvider } from "../player/provider";
 import { useColorScheme } from "react-native";
 import { PortalProvider } from "@tamagui/portal";
 import { JellifyProvider, useJellifyContext } from "./provider";
+import { ToastProvider } from "@tamagui/toast";
 
 export default function Jellify(): React.JSX.Element {
 
   return (
     <PortalProvider shouldAddRootHost>
-      <JellifyProvider>
-        <App />
-      </JellifyProvider>
+      <ToastProvider>
+        <JellifyProvider>
+          <App />
+        </JellifyProvider>
+      </ToastProvider>
     </PortalProvider>
   );
 }
