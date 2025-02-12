@@ -10,9 +10,9 @@ export const CarPlayRecentlyPlayed = (recentTracks : BaseItemDto[]) => new ListT
         return {
             id: track.Id!,
             text: track.Name ? track.Name : "Untitled Track",
-            image: {
-                uri: `file://${getImageFilePath(track.Id!, 150, 150, ImageType.Primary)}`
-            }
+            // image: {
+            //     uri: `file://${getImageFilePath(track.Id!, 150, 150, ImageType.Primary)}`
+            // }
         }
     })     
 })
