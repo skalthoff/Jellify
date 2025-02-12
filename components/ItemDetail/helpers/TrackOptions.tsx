@@ -36,7 +36,7 @@ export default function TrackOptions({
 
     const { data: album, isSuccess: albumFetchSuccess } = useItem(track.AlbumId ?? "");
 
-    const { data: playlists, isPending : playlistsFetchPending, isSuccess: playlistsFetchSuccess } = useUserPlaylists();
+    const { data: playlists, isPending : playlistsFetchPending, isSuccess: playlistsFetchSuccess, refetch } = useUserPlaylists();
 
     const { useAddToQueue } = usePlayerContext();
 
@@ -117,9 +117,9 @@ export default function TrackOptions({
                                 onSuccess: (data, { playlist }) => {
                                     trigger("notificationSuccess")
 
-                                    queryClient.invalidateQueries({
-                                        queryKey: [QueryKeys.ItemTracks, playlist.Id!, false],
-                                    });
+                                    refetch();
+
+
                                 },
                                 onError: () => {
                                     trigger("notificationError")
