@@ -80,9 +80,10 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 ### 💜 Love from Wisconsin 🧀
 This is undoubtedly a passion project of [mine](https://github.com/anultravioletaurora), and I've learned a lot from working on it (and the many failed attempts before it). I hope you enjoy using it! Feature requests and bug reports are welcome :)
 
+
 ## 🙏 Special Thanks To
 - The [Jellyfin Team](https://jellyfin.org/) for their amazing server software, SDKs, and documentation
 - All contributors of [Finamp](https://github.com/jmshrv/finamp). *Jellify* draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin
 - The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
 - Tony, Trevor, [Laine](https://github.com/lainie-ftw) and [Jordan](https://github.com/jordanbleu) for their testing and feedback from the early stages of development
-- Alyssa, for your artistic abilities and the artwork you made for *Jellify*. It gave it the flair it undoubtedly needed
+- [Alyssa](https://www.instagram.com/uhh.lyssarae?igsh=MTRmczExempnbjBwZw==), for providing your artistic abilities and making the artwork for *Jellify*. It gives it the flair it undoubtedly needs
