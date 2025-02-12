@@ -41,9 +41,9 @@ export default function IconCard({
                         large={largeIcon}
                         small={!!!largeIcon}
                     />
+                    <H4 color={getTokens().color.purpleDark}>{ caption ?? "" }</H4>
                 </Card.Header>
                 <Card.Footer padded>
-                    <H4 color={getTokens().color.purpleDark}>{ caption ?? "" }</H4>
                 </Card.Footer>
                 <Card.Background 
                     backgroundColor={getTokens().color.telemagenta}
