@@ -21,14 +21,14 @@ const CarPlayHome : ListTemplate = new ListTemplate({
     onItemSelect: async ({ index }) => {
 
         switch (index) {
-            case 1: 
+            case 0: 
 
                 break;
-            case 2:
+            case 1:
                 const tracks = await fetchRecentlyPlayed()
                 CarPlay.pushTemplate(CarPlayRecentlyPlayed(tracks))
                 break;
-            case 3:
+            case 2:
 
                 break;
 
