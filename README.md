@@ -56,6 +56,10 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 
 ![Queue](screenshots/player_queue.png)
 
+### On the Server
+![image](https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc)
+
+
 ## 🏗 Built with:
 ### 🎨 Frontend
 [Tamagui](https://tamagui.dev/)\
