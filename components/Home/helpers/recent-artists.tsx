@@ -6,6 +6,7 @@ import { StackParamList } from "../../types";
 import { FlatList } from "react-native";
 import { ItemCard } from "../../Global/components/item-card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import HorizontalCardList from "../../../components/Global/components/horizontal-list";
 
 export default function RecentArtists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -14,8 +15,12 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
     return (
         <View>
             <H2 marginLeft={"$2"}>Recent Artists</H2>
-            <FlatList horizontal
-                data={recentArtists}   
+
+            <HorizontalCardList
+                items={recentArtists}
+                onSeeMore={() => {
+
+                }}
                 renderItem={({ item: recentArtist}) => {
                     return (
                         <ItemCard 
