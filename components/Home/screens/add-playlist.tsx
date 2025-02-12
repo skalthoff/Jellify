@@ -29,9 +29,10 @@ export default function AddPlaylist({
             Burnt.alert({
                 title: `Playlist created`,
                 message: `Created playlist ${name}`,
+                duration: 1,
                 preset: 'done'
             });
-            
+
             navigation.goBack();
 
             // Refresh user playlists component on home screen
