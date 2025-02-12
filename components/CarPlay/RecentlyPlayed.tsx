@@ -1,19 +1,17 @@
 import Client from "../../api/client";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import { GridTemplate } from "react-native-carplay";
+import { GridTemplate, ListTemplate } from "react-native-carplay";
 
-export const CarPlayRecentlyPlayed = (recentTracks : BaseItemDto[]) => new GridTemplate({
+export const CarPlayRecentlyPlayed = (recentTracks : BaseItemDto[]) => new ListTemplate({
     title: "Recently Played",
-    buttons: recentTracks.map(track => {
+    items: recentTracks.map(track => {
         return {
             id: track.Id!,
-            titleVariants: [
-                track.Name ? track.Name : "Untitled Track"
-            ],
-            image: {
-                uri: Client.api ? getImageApi(Client.api).getItemImageUrlById(track.Id!) : ""
-            }
+            text: track.Name ? track.Name : "Untitled Track",
+            imgUrls : [
+                Client.api ? getImageApi(Client.api).getItemImageUrlById(track.Id!) : ""
+            ]
         }
     })     
 })

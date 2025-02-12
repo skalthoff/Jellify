@@ -18,12 +18,21 @@ const CarPlayHome : ListTemplate = new ListTemplate({
             ]
         }
     ],
-    onItemSelect: async (item) => {
-        console.log(item);
+    onItemSelect: async ({ index }) => {
 
-        const tracks = await fetchRecentlyPlayed()
+        switch (index) {
+            case 1: 
 
-        CarPlay.pushTemplate(CarPlayRecentlyPlayed(tracks))
+                break;
+            case 2:
+                const tracks = await fetchRecentlyPlayed()
+                CarPlay.pushTemplate(CarPlayRecentlyPlayed(tracks))
+                break;
+            case 3:
+
+                break;
+
+        }
     }
 });
 
