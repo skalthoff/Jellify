@@ -119,7 +119,6 @@ export default function TrackOptions({
 
                                     queryClient.invalidateQueries({
                                         queryKey: [QueryKeys.ItemTracks, playlist.Id!, false],
-                                        exact: true
                                     });
                                 },
                                 onError: () => {
