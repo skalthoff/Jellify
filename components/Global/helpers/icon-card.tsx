@@ -27,8 +27,7 @@ export default function IconCard({
             >
             <Card 
                 animation="bouncy"
-                borderRadius={!circular ? 25 : undefined}
-                circular={circular}
+                borderRadius={25}
                 hoverStyle={{ scale: 0.925 }}
                 pressStyle={{ scale: 0.875 }}
                 width={width ? width : 150}
