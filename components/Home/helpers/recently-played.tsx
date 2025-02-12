@@ -27,7 +27,6 @@ export default function RecentlyPlayed({
                 { recentTracks && (
                     <YStack justifyContent="center" alignContent="center" marginTop={7} marginLeft={"$2"}>
                         <Icon 
-                            small
                             name="play-circle-outline" 
                             color={getToken("$color.telemagenta")} 
                             onPress={() => {
