@@ -115,11 +115,15 @@ export default function TrackOptions({
                                     return addToPlaylist(track, playlist)
                                 },
                                 onSuccess: (data, { playlist }) => {
-                                    trigger("notificationSuccess")
+                                    trigger("notificationSuccess");
 
-                                    refetch();
+                                    queryClient.invalidateQueries({
+                                        queryKey: [QueryKeys.UserPlaylists]
+                                    });
 
-
+                                    queryClient.invalidateQueries({
+                                        queryKey: [QueryKeys.ItemTracks, playlist.Id!, false],
+                                    });                                    
                                 },
                                 onError: () => {
                                     trigger("notificationError")
