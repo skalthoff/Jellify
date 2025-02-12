@@ -11,6 +11,7 @@ import { trigger } from "react-native-haptic-feedback";
 import { queryClient } from "../../../constants/query-client";
 import { QueryKeys } from "../../../enums/query-keys";
 
+import * as Burnt from "burnt";
 
 export default function AddPlaylist({ 
     navigation 
@@ -22,8 +23,15 @@ export default function AddPlaylist({
 
     const useAddPlaylist = useMutation({
         mutationFn: ({ name } : { name : string}) => createPlaylist(name),
-        onSuccess: () => {
-            trigger("notificationSuccess")
+        onSuccess: (data, { name }) => {
+            trigger("notificationSuccess");
+
+            Burnt.alert({
+                title: `Playlist created`,
+                message: `Created playlist ${name}`,
+                preset: 'done'
+            });
+            
             navigation.goBack();
 
             // Refresh user playlists component on home screen
