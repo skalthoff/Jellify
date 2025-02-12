@@ -4,6 +4,7 @@ import Icon from "./icon";
 
 interface IconCardProps {
     name: string;
+    circular?: boolean | undefined;
     onPress: () => void;
     width?: number | undefined
     caption?: string | undefined;
@@ -12,6 +13,7 @@ interface IconCardProps {
 
 export default function IconCard({ 
     name, 
+    circular = false,
     onPress,
     width,
     caption,
@@ -25,7 +27,8 @@ export default function IconCard({
             >
             <Card 
                 animation="bouncy"
-                borderRadius={25}
+                borderRadius={!circular ? 25 : undefined}
+                circular={circular}
                 hoverStyle={{ scale: 0.925 }}
                 pressStyle={{ scale: 0.875 }}
                 width={width ? width : 150}

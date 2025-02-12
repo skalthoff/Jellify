@@ -44,6 +44,7 @@ export default function HorizontalCardList({
                         ? "arrow-right-box" 
                         : "arrow-right-circle"
                     }
+                    circular
                     caption="See More"
                     onPress={onSeeMore}
                 />
