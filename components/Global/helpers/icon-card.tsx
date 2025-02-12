@@ -45,7 +45,10 @@ export default function IconCard({
                 <Card.Footer padded>
                     <H4 color={getTokens().color.purpleDark}>{ caption ?? "" }</H4>
                 </Card.Footer>
-                <Card.Background backgroundColor={getTokens().color.telemagenta}>
+                <Card.Background 
+                    backgroundColor={getTokens().color.telemagenta}
+                    borderRadius={circular ? 300 : 25}
+                >
 
                 </Card.Background>
             </Card>
