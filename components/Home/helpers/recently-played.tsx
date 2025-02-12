@@ -26,7 +26,7 @@ export default function RecentlyPlayed({
 
                 { recentTracks && (
                     <YStack justifyContent="center" alignContent="center" marginTop={7} marginLeft={"$2"}>
-                        <Icon name="play-circle-outline" color={getToken("$color.amethyst")} onPress={() => {
+                        <Icon name="play-circle-outline" color={getToken("$color.telemagenta")} onPress={() => {
                             usePlayNewQueue.mutate({ 
                                 track: recentTracks[0], 
                                 index: 0,

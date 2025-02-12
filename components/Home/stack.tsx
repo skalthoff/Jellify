@@ -69,7 +69,7 @@ export default function Home(): React.JSX.Element {
                 <HomeStack.Group screenOptions={{ 
                     presentation: 'formSheet', 
                     sheetInitialDetentIndex: 0, 
-                    sheetAllowedDetents: [0.25] 
+                    sheetAllowedDetents: [0.35] 
                 }}>
                     <HomeStack.Screen
                         name="AddPlaylist"
