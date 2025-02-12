@@ -8,7 +8,7 @@ import { StackParamList } from "../../../components/types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { trigger } from "react-native-haptic-feedback";
 import { QueuingType } from "../../../enums/queuing-type";
-import Icon from "@/components/Global/helpers/icon";
+import Icon from "../../../components/Global/helpers/icon";
 
 export default function RecentlyPlayed({ 
     navigation 
