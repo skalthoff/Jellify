@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, View } from "tamagui";
+import { getToken, ScrollView, View, XStack, YStack } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import { ItemCard } from "../../Global/components/item-card";
@@ -8,6 +8,7 @@ import { StackParamList } from "../../../components/types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { trigger } from "react-native-haptic-feedback";
 import { QueuingType } from "../../../enums/queuing-type";
+import Icon from "../../../components/Global/helpers/icon";
 
 export default function RecentlyPlayed({ 
     navigation 
@@ -20,7 +21,23 @@ export default function RecentlyPlayed({
 
     return (
         <View>
-            <H2 marginLeft={"$2"}>Play it again</H2>
+            <XStack alignContent="center" marginHorizontal="$2">
+                <H2 textAlign="left">Play it again</H2>
+
+                { recentTracks && (
+                    <YStack justifyContent="center" alignContent="center" marginTop={7} marginLeft={"$2"}>
+                        <Icon name="play-circle-outline" color={getToken("$color.amethyst")} onPress={() => {
+                            usePlayNewQueue.mutate({ 
+                                track: recentTracks[0], 
+                                index: 0,
+                                tracklist: recentTracks,
+                                queueName: "Recently Played",
+                                queuingType: QueuingType.FromSelection
+                            });
+                        }}/>
+                    </YStack>
+                )}
+            </XStack>
             <ScrollView horizontal>
                 { recentTracks && recentTracks.map((recentlyPlayedTrack, index) => {
                     return (
