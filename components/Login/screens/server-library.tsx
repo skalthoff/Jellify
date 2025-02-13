@@ -7,7 +7,7 @@ import _ from "lodash";
 import { useUserViews } from "../../../api/queries/libraries";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
-import { useJellifyContext } from "../../../components/provider";
+import { useJellifyContext } from "../../provider";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 export default function ServerLibrary(): React.JSX.Element {

@@ -4,18 +4,22 @@ import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
 import { Input, Spinner, YStack, ZStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
-import { H1 } from "../../Global/helpers/text";
+import { H2 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
 import { JellifyUser } from "../../../types/JellifyUser";
+import { ServerAuthenticationProps } from "../../../components/types";
 
-export default function ServerAuthentication(): React.JSX.Element {
+export default function ServerAuthentication({
+    route,
+    navigation,
+}: ServerAuthenticationProps): React.JSX.Element {
 
     const [username, setUsername] = useState<string | undefined>(undefined);
     const [password, setPassword] = React.useState<string | undefined>(undefined);
 
-    const { setUser, server, setServer } = useAuthenticationContext();
+    const { setUser, setServer } = useAuthenticationContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
@@ -42,7 +46,9 @@ export default function ServerAuthentication(): React.JSX.Element {
             }
 
             Client.setUser(user);
-            return setUser(user);
+            setUser(user);
+
+            navigation
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
@@ -52,9 +58,9 @@ export default function ServerAuthentication(): React.JSX.Element {
 
     return (
         <SafeAreaView>
-            <H1>
-                { `Sign in to ${server?.name ?? "Jellyfin"}`}
-            </H1>
+            <H2>
+                { `Sign in to ${route.params.server.name}`}
+            </H2>
             <Button onPress={() => { 
                 Client.switchServer()
                 setServer(undefined);
@@ -90,7 +96,7 @@ export default function ServerAuthentication(): React.JSX.Element {
                     onPress={() => {
                         
                         if (!_.isUndefined(username)) {
-                            console.log(`Signing in to ${server!.name}`);
+                            console.log(`Signing in...`);
                             useApiMutation.mutate({ username, password });
                         }
                     }}

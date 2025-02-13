@@ -13,8 +13,14 @@ import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
 import { useAuthenticationContext } from "../provider";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamList } from "@/components/types";
 
-export default function ServerAddress(): React.JSX.Element {
+export default function ServerAddress({ 
+    navigation
+}: {
+    navigation: NativeStackNavigationProp<StackParamList>
+}): React.JSX.Element {
 
     const [useHttps, setUseHttps] = useState<boolean>(true);
     const [serverAddress, setServerAddress] = useState<string | undefined>(undefined);
@@ -48,6 +54,8 @@ export default function ServerAddress(): React.JSX.Element {
 
             Client.setPublicApiClient(server);
             setServer(server);
+
+            navigation.navigate("ServerAuthentication", { server });
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
