@@ -10,13 +10,14 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../../components/types";
 import { QueuingType } from "../../../enums/queuing-type";
 import BlurhashedImage from "./blurhashed-image";
+import { Queue } from "../../../player/types/queue-item";
 
 interface TrackProps {
     track: BaseItemDto;
     navigation: NativeStackNavigationProp<StackParamList>;
     tracklist?: BaseItemDto[] | undefined;
     index?: number | undefined;
-    queueName?: string | undefined;
+    queue?: Queue;
     showArtwork?: boolean | undefined;
     onPress?: () => void | undefined;
     onLongPress?: () => void | undefined;
@@ -32,7 +33,7 @@ export default function Track({
     tracklist,
     navigation,
     index,
-    queueName,
+    queue,
     showArtwork,
     onPress,
     onLongPress,
@@ -45,7 +46,7 @@ export default function Track({
 
     const theme = useTheme();
     const { width } = useSafeAreaFrame();
-    const { nowPlaying, queue, usePlayNewQueue } = usePlayerContext();
+    const { nowPlaying, playQueue, usePlayNewQueue } = usePlayerContext();
 
     const isPlaying = nowPlaying?.item.Id === track.Id;
 
@@ -62,8 +63,8 @@ export default function Track({
                         usePlayNewQueue.mutate({
                             track,
                             index,
-                            tracklist: tracklist ?? queue.map((track) => track.item),
-                            queueName: queueName ? queueName : track.Album ? track.Album! : "Queue",
+                            tracklist: tracklist ?? playQueue.map((track) => track.item),
+                            queue: queue ? queue : "Queue",
                             queuingType: QueuingType.FromSelection
                         });
                     }

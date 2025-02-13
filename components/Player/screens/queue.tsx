@@ -12,7 +12,7 @@ import { FadeIn, FadeOut, ReduceMotion, SequencedTransition } from "react-native
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
-    const { queue, useClearQueue, useRemoveFromQueue, useReorderQueue, useSkip, nowPlaying } = usePlayerContext();
+    const { playQueue: queue, useClearQueue, useRemoveFromQueue, useReorderQueue, useSkip, nowPlaying } = usePlayerContext();
 
     navigation.setOptions({
         headerRight: () => {

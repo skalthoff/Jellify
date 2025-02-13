@@ -18,14 +18,15 @@ import { convertRunTimeTicksToSeconds } from "../helpers/runtimeticks";
 import Client from "../api/client";
 import { AddToQueueMutation, QueueMutation, QueueOrderMutation } from "./interfaces";
 import { Section } from "../components/Player/types";
+import { Queue } from "./types/queue-item";
 
 interface PlayerContext {
     initialized: boolean;
     nowPlayingIsFavorite: boolean;
     setNowPlayingIsFavorite: React.Dispatch<SetStateAction<boolean>>;
     nowPlaying: JellifyTrack | undefined;
-    queue: JellifyTrack[];
-    queueName: string | undefined;
+    playQueue: JellifyTrack[];
+    queue: Queue;
     getQueueSectionData: () => Section[];
     useAddToQueue: UseMutationResult<void, Error, AddToQueueMutation, unknown>;
     useClearQueue: UseMutationResult<void, Error, void, unknown>;
@@ -54,9 +55,9 @@ const PlayerContextInitializer = () => {
     const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(nowPlayingJson ? JSON.parse(nowPlayingJson) : undefined);
     const [isSkipping, setIsSkipping] = useState<boolean>(false);
 
-    const [queue, setQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
+    const [playQueue, setPlayQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
     
-    const [queueName, setQueueName] = useState<string | undefined>(undefined);
+    const [queue, setQueue] = useState<Queue>("Recently Played");
     //#endregion State
 
     
@@ -74,7 +75,7 @@ const PlayerContextInitializer = () => {
         return Object.keys(QueuingType).map((type) => {
             return {
                 title: type,
-                data: queue.filter(track => track.QueuingType === type)
+                data: playQueue.filter(track => track.QueuingType === type)
             } as Section
         });
     }
@@ -82,26 +83,26 @@ const PlayerContextInitializer = () => {
     const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
         console.debug("Clearing queue")
         await TrackPlayer.reset();
-        setQueue([]);        
+        setPlayQueue([]);        
     }
     
     const addToQueue = async (tracks: JellifyTrack[]) => {
-        const insertIndex = await findPlayQueueIndexStart(queue);
+        const insertIndex = await findPlayQueueIndexStart(playQueue);
         console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`)
         
         await TrackPlayer.add(tracks, insertIndex);
         
-        setQueue(await getQueue() as JellifyTrack[])
+        setPlayQueue(await getQueue() as JellifyTrack[])
     }
 
     const addToNext = async (tracks: JellifyTrack[]) => {
-        const insertIndex = await findPlayNextIndexStart(queue);
+        const insertIndex = await findPlayNextIndexStart(playQueue);
 
         console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`);
 
         await TrackPlayer.add(tracks, insertIndex);
 
-        setQueue(await getQueue() as JellifyTrack[]);
+        setPlayQueue(await getQueue() as JellifyTrack[]);
     }
     //#endregion Functions
     
@@ -124,7 +125,7 @@ const PlayerContextInitializer = () => {
 
             await TrackPlayer.remove([index]);
 
-            setQueue(await TrackPlayer.getQueue() as JellifyTrack[])
+            setPlayQueue(await TrackPlayer.getQueue() as JellifyTrack[])
         }
     })
 
@@ -134,13 +135,13 @@ const PlayerContextInitializer = () => {
 
             await TrackPlayer.removeUpcomingTracks();
 
-            setQueue(await getQueue() as JellifyTrack[]);
+            setPlayQueue(await getQueue() as JellifyTrack[]);
         }
     });
 
     const useReorderQueue = useMutation({
         mutationFn: async (mutation : QueueOrderMutation) => {
-            setQueue(mutation.newOrder);
+            setPlayQueue(mutation.newOrder);
             await TrackPlayer.move(mutation.from, mutation.to);
         }
     })
@@ -173,13 +174,13 @@ const PlayerContextInitializer = () => {
             trigger("impactMedium")
             if (!isUndefined(index)) {
                 setIsSkipping(true);
-                setNowPlaying(queue[index]);
+                setNowPlaying(playQueue[index]);
                 await skip(index);
                 setIsSkipping(false);
             }
             else {
-                const nowPlayingIndex = queue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
-                setNowPlaying(queue[nowPlayingIndex + 1])
+                const nowPlayingIndex = playQueue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
+                setNowPlaying(playQueue[nowPlayingIndex + 1])
                 await skipToNext();
             }
         }
@@ -189,10 +190,10 @@ const PlayerContextInitializer = () => {
         mutationFn: async () => {
             trigger("impactMedium");
 
-            const nowPlayingIndex = queue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
+            const nowPlayingIndex = playQueue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
 
             if (nowPlayingIndex > 0) {
-                setNowPlaying(queue[nowPlayingIndex - 1])
+                setNowPlaying(playQueue[nowPlayingIndex - 1])
                 await skipToPrevious();
             }
         }
@@ -212,7 +213,7 @@ const PlayerContextInitializer = () => {
                 return mapDtoToTrack(track, QueuingType.FromSelection)
             }));
             
-            setQueueName(mutation.queueName);
+            setQueue(mutation.queue);
         },
         onSuccess: async (data, mutation: QueueMutation) => {
             setIsSkipping(false);
@@ -303,10 +304,16 @@ const PlayerContextInitializer = () => {
 
     //#region useEffects
     useEffect(() => {
-        if (initialized && queue)
-            storage.set(MMKVStorageKeys.PlayQueue, JSON.stringify(queue))
+        storage.set(MMKVStorageKeys.Queue, JSON.stringify(playQueue))
     }, [
-        queue
+        playQueue
+    ])
+
+    useEffect(() => {
+        if (initialized && playQueue)
+            storage.set(MMKVStorageKeys.PlayQueue, JSON.stringify(playQueue))
+    }, [
+        playQueue
     ])
 
     useEffect(() => {
@@ -317,16 +324,16 @@ const PlayerContextInitializer = () => {
     ])
 
     useEffect(() => {
-        if (!initialized && queue.length > 0 && nowPlaying) {
-            TrackPlayer.setQueue(queue)
+        if (!initialized && playQueue.length > 0 && nowPlaying) {
+            TrackPlayer.setQueue(playQueue)
                 .then(() => {
-                    TrackPlayer.skip(queue.findIndex(track => track.item.Id! === nowPlaying.item.Id!));
+                    TrackPlayer.skip(playQueue.findIndex(track => track.item.Id! === nowPlaying.item.Id!));
                 });
         }
 
         setInitialized(true);
     }, [
-        queue,
+        playQueue,
         nowPlaying
     ])
     //#endregion useEffects
@@ -337,8 +344,8 @@ const PlayerContextInitializer = () => {
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying,
+        playQueue,
         queue,
-        queueName,
         getQueueSectionData,
         useAddToQueue,
         useClearQueue,
@@ -361,8 +368,8 @@ export const PlayerContext = createContext<PlayerContext>({
     nowPlayingIsFavorite: false,
     setNowPlayingIsFavorite: () => {},
     nowPlaying: undefined,
-    queue: [],
-    queueName: undefined,
+    playQueue: [],
+    queue: "Recently Played",
     getQueueSectionData: () => [],
     useAddToQueue: {
         mutate: () => {},
@@ -537,8 +544,8 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying,
-        queue, 
-        queueName,
+        playQueue, 
+        queue,
         getQueueSectionData,
         useAddToQueue,
         useClearQueue,
@@ -558,8 +565,8 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying,
+        playQueue,
         queue,
-        queueName,
         getQueueSectionData,
         useAddToQueue,
         useClearQueue,

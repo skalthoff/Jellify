@@ -154,7 +154,7 @@ export default function Playlist({
                         track={track}
                         tracklist={tracks!}
                         index={index}
-                        queueName={playlist.Name ?? "Untitled Playlist"}
+                        queue={playlist}
                         showArtwork
                         onLongPress={editing ? drag : undefined}
                     />
