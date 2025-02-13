@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { StackParamList } from "../types";
-import FavoritesScreen from "./component";
+import Library from "./component";
 import { ArtistScreen } from "../Artist/screens";
 import { AlbumScreen } from "../Album/screens";
 import { PlaylistScreen } from "../Playlist/screens";
@@ -13,14 +13,14 @@ import PlaylistsScreen from "../Playlists/screen";
 
 const FavoritesStack = createNativeStackNavigator<StackParamList>();
 
-export default function Favorites(): React.JSX.Element {
+export default function LibraryStack(): React.JSX.Element {
     return (
         <FavoritesStack.Navigator
             initialRouteName="Favorites"
         >
             <FavoritesStack.Screen
                 name="Favorites"
-                component={FavoritesScreen}
+                component={Library}
                 options={{
                     headerLargeTitle: true,
                     headerLargeTitleStyle: {
