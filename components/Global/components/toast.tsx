@@ -6,25 +6,23 @@ export default function Toast() : React.JSX.Element | null {
     
     if (!currentToast || currentToast.isHandledNatively) return null
     return (
-        <Theme name="inverted_purple">
-            <TamaguiToast
-                key={currentToast.id}
-                duration={currentToast.duration}
-                enterStyle={{ opacity: 0, scale: 0.5, y: -25 }}
-                exitStyle={{ opacity: 0, scale: 1, y: -20 }}
-                y={0}
-                opacity={1}
-                scale={1}
-                animation="200ms"
-                viewportName={currentToast.viewportName}
-                >
-                <YStack>
-                    <TamaguiToast.Title>{currentToast.title}</TamaguiToast.Title>
-                    {!!currentToast.message && (
-                        <TamaguiToast.Description>{currentToast.message}</TamaguiToast.Description>
-                    )}
-                </YStack>
-            </TamaguiToast>
-        </Theme>
-    )
+        <TamaguiToast
+            key={currentToast.id}
+            duration={currentToast.duration}
+            enterStyle={{ opacity: 0, scale: 0.5, y: -25 }}
+            exitStyle={{ opacity: 0, scale: 1, y: -20 }}
+            y={0}
+            opacity={1}
+            scale={1}
+            animation="200ms"
+            viewportName={currentToast.viewportName}
+            >
+            <YStack>
+                <TamaguiToast.Title>{currentToast.title}</TamaguiToast.Title>
+                {!!currentToast.message && (
+                    <TamaguiToast.Description>{currentToast.message}</TamaguiToast.Description>
+                )}
+            </YStack>
+        </TamaguiToast>
+       )
     }
