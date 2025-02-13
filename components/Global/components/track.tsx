@@ -169,14 +169,16 @@ export default function Track({
                         <Icon 
                             name={showRemove ? "close" : "dots-vertical"} 
                             onPress={() => {
-                                if (!!showRemove)
+                                if (!!showRemove) {
                                     if (onRemove)
                                         onRemove()
-                                else 
+                                }
+                                else {
                                     navigation.navigate("Details", {
                                         item: track,
                                         isNested: isNested
                                     });
+                                }
                             }} 
                         />
 
