@@ -27,6 +27,7 @@ const jellifyConfig = createTamagui({
     tokens,
     themes: {
       dark: {
+        shadowColor: tokens.color.purple,
         background: tokens.color.purpleDark,
         backgroundPress: tokens.color.purpleGray,
         backgroundFocus: tokens.color.amethyst,
