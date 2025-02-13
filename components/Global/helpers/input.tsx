@@ -23,7 +23,7 @@ export default function Input(props: InputProps): React.JSX.Element {
             )}
 
             <TamaguiInput 
-                flex={4}
+                flex={props.prependElement ? 5 : 1}
                 {...props}
                 clearButtonMode="always"
             />
