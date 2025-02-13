@@ -11,16 +11,16 @@ export default function Input(props: InputProps): React.JSX.Element {
         <XStack>
 
             
-            <YStack 
-                flex={1} 
-                alignContent='flex-end' 
-                justifyContent='center'
-            >
-                { props.prependElement && (
-                    props.prependElement
-                )}
+            { props.prependElement && (
+                <YStack 
+                    flex={1} 
+                    alignContent='flex-end' 
+                    justifyContent='center'
+                >
+                    { props.prependElement }
 
-            </YStack>
+                </YStack>
+            )}
 
             <TamaguiInput 
                 flexGrow={5}
