@@ -48,7 +48,7 @@ export default function ServerAuthentication({
             Client.setUser(user);
             setUser(user);
 
-            navigation
+            navigation.navigate("LibrarySelection", { user });
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
