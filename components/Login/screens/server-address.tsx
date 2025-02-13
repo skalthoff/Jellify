@@ -67,7 +67,7 @@ export default function ServerAddress({
     return (
         <SafeAreaView>
             <H2 marginVertical={"$7"} marginHorizontal={"$2"}>Connect to Jellyfin</H2>
-            <XStack>
+            <XStack marginBottom={"$7"}>
                 <SwitchWithLabel 
                     checked={useHttps} 
                     onCheckedChange={(checked) => setUseHttps(checked)} 
