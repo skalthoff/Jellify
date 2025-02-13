@@ -1,7 +1,7 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { getTokens, Separator, XStack, YStack } from "tamagui";
+import { getToken, Separator, Spacer, XStack, YStack } from "tamagui";
 import { useItemTracks } from "../../api/queries/tracks";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
@@ -45,14 +45,26 @@ export default function Playlist({
     navigation.setOptions({
         headerRight: () => {
             return (
-                <Icon 
-                    color={editing 
-                        ? getTokens().color.telemagenta.val 
-                        : getTokens().color.white.val
-                    }
-                    name={editing ? 'check' : 'pencil'} 
-                    onPress={() => setEditing(!editing)} 
-                />
+
+                <XStack justifyContent="space-between">
+
+                    { editing && (
+                        <Icon
+                            color={getToken("$color.danger")}
+                            name="delete-sweep-outline" // otherwise use "delete-circle"
+                            onPress={() => navigation.navigate("DeletePlaylist", { playlist })}
+                        />
+
+                    )}
+
+                    <Spacer />
+
+                    <Icon 
+                        color={getToken("$color.amethyst")}
+                        name={editing ? 'content-save-outline' : 'pencil'} 
+                        onPress={() => setEditing(!editing)} 
+                    />
+                </XStack>
             )
         }
     });

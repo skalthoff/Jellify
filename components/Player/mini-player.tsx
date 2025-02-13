@@ -73,7 +73,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                                         color={theme.borderColor.val}
                                         name="skip-next" 
                                         onPress={() => useSkip.mutate(undefined)}
-                                        />
+                                    />
                                 </XStack>
                             </XStack>
                         )

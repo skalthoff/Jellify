@@ -26,6 +26,9 @@ export type StackParamList = {
     Tracks: undefined;
     Genres: undefined;
     Playlists: undefined;
+    DeletePlaylist: {
+        playlist: BaseItemDto
+    }
 
     Search: undefined;
 
@@ -84,6 +87,7 @@ export type ArtistsProps = NativeStackScreenProps<StackParamList, "Artists">;
 export type AlbumsProps = NativeStackScreenProps<StackParamList, "Albums">;
 
 export type FavoritePlaylistsProps = NativeStackScreenProps<StackParamList, "Playlists">;
+export type DeletePlaylistProps = NativeStackScreenProps<StackParamList, "DeletePlaylist">;
 
 export type FavoriteTracksProps = NativeStackScreenProps<StackParamList, "Tracks">;
 

@@ -26,10 +26,10 @@ export default function Home(): React.JSX.Element {
                         name="Home" 
                         component={ProvidedHome} 
                         options={{
-                            headerLargeTitle: true,
-                            headerLargeTitleStyle: {
-                                fontFamily: 'Aileron-Bold'
-                            }
+                            // headerLargeTitle: true,
+                            // headerLargeTitleStyle: {
+                            //     fontFamily: 'Aileron-Bold'
+                            // }
                         }}
                     />
 
