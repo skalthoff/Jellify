@@ -23,7 +23,6 @@ export default function Input(props: InputProps): React.JSX.Element {
             )}
 
             <TamaguiInput 
-                size={"$3"}
                 {...props}
                 clearButtonMode="always"
             />
