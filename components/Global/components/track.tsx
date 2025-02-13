@@ -22,7 +22,9 @@ interface TrackProps {
     onLongPress?: () => void | undefined;
     isNested?: boolean | undefined;
     invertedColors?: boolean | undefined;
-    prependElement?: React.JSX.Element | undefined
+    prependElement?: React.JSX.Element | undefined;
+    showRemove?: boolean | undefined;
+    onRemove?: () => void | undefined;
 }
 
 export default function Track({
@@ -36,7 +38,9 @@ export default function Track({
     onLongPress,
     isNested,
     invertedColors,
-    prependElement
+    prependElement,
+    showRemove,
+    onRemove
 } : TrackProps) : React.JSX.Element {
 
     const theme = useTheme();
@@ -162,12 +166,16 @@ export default function Track({
                         justifyContent="center"
                     >
                         <Icon 
-                            name="dots-vertical" 
+                            name={showRemove ? "close" : "dots-vertical"} 
                             onPress={() => {
-                                navigation.navigate("Details", {
-                                    item: track,
-                                    isNested: isNested
-                                });
+                                if (showRemove)
+                                    if (onRemove)
+                                        onRemove()
+                                else 
+                                    navigation.navigate("Details", {
+                                        item: track,
+                                        isNested: isNested
+                                    });
                             }} 
                         />
 
