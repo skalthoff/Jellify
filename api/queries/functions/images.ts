@@ -47,7 +47,7 @@ export function fetchItemImage(itemId: string, imageType: ImageType, width: numb
     });
 }
 
-function getImageFilePath(itemId: string, width: number, height: number, imageType: ImageType) {
+export function getImageFilePath(itemId: string, width: number, height: number, imageType: ImageType) {
     return `${Dirs.CacheDir}/images/${itemId}_${imageType}_${width}x${height}.png`
 }
 

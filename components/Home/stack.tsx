@@ -7,8 +7,8 @@ import { AlbumScreen } from "../Album/screens";
 import { PlaylistScreen } from "../Playlist/screens";
 import { ProvidedHome } from "./component";
 import DetailsScreen from "../ItemDetail/screen";
-import Player from "../Player/stack";
-import AddPlaylist from "./screens/add-playlist";
+import AddPlaylist from "../Library/components/add-playlist";
+import ArtistsScreen from "../Artists/screen";
 
 const HomeStack = createNativeStackNavigator<StackParamList>();
 
@@ -46,6 +46,11 @@ export default function Home(): React.JSX.Element {
                     />
 
                     <HomeStack.Screen
+                        name="Artists"
+                        component={ArtistsScreen}
+                    />
+
+                    <HomeStack.Screen
                         name="Album"
                         component={AlbumScreen}
                         options={({ route }) => ({
@@ -63,21 +68,6 @@ export default function Home(): React.JSX.Element {
                         })}
                     />
 
-                </HomeStack.Group>
-
-                {/* https://www.reddit.com/r/reactnative/comments/1dgktbn/comment/lxd23sj/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button */}
-                <HomeStack.Group screenOptions={{ 
-                    presentation: 'formSheet', 
-                    sheetInitialDetentIndex: 0, 
-                    sheetAllowedDetents: [0.35] 
-                }}>
-                    <HomeStack.Screen
-                        name="AddPlaylist"
-                        component={AddPlaylist}
-                        options={{
-                            title: "Add Playlist",
-                        }}
-                    />
                 </HomeStack.Group>
 
                 <HomeStack.Group screenOptions={{ presentation: 'modal' }}>

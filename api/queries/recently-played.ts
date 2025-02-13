@@ -7,7 +7,7 @@ export const useRecentlyPlayed = () => useQuery({
     queryFn: () => fetchRecentlyPlayed()
 });
 
-export const useRecentlyPlayedArtists = () => useQuery({
-    queryKey: [QueryKeys.RecentlyPlayedArtists],
-    queryFn: () => fetchRecentlyPlayedArtists()
+export const useRecentlyPlayedArtists = (offset?: number | undefined) => useQuery({
+    queryKey: [QueryKeys.RecentlyPlayedArtists, offset],
+    queryFn: () => fetchRecentlyPlayedArtists(offset)
 });

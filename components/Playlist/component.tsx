@@ -8,7 +8,7 @@ import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
 import BlurhashedImage from "../Global/components/blurhashed-image";
 import DraggableFlatList from "react-native-draggable-flatlist";
-import { reorderPlaylist, updatePlaylist } from "../../api/mutations/functions/playlists";
+import { removeFromPlaylist, reorderPlaylist, updatePlaylist } from "../../api/mutations/functions/playlists";
 import { useEffect, useState } from "react";
 import Icon from "../Global/helpers/icon";
 import { useMutation } from "@tanstack/react-query";
@@ -25,6 +25,12 @@ interface PlaylistOrderMutation {
     playlist: BaseItemDto;
     track: BaseItemDto;
     to: number
+}
+
+interface RemoveFromPlaylistMutation {
+    playlist: BaseItemDto;
+    track: BaseItemDto;
+    index: number;
 }
 
 export default function Playlist({
@@ -84,6 +90,20 @@ export default function Playlist({
             trigger('notificationError');
 
             setPlaylistTracks(tracks ?? []);
+        }
+    });
+
+    const useRemoveFromPlaylist = useMutation({
+        mutationFn: ({ playlist, track, index } : RemoveFromPlaylistMutation) => {
+            return removeFromPlaylist(track, playlist);
+        },
+        onSuccess: (data, { index }) => {
+            trigger("notificationSuccess");
+
+            setPlaylistTracks(playlistTracks.slice(0, index).concat(playlistTracks.slice(index + 1, playlistTracks.length -1)))
+        },
+        onError: () => {
+            trigger("notificationError")
         }
     })
 
@@ -154,9 +174,11 @@ export default function Playlist({
                         track={track}
                         tracklist={tracks!}
                         index={index}
-                        queueName={playlist.Name ?? "Untitled Playlist"}
+                        queue={playlist}
                         showArtwork
                         onLongPress={editing ? drag : undefined}
+                        showRemove={editing}
+                        onRemove={() => useRemoveFromPlaylist.mutate({ playlist, track, index: index! })}
                     />
                 )    
             }}

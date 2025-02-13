@@ -34,7 +34,7 @@ export default function RecentlyPlayed({
                                     track: recentTracks[0], 
                                     index: 0,
                                     tracklist: recentTracks,
-                                    queueName: "Recently Played",
+                                    queue: "Recently Played",
                                     queuingType: QueuingType.FromSelection
                                 });
                             }}
@@ -56,7 +56,7 @@ export default function RecentlyPlayed({
                                     track: recentlyPlayedTrack, 
                                     index: index,
                                     tracklist: recentTracks,
-                                    queueName: "Recently Played",
+                                    queue: "Recently Played",
                                     queuingType: QueuingType.FromSelection
                                 });
                             }}

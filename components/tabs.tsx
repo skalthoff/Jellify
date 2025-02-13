@@ -2,13 +2,14 @@ import React from "react";
 import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from "./Home/stack";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Favorites from "./Favorites/stack";
+import Library from "./Library/stack";
 import Settings from "./Settings/stack";
 import { Discover } from "./Discover/stack";
 import { Miniplayer } from "./Player/mini-player";
 import { getTokens, Separator } from "tamagui";
 import { usePlayerContext } from "../player/provider";
 import SearchStack from "./Search/stack";
+import LibraryStack from "./Library/stack";
 
 const Tab = createBottomTabNavigator();
 
@@ -50,12 +51,12 @@ export function Tabs() : React.JSX.Element {
                 />
 
                 <Tab.Screen
-                    name="Favorites"
-                    component={Favorites}
+                    name="Library"
+                    component={LibraryStack}
                     options={{
                         headerShown: false,
                         tabBarIcon: ({color, size }) => (
-                            <MaterialCommunityIcons name="heart-multiple-outline" color={color} size={size} />
+                            <MaterialCommunityIcons name="book-music-outline" color={color} size={size} />
                         )
                     }}
                 />

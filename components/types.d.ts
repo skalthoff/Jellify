@@ -1,3 +1,4 @@
+import { QueryKeys } from "../../enums/query-keys";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
@@ -17,8 +18,10 @@ export type StackParamList = {
 
     Discover: undefined;
 
-    Favorites: undefined;
-    Artists: undefined;
+    Library: undefined;
+    Artists: {
+        query: QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
+    };
     Albums: undefined;
     Tracks: undefined;
     Genres: undefined;
@@ -74,7 +77,7 @@ export type HomePlaylistProps = NativeStackScreenProps<StackParamList, "Playlist
 
 export type QueueProps = NativeStackScreenProps<StackParamList, "Queue">;
 
-export type LibraryProps = NativeStackScreenProps<StackParamList, "Favorites">;
+export type LibraryProps = NativeStackScreenProps<StackParamList, "Library">;
 
 export type ArtistsProps = NativeStackScreenProps<StackParamList, "Artists">;
 

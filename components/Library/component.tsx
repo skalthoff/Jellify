@@ -6,11 +6,11 @@ import { StackParamList } from "../../components/types";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export default function FavoritesScreen({ 
+export default function Library({ 
     route, 
     navigation 
 } : {
-    route: RouteProp<StackParamList, "Favorites">,
+    route: RouteProp<StackParamList, "Library">,
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 
@@ -29,7 +29,7 @@ export default function FavoritesScreen({
                             caption={item.name}
                             width={width / 2.1}
                             onPress={() => {
-                                navigation.navigate(item.name)
+                                navigation.navigate(item.name, item.params)
                             }}
                             largeIcon
                         />
