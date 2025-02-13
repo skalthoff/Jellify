@@ -17,7 +17,6 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../../components/types";
 
 import * as Burnt from "burnt";
-import { ToastViewport } from "@tamagui/toast";
 
 export default function ServerAddress({ 
     navigation
@@ -79,8 +78,6 @@ export default function ServerAddress({
 
     return (
         <SafeAreaView>
-                    <ToastViewport />
-
             <H2 marginVertical={"$7"} marginHorizontal={"$2"}>Connect to Jellyfin</H2>
             <XStack marginBottom={"$3"}>
                 <SwitchWithLabel 
