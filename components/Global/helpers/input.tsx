@@ -8,7 +8,7 @@ interface InputProps extends TamaguiInputProps {
 export default function Input(props: InputProps): React.JSX.Element {
 
     return (
-        <XStack alignItems='center'>
+        <XStack>
 
             
             { props.prependElement && (
@@ -24,7 +24,7 @@ export default function Input(props: InputProps): React.JSX.Element {
             )}
 
             <TamaguiInput 
-                flex={props.prependElement ? 5 : 1}
+                flex={props.prependElement ? 6 : 1}
                 {...props}
                 clearButtonMode="always"
             />
