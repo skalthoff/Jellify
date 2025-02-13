@@ -35,13 +35,13 @@ export default function IconCard({
                 onPress={onPress}
             >
                 <Card.Header>
+                    <H4 color={getTokens().color.purpleDark}>{ caption ?? "" }</H4>
                     <Icon 
                         color={getTokens().color.purpleDark.val} 
                         name={name} 
                         large={largeIcon}
                         small={!!!largeIcon}
                     />
-                    <H4 color={getTokens().color.purpleDark}>{ caption ?? "" }</H4>
                 </Card.Header>
                 <Card.Footer padded>
                 </Card.Footer>
