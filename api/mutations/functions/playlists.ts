@@ -1,6 +1,6 @@
 import { BaseItemDto, MediaType } from "@jellyfin/sdk/lib/generated-client/models";
 import Client from "../../../api/client";
-import { getPlaylistsApi } from "@jellyfin/sdk/lib/utils/api";
+import { getLibraryApi, getPlaylistsApi } from "@jellyfin/sdk/lib/utils/api";
 
 export async function addToPlaylist(track: BaseItemDto, playlist: BaseItemDto) {
 
@@ -40,7 +40,7 @@ export async function reorderPlaylist(playlistId: string, itemId: string, to: nu
 }
 
 export async function createPlaylist(name: string) {
-    console.debug("Creating new playlist");
+    console.debug("Creating new playlist...");
 
     return getPlaylistsApi(Client.api!)
         .createPlaylist({
@@ -50,6 +50,15 @@ export async function createPlaylist(name: string) {
                 Name: name
             }
         });
+}
+
+export async function deletePlaylist(playlistId: string) {
+    console.debug("Deleting playlist...");
+
+    return getLibraryApi(Client.api!)
+        .deleteItem({
+            itemId: playlistId
+        })
 }
 
 /**

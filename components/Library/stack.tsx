@@ -11,6 +11,7 @@ import TracksScreen from "../Tracks/screen";
 import DetailsScreen from "../ItemDetail/screen";
 import PlaylistsScreen from "../Playlists/screen";
 import AddPlaylist from "./components/add-playlist";
+import DeletePlaylist from "./components/delete-playlist";
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -109,6 +110,14 @@ export default function LibraryStack(): React.JSX.Element {
                     component={AddPlaylist}
                     options={{
                         title: "Add Playlist",
+                    }}
+                />
+
+                <Stack.Screen
+                    name="DeletePlaylist"
+                    component={DeletePlaylist}
+                    options={{
+                        title: "Delete Playlist"
                     }}
                 />
             </Stack.Group>
