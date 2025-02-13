@@ -13,8 +13,8 @@ export default function Input(props: InputProps): React.JSX.Element {
             
             <YStack 
                 flex={1} 
-                alignContent='center' 
-                justifyContent='flex-end'
+                alignContent='flex-end' 
+                justifyContent='center'
             >
                 { props.prependElement && (
                     props.prependElement
