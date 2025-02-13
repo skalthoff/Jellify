@@ -6,7 +6,7 @@
 > **jellify** (verb) - *to make gelatinous* <br>
 [see also](https://www.merriam-webster.com/dictionary/jellify)
 
-*Jellify* is a music player for [Jellyfin](https://jellyfin.org/) built with [React Native](https://reactnative.dev/). *Jellify* provides a user experience that feels familar to other popular music apps and a has featureset to match
+*Jellify* is a free and open source music player for [Jellyfin](https://jellyfin.org/). Built with [React Native](https://reactnative.dev/), *Jellify* provides a user experience that feels familar to other popular music apps and a has featureset to match
 
 > *Jellify* requires a connection to a [Jellyfin](https://jellyfin.org/) server to work.
 
@@ -41,12 +41,18 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 ### Home
 ![Jellify Home](screenshots/home.png)
 
-### Favorites / Library
-![Favorites](screenshots/favorites.png)
+### Library
+![Library](screenshots/library.png)
 
-![Favorite Artists](screenshots/favorite_artists.png)
+![Library Artists](screenshots/library_artists.png)
+
+![Artist](screenshots/artist.png)
 
 ![Album](screenshots/album.png)
+
+![Track Options](screenshots/track_options.png)
+
+![Playlist](screenshots/playlist.png)
 
 ### Search
 ![Search](screenshots/search.png)
@@ -55,6 +61,9 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 ![Player](screenshots/player.png)
 
 ![Queue](screenshots/player_queue.png)
+
+### CarPlay
+![Now Playing](screenshots/carplay_nowplaying.jpeg)
 
 ### On the Server
 ![image](https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc)
