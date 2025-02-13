@@ -83,7 +83,7 @@ export default function ServerAuthentication({
                 <Spacer />
 
                 <Input
-                    prependElement={(<Icon small name="lock-outline" color={getToken("$color.amethyst")})}
+                    prependElement={(<Icon small name="lock-outline" color={getToken("$color.amethyst")} />)}
                     placeholder="Password"
                     value={password}
                     onChangeText={(value : string | undefined) => setPassword(value)}
