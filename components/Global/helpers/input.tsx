@@ -8,7 +8,7 @@ interface InputProps extends TamaguiInputProps {
 export default function Input(props: InputProps): React.JSX.Element {
 
     return (
-        <XStack>
+        <XStack alignItems='center'>
 
             
             { props.prependElement && (
