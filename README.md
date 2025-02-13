@@ -52,6 +52,8 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 
 ![Track Options](screenshots/track_options.png)
 
+![Playlist](screenshots/playlist.png)
+
 ### Search
 ![Search](screenshots/search.png)
 
@@ -59,6 +61,9 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 ![Player](screenshots/player.png)
 
 ![Queue](screenshots/player_queue.png)
+
+### CarPlay
+![Now Playing](screenshots/carplay_nowplaying.jpeg)
 
 ### On the Server
 ![image](https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc)
