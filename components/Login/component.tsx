@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 export default function Login(): React.JSX.Element {
 
-    const { user, server, triggerAuth, setTriggerAuth } = useAuthenticationContext();
+    const { user, server, setTriggerAuth } = useAuthenticationContext();
 
     const Stack = createStackNavigator();
 
