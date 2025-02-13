@@ -15,7 +15,6 @@ export default function Input(props: InputProps): React.JSX.Element {
                 <YStack 
                     flex={1} 
                     alignItems='center' 
-                    marginRight={"$2"}
                     justifyContent='center'
                 >
                     { props.prependElement }
