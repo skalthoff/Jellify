@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { Input, Spacer, Spinner, YStack, ZStack } from "tamagui";
+import { Spacer, Spinner, YStack, ZStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
 import { JellifyUser } from "../../../types/JellifyUser";
 import { ServerAuthenticationProps } from "../../../components/types";
+import Input from "../../../components/Global/helpers/input";
 
 export default function ServerAuthentication({
     route,
@@ -78,7 +79,7 @@ export default function ServerAuthentication({
                 />
 
                 <Spacer />
-                
+
                 <Input
                     placeholder="Password"
                     value={password}
