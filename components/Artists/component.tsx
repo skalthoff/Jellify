@@ -16,7 +16,7 @@ export default function Artists({
     const { data: artists, refetch, isPending } = 
         route.params.query === 
             QueryKeys.FavoriteArtists ? useFavoriteArtists() : 
-            QueryKeys.RecentlyPlayedArtists ? useRecentlyPlayedArtists(horizontalCardLimit + 2) :
+            QueryKeys.RecentlyPlayedArtists ? useRecentlyPlayedArtists(horizontalCardLimit + 3) :
             useFavoriteArtists();
 
     const { width } = useSafeAreaFrame();
