@@ -8,7 +8,7 @@ interface InputProps extends TamaguiInputProps {
 export default function Input(props: InputProps): React.JSX.Element {
 
     return (
-        <XStack fullscreen>
+        <XStack>
 
             
             { props.prependElement && (
@@ -23,7 +23,7 @@ export default function Input(props: InputProps): React.JSX.Element {
             )}
 
             <TamaguiInput 
-                flex={props.prependElement ? 3 : 1}
+                size={"$4"}
                 {...props}
                 clearButtonMode="always"
             />
