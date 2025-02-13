@@ -1,9 +1,19 @@
-import { QueryKeys } from "../../enums/query-keys";
+import { QueryKeys } from "../enums/query-keys";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
+import { JellifyServer } from "../types/JellifyServer";
+import { JellifyUser } from "../types/JellifyUser";
 
 export type StackParamList = {
+    ServerAddress: undefined;
+    ServerAuthentication: {
+        server: JellifyServer
+    }
+
+    LibrarySelection: {
+        user: JellifyUser
+    }
+
     Home: undefined;
     AddPlaylist: undefined;
     RecentArtists: {
@@ -58,6 +68,10 @@ export type StackParamList = {
         isNested: boolean | undefined
     }
 }
+
+export type ServerAddressProps = NativeStackScreenProps<StackParamList, "ServerAddress">;
+export type ServerAuthenticationProps = NativeStackScreenProps<StackParamList, "ServerAuthentication">;
+export type LibrarySelectionProps = NativeStackScreenProps<StackParamList, "LibrarySelection">;
 
 export type TabProps = NativeStackScreenProps<StackParamList, 'Tabs'>;
 export type PlayerProps = NativeStackScreenProps<StackParamList, 'Player'>;

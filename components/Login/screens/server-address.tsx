@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { JellifyServer } from "../../../types/JellifyServer";
 import { Input, Spacer, Spinner, XStack, ZStack } from "tamagui";
 import { SwitchWithLabel } from "../../Global/helpers/switch-with-label";
-import { H1 } from "../../Global/helpers/text";
+import { H2 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
 import { http, https } from "../utils/constants";
 import { JellyfinInfo } from "../../../api/info";
@@ -13,8 +13,20 @@ import { getSystemApi } from "@jellyfin/sdk/lib/utils/api/system-api";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
 import { useAuthenticationContext } from "../provider";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamList } from "../../../components/types";
 
-export default function ServerAddress(): React.JSX.Element {
+import * as Burnt from "burnt";
+
+export default function ServerAddress({ 
+    navigation
+}: {
+    navigation: NativeStackNavigationProp<StackParamList>
+}): React.JSX.Element {
+
+    navigation.setOptions({
+        animationTypeForReplace: 'push'
+    })
 
     const [useHttps, setUseHttps] = useState<boolean>(true);
     const [serverAddress, setServerAddress] = useState<string | undefined>(undefined);
@@ -48,18 +60,26 @@ export default function ServerAddress(): React.JSX.Element {
 
             Client.setPublicApiClient(server);
             setServer(server);
+
+            navigation.navigate("ServerAuthentication", { server });
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
             Client.signOut();
             setServer(undefined);
+
+            Burnt.toast({
+                title: "Unable to connect",
+                preset: "error",
+                // message: `Unable to connect to Jellyfin at ${useHttps ? https : http}${serverAddress}`,
+            });
         }
     });
 
     return (
         <SafeAreaView>
-            <H1>Connect to Jellyfin</H1>
-            <XStack>
+            <H2 marginVertical={"$7"} marginHorizontal={"$2"}>Connect to Jellyfin</H2>
+            <XStack marginBottom={"$3"}>
                 <SwitchWithLabel 
                     checked={useHttps} 
                     onCheckedChange={(checked) => setUseHttps(checked)} 
@@ -76,6 +96,7 @@ export default function ServerAddress(): React.JSX.Element {
                     autoCapitalize="none"
                     autoCorrect={false}
                     flexGrow={1}
+                    placeholder="jellyfin.org"
                 />
             </XStack>
 

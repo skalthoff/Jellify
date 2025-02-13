@@ -2,20 +2,30 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { Input, Spinner, YStack, ZStack } from "tamagui";
+import { getToken, Spacer, Spinner, YStack, ZStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
-import { H1 } from "../../Global/helpers/text";
+import { H2 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
 import { JellifyUser } from "../../../types/JellifyUser";
+import { ServerAuthenticationProps } from "../../../components/types";
+import Input from "../../../components/Global/helpers/input";
+import Icon from "../../../components/Global/helpers/icon";
+import { useToastController } from "@tamagui/toast";
+import Toast from "../../../components/Global/components/toast";
 
-export default function ServerAuthentication(): React.JSX.Element {
+export default function ServerAuthentication({
+    route,
+    navigation,
+}: ServerAuthenticationProps): React.JSX.Element {
+
+    const toast = useToastController()
 
     const [username, setUsername] = useState<string | undefined>(undefined);
     const [password, setPassword] = React.useState<string | undefined>(undefined);
 
-    const { setUser, server, setServer } = useAuthenticationContext();
+    const { setUser, setServer } = useAuthenticationContext();
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
@@ -42,42 +52,53 @@ export default function ServerAuthentication(): React.JSX.Element {
             }
 
             Client.setUser(user);
-            return setUser(user);
+            setUser(user);
+
+            navigation.navigate("LibrarySelection", { user });
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
+
+            toast.show("Sign in failed", {
+
+            });            
             return Promise.reject(`An error occured signing into ${Client.server!.name}`);
         }
     });
 
     return (
         <SafeAreaView>
-            <H1>
-                { `Sign in to ${server?.name ?? "Jellyfin"}`}
-            </H1>
+            <H2 marginHorizontal={"$2"} marginVertical={"$7"}>
+                { `Sign in to ${route.params.server.name}`}
+            </H2>
             <Button onPress={() => { 
                 Client.switchServer()
-                setServer(undefined);
+                navigation.push("ServerAddress");
             }}>
                     Switch Server
             </Button>
 
-            <YStack>
+            <YStack marginHorizontal={"$2"} alignContent="space-between">
                 <Input
+                    prependElement={(<Icon small name="human-greeting-variant" color={getToken("$color.amethyst")} />)}
                     placeholder="Username"
                     value={username}
                     onChangeText={(value : string | undefined) => setUsername(value)}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    />
+                />
+
+                <Spacer />
+
                 <Input
+                    prependElement={(<Icon small name="lock-outline" color={getToken("$color.amethyst")} />)}
                     placeholder="Password"
                     value={password}
                     onChangeText={(value : string | undefined) => setPassword(value)}
                     autoCapitalize="none"
                     autoCorrect={false}
                     secureTextEntry
-                    />
+                />
             </YStack>
 
             <ZStack>
@@ -90,7 +111,7 @@ export default function ServerAuthentication(): React.JSX.Element {
                     onPress={() => {
                         
                         if (!_.isUndefined(username)) {
-                            console.log(`Signing in to ${server!.name}`);
+                            console.log(`Signing in...`);
                             useApiMutation.mutate({ username, password });
                         }
                     }}
@@ -98,6 +119,7 @@ export default function ServerAuthentication(): React.JSX.Element {
                         Sign in
                 </Button>
             </ZStack>
+            <Toast />
         </SafeAreaView>
     );
 }
