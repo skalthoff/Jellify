@@ -23,7 +23,7 @@ export default function Input(props: InputProps): React.JSX.Element {
             )}
 
             <TamaguiInput 
-                flexGrow={5}
+                flex={5}
                 {...props}
                 clearButtonMode="always"
             />
