@@ -68,7 +68,6 @@ export default function ServerAuthentication({
 
     return (
         <SafeAreaView>
-            <Toast />
             <H2 marginHorizontal={"$2"} marginVertical={"$7"}>
                 { `Sign in to ${route.params.server.name}`}
             </H2>
@@ -120,6 +119,7 @@ export default function ServerAuthentication({
                         Sign in
                 </Button>
             </ZStack>
+            {/* <Toast /> */}
         </SafeAreaView>
     );
 }
