@@ -11,12 +11,13 @@ import { useColorScheme } from "react-native";
 import { PortalProvider } from "@tamagui/portal";
 import { JellifyProvider, useJellifyContext } from "./provider";
 import { ToastProvider, ToastViewport } from "@tamagui/toast";
+import SafeToastViewport from "./Global/components/toast-area-view-port";
 
 export default function Jellify(): React.JSX.Element {
 
   return (
     <PortalProvider shouldAddRootHost>
-      <ToastProvider>
+      <ToastProvider burntOptions={{ from: 'top'}}>
         <JellifyProvider>
           <App />
         </JellifyProvider>
@@ -42,7 +43,7 @@ function App(): React.JSX.Element {
             <Login /> 
           </JellyfinAuthenticationProvider>
         )}
-        <ToastViewport />
+        <SafeToastViewport />
       </SafeAreaProvider>
     </NavigationContainer>
   )
