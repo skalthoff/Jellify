@@ -6,6 +6,7 @@ import { ItemCard } from "../Global/components/item-card";
 import { ArtistsProps } from "../types";
 import { QueryKeys } from "../../enums/query-keys";
 import { useRecentlyPlayedArtists } from "../../api/queries/recently-played";
+import { horizontalCardLimit } from "../Global/component.config";
 
 export default function Artists({ 
     navigation,
@@ -15,7 +16,7 @@ export default function Artists({
     const { data: artists, refetch, isPending } = 
         route.params.query === 
             QueryKeys.FavoriteArtists ? useFavoriteArtists() : 
-            QueryKeys.RecentlyPlayedArtists ? useRecentlyPlayedArtists() :
+            QueryKeys.RecentlyPlayedArtists ? useRecentlyPlayedArtists(horizontalCardLimit) :
             useFavoriteArtists();
 
     const { width } = useSafeAreaFrame();

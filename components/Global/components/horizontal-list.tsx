@@ -4,6 +4,7 @@ import { FlatList, ListRenderItem } from "react-native";
 import { ItemCard } from "./item-card";
 import IconCard from "../helpers/icon-card";
 import { BaseItemKind } from "@jellyfin/sdk/lib/generated-client/models";
+import { horizontalCardLimit } from "../component.config";
 
 interface HorizontalCardListProps {
     items: BaseItemDto[] | undefined;
@@ -27,7 +28,7 @@ interface HorizontalCardListProps {
 export default function HorizontalCardList({
     items,
     renderItem,
-    cutoff = 20,
+    cutoff = horizontalCardLimit,
     onSeeMore,
     squared = false,
 } : HorizontalCardListProps) : React.JSX.Element {
