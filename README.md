@@ -6,7 +6,7 @@
 > **jellify** (verb) - *to make gelatinous* <br>
 [see also](https://www.merriam-webster.com/dictionary/jellify)
 
-*Jellify* is a music player for [Jellyfin](https://jellyfin.org/) built with [React Native](https://reactnative.dev/). *Jellify* provides a user experience that feels familar to other popular music apps and a has featureset to match
+*Jellify* is a free and open source music player for [Jellyfin](https://jellyfin.org/). Built with [React Native](https://reactnative.dev/), *Jellify* provides a user experience that feels familar to other popular music apps and a has featureset to match
 
 > *Jellify* requires a connection to a [Jellyfin](https://jellyfin.org/) server to work.
 
