@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { getToken, Spacer, Spinner, YStack, ZStack } from "tamagui";
+import { getToken, Spacer, Spinner, Theme, YStack, ZStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
@@ -119,7 +119,10 @@ export default function ServerAuthentication({
                         Sign in
                 </Button>
             </ZStack>
-            {/* <Toast /> */}
+            <Theme name={"inverted_purple"}>
+
+            </Theme>
+            <Toast />
         </SafeAreaView>
     );
 }
