@@ -19,6 +19,8 @@ import Client from "../api/client";
 import { AddToQueueMutation, QueueMutation, QueueOrderMutation } from "./interfaces";
 import { Section } from "../components/Player/types";
 import { Queue } from "./types/queue-item";
+import { markItemPlayed } from "../api/mutations/functions/item";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 interface PlayerContext {
     initialized: boolean;
@@ -212,6 +214,9 @@ const PlayerContextInitializer = () => {
             await addToQueue(mutation.tracklist.map((track) => {
                 return mapDtoToTrack(track, QueuingType.FromSelection)
             }));
+
+            if (typeof(queue) === 'object')
+                await markItemPlayed(mutation.queue as BaseItemDto);
             
             setQueue(mutation.queue);
         },
