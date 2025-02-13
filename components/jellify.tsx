@@ -33,8 +33,6 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
       <SafeAreaProvider>
-        <ToastViewport>
-
         { loggedIn ? (
           <PlayerProvider>
             <Navigation />
@@ -44,7 +42,7 @@ function App(): React.JSX.Element {
             <Login /> 
           </JellyfinAuthenticationProvider>
         )}
-        </ToastViewport>
+        <ToastViewport />
       </SafeAreaProvider>
     </NavigationContainer>
   )
