@@ -41,6 +41,26 @@ export default function TrackOptions({
     const { useAddToQueue } = usePlayerContext();
 
     const { width } = useSafeAreaFrame();
+
+    const useAddToPlaylist = useMutation({
+        mutationFn: ({ track, playlist }: AddToPlaylistMutation) => {
+            return addToPlaylist(track, playlist)
+        },
+        onSuccess: (data, { playlist }) => {
+            trigger("notificationSuccess");
+
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.UserPlaylists]
+            });
+
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.ItemTracks, playlist.Id!, false],
+            });                                    
+        },
+        onError: () => {
+            trigger("notificationError")
+        }
+    })
     
     return (
         <YStack width={width}>
@@ -98,7 +118,7 @@ export default function TrackOptions({
                 <Spinner />
             )}
 
-            { playlistsFetchSuccess && (
+            { !playlistsFetchPending && playlistsFetchSuccess && (
                 <>
                     <Text 
                         bold 
@@ -109,26 +129,6 @@ export default function TrackOptions({
 
                     <YGroup separator={(<Separator />)}>
                         { playlists.map(playlist => {
-
-                            const useAddToPlaylist = useMutation({
-                                mutationFn: ({ track, playlist }: AddToPlaylistMutation) => {
-                                    return addToPlaylist(track, playlist)
-                                },
-                                onSuccess: (data, { playlist }) => {
-                                    trigger("notificationSuccess");
-
-                                    queryClient.invalidateQueries({
-                                        queryKey: [QueryKeys.UserPlaylists]
-                                    });
-
-                                    queryClient.invalidateQueries({
-                                        queryKey: [QueryKeys.ItemTracks, playlist.Id!, false],
-                                    });                                    
-                                },
-                                onError: () => {
-                                    trigger("notificationError")
-                                }
-                            })
 
                             return (
                                 <YGroup.Item>
