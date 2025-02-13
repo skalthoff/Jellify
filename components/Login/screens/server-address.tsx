@@ -14,7 +14,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
 import { useAuthenticationContext } from "../provider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StackParamList } from "@/components/types";
+import { StackParamList } from "../../../components/types";
+
+import * as Burnt from "burnt";
 
 export default function ServerAddress({ 
     navigation
@@ -65,6 +67,12 @@ export default function ServerAddress({
             console.error("An error occurred connecting to the Jellyfin instance", error);
             Client.signOut();
             setServer(undefined);
+
+            Burnt.toast({
+                title: "Unable to connect",
+                preset: "error",
+                message: `Unable to connect to Jellyfin at ${useHttps ? https : http}${serverAddress}`,
+            });
         }
     });
 
