@@ -3,10 +3,10 @@ import { View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import { StackParamList } from "../../types";
-import { FlatList } from "react-native";
 import { ItemCard } from "../../Global/components/item-card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import HorizontalCardList from "../../../components/Global/components/horizontal-list";
+import { QueryKeys } from "../../../enums/query-keys";
 
 export default function RecentArtists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -19,7 +19,9 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
             <HorizontalCardList
                 items={recentArtists}
                 onSeeMore={() => {
-
+                    navigation.navigate("Artists", {
+                        query: QueryKeys.RecentlyPlayedArtists
+                    })
                 }}
                 renderItem={({ item: recentArtist}) => {
                     return (

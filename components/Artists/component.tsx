@@ -4,10 +4,19 @@ import React from "react";
 import { FlatList, RefreshControl } from "react-native";
 import { ItemCard } from "../Global/components/item-card";
 import { ArtistsProps } from "../types";
+import { QueryKeys } from "@/enums/query-keys";
+import { useRecentlyPlayedArtists } from "@/api/queries/recently-played";
 
-export default function Artists({ navigation }: ArtistsProps): React.JSX.Element {
+export default function Artists({ 
+    navigation,
+    route
+}: ArtistsProps): React.JSX.Element {
 
-    const { data: artists, refetch, isPending } = useFavoriteArtists();
+    const { data: artists, refetch, isPending } = 
+        route.params.query === 
+            QueryKeys.FavoriteArtists ? useFavoriteArtists() : 
+            QueryKeys.RecentlyPlayedArtists ? useRecentlyPlayedArtists() :
+            useFavoriteArtists();
 
     const { width } = useSafeAreaFrame();
 
