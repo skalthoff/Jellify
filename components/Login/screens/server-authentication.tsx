@@ -65,7 +65,7 @@ export default function ServerAuthentication({
             </H2>
             <Button onPress={() => { 
                 Client.switchServer()
-                navigation.goBack();
+                navigation.push("ServerAddress");
             }}>
                     Switch Server
             </Button>

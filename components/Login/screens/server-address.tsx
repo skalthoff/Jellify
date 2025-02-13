@@ -22,6 +22,10 @@ export default function ServerAddress({
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 
+    navigation.setOptions({
+        animationTypeForReplace: 'pop'
+    })
+
     const [useHttps, setUseHttps] = useState<boolean>(true);
     const [serverAddress, setServerAddress] = useState<string | undefined>(undefined);
 
