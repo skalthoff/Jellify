@@ -11,6 +11,7 @@ import Client from "../../../api/client";
 import { JellifyUser } from "../../../types/JellifyUser";
 import { ServerAuthenticationProps } from "../../../components/types";
 import Input from "../../../components/Global/helpers/input";
+import Icon from "../../../components/Global/helpers/icon";
 
 export default function ServerAuthentication({
     route,
@@ -71,6 +72,7 @@ export default function ServerAuthentication({
 
             <YStack alignContent="space-between">
                 <Input
+                    prependElement={(<Icon name="person-outline" />)}
                     placeholder="Username"
                     value={username}
                     onChangeText={(value : string | undefined) => setUsername(value)}
