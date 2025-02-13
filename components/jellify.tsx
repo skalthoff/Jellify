@@ -42,7 +42,7 @@ function App(): React.JSX.Element {
             <Login /> 
           </JellyfinAuthenticationProvider>
         )}
-        <ToastViewport alignItems="center" />
+        <ToastViewport />
       </SafeAreaProvider>
     </NavigationContainer>
   )
