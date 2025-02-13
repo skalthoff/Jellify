@@ -10,7 +10,7 @@ export const useFavoritePlaylists = () => useQuery({
 });
 
 export const useUserPlaylists = (sortBy: ItemSortBy[] = []) => useQuery({
-    queryKey: [QueryKeys.UserPlaylists],
+    queryKey: [QueryKeys.UserPlaylists, sortBy],
     queryFn: () => fetchUserPlaylists(sortBy)
 });
 
