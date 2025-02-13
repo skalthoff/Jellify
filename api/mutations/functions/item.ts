@@ -1,4 +1,4 @@
-import Client from "@/api/client";
+import Client from "../../../api/client";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 
