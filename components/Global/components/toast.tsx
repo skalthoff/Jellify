@@ -1,5 +1,5 @@
 import {Toast as TamaguiToast, useToastState} from "@tamagui/toast"
-import { Theme, YStack } from "tamagui"
+import { YStack } from "tamagui"
 
 export default function Toast() : React.JSX.Element | null {
     const currentToast = useToastState()
