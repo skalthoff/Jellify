@@ -100,7 +100,7 @@ export default function Playlist({
         onSuccess: (data, { index }) => {
             trigger("notificationSuccess");
 
-            setPlaylistTracks(playlistTracks.splice(index, 1))
+            setPlaylistTracks(playlistTracks.slice(0, index).concat(playlistTracks.slice(index + 1, playlistTracks.length -1)))
         },
         onError: () => {
             trigger("notificationError")
