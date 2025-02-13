@@ -41,12 +41,16 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 ### Home
 ![Jellify Home](screenshots/home.png)
 
-### Favorites / Library
-![Favorites](screenshots/favorites.png)
+### Library
+![Library](screenshots/library.png)
 
-![Favorite Artists](screenshots/favorite_artists.png)
+![Library Artists](screenshots/library_artists.png)
+
+![Artist](screenshots/artist.png)
 
 ![Album](screenshots/album.png)
+
+![Track Options](screenshots/track_options.png)
 
 ### Search
 ![Search](screenshots/search.png)
