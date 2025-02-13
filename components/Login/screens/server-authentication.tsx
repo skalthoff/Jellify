@@ -70,7 +70,7 @@ export default function ServerAuthentication({
                     Switch Server
             </Button>
 
-            <YStack alignContent="space-between">
+            <YStack marginHorizontal={"$2"} alignContent="space-between">
                 <Input
                     prependElement={(<Icon small name="human-greeting-variant" color={getToken("$color.amethyst")} />)}
                     placeholder="Username"
