@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { Spacer, Spinner, YStack, ZStack } from "tamagui";
+import { getToken, Spacer, Spinner, YStack, ZStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
@@ -72,7 +72,7 @@ export default function ServerAuthentication({
 
             <YStack alignContent="space-between">
                 <Input
-                    prependElement={(<Icon name="person-outline" />)}
+                    prependElement={(<Icon small name="human-greeting-variant" color={getToken("$color.amethyst")} />)}
                     placeholder="Username"
                     value={username}
                     onChangeText={(value : string | undefined) => setUsername(value)}
