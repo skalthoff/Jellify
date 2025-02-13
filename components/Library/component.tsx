@@ -10,7 +10,7 @@ export default function Library({
     route, 
     navigation 
 } : {
-    route: RouteProp<StackParamList, "Favorites">,
+    route: RouteProp<StackParamList, "Library">,
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 

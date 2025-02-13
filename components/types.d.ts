@@ -17,7 +17,7 @@ export type StackParamList = {
 
     Discover: undefined;
 
-    Favorites: undefined;
+    Library: undefined;
     Artists: undefined;
     Albums: undefined;
     Tracks: undefined;
@@ -74,7 +74,7 @@ export type HomePlaylistProps = NativeStackScreenProps<StackParamList, "Playlist
 
 export type QueueProps = NativeStackScreenProps<StackParamList, "Queue">;
 
-export type LibraryProps = NativeStackScreenProps<StackParamList, "Favorites">;
+export type LibraryProps = NativeStackScreenProps<StackParamList, "Library">;
 
 export type ArtistsProps = NativeStackScreenProps<StackParamList, "Artists">;
 

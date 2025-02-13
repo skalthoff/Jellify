@@ -11,15 +11,15 @@ import TracksScreen from "../Tracks/screen";
 import DetailsScreen from "../ItemDetail/screen";
 import PlaylistsScreen from "../Playlists/screen";
 
-const FavoritesStack = createNativeStackNavigator<StackParamList>();
+const Stack = createNativeStackNavigator<StackParamList>();
 
 export default function LibraryStack(): React.JSX.Element {
     return (
-        <FavoritesStack.Navigator
-            initialRouteName="Favorites"
+        <Stack.Navigator
+            initialRouteName="Library"
         >
-            <FavoritesStack.Screen
-                name="Favorites"
+            <Stack.Screen
+                name="Library"
                 component={Library}
                 options={{
                     headerLargeTitle: true,
@@ -29,7 +29,7 @@ export default function LibraryStack(): React.JSX.Element {
                 }}
             />
 
-            <FavoritesStack.Screen 
+            <Stack.Screen 
                 name="Artist" 
                 component={ArtistScreen} 
                 options={({ route }) => ({
@@ -41,7 +41,7 @@ export default function LibraryStack(): React.JSX.Element {
                 })}
             />
 
-            <FavoritesStack.Screen 
+            <Stack.Screen 
                 name="Artists" 
                 component={ArtistsScreen} 
                 options={({ route }) => ({
@@ -52,7 +52,7 @@ export default function LibraryStack(): React.JSX.Element {
                 })}
             />
 
-            <FavoritesStack.Screen
+            <Stack.Screen
                 name="Album"
                 component={AlbumScreen}
                 options={({ route }) => ({
@@ -61,7 +61,7 @@ export default function LibraryStack(): React.JSX.Element {
                 })}
             />
 
-            <FavoritesStack.Screen
+            <Stack.Screen
                 name="Albums"
                 component={AlbumsScreen}
                 options={{
@@ -72,7 +72,7 @@ export default function LibraryStack(): React.JSX.Element {
                 }}
             />
 
-            <FavoritesStack.Screen
+            <Stack.Screen
                 name="Tracks"
                 component={TracksScreen}
                 options={{
@@ -83,7 +83,7 @@ export default function LibraryStack(): React.JSX.Element {
                 }}
             />
 
-            <FavoritesStack.Screen
+            <Stack.Screen
                 name="Playlists"
                 component={PlaylistsScreen}
                 options={{
@@ -94,7 +94,7 @@ export default function LibraryStack(): React.JSX.Element {
                 }}
             />
 
-            <FavoritesStack.Screen
+            <Stack.Screen
                 name="Playlist"
                 component={PlaylistScreen}
                 options={({ route }) => ({
@@ -103,15 +103,15 @@ export default function LibraryStack(): React.JSX.Element {
                 })}
             />
 
-            <FavoritesStack.Group screenOptions={{ presentation: 'modal' }}>
-                <FavoritesStack.Screen
+            <Stack.Group screenOptions={{ presentation: 'modal' }}>
+                <Stack.Screen
                     name="Details"
                     component={DetailsScreen}
                     options={{
                         headerShown: false,
                     }}
                 />
-            </FavoritesStack.Group>
-        </FavoritesStack.Navigator>
+            </Stack.Group>
+        </Stack.Navigator>
     )
 }
