@@ -13,6 +13,7 @@ import { ServerAuthenticationProps } from "../../../components/types";
 import Input from "../../../components/Global/helpers/input";
 import Icon from "../../../components/Global/helpers/icon";
 import { useToastController } from "@tamagui/toast";
+import Toast from "../../../components/Global/components/toast";
 
 export default function ServerAuthentication({
     route,
@@ -118,6 +119,7 @@ export default function ServerAuthentication({
                         Sign in
                 </Button>
             </ZStack>
+            <Toast />
         </SafeAreaView>
     );
 }
