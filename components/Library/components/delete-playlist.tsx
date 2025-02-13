@@ -46,7 +46,7 @@ export default function DeletePlaylist(
 
     return (
         <View marginHorizontal={"$2"}>
-            <Text>{`Delete playlist ${route.params.playlist.Name ?? "Untitled Playlist"}?`}</Text>
+            <Text bold textAlign="center">{`Delete playlist ${route.params.playlist.Name ?? "Untitled Playlist"}?`}</Text>
             <XStack justifyContent="space-evenly">
                 <Button onPress={() => navigation.goBack()}>Cancel</Button>
                 <Button danger onPress={() => useDeletePlaylist.mutate(route.params.playlist)}>Delete</Button>
