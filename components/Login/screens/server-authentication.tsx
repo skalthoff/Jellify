@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { Input, Spinner, YStack, ZStack } from "tamagui";
+import { Input, Spacer, Spinner, YStack, ZStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
@@ -68,14 +68,17 @@ export default function ServerAuthentication({
                     Switch Server
             </Button>
 
-            <YStack>
+            <YStack alignContent="space-between">
                 <Input
                     placeholder="Username"
                     value={username}
                     onChangeText={(value : string | undefined) => setUsername(value)}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    />
+                />
+
+                <Spacer />
+                
                 <Input
                     placeholder="Password"
                     value={password}
@@ -83,7 +86,7 @@ export default function ServerAuthentication({
                     autoCapitalize="none"
                     autoCorrect={false}
                     secureTextEntry
-                    />
+                />
             </YStack>
 
             <ZStack>
