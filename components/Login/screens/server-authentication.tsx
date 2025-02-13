@@ -13,6 +13,8 @@ import { ServerAuthenticationProps } from "../../../components/types";
 import Input from "../../../components/Global/helpers/input";
 import Icon from "../../../components/Global/helpers/icon";
 
+import * as Burnt from "burnt";
+
 export default function ServerAuthentication({
     route,
     navigation,
@@ -54,6 +56,13 @@ export default function ServerAuthentication({
         },
         onError: async (error: Error) => {
             console.error("An error occurred connecting to the Jellyfin instance", error);
+
+            Burnt.toast({
+                title: "Unable to connect",
+                preset: "error",
+                // message: `Unable to connect to Jellyfin at ${useHttps ? https : http}${serverAddress}`,
+            });
+            
             return Promise.reject(`An error occured signing into ${Client.server!.name}`);
         }
     });
