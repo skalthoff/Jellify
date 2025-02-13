@@ -1,3 +1,4 @@
+import { QueryKeys } from "../../enums/query-keys";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
@@ -18,7 +19,9 @@ export type StackParamList = {
     Discover: undefined;
 
     Library: undefined;
-    Artists: undefined;
+    Artists: {
+        query: QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
+    };
     Albums: undefined;
     Tracks: undefined;
     Genres: undefined;

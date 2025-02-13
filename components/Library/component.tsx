@@ -29,7 +29,7 @@ export default function Library({
                             caption={item.name}
                             width={width / 2.1}
                             onPress={() => {
-                                navigation.navigate(item.name)
+                                navigation.navigate(item.name, item.params)
                             }}
                             largeIcon
                         />
