@@ -5,7 +5,7 @@ import { FlatList, RefreshControl } from "react-native";
 import { ItemCard } from "../Global/components/item-card";
 import { ArtistsProps } from "../types";
 import { QueryKeys } from "../../enums/query-keys";
-import { useRecentlyPlayedArtists } from "@/api/queries/recently-played";
+import { useRecentlyPlayedArtists } from "../../api/queries/recently-played";
 
 export default function Artists({ 
     navigation,
