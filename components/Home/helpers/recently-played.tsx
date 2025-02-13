@@ -26,15 +26,19 @@ export default function RecentlyPlayed({
 
                 { recentTracks && (
                     <YStack justifyContent="center" alignContent="center" marginTop={7} marginLeft={"$2"}>
-                        <Icon name="play-circle-outline" color={getToken("$color.amethyst")} onPress={() => {
-                            usePlayNewQueue.mutate({ 
-                                track: recentTracks[0], 
-                                index: 0,
-                                tracklist: recentTracks,
-                                queueName: "Recently Played",
-                                queuingType: QueuingType.FromSelection
-                            });
-                        }}/>
+                        <Icon 
+                            name="play-circle-outline" 
+                            color={getToken("$color.telemagenta")} 
+                            onPress={() => {
+                                usePlayNewQueue.mutate({ 
+                                    track: recentTracks[0], 
+                                    index: 0,
+                                    tracklist: recentTracks,
+                                    queue: "Recently Played",
+                                    queuingType: QueuingType.FromSelection
+                                });
+                            }}
+                        />
                     </YStack>
                 )}
             </XStack>
@@ -52,7 +56,7 @@ export default function RecentlyPlayed({
                                     track: recentlyPlayedTrack, 
                                     index: index,
                                     tracklist: recentTracks,
-                                    queueName: "Recently Played",
+                                    queue: "Recently Played",
                                     queuingType: QueuingType.FromSelection
                                 });
                             }}

@@ -7,19 +7,16 @@ import React from "react";
 import { FlatList } from "react-native";
 import { getToken, View, XStack, YStack } from "tamagui";
 import Icon from "../../../components/Global/helpers/icon";
+import { ItemSortBy } from "@jellyfin/sdk/lib/generated-client/models";
 
 export default function Playlists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
 
-    const { data: playlists } = useUserPlaylists();
+    const { data: playlists } = useUserPlaylists([ItemSortBy.DatePlayed]);
 
     return (
         <View>
             <XStack alignContent="center" marginHorizontal={"$2"}>
                 <H2 textAlign="left">Your Playlists</H2>
-
-                <YStack justifyContent="center" alignContent="center" marginTop={7} marginLeft={"$2"}>
-                    <Icon name="plus-circle-outline" color={getToken("$color.amethyst")} onPress={() => navigation.navigate('AddPlaylist')}/>
-                </YStack>
             </XStack>
             <FlatList horizontal
                 data={playlists}

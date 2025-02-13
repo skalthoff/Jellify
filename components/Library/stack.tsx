@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { StackParamList } from "../types";
-import FavoritesScreen from "./component";
+import Library from "./component";
 import { ArtistScreen } from "../Artist/screens";
 import { AlbumScreen } from "../Album/screens";
 import { PlaylistScreen } from "../Playlist/screens";
@@ -10,17 +10,18 @@ import AlbumsScreen from "../Albums/screen";
 import TracksScreen from "../Tracks/screen";
 import DetailsScreen from "../ItemDetail/screen";
 import PlaylistsScreen from "../Playlists/screen";
+import AddPlaylist from "./components/add-playlist";
 
-const FavoritesStack = createNativeStackNavigator<StackParamList>();
+const Stack = createNativeStackNavigator<StackParamList>();
 
-export default function Favorites(): React.JSX.Element {
+export default function LibraryStack(): React.JSX.Element {
     return (
-        <FavoritesStack.Navigator
-            initialRouteName="Favorites"
+        <Stack.Navigator
+            initialRouteName="Library"
         >
-            <FavoritesStack.Screen
-                name="Favorites"
-                component={FavoritesScreen}
+            <Stack.Screen
+                name="Library"
+                component={Library}
                 options={{
                     headerLargeTitle: true,
                     headerLargeTitleStyle: {
@@ -29,7 +30,7 @@ export default function Favorites(): React.JSX.Element {
                 }}
             />
 
-            <FavoritesStack.Screen 
+            <Stack.Screen 
                 name="Artist" 
                 component={ArtistScreen} 
                 options={({ route }) => ({
@@ -41,18 +42,14 @@ export default function Favorites(): React.JSX.Element {
                 })}
             />
 
-            <FavoritesStack.Screen 
+            <Stack.Screen 
                 name="Artists" 
                 component={ArtistsScreen} 
                 options={({ route }) => ({
-                    headerLargeTitle: true,
-                    headerLargeTitleStyle: {
-                        fontFamily: 'Aileron-Bold'
-                    }
                 })}
             />
 
-            <FavoritesStack.Screen
+            <Stack.Screen
                 name="Album"
                 component={AlbumScreen}
                 options={({ route }) => ({
@@ -61,40 +58,28 @@ export default function Favorites(): React.JSX.Element {
                 })}
             />
 
-            <FavoritesStack.Screen
+            <Stack.Screen
                 name="Albums"
                 component={AlbumsScreen}
                 options={{
-                    headerLargeTitle: true,
-                    headerLargeTitleStyle: {
-                        fontFamily: 'Aileron-Bold'
-                    }
                 }}
             />
 
-            <FavoritesStack.Screen
+            <Stack.Screen
                 name="Tracks"
                 component={TracksScreen}
                 options={{
-                    headerLargeTitle: true,
-                    headerLargeTitleStyle: {
-                        fontFamily: 'Aileron-Bold'
-                    }
                 }}
             />
 
-            <FavoritesStack.Screen
+            <Stack.Screen
                 name="Playlists"
                 component={PlaylistsScreen}
                 options={{
-                    headerLargeTitle: true,
-                    headerLargeTitleStyle: {
-                        fontFamily: 'Aileron-Bold'
-                    }
                 }}
             />
 
-            <FavoritesStack.Screen
+            <Stack.Screen
                 name="Playlist"
                 component={PlaylistScreen}
                 options={({ route }) => ({
@@ -103,15 +88,31 @@ export default function Favorites(): React.JSX.Element {
                 })}
             />
 
-            <FavoritesStack.Group screenOptions={{ presentation: 'modal' }}>
-                <FavoritesStack.Screen
+            <Stack.Group screenOptions={{ presentation: 'modal' }}>
+                <Stack.Screen
                     name="Details"
                     component={DetailsScreen}
                     options={{
                         headerShown: false,
                     }}
                 />
-            </FavoritesStack.Group>
-        </FavoritesStack.Navigator>
+            </Stack.Group>
+
+            {/* https://www.reddit.com/r/reactnative/comments/1dgktbn/comment/lxd23sj/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button */}
+            <Stack.Group screenOptions={{ 
+                presentation: 'formSheet', 
+                sheetInitialDetentIndex: 0, 
+                sheetAllowedDetents: [0.35] 
+            }}>
+                <Stack.Screen
+                    name="AddPlaylist"
+                    component={AddPlaylist}
+                    options={{
+                        title: "Add Playlist",
+                    }}
+                />
+            </Stack.Group>
+
+        </Stack.Navigator>
     )
 }
