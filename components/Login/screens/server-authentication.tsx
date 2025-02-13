@@ -58,7 +58,7 @@ export default function ServerAuthentication({
 
     return (
         <SafeAreaView>
-            <H2>
+            <H2 marginHorizontal={"$2"} marginVertical={"$7"}>
                 { `Sign in to ${route.params.server.name}`}
             </H2>
             <Button onPress={() => { 
