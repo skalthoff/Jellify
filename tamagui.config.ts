@@ -5,7 +5,7 @@ import { headingFont, bodyFont } from './fonts.config'
 const tokens = createTokens({
   ...TamaguiTokens,
   color: {
-    danger: "#691029",
+    danger: "#ff0000",
     purpleDark: "#0C0622",
     purple: "#100538",
     purpleGray: "#66617B",

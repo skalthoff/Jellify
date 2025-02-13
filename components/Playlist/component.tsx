@@ -1,7 +1,7 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { getToken, getTokens, Separator, XStack, YStack } from "tamagui";
+import { getToken, Separator, Spacer, XStack, YStack } from "tamagui";
 import { useItemTracks } from "../../api/queries/tracks";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
@@ -57,12 +57,11 @@ export default function Playlist({
 
                     )}
 
+                    <Spacer />
+
                     <Icon 
-                        color={editing 
-                            ? getTokens().color.amethyst.val 
-                            : getTokens().color.white.val
-                        }
-                        name={editing ? 'check' : 'pencil'} 
+                        color={getToken("$color.amethyst")}
+                        name={editing ? 'content-save-outline' : 'pencil'} 
                         onPress={() => setEditing(!editing)} 
                     />
                 </XStack>
