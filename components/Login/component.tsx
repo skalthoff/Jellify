@@ -40,6 +40,7 @@ export default function Login(): React.JSX.Element {
                             options={{ 
                                 headerShown: false, 
                             }} 
+                            initialParams={{ server }}
                             //@ts-ignore
                             component={ServerAuthentication} 
                         />
