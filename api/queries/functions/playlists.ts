@@ -20,7 +20,7 @@ export function fetchUserPlaylists(
                 fields: [
                     "Path"
                 ],
-                sortBy: defaultSorting.concat(sortBy),
+                sortBy: sortBy.concat(defaultSorting),
                 sortOrder: [
                     SortOrder.Ascending
                 ]
