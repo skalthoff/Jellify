@@ -16,7 +16,7 @@ export default function Jellify(): React.JSX.Element {
 
   return (
     <PortalProvider shouldAddRootHost>
-      <ToastProvider native>
+      <ToastProvider>
         <JellifyProvider>
           <App />
         </JellifyProvider>
@@ -42,7 +42,7 @@ function App(): React.JSX.Element {
             <Login /> 
           </JellyfinAuthenticationProvider>
         )}
-        <ToastViewport />
+        <ToastViewport portalToRoot />
       </SafeAreaProvider>
     </NavigationContainer>
   )
