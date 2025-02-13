@@ -52,12 +52,7 @@ export default function ServerLibrary(): React.JSX.Element {
                                     value={library.Id!} 
                                     aria-label={library.Name!}
                                 >
-                                    <Label
-                                        htmlFor={library.Id!} 
-                                        size="$2"
-                                    >
-                                        {library.Name ?? "Unnamed Library"}
-                                    </Label>
+                                    <Text>{library.Name ?? "Unnamed Library"}</Text>
                                 </ToggleGroup.Item>
                             )
                         })
