@@ -37,7 +37,8 @@ export default function HorizontalCardList({
             horizontal
             data={items?.slice(0, cutoff - 1) ?? undefined}
             renderItem={renderItem}
-            ListFooterComponent={(
+            ListFooterComponent={() => {
+                return items ? (
                 <IconCard
                     name={
                         squared 
@@ -48,7 +49,8 @@ export default function HorizontalCardList({
                     caption="See More"
                     onPress={onSeeMore}
                 />
-            )}
+                ) : undefined}
+            }
         />
     )
 }
