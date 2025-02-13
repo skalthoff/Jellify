@@ -35,9 +35,9 @@ export default function AddPlaylist({
 
             navigation.goBack();
 
-            // Refresh user playlists component on home screen
+            // Refresh user playlists component in library
             queryClient.invalidateQueries({
-                queryKey: [QueryKeys.UserPlaylists]
+                queryKey: [QueryKeys.FavoritePlaylists]
             });
         },
         onError: () => {
