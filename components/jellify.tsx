@@ -10,7 +10,7 @@ import { PlayerProvider } from "../player/provider";
 import { useColorScheme } from "react-native";
 import { PortalProvider } from "@tamagui/portal";
 import { JellifyProvider, useJellifyContext } from "./provider";
-import { ToastProvider } from "@tamagui/toast";
+import { ToastProvider, ToastViewport } from "@tamagui/toast";
 
 export default function Jellify(): React.JSX.Element {
 
@@ -32,6 +32,7 @@ function App(): React.JSX.Element {
   
   return (
     <NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
+      <ToastViewport />
       <SafeAreaProvider>
         { loggedIn ? (
           <PlayerProvider>
