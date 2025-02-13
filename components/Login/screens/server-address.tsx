@@ -23,7 +23,7 @@ export default function ServerAddress({
 }): React.JSX.Element {
 
     navigation.setOptions({
-        animationTypeForReplace: 'pop'
+        animationTypeForReplace: 'push'
     })
 
     const [useHttps, setUseHttps] = useState<boolean>(true);
