@@ -71,7 +71,7 @@ export default function ServerAddress({
             Burnt.toast({
                 title: "Unable to connect",
                 preset: "error",
-                message: `Unable to connect to Jellyfin at ${useHttps ? https : http}${serverAddress}`,
+                // message: `Unable to connect to Jellyfin at ${useHttps ? https : http}${serverAddress}`,
             });
         }
     });
