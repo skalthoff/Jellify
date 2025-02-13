@@ -10,15 +10,15 @@ export default function Input(props: InputProps): React.JSX.Element {
     return (
         <XStack>
 
-            { props.prependElement && (
-                props.prependElement
-            )}
             
             <YStack 
                 flex={1} 
                 alignContent='center' 
                 justifyContent='center'
             >
+                { props.prependElement && (
+                    props.prependElement
+                )}
 
             </YStack>
 
