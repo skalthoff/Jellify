@@ -16,7 +16,7 @@ export default function Jellify(): React.JSX.Element {
 
   return (
     <PortalProvider shouldAddRootHost>
-      <ToastProvider>
+      <ToastProvider native>
         <JellifyProvider>
           <App />
         </JellifyProvider>
