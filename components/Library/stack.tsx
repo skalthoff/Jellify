@@ -10,6 +10,7 @@ import AlbumsScreen from "../Albums/screen";
 import TracksScreen from "../Tracks/screen";
 import DetailsScreen from "../ItemDetail/screen";
 import PlaylistsScreen from "../Playlists/screen";
+import AddPlaylist from "./components/add-playlist";
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -96,6 +97,22 @@ export default function LibraryStack(): React.JSX.Element {
                     }}
                 />
             </Stack.Group>
+
+            {/* https://www.reddit.com/r/reactnative/comments/1dgktbn/comment/lxd23sj/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button */}
+            <Stack.Group screenOptions={{ 
+                presentation: 'formSheet', 
+                sheetInitialDetentIndex: 0, 
+                sheetAllowedDetents: [0.35] 
+            }}>
+                <Stack.Screen
+                    name="AddPlaylist"
+                    component={AddPlaylist}
+                    options={{
+                        title: "Add Playlist",
+                    }}
+                />
+            </Stack.Group>
+
         </Stack.Navigator>
     )
 }
