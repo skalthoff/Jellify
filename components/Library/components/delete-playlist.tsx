@@ -6,6 +6,8 @@ import { useMutation } from "@tanstack/react-query";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { deletePlaylist } from "../../../api/mutations/functions/playlists";
 import { trigger } from "react-native-haptic-feedback";
+import { queryClient } from "../../../constants/query-client";
+import { QueryKeys } from "../../../enums/query-keys";
 
 import * as Burnt from "burnt";
 
@@ -21,12 +23,20 @@ export default function DeletePlaylist(
         onSuccess: (data, playlist) => {
             trigger("notificationSuccess");
 
+            navigation.goBack();
+            navigation.goBack();
             Burnt.alert({
                 title: `Playlist deleted`,
                 message: `Deleted ${playlist.Name ?? "Untitled Playlist"}`,
                 duration: 1,
                 preset: 'done'
             });
+
+            // Refresh user playlists component on home screen
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.UserPlaylists]
+            });
+            
             
         },
         onError: () => {
