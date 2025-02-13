@@ -45,10 +45,6 @@ export default function LibraryStack(): React.JSX.Element {
                 name="Artists" 
                 component={ArtistsScreen} 
                 options={({ route }) => ({
-                    headerLargeTitle: true,
-                    headerLargeTitleStyle: {
-                        fontFamily: 'Aileron-Bold'
-                    }
                 })}
             />
 
@@ -65,10 +61,6 @@ export default function LibraryStack(): React.JSX.Element {
                 name="Albums"
                 component={AlbumsScreen}
                 options={{
-                    headerLargeTitle: true,
-                    headerLargeTitleStyle: {
-                        fontFamily: 'Aileron-Bold'
-                    }
                 }}
             />
 
@@ -76,10 +68,6 @@ export default function LibraryStack(): React.JSX.Element {
                 name="Tracks"
                 component={TracksScreen}
                 options={{
-                    headerLargeTitle: true,
-                    headerLargeTitleStyle: {
-                        fontFamily: 'Aileron-Bold'
-                    }
                 }}
             />
 
@@ -87,10 +75,6 @@ export default function LibraryStack(): React.JSX.Element {
                 name="Playlists"
                 component={PlaylistsScreen}
                 options={{
-                    headerLargeTitle: true,
-                    headerLargeTitleStyle: {
-                        fontFamily: 'Aileron-Bold'
-                    }
                 }}
             />
 
