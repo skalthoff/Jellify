@@ -27,7 +27,7 @@ export const useSetupPlayer = () => useQuery({
                 IOSCategoryOptions.AllowBluetooth,
             ]
         })
-        await TrackPlayer.updateOptions({
+        return await TrackPlayer.updateOptions({
                 progressUpdateEventInterval: 1,
                 capabilities: CAPABILITIES,
                 notificationCapabilities: CAPABILITIES,
