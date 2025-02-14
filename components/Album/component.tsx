@@ -105,9 +105,9 @@ export default function Album({
                     </YStack>
 
                 )}
-                style={{
-                    overflow: 'hidden' // Prevent unnecessary memory usage
-                }} 
+                // style={{
+                //     overflow: 'hidden' // Prevent unnecessary memory usage
+                // }} 
             />
 
     )
