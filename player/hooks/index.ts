@@ -20,7 +20,7 @@ export const useSetupPlayer = () => useQuery({
     queryFn: () => {
         return TrackPlayer.setupPlayer({
             autoHandleInterruptions: true,
-            maxCacheSize: 1000 * 500, // 500MB
+            maxCacheSize: 1000 * 2500, // 250MB, TODO make this adjustable
             iosCategory: IOSCategory.Playback,
             iosCategoryOptions: [
                 IOSCategoryOptions.AllowAirPlay,
