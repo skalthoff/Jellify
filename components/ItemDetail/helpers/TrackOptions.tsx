@@ -79,7 +79,7 @@ export default function TrackOptions({
                                 navigation.goBack();
                             
                             navigation.goBack();
-                            navigation.push("Album", {
+                            navigation.navigate("Album", {
                                 album
                             });
                         }}

@@ -39,14 +39,6 @@ export default function Player() : React.JSX.Element {
                 }}
             />
 
-            <PlayerStack.Screen
-                name="Album"
-                component={AlbumScreen}
-                options={{
-                    headerTitle: ""
-                }}
-            />
-
         </PlayerStack.Navigator>
     );
 }
