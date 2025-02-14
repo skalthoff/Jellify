@@ -46,6 +46,9 @@ export default function FavoritePlaylists({ navigation }: FavoritePlaylistsProps
                     />
                 )
             }}
+            style={{
+                overflow: 'hidden' // Prevent unnecessary memory usage
+            }} 
         />
     )
 }

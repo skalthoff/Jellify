@@ -42,7 +42,10 @@ export default function RecentlyPlayed({
                     </YStack>
                 )}
             </XStack>
-            <ScrollView horizontal>
+            <ScrollView 
+                horizontal
+                removeClippedSubviews // Save memory usage
+            >
                 { recentTracks && recentTracks.map((recentlyPlayedTrack, index) => {
                     return (
                         <ItemCard

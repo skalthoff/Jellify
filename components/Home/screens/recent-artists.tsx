@@ -20,6 +20,9 @@ export default function RecentArtistsScreen({
             renderItem={({ index, item: artist }) => {
                 return <Item item={artist} queueName="" navigation={navigation} />
             }}
+            style={{
+                overflow: 'hidden' // Prevent unnecessary memory usage
+            }} 
         />
     )
 

@@ -31,6 +31,9 @@ export default function Tracks({ navigation }: { navigation: NativeStackNavigati
 
                 )
             }}
+            style={{
+                overflow: 'hidden' // Prevent unnecessary memory usage
+            }} 
         />
     )
 }
