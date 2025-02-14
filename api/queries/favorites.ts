@@ -21,8 +21,3 @@ export const useFavoriteTracks = () => useQuery({
     queryKey: [QueryKeys.FavoriteTracks],
     queryFn: () => fetchFavoriteTracks()
 });
-
-export const useUserData = (itemId: string) => useQuery({
-    queryKey: [QueryKeys.UserData, itemId],
-    queryFn: () => fetchUserData(itemId)
-});

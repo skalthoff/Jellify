@@ -1,5 +1,4 @@
 import { usePlayerContext } from "../../../player/provider";
-import { useItem } from "../../../api/queries/item";
 import { StackParamList } from "../../../components/types";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -11,12 +10,13 @@ import { Text } from "../../../components/Global/helpers/text";
 import { useUserPlaylists } from "../../../api/queries/playlist";
 import React from "react";
 import BlurhashedImage from "../../../components/Global/components/blurhashed-image";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AddToPlaylistMutation } from "../types";
 import { addToPlaylist } from "../../../api/mutations/functions/playlists";
 import { trigger } from "react-native-haptic-feedback";
 import { queryClient } from "../../../constants/query-client";
 import { QueryKeys } from "../../../enums/query-keys";
+import { fetchItem } from "../../../api/queries/functions/item";
 
 interface TrackOptionsProps {
     track: BaseItemDto;
@@ -34,7 +34,10 @@ export default function TrackOptions({
     isNested
 } : TrackOptionsProps) : React.JSX.Element {
 
-    const { data: album, isSuccess: albumFetchSuccess } = useItem(track.AlbumId ?? "");
+    const { data: album, isSuccess: albumFetchSuccess } = useQuery({
+        queryKey: [QueryKeys.Item, track.AlbumId!],
+        queryFn: () => fetchItem(track.AlbumId!)
+    });;
 
     const { data: playlists, isPending : playlistsFetchPending, isSuccess: playlistsFetchSuccess, refetch } = useUserPlaylists();
 
