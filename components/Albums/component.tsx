@@ -34,6 +34,9 @@ export default function Albums({ navigation }: AlbumsProps) : React.JSX.Element 
                         />
                     )
                 }}
+                style={{
+                    overflow: 'hidden' // Prevent unnecessary memory usage
+                }} 
             />
         )
     }

@@ -39,8 +39,10 @@ export default function Artist({
 
     return (
         <ScrollView 
+            alignContent="center"
             contentInsetAdjustmentBehavior="automatic"
-            alignContent="center">
+            removeClippedSubviews
+        >
             <YStack alignContent="center" justifyContent="center" minHeight={bannerHeight}>
                 <BlurhashedImage
                     borderRadius={0}
@@ -73,6 +75,9 @@ export default function Artist({
                             />
                         )
                     }}
+                    style={{
+                        overflow: 'hidden' // Prevent unnecessary memory usage
+                    }} 
                 />
         </ScrollView>
     )

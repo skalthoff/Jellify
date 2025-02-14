@@ -35,6 +35,9 @@ export default function Library({
                         />
                     )
                 }}
+                style={{
+                    overflow: 'hidden' // Prevent unnecessary memory usage
+                }} 
             />
         </SafeAreaView>
     )

@@ -59,6 +59,9 @@ export default function Search({
                     <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
                 )
             }} 
+            style={{
+                overflow: 'hidden' // Prevent unnecessary memory usage
+            }} 
         />
     )
 }

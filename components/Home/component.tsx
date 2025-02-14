@@ -32,10 +32,12 @@ export function ProvidedHome({
                 contentInsetAdjustmentBehavior="automatic"
                 refreshControl={
                     <RefreshControl 
-                        refreshing={refetching} 
-                        onRefresh={onRefetch}
+                    refreshing={refetching} 
+                    onRefresh={onRefetch}
                     />
-                }>
+                }
+                removeClippedSubviews // Save memory usage
+            >
                 <YStack alignContent='flex-start'>
                     <XStack margin={"$2"}>
                         <H3>{`Hi, ${Client.user!.name}`}</H3>

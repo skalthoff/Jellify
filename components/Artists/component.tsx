@@ -44,6 +44,9 @@ export default function Artists({
                     />
                 )
             }}
+            style={{
+                overflow: 'hidden' // Prevent unnecessary memory usage
+            }} 
         />
     )
 }
