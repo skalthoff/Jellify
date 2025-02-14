@@ -76,7 +76,7 @@ export default function TrackOptions({
                         onPress={() => {
                             
                             if (isNested)
-                                navigation.getParent()!.goBack();
+                                navigation.goBack();
                             
                             navigation.goBack();
                             navigation.navigate("Album", {

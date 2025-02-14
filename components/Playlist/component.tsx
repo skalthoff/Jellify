@@ -2,7 +2,6 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
 import { getToken, Separator, Spacer, XStack, YStack } from "tamagui";
-import { useItemTracks } from "../../api/queries/tracks";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
@@ -11,10 +10,12 @@ import DraggableFlatList from "react-native-draggable-flatlist";
 import { removeFromPlaylist, reorderPlaylist, updatePlaylist } from "../../api/mutations/functions/playlists";
 import { useEffect, useState } from "react";
 import Icon from "../Global/helpers/icon";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { trigger } from "react-native-haptic-feedback";
 import { queryClient } from "../../constants/query-client";
 import { QueryKeys } from "../../enums/query-keys";
+import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
+import Client from "../../api/client";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
@@ -40,7 +41,18 @@ export default function Playlist({
 
     const [editing, setEditing] = useState<boolean>(false);
     const [playlistTracks, setPlaylistTracks] = useState<BaseItemDto[]>([]);
-    const { data: tracks, isPending, isSuccess, refetch } = useItemTracks(playlist.Id!);
+    const { data: tracks, isPending, isSuccess, refetch } = useQuery({
+        queryKey: [QueryKeys.ItemTracks, playlist.Id!],
+        queryFn: () => {
+            
+            return getItemsApi(Client.api!).getItems({
+                parentId: playlist.Id!,
+            })
+            .then((response) => {
+                return response.data.Items ? response.data.Items! : [];
+            })
+        },
+    });
 
     navigation.setOptions({
         headerRight: () => {
