@@ -8,6 +8,8 @@ export function fetchItemImage(itemId: string, imageType: ImageType, width: numb
     
     return new Promise<string>(async (resolve, reject) => {
 
+        console.debug("Fetching item image");
+
         // Make sure images folder exists in cache, create if it doesn't
         if (!(await FileSystem.exists(`${Dirs.CacheDir}/images`)))
             await FileSystem.mkdir(`${Dirs.CacheDir}/images`)
