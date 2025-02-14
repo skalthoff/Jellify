@@ -14,5 +14,6 @@ export const useItemImage = (itemId: string, imageType: ImageType = ImageType.Pr
     ],
     queryFn: () => fetchItemImage(itemId, imageType, width, height),
     retry: 2,
-    staleTime: QueryConfig.staleTime.oneDay,
+    gcTime: (1000 * 60), // 1 minute
+    staleTime: (1000 * 60) // 1 minute,
 });

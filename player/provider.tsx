@@ -46,7 +46,8 @@ interface PlayerContext {
 const PlayerContextInitializer = () => {
 
     const nowPlayingJson = storage.getString(MMKVStorageKeys.NowPlaying)
-    const queueJson = storage.getString(MMKVStorageKeys.PlayQueue);
+    const playQueueJson = storage.getString(MMKVStorageKeys.PlayQueue);
+    const queueJson = storage.getString(MMKVStorageKeys.Queue)
 
     const playStateApi = getPlaystateApi(Client.api!)
     
@@ -57,9 +58,9 @@ const PlayerContextInitializer = () => {
     const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(nowPlayingJson ? JSON.parse(nowPlayingJson) : undefined);
     const [isSkipping, setIsSkipping] = useState<boolean>(false);
 
-    const [playQueue, setPlayQueue] = useState<JellifyTrack[]>(queueJson ? JSON.parse(queueJson) : []);
+    const [playQueue, setPlayQueue] = useState<JellifyTrack[]>(playQueueJson ? JSON.parse(playQueueJson) : []);
     
-    const [queue, setQueue] = useState<Queue>("Recently Played");
+    const [queue, setQueue] = useState<Queue>(queueJson ? JSON.parse(queueJson) : 'Queue');
     //#endregion State
 
     
