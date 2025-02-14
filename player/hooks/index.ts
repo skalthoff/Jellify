@@ -17,17 +17,17 @@ const CAPABILITIES: Capability[] = [
   
 export const useSetupPlayer = () => useQuery({
     queryKey: [QueryKeys.Player],
-    queryFn: () => {
-        return TrackPlayer.setupPlayer({
+    queryFn: async () => {
+        await TrackPlayer.setupPlayer({
             autoHandleInterruptions: true,
-            maxCacheSize: 1000 * 250, // 250MB, TODO make this adjustable
+            maxCacheSize: 1000 * 100, // 100MB, TODO make this adjustable
             iosCategory: IOSCategory.Playback,
             iosCategoryOptions: [
                 IOSCategoryOptions.AllowAirPlay,
                 IOSCategoryOptions.AllowBluetooth,
             ]
-        }).then(() => {
-            return TrackPlayer.updateOptions({
+        })
+        await TrackPlayer.updateOptions({
                 progressUpdateEventInterval: 1,
                 capabilities: CAPABILITIES,
                 notificationCapabilities: CAPABILITIES,
@@ -41,7 +41,6 @@ export const useSetupPlayer = () => useQuery({
                 //     isActive: true,
                 //     title: "Unfavorite"
                 // }
-            });
         });
     }
 });
