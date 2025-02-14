@@ -8,10 +8,16 @@ import { FlatList } from "react-native";
 import { getToken, View, XStack, YStack } from "tamagui";
 import Icon from "../../../components/Global/helpers/icon";
 import { ItemSortBy } from "@jellyfin/sdk/lib/generated-client/models";
+import { useQuery } from "@tanstack/react-query";
+import { QueryKeys } from "../../../enums/query-keys";
+import { fetchUserPlaylists } from "../../../api/queries/functions/playlists";
 
 export default function Playlists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
 
-    const { data: playlists } = useUserPlaylists([ItemSortBy.DatePlayed]);
+    const { data: playlists } = useQuery({
+        queryKey: [QueryKeys.UserPlaylists],
+        queryFn: () => fetchUserPlaylists()
+    });
 
     return (
         <View>
