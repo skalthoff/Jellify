@@ -105,7 +105,7 @@ export type AlbumsProps = NativeStackScreenProps<StackParamList, "Albums">;
 export type FavoritePlaylistsProps = NativeStackScreenProps<StackParamList, "Playlists">;
 export type DeletePlaylistProps = NativeStackScreenProps<StackParamList, "DeletePlaylist">;
 
-export type FavoriteTracksProps = NativeStackScreenProps<StackParamList, "Tracks">;
+export type TracksProps = NativeStackScreenProps<StackParamList, "Tracks">;
 
 export type GenresProps = NativeStackScreenProps<StackParamList, "Genres">;
 

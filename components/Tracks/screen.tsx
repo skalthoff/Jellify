@@ -1,5 +1,5 @@
 import { RouteProp } from "@react-navigation/native";
-import { StackParamList } from "../types";
+import { TracksProps, StackParamList } from "../types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import Track from "../Global/components/track";
@@ -12,10 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 export default function TracksScreen({
     route,
     navigation
-} : {
-    route: RouteProp<StackParamList, "Tracks">,
-    navigation: NativeStackNavigationProp<StackParamList>
-}) : React.JSX.Element {
+} : TracksProps) : React.JSX.Element {
 
     const { query } = route.params;
 
