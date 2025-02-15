@@ -88,6 +88,7 @@ export default function Album({
                             tracklist={tracks!}
                             index={index}
                             navigation={navigation}
+                            queue={album}
                         />
                     )
                     

@@ -17,7 +17,7 @@ interface TrackProps {
     navigation: NativeStackNavigationProp<StackParamList>;
     tracklist?: BaseItemDto[] | undefined;
     index?: number | undefined;
-    queue?: Queue;
+    queue: Queue;
     showArtwork?: boolean | undefined;
     onPress?: () => void | undefined;
     onLongPress?: () => void | undefined;
@@ -64,7 +64,7 @@ export default function Track({
                             track,
                             index,
                             tracklist: tracklist ?? playQueue.map((track) => track.item),
-                            queue: queue ? queue : "Queue",
+                            queue,
                             queuingType: QueuingType.FromSelection
                         });
                     }
