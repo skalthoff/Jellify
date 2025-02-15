@@ -236,38 +236,6 @@ const PlayerContextInitializer = () => {
     //#endregion
 
     //#region RNTP Setup
-    const { isSuccess: isPlayerReady } = useQuery({
-        queryKey: [QueryKeys.Player],
-        queryFn: async () => {
-            await TrackPlayer.setupPlayer({
-                autoHandleInterruptions: true,
-                maxCacheSize: 1000 * 100, // 100MB, TODO make this adjustable
-                iosCategory: IOSCategory.Playback,
-                iosCategoryOptions: [
-                    IOSCategoryOptions.AllowAirPlay,
-                    IOSCategoryOptions.AllowBluetooth,
-                ]
-            });
-            
-            return await TrackPlayer.updateOptions({
-                    progressUpdateEventInterval: 1,
-                    capabilities: CAPABILITIES,
-                    notificationCapabilities: CAPABILITIES,
-                    compactCapabilities: CAPABILITIES,
-                    // ratingType: RatingType.Heart,
-                    // likeOptions: {
-                    //     isActive: false,
-                    //     title: "Favorite"
-                    // },
-                    // dislikeOptions: {
-                    //     isActive: true,
-                    //     title: "Unfavorite"
-                    // }
-            });
-        },
-        retry: 0,
-        staleTime: 1000 * 60 * 60 * 24 * 7 // 7 days
-    });
     
     const { state: playbackState } = usePlaybackState();
     const progress = useProgress(UPDATE_INTERVAL);
@@ -332,14 +300,6 @@ const PlayerContextInitializer = () => {
         }
     });
 
-    useEffect(() => {
-        if (isPlayerReady)
-          console.debug("Player is ready")
-        else
-          console.warn("Player could not be setup")
-      }, [
-        isPlayerReady
-      ])
     //#endregion RNTP Setup
 
     //#region useEffects
