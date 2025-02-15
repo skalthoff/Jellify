@@ -234,7 +234,7 @@ const PlayerContextInitializer = () => {
     //#endregion
 
     //#region RNTP Setup
-    const isPlayerReady = useSetupPlayer().isSuccess;
+    const { isSuccess: isPlayerReady } = useSetupPlayer();
     const { state: playbackState } = usePlaybackState();
     const progress = useProgress(UPDATE_INTERVAL);
 
@@ -310,9 +310,9 @@ const PlayerContextInitializer = () => {
 
     //#region useEffects
     useEffect(() => {
-        storage.set(MMKVStorageKeys.Queue, JSON.stringify(playQueue))
+        storage.set(MMKVStorageKeys.Queue, JSON.stringify(queue))
     }, [
-        playQueue
+        queue
     ])
 
     useEffect(() => {
