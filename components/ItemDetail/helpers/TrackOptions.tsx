@@ -7,7 +7,6 @@ import { QueuingType } from "../../../enums/queuing-type";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import IconButton from "../../../components/Global/helpers/icon-button";
 import { Text } from "../../../components/Global/helpers/text";
-import { useUserPlaylists } from "../../../api/queries/playlist";
 import React from "react";
 import BlurhashedImage from "../../../components/Global/components/blurhashed-image";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -17,6 +16,7 @@ import { trigger } from "react-native-haptic-feedback";
 import { queryClient } from "../../../constants/query-client";
 import { QueryKeys } from "../../../enums/query-keys";
 import { fetchItem } from "../../../api/queries/functions/item";
+import { fetchUserPlaylists } from "../../../api/queries/functions/playlists";
 
 interface TrackOptionsProps {
     track: BaseItemDto;
@@ -39,7 +39,11 @@ export default function TrackOptions({
         queryFn: () => fetchItem(track.AlbumId!)
     });;
 
-    const { data: playlists, isPending : playlistsFetchPending, isSuccess: playlistsFetchSuccess, refetch } = useUserPlaylists();
+    const { data: playlists, isPending : playlistsFetchPending, isSuccess: playlistsFetchSuccess, refetch } = useQuery({
+            queryKey: [QueryKeys.UserPlaylists],
+            queryFn: () => fetchUserPlaylists()
+        });
+    ;
 
     const { useAddToQueue } = usePlayerContext();
 

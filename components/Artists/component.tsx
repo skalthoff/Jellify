@@ -1,12 +1,12 @@
-import { useFavoriteArtists } from "../../api/queries/favorites";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import React from "react";
 import { FlatList, RefreshControl } from "react-native";
 import { ItemCard } from "../Global/components/item-card";
 import { ArtistsProps } from "../types";
 import { QueryKeys } from "../../enums/query-keys";
-import { useRecentlyPlayedArtists } from "../../api/queries/recently-played";
-import { horizontalCardLimit } from "../Global/component.config";
+import { useQuery } from "@tanstack/react-query";
+import { fetchRecentlyPlayedArtists } from "../../api/queries/functions/recents";
+import { fetchFavoriteArtists } from "../../api/queries/functions/favorites";
 
 export default function Artists({ 
     navigation,
@@ -15,9 +15,20 @@ export default function Artists({
 
     const { data: artists, refetch, isPending } = 
         route.params.query === 
-            QueryKeys.FavoriteArtists ? useFavoriteArtists() : 
-            QueryKeys.RecentlyPlayedArtists ? useRecentlyPlayedArtists(horizontalCardLimit + 3) :
-            useFavoriteArtists();
+            QueryKeys.FavoriteArtists ? useQuery({
+                queryKey: [QueryKeys.FavoriteArtists],
+                queryFn: () => fetchFavoriteArtists()
+            }) : 
+            
+            QueryKeys.RecentlyPlayedArtists ? useQuery({
+                queryKey: [QueryKeys.RecentlyPlayedArtists],
+                queryFn: () => fetchRecentlyPlayedArtists()
+            }) :
+            
+            useQuery({
+                queryKey: [QueryKeys.FavoriteArtists],
+                queryFn: () => fetchFavoriteArtists()
+            });
 
     const { width } = useSafeAreaFrame();
 

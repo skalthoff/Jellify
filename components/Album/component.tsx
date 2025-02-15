@@ -1,16 +1,19 @@
 import { StackParamList } from "../types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { YStack, XStack, Separator } from "tamagui";
-import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { BaseItemDto, ItemSortBy } from "@jellyfin/sdk/lib/generated-client/models";
 import { H3, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import Track from "../Global/components/track";
-import { useItemTracks } from "../../api/queries/tracks";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
 import BlurhashedImage from "../Global/components/blurhashed-image";
 import Avatar from "../Global/components/avatar";
+import { useQuery } from "@tanstack/react-query";
+import { QueryKeys } from "../../enums/query-keys";
+import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
+import Client from "../../api/client";
 
 interface AlbumProps {
     album: BaseItemDto,
@@ -31,7 +34,27 @@ export default function Album({
     })
     const { width } = useSafeAreaFrame();
 
-    const { data: tracks } = useItemTracks(album.Id!, true);
+    const { data: tracks } =  useQuery({
+        queryKey: [QueryKeys.ItemTracks, album.Id!],
+        queryFn: () => {
+
+            let sortBy: ItemSortBy[] = [];
+
+            sortBy = [
+                ItemSortBy.ParentIndexNumber,
+                ItemSortBy.IndexNumber,
+                ItemSortBy.SortName
+            ]
+
+            return getItemsApi(Client.api!).getItems({
+                parentId: album.Id!,
+                sortBy
+            })
+            .then((response) => {
+                return response.data.Items ? response.data.Items! : [];
+            })
+        },
+    });
 
     return (
             <FlatList
