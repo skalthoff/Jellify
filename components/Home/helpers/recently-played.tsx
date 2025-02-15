@@ -9,6 +9,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { trigger } from "react-native-haptic-feedback";
 import { QueuingType } from "../../../enums/queuing-type";
 import Icon from "../../../components/Global/helpers/icon";
+import { FlatList } from "react-native";
 
 export default function RecentlyPlayed({ 
     navigation 
@@ -42,11 +43,10 @@ export default function RecentlyPlayed({
                     </YStack>
                 )}
             </XStack>
-            <ScrollView 
+            <FlatList 
                 horizontal
-                removeClippedSubviews // Save memory usage
-            >
-                { recentTracks && recentTracks.map((recentlyPlayedTrack, index) => {
+                data={recentTracks}
+                renderItem={({ index, item: recentlyPlayedTrack }) => {
                     return (
                         <ItemCard
                             caption={recentlyPlayedTrack.Name}
@@ -58,7 +58,7 @@ export default function RecentlyPlayed({
                                 usePlayNewQueue.mutate({ 
                                     track: recentlyPlayedTrack, 
                                     index: index,
-                                    tracklist: recentTracks,
+                                    tracklist: recentTracks ?? [recentlyPlayedTrack],
                                     queue: "Recently Played",
                                     queuingType: QueuingType.FromSelection
                                 });
@@ -72,8 +72,11 @@ export default function RecentlyPlayed({
                             }}
                         />                                
                     )
-                })}
-            </ScrollView>
+                }} 
+                style={{
+                    overflow: 'hidden'
+                }}
+            />
         </View>
     )
 }
