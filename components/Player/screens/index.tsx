@@ -71,7 +71,10 @@ export default function PlayerScreen({
             <>
                 <YStack>
 
-                    <XStack marginHorizontal={"$2"}>
+                    <XStack 
+                        marginBottom={"$2"}
+                        marginHorizontal={"$2"}
+                    >
 
                         <YStack 
                             alignContent="flex-end"
