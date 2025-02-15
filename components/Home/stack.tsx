@@ -9,6 +9,7 @@ import { ProvidedHome } from "./component";
 import DetailsScreen from "../ItemDetail/screen";
 import AddPlaylist from "../Library/components/add-playlist";
 import ArtistsScreen from "../Artists/screen";
+import TracksScreen from "../Tracks/screen";
 
 const HomeStack = createNativeStackNavigator<StackParamList>();
 
@@ -48,6 +49,14 @@ export default function Home(): React.JSX.Element {
                     <HomeStack.Screen
                         name="Artists"
                         component={ArtistsScreen}
+                    />
+
+                    <HomeStack.Screen
+                        name="Tracks"
+                        component={TracksScreen}
+                        options={{
+                            title: "Recent Tracks"
+                        }}
                     />
 
                     <HomeStack.Screen

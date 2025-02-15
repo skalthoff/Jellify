@@ -129,7 +129,7 @@ export default function ItemDetail({
 
                     <YStack 
                         flex={1}
-                        alignContent="center"
+                        alignItems="flex-end"
                         justifyContent="center"
                     >
                         <FavoriteButton item={item} />
