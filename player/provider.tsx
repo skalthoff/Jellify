@@ -21,7 +21,7 @@ import { Section } from "../components/Player/types";
 import { Queue } from "./types/queue-item";
 import { markItemPlayed } from "../api/mutations/functions/item";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
-import { QueryKeys } from "@/enums/query-keys";
+import { QueryKeys } from "../enums/query-keys";
 import { CAPABILITIES } from "./constants";
 
 interface PlayerContext {
