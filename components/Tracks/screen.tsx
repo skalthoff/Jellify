@@ -1,6 +1,4 @@
-import { RouteProp } from "@react-navigation/native";
-import { TracksProps, StackParamList } from "../types";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { TracksProps } from "../types";
 import React from "react";
 import Track from "../Global/components/track";
 import { FlatList, RefreshControl } from "react-native";
@@ -13,12 +11,11 @@ export default function TracksScreen({
     route,
     navigation
 } : TracksProps) : React.JSX.Element {
-
-    const { query } = route.params;
-
     const { data: tracks, refetch, isPending } = useQuery({
-        queryKey: [query],
-        queryFn: () => query === QueryKeys.RecentlyPlayed ? fetchRecentlyPlayed() : fetchFavoriteTracks()
+        queryKey: [route.params.query],
+        queryFn: () => route.params.query === QueryKeys.RecentlyPlayed 
+            ? fetchRecentlyPlayed() 
+            : fetchFavoriteTracks()
     });
 
     return (
