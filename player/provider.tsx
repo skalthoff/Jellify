@@ -264,7 +264,9 @@ const PlayerContextInitializer = () => {
                     //     title: "Unfavorite"
                     // }
             });
-        }
+        },
+        retry: 0,
+        staleTime: 1000 * 60 * 60 * 24 * 7 // 7 days
     });
     
     const { state: playbackState } = usePlaybackState();
