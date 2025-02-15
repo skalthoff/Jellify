@@ -52,6 +52,7 @@ export default function Playlist({
                 return response.data.Items ? response.data.Items! : [];
             })
         },
+        staleTime: (1000 * 60 * 1 * 1) * 1 // 1 minute, since these are mutable by nature
     });
 
     navigation.setOptions({
