@@ -3,13 +3,13 @@ import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayNextIndexStart, findPlayQueueIndexStart } from "./helpers/index";
-import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
+import TrackPlayer, { Event, IOSCategory, IOSCategoryOptions, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
 import { isEqual, isUndefined } from "lodash";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
-import { useSetupPlayer, useUpdateOptions } from "../player/hooks";
+import { useUpdateOptions } from "../player/hooks";
 import { UPDATE_INTERVAL } from "./config";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { useMutation, UseMutationResult, useQuery } from "@tanstack/react-query";
 import { mapDtoToTrack } from "../helpers/mappings";
 import { QueuingType } from "../enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
@@ -21,6 +21,8 @@ import { Section } from "../components/Player/types";
 import { Queue } from "./types/queue-item";
 import { markItemPlayed } from "../api/mutations/functions/item";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { QueryKeys } from "@/enums/query-keys";
+import { CAPABILITIES } from "./constants";
 
 interface PlayerContext {
     initialized: boolean;
@@ -234,7 +236,37 @@ const PlayerContextInitializer = () => {
     //#endregion
 
     //#region RNTP Setup
-    const { isSuccess: isPlayerReady } = useSetupPlayer();
+    const { isSuccess: isPlayerReady } = useQuery({
+        queryKey: [QueryKeys.Player],
+        queryFn: async () => {
+            await TrackPlayer.setupPlayer({
+                autoHandleInterruptions: true,
+                maxCacheSize: 1000 * 100, // 100MB, TODO make this adjustable
+                iosCategory: IOSCategory.Playback,
+                iosCategoryOptions: [
+                    IOSCategoryOptions.AllowAirPlay,
+                    IOSCategoryOptions.AllowBluetooth,
+                ]
+            });
+            
+            return await TrackPlayer.updateOptions({
+                    progressUpdateEventInterval: 1,
+                    capabilities: CAPABILITIES,
+                    notificationCapabilities: CAPABILITIES,
+                    compactCapabilities: CAPABILITIES,
+                    // ratingType: RatingType.Heart,
+                    // likeOptions: {
+                    //     isActive: false,
+                    //     title: "Favorite"
+                    // },
+                    // dislikeOptions: {
+                    //     isActive: true,
+                    //     title: "Unfavorite"
+                    // }
+            });
+        }
+    });
+    
     const { state: playbackState } = usePlaybackState();
     const progress = useProgress(UPDATE_INTERVAL);
 
