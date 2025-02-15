@@ -1,10 +1,12 @@
-import { useFavoritePlaylists } from "../../api/queries/favorites";
 import { FlatList, RefreshControl } from "react-native-gesture-handler";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { ItemCard } from "../Global/components/item-card";
 import { FavoritePlaylistsProps } from "../types";
 import Icon from "../Global/helpers/icon";
 import { getToken } from "tamagui";
+import { fetchFavoritePlaylists } from "../../api/queries/functions/favorites";
+import { QueryKeys } from "../../enums/query-keys";
+import { useQuery } from "@tanstack/react-query";
 
 export default function FavoritePlaylists({ navigation }: FavoritePlaylistsProps) : React.JSX.Element {
 
@@ -18,7 +20,10 @@ export default function FavoritePlaylists({ navigation }: FavoritePlaylistsProps
         }
     });
 
-    const { data: playlists, isPending, refetch } = useFavoritePlaylists();
+    const { data: playlists, isPending, refetch } = useQuery({
+        queryKey: [QueryKeys.UserPlaylists],
+        queryFn: () => fetchFavoritePlaylists()
+    });
 
     const { width } = useSafeAreaFrame();
 

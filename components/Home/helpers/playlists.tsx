@@ -1,13 +1,10 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useUserPlaylists } from "../../../api/queries/playlist";
 import { ItemCard } from "../../Global/components/item-card";
 import { H2 } from "../../../components/Global/helpers/text";
 import { StackParamList } from "../../../components/types";
 import React from "react";
 import { FlatList } from "react-native";
-import { getToken, View, XStack, YStack } from "tamagui";
-import Icon from "../../../components/Global/helpers/icon";
-import { ItemSortBy } from "@jellyfin/sdk/lib/generated-client/models";
+import { View, XStack } from "tamagui";
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../../enums/query-keys";
 import { fetchUserPlaylists } from "../../../api/queries/functions/playlists";
