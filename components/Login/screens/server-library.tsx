@@ -4,11 +4,13 @@ import { useAuthenticationContext } from "../provider";
 import { H1, H2, Label, Text } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
 import _ from "lodash";
-import { useUserViews } from "../../../api/queries/libraries";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Client from "../../../api/client";
 import { useJellifyContext } from "../../provider";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { QueryKeys } from "../../../enums/query-keys";
+import { fetchUserViews } from "../../../api/queries/functions/libraries";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ServerLibrary(): React.JSX.Element {
 
@@ -19,7 +21,10 @@ export default function ServerLibrary(): React.JSX.Element {
     const [libraryId, setLibraryId] = useState<string | undefined>(undefined);
     const [playlistLibrary, setPlaylistLibrary] = useState<BaseItemDto | undefined>(undefined);
 
-    const { data : libraries, isError, isPending, isSuccess, refetch } = useUserViews();
+    const { data : libraries, isError, isPending, isSuccess, refetch } = useQuery({
+        queryKey: [QueryKeys.UserViews],
+        queryFn: () => fetchUserViews()
+    });;
 
     useEffect(() => {
         if (!isPending && isSuccess)

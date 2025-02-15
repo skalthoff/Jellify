@@ -73,7 +73,7 @@ export default function TrackOptions({
         <YStack width={width}>
 
             <XStack justifyContent="space-evenly">
-                { albumFetchSuccess ? (
+                { albumFetchSuccess && album ? (
                     <IconButton 
                         name="music-box"
                         title="Go to Album"
@@ -83,9 +83,21 @@ export default function TrackOptions({
                                 navigation.goBack();
                             
                             navigation.goBack();
-                            navigation.navigate("Album", {
-                                album
-                            });
+
+                            if (isNested)
+                                navigation.navigate('Tabs', {
+                                    screen: 'Home', 
+                                    params: {
+                                        screen: 'Album',
+                                        params: {
+                                            album
+                                        }
+                                    }
+                                });
+                            else 
+                                navigation.navigate('Album', {
+                                        album
+                                });
                         }}
                         size={width / 6}
                     />

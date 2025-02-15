@@ -31,7 +31,7 @@ export default function Tracks({ navigation }: { navigation: NativeStackNavigati
                         showArtwork
                         track={track}
                         tracklist={tracks?.slice(index, index + 50) ?? []}
-                        queue="Queue"
+                        queue="Favorite Tracks"
                     />
 
                 )

@@ -26,13 +26,14 @@ export default function BlurhashedImage({
     const { data: image, isSuccess } = useQuery({
         queryKey: [
             QueryKeys.ItemImage, 
-            item.Id!, 
+            item.AlbumId ? item.AlbumId : item.Id!, 
             type ?? ImageType.Primary, 
             Math.ceil(width / 100) * 100, // Images are fetched at a higher, generic resolution
             Math.ceil(height ?? width / 100) * 100 // So these keys need to match
         ],
-        queryFn: () => fetchItemImage(item.Id!, type ?? ImageType.Primary, width, height ?? width),
-        staleTime: (1000 * 60 * 60) // 1 hour,
+        queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width),
+        staleTime: (1000 * 60 * 60) * 24, // 1 day, images probably don't refresh that often
+        gcTime: (1000 * 1 * 1) * 1 // 1 second, these are stored on disk anyways so refetching is cheap
     });;
 
     const blurhash = !isEmpty(item.ImageBlurHashes) 

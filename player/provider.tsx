@@ -3,13 +3,13 @@ import { JellifyTrack } from "../types/JellifyTrack";
 import { storage } from "../constants/storage";
 import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayNextIndexStart, findPlayQueueIndexStart } from "./helpers/index";
-import TrackPlayer, { Event, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
+import TrackPlayer, { Event, IOSCategory, IOSCategoryOptions, Progress, State, usePlaybackState, useProgress, useTrackPlayerEvents } from "react-native-track-player";
 import { isEqual, isUndefined } from "lodash";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
-import { useSetupPlayer, useUpdateOptions } from "../player/hooks";
+import { useUpdateOptions } from "../player/hooks";
 import { UPDATE_INTERVAL } from "./config";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { useMutation, UseMutationResult, useQuery } from "@tanstack/react-query";
 import { mapDtoToTrack } from "../helpers/mappings";
 import { QueuingType } from "../enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
@@ -21,6 +21,8 @@ import { Section } from "../components/Player/types";
 import { Queue } from "./types/queue-item";
 import { markItemPlayed } from "../api/mutations/functions/item";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { QueryKeys } from "../enums/query-keys";
+import { CAPABILITIES } from "./constants";
 
 interface PlayerContext {
     initialized: boolean;
@@ -234,7 +236,7 @@ const PlayerContextInitializer = () => {
     //#endregion
 
     //#region RNTP Setup
-    const isPlayerReady = useSetupPlayer().isSuccess;
+    
     const { state: playbackState } = usePlaybackState();
     const progress = useProgress(UPDATE_INTERVAL);
 
@@ -298,21 +300,13 @@ const PlayerContextInitializer = () => {
         }
     });
 
-    useEffect(() => {
-        if (isPlayerReady)
-          console.debug("Player is ready")
-        else
-          console.warn("Player could not be setup")
-      }, [
-        isPlayerReady
-      ])
     //#endregion RNTP Setup
 
     //#region useEffects
     useEffect(() => {
-        storage.set(MMKVStorageKeys.Queue, JSON.stringify(playQueue))
+        storage.set(MMKVStorageKeys.Queue, JSON.stringify(queue))
     }, [
-        playQueue
+        queue
     ])
 
     useEffect(() => {
