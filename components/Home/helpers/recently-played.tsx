@@ -25,6 +25,7 @@ export default function RecentlyPlayed({
             <H2 marginLeft={"$2"}>Play it again</H2>
 
             <HorizontalCardList
+                squared
                 items={recentTracks}
                 onSeeMore={() => {
                     navigation.navigate("Tracks", {
