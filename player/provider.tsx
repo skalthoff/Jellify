@@ -217,9 +217,6 @@ const PlayerContextInitializer = () => {
             await addToQueue(mutation.tracklist.map((track) => {
                 return mapDtoToTrack(track, QueuingType.FromSelection)
             }));
-
-            if (typeof(queue) === 'object')
-                await markItemPlayed(mutation.queue as BaseItemDto);
             
             setQueue(mutation.queue);
         },
