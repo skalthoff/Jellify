@@ -217,9 +217,6 @@ export default function Playlist({
                     <RunTimeTicks>{ playlist.RunTimeTicks }</RunTimeTicks>
                 </XStack>
             )}
-            // style={{
-            //     overflow: 'hidden' // Prevent unnecessary memory usage
-            // }} 
         />
     )
 }
