@@ -22,7 +22,7 @@ export default function Jellify(): React.JSX.Element {
   const { isSuccess: isPlayerReady } = useQuery({
     queryKey: [QueryKeys.Player],
     queryFn: async () => {
-      await TrackPlayer.setupPlayer({
+      return await TrackPlayer.setupPlayer({
         autoHandleInterruptions: true,
         maxCacheSize: 1000 * 100, // 100MB, TODO make this adjustable
         iosCategory: IOSCategory.Playback,
@@ -30,9 +30,8 @@ export default function Jellify(): React.JSX.Element {
             IOSCategoryOptions.AllowAirPlay,
             IOSCategoryOptions.AllowBluetooth,
         ]
-      });
-      
-      return await TrackPlayer.updateOptions({
+      })
+      .then(() => TrackPlayer.updateOptions({
         progressUpdateEventInterval: 1,
         capabilities: CAPABILITIES,
         notificationCapabilities: CAPABILITIES,
@@ -46,7 +45,7 @@ export default function Jellify(): React.JSX.Element {
         //     isActive: true,
         //     title: "Unfavorite"
         // }
-      });
+      }));
     },
     retry: 0,
     // staleTime: 1000 * 60 * 60 * 24 * 7 // 7 days
