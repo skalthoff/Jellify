@@ -33,7 +33,9 @@ export type StackParamList = {
         query: QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
     };
     Albums: undefined;
-    Tracks: undefined;
+    Tracks: {
+        query: QueryKeys.FavoriteTracks | QueryKeys.RecentlyPlayed
+    };
     Genres: undefined;
     Playlists: undefined;
     DeletePlaylist: {
