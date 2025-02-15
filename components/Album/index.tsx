@@ -1,7 +1,6 @@
-import { StackParamList } from "../types";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { HomeAlbumProps } from "../types";
 import { YStack, XStack, Separator } from "tamagui";
-import { BaseItemDto, ItemSortBy } from "@jellyfin/sdk/lib/generated-client/models";
+import { ItemSortBy } from "@jellyfin/sdk/lib/generated-client/models";
 import { H3, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
@@ -14,16 +13,15 @@ import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/query-keys";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
+import { useMemo } from "react";
 
-interface AlbumProps {
-    album: BaseItemDto,
-    navigation: NativeStackNavigationProp<StackParamList>;
-}
 
-export default function Album({
-    album,
-    navigation
-}: AlbumProps): React.JSX.Element {
+export function AlbumScreen({ 
+    route, 
+    navigation 
+} : HomeAlbumProps): React.JSX.Element {
+
+    const { album } = route.params;
 
     navigation.setOptions({
         headerRight: () => {
@@ -60,24 +58,31 @@ export default function Album({
             <FlatList
                 contentInsetAdjustmentBehavior="automatic"
                 data={tracks}
+                keyExtractor={(item) => item.Id!}
                 numColumns={1}
                 ItemSeparatorComponent={() => <Separator />}
-                ListHeaderComponent={() => (
-                    <YStack 
-                        alignItems="center" 
-                        alignContent="center"
-                        marginTop={"$4"}
-                        minHeight={width / 1.1}
-                    >
-                        <BlurhashedImage
-                            item={album}
-                            width={width / 1.1}
-                            height={width / 1.1}
-                        />
+                ListHeaderComponent={(
+                    useMemo(() => {
+                        return (
+                            <YStack 
+                                alignItems="center" 
+                                alignContent="center"
+                                marginTop={"$4"}
+                                minHeight={width / 1.1}
+                                >
+                                <BlurhashedImage
+                                    item={album}
+                                    width={width / 1.1}
+                                    height={width / 1.1}
+                                    />
 
-                        <H5>{ album.Name ?? "Untitled Album" }</H5>
-                        <Text>{ album.ProductionYear?.toString() ?? "" }</Text>
-                    </YStack>
+                                <H5>{ album.Name ?? "Untitled Album" }</H5>
+                                <Text>{ album.ProductionYear?.toString() ?? "" }</Text>
+                            </YStack>
+                        )
+                    }, [
+                        album
+                    ])
 
                 )}
                 renderItem={({ item: track, index }) => {
@@ -93,7 +98,7 @@ export default function Album({
                     )
                     
                 }}
-                ListFooterComponent={() => (
+                ListFooterComponent={(
                     <YStack justifyContent="flex-start">
                         <XStack flex={1} marginTop={"$3"} justifyContent="flex-end">
                             <Text 
@@ -109,6 +114,7 @@ export default function Album({
                         <H3>Album Artists</H3>
                         <FlatList
                             horizontal
+                            keyExtractor={(item) => item.Id!}
                             data={album.ArtistItems}
                             renderItem={({ index, item: artist }) => {
                                 return (
@@ -133,6 +139,5 @@ export default function Album({
                 //     overflow: 'hidden' // Prevent unnecessary memory usage
                 // }} 
             />
-
     )
 }

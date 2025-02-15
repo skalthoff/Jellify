@@ -3,7 +3,7 @@ import React from "react";
 import { StackParamList } from "../types";
 import Library from "./component";
 import { ArtistScreen } from "../Artist/screens";
-import { AlbumScreen } from "../Album/screens";
+import { AlbumScreen } from "../Album";
 import { PlaylistScreen } from "../Playlist/screens";
 import ArtistsScreen from "../Artists/screen";
 import AlbumsScreen from "../Albums/screen";
