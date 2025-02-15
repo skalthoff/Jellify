@@ -56,7 +56,9 @@ export default function Jellify(): React.JSX.Element {
     <PortalProvider shouldAddRootHost>
       <ToastProvider burntOptions={{ from: 'top'}}>
         <JellifyProvider>
-          <App />
+          { isPlayerReady && (
+            <App />
+          )}
         </JellifyProvider>
       </ToastProvider>
     </PortalProvider>
