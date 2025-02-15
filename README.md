@@ -39,25 +39,33 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 
 ## 👀 Lemme see!
 ### Home
+Home
+
 <img src="screenshots/playlist.png" alt="Jellify Home" width="275" height="600">
 
 ### Library
 Library
+
 <img src="screenshots/library.png" alt="Library" width="275" height="600">
 
 Library Artists
+
 <img src="screenshots/library_artists.png" alt="Library Artists" width="275" height="600">
 
 Artist
+
 <img src="screenshots/artist.png" alt="Artist" width="275" height="600">
 
 Album
+
 <img src="screenshots/album.png" alt="Album" width="275" height="600">
 
-Track Options 
+Track Options
+ 
 <img src="screenshots/track_options.png" alt="Track Options" width="275" height="600">
 
 Playlist
+
 <img src="screenshots/playlist.png" alt="Playlist" width="275" height="600">
 
 ### Search
