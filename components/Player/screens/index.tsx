@@ -90,14 +90,14 @@ export default function PlayerScreen({
                             />
                         </YStack>
 
-                        { useMemo(() => {
+                        <YStack 
+                        alignItems="center"
+                        alignContent="center"
+                        flex={3}
+                        >
 
-                            <YStack 
-                            alignItems="center"
-                            alignContent="center"
-                            flex={3}
-                            >
-                                <Text>Playing from</Text>
+                            <Text>Playing from</Text>
+                            { useMemo(() => {
                                 <TextTicker {...TextTickerConfig}>
                                     <Text bold>
                                         { 
@@ -108,10 +108,10 @@ export default function PlayerScreen({
                                         }
                                     </Text>
                                 </TextTicker>
-                            </YStack>
-                        }, [
-                            queue
-                        ])}
+                            }, [
+                                queue
+                            ])}
+                        </YStack>
 
                         <Spacer flex={1} />
                     </XStack>
