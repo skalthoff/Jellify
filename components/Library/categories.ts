@@ -3,7 +3,9 @@ import { QueryKeys } from "../../enums/query-keys";
 interface CategoryRoute {
     name: any; // ¯\_(ツ)_/¯
     iconName: string;
-    params?: any | undefined;
+    params?: {
+        query: QueryKeys
+    };
 };
 
 const Categories : CategoryRoute[] = [
