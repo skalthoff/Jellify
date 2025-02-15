@@ -47,7 +47,8 @@ export default function Jellify(): React.JSX.Element {
         // }
       }));
     },
-    // staleTime: 1000 * 60 * 60 * 24 * 7 // 7 days
+    gcTime: 0,
+    staleTime: 1000 * 60 * 60 * 24 * 7 // 7 days
   });
 
   return (
