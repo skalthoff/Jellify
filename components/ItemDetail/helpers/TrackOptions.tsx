@@ -83,8 +83,15 @@ export default function TrackOptions({
                                 navigation.goBack();
                             
                             navigation.goBack();
-                            navigation.navigate("Album", {
-                                album
+
+                            navigation.navigate('Tabs', {
+                                screen: 'Home', 
+                                params: {
+                                    screen: 'Album',
+                                    params: {
+                                        artist: album,
+                                    }
+                                }
                             });
                         }}
                         size={width / 6}
