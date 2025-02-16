@@ -16,6 +16,7 @@ import { queryClient } from "../../constants/query-client";
 import { QueryKeys } from "../../enums/query-keys";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
+import { RefreshControl } from "react-native";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
@@ -108,7 +109,7 @@ export default function Playlist({
             trigger('notificationSuccess');
 
             queryClient.invalidateQueries({
-                queryKey: [QueryKeys.ItemTracks, playlist.Id, false]
+                queryKey: [QueryKeys.ItemTracks, playlist.Id]
             })
         },
         onError: () => {
@@ -130,30 +131,16 @@ export default function Playlist({
         onError: () => {
             trigger("notificationError")
         }
-    })
-
-    /**
-     * @deprecated this doesn't reorder the playlist reliably enough
-     */
-    const useReorderPlaylist = useMutation({
-        mutationFn: ({ playlist, track, to } : PlaylistOrderMutation) => {
-            return reorderPlaylist(playlist.Id!, track.Id!, to)
-        },
-        onSuccess: () => {
-            trigger("notificationSuccess");
-
-            queryClient.invalidateQueries({
-                queryKey: [QueryKeys.ItemTracks, playlist.Id, false]
-            })
-        },
-        onError: () => {
-            trigger("notificationError");
-        }
     });
 
     return (
         <DraggableFlatList
-            removeClippedSubviews={false}
+            refreshControl={
+                <RefreshControl
+                    refreshing={isPending}
+                    onRefresh={refetch}
+                />
+            }
             contentInsetAdjustmentBehavior="automatic"
             data={playlistTracks}
             dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
