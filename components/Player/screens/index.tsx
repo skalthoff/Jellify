@@ -90,28 +90,22 @@ export default function PlayerScreen({
                             />
                         </YStack>
 
-                        { useMemo(() => {
+                        <YStack 
+                        alignItems="center"
+                        alignContent="center"
+                        flex={3}
+                        >
 
-                            <YStack 
-                            alignItems="center"
-                            alignContent="center"
-                            flex={3}
-                            >
-                                <Text>Playing from</Text>
-                                <TextTicker {...TextTickerConfig}>
-                                    <Text bold>
-                                        { 
-                                            // If the Queue is a BaseItemDto, display the name of it
-                                            typeof(queue) === 'object' 
-                                            ? (queue as BaseItemDto).Name ?? "Untitled"
-                                            : queue
-                                        }
-                                    </Text>
-                                </TextTicker>
-                            </YStack>
-                        }, [
-                            queue
-                        ])}
+                            <Text>Playing from</Text>
+                            <Text bold>
+                                { 
+                                    // If the Queue is a BaseItemDto, display the name of it
+                                    typeof(queue) === 'object' 
+                                    ? (queue as BaseItemDto).Name ?? "Untitled"
+                                    : queue
+                                }
+                            </Text>
+                        </YStack>
 
                         <Spacer flex={1} />
                     </XStack>

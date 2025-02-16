@@ -213,7 +213,7 @@ export default function Playlist({
                         color={"$borderColor"} 
                         style={{ display: "block"}}
                     >
-                        Total Runtime:
+                        Total Runtime: 
                     </Text>
                     <RunTimeTicks>{ playlist.RunTimeTicks }</RunTimeTicks>
                 </XStack>
