@@ -20,9 +20,6 @@ export default function RecentArtistsScreen({
             renderItem={({ index, item: track }) => {
                 return <Item item={track} queueName="Recently Played" navigation={navigation} />
             }}
-            style={{
-                overflow: 'hidden' // Prevent unnecessary memory usage
-            }} 
         />
     )
 
