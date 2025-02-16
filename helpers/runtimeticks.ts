@@ -9,7 +9,7 @@ import { runOnRuntime } from "react-native-reanimated";
  * 
  * @see https://emby.media/community/index.php?/topic/63357-runtimeticks-microseconds-milliseconds-or-nanoseconds/
  */
-export function convertSecondsToRunTimeTicks(seconds: number) {
+export function convertSecondsToRunTimeTicks(seconds: number) : number {
     return runOnRuntime(backgroundRuntime, (runTimeSeconds: number) => {
         'worklet';
         const runTimeMilliseconds = runTimeSeconds * 1000 * 10000;
@@ -25,7 +25,7 @@ export function convertSecondsToRunTimeTicks(seconds: number) {
  * 
  * @see https://emby.media/community/index.php?/topic/63357-runtimeticks-microseconds-milliseconds-or-nanoseconds/
  */
-export function convertRunTimeTicksToSeconds(ticks: number) {
+export function convertRunTimeTicksToSeconds(ticks: number) : number {
     return runOnRuntime(backgroundRuntime, (runTimeTicks : number) => {
         'worklet';
         const runTimeMilliseconds = runTimeTicks / 10000; 
