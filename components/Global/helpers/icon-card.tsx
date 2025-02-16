@@ -27,7 +27,7 @@ export default function IconCard({
             >
             <Card 
                 animation="bouncy"
-                borderRadius={circular ? 300 : 0}
+                borderRadius={circular ? 300 : 2}
                 hoverStyle={{ scale: 0.925 }}
                 pressStyle={{ scale: 0.875 }}
                 width={width ? width : 150}
@@ -47,7 +47,7 @@ export default function IconCard({
                 </Card.Footer>
                 <Card.Background 
                     backgroundColor={getTokens().color.telemagenta}
-                    borderRadius={circular ? 300 : 25}
+                    borderRadius={circular ? 300 : 2}
                 >
 
                 </Card.Background>
