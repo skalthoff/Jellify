@@ -44,7 +44,7 @@ function calculateRunTimeFromTicks(runTimeTicks: number) : string {
     return calculateRunTimeFromSeconds(runTimeTotalSeconds);
 }
 
-function padRunTimeNumber(number: number) : string {
+const padRunTimeNumber = (number: number)  : string => {
     'worklet';
     if (number >= 10) {
         return `${number}`
