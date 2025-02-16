@@ -121,6 +121,7 @@ export default function PlayerScreen({
                     { useMemo(() => {
                         return (
                             <BlurhashedImage
+                                borderRadius={2}
                                 item={nowPlaying!.item}
                                 width={width / 1.1}
                             />
