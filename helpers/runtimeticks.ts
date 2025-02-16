@@ -7,9 +7,9 @@
  * @see https://emby.media/community/index.php?/topic/63357-runtimeticks-microseconds-milliseconds-or-nanoseconds/
  */
 export function convertSecondsToRunTimeTicks(seconds: number) {
-        const runTimeMilliseconds = seconds * 1000 * 10000;
-    
-        return runTimeMilliseconds;
+    'worklet';
+    const runTimeMilliseconds = seconds * 1000 * 10000;
+    return runTimeMilliseconds;
 }
 
 /**
@@ -20,7 +20,8 @@ export function convertSecondsToRunTimeTicks(seconds: number) {
  * @see https://emby.media/community/index.php?/topic/63357-runtimeticks-microseconds-milliseconds-or-nanoseconds/
  */
 export function convertRunTimeTicksToSeconds(ticks: number) {
-        const runTimeMilliseconds = ticks / 10000; 
-        const runTimeTotalSeconds = Math.floor(runTimeMilliseconds / 1000);
-        return runTimeTotalSeconds;
+    'worklet';
+    const runTimeMilliseconds = ticks / 10000; 
+    const runTimeTotalSeconds = Math.floor(runTimeMilliseconds / 1000);
+    return runTimeTotalSeconds;
 }
