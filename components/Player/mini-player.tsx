@@ -40,7 +40,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                                     flex={1}>
                                         <BlurhashedImage
                                             item={nowPlaying!.item}
-                                            width={getToken("$7")}
+                                            width={getToken("$15")}
                                             borderRadius={2}
                                             />
 
