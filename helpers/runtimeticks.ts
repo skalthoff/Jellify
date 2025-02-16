@@ -11,6 +11,7 @@ import { runOnRuntime } from "react-native-reanimated";
  */
 export function convertSecondsToRunTimeTicks(seconds: number) {
     return runOnRuntime(backgroundRuntime, (runTimeSeconds: number) => {
+        'worklet';
         const runTimeMilliseconds = runTimeSeconds * 1000 * 10000;
     
         return runTimeMilliseconds;
@@ -26,6 +27,7 @@ export function convertSecondsToRunTimeTicks(seconds: number) {
  */
 export function convertRunTimeTicksToSeconds(ticks: number) {
     return runOnRuntime(backgroundRuntime, (runTimeTicks : number) => {
+        'worklet';
         const runTimeMilliseconds = runTimeTicks / 10000; 
         const runTimeTotalSeconds = Math.floor(runTimeMilliseconds / 1000);
         return runTimeTotalSeconds;
