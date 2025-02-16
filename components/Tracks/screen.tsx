@@ -41,9 +41,6 @@ export default function TracksScreen({
 
                 )
             }}
-            style={{
-                overflow: 'hidden' // Prevent unnecessary memory usage
-            }} 
         />
     )
 }
