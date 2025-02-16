@@ -33,22 +33,13 @@ function calculateRunTimeFromSeconds(seconds: number) : string {
     const runTimeMinutes = Math.floor((seconds % 3600) / 60)
     const runTimeSeconds = Math.floor(seconds % 60);
 
-    return (runTimeHours != 0 ? `${padRunTimeNumber(runTimeHours)}:` : "") + 
-        (runTimeHours != 0 ? `${padRunTimeNumber(runTimeMinutes)}:` : `${runTimeMinutes}:`) +
-        (padRunTimeNumber(runTimeSeconds));
+    return (runTimeHours != 0 ? `${runTimeHours >= 10 ? runTimeHours : "0" + runTimeHours}:` : "") + 
+        (runTimeHours != 0 ? `${runTimeMinutes >= 10 ? runTimeMinutes : "0" + runTimeMinutes}:` : `${runTimeMinutes}:`) +
+        (runTimeSeconds >= 10 ? runTimeSeconds : "0" + runTimeSeconds);
 }
 
 function calculateRunTimeFromTicks(runTimeTicks: number) : string {
     'worklet';
     const runTimeTotalSeconds = convertRunTimeTicksToSeconds(runTimeTicks);
     return calculateRunTimeFromSeconds(runTimeTotalSeconds);
-}
-
-const padRunTimeNumber = (number: number)  : string => {
-    'worklet';
-    if (number >= 10) {
-        return `${number}`
-    }
-
-    return `0${number}`;
 }
