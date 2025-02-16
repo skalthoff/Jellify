@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { getTokens, useTheme, View, XStack, YStack } from "tamagui";
+import { getToken, getTokens, useTheme, View, XStack, YStack } from "tamagui";
 import { usePlayerContext } from "../../player/provider";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, ParamListBase } from "@react-navigation/native";
@@ -40,7 +40,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                                     flex={1}>
                                         <BlurhashedImage
                                             item={nowPlaying!.item}
-                                            width={width / 7}
+                                            width={getToken("$6")}
                                             borderRadius={2}
                                             />
 

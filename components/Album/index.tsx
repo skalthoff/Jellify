@@ -76,7 +76,7 @@ export function AlbumScreen({
                                     height={width / 1.1}
                                     />
 
-                                <H5>{ album.Name ?? "Untitled Album" }</H5>
+                                <H5 textAlign="center">{ album.Name ?? "Untitled Album" }</H5>
                                 <Text>{ album.ProductionYear?.toString() ?? "" }</Text>
                             </YStack>
                         )
@@ -121,7 +121,7 @@ export function AlbumScreen({
                                     <Avatar
                                         circular
                                         item={artist}
-                                        width={width / 4}
+                                        width={"$10"}
                                         onPress={() => {
                                             navigation.navigate("Artist", {
                                                 artist
