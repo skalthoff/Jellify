@@ -38,10 +38,8 @@ function calculateRunTimeFromSeconds(seconds: number) : string {
 }
 
 function calculateRunTimeFromTicks(runTimeTicks: number) : string {
-
-
+    'worklet';
     const runTimeTotalSeconds = convertRunTimeTicksToSeconds(runTimeTicks);
-
     return calculateRunTimeFromSeconds(runTimeTotalSeconds);
 }
 
