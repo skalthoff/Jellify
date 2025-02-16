@@ -28,6 +28,7 @@ export function RunTimeTicks({ children } : { children?: number | null | undefin
 }
 
 function calculateRunTimeFromSeconds(seconds: number) : string {
+    'worklet';
     const runTimeHours = Math.floor(seconds / 3600);
     const runTimeMinutes = Math.floor((seconds % 3600) / 60)
     const runTimeSeconds = Math.floor(seconds % 60);
@@ -44,6 +45,7 @@ function calculateRunTimeFromTicks(runTimeTicks: number) : string {
 }
 
 function padRunTimeNumber(number: number) : string {
+    'worklet';
     if (number >= 10)
         return `${number}`
 
