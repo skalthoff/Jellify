@@ -5,7 +5,10 @@ import React from "react";
 import { backgroundRuntime } from "../../../App";
 
 export function RunTimeSeconds({ children }: { children: number }) : React.JSX.Element {
-    return <Text bold>{ runOnRuntime(backgroundRuntime, calculateRunTimeFromSeconds)(children) }</Text>
+
+    const seconds : string = runOnRuntime(backgroundRuntime, calculateRunTimeFromSeconds)(children)
+
+    return <Text bold>{  seconds }</Text>
 }
 
 export function RunTimeTicks({ children } : { children?: number | null | undefined }) : React.JSX.Element {
