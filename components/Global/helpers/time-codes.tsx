@@ -13,6 +13,7 @@ export function RunTimeTicks({ children } : { children?: number | null | undefin
         return <Text>0:00</Text>
 
     let time = runOnRuntime(backgroundRuntime, (ticks : number) => {
+        'worklet';
         return calculateRunTimeFromTicks(ticks)
     })(children);
 
