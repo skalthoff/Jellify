@@ -37,7 +37,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                             >
                                 <YStack
                                     justifyContent="center"
-                                    alignItems="flex-end"
+                                    alignItems="flex-start"
                                     flex={1}>
                                         <BlurhashedImage
                                             item={nowPlaying!.item}
