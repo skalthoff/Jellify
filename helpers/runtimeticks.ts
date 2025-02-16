@@ -30,6 +30,7 @@ export function convertRunTimeTicksToSeconds(ticks: number) {
         'worklet';
         const runTimeMilliseconds = runTimeTicks / 10000; 
         const runTimeTotalSeconds = Math.floor(runTimeMilliseconds / 1000);
+        console.log(runTimeTicks, runTimeTotalSeconds)
         return runTimeTotalSeconds;
     })(ticks);
 }
