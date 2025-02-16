@@ -72,15 +72,15 @@ Playlist
 <img src="screenshots/search.png" alt="Search" width="275" height="600">
 
 ### Player
-<img src="screenshots/player.png" alt="Player">
+<img src="screenshots/player.png" alt="Player" width="275" height="600">
 
-<img src="screenshots/player_queue.png" alt="Queue">
+<img src="screenshots/player_queue.png" alt="Queue" width="275" height="600">
 
 ### CarPlay (Sneak Preview)
-<img src="screenshots/carplay_nowplaying.jpeg" alt="Now Playing (CarPlay)">
+<img src="screenshots/carplay_nowplaying.jpeg" alt="Now Playing (CarPlay)" width="500" height="350">
 
 ### On the Server
-<img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking">
+<img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking" width="300" height="200">
 
 ## 🏗 Built with:
 ### 🎨 Frontend
