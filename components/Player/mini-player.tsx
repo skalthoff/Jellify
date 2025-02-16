@@ -47,21 +47,21 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
 
                                 </YStack>
 
-                                            <YStack 
-                                                alignContent="flex-start" 
-                                                marginLeft={"$2"}
-                                                flex={4} 
-                                                maxWidth={"$20"}
-                                                >
-                                                <TextTicker {...TextTickerConfig}>
-                                                    <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
-                                                </TextTicker>
+                                <YStack 
+                                    alignContent="flex-start" 
+                                    marginLeft={"$2"}
+                                    flex={4} 
+                                    maxWidth={"$20"}
+                                    >
+                                    <TextTicker {...TextTickerConfig}>
+                                        <Text bold>{nowPlaying?.title ?? "Nothing Playing"}</Text>
+                                    </TextTicker>
 
-                                                <TextTicker {...TextTickerConfig}>
-                                                    <Text color={getTokens().color.telemagenta}>{nowPlaying?.artist ?? ""}</Text>
-                                                </TextTicker>
+                                    <TextTicker {...TextTickerConfig}>
+                                        <Text color={getTokens().color.telemagenta}>{nowPlaying?.artist ?? ""}</Text>
+                                    </TextTicker>
 
-                                            </YStack>
+                                </YStack>
                                 
                                 <XStack 
                                 justifyContent="flex-end" 
