@@ -2,7 +2,7 @@ import { runOnRuntime } from "react-native-reanimated";
 import { convertRunTimeTicksToSeconds } from "../../../helpers/runtimeticks";
 import { Text } from "./text";
 import React from "react";
-import { backgroundRuntime } from "@/App";
+import { backgroundRuntime } from "../../../App";
 
 export function RunTimeSeconds({ children }: { children: number }) : React.JSX.Element {
     return <Text bold>{ calculateRunTimeFromSeconds(children) }</Text>
