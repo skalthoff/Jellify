@@ -1,4 +1,5 @@
 // import { backgroundRuntime } from "@/App";
+import { backgroundRuntime } from "../App";
 import { runOnRuntime } from "react-native-reanimated";
 
 /**
@@ -9,11 +10,11 @@ import { runOnRuntime } from "react-native-reanimated";
  * @see https://emby.media/community/index.php?/topic/63357-runtimeticks-microseconds-milliseconds-or-nanoseconds/
  */
 export function convertSecondsToRunTimeTicks(seconds: number) {
-    // return runOnRuntime(backgroundRuntime, (runTimeSeconds: number) => {
-        const runTimeMilliseconds = seconds * 1000 * 10000;
+    return runOnRuntime(backgroundRuntime, (runTimeSeconds: number) => {
+        const runTimeMilliseconds = runTimeSeconds * 1000 * 10000;
     
         return runTimeMilliseconds;
-    // })(seconds);
+    })(seconds);
 }
 
 /**
@@ -24,9 +25,9 @@ export function convertSecondsToRunTimeTicks(seconds: number) {
  * @see https://emby.media/community/index.php?/topic/63357-runtimeticks-microseconds-milliseconds-or-nanoseconds/
  */
 export function convertRunTimeTicksToSeconds(ticks: number) {
-    // return runOnRuntime(backgroundRuntime, (runTimeTicks : number) => {
-        const runTimeMilliseconds = ticks / 10000; 
+    return runOnRuntime(backgroundRuntime, (runTimeTicks : number) => {
+        const runTimeMilliseconds = runTimeTicks / 10000; 
         const runTimeTotalSeconds = Math.floor(runTimeMilliseconds / 1000);
         return runTimeTotalSeconds;
-    // })(ticks);
+    })(ticks);
 }
