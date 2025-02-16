@@ -1,6 +1,6 @@
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
 import { Blurhash } from "react-native-blurhash";
-import { View } from "tamagui";
+import { Square, View } from "tamagui";
 import { isEmpty } from "lodash";
 import { Image } from "react-native";
 import { QueryKeys } from "../../../enums/query-keys";
@@ -32,8 +32,6 @@ export default function BlurhashedImage({
             Math.ceil(height ?? width / 100) * 100 // So these keys need to match
         ],
         queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width),
-        gcTime: (1000 * 60), // 1 minute
-        staleTime: (1000 * 60 * 60 * 24) // 1 Day
     });
 
     const blurhash = !isEmpty(item.ImageBlurHashes) 
@@ -56,12 +54,19 @@ export default function BlurhashedImage({
                         resizeMode: "contain"
                     }} 
                 />
-            ) : blurhash && (
+            ) : blurhash ? (
                 <Blurhash blurhash={blurhash!} style={{ 
                     height: height ?? width, 
                     width: width,
                     borderRadius: borderRadius ? borderRadius : 25 
                 }} />
+            ) : (
+                <Square
+                    backgroundColor="$amethyst"
+                    width={width}
+                    height={height ?? width}
+                    borderRadius={borderRadius ? borderRadius : 25}
+                />
             )
         }
         </View>
