@@ -35,14 +35,14 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                                 height={"$6"} 
                                 onPress={() => navigation.navigate("Player")}
                             >
-                            <YStack
-                                    alignContent="center"
+                                <YStack
+                                    alignContent="flex-end"
                                     flex={1}>
                                         <BlurhashedImage
                                             item={nowPlaying!.item}
                                             width={getToken("$12")}
                                             borderRadius={2}
-                                            />
+                                        />
 
                                 </YStack>
 
