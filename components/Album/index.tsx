@@ -135,9 +135,6 @@ export function AlbumScreen({
                     </YStack>
 
                 )}
-                // style={{
-                //     overflow: 'hidden' // Prevent unnecessary memory usage
-                // }} 
             />
     )
 }

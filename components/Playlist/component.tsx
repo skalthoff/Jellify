@@ -153,6 +153,7 @@ export default function Playlist({
 
     return (
         <DraggableFlatList
+            removeClippedSubviews={false}
             contentInsetAdjustmentBehavior="automatic"
             data={playlistTracks}
             dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
@@ -213,7 +214,7 @@ export default function Playlist({
                         color={"$borderColor"} 
                         style={{ display: "block"}}
                     >
-                        Total Runtime:
+                        Total Runtime: 
                     </Text>
                     <RunTimeTicks>{ playlist.RunTimeTicks }</RunTimeTicks>
                 </XStack>
