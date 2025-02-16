@@ -36,6 +36,7 @@ export function Miniplayer({ navigation }: { navigation : NavigationHelpers<Para
                                 onPress={() => navigation.navigate("Player")}
                             >
                                 <YStack
+                                    justifyContent="center"
                                     alignItems="flex-end"
                                     flex={1}>
                                         <BlurhashedImage
