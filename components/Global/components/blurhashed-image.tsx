@@ -1,9 +1,11 @@
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models";
-import { useItemImage } from "../../../api/queries/image";
 import { Blurhash } from "react-native-blurhash";
 import { View } from "tamagui";
 import { isEmpty } from "lodash";
 import { Image } from "react-native";
+import { QueryKeys } from "../../../enums/query-keys";
+import { useQuery } from "@tanstack/react-query";
+import { fetchItemImage } from "../../../api/queries/functions/images";
 
 interface BlurhashLoadingProps {
     item: BaseItemDto;
@@ -21,7 +23,16 @@ export default function BlurhashedImage({
     borderRadius
 } : BlurhashLoadingProps) : React.JSX.Element {
 
-    const { data: image, isSuccess } = useItemImage(item.Id!, type, width, height ?? width);
+    const { data: image, isSuccess } = useQuery({
+        queryKey: [
+            QueryKeys.ItemImage, 
+            item.AlbumId ? item.AlbumId : item.Id!, 
+            type ?? ImageType.Primary, 
+            Math.ceil(width / 100) * 100, // Images are fetched at a higher, generic resolution
+            Math.ceil(height ?? width / 100) * 100 // So these keys need to match
+        ],
+        queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width),
+    });
 
     const blurhash = !isEmpty(item.ImageBlurHashes) 
         && !isEmpty(type ? item.ImageBlurHashes[type] : item.ImageBlurHashes.Primary) 

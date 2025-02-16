@@ -1,8 +1,19 @@
+import { QueryKeys } from "../enums/query-keys";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
+import { JellifyServer } from "../types/JellifyServer";
+import { JellifyUser } from "../types/JellifyUser";
 
 export type StackParamList = {
+    ServerAddress: undefined;
+    ServerAuthentication: {
+        server: JellifyServer
+    }
+
+    LibrarySelection: {
+        user: JellifyUser
+    }
+
     Home: undefined;
     AddPlaylist: undefined;
     RecentArtists: {
@@ -17,12 +28,19 @@ export type StackParamList = {
 
     Discover: undefined;
 
-    Favorites: undefined;
-    Artists: undefined;
+    Library: undefined;
+    Artists: {
+        query: QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
+    };
     Albums: undefined;
-    Tracks: undefined;
+    Tracks: {
+        query: QueryKeys.FavoriteTracks | QueryKeys.RecentlyPlayed
+    };
     Genres: undefined;
     Playlists: undefined;
+    DeletePlaylist: {
+        playlist: BaseItemDto
+    }
 
     Search: undefined;
 
@@ -53,6 +71,10 @@ export type StackParamList = {
     }
 }
 
+export type ServerAddressProps = NativeStackScreenProps<StackParamList, "ServerAddress">;
+export type ServerAuthenticationProps = NativeStackScreenProps<StackParamList, "ServerAuthentication">;
+export type LibrarySelectionProps = NativeStackScreenProps<StackParamList, "LibrarySelection">;
+
 export type TabProps = NativeStackScreenProps<StackParamList, 'Tabs'>;
 export type PlayerProps = NativeStackScreenProps<StackParamList, 'Player'>;
 
@@ -74,15 +96,16 @@ export type HomePlaylistProps = NativeStackScreenProps<StackParamList, "Playlist
 
 export type QueueProps = NativeStackScreenProps<StackParamList, "Queue">;
 
-export type LibraryProps = NativeStackScreenProps<StackParamList, "Favorites">;
+export type LibraryProps = NativeStackScreenProps<StackParamList, "Library">;
 
 export type ArtistsProps = NativeStackScreenProps<StackParamList, "Artists">;
 
 export type AlbumsProps = NativeStackScreenProps<StackParamList, "Albums">;
 
 export type FavoritePlaylistsProps = NativeStackScreenProps<StackParamList, "Playlists">;
+export type DeletePlaylistProps = NativeStackScreenProps<StackParamList, "DeletePlaylist">;
 
-export type FavoriteTracksProps = NativeStackScreenProps<StackParamList, "Tracks">;
+export type TracksProps = NativeStackScreenProps<StackParamList, "Tracks">;
 
 export type GenresProps = NativeStackScreenProps<StackParamList, "Genres">;
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { getToken, ScrollView, View, XStack, YStack } from "tamagui";
+import { View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import { ItemCard } from "../../Global/components/item-card";
@@ -8,7 +8,8 @@ import { StackParamList } from "../../../components/types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { trigger } from "react-native-haptic-feedback";
 import { QueuingType } from "../../../enums/queuing-type";
-import Icon from "../../../components/Global/helpers/icon";
+import HorizontalCardList from "../../../components/Global/components/horizontal-list";
+import { QueryKeys } from "../../../enums/query-keys";
 
 export default function RecentlyPlayed({ 
     navigation 
@@ -21,25 +22,17 @@ export default function RecentlyPlayed({
 
     return (
         <View>
-            <XStack alignContent="center" marginHorizontal="$2">
-                <H2 textAlign="left">Play it again</H2>
+            <H2 marginLeft={"$2"}>Play it again</H2>
 
-                { recentTracks && (
-                    <YStack justifyContent="center" alignContent="center" marginTop={7} marginLeft={"$2"}>
-                        <Icon name="play-circle-outline" color={getToken("$color.amethyst")} onPress={() => {
-                            usePlayNewQueue.mutate({ 
-                                track: recentTracks[0], 
-                                index: 0,
-                                tracklist: recentTracks,
-                                queueName: "Recently Played",
-                                queuingType: QueuingType.FromSelection
-                            });
-                        }}/>
-                    </YStack>
-                )}
-            </XStack>
-            <ScrollView horizontal>
-                { recentTracks && recentTracks.map((recentlyPlayedTrack, index) => {
+            <HorizontalCardList
+                squared
+                items={recentTracks}
+                onSeeMore={() => {
+                    navigation.navigate("Tracks", {
+                        query: QueryKeys.RecentlyPlayed
+                    })
+                }}
+                renderItem={({ index, item: recentlyPlayedTrack }) => {
                     return (
                         <ItemCard
                             caption={recentlyPlayedTrack.Name}
@@ -51,8 +44,8 @@ export default function RecentlyPlayed({
                                 usePlayNewQueue.mutate({ 
                                     track: recentlyPlayedTrack, 
                                     index: index,
-                                    tracklist: recentTracks,
-                                    queueName: "Recently Played",
+                                    tracklist: recentTracks ?? [recentlyPlayedTrack],
+                                    queue: "Recently Played",
                                     queuingType: QueuingType.FromSelection
                                 });
                             }}
@@ -65,8 +58,8 @@ export default function RecentlyPlayed({
                             }}
                         />                                
                     )
-                })}
-            </ScrollView>
+                }}
+            />
         </View>
     )
 }

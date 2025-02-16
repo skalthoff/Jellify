@@ -16,6 +16,7 @@ import { ProgressMultiplier, TextTickerConfig } from "../component.config";
 import { toUpper } from "lodash";
 import { trigger } from "react-native-haptic-feedback";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 const scrubGesture = Gesture.Pan();
 
@@ -34,7 +35,8 @@ export default function PlayerScreen({
         useSeekTo, 
         useSkip, 
         usePrevious, 
-        queueName,
+        playQueue,
+        queue
     } = usePlayerContext();
     
     const [seeking, setSeeking] = useState<boolean>(false);
@@ -69,7 +71,10 @@ export default function PlayerScreen({
             <>
                 <YStack>
 
-                    <XStack marginHorizontal={"$2"}>
+                    <XStack 
+                        marginBottom={"$2"}
+                        marginHorizontal={"$2"}
+                    >
 
                         <YStack 
                             alignContent="flex-end"
@@ -86,14 +91,20 @@ export default function PlayerScreen({
                         </YStack>
 
                         <YStack 
-                            alignItems="center"
-                            alignContent="center"
-                            flex={3}
+                        alignItems="center"
+                        alignContent="center"
+                        flex={3}
                         >
+
                             <Text>Playing from</Text>
-                            <TextTicker {...TextTickerConfig}>
-                                <Text bold>{ queueName ?? "Queue"}</Text>
-                            </TextTicker>
+                            <Text bold>
+                                { 
+                                    // If the Queue is a BaseItemDto, display the name of it
+                                    typeof(queue) === 'object' 
+                                    ? (queue as BaseItemDto).Name ?? "Untitled"
+                                    : queue
+                                }
+                            </Text>
                         </YStack>
 
                         <Spacer flex={1} />

@@ -52,7 +52,7 @@ export default function Item({
                             usePlayNewQueue.mutate({
                                 track: item,
                                 tracklist: [item],
-                                queueName,
+                                queue: "Search",
                                 queuingType: QueuingType.FromSelection
                             })
                             break;

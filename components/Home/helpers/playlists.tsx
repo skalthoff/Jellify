@@ -1,25 +1,25 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useUserPlaylists } from "../../../api/queries/playlist";
 import { ItemCard } from "../../Global/components/item-card";
 import { H2 } from "../../../components/Global/helpers/text";
 import { StackParamList } from "../../../components/types";
 import React from "react";
 import { FlatList } from "react-native";
-import { getToken, View, XStack, YStack } from "tamagui";
-import Icon from "../../../components/Global/helpers/icon";
+import { View, XStack } from "tamagui";
+import { useQuery } from "@tanstack/react-query";
+import { QueryKeys } from "../../../enums/query-keys";
+import { fetchUserPlaylists } from "../../../api/queries/functions/playlists";
 
 export default function Playlists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}) : React.JSX.Element {
 
-    const { data: playlists } = useUserPlaylists();
+    const { data: playlists } = useQuery({
+        queryKey: [QueryKeys.UserPlaylists],
+        queryFn: () => fetchUserPlaylists()
+    });
 
     return (
         <View>
             <XStack alignContent="center" marginHorizontal={"$2"}>
                 <H2 textAlign="left">Your Playlists</H2>
-
-                <YStack justifyContent="center" alignContent="center" marginTop={7} marginLeft={"$2"}>
-                    <Icon name="plus-circle-outline" color={getToken("$color.amethyst")} onPress={() => navigation.navigate('AddPlaylist')}/>
-                </YStack>
             </XStack>
             <FlatList horizontal
                 data={playlists}
@@ -35,7 +35,11 @@ export default function Playlists({ navigation }: { navigation: NativeStackNavig
                                 })
                             }} />
                     )
-                }} />
+                }}
+                style={{
+                    overflow: 'hidden' // Prevent unnecessary memory usage
+                }} 
+            />
         </View>
     )
 }

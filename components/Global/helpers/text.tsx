@@ -18,7 +18,7 @@ interface LabelProps {
 
 export function Label(props: LabelProps): React.JSX.Element {
     return (
-        <TamaguiLabel htmlFor={props.htmlFor} justifyContent="flex-end">{ props.children }</TamaguiLabel>
+        <TamaguiLabel fontWeight={600} htmlFor={props.htmlFor} justifyContent="flex-end">{ props.children }</TamaguiLabel>
     )
 }
 
