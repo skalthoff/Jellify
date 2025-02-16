@@ -26,7 +26,7 @@ export function ItemCard(props: CardProps) {
             <TamaguiCard 
                 size="$4" 
                 backgroundColor={getToken("$color.amethyst")}
-                borderRadius={props.squared ? 2 : dimensions.width}
+                borderRadius={props.squared ? 5 : dimensions.width}
                 animation="bouncy"
                 hoverStyle={props.onPress ? { scale: 0.925 } : {}}
                 pressStyle={props.onPress ? { scale: 0.875 } : {}}
@@ -52,7 +52,7 @@ export function ItemCard(props: CardProps) {
                         item={props.item}
                         width={dimensions.width}
                         height={dimensions.height}
-                        borderRadius={props.squared ? 2 : dimensions.width}
+                        borderRadius={props.squared ? 5 : dimensions.width}
                     />
                 </TamaguiCard.Background>
             </TamaguiCard>
