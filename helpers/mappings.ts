@@ -14,7 +14,7 @@ export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) : Je
     const urlParams = {
         "Container": item.Container!,
         "TranscodingContainer": transcodingContainer,
-        "TranscodingProtocol": "hls",
+        "TranscodingProtocol": "http",
         "EnableRemoteMedia": "true",
         "EnableRedirection": "true",
         "api_key": Client.api!.accessToken,
