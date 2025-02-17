@@ -112,7 +112,7 @@ export function AlbumScreen({
                                 >
                                 Total Runtime: 
                             </Text>
-                            <RunTimeTicks>{ runTimeTicks.get() }</RunTimeTicks>
+                            <RunTimeTicks>{ runTimeTicks }</RunTimeTicks>
                         </XStack>
 
                         <H3>Album Artists</H3>

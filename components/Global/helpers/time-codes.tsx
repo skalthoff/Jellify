@@ -1,8 +1,9 @@
-import { runOnRuntime } from "react-native-reanimated";
+import { isSharedValue, runOnRuntime, SharedValue } from "react-native-reanimated";
 import { convertRunTimeTicksToSeconds } from "../../../helpers/runtimeticks";
 import { Text } from "./text";
 import React from "react";
 import { backgroundRuntime } from "../../../App";
+import { isNull, isNumber, isUndefined } from "lodash";
 
 export function RunTimeSeconds({ children }: { children: number }) : React.JSX.Element {
 
@@ -11,23 +12,26 @@ export function RunTimeSeconds({ children }: { children: number }) : React.JSX.E
     return <Text bold>{  seconds }</Text>
 }
 
-export function RunTimeTicks({ children } : { children?: number | null | undefined }) : React.JSX.Element {
-    if (!!!children) 
+export function RunTimeTicks({ children } : { children: SharedValue<number> | SharedValue<null> | SharedValue<undefined> }) : React.JSX.Element {
+    if (!isSharedValue<number>(children)) 
         return <Text>0:00</Text>
 
-    let time = runOnRuntime(backgroundRuntime, (ticks : number) => {
-        'worklet';
-        return calculateRunTimeFromTicks(ticks)
-    })(children);
+    else {
 
-    return (
-        <Text 
-            style={{display: "block"}} 
-            color="$borderColor"
-        >
-            { time }
-        </Text>
-    )
+        let time = runOnRuntime(backgroundRuntime, (ticks : SharedValue<number>) => {
+            'worklet';
+            return calculateRunTimeFromTicks(ticks)
+        })(children);
+        
+        return (
+            <Text 
+                style={{display: "block"}} 
+                color="$borderColor"
+                >
+                { time }
+            </Text>
+        )
+    }
 }
 
 function calculateRunTimeFromSeconds(seconds: number) : string {
@@ -41,7 +45,7 @@ function calculateRunTimeFromSeconds(seconds: number) : string {
         (runTimeSeconds >= 10 ? runTimeSeconds : "0" + runTimeSeconds);
 }
 
-function calculateRunTimeFromTicks(runTimeTicks: number) : string {
+function calculateRunTimeFromTicks(runTimeTicks: SharedValue<number>) : string {
     'worklet';
     const runTimeTotalSeconds = convertRunTimeTicksToSeconds(runTimeTicks);
     return calculateRunTimeFromSeconds(runTimeTotalSeconds);

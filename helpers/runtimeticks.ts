@@ -1,3 +1,4 @@
+import { SharedValue } from "react-native-reanimated";
 
 /**
  * Converts the run time seconds of a track to the RunTimeTicks standard set by Emby / Jellyfin
@@ -19,9 +20,9 @@ export function convertSecondsToRunTimeTicks(seconds: number) {
  * 
  * @see https://emby.media/community/index.php?/topic/63357-runtimeticks-microseconds-milliseconds-or-nanoseconds/
  */
-export function convertRunTimeTicksToSeconds(ticks: number) {
+export function convertRunTimeTicksToSeconds(ticks: SharedValue<number>) {
     'worklet';
-    const runTimeMilliseconds = ticks / 10000; 
+    const runTimeMilliseconds = ticks.get() / 10000; 
     const runTimeTotalSeconds = Math.floor(runTimeMilliseconds / 1000);
     return runTimeTotalSeconds;
 }
