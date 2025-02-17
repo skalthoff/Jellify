@@ -9,11 +9,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { ScrollView, FlatList } from "react-native";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
-import { YStack, H2 } from "tamagui";
+import { YStack } from "tamagui";
 import BlurhashedImage from "../Global/components/blurhashed-image";
 import FavoriteButton from "../Global/components/favorite-button";
 import { ItemCard } from "../Global/components/item-card";
 import { Freeze } from "react-freeze";
+import { H2 } from "../Global/helpers/text";
 
 export function ArtistScreen({ 
     route, 
