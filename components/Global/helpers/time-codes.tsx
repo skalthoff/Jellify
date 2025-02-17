@@ -7,9 +7,11 @@ import { isEmpty, isNull, isNumber, isUndefined } from "lodash";
 
 export function RunTimeSeconds({ children }: { children: number }) : React.JSX.Element {
 
-    const seconds : string = runOnRuntime(backgroundRuntime, calculateRunTimeFromSeconds)(children)
+    const seconds = useSharedValue<string>("0:00")
 
-    return <Text bold>{ seconds }</Text>
+    seconds.set(runOnRuntime(backgroundRuntime, calculateRunTimeFromSeconds)(children))
+
+    return <Text bold>{ seconds.get() }</Text>
 }
 
 export function RunTimeTicks({ children } : { children: number | null | undefined }) : React.JSX.Element {
