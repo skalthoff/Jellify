@@ -30,7 +30,7 @@ export function RunTimeTicks({ children } : { children: number | null | undefine
                 style={{display: "block"}} 
                 color="$borderColor"
                 >
-                { time.get() }
+                { time.value }
             </Text>
         )
     }
