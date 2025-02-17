@@ -9,7 +9,9 @@ export function RunTimeSeconds({ children }: { children: number }) : React.JSX.E
 
     const seconds = useSharedValue<string>("0:00")
 
-    seconds.set(runOnRuntime(backgroundRuntime, calculateRunTimeFromSeconds)(children))
+    runOnRuntime(backgroundRuntime, (time : number) => {
+        seconds.set(calculateRunTimeFromSeconds(time))
+    })(children)
 
     return <Text bold>{ seconds.get() }</Text>
 }
