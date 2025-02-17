@@ -22,7 +22,7 @@ export function RunTimeTicks({ children } : { children: number | null | undefine
 
         runOnRuntime(backgroundRuntime, (ticks : number) => {
             'worklet';
-            time.value = calculateRunTimeFromTicks(ticks)
+            time.set(calculateRunTimeFromTicks(ticks))
         })(children);
         
         return (
