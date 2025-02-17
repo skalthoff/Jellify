@@ -79,6 +79,7 @@ export default function ItemDetail({
                     <BlurhashedImage
                         item={item}
                         width={width / 1.5}
+                        borderRadius={item.Type === "MusicArtist" ? 100 : 2}
                         />
                 </XStack>
 

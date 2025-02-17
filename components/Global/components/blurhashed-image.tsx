@@ -32,8 +32,6 @@ export default function BlurhashedImage({
             Math.ceil(height ?? width / 100) * 100 // So these keys need to match
         ],
         queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width),
-        gcTime: 1000 * 5, // 5 minutes, these are stored on disk anyways
-        staleTime: 1000 * 5 
     });
 
     const blurhash = !isEmpty(item.ImageBlurHashes) 
