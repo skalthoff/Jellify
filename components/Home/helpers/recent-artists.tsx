@@ -19,7 +19,7 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
             <HorizontalCardList
                 items={recentArtists}
                 onSeeMore={() => {
-                    navigation.replace("Artists", {
+                    navigation.navigate("Artists", {
                         query: QueryKeys.RecentlyPlayedArtists
                     })
                 }}
@@ -29,7 +29,7 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
                             item={recentArtist}
                             caption={recentArtist.Name ?? "Unknown Artist"}
                             onPress={() => {
-                                navigation.replace('Artist', 
+                                navigation.navigate('Artist', 
                                     { 
                                         artist: recentArtist, 
                                     }

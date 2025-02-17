@@ -8,8 +8,9 @@ import { useHomeContext } from "./provider";
 import { H3 } from "../Global/helpers/text";
 import Client from "../../api/client";
 import { usePlayerContext } from "../../player/provider";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useFocusEffect } from "@react-navigation/native";
 
 export function ProvidedHome({ 
     navigation 
@@ -18,6 +19,26 @@ export function ProvidedHome({
 }): React.JSX.Element {
 
     const { refreshing: refetching, onRefresh } = useHomeContext()
+
+    useFocusEffect(
+        useCallback(() => {
+
+            console.debug("Home mounted");
+
+            navigation.reset({
+                index: 0,
+                routes: [
+                    {
+                        name: "Home"
+                    }
+                ]
+            });
+
+            return () => {
+                console.debug("Home unmounted");
+            }
+        }, [])
+    )
 
     return (
             <ScrollView 
