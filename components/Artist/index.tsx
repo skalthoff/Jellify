@@ -1,8 +1,8 @@
 import { RouteProp, useIsFocused } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import Client from "@/api/client";
-import { QueryKeys } from "@/enums/query-keys";
+import Client from "../../api/client";
+import { QueryKeys } from "../../enums/query-keys";
 import { BaseItemKind, ItemSortBy, SortOrder } from "@jellyfin/sdk/lib/generated-client/models";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import { useQuery } from "@tanstack/react-query";
