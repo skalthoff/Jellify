@@ -14,6 +14,7 @@ import { QueryKeys } from "../../enums/query-keys";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
 import { useMemo } from "react";
+import { useSharedValue } from "react-native-reanimated";
 
 
 export function AlbumScreen({ 
@@ -99,6 +100,7 @@ export function AlbumScreen({
                     
                 }}
                 ListFooterComponent={(
+                    
                     <YStack justifyContent="flex-start">
                         <XStack flex={1} marginTop={"$3"} justifyContent="flex-end">
                             <Text 

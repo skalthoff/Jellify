@@ -5,12 +5,13 @@ import { QueuingType } from "../enums/queuing-type";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../api/client";
 import { isUndefined } from "lodash";
+import { runOnRuntime } from "react-native-reanimated";
+import { backgroundRuntime } from "../App";
 
 // TODO: Make this configurable
 const transcodingContainer = "m4a";
 
 export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) : JellifyTrack {
-
     const urlParams = {
         "Container": item.Container!,
         "TranscodingContainer": transcodingContainer,
