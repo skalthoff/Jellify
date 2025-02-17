@@ -8,8 +8,9 @@ import DraggableFlatList from "react-native-draggable-flatlist";
 import { trigger } from "react-native-haptic-feedback";
 import { getTokens, Separator, View } from "tamagui";
 import { FadeIn, FadeOut, ReduceMotion, SequencedTransition } from "react-native-reanimated";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useCallback, useState } from "react";
+import { Freeze } from "react-freeze";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -29,24 +30,11 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
 
     const scrollIndex = playQueue.findIndex(queueItem => queueItem.item.Id! === nowPlaying!.item.Id!)
 
-    useFocusEffect(
-        useCallback(() => {
-
-            console.debug("Mounted Queue");
-            setHidden(false);
-
-            return () => {
-                console.debug("Queue unmounted");
-                setHidden(true);
-            }
-        }, [])
-    )
+    const freeze = !useIsFocused();
 
     return (
-        hidden ? (
-            <View />
-        ) : (
-            
+        <Freeze freeze={freeze}>
+
             <DraggableFlatList
                 contentInsetAdjustmentBehavior="automatic"
                 data={playQueue}
@@ -96,6 +84,6 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                     )
                 }}
             />
-        )
+        </Freeze>
     )
 }

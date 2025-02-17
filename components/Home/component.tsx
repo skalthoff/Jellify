@@ -8,7 +8,7 @@ import { useHomeContext } from "./provider";
 import { H3 } from "../Global/helpers/text";
 import Client from "../../api/client";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import { Freeze } from "react-freeze";
 
 export function ProvidedHome({ 
