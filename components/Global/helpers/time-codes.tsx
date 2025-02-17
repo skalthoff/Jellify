@@ -1,59 +1,48 @@
-import { isSharedValue, runOnRuntime, SharedValue, useSharedValue } from "react-native-reanimated";
 import { convertRunTimeTicksToSeconds } from "../../../helpers/runtimeticks";
 import { Text } from "./text";
 import React from "react";
-import { backgroundRuntime } from "../../../App";
-import { isEmpty, isNull, isNumber, isUndefined } from "lodash";
 
 export function RunTimeSeconds({ children }: { children: number }) : React.JSX.Element {
-
-    const seconds = useSharedValue<string>("0:00")
-
-    runOnRuntime(backgroundRuntime, (time : number) => {
-        'worklet';
-        seconds.set(calculateRunTimeFromSeconds(time))
-    })(children)
-
-    return <Text bold>{ seconds.get() }</Text>
+    return <Text bold>{ calculateRunTimeFromSeconds(children) }</Text>
 }
 
-export function RunTimeTicks({ children } : { children: number | null | undefined }) : React.JSX.Element {
-    if (isNull(children) || isUndefined(children)) 
+export function RunTimeTicks({ children } : { children?: number | null | undefined }) : React.JSX.Element {
+    if (!!!children) 
         return <Text>0:00</Text>
 
-    else {
+    let time = calculateRunTimeFromTicks(children);
 
-        const time = useSharedValue<string>("0:00")
-
-        runOnRuntime(backgroundRuntime, (ticks : number) => {
-            'worklet';
-            time.set(calculateRunTimeFromTicks(ticks))
-        })(children);
-        
-        return (
-            <Text 
-                style={{display: "block"}} 
-                color="$borderColor"
-                >
-                { time.get() }
-            </Text>
-        )
-    }
+    return (
+        <Text 
+            style={{display: "block"}} 
+            color="$borderColor"
+        >
+            { time }
+        </Text>
+    )
 }
 
 function calculateRunTimeFromSeconds(seconds: number) : string {
-    'worklet';
     const runTimeHours = Math.floor(seconds / 3600);
     const runTimeMinutes = Math.floor((seconds % 3600) / 60)
     const runTimeSeconds = Math.floor(seconds % 60);
 
-    return (runTimeHours != 0 ? `${runTimeHours >= 10 ? runTimeHours : "0" + runTimeHours}:` : "") + 
-        (runTimeHours != 0 ? `${runTimeMinutes >= 10 ? runTimeMinutes : "0" + runTimeMinutes}:` : `${runTimeMinutes}:`) +
-        (runTimeSeconds >= 10 ? runTimeSeconds : "0" + runTimeSeconds);
+    return (runTimeHours != 0 ? `${padRunTimeNumber(runTimeHours)}:` : "") + 
+        (runTimeHours != 0 ? `${padRunTimeNumber(runTimeMinutes)}:` : `${runTimeMinutes}:`) +
+        (padRunTimeNumber(runTimeSeconds));
 }
 
 function calculateRunTimeFromTicks(runTimeTicks: number) : string {
-    'worklet';
+
+
     const runTimeTotalSeconds = convertRunTimeTicksToSeconds(runTimeTicks);
+
     return calculateRunTimeFromSeconds(runTimeTotalSeconds);
+}
+
+function padRunTimeNumber(number: number) : string {
+    if (number >= 10)
+        return `${number}`
+
+    return `0${number}`;
 }
