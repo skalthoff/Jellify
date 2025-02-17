@@ -22,7 +22,7 @@ export function RunTimeTicks({ children } : { children: number | null | undefine
 
         runOnRuntime(backgroundRuntime, (ticks : number) => {
             'worklet';
-            time.set(calculateRunTimeFromTicks(ticks))
+            time.value = calculateRunTimeFromTicks(ticks)
         })(children);
         
         return (
@@ -30,7 +30,7 @@ export function RunTimeTicks({ children } : { children: number | null | undefine
                 style={{display: "block"}} 
                 color="$borderColor"
                 >
-                { time.value }
+                { time.get() }
             </Text>
         )
     }
