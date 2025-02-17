@@ -14,7 +14,6 @@ import { Freeze } from "react-freeze";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
-    const [hidden, setHidden] = useState<boolean>(false);
     const { width } = useSafeAreaFrame();
     const { playQueue, queue, useClearQueue, useRemoveFromQueue, useReorderQueue, useSkip, nowPlaying } = usePlayerContext();
 
@@ -34,7 +33,6 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
 
     return (
         <Freeze freeze={freeze}>
-
             <DraggableFlatList
                 contentInsetAdjustmentBehavior="automatic"
                 data={playQueue}
