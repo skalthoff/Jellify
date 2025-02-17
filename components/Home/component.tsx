@@ -17,15 +17,7 @@ export function ProvidedHome({
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 
-    const { refreshing: refetching, onRefresh: onRefetch } = useHomeContext()
-
-    const { nowPlayingIsFavorite } = usePlayerContext();
-
-    useEffect(() => {
-        onRefetch()
-    }, [
-        nowPlayingIsFavorite
-    ])
+    const { refreshing: refetching, onRefresh } = useHomeContext()
 
     return (
             <ScrollView 
@@ -33,7 +25,7 @@ export function ProvidedHome({
                 refreshControl={
                     <RefreshControl 
                     refreshing={refetching} 
-                    onRefresh={onRefetch}
+                    onRefresh={onRefresh}
                     />
                 }
                 removeClippedSubviews // Save memory usage
