@@ -1,4 +1,4 @@
-import { isSharedValue, runOnRuntime, SharedValue } from "react-native-reanimated";
+import { isSharedValue, runOnRuntime, SharedValue, useSharedValue } from "react-native-reanimated";
 import { convertRunTimeTicksToSeconds } from "../../../helpers/runtimeticks";
 import { Text } from "./text";
 import React from "react";
@@ -9,7 +9,7 @@ export function RunTimeSeconds({ children }: { children: number }) : React.JSX.E
 
     const seconds : string = runOnRuntime(backgroundRuntime, calculateRunTimeFromSeconds)(children)
 
-    return <Text bold>{  seconds }</Text>
+    return <Text bold>{ seconds }</Text>
 }
 
 export function RunTimeTicks({ children } : { children: SharedValue<number> | SharedValue<null> | SharedValue<undefined> }) : React.JSX.Element {
@@ -18,9 +18,11 @@ export function RunTimeTicks({ children } : { children: SharedValue<number> | Sh
 
     else {
 
-        let time = runOnRuntime(backgroundRuntime, (ticks : SharedValue<number>) => {
+        const time = useSharedValue<string>("0:00")
+
+        runOnRuntime(backgroundRuntime, (ticks : SharedValue<number>) => {
             'worklet';
-            return calculateRunTimeFromTicks(ticks)
+            time.set(calculateRunTimeFromTicks(ticks))
         })(children);
         
         return (
@@ -28,7 +30,7 @@ export function RunTimeTicks({ children } : { children: SharedValue<number> | Sh
                 style={{display: "block"}} 
                 color="$borderColor"
                 >
-                { time }
+                { time.get() }
             </Text>
         )
     }
