@@ -14,6 +14,7 @@ import { QueryKeys } from "../../enums/query-keys";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
 import { useMemo } from "react";
+import { useSharedValue } from "react-native-reanimated";
 
 
 export function AlbumScreen({ 
@@ -31,6 +32,8 @@ export function AlbumScreen({
         }
     })
     const { width } = useSafeAreaFrame();
+
+    const runTimeTicks = useSharedValue(album.RunTimeTicks!)
 
     const { data: tracks } =  useQuery({
         queryKey: [QueryKeys.ItemTracks, album.Id!],
@@ -99,6 +102,7 @@ export function AlbumScreen({
                     
                 }}
                 ListFooterComponent={(
+                    
                     <YStack justifyContent="flex-start">
                         <XStack flex={1} marginTop={"$3"} justifyContent="flex-end">
                             <Text 
@@ -108,7 +112,7 @@ export function AlbumScreen({
                                 >
                                 Total Runtime: 
                             </Text>
-                            <RunTimeTicks>{ album.RunTimeTicks }</RunTimeTicks>
+                            <RunTimeTicks>{ runTimeTicks.get() }</RunTimeTicks>
                         </XStack>
 
                         <H3>Album Artists</H3>
