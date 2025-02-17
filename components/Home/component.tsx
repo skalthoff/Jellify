@@ -7,9 +7,8 @@ import RecentlyPlayed from "./helpers/recently-played";
 import { useHomeContext } from "./provider";
 import { H3 } from "../Global/helpers/text";
 import Client from "../../api/client";
-import { useCallback, useState } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { Freeze } from "react-freeze";
 
 export function ProvidedHome({ 
@@ -18,22 +17,9 @@ export function ProvidedHome({
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 
-    const [freeze, setFreeze] = useState<boolean>(false);
+    const freeze = !useIsFocused()
 
     const { refreshing: refetching, onRefresh } = useHomeContext()
-
-    useFocusEffect(
-        useCallback(() => {
-
-            console.debug("Mounted home");
-            setFreeze(false)
-
-            return () => {
-                console.debug("Home unmounted");
-                setFreeze(true);
-            }
-        }, [])
-    )
 
     return (
         <Freeze freeze={freeze}>
