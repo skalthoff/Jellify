@@ -7,10 +7,10 @@ import RecentlyPlayed from "./helpers/recently-played";
 import { useHomeContext } from "./provider";
 import { H3 } from "../Global/helpers/text";
 import Client from "../../api/client";
-import { usePlayerContext } from "../../player/provider";
-import { useCallback, useEffect } from "react";
+import { useCallback, useState } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useFocusEffect } from "@react-navigation/native";
+import { Freeze } from "react-freeze";
 
 export function ProvidedHome({ 
     navigation 
@@ -18,20 +18,25 @@ export function ProvidedHome({
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 
+    const [freeze, setFreeze] = useState<boolean>(false);
+
     const { refreshing: refetching, onRefresh } = useHomeContext()
 
     useFocusEffect(
         useCallback(() => {
 
-            console.debug("Mounted Queue");
+            console.debug("Mounted home");
+            setFreeze(false)
 
             return () => {
-                console.debug("Queue unmounted");
+                console.debug("Home unmounted");
+                setFreeze(true);
             }
         }, [])
     )
 
     return (
+        <Freeze freeze={freeze}>
             <ScrollView 
                 contentInsetAdjustmentBehavior="automatic"
                 refreshControl={
@@ -60,5 +65,6 @@ export function ProvidedHome({
                     <Playlists navigation={navigation}/>
                 </YStack>
             </ScrollView>
+        </Freeze>
     );
 }
