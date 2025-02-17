@@ -23,19 +23,10 @@ export function ProvidedHome({
     useFocusEffect(
         useCallback(() => {
 
-            console.debug("Home mounted");
-
-            navigation.reset({
-                index: 0,
-                routes: [
-                    {
-                        name: "Home"
-                    }
-                ]
-            });
+            console.debug("Mounted Queue");
 
             return () => {
-                console.debug("Home unmounted");
+                console.debug("Queue unmounted");
             }
         }, [])
     )
