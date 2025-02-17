@@ -3,7 +3,7 @@ import { convertRunTimeTicksToSeconds } from "../../../helpers/runtimeticks";
 import { Text } from "./text";
 import React from "react";
 import { backgroundRuntime } from "../../../App";
-import { isNull, isNumber, isUndefined } from "lodash";
+import { isEmpty, isNull, isNumber, isUndefined } from "lodash";
 
 export function RunTimeSeconds({ children }: { children: number }) : React.JSX.Element {
 
@@ -12,15 +12,15 @@ export function RunTimeSeconds({ children }: { children: number }) : React.JSX.E
     return <Text bold>{ seconds }</Text>
 }
 
-export function RunTimeTicks({ children } : { children: SharedValue<number> | SharedValue<null> | SharedValue<undefined> }) : React.JSX.Element {
-    if (!isSharedValue<number>(children)) 
+export function RunTimeTicks({ children } : { children: number | null | undefined }) : React.JSX.Element {
+    if (isNull(children) || isUndefined(children)) 
         return <Text>0:00</Text>
 
     else {
 
         const time = useSharedValue<string>("0:00")
 
-        runOnRuntime(backgroundRuntime, (ticks : SharedValue<number>) => {
+        runOnRuntime(backgroundRuntime, (ticks : number) => {
             'worklet';
             time.set(calculateRunTimeFromTicks(ticks))
         })(children);
@@ -47,7 +47,7 @@ function calculateRunTimeFromSeconds(seconds: number) : string {
         (runTimeSeconds >= 10 ? runTimeSeconds : "0" + runTimeSeconds);
 }
 
-function calculateRunTimeFromTicks(runTimeTicks: SharedValue<number>) : string {
+function calculateRunTimeFromTicks(runTimeTicks: number) : string {
     'worklet';
     const runTimeTotalSeconds = convertRunTimeTicksToSeconds(runTimeTicks);
     return calculateRunTimeFromSeconds(runTimeTotalSeconds);

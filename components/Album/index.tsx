@@ -33,8 +33,6 @@ export function AlbumScreen({
     })
     const { width } = useSafeAreaFrame();
 
-    const runTimeTicks = useSharedValue(album.RunTimeTicks!)
-
     const { data: tracks } =  useQuery({
         queryKey: [QueryKeys.ItemTracks, album.Id!],
         queryFn: () => {
@@ -112,7 +110,7 @@ export function AlbumScreen({
                                 >
                                 Total Runtime: 
                             </Text>
-                            <RunTimeTicks>{ runTimeTicks }</RunTimeTicks>
+                            <RunTimeTicks>{ album.RunTimeTicks }</RunTimeTicks>
                         </XStack>
 
                         <H3>Album Artists</H3>
