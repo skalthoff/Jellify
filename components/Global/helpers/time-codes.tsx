@@ -10,6 +10,7 @@ export function RunTimeSeconds({ children }: { children: number }) : React.JSX.E
     const seconds = useSharedValue<string>("0:00")
 
     runOnRuntime(backgroundRuntime, (time : number) => {
+        'worklet';
         seconds.set(calculateRunTimeFromSeconds(time))
     })(children)
 
