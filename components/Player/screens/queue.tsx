@@ -8,6 +8,8 @@ import DraggableFlatList from "react-native-draggable-flatlist";
 import { trigger } from "react-native-haptic-feedback";
 import { getTokens, Separator } from "tamagui";
 import { FadeIn, FadeOut, ReduceMotion, SequencedTransition } from "react-native-reanimated";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -22,9 +24,20 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                 }}/>
             )
         }
-    })
+    });
 
     const scrollIndex = playQueue.findIndex(queueItem => queueItem.item.Id! === nowPlaying!.item.Id!)
+
+    useFocusEffect(
+        useCallback(() => {
+
+            console.debug("Mounted Queue");
+
+            return () => {
+                console.debug("Queue unmounted");
+            }
+        }, [])
+    )
 
     return (
         <DraggableFlatList
