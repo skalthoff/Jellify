@@ -28,7 +28,6 @@ export default function PlayerScreen({
 }) : React.JSX.Element {
 
     const { 
-        useTogglePlayback, 
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying, 
@@ -36,7 +35,7 @@ export default function PlayerScreen({
         useSeekTo, 
         useSkip, 
         usePrevious, 
-        playQueue,
+        playbackState,
         queue
     } = usePlayerContext();
     
@@ -271,7 +270,10 @@ export default function PlayerScreen({
                         )}
                     </XStack>
 
-                    <XStack marginHorizontal={20} marginTop={"$3"} marginBottom={"$2"}>
+                    { useMemo(() => {
+                        return (
+
+                        <XStack marginHorizontal={20} marginTop={"$3"} marginBottom={"$2"}>
                         <XStack flex={1} justifyContent="flex-start">
                             <RunTimeSeconds>{Math.floor(progressState / ProgressMultiplier)}</RunTimeSeconds>
                         </XStack>
@@ -296,8 +298,14 @@ export default function PlayerScreen({
                             </RunTimeSeconds>
                         </XStack>
                     </XStack>
+                        )
+                    }, [
+                        progress
+                    ])}
 
-                    <XStack 
+                    { useMemo(() => {
+
+                        <XStack 
                         alignItems="center" 
                         justifyContent="space-evenly" 
                         marginVertical={"$2"}
@@ -342,6 +350,9 @@ export default function PlayerScreen({
                             }}  
                             />              
                     </XStack>
+                    }, [
+                        playbackState
+                    ])}
 
                     <XStack justifyContent="space-evenly" marginVertical={"$7"}>
                         <Icon name="speaker-multiple"
