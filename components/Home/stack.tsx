@@ -2,7 +2,6 @@ import _ from "lodash";
 import { HomeProvider } from "./provider";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
-import { ArtistScreen } from "../Artist/screens";
 import { AlbumScreen } from "../Album";
 import { PlaylistScreen } from "../Playlist/screens";
 import { ProvidedHome } from "./component";
@@ -10,31 +9,28 @@ import DetailsScreen from "../ItemDetail/screen";
 import AddPlaylist from "../Library/components/add-playlist";
 import ArtistsScreen from "../Artists/screen";
 import TracksScreen from "../Tracks/screen";
+import { ArtistScreen } from "../Artist";
 
-const HomeStack = createNativeStackNavigator<StackParamList>();
+const Stack = createNativeStackNavigator<StackParamList>();
 
 export default function Home(): React.JSX.Element {
 
     return (
         <HomeProvider>
-            <HomeStack.Navigator 
+            <Stack.Navigator 
+                
                 initialRouteName="Home"
                 screenOptions={{
+                    
                 }}
             >
-                <HomeStack.Group>
-                    <HomeStack.Screen 
+                <Stack.Group>
+                    <Stack.Screen 
                         name="Home" 
                         component={ProvidedHome} 
-                        options={{
-                            // headerLargeTitle: true,
-                            // headerLargeTitleStyle: {
-                            //     fontFamily: 'Aileron-Bold'
-                            // }
-                        }}
                     />
 
-                    <HomeStack.Screen 
+                    <Stack.Screen 
                         name="Artist" 
                         component={ArtistScreen} 
                         options={({ route }) => ({
@@ -46,12 +42,12 @@ export default function Home(): React.JSX.Element {
                         })}
                     />
 
-                    <HomeStack.Screen
+                    <Stack.Screen
                         name="Artists"
                         component={ArtistsScreen}
                     />
 
-                    <HomeStack.Screen
+                    <Stack.Screen
                         name="Tracks"
                         component={TracksScreen}
                         options={{
@@ -59,7 +55,7 @@ export default function Home(): React.JSX.Element {
                         }}
                     />
 
-                    <HomeStack.Screen
+                    <Stack.Screen
                         name="Album"
                         component={AlbumScreen}
                         options={({ route }) => ({
@@ -68,7 +64,7 @@ export default function Home(): React.JSX.Element {
                         })}
                     />
 
-                    <HomeStack.Screen
+                    <Stack.Screen
                         name="Playlist"
                         component={PlaylistScreen}
                         options={({ route }) => ({
@@ -77,18 +73,18 @@ export default function Home(): React.JSX.Element {
                         })}
                     />
 
-                </HomeStack.Group>
+                </Stack.Group>
 
-                <HomeStack.Group screenOptions={{ presentation: 'modal' }}>
-                    <HomeStack.Screen
+                <Stack.Group screenOptions={{ presentation: 'modal' }}>
+                    <Stack.Screen
                         name="Details"
                         component={DetailsScreen}
                         options={{
                             headerShown: false,
                         }}
                     />
-                </HomeStack.Group>
-            </HomeStack.Navigator>
+                </Stack.Group>
+            </Stack.Navigator>
         </HomeProvider>
     );
 }

@@ -17,6 +17,7 @@ import { toUpper } from "lodash";
 import { trigger } from "react-native-haptic-feedback";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { useIsFocused } from "@react-navigation/native";
 
 const scrubGesture = Gesture.Pan();
 
@@ -51,6 +52,8 @@ export default function PlayerScreen({
         : 0
     );
 
+    const freeze = !useIsFocused()
+
     const { width } = useSafeAreaFrame();
 
     useEffect(() => {
@@ -68,13 +71,13 @@ export default function PlayerScreen({
     return (
         <SafeAreaView edges={["right", "left"]}>
             { nowPlaying && (
-            <>
+                <>
                 <YStack>
 
                     <XStack 
                         marginBottom={"$2"}
                         marginHorizontal={"$2"}
-                    >
+                        >
 
                         <YStack 
                             alignContent="flex-end"
@@ -87,7 +90,7 @@ export default function PlayerScreen({
                                     navigation.goBack();
                                 }}
                                 small
-                            />
+                                />
                         </YStack>
 
                         <YStack 
@@ -186,7 +189,7 @@ export default function PlayerScreen({
                             justifyContent="flex-end" 
                             alignItems="center" 
                             flex={2}
-                        >
+                            >
                             {/* Buttons for favorites, song menu go here */}
 
                             <Icon
@@ -204,7 +207,7 @@ export default function PlayerScreen({
                             <FavoriteButton 
                                 item={nowPlaying!.item} 
                                 onToggle={() => setNowPlayingIsFavorite(!nowPlayingIsFavorite)}
-                            />
+                                />
                         </XStack>
                     </XStack>
 
@@ -230,7 +233,7 @@ export default function PlayerScreen({
                                                 navigation.setOptions({
                                                     gestureEnabled: true
                                                 });
-
+                                                
                                                 useSeekTo.mutate(Math.floor(progressState / ProgressMultiplier));
                                             },
                                             onSlideStart: () => {
@@ -243,11 +246,11 @@ export default function PlayerScreen({
                                             },
                                             onSlideMove: (event, value) => {
                                                 setSeeking(true);
-
+                                                
                                                 navigation.setOptions({
                                                     gestureEnabled: false
                                                 });
-
+                                                
                                                 setProgressState(value);
                                             },
                                             onSlideEnd: (event, value) => {
@@ -260,7 +263,7 @@ export default function PlayerScreen({
                                                 useSeekTo.mutate(Math.floor(value / ProgressMultiplier));
                                             }
                                         }}
-                                    />
+                                        />
                                 </GestureDetector>
                             )}, [
                                 progressState
@@ -298,25 +301,25 @@ export default function PlayerScreen({
                         alignItems="center" 
                         justifyContent="space-evenly" 
                         marginVertical={"$2"}
-                    >
+                        >
                         <Icon
                             color={getTokens().color.amethyst.val}
                             name="rewind-15"
                             onPress={() => {
-
+                                
                                 setSeeking(true);
                                 setProgressState(progressState - (15 * ProgressMultiplier));
                                 setSeeking(false);
                                 useSeekTo.mutate(progress!.position - 15);
                             }}
-                        />
+                            />
                         
                         <Icon
                             color={getTokens().color.amethyst.val}
                             name="skip-previous"
                             onPress={() => usePrevious.mutate()}
                             large
-                        />
+                            />
 
                         {/* I really wanted a big clunky play button */}
                         <PlayPauseButton size={width / 5} />
@@ -326,7 +329,7 @@ export default function PlayerScreen({
                             name="skip-next" 
                             onPress={() => useSkip.mutate(undefined)}
                             large
-                        />    
+                            />    
 
                         <Icon
                             color={getTokens().color.amethyst.val}
@@ -337,7 +340,7 @@ export default function PlayerScreen({
                                 setSeeking(false);
                                 useSeekTo.mutate(progress!.position + 15);
                             }}  
-                        />              
+                            />              
                     </XStack>
 
                     <XStack justifyContent="space-evenly" marginVertical={"$7"}>

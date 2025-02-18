@@ -6,7 +6,7 @@ import { StackParamList } from "../types";
 import { QueryKeys } from "../../enums/query-keys";
 import { fetchSearchResults } from "../../api/queries/functions/search";
 import { useQuery } from "@tanstack/react-query";
-import { FlatList, useColorScheme } from "react-native";
+import { FlatList } from "react-native";
 import { Text } from "../Global/helpers/text";
 import { fetchSearchSuggestions } from "../../api/queries/functions/suggestions";
 

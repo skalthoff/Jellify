@@ -6,8 +6,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { trigger } from "react-native-haptic-feedback";
-import { getTokens, Separator } from "tamagui";
-import { FadeIn, FadeOut, ReduceMotion, SequencedTransition } from "react-native-reanimated";
+import { Separator } from "tamagui";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -22,9 +22,11 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                 }}/>
             )
         }
-    })
+    });
 
     const scrollIndex = playQueue.findIndex(queueItem => queueItem.item.Id! === nowPlaying!.item.Id!)
+
+    const freeze = !useIsFocused();
 
     return (
         <DraggableFlatList
@@ -49,12 +51,12 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                 useReorderQueue.mutate({ newOrder: data, from, to });
             }}
             renderItem={({ item: queueItem, getIndex, drag, isActive }) => {
-
+                
                 const index = getIndex();
-
+                
                 return (
                     <Track
-                        queue={queue}
+                    queue={queue}
                         navigation={navigation}
                         track={queueItem.item}
                         index={getIndex()}
