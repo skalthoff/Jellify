@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
@@ -16,9 +16,12 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
         <View>
             <H2 marginLeft={"$2"}>Recent Artists</H2>
 
-            <HorizontalCardList
-                items={recentArtists}
-                onSeeMore={() => {
+            { useMemo(() => {
+                return (
+
+                    <HorizontalCardList
+                    items={recentArtists}
+                    onSeeMore={() => {
                     navigation.navigate("Artists", {
                         query: QueryKeys.RecentlyPlayedArtists
                     })
@@ -38,7 +41,11 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
                         </ItemCard>
                     )
                 }}
-            />
+                />
+            )
+        }, [
+            recentArtists
+        ])}
         </View>
     )
 }
