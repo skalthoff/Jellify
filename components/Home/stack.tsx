@@ -28,12 +28,6 @@ export default function Home(): React.JSX.Element {
                     <Stack.Screen 
                         name="Home" 
                         component={ProvidedHome} 
-                        options={{
-                            // headerLargeTitle: true,
-                            // headerLargeTitleStyle: {
-                            //     fontFamily: 'Aileron-Bold'
-                            // }
-                        }}
                     />
 
                     <Stack.Screen 

@@ -8,8 +8,6 @@ import { useHomeContext } from "./provider";
 import { H3 } from "../Global/helpers/text";
 import Client from "../../api/client";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useIsFocused } from "@react-navigation/native";
-import { Freeze } from "react-freeze";
 
 export function ProvidedHome({ 
     navigation 
@@ -17,40 +15,36 @@ export function ProvidedHome({
     navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 
-    const freeze = !useIsFocused()
-
     const { refreshing: refetching, onRefresh } = useHomeContext()
 
     return (
-        <Freeze freeze={freeze}>
-            <ScrollView 
-                contentInsetAdjustmentBehavior="automatic"
-                refreshControl={
-                    <RefreshControl 
-                    refreshing={refetching} 
-                    onRefresh={onRefresh}
-                    />
-                }
-                removeClippedSubviews // Save memory usage
-            >
-                <YStack alignContent='flex-start'>
-                    <XStack margin={"$2"}>
-                        <H3>{`Hi, ${Client.user!.name}`}</H3>
-                    </XStack>
+        <ScrollView 
+            contentInsetAdjustmentBehavior="automatic"
+            refreshControl={
+                <RefreshControl 
+                refreshing={refetching} 
+                onRefresh={onRefresh}
+                />
+            }
+            removeClippedSubviews // Save memory usage
+        >
+            <YStack alignContent='flex-start'>
+                <XStack margin={"$2"}>
+                    <H3>{`Hi, ${Client.user!.name}`}</H3>
+                </XStack>
 
-                    <Separator marginVertical={"$2"} />
+                <Separator marginVertical={"$2"} />
 
-                    <RecentArtists navigation={navigation} />
+                <RecentArtists navigation={navigation} />
 
-                    <Separator marginVertical={"$3"} />
+                <Separator marginVertical={"$3"} />
 
-                    <RecentlyPlayed navigation={navigation} />
+                <RecentlyPlayed navigation={navigation} />
 
-                    <Separator marginVertical={"$3"} />
+                <Separator marginVertical={"$3"} />
 
-                    <Playlists navigation={navigation}/>
-                </YStack>
-            </ScrollView>
-        </Freeze>
+                <Playlists navigation={navigation}/>
+            </YStack>
+        </ScrollView>
     );
 }

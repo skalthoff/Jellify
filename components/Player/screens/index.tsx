@@ -18,7 +18,6 @@ import { trigger } from "react-native-haptic-feedback";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useIsFocused } from "@react-navigation/native";
-import { Freeze } from "react-freeze";
 
 const scrubGesture = Gesture.Pan();
 
@@ -70,8 +69,6 @@ export default function PlayerScreen({
     ]);
 
     return (
-        <Freeze freeze={freeze}>
-
         <SafeAreaView edges={["right", "left"]}>
             { nowPlaying && (
                 <>
@@ -363,6 +360,5 @@ export default function PlayerScreen({
             </>
             )}
         </SafeAreaView>
-    </Freeze>
     );
 }

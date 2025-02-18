@@ -7,11 +7,17 @@ import TrackPlayer from 'react-native-track-player';
 import Client from './api/client';
 import { enableFreeze, enableScreens } from "react-native-screens";
 
+// Initialize API client instance
 Client.instance;
 
-enableFreeze(true);
+// Enable React Navigation freeze for detaching inactive screens
+enableFreeze();
+
+// TODO: I don't think this is needed with React Navigation 6+
 enableScreens();
 
 AppRegistry.registerComponent(appName, () => App);
-AppRegistry.registerComponent('RNCarPlayScene', () => App)
+AppRegistry.registerComponent('RNCarPlayScene', () => App);
+
+// Register RNTP playback service for remote controls
 TrackPlayer.registerPlaybackService(() => PlaybackService);
