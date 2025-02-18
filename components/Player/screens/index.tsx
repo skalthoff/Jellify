@@ -304,10 +304,11 @@ export default function PlayerScreen({
                     ])}
 
                     { useMemo(() => {
+                        return (
 
-                        <XStack 
-                        alignItems="center" 
-                        justifyContent="space-evenly" 
+                            <XStack 
+                            alignItems="center" 
+                            justifyContent="space-evenly" 
                         marginVertical={"$2"}
                         >
                         <Icon
@@ -350,10 +351,11 @@ export default function PlayerScreen({
                             }}  
                             />              
                     </XStack>
+                    )
                     }, [
                         playbackState
                     ])}
-
+                    
                     <XStack justifyContent="space-evenly" marginVertical={"$7"}>
                         <Icon name="speaker-multiple"
                         />
