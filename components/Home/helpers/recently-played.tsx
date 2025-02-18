@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View } from "tamagui";
 import { useHomeContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
@@ -24,8 +24,11 @@ export default function RecentlyPlayed({
         <View>
             <H2 marginLeft={"$2"}>Play it again</H2>
 
-            <HorizontalCardList
-                squared
+            { useMemo(() => {
+                return (
+
+                    <HorizontalCardList
+                    squared
                 items={recentTracks}
                 onSeeMore={() => {
                     navigation.navigate("Tracks", {
@@ -56,10 +59,14 @@ export default function RecentlyPlayed({
                                     isNested: false
                                 })
                             }}
-                        />                                
-                    )
-                }}
-            />
+                            />                                
+                        )
+                    }}
+                    />
+                )
+            }, [
+                recentTracks
+            ])}
         </View>
     )
 }

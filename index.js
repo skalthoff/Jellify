@@ -13,9 +13,6 @@ Client.instance;
 // Enable React Navigation freeze for detaching inactive screens
 enableFreeze();
 
-// TODO: I don't think this is needed with React Navigation 6+
-enableScreens();
-
 AppRegistry.registerComponent(appName, () => App);
 AppRegistry.registerComponent('RNCarPlayScene', () => App);
 

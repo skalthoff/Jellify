@@ -7,12 +7,20 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { trigger } from "react-native-haptic-feedback";
 import { Separator } from "tamagui";
-import { useIsFocused } from "@react-navigation/native";
+import { useMemo } from "react";
 
 export default function Queue({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
-    const { playQueue, queue, useClearQueue, useRemoveFromQueue, useReorderQueue, useSkip, nowPlaying } = usePlayerContext();
+    const { 
+        playQueue, 
+        queue, 
+        useClearQueue, 
+        useRemoveFromQueue, 
+        useReorderQueue, 
+        useSkip, 
+        nowPlaying 
+    } = usePlayerContext();
 
     navigation.setOptions({
         headerRight: () => {
@@ -26,11 +34,12 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
 
     const scrollIndex = playQueue.findIndex(queueItem => queueItem.item.Id! === nowPlaying!.item.Id!)
 
-    const freeze = !useIsFocused();
-
     return (
-        <DraggableFlatList
-            contentInsetAdjustmentBehavior="automatic"
+        useMemo(() => {
+            return (
+
+                <DraggableFlatList
+                contentInsetAdjustmentBehavior="automatic"
             data={playQueue}
             dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
             extraData={nowPlaying}
@@ -74,9 +83,13 @@ export default function Queue({ navigation }: { navigation: NativeStackNavigatio
                             if (index)
                                 useRemoveFromQueue.mutate(index)
                         }}
-                    />
-                )
-            }}
-        />
+                        />
+                    )
+                }}
+                />
+            )
+        }, [
+            playQueue
+        ])
     )
 }

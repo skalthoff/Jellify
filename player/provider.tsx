@@ -85,7 +85,7 @@ const PlayerContextInitializer = () => {
     
     const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
         console.debug("Clearing queue")
-        await TrackPlayer.reset();
+        await TrackPlayer.setQueue([]);
         setPlayQueue([]);        
     }
     
