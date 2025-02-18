@@ -10,9 +10,8 @@ import AddPlaylist from "../Library/components/add-playlist";
 import ArtistsScreen from "../Artists/screen";
 import TracksScreen from "../Tracks/screen";
 import { ArtistScreen } from "../Artist";
-import { createStackNavigator } from "@react-navigation/stack";
 
-const Stack = createStackNavigator<StackParamList>();
+const Stack = createNativeStackNavigator<StackParamList>();
 
 export default function Home(): React.JSX.Element {
 
