@@ -9,7 +9,7 @@ import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
 import { useUpdateOptions } from "../player/hooks";
 import { UPDATE_INTERVAL } from "./config";
-import { useMutation, UseMutationResult, useQuery } from "@tanstack/react-query";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { mapDtoToTrack } from "../helpers/mappings";
 import { QueuingType } from "../enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
@@ -21,9 +21,6 @@ import { Section } from "../components/Player/types";
 import { Queue } from "./types/queue-item";
 
 import * as Burnt from "burnt";
-import { QueryKeys } from "@/enums/query-keys";
-import fetchItemAudio from "@/api/queries/functions/audio";
-import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 interface PlayerContext {
     initialized: boolean;
@@ -171,11 +168,6 @@ const PlayerContextInitializer = () => {
             else 
                 return play(index);
         }
-    });
-
-    const useFetchAudio = (track: BaseItemDto) => useQuery({
-        queryKey: [QueryKeys.Audio, track.Id!],
-        queryFn: () => fetchItemAudio(track)
     });
 
     const useSeekTo = useMutation({
