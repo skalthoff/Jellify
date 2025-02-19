@@ -5,6 +5,8 @@ import { QueryKeys } from "../../../enums/query-keys";
 import { fetchRecentlyAdded } from "../../../api/queries/functions/recents";
 import HorizontalCardList from "../../../components/Global/components/horizontal-list";
 import { ItemCard } from "../../../components/Global/components/item-card";
+import { H2 } from "@/components/Global/helpers/text";
+import Client from "@/api/client";
 
 export default function RecentlyAdded({ 
     navigation
@@ -26,6 +28,7 @@ export default function RecentlyAdded({
                     query: QueryKeys.RecentlyAdded
                 })
             }}
+            ListHeaderComponent={(<H2>{`Recently added to ${Client.server?.name ?? "Jellyfin"}`}</H2>)}
             renderItem={({ item }) => 
                 <ItemCard
                     caption={item.Name}
