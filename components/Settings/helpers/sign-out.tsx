@@ -3,6 +3,7 @@ import Button from "../../Global/helpers/button";
 import { stop } from "react-native-track-player/lib/src/trackPlayer";
 import Client from "../../../api/client";
 import { useJellifyContext } from "../../../components/provider";
+import TrackPlayer from "react-native-track-player";
 
 export default function SignOut(): React.JSX.Element {
 
@@ -10,9 +11,9 @@ export default function SignOut(): React.JSX.Element {
 
     return (
         <Button onPress={() => {
-            stop();
             setLoggedIn(false);
             Client.signOut();
+            TrackPlayer.reset();
         }}>
             Sign Out
         </Button>
