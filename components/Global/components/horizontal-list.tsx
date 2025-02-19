@@ -1,9 +1,7 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models/base-item-dto";
 import React from "react";
 import { FlatList, ListRenderItem } from "react-native";
-import { ItemCard } from "./item-card";
 import IconCard from "../helpers/icon-card";
-import { BaseItemKind } from "@jellyfin/sdk/lib/generated-client/models";
 import { horizontalCardLimit } from "../component.config";
 
 interface HorizontalCardListProps {

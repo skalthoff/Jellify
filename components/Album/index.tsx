@@ -86,21 +86,16 @@ export function AlbumScreen({
                     ])
 
                 )}
-                renderItem={({ item: track, index }) => {
-                    
-                    return (
-                        <Track
-                            track={track}
-                            tracklist={tracks!}
-                            index={index}
-                            navigation={navigation}
-                            queue={album}
-                        />
-                    )
-                    
-                }}
+                renderItem={({ item: track, index }) =>
+                    <Track
+                        track={track}
+                        tracklist={tracks!}
+                        index={index}
+                        navigation={navigation}
+                        queue={album}
+                    />                    
+                }
                 ListFooterComponent={(
-                    
                     <YStack justifyContent="flex-start">
                         <XStack flex={1} marginTop={"$3"} justifyContent="flex-end">
                             <Text 
@@ -118,8 +113,7 @@ export function AlbumScreen({
                             horizontal
                             keyExtractor={(item) => item.Id!}
                             data={album.ArtistItems}
-                            renderItem={({ index, item: artist }) => {
-                                return (
+                            renderItem={({ index, item: artist }) =>
                                     <Avatar
                                         circular
                                         item={artist}
@@ -131,9 +125,9 @@ export function AlbumScreen({
                                         }}
                                         subheading={artist.Name ?? "Unknown Artist"}
                                     />
-                                )
-                            }}
-                            />
+                                
+                            }
+                        />
                     </YStack>
 
                 )}

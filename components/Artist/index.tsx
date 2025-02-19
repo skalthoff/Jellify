@@ -81,22 +81,20 @@ export function ArtistScreen({
                     }}
                     data={albums}
                     numColumns={columns} // TODO: Make this adjustable
-                    renderItem={({ item: album }) => {
-                        return (
-                            <ItemCard
-                                caption={album.Name}
-                                subCaption={album.ProductionYear?.toString()}
-                                width={(width / 1.1) / columns}
-                                squared 
-                                item={album}
-                                onPress={() => {
-                                    navigation.navigate('Album', {
-                                        album
-                                    })
-                                }}
-                            />
-                        )
-                    }}
+                    renderItem={({ item: album }) => 
+                        <ItemCard
+                            caption={album.Name}
+                            subCaption={album.ProductionYear?.toString()}
+                            width={(width / 1.1) / columns}
+                            squared 
+                            item={album}
+                            onPress={() => {
+                                navigation.navigate('Album', {
+                                    album
+                                })
+                            }}
+                        />
+                    }
                 />
         </ScrollView>
     )

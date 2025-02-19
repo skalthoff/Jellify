@@ -25,20 +25,18 @@ export default function Albums({ navigation }: AlbumsProps) : React.JSX.Element 
                         onRefresh={refetch}
                     />
                 }
-                renderItem={({ index, item: album}) => {
-                    return (
-                        <ItemCard
-                            item={album}
-                            caption={album.Name ?? "Untitled Album"}
-                            subCaption={album.ProductionYear?.toString() ?? ""}
-                            squared
-                            onPress={() => {
-                                navigation.navigate("Album", { album })
-                            }}
-                            width={width / 2.1}
-                        />
-                    )
-                }}
+                renderItem={({ index, item: album}) => 
+                    <ItemCard
+                        item={album}
+                        caption={album.Name ?? "Untitled Album"}
+                        subCaption={album.ProductionYear?.toString() ?? ""}
+                        squared
+                        onPress={() => {
+                            navigation.navigate("Album", { album })
+                        }}
+                        width={width / 2.1}
+                    />   
+                }
             />
         )
     }

@@ -29,18 +29,15 @@ export default function TracksScreen({
                     onRefresh={refetch}
                 />
             }
-            renderItem={({ index, item: track}) => {
-                return (
-                    <Track
-                        navigation={navigation}
-                        showArtwork
-                        track={track}
-                        tracklist={tracks?.slice(index, index + 50) ?? []}
-                        queue="Favorite Tracks"
-                    />
-
-                )
-            }}
+            renderItem={({ index, item: track}) =>
+                <Track
+                    navigation={navigation}
+                    showArtwork
+                    track={track}
+                    tracklist={tracks?.slice(index, index + 50) ?? []}
+                    queue="Favorite Tracks"
+                />
+            }
         />
     )
 }
