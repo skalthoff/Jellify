@@ -47,9 +47,9 @@ export type StackParamList = {
     Search: undefined;
 
     Settings: undefined;
-    AccountDetails: undefined;
-    ServerDetails: undefined;
-    PlaybackDetails: undefined;
+    Account: undefined;
+    Server: undefined;
+    Playback: undefined;
     Labs: undefined;
 
     Tabs: {
@@ -115,9 +115,9 @@ export type GenresProps = NativeStackScreenProps<StackParamList, "Genres">;
 
 export type DetailsProps = NativeStackScreenProps<StackParamList, "Details">;
 
-export type AccountDetailsProps = NativeStackScreenProps<StackParamList, "AccountDetails">;
-export type ServerDetailsProps = NativeStackScreenProps<StackParamList, "ServerDetails">;
-export type PlaybackDetailsProps = NativeStackScreenProps<StackParamList, "PlaybackDetails">;
+export type AccountDetailsProps = NativeStackScreenProps<StackParamList, "Account">;
+export type ServerDetailsProps = NativeStackScreenProps<StackParamList, "Server">;
+export type PlaybackDetailsProps = NativeStackScreenProps<StackParamList, "Playback">;
 export type LabsProps = NativeStackScreenProps<StackParamList, 'Labs'>;
 
 

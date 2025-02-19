@@ -26,7 +26,7 @@ export default function Settings(): React.JSX.Element {
             />
 
             <SettingsStack.Screen
-                name="AccountDetails"
+                name="Account"
                 component={AccountDetails}
                 options={{
                     title: "Account",
@@ -38,12 +38,12 @@ export default function Settings(): React.JSX.Element {
             />
 
             <SettingsStack.Screen
-                name="ServerDetails"
+                name="Server"
                 component={ServerDetails}
             />
 
             <SettingsStack.Screen
-                name="PlaybackDetails"
+                name="Playback"
                 component={PlaybackDetails}
             />
 
