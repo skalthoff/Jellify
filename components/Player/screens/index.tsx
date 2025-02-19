@@ -300,7 +300,8 @@ export default function PlayerScreen({
                     </XStack>
                         )
                     }, [
-                        progress
+                        progressState,
+                        progress?.duration
                     ])}
 
                     { useMemo(() => {
