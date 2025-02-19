@@ -10,7 +10,7 @@ export default function Index({ navigation }: { navigation : NativeStackNavigati
     return (
         <SafeAreaView edges={["top", "left", "right"]}>
             <ScrollView
-                flex={1}
+                flexGrow={1}
                 contentInsetAdjustmentBehavior="automatic"
                 removeClippedSubviews
             >
