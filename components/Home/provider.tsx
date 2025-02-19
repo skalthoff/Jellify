@@ -24,13 +24,14 @@ const HomeContextInitializer = () => {
     });
 
     const onRefresh = async () => {
+        setRefreshing(true);
+        
         await Promise.all([
             refetchRecentTracks(),
             refetchRecentArtists()
         ])
-        .then(() => {
-            setRefreshing(false);
-        })
+
+        setRefreshing(false);
     }
 
     return {

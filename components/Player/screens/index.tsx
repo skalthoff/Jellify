@@ -18,6 +18,8 @@ import { trigger } from "react-native-haptic-feedback";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useIsFocused } from "@react-navigation/native";
+import { useProgress } from "react-native-track-player";
+import { UPDATE_INTERVAL } from "../../../player/config";
 
 const scrubGesture = Gesture.Pan();
 
@@ -31,7 +33,6 @@ export default function PlayerScreen({
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying, 
-        progress, 
         useSeekTo, 
         useSkip, 
         usePrevious, 
@@ -39,6 +40,8 @@ export default function PlayerScreen({
         queue
     } = usePlayerContext();
     
+    const progress = useProgress(UPDATE_INTERVAL);
+
     const [seeking, setSeeking] = useState<boolean>(false);
 
     /**
