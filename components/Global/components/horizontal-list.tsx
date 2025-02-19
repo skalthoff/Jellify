@@ -47,6 +47,9 @@ export default function HorizontalCardList({
                 ) : undefined}
             }
             removeClippedSubviews
+            style={{
+                overflow: "hidden"
+            }}
         />
     )
 }
