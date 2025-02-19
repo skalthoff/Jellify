@@ -13,6 +13,7 @@ export default function Index({ navigation }: { navigation : NativeStackNavigati
                 flexGrow={1}
                 contentInsetAdjustmentBehavior="automatic"
                 removeClippedSubviews
+                paddingBottom={"$15"}
             >
                 <H2>{`Recently added`}</H2>
                 <RecentlyAdded navigation={navigation} />
