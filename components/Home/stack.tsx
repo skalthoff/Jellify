@@ -59,7 +59,7 @@ export default function Home(): React.JSX.Element {
                         name="Album"
                         component={AlbumScreen}
                         options={({ route }) => ({
-                            headerShown: true,
+                            title: route.params.album.Name ?? "Untitled Album",
                             headerTitle: ""
                         })}
                     />

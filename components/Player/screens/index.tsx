@@ -18,6 +18,8 @@ import { trigger } from "react-native-haptic-feedback";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useIsFocused } from "@react-navigation/native";
+import { useProgress } from "react-native-track-player";
+import { UPDATE_INTERVAL } from "../../../player/config";
 
 const scrubGesture = Gesture.Pan();
 
@@ -31,7 +33,6 @@ export default function PlayerScreen({
         nowPlayingIsFavorite,
         setNowPlayingIsFavorite,
         nowPlaying, 
-        progress, 
         useSeekTo, 
         useSkip, 
         usePrevious, 
@@ -39,6 +40,8 @@ export default function PlayerScreen({
         queue
     } = usePlayerContext();
     
+    const progress = useProgress(UPDATE_INTERVAL);
+
     const [seeking, setSeeking] = useState<boolean>(false);
 
     /**
@@ -300,58 +303,58 @@ export default function PlayerScreen({
                     </XStack>
                         )
                     }, [
-                        progress
+                        progressState,
+                        progress?.duration
                     ])}
 
                     { useMemo(() => {
                         return (
-
                             <XStack 
-                            alignItems="center" 
-                            justifyContent="space-evenly" 
-                        marginVertical={"$2"}
-                        >
-                        <Icon
-                            color={getTokens().color.amethyst.val}
-                            name="rewind-15"
-                            onPress={() => {
+                                alignItems="center" 
+                                justifyContent="space-evenly" 
+                                marginVertical={"$2"}
+                                >
+                                <Icon
+                                    color={getTokens().color.amethyst.val}
+                                    name="rewind-15"
+                                    onPress={() => {
+                                        
+                                        setSeeking(true);
+                                        setProgressState(progressState - (15 * ProgressMultiplier));
+                                        setSeeking(false);
+                                        useSeekTo.mutate(progress!.position - 15);
+                                    }}
+                                    />
                                 
-                                setSeeking(true);
-                                setProgressState(progressState - (15 * ProgressMultiplier));
-                                setSeeking(false);
-                                useSeekTo.mutate(progress!.position - 15);
-                            }}
-                            />
-                        
-                        <Icon
-                            color={getTokens().color.amethyst.val}
-                            name="skip-previous"
-                            onPress={() => usePrevious.mutate()}
-                            large
-                            />
+                                <Icon
+                                    color={getTokens().color.amethyst.val}
+                                    name="skip-previous"
+                                    onPress={() => usePrevious.mutate()}
+                                    large
+                                    />
 
-                        {/* I really wanted a big clunky play button */}
-                        <PlayPauseButton size={width / 5} />
+                                {/* I really wanted a big clunky play button */}
+                                <PlayPauseButton size={width / 5} />
 
-                        <Icon
-                            color={getTokens().color.amethyst.val}
-                            name="skip-next" 
-                            onPress={() => useSkip.mutate(undefined)}
-                            large
-                            />    
+                                <Icon
+                                    color={getTokens().color.amethyst.val}
+                                    name="skip-next" 
+                                    onPress={() => useSkip.mutate(undefined)}
+                                    large
+                                    />    
 
-                        <Icon
-                            color={getTokens().color.amethyst.val}
-                            name="fast-forward-15"
-                            onPress={() => { 
-                                setSeeking(true);
-                                setProgressState(progressState + (15 * ProgressMultiplier));
-                                setSeeking(false);
-                                useSeekTo.mutate(progress!.position + 15);
-                            }}  
-                            />              
-                    </XStack>
-                    )
+                                <Icon
+                                    color={getTokens().color.amethyst.val}
+                                    name="fast-forward-15"
+                                    onPress={() => { 
+                                        setSeeking(true);
+                                        setProgressState(progressState + (15 * ProgressMultiplier));
+                                        setSeeking(false);
+                                        useSeekTo.mutate(progress!.position + 15);
+                                    }}  
+                                    />              
+                            </XStack>
+                            )
                     }, [
                         playbackState
                     ])}

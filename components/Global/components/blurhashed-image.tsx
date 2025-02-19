@@ -28,11 +28,8 @@ export default function BlurhashedImage({
             QueryKeys.ItemImage, 
             item.AlbumId ? item.AlbumId : item.Id!, 
             type ?? ImageType.Primary, 
-            Math.ceil(width / 100) * 100, // Images are fetched at a higher, generic resolution
-            Math.ceil(height ?? width / 100) * 100 // So these keys need to match
         ],
-        queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width),
-        retry: 1
+        queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary),
     });
 
     const blurhash = !isEmpty(item.ImageBlurHashes) 

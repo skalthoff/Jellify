@@ -32,7 +32,9 @@ export type StackParamList = {
     Artists: {
         query: QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
     };
-    Albums: undefined;
+    Albums: {
+        query: QueryKeys.FavoriteAlbums | QueryKeys.RecentlyAdded
+    };
     Tracks: {
         query: QueryKeys.FavoriteTracks | QueryKeys.RecentlyPlayed
     };

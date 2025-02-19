@@ -22,8 +22,7 @@ export default function Library({
                 contentInsetAdjustmentBehavior="automatic"
                 data={Categories}
                 numColumns={2}
-                renderItem={({ index, item }) => {
-                    return (
+                renderItem={({ index, item }) =>
                         <IconCard 
                             name={item.iconName}
                             caption={item.name}
@@ -33,8 +32,7 @@ export default function Library({
                             }}
                             largeIcon
                         />
-                    )
-                }}
+                }
             />
         </SafeAreaView>
     )
