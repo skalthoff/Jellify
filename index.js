@@ -11,7 +11,7 @@ import { enableFreeze, enableScreens } from "react-native-screens";
 Client.instance;
 
 // Enable React Navigation freeze for detaching inactive screens
-enableFreeze();
+// enableFreeze();
 
 AppRegistry.registerComponent(appName, () => App);
 AppRegistry.registerComponent('RNCarPlayScene', () => App);
