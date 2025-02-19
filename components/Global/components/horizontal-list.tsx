@@ -30,7 +30,7 @@ export default function HorizontalCardList({
     return (
         <FlatList
             horizontal
-            data={(props.data as Array<BaseItemDto>).slice(0, cutoff - 1)}
+            data={(props.data as Array<BaseItemDto> | undefined)?.slice(0, cutoff - 1) ?? undefined}
             renderItem={props.renderItem}
             ListFooterComponent={() => {
                 return props.data ? (
