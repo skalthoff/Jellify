@@ -15,6 +15,7 @@ import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
 import { useMemo } from "react";
 import { useSharedValue } from "react-native-reanimated";
+import { ItemCard } from "../Global/components/item-card";
 
 
 export function AlbumScreen({ 
@@ -114,18 +115,16 @@ export function AlbumScreen({
                             keyExtractor={(item) => item.Id!}
                             data={album.ArtistItems}
                             renderItem={({ index, item: artist }) =>
-                                    <Avatar
-                                        circular
-                                        item={artist}
-                                        width={"$10"}
-                                        onPress={() => {
-                                            navigation.navigate("Artist", {
-                                                artist
-                                            });
-                                        }}
-                                        subheading={artist.Name ?? "Unknown Artist"}
-                                    />
-                                
+                                <ItemCard
+                                    width={"$13"}
+                                    item={artist}
+                                    caption={artist.Name ?? "Unknown Artist"}
+                                    onPress={() => {
+                                        navigation.navigate("Artist", {
+                                            artist
+                                        });
+                                    }}
+                                />
                             }
                         />
                     </YStack>
