@@ -4,6 +4,7 @@ import Index from "./component";
 import DetailsScreen from "../ItemDetail/screen";
 import Player from "../Player/stack";
 import Albums from "../Albums/component";
+import { AlbumScreen } from "../Album";
 
 export const DiscoverStack = createNativeStackNavigator<StackParamList>();
 
@@ -24,6 +25,15 @@ export function Discover(): React.JSX.Element {
                         fontFamily: 'Aileron-Bold'
                     }
                 }}
+            />
+
+            <DiscoverStack.Screen
+                name="Album"
+                component={AlbumScreen}
+                options={({ route }) => ({
+                    title: route.params.album.Name ?? "Untitled Album",
+                    headerTitle: ""
+                })}
             />
 
             <DiscoverStack.Screen
