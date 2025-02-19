@@ -8,7 +8,10 @@ import { StackParamList } from "../types";
 export default function Index({ navigation }: { navigation : NativeStackNavigationProp<StackParamList> }) : React.JSX.Element {
     return (
         <SafeAreaView>
-            <ScrollView removeClippedSubviews>
+            <ScrollView
+                contentInsetAdjustmentBehavior="automatic"
+                removeClippedSubviews
+            >
                 <RecentlyAdded navigation={navigation} />
             </ScrollView>
         </SafeAreaView>
