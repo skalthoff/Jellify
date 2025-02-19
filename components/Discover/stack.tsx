@@ -5,6 +5,7 @@ import DetailsScreen from "../ItemDetail/screen";
 import Player from "../Player/stack";
 import Albums from "../Albums/component";
 import { AlbumScreen } from "../Album";
+import { ArtistScreen } from "../Artist";
 
 export const DiscoverStack = createNativeStackNavigator<StackParamList>();
 
@@ -25,6 +26,18 @@ export function Discover(): React.JSX.Element {
                         fontFamily: 'Aileron-Bold'
                     }
                 }}
+            />
+
+            <DiscoverStack.Screen
+                name="Artist"
+                component={ArtistScreen}
+                options={({ route }) => ({
+                    title: route.params.artist.Name ?? "Unknown Artist",
+                    headerLargeTitle: true,
+                    headerLargeTitleStyle: {
+                        fontFamily: 'Aileron-Bold'
+                    }
+                })}
             />
 
             <DiscoverStack.Screen
