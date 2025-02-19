@@ -18,7 +18,7 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
             <H2 marginLeft={"$2"}>Recent Artists</H2>
 
                 <HorizontalCardList
-                    items={recentArtists}
+                    data={recentArtists}
                     onSeeMore={() => {
                     navigation.navigate("Artists", {
                         query: QueryKeys.RecentlyPlayedArtists

@@ -5,11 +5,15 @@ import { FlatList, RefreshControl } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/query-keys";
 import { fetchFavoriteAlbums } from "../../api/queries/functions/favorites";
+import { fetchRecentlyAdded } from "../../api/queries/functions/recents";
 
-export default function Albums({ navigation }: AlbumsProps) : React.JSX.Element {
+export default function Albums({ navigation, route }: AlbumsProps) : React.JSX.Element {
+
+    const fetchRecentlyAddedAlbums = route.params.query === QueryKeys.RecentlyAdded;
+
     const { data: albums, refetch, isPending } = useQuery({
-        queryKey: [QueryKeys.FavoriteAlbums],
-        queryFn: () => fetchFavoriteAlbums()
+        queryKey: [route.params.query],
+        queryFn: () => fetchRecentlyAddedAlbums ? fetchRecentlyAdded(20) : fetchFavoriteAlbums()
     });
 
     const { width } = useSafeAreaFrame();

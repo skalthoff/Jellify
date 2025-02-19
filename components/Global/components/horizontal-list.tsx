@@ -1,13 +1,10 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models/base-item-dto";
 import React from "react";
-import { FlatList, ListRenderItem } from "react-native";
+import { FlatList, FlatListProps, ListRenderItem } from "react-native";
 import IconCard from "../helpers/icon-card";
 import { horizontalCardLimit } from "../component.config";
 
-interface HorizontalCardListProps {
-    items: BaseItemDto[] | undefined;
-    renderItem: ListRenderItem<BaseItemDto> | null | undefined
-
+interface HorizontalCardListProps extends FlatListProps<BaseItemDto> {
     squared?: boolean | undefined;
     /**
      * The number of items that will be displayed before
@@ -24,20 +21,19 @@ interface HorizontalCardListProps {
  * @returns 
  */
 export default function HorizontalCardList({
-    items,
-    renderItem,
     cutoff = horizontalCardLimit,
     onSeeMore,
     squared = false,
+    ...props
 } : HorizontalCardListProps) : React.JSX.Element {
 
     return (
         <FlatList
             horizontal
-            data={items?.slice(0, cutoff - 1) ?? undefined}
-            renderItem={renderItem}
+            data={props.data}
+            renderItem={props.renderItem}
             ListFooterComponent={() => {
-                return items ? (
+                return props.data ? (
                 <IconCard
                     name={
                         squared 

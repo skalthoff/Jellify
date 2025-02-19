@@ -3,6 +3,7 @@ import { StackParamList } from "../types";
 import Index from "./component";
 import DetailsScreen from "../ItemDetail/screen";
 import Player from "../Player/stack";
+import Albums from "../Albums/component";
 
 export const DiscoverStack = createNativeStackNavigator<StackParamList>();
 
@@ -23,6 +24,11 @@ export function Discover(): React.JSX.Element {
                         fontFamily: 'Aileron-Bold'
                     }
                 }}
+            />
+
+            <DiscoverStack.Screen
+                name="Albums"
+                component={Albums}
             />
             
             <DiscoverStack.Group screenOptions={{ presentation: "modal"}}>
