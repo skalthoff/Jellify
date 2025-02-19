@@ -116,7 +116,7 @@ export function AlbumScreen({
                             data={album.ArtistItems}
                             renderItem={({ index, item: artist }) =>
                                 <ItemCard
-                                    width={"$13"}
+                                    width={100}
                                     item={artist}
                                     caption={artist.Name ?? "Unknown Artist"}
                                     onPress={() => {
