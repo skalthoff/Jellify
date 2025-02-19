@@ -28,7 +28,6 @@ export default function RecentlyAdded({
                     query: QueryKeys.RecentlyAdded
                 })
             }}
-            ListHeaderComponent={(<H2>{`Recently added to ${Client.server?.name ?? "Jellyfin"}`}</H2>)}
             renderItem={({ item }) => 
                 <ItemCard
                     caption={item.Name}
