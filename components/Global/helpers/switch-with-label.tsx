@@ -22,7 +22,7 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
           >
             {props.label}
           </Label>
-          <Theme name={"inverted_purple"}>
+          {/* <Theme name={"inverted_purple"}> */}
             <Separator minHeight={20} vertical />
             <Switch 
               id={id} 
@@ -33,7 +33,7 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
               >
               <Switch.Thumb animation="bouncy" />
             </Switch>
-          </Theme>
+          {/* </Theme> */}
         </XStack>
     )
   }
