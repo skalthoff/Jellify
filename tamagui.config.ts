@@ -44,6 +44,7 @@ const jellifyConfig = createTamagui({
       },
       light: {
         background: tokens.color.white,
+        backgroundActive: tokens.color.amethyst,
         borderColor: tokens.color.purpleGray,
         color: tokens.color.purpleDark
       },
