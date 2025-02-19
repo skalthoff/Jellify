@@ -17,23 +17,21 @@ export default function Library({
     const { width } = useSafeAreaFrame();
 
     return (
-        // <SafeAreaView style={{ flex: 1 }} edges={["top", "right", "left"]}>
-            <FlatList
-                contentInsetAdjustmentBehavior="automatic"
-                data={Categories}
-                numColumns={2}
-                renderItem={({ index, item }) =>
-                        <IconCard 
-                            name={item.iconName}
-                            caption={item.name}
-                            width={width / 2.1}
-                            onPress={() => {
-                                navigation.navigate(item.name, item.params)
-                            }}
-                            largeIcon
-                        />
-                }
-            />
-        // </SafeAreaView>
+        <FlatList
+            contentInsetAdjustmentBehavior="automatic"
+            data={Categories}
+            numColumns={2}
+            renderItem={({ index, item }) =>
+                    <IconCard 
+                        name={item.iconName}
+                        caption={item.name}
+                        width={width / 2.1}
+                        onPress={() => {
+                            navigation.navigate(item.name, item.params)
+                        }}
+                        largeIcon
+                    />
+            }
+        />
     )
 }

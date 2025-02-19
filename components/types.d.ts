@@ -48,7 +48,9 @@ export type StackParamList = {
 
     Settings: undefined;
     AccountDetails: undefined;
-    DevTools: undefined;
+    ServerDetails: undefined;
+    PlaybackDetails: undefined;
+    Labs: undefined;
 
     Tabs: {
         screen: string;
@@ -114,7 +116,9 @@ export type GenresProps = NativeStackScreenProps<StackParamList, "Genres">;
 export type DetailsProps = NativeStackScreenProps<StackParamList, "Details">;
 
 export type AccountDetailsProps = NativeStackScreenProps<StackParamList, "AccountDetails">;
+export type ServerDetailsProps = NativeStackScreenProps<StackParamList, "ServerDetails">;
+export type PlaybackDetailsProps = NativeStackScreenProps<StackParamList, "PlaybackDetails">;
+export type LabsProps = NativeStackScreenProps<StackParamList, 'Labs'>;
 
-export type DevToolsProps = NativeStackScreenProps<StackParamList, 'DevTools'>;
 
 export type useState<T> = [T, React.Dispatch<T>];
