@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Categories from "./categories";
 import IconCard from "../../components/Global/helpers/icon-card";
 import { StackParamList } from "../../components/types";

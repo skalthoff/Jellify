@@ -1,9 +1,9 @@
 import React from "react";
 import Client from "../../../api/client";
 import { Text } from "react-native";
-import { Icon } from "react-native-vector-icons/Icon";
 import { YStack, XStack } from "tamagui";
 import { H5 } from "../../../components/Global/helpers/text";
+import Icon from "../../../components/Global/helpers/icon";
 
 export default function ServerDetails() : React.JSX.Element {
     return (
