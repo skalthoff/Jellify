@@ -59,11 +59,9 @@ export default function Search({
             )}
             data={items}
             refreshing={isFetching}
-            renderItem={({ item }) => {
-                return (
-                    <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
-                )
-            }} 
+            renderItem={({ item }) => 
+                <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
+            }
         />
     )
 }
