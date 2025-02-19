@@ -273,12 +273,16 @@ export default function PlayerScreen({
                         )}
                     </XStack>
 
-                    { useMemo(() => {
-                        return (
 
                         <XStack marginHorizontal={20} marginTop={"$3"} marginBottom={"$2"}>
                         <XStack flex={1} justifyContent="flex-start">
-                            <RunTimeSeconds>{Math.floor(progressState / ProgressMultiplier)}</RunTimeSeconds>
+                            { useMemo(() => {
+                                return (
+                                    <RunTimeSeconds>{Math.floor(progressState / ProgressMultiplier)}</RunTimeSeconds>
+                                )
+                            }, [
+                                progressState,
+                            ])}
                         </XStack>
 
                         <XStack flex={1} justifyContent="space-between">
@@ -301,11 +305,6 @@ export default function PlayerScreen({
                             </RunTimeSeconds>
                         </XStack>
                     </XStack>
-                        )
-                    }, [
-                        progressState,
-                        progress?.duration
-                    ])}
 
                     { useMemo(() => {
                         return (

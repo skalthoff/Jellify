@@ -23,13 +23,17 @@ export default function BlurhashedImage({
     borderRadius
 } : BlurhashLoadingProps) : React.JSX.Element {
 
+    console.debug(`Rendering image`);
+
     const { data: image, isSuccess } = useQuery({
         queryKey: [
             QueryKeys.ItemImage, 
             item.AlbumId ? item.AlbumId : item.Id!, 
             type ?? ImageType.Primary, 
+            Math.ceil(width / 100) * 100, // Images are fetched at a higher, generic resolution
+            Math.ceil(height ?? width / 100) * 100 // So these keys need to match
         ],
-        queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary),
+        queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width),
     });
 
     const blurhash = !isEmpty(item.ImageBlurHashes) 
