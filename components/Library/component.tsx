@@ -17,7 +17,7 @@ export default function Library({
     const { width } = useSafeAreaFrame();
 
     return (
-        <SafeAreaView style={{ flex: 1 }} edges={["top", "right", "left"]}>
+        // <SafeAreaView style={{ flex: 1 }} edges={["top", "right", "left"]}>
             <FlatList
                 contentInsetAdjustmentBehavior="automatic"
                 data={Categories}
@@ -34,6 +34,6 @@ export default function Library({
                         />
                 }
             />
-        </SafeAreaView>
+        // </SafeAreaView>
     )
 }
