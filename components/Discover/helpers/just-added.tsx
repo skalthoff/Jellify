@@ -31,7 +31,7 @@ export default function RecentlyAdded({
                     caption={item.Name}
                     subCaption={`${item.Artists?.join(", ")}`}
                     squared
-                    width={"13"}
+                    width={"$13"}
                     item={item}
                     onPress={() => {
                         navigation.navigate("Album", {
