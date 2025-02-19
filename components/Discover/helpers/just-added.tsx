@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { QueryKeys } from "../../../enums/query-keys";
 import { fetchRecentlyAdded } from "../../../api/queries/functions/recents";
 import HorizontalCardList from "../../../components/Global/components/horizontal-list";
-import { ItemCard } from "@/components/Global/components/item-card";
+import { ItemCard } from "../../../components/Global/components/item-card";
 
 export default function RecentlyAdded({ 
     navigation
