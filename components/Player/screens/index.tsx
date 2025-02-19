@@ -306,53 +306,52 @@ export default function PlayerScreen({
 
                     { useMemo(() => {
                         return (
-
                             <XStack 
-                            alignItems="center" 
-                            justifyContent="space-evenly" 
-                        marginVertical={"$2"}
-                        >
-                        <Icon
-                            color={getTokens().color.amethyst.val}
-                            name="rewind-15"
-                            onPress={() => {
+                                alignItems="center" 
+                                justifyContent="space-evenly" 
+                                marginVertical={"$2"}
+                                >
+                                <Icon
+                                    color={getTokens().color.amethyst.val}
+                                    name="rewind-15"
+                                    onPress={() => {
+                                        
+                                        setSeeking(true);
+                                        setProgressState(progressState - (15 * ProgressMultiplier));
+                                        setSeeking(false);
+                                        useSeekTo.mutate(progress!.position - 15);
+                                    }}
+                                    />
                                 
-                                setSeeking(true);
-                                setProgressState(progressState - (15 * ProgressMultiplier));
-                                setSeeking(false);
-                                useSeekTo.mutate(progress!.position - 15);
-                            }}
-                            />
-                        
-                        <Icon
-                            color={getTokens().color.amethyst.val}
-                            name="skip-previous"
-                            onPress={() => usePrevious.mutate()}
-                            large
-                            />
+                                <Icon
+                                    color={getTokens().color.amethyst.val}
+                                    name="skip-previous"
+                                    onPress={() => usePrevious.mutate()}
+                                    large
+                                    />
 
-                        {/* I really wanted a big clunky play button */}
-                        <PlayPauseButton size={width / 5} />
+                                {/* I really wanted a big clunky play button */}
+                                <PlayPauseButton size={width / 5} />
 
-                        <Icon
-                            color={getTokens().color.amethyst.val}
-                            name="skip-next" 
-                            onPress={() => useSkip.mutate(undefined)}
-                            large
-                            />    
+                                <Icon
+                                    color={getTokens().color.amethyst.val}
+                                    name="skip-next" 
+                                    onPress={() => useSkip.mutate(undefined)}
+                                    large
+                                    />    
 
-                        <Icon
-                            color={getTokens().color.amethyst.val}
-                            name="fast-forward-15"
-                            onPress={() => { 
-                                setSeeking(true);
-                                setProgressState(progressState + (15 * ProgressMultiplier));
-                                setSeeking(false);
-                                useSeekTo.mutate(progress!.position + 15);
-                            }}  
-                            />              
-                    </XStack>
-                    )
+                                <Icon
+                                    color={getTokens().color.amethyst.val}
+                                    name="fast-forward-15"
+                                    onPress={() => { 
+                                        setSeeking(true);
+                                        setProgressState(progressState + (15 * ProgressMultiplier));
+                                        setSeeking(false);
+                                        useSeekTo.mutate(progress!.position + 15);
+                                    }}  
+                                    />              
+                            </XStack>
+                            )
                     }, [
                         playbackState
                     ])}
