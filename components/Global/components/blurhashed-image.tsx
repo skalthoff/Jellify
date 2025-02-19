@@ -23,8 +23,6 @@ export default function BlurhashedImage({
     borderRadius
 } : BlurhashLoadingProps) : React.JSX.Element {
 
-    console.debug(`Rendering image`);
-
     const { data: image, isSuccess } = useQuery({
         queryKey: [
             QueryKeys.ItemImage, 
