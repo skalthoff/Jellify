@@ -7,6 +7,7 @@ import { ItemCard } from "../../Global/components/item-card";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import HorizontalCardList from "../../../components/Global/components/horizontal-list";
 import { QueryKeys } from "../../../enums/query-keys";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 export default function RecentArtists({ navigation }: { navigation: NativeStackNavigationProp<StackParamList>}): React.JSX.Element {
 
@@ -36,7 +37,6 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
                         }>
                     </ItemCard>
                 }/>
-            )
         </View>
     )
 }
