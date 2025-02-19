@@ -9,9 +9,9 @@ interface CategoryRoute {
 };
 
 const Categories : CategoryRoute[] = [
-    { name: "AccountDetails", iconName: "account-key-outline" },
-    { name: "ServerDetails", iconName: "server-network" },
-    { name: "PlaybackDetails", iconName: "disc-player" },
+    { name: "Account", iconName: "account-key-outline" },
+    { name: "Server", iconName: "server-network" },
+    { name: "Playback", iconName: "disc-player" },
     { name: "Labs", iconName: "flask-outline" },
 ];
 
