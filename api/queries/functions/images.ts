@@ -3,7 +3,7 @@ import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 import Client from "../../../api/client"
 
-export function fetchItemImage(itemId: string, imageType: ImageType, width: number, height: number) {
+export function fetchItemImage(itemId: string, imageType: ImageType) {
     
     return new Promise<string>(async (resolve, reject) => {
 
@@ -16,9 +16,9 @@ export function fetchItemImage(itemId: string, imageType: ImageType, width: numb
                 .getItemImage({
                     itemId,
                     imageType,
-                    width: Math.ceil(width / 100) * 100 * 2, // Round to the nearest 100 for simplicity and to avoid 
-                    height: Math.ceil(height / 100) * 100 * 2, // redundant images in storage, then double it to make sure it's crispy
-                    format: ImageFormat.Png
+                    width: 1000, // We just care about one big nice image 
+                    height: 1000, // to keep in cache to use for all instants of
+                    format: ImageFormat.Png // the image
                 },
                 {
                     responseType: 'blob',
