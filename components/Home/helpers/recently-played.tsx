@@ -24,49 +24,40 @@ export default function RecentlyPlayed({
         <View>
             <H2 marginLeft={"$2"}>Play it again</H2>
 
-            { useMemo(() => {
-                return (
-
-                    <HorizontalCardList
-                    squared
+            <HorizontalCardList
+                squared
                 items={recentTracks}
                 onSeeMore={() => {
                     navigation.navigate("Tracks", {
                         query: QueryKeys.RecentlyPlayed
                     })
                 }}
-                renderItem={({ index, item: recentlyPlayedTrack }) => {
-                    return (
-                        <ItemCard
-                            caption={recentlyPlayedTrack.Name}
-                            subCaption={`${recentlyPlayedTrack.Artists?.join(", ")}`}
-                            squared
-                            width={150}
-                            item={recentlyPlayedTrack}
-                            onPress={() => {
-                                usePlayNewQueue.mutate({ 
-                                    track: recentlyPlayedTrack, 
-                                    index: index,
-                                    tracklist: recentTracks ?? [recentlyPlayedTrack],
-                                    queue: "Recently Played",
-                                    queuingType: QueuingType.FromSelection
-                                });
-                            }}
-                            onLongPress={() => {
-                                trigger("impactMedium");
-                                navigation.navigate("Details", {
-                                    item: recentlyPlayedTrack,
-                                    isNested: false
-                                })
-                            }}
-                            />                                
-                        )
-                    }}
-                    />
-                )
-            }, [
-                recentTracks
-            ])}
+                renderItem={({ index, item: recentlyPlayedTrack }) => 
+                    <ItemCard
+                        caption={recentlyPlayedTrack.Name}
+                        subCaption={`${recentlyPlayedTrack.Artists?.join(", ")}`}
+                        squared
+                        width={150}
+                        item={recentlyPlayedTrack}
+                        onPress={() => {
+                            usePlayNewQueue.mutate({ 
+                                track: recentlyPlayedTrack, 
+                                index: index,
+                                tracklist: recentTracks ?? [recentlyPlayedTrack],
+                                queue: "Recently Played",
+                                queuingType: QueuingType.FromSelection
+                            });
+                        }}
+                        onLongPress={() => {
+                            trigger("impactMedium");
+                            navigation.navigate("Details", {
+                                item: recentlyPlayedTrack,
+                                isNested: false
+                            })
+                        }}
+                    />                                
+                }
+            />
         </View>
     )
 }
