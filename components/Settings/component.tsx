@@ -24,7 +24,8 @@ export default function Root({
             <YGroup 
                 alignSelf="center" 
                 bordered 
-                width={width / 1.5} 
+                width={"$20"} 
+                marginTop={"$2"}
             >
                 <YGroup.Item>
                     <ListItem
