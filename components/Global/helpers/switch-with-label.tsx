@@ -1,6 +1,5 @@
 import { SizeTokens, XStack, Separator, Switch, ColorTokens, Theme } from "tamagui";
 import { Label } from "./text";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 interface SwitchWithLabelProps {
   onCheckedChange: (value: boolean) => void,
@@ -22,18 +21,17 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
           >
             {props.label}
           </Label>
-          {/* <Theme name={"inverted_purple"}> */}
+          <Theme name={"inverted_purple"}>
             <Separator minHeight={20} vertical />
             <Switch 
               id={id} 
               size={props.size} 
               checked={props.checked} 
               onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
-              backgroundColor={props.backgroundColor ?? Colors.Primary}
-              >
+            >
               <Switch.Thumb animation="bouncy" />
             </Switch>
-          {/* </Theme> */}
+          </Theme>
         </XStack>
     )
   }
