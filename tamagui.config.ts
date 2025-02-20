@@ -44,13 +44,14 @@ const jellifyConfig = createTamagui({
       },
       light: {
         background: tokens.color.white,
+        backgroundActive: tokens.color.amethyst,
         borderColor: tokens.color.purpleGray,
         color: tokens.color.purpleDark
       },
       light_inverted_purple: {
-        color: tokens.color.amethyst,
-        borderColor: tokens.color.purpleGray,
-        background: tokens.color.amethyst
+        color: tokens.color.purpleDark,
+        borderColor: tokens.color.purpleDark,
+        background: tokens.color.purpleGray
       }
     }
 });

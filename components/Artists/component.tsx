@@ -22,7 +22,7 @@ export default function Artists({
             
             QueryKeys.RecentlyPlayedArtists ? useQuery({
                 queryKey: [QueryKeys.RecentlyPlayedArtists],
-                queryFn: () => fetchRecentlyPlayedArtists()
+                queryFn: () => fetchRecentlyPlayedArtists(20)
             }) :
             
             useQuery({

@@ -6,15 +6,17 @@ import Library from "./Library/stack";
 import Settings from "./Settings/stack";
 import { Discover } from "./Discover/stack";
 import { Miniplayer } from "./Player/mini-player";
-import { getTokens, Separator } from "tamagui";
+import { getToken, getTokens, Separator } from "tamagui";
 import { usePlayerContext } from "../player/provider";
 import SearchStack from "./Search/stack";
 import LibraryStack from "./Library/stack";
+import { useColorScheme } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
 export function Tabs() : React.JSX.Element {
 
+    const isDarkMode = useColorScheme() === 'dark'
     const { nowPlaying } = usePlayerContext();
 
     return (
@@ -23,7 +25,7 @@ export function Tabs() : React.JSX.Element {
                 screenOptions={{
                     animation: 'shift',
                     tabBarActiveTintColor: getTokens().color.telemagenta.val,
-                    tabBarInactiveTintColor: getTokens().color.amethyst.val
+                    tabBarInactiveTintColor: isDarkMode ? getToken("$color.amethyst") : getToken("$color.purpleGray")
                 }}
                 tabBar={(props) => (
                     <>
