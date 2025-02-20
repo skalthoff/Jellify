@@ -1,4 +1,4 @@
-import { SizeTokens, XStack, Separator, Switch, ColorTokens, Theme } from "tamagui";
+import { SizeTokens, XStack, Separator, Switch, Theme, styled, getToken } from "tamagui";
 import { Label } from "./text";
 
 interface SwitchWithLabelProps {
@@ -7,8 +7,12 @@ interface SwitchWithLabelProps {
   checked: boolean;
   label: string;
   width?: number | undefined;
-  backgroundColor?: ColorTokens;
 }
+
+const JellifySliderThumb = styled(Switch.Thumb, {
+  borderColor: getToken("$color.amethyst"),
+  backgroundColor: getToken("$color.purpleDark")
+})
 
 export function SwitchWithLabel(props: SwitchWithLabelProps) {
     const id = `switch-${props.size.toString().slice(1)}-${props.checked ?? ''}}`
@@ -29,7 +33,7 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
               checked={props.checked} 
               onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
             >
-              <Switch.Thumb animation="bouncy" />
+              <JellifySliderThumb animation="bouncy" />
             </Switch>
           </Theme>
         </XStack>
