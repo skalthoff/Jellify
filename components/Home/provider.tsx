@@ -3,7 +3,7 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/query-keys";
 import { fetchRecentlyPlayed, fetchRecentlyPlayedArtists } from "../../api/queries/functions/recents";
-import { queryClient } from "@/constants/query-client";
+import { queryClient } from "../../constants/query-client";
 
 interface HomeContext {
     refreshing: boolean;
