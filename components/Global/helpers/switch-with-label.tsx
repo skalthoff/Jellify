@@ -32,6 +32,7 @@ export function SwitchWithLabel(props: SwitchWithLabelProps) {
               size={props.size} 
               checked={props.checked} 
               onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
+              backgroundColor={props.checked ? getToken("$color.telemagenta") : getToken("$color.purpleGray")}
             >
               <JellifySliderThumb animation="bouncy" />
             </Switch>
