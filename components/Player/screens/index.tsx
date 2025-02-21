@@ -50,7 +50,7 @@ export default function PlayerScreen({
      */
     const [progressState, setProgressState] = useState<number>(
         progress && progress.position 
-        ? Math.round(progress.position * ProgressMultiplier)
+        ? Math.floor(progress.position * ProgressMultiplier)
         : 0
     );
 
@@ -62,7 +62,7 @@ export default function PlayerScreen({
         if (!seeking)
             progress && progress.position
             ? setProgressState(
-                Math.round(
+                Math.floor(
                     progress.position * ProgressMultiplier
                 )
             ) : 0;
