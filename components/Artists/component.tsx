@@ -22,8 +22,8 @@ export default function Artists({
             }) : 
             
             QueryKeys.RecentlyPlayedArtists ? useQuery({
-                queryKey: [QueryKeys.RecentlyPlayedArtists],
-                queryFn: () => fetchRecentlyPlayedArtists(QueryConfig.limits.recents)
+                queryKey: [QueryKeys.RecentlyPlayedArtists, QueryConfig.limits.recents * 4, QueryConfig.limits.recents],
+                queryFn: () => fetchRecentlyPlayedArtists(QueryConfig.limits.recents * 4, QueryConfig.limits.recents)
             }) :
             
             useQuery({
