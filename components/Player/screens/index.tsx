@@ -328,7 +328,15 @@ export default function PlayerScreen({
                                 <Icon
                                     color={getTokens().color.amethyst.val}
                                     name="skip-previous"
-                                    onPress={() => usePrevious.mutate()}
+                                    onPress={() => {
+
+                                        if (progressState / ProgressMultiplier < 3)
+                                            usePrevious.mutate()
+                                        else {
+                                            setProgressState(0);
+                                            useSeekTo.mutate(0);
+                                        }
+                                    }}
                                     large
                                     />
 
