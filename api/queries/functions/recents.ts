@@ -4,7 +4,7 @@ import { QueryConfig } from "../query.config";
 import Client from "../../client";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
 
-export function fetchRecentlyAdded(offset?: number | undefined) : Promise<BaseItemDto[]> {
+export function fetchRecentlyAdded(limit: number = QueryConfig.limits.recents, offset?: number | undefined) : Promise<BaseItemDto[]> {
     return new Promise(async (resolve, reject) => {
 
         if (!!!Client.api)
@@ -16,7 +16,7 @@ export function fetchRecentlyAdded(offset?: number | undefined) : Promise<BaseIt
             getUserLibraryApi(Client.api)
                 .getLatestMedia({
                     parentId: Client.library.musicLibraryId,
-                    limit: QueryConfig.limits.recents,
+                    limit,
                 })
                 .then(({ data }) => {
                     resolve(data);
@@ -61,8 +61,8 @@ export function fetchRecentlyPlayed(limit: number = QueryConfig.limits.recents, 
     })
 }
 
-export function fetchRecentlyPlayedArtists(offset?: number | undefined) : Promise<BaseItemDto[]> {
-    return fetchRecentlyPlayed(QueryConfig.limits.recents * 2, offset)
+export function fetchRecentlyPlayedArtists(limit: number = QueryConfig.limits.recents, offset?: number | undefined) : Promise<BaseItemDto[]> {
+    return fetchRecentlyPlayed(limit * 2, offset)
         .then((tracks) => {
             return getItemsApi(Client.api!)
                 .getItems({ 
