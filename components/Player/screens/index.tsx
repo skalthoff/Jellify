@@ -76,65 +76,67 @@ export default function PlayerScreen({
                 <>
                 <YStack>
 
-                    <XStack 
-                        marginBottom={"$2"}
-                        marginHorizontal={"$2"}
-                        >
+                    { useMemo(() => (
+                        <>
+                            <XStack 
+                                marginBottom={"$2"}
+                                marginHorizontal={"$2"}
+                                >
 
-                        <YStack 
-                            alignContent="flex-end"
-                            flex={1}
-                            justifyContent="center"
-                        >
-                            <Icon
-                                name="chevron-down"
-                                onPress={() => {
-                                    navigation.goBack();
-                                }}
-                                small
-                                />
-                        </YStack>
+                                <YStack 
+                                    alignContent="flex-end"
+                                    flex={1}
+                                    justifyContent="center"
+                                    >
+                                    <Icon
+                                        name="chevron-down"
+                                        onPress={() => {
+                                            navigation.goBack();
+                                        }}
+                                        small
+                                        />
+                                </YStack>
 
-                        <YStack 
-                        alignItems="center"
-                        alignContent="center"
-                        flex={3}
-                        >
+                                <YStack 
+                                alignItems="center"
+                                alignContent="center"
+                                flex={3}
+                                >
 
-                            <Text>Playing from</Text>
-                            <Text bold>
-                                { 
-                                    // If the Queue is a BaseItemDto, display the name of it
-                                    typeof(queue) === 'object' 
-                                    ? (queue as BaseItemDto).Name ?? "Untitled"
-                                    : queue
-                                }
-                            </Text>
-                        </YStack>
+                                    <Text>Playing from</Text>
+                                    <Text bold>
+                                        { 
+                                            // If the Queue is a BaseItemDto, display the name of it
+                                            typeof(queue) === 'object' 
+                                            ? (queue as BaseItemDto).Name ?? "Untitled"
+                                            : queue
+                                        }
+                                    </Text>
+                                </YStack>
 
-                        <Spacer flex={1} />
-                    </XStack>
+                                <Spacer flex={1} />
+                            </XStack>
 
-                    <XStack 
-                        justifyContent="center"
-                        alignContent="center"
-                        minHeight={width / 1.1}
-                        // onPress={() => {
-                        //     useTogglePlayback.mutate(undefined)
-                        // }}
-                    >
-                    { useMemo(() => {
-                        return (
-                            <BlurhashedImage
-                                borderRadius={2}
-                                item={nowPlaying!.item}
-                                width={width / 1.1}
-                            />
-                        )
-                    }, [
-                        nowPlaying
+                            <XStack 
+                                justifyContent="center"
+                                alignContent="center"
+                                minHeight={width / 1.1}
+                                // onPress={() => {
+                                    //     useTogglePlayback.mutate(undefined)
+                                    // }}
+                                    >
+                                    <BlurhashedImage
+                                        borderRadius={2}
+                                        item={nowPlaying!.item}
+                                        width={width / 1.1}
+                                        />
+                                )
+                            </XStack>
+                        </>
+                    ), [
+                        nowPlaying,
+                        queue
                     ])}
-                    </XStack>
 
                     <XStack marginHorizontal={20} paddingVertical={5}>
 
