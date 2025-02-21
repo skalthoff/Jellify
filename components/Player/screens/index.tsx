@@ -62,9 +62,7 @@ export default function PlayerScreen({
         if (!seeking)
             progress && progress.position
             ? setProgressState(
-                Math.ceil(
-                    progress.position * ProgressMultiplier
-                )
+                Math.ceil(progress.position) * ProgressMultiplier
             ) : 0;
     }, [
         progress
