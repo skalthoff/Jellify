@@ -330,6 +330,7 @@ export default function PlayerScreen({
                                     name="skip-previous"
                                     onPress={() => {
 
+                                        console.debug(`Skipping at ${progressState}`)
                                         if (progressState / ProgressMultiplier < 3)
                                             usePrevious.mutate()
                                         else {
