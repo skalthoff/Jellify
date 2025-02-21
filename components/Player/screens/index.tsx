@@ -76,7 +76,8 @@ export default function PlayerScreen({
                 <>
                 <YStack>
 
-                    { useMemo(() => (
+                    { useMemo(() => {
+                        return (
                         <>
                             <XStack 
                                 marginBottom={"$2"}
@@ -129,7 +130,8 @@ export default function PlayerScreen({
                                         />
                             </XStack>
                         </>
-                    ), [
+                        )
+                    }, [
                         nowPlaying,
                         queue
                     ])}
