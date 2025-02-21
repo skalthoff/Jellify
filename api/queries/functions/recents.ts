@@ -62,7 +62,7 @@ export function fetchRecentlyPlayed(limit: number = QueryConfig.limits.recents, 
 }
 
 export function fetchRecentlyPlayedArtists(limit: number = QueryConfig.limits.recents, offset?: number | undefined) : Promise<BaseItemDto[]> {
-    return fetchRecentlyPlayed(limit * 2, offset)
+    return fetchRecentlyPlayed(limit * 2, offset ? offset + 10 : undefined)
         .then((tracks) => {
             return getItemsApi(Client.api!)
                 .getItems({ 
