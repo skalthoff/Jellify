@@ -121,16 +121,12 @@ export default function PlayerScreen({
                                 justifyContent="center"
                                 alignContent="center"
                                 minHeight={width / 1.1}
-                                // onPress={() => {
-                                    //     useTogglePlayback.mutate(undefined)
-                                    // }}
                                     >
                                     <BlurhashedImage
                                         borderRadius={2}
                                         item={nowPlaying!.item}
                                         width={width / 1.1}
                                         />
-                                )
                             </XStack>
                         </>
                     ), [
