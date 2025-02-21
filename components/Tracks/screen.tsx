@@ -7,6 +7,7 @@ import { fetchRecentlyPlayed } from "../../api/queries/functions/recents";
 import { fetchFavoriteTracks } from "../../api/queries/functions/favorites";
 import { useQuery } from "@tanstack/react-query";
 import { Separator } from "tamagui";
+import { QueryConfig } from "../../api/queries/query.config";
 
 export default function TracksScreen({
     route,
@@ -15,7 +16,7 @@ export default function TracksScreen({
     const { data: tracks, refetch, isPending } = useQuery({
         queryKey: [route.params.query],
         queryFn: () => route.params.query === QueryKeys.RecentlyPlayed 
-            ? fetchRecentlyPlayed(20) 
+            ? fetchRecentlyPlayed(QueryConfig.limits.recents * 2, 20) 
             : fetchFavoriteTracks()
     });
 

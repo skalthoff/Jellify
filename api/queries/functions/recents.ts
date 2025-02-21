@@ -24,7 +24,7 @@ export function fetchRecentlyAdded(offset?: number | undefined) : Promise<BaseIt
     })
 }
 
-export function fetchRecentlyPlayed(offset?: number | undefined): Promise<BaseItemDto[]> {
+export function fetchRecentlyPlayed(limit: number = QueryConfig.limits.recents, offset?: number | undefined): Promise<BaseItemDto[]> {
 
     console.debug("Fetching recently played items");
 
@@ -35,7 +35,7 @@ export function fetchRecentlyPlayed(offset?: number | undefined): Promise<BaseIt
                 BaseItemKind.Audio
             ],
             startIndex: offset,
-            limit: QueryConfig.limits.recents,
+            limit,
             parentId: Client.library!.musicLibraryId, 
             recursive: true,
             sortBy: [ 
@@ -62,7 +62,7 @@ export function fetchRecentlyPlayed(offset?: number | undefined): Promise<BaseIt
 }
 
 export function fetchRecentlyPlayedArtists(offset?: number | undefined) : Promise<BaseItemDto[]> {
-    return fetchRecentlyPlayed(offset)
+    return fetchRecentlyPlayed(QueryConfig.limits.recents * 2, offset)
         .then((tracks) => {
             return getItemsApi(Client.api!)
                 .getItems({ 
