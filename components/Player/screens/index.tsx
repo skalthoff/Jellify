@@ -320,8 +320,8 @@ export default function PlayerScreen({
                                         
                                         setSeeking(true);
                                         setProgressState(progressState - (15 * ProgressMultiplier));
-                                        setSeeking(false);
                                         useSeekTo.mutate(progress!.position - 15);
+                                        setSeeking(false);
                                     }}
                                     />
                                 
@@ -334,8 +334,10 @@ export default function PlayerScreen({
                                         if (progressState / ProgressMultiplier < 3)
                                             usePrevious.mutate()
                                         else {
+                                            setSeeking(true);
                                             setProgressState(0);
                                             useSeekTo.mutate(0);
+                                            setSeeking(false);
                                         }
                                     }}
                                     large
@@ -357,8 +359,8 @@ export default function PlayerScreen({
                                     onPress={() => { 
                                         setSeeking(true);
                                         setProgressState(progressState + (15 * ProgressMultiplier));
-                                        setSeeking(false);
                                         useSeekTo.mutate(progress!.position + 15);
+                                        setSeeking(false);
                                     }}  
                                     />              
                             </XStack>
