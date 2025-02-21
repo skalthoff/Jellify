@@ -366,7 +366,8 @@ export default function PlayerScreen({
                             </XStack>
                             )
                     }, [
-                        playbackState
+                        playbackState,
+                        progressState
                     ])}
                     
                     <XStack justifyContent="space-evenly" marginVertical={"$7"}>
