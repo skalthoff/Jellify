@@ -8,6 +8,7 @@ import { XStack, YStack } from "tamagui";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { usePlayerContext } from "../../../player/provider";
 import { RunTimeSeconds } from "../../../components/Global/helpers/time-codes";
+import { UPDATE_INTERVAL } from "../../../player/config";
 
 const scrubGesture = Gesture.Pan();
 
@@ -20,7 +21,7 @@ export default function Scrubber() : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
 
-    const progress = useProgress();
+    const progress = useProgress(UPDATE_INTERVAL);
 
     const [seeking, setSeeking] = useState<boolean>(false);
     
@@ -45,7 +46,6 @@ export default function Scrubber() : React.JSX.Element {
 
     return (
         <YStack>
-
             <GestureDetector gesture={scrubGesture}>
                 <HorizontalSlider 
                     value={position}
