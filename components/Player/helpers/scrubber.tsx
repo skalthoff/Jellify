@@ -82,7 +82,7 @@ export default function Scrubber() : React.JSX.Element {
                     />
             </GestureDetector>
 
-            <XStack marginTop={"$3"} marginBottom={"$2"}>
+            <XStack margin={"$2"}>
                 <YStack flex={1} alignItems="flex-start">
                     <RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
                 </YStack>
