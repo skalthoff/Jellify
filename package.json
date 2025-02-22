@@ -9,12 +9,12 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "pod:install": "cd ios && bundle install && RCT_NEW_ARCH_ENABLED=0 pod install",
-    "pod:install-new-arch": "cd ios && bundle install && RCT_NEW_ARCH_ENABLED=1 pod install",
+    "pod:install": "cd ios && bundle install && RCT_NEW_ARCH_ENABLED=0 bundle exec pod install",
+    "pod:install-new-arch": "cd ios && bundle install && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install",
     "pod:clean": "cd ios && pod deintegrate",
-    "fastlane:ios:build": "cd ios && fastlane build",
-    "fastlane:ios:beta": "cd ios && fastlane beta",
-    "fastlane:android:build": "cd android && bundle install && fastlane build"
+    "fastlane:ios:build": "cd ios && bundle exec fastlane build",
+    "fastlane:ios:beta": "cd ios && bundle exec fastlane beta",
+    "fastlane:android:build": "cd android && bundle install && bundle exec fastlane build"
   },
   "dependencies": {
     "@jellyfin/sdk": "^0.11.0",
