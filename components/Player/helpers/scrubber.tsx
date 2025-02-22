@@ -82,16 +82,16 @@ export default function Scrubber() : React.JSX.Element {
                     />
             </GestureDetector>
 
-            <XStack marginHorizontal={20} marginTop={"$3"} marginBottom={"$2"}>
-                <XStack flex={1} justifyContent="flex-start">
+            <XStack marginTop={"$3"} marginBottom={"$2"}>
+                <YStack flex={1} justifyContent="flex-start">
                     <RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
-                </XStack>
+                </YStack>
 
-                <XStack flex={1} justifyContent="space-between">
+                <YStack flex={1} justifyContent="space-between">
                     { /** Track metadata can go here */}
-                </XStack>
+                </YStack>
 
-                <XStack flex={1} justifyContent="flex-end">
+                <YStack flex={1} justifyContent="flex-end">
                     <RunTimeSeconds>
                         {
                             progress && progress.duration
@@ -99,7 +99,7 @@ export default function Scrubber() : React.JSX.Element {
                             : 0
                         }
                     </RunTimeSeconds>
-                </XStack>
+                </YStack>
             </XStack>
         </YStack>
     )
