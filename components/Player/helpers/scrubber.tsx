@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useProgress } from "react-native-track-player";
 import { ProgressMultiplier } from "../component.config";
-import { HorizontalSlider } from "@/components/Global/helpers/slider";
+import { HorizontalSlider } from "../../../components/Global/helpers/slider";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { trigger } from "react-native-haptic-feedback";
 import { XStack, YStack } from "tamagui";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { usePlayerContext } from "../../../player/provider";
-import { RunTimeSeconds } from "@/components/Global/helpers/time-codes";
+import { RunTimeSeconds } from "../../../components/Global/helpers/time-codes";
 
 const scrubGesture = Gesture.Pan();
 
