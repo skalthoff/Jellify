@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useProgress } from "react-native-track-player";
-import { ProgressMultiplier } from "../component.config";
 import { HorizontalSlider } from "../../../components/Global/helpers/slider";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { trigger } from "react-native-haptic-feedback";
@@ -28,7 +27,7 @@ export default function Scrubber() : React.JSX.Element {
 
     
     const [position, setPosition] = useState<number>(progress && progress.position ? 
-        Math.floor(progress.position * ProgressMultiplier)
+        Math.floor(progress.position)
         : 0
     );
 
@@ -37,7 +36,7 @@ export default function Scrubber() : React.JSX.Element {
             progress && progress.position
             ? setPosition(
                 Math.floor(
-                    progress.position * ProgressMultiplier
+                    progress.position
                 )
             ) : 0;
     }, [
@@ -51,7 +50,7 @@ export default function Scrubber() : React.JSX.Element {
                     value={position}
                     max={
                         progress && progress.duration > 0 
-                        ? progress.duration * ProgressMultiplier 
+                        ? progress.duration 
                         : 1
                     }
                     width={width / 1.1}
@@ -60,7 +59,7 @@ export default function Scrubber() : React.JSX.Element {
                         onPressOut: (event) => {
                             trigger("notificationSuccess")
                             setSeeking(false);
-                            useSeekTo.mutate(Math.floor(position / ProgressMultiplier));
+                            useSeekTo.mutate(Math.floor(position));
                         },
                         onSlideStart: (event, value) => {
                             trigger("impactLight");
@@ -76,7 +75,7 @@ export default function Scrubber() : React.JSX.Element {
                             trigger("notificationSuccess")
                             setSeeking(false);
                             setPosition(value)
-                            useSeekTo.mutate(Math.floor(value / ProgressMultiplier));
+                            useSeekTo.mutate(Math.floor(value));
                         }
                     }}
                     />
@@ -84,7 +83,7 @@ export default function Scrubber() : React.JSX.Element {
 
             <XStack margin={"$2"}>
                 <YStack flex={1} alignItems="flex-start">
-                    <RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
+                    <RunTimeSeconds>{Math.floor(position)}</RunTimeSeconds>
                 </YStack>
 
                 <YStack flex={1} alignItems="center">
