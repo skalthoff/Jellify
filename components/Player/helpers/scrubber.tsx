@@ -84,7 +84,7 @@ export default function Scrubber() : React.JSX.Element {
 
             <XStack margin={"$2"}>
                 <YStack flex={1} alignItems="flex-start">
-                    <RunTimeSeconds>{Math.floor(position)}</RunTimeSeconds>
+                    <RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
                 </YStack>
 
                 <YStack flex={1} alignItems="center">
