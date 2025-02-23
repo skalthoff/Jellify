@@ -2,8 +2,8 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { getToken, Spacer, YStack } from "tamagui";
 import Icon from "../helpers/icon";
 import { useQuery } from "@tanstack/react-query";
-import { QueryKeys } from "@/enums/query-keys";
-import { fetchUserData } from "@/api/queries/functions/favorites";
+import { QueryKeys } from "../../../enums/query-keys";
+import { fetchUserData } from "../../../api/queries/functions/favorites";
 
 export default function FavoriteIcon({ 
     item 
