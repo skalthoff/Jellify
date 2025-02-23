@@ -1,9 +1,7 @@
-import { queryClient } from "@/constants/query-client"
-import Client from "../../api/client"
+import { queryClient } from "../../constants/query-client"
 import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/models"
-import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
-import { GridTemplate, ListTemplate } from "react-native-carplay"
-import { QueryKeys } from "@/enums/query-keys"
+import { ListTemplate } from "react-native-carplay"
+import { QueryKeys } from "../../enums/query-keys"
 
 export const CarPlayRecentArtists = (artists : BaseItemDto[]) => new ListTemplate({
     title: "Recently Played",
