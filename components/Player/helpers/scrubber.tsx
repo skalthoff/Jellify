@@ -54,7 +54,7 @@ export default function Scrubber() : React.JSX.Element {
                         ? progress.duration * ProgressMultiplier
                         : 1
                     }
-                    width={width / 1.2}
+                    width={width / 1.125}
                     props={{
                         // If user swipes off of the slider we should seek to the spot
                         onPressOut: (event) => {
