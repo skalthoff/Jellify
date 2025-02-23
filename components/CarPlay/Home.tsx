@@ -3,6 +3,8 @@ import Client from "../../api/client";
 import { fetchRecentlyPlayed, fetchRecentlyPlayedArtists } from "../../api/queries/functions/recents";
 import { CarPlay, ListTemplate } from "react-native-carplay";
 import { CarPlayRecentlyPlayed } from "./RecentlyPlayed";
+import { CarPlayRecentArtists } from "./RecentArtists";
+import { queryClient } from "@/constants/query-client";
 
 const CarPlayHome : ListTemplate = new ListTemplate({
     id: 'Home',
@@ -22,7 +24,8 @@ const CarPlayHome : ListTemplate = new ListTemplate({
 
         switch (index) {
             case 0: 
-
+                const artists = await fetchRecentlyPlayedArtists();
+                CarPlay.pushTemplate(CarPlayRecentArtists(artists))
                 break;
             case 1:
                 const tracks = await fetchRecentlyPlayed()
