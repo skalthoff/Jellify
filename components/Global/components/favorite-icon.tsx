@@ -13,7 +13,8 @@ export default function FavoriteIcon({
 
     const { data } = useQuery({
         queryKey: [QueryKeys.UserData, item.Id!],
-        queryFn: () => fetchUserData(item.Id!)
+        queryFn: () => fetchUserData(item.Id!),
+        staleTime: (1000 * 60 * 5) // 5 minutes
     });
 
     return (
