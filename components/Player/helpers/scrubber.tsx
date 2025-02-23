@@ -8,6 +8,7 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { usePlayerContext } from "../../../player/provider";
 import { RunTimeSeconds } from "../../../components/Global/helpers/time-codes";
 import { UPDATE_INTERVAL } from "../../../player/config";
+import { ProgressMultiplier } from "../component.config";
 
 const scrubGesture = Gesture.Pan();
 
@@ -27,7 +28,7 @@ export default function Scrubber() : React.JSX.Element {
 
     
     const [position, setPosition] = useState<number>(progress && progress.position ? 
-        Math.floor(progress.position)
+        Math.floor(progress.position * ProgressMultiplier)
         : 0
     );
 
@@ -36,7 +37,7 @@ export default function Scrubber() : React.JSX.Element {
             progress && progress.position
             ? setPosition(
                 Math.floor(
-                    progress.position
+                    progress.position * ProgressMultiplier
                 )
             ) : 0;
     }, [
@@ -50,7 +51,7 @@ export default function Scrubber() : React.JSX.Element {
                     value={position}
                     max={
                         progress && progress.duration > 0 
-                        ? progress.duration 
+                        ? progress.duration * ProgressMultiplier
                         : 1
                     }
                     width={width / 1.1}
@@ -59,7 +60,7 @@ export default function Scrubber() : React.JSX.Element {
                         onPressOut: (event) => {
                             trigger("notificationSuccess")
                             setSeeking(false);
-                            useSeekTo.mutate(Math.floor(position));
+                            useSeekTo.mutate(Math.floor(position / ProgressMultiplier));
                         },
                         onSlideStart: (event, value) => {
                             trigger("impactLight");
@@ -75,7 +76,7 @@ export default function Scrubber() : React.JSX.Element {
                             trigger("notificationSuccess")
                             setSeeking(false);
                             setPosition(value)
-                            useSeekTo.mutate(Math.floor(value));
+                            useSeekTo.mutate(Math.floor(value / ProgressMultiplier));
                         }
                     }}
                     />
