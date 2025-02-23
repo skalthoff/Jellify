@@ -4,7 +4,8 @@ import { fetchRecentlyPlayed, fetchRecentlyPlayedArtists } from "../../api/queri
 import { CarPlay, ListTemplate } from "react-native-carplay";
 import { CarPlayRecentlyPlayed } from "./RecentlyPlayed";
 import { CarPlayRecentArtists } from "./RecentArtists";
-import { queryClient } from "@/constants/query-client";
+import { queryClient } from "../../constants/query-client";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 const CarPlayHome : ListTemplate = new ListTemplate({
     id: 'Home',
@@ -24,7 +25,7 @@ const CarPlayHome : ListTemplate = new ListTemplate({
 
         switch (index) {
             case 0: 
-                const artists = await fetchRecentlyPlayedArtists();
+                const artists = queryClient.getQueryData<BaseItemDto[]>([QueryKeys.RecentlyPlayedArtists]);
                 CarPlay.pushTemplate(CarPlayRecentArtists(artists))
                 break;
             case 1:

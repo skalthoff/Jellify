@@ -3,11 +3,11 @@ import { BaseItemDto, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { ListTemplate } from "react-native-carplay"
 import { QueryKeys } from "../../enums/query-keys"
 
-export const CarPlayRecentArtists = (artists : BaseItemDto[]) => new ListTemplate({
+export const CarPlayRecentArtists = (artists : BaseItemDto[] | undefined) => new ListTemplate({
     title: "Recently Played",
     sections: [
         {
-            items: artists.map(artist => {
+            items: artists ? artists.map(artist => {
                 return {
                     id: artist.Id!,
                     text: artist.Name ? artist.Name : "Untitled Track",
@@ -15,7 +15,7 @@ export const CarPlayRecentArtists = (artists : BaseItemDto[]) => new ListTemplat
                         uri: queryClient.getQueryData([ QueryKeys.ItemImage, ImageType.Primary ])
                     }
                 }
-            })
+            }) : []
         }
     ]
 })
