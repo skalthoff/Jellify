@@ -5,13 +5,17 @@ import { GridTemplate, ListTemplate } from "react-native-carplay"
 
 export const CarPlayRecentArtists = (artists : BaseItemDto[]) => new ListTemplate({
     title: "Recently Played",
-    items: artists.map(artist => {
-        return {
-            id: artist.Id!,
-            text: artist.Name ? artist.Name : "Untitled Track",
-            image: {
-                uri: getImageApi(Client.api!).getItemImageUrlById(artist.Id!)
-            }
+    sections: [
+        {
+            items: artists.map(artist => {
+                return {
+                    id: artist.Id!,
+                    text: artist.Name ? artist.Name : "Untitled Track",
+                    image: {
+                        uri: getImageApi(Client.api!).getItemImageUrlById(artist.Id!)
+                    }
+                }
+            })
         }
-    })
+    ]
 })

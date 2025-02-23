@@ -3,10 +3,8 @@ import { ListTemplate } from "react-native-carplay";
 
 export const CarPlayRecentlyPlayed = (recentTracks : BaseItemDto[]) => new ListTemplate({
     title: "Recently Played",
-    
     sections: [
         {
-            header: `Recently Played`,
             items: recentTracks.map(track => {
                 return {
                     id: track.Id!,
