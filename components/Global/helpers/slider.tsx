@@ -50,7 +50,7 @@ export function HorizontalSlider({
             <JellifySliderThumb 
                 circular
                 index={0}
-                size={"$2"}
+                size={"$1"}
                 hitSlop={{
                     top: 35,
                     right: 70,
