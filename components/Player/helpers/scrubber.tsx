@@ -34,14 +34,14 @@ export default function Scrubber() : React.JSX.Element {
 
     useEffect(() => {
         if (!seeking)
-            progress && progress.position
+            progress.position
             ? setPosition(
                 Math.floor(
                     progress.position * ProgressMultiplier
                 )
             ) : 0;
     }, [
-        progress
+        progress.position
     ]);
 
     return (
