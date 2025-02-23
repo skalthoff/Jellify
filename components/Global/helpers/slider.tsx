@@ -1,5 +1,5 @@
 import React from "react";
-import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider, getTokens, useTheme } from "tamagui";
+import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider, getTokens, useTheme, getToken } from "tamagui";
 
 interface SliderProps {
     value?: number | undefined;
@@ -12,6 +12,14 @@ const JellifyActiveSliderTrack = styled(Slider.TrackActive, {
     backgroundColor: getTokens().color.$telemagenta
 })
 
+const JellifySliderThumb = styled(Slider.Thumb, {
+    backgroundColor: getToken("$color.purpleDark"),
+    borderColor: getToken("$color.amethyst"),
+})
+
+const JellifySliderTrack = styled(Slider.Track, {
+    backgroundColor: getToken("$color.amethyst")
+});
 export function HorizontalSlider({ 
     value, 
     max,
@@ -24,41 +32,30 @@ export function HorizontalSlider({
     props?: TamaguiSliderProps | undefined
 }) : React.JSX.Element {
     
-    const theme = useTheme()
-
-    const JellifySliderThumb = styled(Slider.Thumb, {
-        backgroundColor: theme.background,
-        borderColor: theme.borderColor,
-    })
-    
-    const JellifySliderTrack = styled(Slider.Track, {
-        backgroundColor: theme.borderColor
-    });
-    
     return (
         <TamaguiSlider 
-        width={width} 
-        value={value ? [value] : []}
-        max={max} 
-        step={1}
-        orientation="horizontal"
-        marginHorizontal={10}
-        { ...props }
-        >
-            <JellifySliderTrack size="$4">
-                <JellifyActiveSliderTrack size={"$4"} />
-            </JellifySliderTrack>
-            <JellifySliderThumb 
-                circular
-                index={0}
-                size={"$2"}
-                hitSlop={{
-                    top: 35,
-                    right: 70,
-                    bottom: 70,
-                    left: 70
-                }}
-            />
+            width={width} 
+            value={value ? [value] : []}
+            max={max} 
+            step={1}
+            orientation="horizontal"
+            marginHorizontal={10}
+            { ...props }
+            >
+                <JellifySliderTrack size="$4">
+                    <JellifyActiveSliderTrack size={"$4"} />
+                </JellifySliderTrack>
+                <JellifySliderThumb 
+                    circular
+                    index={0}
+                    size={"$1"}
+                    hitSlop={{
+                        top: 35,
+                        right: 70,
+                        bottom: 70,
+                        left: 70
+                    }}
+                />
         </TamaguiSlider>
     )
 }
