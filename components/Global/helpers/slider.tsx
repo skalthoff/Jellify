@@ -32,32 +32,30 @@ export function HorizontalSlider({
     props?: TamaguiSliderProps | undefined
 }) : React.JSX.Element {
     
-    const theme = useTheme()
-
-    
     return (
         <TamaguiSlider 
-        width={width} 
-        value={value ? [value] : []}
-        max={max} 
-        orientation="horizontal"
-        marginHorizontal={10}
-        { ...props }
-        >
-            <JellifySliderTrack size="$4">
-                <JellifyActiveSliderTrack size={"$4"} />
-            </JellifySliderTrack>
-            <JellifySliderThumb 
-                circular
-                index={0}
-                size={"$1"}
-                hitSlop={{
-                    top: 35,
-                    right: 70,
-                    bottom: 70,
-                    left: 70
-                }}
-            />
+            width={width} 
+            value={value ? [value] : []}
+            max={max} 
+            step={1}
+            orientation="horizontal"
+            marginHorizontal={10}
+            { ...props }
+            >
+                <JellifySliderTrack size="$4">
+                    <JellifyActiveSliderTrack size={"$4"} />
+                </JellifySliderTrack>
+                <JellifySliderThumb 
+                    circular
+                    index={0}
+                    size={"$1"}
+                    hitSlop={{
+                        top: 35,
+                        right: 70,
+                        bottom: 70,
+                        left: 70
+                    }}
+                />
         </TamaguiSlider>
     )
 }
