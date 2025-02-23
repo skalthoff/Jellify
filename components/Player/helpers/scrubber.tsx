@@ -48,7 +48,7 @@ export default function Scrubber() : React.JSX.Element {
         <YStack>
             <GestureDetector gesture={scrubGesture}>
                 <HorizontalSlider 
-                    value={Math.floor(position)}
+                    value={position}
                     max={
                         progress && progress.duration > 0 
                         ? progress.duration * ProgressMultiplier

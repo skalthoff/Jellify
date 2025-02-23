@@ -40,7 +40,6 @@ export function HorizontalSlider({
         width={width} 
         value={value ? [value] : []}
         max={max} 
-        step={1}
         orientation="horizontal"
         marginHorizontal={10}
         { ...props }
