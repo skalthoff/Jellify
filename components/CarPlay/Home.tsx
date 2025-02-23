@@ -22,6 +22,8 @@ const CarPlayHome : ListTemplate = new ListTemplate({
     ],
     onItemSelect: async ({ index }) => {
 
+        console.debug(`Home item selected`);
+
         switch (index) {
             case 0: 
                 const artists = queryClient.getQueryData<BaseItemDto[]>([QueryKeys.RecentlyPlayedArtists]);
