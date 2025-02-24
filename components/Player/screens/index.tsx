@@ -78,7 +78,7 @@ export default function PlayerScreen({
                                 <YStack 
                                 alignItems="center"
                                 alignContent="center"
-                                flex={4}
+                                flex={6}
                                 >
 
                                     <Text>Playing from</Text>
