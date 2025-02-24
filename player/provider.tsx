@@ -111,6 +111,7 @@ const PlayerContextInitializer = () => {
     //#region Hooks
     const useAddToQueue = useMutation({
         mutationFn: async (mutation: AddToQueueMutation) => {
+            trigger("impactLight");
             
             if (mutation.queuingType === QueuingType.PlayingNext)
                 return addToNext([mapDtoToTrack(mutation.track, mutation.queuingType)]);
@@ -122,7 +123,7 @@ const PlayerContextInitializer = () => {
             trigger("notificationSuccess");
 
             Burnt.alert({
-                title: queuingType === QueuingType.PlayingNext ? "Playing next" : "Added to Queue",
+                title: queuingType === QueuingType.PlayingNext ? "Playing next" : "Added to queue",
                 duration: 1,
                 preset: 'done'
             });
