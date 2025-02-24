@@ -40,7 +40,7 @@
     "react-freeze": "^1.0.4",
     "react-native": "0.77.0",
     "react-native-background-actions": "^4.0.1",
-    "react-native-blurhash": "^2.1.0",
+    "react-native-blurhash": "^2.1.1",
     "react-native-carplay": "^2.4.1-beta.0",
     "react-native-device-info": "^14.0.4",
     "react-native-draggable-flatlist": "^4.0.1",
