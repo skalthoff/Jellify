@@ -1,5 +1,5 @@
 import React from "react";
-import { SliderProps as TamaguiSliderProps, SliderVerticalProps, Slider as TamaguiSlider, styled, Slider, getTokens, useTheme, getToken } from "tamagui";
+import { SliderProps as TamaguiSliderProps, Slider as TamaguiSlider, styled, Slider, getTokens, getToken } from "tamagui";
 
 interface SliderProps {
     value?: number | undefined;
@@ -25,12 +25,7 @@ export function HorizontalSlider({
     max,
     width, 
     props 
-}: { 
-    value?: number | undefined, 
-    max: number;
-    width?: number | undefined, 
-    props?: TamaguiSliderProps | undefined
-}) : React.JSX.Element {
+}: SliderProps) : React.JSX.Element {
     
     return (
         <TamaguiSlider 
@@ -56,37 +51,6 @@ export function HorizontalSlider({
                         left: 70
                     }}
                 />
-        </TamaguiSlider>
-    )
-}
-  
-export function VerticalSlider(props: SliderVerticalProps) : React.JSX.Element {
-
-    const theme = useTheme()
-
-    const JellifySliderThumb = styled(Slider.Thumb, {
-        backgroundColor: theme.background,
-        borderColor: theme.borderColor,
-    })
-    
-    const JellifySliderTrack = styled(Slider.Track, {
-        backgroundColor: theme.borderColor
-    });
-
-    return ( 
-        <TamaguiSlider 
-            size="$3" 
-            width={200} 
-            defaultValue={[0]} 
-            max={100} 
-            step={1}
-            orientation="vertical"
-            marginVertical={10}
-        >
-            <JellifySliderTrack>
-                <JellifyActiveSliderTrack />
-            </JellifySliderTrack>
-            <JellifySliderThumb circular index={0} size={"$2"} />
         </TamaguiSlider>
     )
 }

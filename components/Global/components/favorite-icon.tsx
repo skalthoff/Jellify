@@ -4,6 +4,7 @@ import Icon from "../helpers/icon";
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../../enums/query-keys";
 import { fetchUserData } from "../../../api/queries/functions/favorites";
+import { useEffect, useState } from "react";
 
 export default function FavoriteIcon({ 
     item 
@@ -11,11 +12,19 @@ export default function FavoriteIcon({
     item: BaseItemDto 
 }) : React.JSX.Element {
 
-    const { data } = useQuery({
+    const [isFavorite, setIsFavorite] = useState<boolean>(item.UserData?.IsFavorite ?? false);
+
+    const { data: userData } = useQuery({
         queryKey: [QueryKeys.UserData, item.Id!],
         queryFn: () => fetchUserData(item.Id!),
-        staleTime: (1000 * 60 * 5) // 5 minutes
+        staleTime: (1000 * 60 * 5) // 5 minutes,
     });
+
+    useEffect(() => {
+        setIsFavorite(userData?.IsFavorite ?? false)
+    }, [
+        userData
+    ])
 
     return (
         <YStack
@@ -23,7 +32,7 @@ export default function FavoriteIcon({
             justifyContent="center"
             minWidth={24}
         >
-            { data && data.IsFavorite ? (
+            { isFavorite ? (
                 <Icon 
                     small 
                     name="heart" 
