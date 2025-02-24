@@ -1276,7 +1276,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-blurhash (2.1.0):
+  - react-native-blurhash (2.1.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2181,7 +2181,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 51e7813abf875408a0f367e473a65bbab6aa8481
   react-native-background-actions: 48e6bad9e2a47e3b04858634c5a05ea11062f680
   react-native-blur: b06c3fe88680beac622d8d13b8c36ec15c50383b
-  react-native-blurhash: 6ab88cb30b05fe08e9ad71d96574b77bb60b9d82
+  react-native-blurhash: bab22da783c13c6fa5004a56559c287f56f0c7a1
   react-native-carplay: 8f388f6f73e5e0f73ed154ad8794371343ee20c0
   react-native-mmkv: a6e08ad1b51b84af075f91798f8a92c878472265
   react-native-safe-area-context: 3e33e7c43c8b74dba436a5a32651cb8d7064c740
