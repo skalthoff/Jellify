@@ -21,6 +21,8 @@ import { Section } from "../components/Player/types";
 import { Queue } from "./types/queue-item";
 
 import * as Burnt from "burnt";
+import { markItemPlayed } from "@/api/mutations/functions/item";
+import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 
 interface PlayerContext {
     initialized: boolean;
@@ -231,7 +233,10 @@ const PlayerContextInitializer = () => {
         },
         onSuccess: async (data, mutation: QueueMutation) => {
             setIsSkipping(false);
-            await play(mutation.index)
+            await play(mutation.index);
+
+            if (typeof(mutation.queue) === 'object')
+                await markItemPlayed(queue as BaseItemDto);
         },
         onError: async () => {
             setIsSkipping(false);

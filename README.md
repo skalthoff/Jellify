@@ -118,7 +118,7 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
   - Coming Soon™️
 
 ## 🙏 Special Thanks To
-- The [Jellyfin Team](https://jellyfin.org/) for their amazing server software, SDKs, and documentation
+- The [Jellyfin Team](https://jellyfin.org/) for making this possible with their software, SDKs, and unequivocal helpfulness
 - All contributors of [Finamp](https://github.com/jmshrv/finamp). *Jellify* draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin
 - The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
 - Tony, Trevor, [Laine](https://github.com/lainie-ftw) and [Jordan](https://github.com/jordanbleu) for their testing and feedback from the early stages of development
