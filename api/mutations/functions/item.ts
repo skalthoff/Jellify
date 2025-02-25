@@ -1,6 +1,6 @@
 import Client from "../../../api/client";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
-import { getItemsApi, getPlaystateApi, getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api";
+import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import { isUndefined } from "lodash";
 
 /**
