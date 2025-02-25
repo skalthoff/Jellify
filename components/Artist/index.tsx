@@ -112,7 +112,6 @@ export function ArtistScreen({
                                 <ItemCard
                                     width={150}
                                     item={artist}
-                                    circular
                                 />
                             )}
                         />
