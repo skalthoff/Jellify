@@ -1,6 +1,6 @@
-import Client from "@/api/client";
+import Client from "../../../api/client";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
-import { getItemsApi, getLibraryApi } from "@jellyfin/sdk/lib/utils/api";
+import { getLibraryApi } from "@jellyfin/sdk/lib/utils/api";
 
 export default function fetchSimilar(itemId : string, limit : number = 10, startIndex : number = 0) : Promise<BaseItemDto[]> {
     return new Promise((resolve, reject) => {
