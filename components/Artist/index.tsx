@@ -13,7 +13,7 @@ import { YStack } from "tamagui";
 import BlurhashedImage from "../Global/components/blurhashed-image";
 import FavoriteButton from "../Global/components/favorite-button";
 import { ItemCard } from "../Global/components/item-card";
-import { H2 } from "../Global/helpers/text";
+import { H2, H3 } from "../Global/helpers/text";
 import fetchSimilar from "../../api/queries/functions/similar";
 import HorizontalCardList from "../Global/components/horizontal-list";
 
@@ -80,7 +80,7 @@ export function ArtistScreen({
                 />
             </YStack>
 
-            <H2>Albums</H2>
+            <H3>Albums</H3>
                 <FlatList
                     contentContainerStyle={{
                         flexGrow: 1,
@@ -105,7 +105,7 @@ export function ArtistScreen({
                     ListFooterComponent={(
                         <YStack>
 
-                            <H2>{`Similar to ${artist.Name ?? 'Unknown Artist'}`} </H2>
+                            <H3>{`Similar to ${artist.Name ?? 'Unknown Artist'}`} </H3>
 
                             <FlatList
                                 data={similarArtists}
