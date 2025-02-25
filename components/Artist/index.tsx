@@ -115,7 +115,7 @@ export function ArtistScreen({
                                         caption={artist.Name ?? "Unknown Artist"}
                                         item={artist}
                                         onPress={() => {
-                                            navigation.navigate('Artist', {
+                                            navigation.push('Artist', {
                                                 artist
                                             })
                                         }}
