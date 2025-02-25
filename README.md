@@ -76,6 +76,8 @@ Playlist
 
 <img src="screenshots/player_queue.png" alt="Queue" width="275" height="600">
 
+<img src='screenshots/favorite_track.png' alt='Favorite Track' width='275' height='600”'>
+
 ### CarPlay (Sneak Preview)
 <img src="screenshots/carplay_nowplaying.jpeg" alt="Now Playing (CarPlay)" width="500" height="350">
 
