@@ -12,7 +12,7 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { mapDtoToTrack } from "../helpers/mappings";
 import { QueuingType } from "../enums/queuing-type";
 import { trigger } from "react-native-haptic-feedback";
-import { getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
+import { getActiveTrackIndex, getQueue, pause, seekTo, skip, skipToNext, skipToPrevious } from "react-native-track-player/lib/src/trackPlayer";
 import { convertRunTimeTicksToSeconds } from "../helpers/runtimeticks";
 import Client from "../api/client";
 import { AddToQueueMutation, QueueMutation, QueueOrderMutation } from "./interfaces";
@@ -187,16 +187,23 @@ const PlayerContextInitializer = () => {
     const useSkip = useMutation({
         mutationFn: async (index?: number | undefined) => {
             trigger("impactMedium")
-            if (!isUndefined(index)) {
-                setIsSkipping(true);
-                setNowPlaying(playQueue[index]);
-                await skip(index);
-                setIsSkipping(false);
-            }
+
+            // Handle if this is the last track in the queue
+            if (playQueue.length - 1 === await getActiveTrackIndex())
+                return;
+
             else {
-                const nowPlayingIndex = playQueue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
-                setNowPlaying(playQueue[nowPlayingIndex + 1])
-                await skipToNext();
+                if (!isUndefined(index)) {
+                    setIsSkipping(true);
+                    setNowPlaying(playQueue[index]);
+                    await skip(index);
+                    setIsSkipping(false);
+                }
+                else {
+                    const nowPlayingIndex = playQueue.findIndex((track) => track.item.Id === nowPlaying!.item.Id);
+                    setNowPlaying(playQueue[nowPlayingIndex + 1])
+                    await skipToNext();
+                }
             }
         }
     });
