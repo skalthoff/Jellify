@@ -110,8 +110,13 @@ export function ArtistScreen({
                             }}
                             renderItem={({ item: artist }) => (
                                 <ItemCard
-                                    width={150}
+                                    caption={artist.Name ?? "Unknown Artist"}
                                     item={artist}
+                                    onPress={() => {
+                                        navigation.navigate('Artist', {
+                                            artist
+                                        })
+                                    }}
                                 />
                             )}
                         />
