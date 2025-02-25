@@ -56,6 +56,10 @@ Artist
 
 <img src="screenshots/artist.png" alt="Artist" width="275" height="600">
 
+Similar Artists
+
+<img src="screenshots/artist_similarto.png" alt="Similar Artists" width="275" height="600">
+
 Album
 
 <img src="screenshots/album.png" alt="Album" width="275" height="600">
