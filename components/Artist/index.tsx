@@ -103,23 +103,25 @@ export function ArtistScreen({
                         />
                     }
                     ListFooterComponent={(
-                        <HorizontalCardList
-                            data={similarArtists}
-                            onSeeMore={() => {
+                        <YStack>
 
-                            }}
-                            renderItem={({ item: artist }) => (
-                                <ItemCard
-                                    caption={artist.Name ?? "Unknown Artist"}
-                                    item={artist}
-                                    onPress={() => {
-                                        navigation.navigate('Artist', {
-                                            artist
-                                        })
-                                    }}
-                                />
-                            )}
-                        />
+                            <H2>{`Similar to ${artist.Name ?? 'Unknown Artist'}`} </H2>
+
+                            <FlatList
+                                data={similarArtists}
+                                renderItem={({ item: artist }) => (
+                                    <ItemCard
+                                        caption={artist.Name ?? "Unknown Artist"}
+                                        item={artist}
+                                        onPress={() => {
+                                            navigation.navigate('Artist', {
+                                                artist
+                                            })
+                                        }}
+                                    />
+                                )}
+                            />
+                        </YStack>
                     )}
                 />
         </ScrollView>
