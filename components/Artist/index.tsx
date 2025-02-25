@@ -14,6 +14,8 @@ import BlurhashedImage from "../Global/components/blurhashed-image";
 import FavoriteButton from "../Global/components/favorite-button";
 import { ItemCard } from "../Global/components/item-card";
 import { H2 } from "../Global/helpers/text";
+import fetchSimilar from "@/api/queries/functions/similar";
+import HorizontalCardList from "../Global/components/horizontal-list";
 
 export function ArtistScreen({ 
     route, 
@@ -60,6 +62,11 @@ export function ArtistScreen({
         }
     });
 
+    const { data: similarArtists } = useQuery({
+        queryKey: [QueryKeys.SimilarItems, artist.Id],
+        queryFn: () => fetchSimilar(artist.Id!)
+    })
+
     return (
         <ScrollView 
             contentInsetAdjustmentBehavior="automatic"
@@ -95,6 +102,20 @@ export function ArtistScreen({
                             }}
                         />
                     }
+                    ListFooterComponent={(
+                        <HorizontalCardList
+                            data={similarArtists}
+                            onSeeMore={() => {
+
+                            }}
+                            renderItem={({ item: artist }) => (
+                                <ItemCard
+                                    item={artist}
+                                    circular
+                                />
+                            )}
+                        />
+                    )}
                 />
         </ScrollView>
     )
