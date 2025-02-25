@@ -109,6 +109,7 @@ export function ArtistScreen({
 
                             <FlatList
                                 data={similarArtists}
+                                horizontal
                                 renderItem={({ item: artist }) => (
                                     <ItemCard
                                         caption={artist.Name ?? "Unknown Artist"}
