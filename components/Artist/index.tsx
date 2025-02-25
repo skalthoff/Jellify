@@ -110,6 +110,7 @@ export function ArtistScreen({
                             }}
                             renderItem={({ item: artist }) => (
                                 <ItemCard
+                                    width={150}
                                     item={artist}
                                     circular
                                 />
