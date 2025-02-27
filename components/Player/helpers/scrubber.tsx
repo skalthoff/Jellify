@@ -29,21 +29,18 @@ export default function Scrubber() : React.JSX.Element {
 
     const [seeking, setSeeking] = useState<boolean>(false);
     
-
-    
     const [position, setPosition] = useState<number>(progress && progress.position ? 
         Math.floor(progress.position * ProgressMultiplier)
         : 0
     );
 
     useEffect(() => {
-        if (!seeking)
-            progress.position
-            ? setPosition(
+        if (!seeking && progress.position)
+            setPosition(
                 Math.floor(
                     progress.position * ProgressMultiplier
                 )
-            ) : 0;
+            );
     }, [
         progress.position
     ]);
@@ -117,7 +114,7 @@ export default function Scrubber() : React.JSX.Element {
                     onPress={() => {
                         useSeekTo.mutate(progress!.position - 15);
                     }}
-                    />
+                />
                 
                 <Icon
                     color={getToken("$color.amethyst")}
@@ -132,7 +129,7 @@ export default function Scrubber() : React.JSX.Element {
                         }
                     }}
                     large
-                    />
+                />
 
                 {/* I really wanted a big clunky play button */}
                 <PlayPauseButton size={width / 5} />
@@ -142,7 +139,7 @@ export default function Scrubber() : React.JSX.Element {
                     name="skip-next" 
                     onPress={() => useSkip.mutate(undefined)}
                     large
-                    />    
+                />    
 
                 <Icon
                     color={getToken("$color.amethyst")}
@@ -150,7 +147,7 @@ export default function Scrubber() : React.JSX.Element {
                     onPress={() => { 
                         useSeekTo.mutate(progress!.position + 15);
                     }}  
-                    />              
+                />              
             </XStack>
         </YStack>
     )
