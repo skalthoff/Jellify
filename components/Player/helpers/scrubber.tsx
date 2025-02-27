@@ -9,7 +9,7 @@ import { usePlayerContext } from "../../../player/provider";
 import { RunTimeSeconds } from "../../../components/Global/helpers/time-codes";
 import { UPDATE_INTERVAL } from "../../../player/config";
 import { ProgressMultiplier } from "../component.config";
-import Icon from "@/components/Global/helpers/icon";
+import Icon from "../../../components/Global/helpers/icon";
 import PlayPauseButton from "./buttons";
 
 const scrubGesture = Gesture.Pan();
