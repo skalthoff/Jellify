@@ -5,7 +5,6 @@ import {name as appName} from './app.json';
 import { PlaybackService } from './player/service'
 import TrackPlayer from 'react-native-track-player';
 import Client from './api/client';
-import { enableFreeze, enableScreens } from "react-native-screens";
 
 // Initialize API client instance
 Client.instance;
