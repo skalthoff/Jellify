@@ -103,7 +103,7 @@ export default function Scrubber() : React.JSX.Element {
                         }
                     </RunTimeSeconds>
                 </YStack>
-            </XStack> (
+            </XStack>
 
             <XStack 
                 alignItems="center" 
