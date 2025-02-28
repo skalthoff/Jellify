@@ -17,7 +17,6 @@ const scrubGesture = Gesture.Pan();
 export default function Scrubber() : React.JSX.Element {
 
     const { 
-        playbackState,
         useSeekTo, 
         useSkip, 
         usePrevious, 
@@ -35,8 +34,17 @@ export default function Scrubber() : React.JSX.Element {
         : 0
     );
 
+    /**
+     * Update position in the scrubber if the user isn't interacting
+     */
     useEffect(() => {
-        if (!seeking && progress.position)
+        if (
+            !seeking 
+            && !useSkip.isPending
+            && !usePrevious.isPending
+            && !useSeekTo.isPending
+            && progress.position
+        )
             setPosition(
                 Math.floor(
                     progress.position * ProgressMultiplier
@@ -59,7 +67,7 @@ export default function Scrubber() : React.JSX.Element {
                     width={width / 1.125}
                     props={{
                         // If user swipes off of the slider we should seek to the spot
-                        onPressOut: (event) => {
+                        onPressOut: () => {
                             trigger("notificationSuccess")
                             useSeekTo.mutate(Math.floor(position / ProgressMultiplier));
                             setSeeking(false);
