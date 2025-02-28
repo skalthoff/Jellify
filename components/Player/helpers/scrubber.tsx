@@ -26,8 +26,6 @@ export default function Scrubber() : React.JSX.Element {
     const { width } = useSafeAreaFrame();
 
     const progress = useProgress(UPDATE_INTERVAL);
-
-    const [seeking, setSeeking] = useState<boolean>(false);
     
     const [position, setPosition] = useState<number>(progress && progress.position ? 
         Math.floor(progress.position * ProgressMultiplier)
@@ -39,8 +37,7 @@ export default function Scrubber() : React.JSX.Element {
      */
     useEffect(() => {
         if (
-            !seeking 
-            && !useSkip.isPending
+            !useSkip.isPending
             && !usePrevious.isPending
             && !useSeekTo.isPending
             && progress.position
@@ -70,26 +67,22 @@ export default function Scrubber() : React.JSX.Element {
                         onPressOut: () => {
                             trigger("notificationSuccess")
                             useSeekTo.mutate(Math.floor(position / ProgressMultiplier));
-                            setSeeking(false);
                         },
                         onSlideStart: (event, value) => {
                             trigger("impactLight");
-                            setSeeking(true);
                             setPosition(value)
                         },
                         onSlideMove: (event, value) => {
                             trigger("clockTick")
-                            setSeeking(true);
                             setPosition(value);
                         },
                         onSlideEnd: (event, value) => {
                             trigger("notificationSuccess")
                             setPosition(value)
                             useSeekTo.mutate(Math.floor(value / ProgressMultiplier));
-                            setSeeking(false);
                         }
                     }}
-                    />
+                />
             </GestureDetector>
 
             <XStack margin={"$2"} marginTop={"$3"}>
@@ -123,7 +116,7 @@ export default function Scrubber() : React.JSX.Element {
                     onPress={() => {
                         useSeekTo.mutate(position - (15 * ProgressMultiplier));
                     }}
-                    />
+                />
                 
                 <Icon
                     color={getToken("$color.amethyst")}
@@ -148,7 +141,7 @@ export default function Scrubber() : React.JSX.Element {
                     name="skip-next" 
                     onPress={() => useSkip.mutate(undefined)}
                     large
-                    />    
+                />    
 
                 <Icon
                     color={getToken("$color.amethyst")}
@@ -156,7 +149,7 @@ export default function Scrubber() : React.JSX.Element {
                     onPress={() => { 
                         useSeekTo.mutate(position + (15 * ProgressMultiplier));
                     }}  
-                    />              
+                />              
             </XStack>
         </YStack>
     )
