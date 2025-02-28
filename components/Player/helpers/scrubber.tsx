@@ -17,7 +17,6 @@ const scrubGesture = Gesture.Pan();
 export default function Scrubber() : React.JSX.Element {
 
     const { 
-        playbackState,
         useSeekTo, 
         useSkip, 
         usePrevious, 
@@ -26,17 +25,26 @@ export default function Scrubber() : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
 
-    const progress = useProgress(UPDATE_INTERVAL);
-
     const [seeking, setSeeking] = useState<boolean>(false);
+
+    const progress = useProgress(UPDATE_INTERVAL);
     
     const [position, setPosition] = useState<number>(progress && progress.position ? 
         Math.floor(progress.position * ProgressMultiplier)
         : 0
     );
 
+    /**
+     * Update position in the scrubber if the user isn't interacting
+     */
     useEffect(() => {
-        if (!seeking && progress.position)
+        if (
+            !seeking
+            && !useSkip.isPending
+            && !usePrevious.isPending
+            && !useSeekTo.isPending
+            && progress.position
+        )
             setPosition(
                 Math.floor(
                     progress.position * ProgressMultiplier
@@ -48,120 +56,105 @@ export default function Scrubber() : React.JSX.Element {
 
     return (
         <YStack>
-            { useMemo(() => (
-                <>
-                <GestureDetector gesture={scrubGesture}>
-                    <HorizontalSlider 
-                        value={position}
-                        max={
-                            progress && progress.duration > 0 
-                            ? progress.duration * ProgressMultiplier
-                            : 1
+            <GestureDetector gesture={scrubGesture}>
+                <HorizontalSlider 
+                    value={position}
+                    max={
+                        progress && progress.duration > 0 
+                        ? progress.duration * ProgressMultiplier
+                        : 1
+                    }
+                    width={width / 1.125}
+                    props={{
+                        // If user swipes off of the slider we should seek to the spot
+                        onPressOut: () => {
+                            trigger("notificationSuccess")
+                            useSeekTo.mutate(Math.floor(position / ProgressMultiplier));
+                            setSeeking(false);
+                        },
+                        onSlideStart: (event, value) => {
+                            setSeeking(true);
+                            trigger("impactLight");
+                            setPosition(value)
+                        },
+                        onSlideMove: (event, value) => {
+                            trigger("clockTick")
+                            setPosition(value);
+                        },
+                        onSlideEnd: (event, value) => {
+                            trigger("notificationSuccess")
+                            setPosition(value)
+                            useSeekTo.mutate(Math.floor(value / ProgressMultiplier));
+                            setSeeking(false);
                         }
-                        width={width / 1.125}
-                        props={{
-                            // If user swipes off of the slider we should seek to the spot
-                            onPressOut: (event) => {
-                                trigger("notificationSuccess")
-                                useSeekTo.mutate(Math.floor(position / ProgressMultiplier));
-                                setSeeking(false);
-                            },
-                            onSlideStart: (event, value) => {
-                                trigger("impactLight");
-                                setSeeking(true);
-                                setPosition(value)
-                            },
-                            onSlideMove: (event, value) => {
-                                trigger("clockTick")
-                                setSeeking(true);
-                                setPosition(value);
-                            },
-                            onSlideEnd: (event, value) => {
-                                trigger("notificationSuccess")
-                                setPosition(value)
-                                useSeekTo.mutate(Math.floor(value / ProgressMultiplier));
-                                setSeeking(false);
-                            }
-                        }}
-                        />
-                </GestureDetector>
+                    }}
+                />
+            </GestureDetector>
 
-                <XStack margin={"$2"} marginTop={"$3"}>
-                    <YStack flex={1} alignItems="flex-start">
-                        <RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
-                    </YStack>
+            <XStack margin={"$2"} marginTop={"$3"}>
+                <YStack flex={1} alignItems="flex-start">
+                    <RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
+                </YStack>
 
-                    <YStack flex={1} alignItems="center">
-                        { /** Track metadata can go here */}
-                    </YStack>
+                <YStack flex={1} alignItems="center">
+                    { /** Track metadata can go here */}
+                </YStack>
 
-                    <YStack flex={1} alignItems="flex-end">
-                        <RunTimeSeconds>
-                            {
-                                progress && progress.duration
-                                ? Math.ceil(progress.duration) 
-                                : 0
-                            }
-                        </RunTimeSeconds>
-                    </YStack>
-                </XStack>
-            </>
-            ), [
-                position,
-                seeking
-            ])}
+                <YStack flex={1} alignItems="flex-end">
+                    <RunTimeSeconds>
+                        {
+                            progress && progress.duration
+                            ? Math.ceil(progress.duration) 
+                            : 0
+                        }
+                    </RunTimeSeconds>
+                </YStack>
+            </XStack>
 
-            { useMemo(() => (
+            <XStack 
+                alignItems="center" 
+                justifyContent="space-evenly" 
+                marginVertical={"$2"}
+                >
+                <Icon
+                    color={getToken("$color.amethyst")}
+                    name="rewind-15"
+                    onPress={() => {
+                        useSeekTo.mutate(position / ProgressMultiplier - 15);
+                    }}
+                />
+                
+                <Icon
+                    color={getToken("$color.amethyst")}
+                    name="skip-previous"
+                    onPress={() => {
+                        if (position / ProgressMultiplier < 3)
+                            usePrevious.mutate()
+                        else {
+                            useSeekTo.mutate(0);
+                        }
+                    }}
+                    large
+                />
 
-                <XStack 
-                    alignItems="center" 
-                    justifyContent="space-evenly" 
-                    marginVertical={"$2"}
-                    >
-                    <Icon
-                        color={getToken("$color.amethyst")}
-                        name="rewind-15"
-                        onPress={() => {
-                            useSeekTo.mutate(progress!.position - 15);
-                        }}
-                        />
-                    
-                    <Icon
-                        color={getToken("$color.amethyst")}
-                        name="skip-previous"
-                        onPress={() => {
-                            
-                            console.debug(`Skipping at ${position}`)
-                            if (position / ProgressMultiplier < 3)
-                                usePrevious.mutate()
-                            else {
-                                useSeekTo.mutate(0);
-                            }
-                        }}
-                        large
-                        />
+                {/* I really wanted a big clunky play button */}
+                <PlayPauseButton size={width / 5} />
 
-                    {/* I really wanted a big clunky play button */}
-                    <PlayPauseButton size={width / 5} />
+                <Icon
+                    color={getToken("$color.amethyst")}
+                    name="skip-next" 
+                    onPress={() => useSkip.mutate(undefined)}
+                    large
+                />    
 
-                    <Icon
-                        color={getToken("$color.amethyst")}
-                        name="skip-next" 
-                        onPress={() => useSkip.mutate(undefined)}
-                        large
-                        />    
-
-                    <Icon
-                        color={getToken("$color.amethyst")}
-                        name="fast-forward-15"
-                        onPress={() => { 
-                            useSeekTo.mutate(progress!.position + 15);
-                        }}  
-                        />              
-                </XStack>
-            ), [
-                playbackState
-            ])}
+                <Icon
+                    color={getToken("$color.amethyst")}
+                    name="fast-forward-15"
+                    onPress={() => { 
+                        useSeekTo.mutate(position / ProgressMultiplier - 15);
+                    }}  
+                />              
+            </XStack>
         </YStack>
     )
 }
