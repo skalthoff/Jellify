@@ -25,6 +25,8 @@ export default function Scrubber() : React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
 
+    const [seeking, setSeeking] = useState<boolean>(false);
+
     const progress = useProgress(UPDATE_INTERVAL);
     
     const [position, setPosition] = useState<number>(progress && progress.position ? 
@@ -37,7 +39,8 @@ export default function Scrubber() : React.JSX.Element {
      */
     useEffect(() => {
         if (
-            !useSkip.isPending
+            !seeking
+            && !useSkip.isPending
             && !usePrevious.isPending
             && !useSeekTo.isPending
             && progress.position
@@ -67,8 +70,10 @@ export default function Scrubber() : React.JSX.Element {
                         onPressOut: () => {
                             trigger("notificationSuccess")
                             useSeekTo.mutate(Math.floor(position / ProgressMultiplier));
+                            setSeeking(false);
                         },
                         onSlideStart: (event, value) => {
+                            setSeeking(true);
                             trigger("impactLight");
                             setPosition(value)
                         },
@@ -80,6 +85,7 @@ export default function Scrubber() : React.JSX.Element {
                             trigger("notificationSuccess")
                             setPosition(value)
                             useSeekTo.mutate(Math.floor(value / ProgressMultiplier));
+                            setSeeking(false);
                         }
                     }}
                 />
