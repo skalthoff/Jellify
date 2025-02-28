@@ -151,7 +151,7 @@ export default function Scrubber() : React.JSX.Element {
                     color={getToken("$color.amethyst")}
                     name="fast-forward-15"
                     onPress={() => { 
-                        useSeekTo.mutate(position / ProgressMultiplier - 15);
+                        useSeekTo.mutate(position / ProgressMultiplier + 15);
                     }}  
                 />              
             </XStack>
