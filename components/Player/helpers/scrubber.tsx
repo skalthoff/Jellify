@@ -114,7 +114,7 @@ export default function Scrubber() : React.JSX.Element {
                     color={getToken("$color.amethyst")}
                     name="rewind-15"
                     onPress={() => {
-                        useSeekTo.mutate(position - (15 * ProgressMultiplier));
+                        useSeekTo.mutate(position / ProgressMultiplier - 15);
                     }}
                 />
                 
@@ -122,8 +122,6 @@ export default function Scrubber() : React.JSX.Element {
                     color={getToken("$color.amethyst")}
                     name="skip-previous"
                     onPress={() => {
-                        
-                        console.debug(`Skipping at ${position}`)
                         if (position / ProgressMultiplier < 3)
                             usePrevious.mutate()
                         else {
@@ -131,7 +129,7 @@ export default function Scrubber() : React.JSX.Element {
                         }
                     }}
                     large
-                    />
+                />
 
                 {/* I really wanted a big clunky play button */}
                 <PlayPauseButton size={width / 5} />
@@ -147,7 +145,7 @@ export default function Scrubber() : React.JSX.Element {
                     color={getToken("$color.amethyst")}
                     name="fast-forward-15"
                     onPress={() => { 
-                        useSeekTo.mutate(position + (15 * ProgressMultiplier));
+                        useSeekTo.mutate(position / ProgressMultiplier - 15);
                     }}  
                 />              
             </XStack>
