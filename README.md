@@ -4,7 +4,7 @@
 [![publish-ios-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-ios-beta.yml/badge.svg)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-ios-beta.yml)
 
 ### 🔗 Quick Links
-[Discord Server](https://discord.gg/SF8bFMDK)
+[Discord Server](https://discord.gg/yf8fBatktn)
 
 ### ℹ️ About
 
