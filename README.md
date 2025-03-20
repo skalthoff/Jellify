@@ -3,6 +3,11 @@
 
 [![publish-ios-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-ios-beta.yml/badge.svg)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-ios-beta.yml)
 
+### 🔗 Quick Links
+[Discord Server](https://discord.gg/yf8fBatktn)
+
+### ℹ️ About
+
 > **jellify** (verb) - *to make gelatinous* <br>
 [see also](https://www.merriam-webster.com/dictionary/jellify)
 
