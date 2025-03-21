@@ -13,8 +13,10 @@ export async function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType
     const url = await mediaInfoApi.getPlaybackInfo({
         itemId: item.Id!,
     })
-    .then((response) => {
-        return response.data.MediaSources![0].TranscodingUrl!
+    .then(({ data }) => {
+
+        console.debug(data)
+        return data.MediaSources![0].TranscodingUrl!
     })
 
     const isFavorite = !isUndefined(item.UserData) && (item.UserData.IsFavorite ?? false);
