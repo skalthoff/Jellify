@@ -234,7 +234,7 @@ const PlayerContextInitializer = () => {
             await resetQueue(false);
         
             await addToQueue(mutation.tracklist.map((track) => {
-                return mapDtoToTrack(track)
+                return mapDtoToTrack(track, QueuingType.FromSelection)
             }));
                 
             setQueue(mutation.queue);
