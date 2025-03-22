@@ -16,6 +16,9 @@ interface JellifyContext {
 
 const JellifyContextInitializer = () => {
 
+    console.debug(CarPlay)
+    console.debug(typeof(CarPlay))
+
     const [loggedIn, setLoggedIn] = useState<boolean>(
         !isUndefined(Client) &&
         !isUndefined(Client.api) && 
