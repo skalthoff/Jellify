@@ -115,10 +115,10 @@ const PlayerContextInitializer = () => {
             trigger("impactLight");
             
             if (mutation.queuingType === QueuingType.PlayingNext)
-                return addToNext([await mapDtoToTrack(mutation.track, mutation.queuingType)]);
+                return addToNext([mapDtoToTrack(mutation.track, mutation.queuingType)]);
             
             else
-            return addToQueue([await mapDtoToTrack(mutation.track, mutation.queuingType)])
+            return addToQueue([mapDtoToTrack(mutation.track, mutation.queuingType)])
         },
         onSuccess: (data, { queuingType }) => {
             trigger("notificationSuccess");
@@ -229,16 +229,13 @@ const PlayerContextInitializer = () => {
             setIsSkipping(true);
 
             // Optimistically set now playing
-            setNowPlaying(await mapDtoToTrack(mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection));
+            setNowPlaying(mapDtoToTrack(mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection));
 
             await resetQueue(false);
-
-            let queuedTracks : JellifyTrack[] = [];
-            
-            mutation.tracklist.forEach(async (track) => {
-                queuedTracks.push(await mapDtoToTrack(track))
-            })
-            await addToQueue(queuedTracks);
+        
+            await addToQueue(mutation.tracklist.map((track) => {
+                return mapDtoToTrack(track)
+            }));
                 
             setQueue(mutation.queue);
         },
