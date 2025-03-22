@@ -68,6 +68,10 @@ export default function TrackOptions({
             trigger("notificationSuccess");
 
             queryClient.invalidateQueries({
+                queryKey: [QueryKeys.UserPlaylists]
+            });
+            
+            queryClient.invalidateQueries({
                 queryKey: [QueryKeys.ItemTracks, playlist.Id!],
             });                                    
         },
