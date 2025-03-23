@@ -34,9 +34,9 @@ export default function BlurhashedImage({
             Math.ceil(height ?? width / 100) * 100 // So these keys need to match
         ],
         queryFn: () => {
-            return runOnRuntime(backgroundRuntime, (item : BaseItemDto) => {
+            // return runOnRuntime(backgroundRuntime, (item : BaseItemDto) => {
                 return fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width)
-            })(item)
+            // })(item)
         },
         staleTime: (1000 * 60 * 60) * 24 * 7 // 1 week, to prevent overloading servers
     });
