@@ -6,8 +6,6 @@ import { Image } from "react-native";
 import { QueryKeys } from "../../../enums/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { fetchItemImage } from "../../../api/queries/functions/images";
-import { runOnRuntime } from "react-native-reanimated";
-import { backgroundRuntime } from "../../../App";
 
 interface BlurhashLoadingProps {
     item: BaseItemDto;
@@ -33,11 +31,7 @@ export default function BlurhashedImage({
             Math.ceil(width / 100) * 100, // Images are fetched at a higher, generic resolution
             Math.ceil(height ?? width / 100) * 100 // So these keys need to match
         ],
-        queryFn: () => {
-            return runOnRuntime(backgroundRuntime, (item : BaseItemDto) => {
-                return fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width)
-            })(item)
-        },
+        queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width),
         staleTime: (1000 * 60 * 60) * 24 * 7 // 1 week, to prevent overloading servers
     });
 
