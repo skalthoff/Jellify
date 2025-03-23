@@ -44,9 +44,9 @@ function blobToBase64(blob : Blob) {
         const reader = new FileReader();
 
         reader.onloadend = () => resolve(reader.result as string);
-        runOnRuntime(backgroundRuntime, (blob : Blob) => {
+        runOnRuntime(backgroundRuntime, (blob : Blob, reader: FileReader) => {
             'worklet';
             reader.readAsDataURL(blob);
-        })(blob)
+        })(blob, reader)
     });
   }
