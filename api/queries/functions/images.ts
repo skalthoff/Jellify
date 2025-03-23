@@ -41,12 +41,12 @@ export function fetchItemImage(itemId: string, imageType: ImageType, width: numb
 
 function blobToBase64(blob : Blob) {
     return new Promise<string>((resolve, _) => {
-        const reader = new FileReader();
-
-        reader.onloadend = () => resolve(reader.result as string);
-        runOnRuntime(backgroundRuntime, (blob : Blob, reader: FileReader) => {
+        runOnRuntime(backgroundRuntime, (blob : Blob) => {
             'worklet';
+
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
             reader.readAsDataURL(blob);
-        })(blob, reader)
+        })(blob)
     });
   }
