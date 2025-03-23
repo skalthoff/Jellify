@@ -2,7 +2,7 @@ import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 import Client from "../../../api/client"
-import { backgroundRuntime } from "@/App";
+import { backgroundRuntime } from "../../../App";
 import { runOnRuntime } from "react-native-reanimated";
 
 export function fetchItemImage(itemId: string, imageType: ImageType, width: number, height: number) {
