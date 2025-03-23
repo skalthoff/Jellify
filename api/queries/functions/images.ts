@@ -2,9 +2,6 @@ import { ImageFormat, ImageType } from "@jellyfin/sdk/lib/generated-client/model
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api"
 import _ from "lodash"
 import Client from "../../../api/client"
-import { NativeModules } from "react-native";
-
-const { BackgroundFileReader } = NativeModules;
 
 export function fetchItemImage(itemId: string, imageType: ImageType, width: number, height: number) {
     
@@ -41,7 +38,9 @@ export function fetchItemImage(itemId: string, imageType: ImageType, width: numb
 }
 
 function blobToBase64(blob : Blob) {
-    return new Promise<string>((resolve, reject) => {
-        BackgroundFileReader.readBlobInBackground(blob, resolve, reject)
+    return new Promise<string>((resolve, _) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.readAsDataURL(blob);
     });
   }
