@@ -1,7 +1,7 @@
 ![Jellify App Icon](assets/icon_dark_60pt_3x.png)
 # 🪼 Jellify
 
-[![publish-ios-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-ios-beta.yml/badge.svg)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-ios-beta.yml)
+[![publish-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml/badge.svg?branch=main)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml)
 
 ### 🔗 Quick Links
 [Discord Server](https://discord.gg/yf8fBatktn)
