@@ -15,6 +15,7 @@ import { createWorkletRuntime } from 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { JellifyDarkTheme, JellifyLightTheme } from './components/theme';
+import uuid from "react-native-uuid"
 
 export const backgroundRuntime = createWorkletRuntime('background');
 
@@ -58,8 +59,20 @@ export default function App(): React.JSX.Element {
       <PersistQueryClientProvider 
         client={queryClient} 
         persistOptions={{ 
+
+          /**
+           * Bust old data in favor of newer
+           * data
+           */
+          buster: uuid.v4(),
+          
           persister: clientPersister,
-          maxAge: Infinity // 1 Day
+
+          /**
+           * Infinity, since data can remain the 
+           * same forever on the server
+           */
+          maxAge: Infinity 
       }}>
         <GestureHandlerRootView>
           <TamaguiProvider config={jellifyConfig}>

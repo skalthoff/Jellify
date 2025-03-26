@@ -14,7 +14,11 @@ import { QueryClient } from "@tanstack/react-query";
 export const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            gcTime: Infinity, // disable
+            /**
+             * Infinity, this needs to be greater than
+             * or higher than the `maxAge`
+             */
+            gcTime: Infinity,
             staleTime: (1000 * 60 * 60) * 1 // 1 hour, users can manually refresh stuff too!
         }
     }
