@@ -59,7 +59,7 @@ export default function App(): React.JSX.Element {
         client={queryClient} 
         persistOptions={{ 
           persister: clientPersister,
-          maxAge: Infinity // 1 Day
+          maxAge: (1000 * 60 * 60) * 1 // 1 hour
       }}>
         <GestureHandlerRootView>
           <TamaguiProvider config={jellifyConfig}>

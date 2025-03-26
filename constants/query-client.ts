@@ -14,7 +14,7 @@ import { QueryClient } from "@tanstack/react-query";
 export const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            gcTime: Infinity, // disable
+            gcTime: (1000 * 60 * 60) * 3, // 3 hours
             staleTime: (1000 * 60 * 60) * 1 // 1 hour, users can manually refresh stuff too!
         }
     }
