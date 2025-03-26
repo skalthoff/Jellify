@@ -2,11 +2,12 @@ import Client from "../api/client";
 import { isUndefined } from "lodash";
 import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 import { Platform } from 'react-native'
+import { CarPlayInterface, NowPlayingTemplate, TabBarTemplate } from "react-native-carplay";
 
 // 'react-native-carplay' has also been disabled for android builds in react-native.config.js 
-const CarPlayModule = Platform.OS === 'ios' ? require('react-native-carplay') : null;
-const CarPlayNavigation = CarPlayModule ? require('./CarPlay/Navigation').CarPlayNavigation : null;
-const CarPlayNowPlaying = CarPlayModule ? require('./CarPlay/NowPlaying').CarPlayNowPlaying : null;
+const CarPlay = Platform.OS === 'ios' ? require('react-native-carplay').CarPlay as CarPlayInterface : null;
+const CarPlayNavigation : TabBarTemplate = CarPlay ? require('./CarPlay/Navigation').CarPlayNavigation : null;
+const CarPlayNowPlaying : NowPlayingTemplate = CarPlay ? require('./CarPlay/NowPlaying').CarPlayNowPlaying : null;
 
 interface JellifyContext {
     loggedIn: boolean;
@@ -15,9 +16,6 @@ interface JellifyContext {
 }
 
 const JellifyContextInitializer = () => {
-
-    console.debug(CarPlayModule)
-    console.debug(typeof(CarPlayModule))
 
     const [loggedIn, setLoggedIn] = useState<boolean>(
         !isUndefined(Client) &&
@@ -28,17 +26,17 @@ const JellifyContextInitializer = () => {
     );
 
 
-    const [carPlayConnected, setCarPlayConnected] = useState(CarPlayModule ? CarPlayModule.connected : false);
+    const [carPlayConnected, setCarPlayConnected] = useState(CarPlay ? CarPlay.connected : false);
 
     useEffect(() => {
   
       function onConnect() {
         setCarPlayConnected(true);
 
-        if (loggedIn && CarPlayModule) {
-            CarPlayModule.CarPlay.setRootTemplate(CarPlayNavigation, true);
-            CarPlayModule.CarPlay.pushTemplate(CarPlayNowPlaying, true);
-            CarPlayModule.CarPlay.enableNowPlaying(true); // https://github.com/birkir/react-native-carplay/issues/185
+        if (loggedIn && CarPlay) {
+            CarPlay.setRootTemplate(CarPlayNavigation, true);
+            CarPlay.pushTemplate(CarPlayNowPlaying, true);
+            CarPlay.enableNowPlaying(true); // https://github.com/birkir/react-native-carplay/issues/185
         }
       }
   
@@ -46,12 +44,12 @@ const JellifyContextInitializer = () => {
         setCarPlayConnected(false);
       }
 
-      if (CarPlayModule) {
-          CarPlayModule.CarPlay.registerOnConnect(onConnect);
-          CarPlayModule.CarPlay.registerOnDisconnect(onDisconnect);
+      if (CarPlay) {
+          CarPlay.registerOnConnect(onConnect);
+          CarPlay.registerOnDisconnect(onDisconnect);
           return () => {
-            CarPlayModule.CarPlay.unregisterOnConnect(onConnect)
-            CarPlayModule.CarPlay.unregisterOnDisconnect(onDisconnect)
+            CarPlay.unregisterOnConnect(onConnect)
+            CarPlay.unregisterOnDisconnect(onDisconnect)
           };
       }
     });
