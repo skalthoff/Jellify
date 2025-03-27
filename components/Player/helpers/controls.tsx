@@ -3,7 +3,7 @@ import { XStack, getToken } from "tamagui";
 import PlayPauseButton from "./buttons";
 import Icon from "../../../components/Global/helpers/icon";
 import { getProgress, seekBy, skipToNext } from "react-native-track-player/lib/src/trackPlayer";
-import { usePlayerContext } from "@/player/provider";
+import { usePlayerContext } from "../../../player/provider";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 
 export default function Controls(): React.JSX.Element {
