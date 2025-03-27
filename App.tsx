@@ -58,14 +58,7 @@ export default function App(): React.JSX.Element {
 
       <PersistQueryClientProvider 
         client={queryClient} 
-        persistOptions={{ 
-
-          /**
-           * Bust old data in favor of newer
-           * data
-           */
-          buster: uuid.v4(),
-          
+        persistOptions={{           
           persister: clientPersister,
 
           /**
