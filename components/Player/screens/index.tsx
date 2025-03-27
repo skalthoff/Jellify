@@ -15,6 +15,7 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { useProgress } from "react-native-track-player";
 import { UPDATE_INTERVAL } from "../../../player/config";
 import Scrubber from "../helpers/scrubber";
+import Controls from "../helpers/controls";
 
 export default function PlayerScreen({ 
     navigation 
@@ -182,6 +183,8 @@ export default function PlayerScreen({
                         {/* playback progress goes here */}
                         <Scrubber />
                     </XStack>
+
+                    <Controls />
                     
                     <XStack justifyContent="space-evenly" marginVertical={"$7"}>
                         <Icon name="speaker-multiple"
