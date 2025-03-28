@@ -24,4 +24,4 @@ jobs:
 
       - name: Debug
         run: ls
-        working-directory: android/build
+        working-directory: android
