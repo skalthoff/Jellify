@@ -32,7 +32,8 @@ export default function BlurhashedImage({
             Math.ceil(height ?? width / 100) * 100 // So these keys need to match
         ],
         queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width),
-        staleTime: (1000 * 60 * 60) * 24 * 7, // 1 week, to prevent overloading servers
+        staleTime: (1000 * 60 * 60) * 1,
+        gcTime: (1000 * 60 * 60) * 3,
         refetchOnMount: false,
         refetchOnWindowFocus: false
     });
