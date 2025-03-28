@@ -5,7 +5,7 @@ import { Platform } from 'react-native'
 import { CarPlayInterface, NowPlayingTemplate, TabBarTemplate } from "react-native-carplay";
 
 // 'react-native-carplay' has also been disabled for android builds in react-native.config.js 
-const CarPlay = Platform.OS === 'ios' ? require('react-native-carplay').CarPlay as CarPlayInterface : null;
+const CarPlay = Platform.OS === 'ios' ? require('react-native-carplay') : null;
 const CarPlayNavigation : TabBarTemplate = CarPlay ? require('./CarPlay/Navigation').CarPlayNavigation : null;
 const CarPlayNowPlaying : NowPlayingTemplate = CarPlay ? require('./CarPlay/NowPlaying').CarPlayNowPlaying : null;
 
