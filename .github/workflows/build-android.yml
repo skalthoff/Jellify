@@ -1,5 +1,6 @@
 name: build-android
 on:
+  push:
   pull_request:
 jobs:
   build-android:
