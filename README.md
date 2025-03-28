@@ -6,6 +6,8 @@
 ### 🔗 Quick Links
 [Discord Server](https://discord.gg/yf8fBatktn)
 
+[TestFlight](https://testflight.apple.com/join/etVSc7ZQ)
+
 ### ℹ️ About
 
 > **jellify** (verb) - *to make gelatinous* <br>
