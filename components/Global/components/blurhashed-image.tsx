@@ -15,6 +15,20 @@ interface BlurhashLoadingProps {
     borderRadius?: number | undefined
 }
 
+/**
+ * A React component that will render a Blurhash
+ * string as an image while loading the full image
+ * from the server
+ * 
+ * Image Query is stale after 30 minutes and collected
+ * after an hour to keep the cache size down and the 
+ * app performant
+ * 
+ * TODO: Keep images in offline mode
+ * 
+ * @param param0 
+ * @returns 
+ */
 export default function BlurhashedImage({ 
     item, 
     width, 
@@ -32,8 +46,8 @@ export default function BlurhashedImage({
             Math.ceil(height ?? width / 100) * 100 // So these keys need to match
         ],
         queryFn: () => fetchItemImage(item.AlbumId ? item.AlbumId : item.Id!, type ?? ImageType.Primary, width, height ?? width),
-        staleTime: (1000 * 60 * 60) * 1,
-        gcTime: (1000 * 60 * 60) * 3,
+        staleTime: (1000 * 60 * 30), // 30 minutes
+        gcTime: (1000 * 60 * 60), // 1 hour
         refetchOnMount: false,
         refetchOnWindowFocus: false
     });
