@@ -6,7 +6,7 @@ import { CarPlayInterface, NowPlayingTemplate, TabBarTemplate } from "react-nati
 
 // 'react-native-carplay' has also been disabled for android builds in react-native.config.js 
 const CarPlay = Platform.OS === 'ios' ? require('react-native-carplay').CarPlay as CarPlayInterface : null;
-const CarPlayNavigation : TabBarTemplate = CarPlay ? require('./CarPlay/Navigation') : null;
+const CarPlayNavigation : TabBarTemplate = CarPlay ? require('./CarPlay/Navigation').CarPlayNavigation : null;
 const CarPlayNowPlaying : NowPlayingTemplate = CarPlay ? require('./CarPlay/NowPlaying') : null;
 
 interface JellifyContext {
