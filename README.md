@@ -123,14 +123,26 @@ Playlist
 This is undoubtedly a passion project of [mine](https://github.com/anultravioletaurora), and I've learned a lot from working on it (and the many failed attempts before it). I hope you enjoy using it! Feature requests and bug reports are welcome :)
 
 ## 🏃‍♀️Running Locally
-- iOS Instructions
-  - Clone this repository
-  - Run `npm run init` to install `npm` packages, to install `bundler` and required gems, and to install CocoaPods
-  - In the `ios` directory, run `fastlane match development --readonly` to fetch the development signing certificates
-    - You will need access to the *Jellify Signing* private repository
 
-- Android Instructions
-  - Coming Soon™️
+#### Universal Dependencies
+- Ruby
+- NodeJS
+
+#### iOS Instructions
+- Clone this repository
+- Run `npm run init` to initialize the project
+  - This will install `npm` packages, install `bundler` and required gems, and installs CocoaPods
+- In the `ios` directory, run `fastlane match development --readonly` to fetch the development signing certificates
+  - You will need access to the *Jellify Signing* private repository
+- To run locally, run `npm run start` then run the app on your device or in the simulator
+  - Make sure you open the `Jellify.xcodeworkspace`, *not* the `Jellify.xcodeproject`
+- To create a build, run `npm run fastlane:ios:build` to use fastlane to compile an `.ipa` for you
+
+#### Android Instructions
+- Clone this repository
+- Run `npm i` to install `npm` packages
+- To run locally, run `npm run start`, then run the app on your devvice or in the emulator
+- To create a build, run `npm run fastlane:android:build` to use fastlane to compile an `.apk` for you  
 
 ## 🙏 Special Thanks To
 - The [Jellyfin Team](https://jellyfin.org/) for making this possible with their software, SDKs, and unequivocal helpfulness. 
