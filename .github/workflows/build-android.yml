@@ -1,6 +1,5 @@
 name: build-android
 on:
-  push:
   pull_request:
 jobs:
   build-android:
@@ -22,7 +21,3 @@ jobs:
       
       - name: 🚀 Run fastlane build
         run: npm run fastlane:android:build
-
-      - name: Debug
-        run: cd app && ls
-        working-directory: android
