@@ -21,7 +21,3 @@ jobs:
       
       - name: 🚀 Run fastlane build
         run: npm run fastlane:android:build
-
-      - name: Debug
-        run: cd build && ls
-        working-directory: android
