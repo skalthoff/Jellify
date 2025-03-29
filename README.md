@@ -26,23 +26,22 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 
 ## 💡 Features
 ### ✨ Current
-- Available via Private Testflight
-- iOS support
+- Available via Testflight and Android APK
+  - APKs are associated with each [release](https://github.com/anultravioletaurora/Jellify/releases)
 - Light and Dark modes
 - Home screen access to previously played tracks, artists, and your playlists
+- Quick access to similar artists and items for discovering music in your library
 - Jellyfin playback reporting and [Last.FM Plugin](https://github.com/jesseward/jellyfin-plugin-lastfm) support
 - Library of Favorited Music, not too dissimilar to how streaming services handle your 'library'
 - Full playlist support, including creating, updating, and reordering
 
 ### 🛠 Roadmap
-- [Android Support](https://github.com/anultravioletaurora/Jellify/issues/54)
-- Quick access to similar artists and items for discovering music in your library
-- [Support for Jellyfin Instant Mixes](https://github.com/anultravioletaurora/Jellify/issues/50)
-- [CarPlay / Android Auto Support](https://github.com/anultravioletaurora/Jellify/issues/5)
-- Public Testflight
 - [Offline Playback](https://github.com/anultravioletaurora/Jellify/issues/10)
-- Shared, Public, and Collaborative Playlists
-- Web / Desktop support
+- [CarPlay / Android Auto Support](https://github.com/anultravioletaurora/Jellify/issues/5)
+- [Support for Jellyfin Instant Mixes](https://github.com/anultravioletaurora/Jellify/issues/50)
+- [Shared, Public, and Collaborative Playlists](https://github.com/anultravioletaurora/Jellify/issues/175)
+- [Web / Desktop support](https://github.com/anultravioletaurora/Jellify/issues/71)
+- [TV (Android, Samsung) Support](https://github.com/anultravioletaurora/Jellify/issues/85)
 
 ## 👀 Lemme see!
 ### Home
