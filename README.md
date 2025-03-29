@@ -145,7 +145,13 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 ## 🙏 Special Thanks To
 - The [Jellyfin Team](https://jellyfin.org/) for making this possible with their software, SDKs, and unequivocal helpfulness. 
-- James and all other contributors of [Finamp](https://github.com/jmshrv/finamp). *Jellify* draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin. James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
+  - Special thanks to [Niels](https://github.com/nielsvanvelzen) and [Bill](https://github.com/thornbill)
+- [James](https://github.com/jmshrv) and all other contributors of [Finamp](https://github.com/jmshrv/finamp). *Jellify* draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin. 
+  - James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
 - The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
-- Tony, Trevor, [Laine](https://github.com/lainie-ftw) and [Jordan](https://github.com/jordanbleu) for their testing and feedback from the early stages of development
-- [Alyssa](https://www.instagram.com/uhh.lyssarae?igsh=MTRmczExempnbjBwZw==), for your design knowledge and for making the artwork for *Jellify*. You’ve been instrumental in shaping it’s user experience
+- My dear friends that have heard me talk about *Jellify* for literally **eons**. Thank you for testing *Jellify* during it's infancy and for supporting me all the way back at the beginning of this project 
+  - Tony (iOS, Android)
+  - Trevor (Android)
+  - [Laine](https://github.com/lainie-ftw) (Android)  
+  - [Jordan](https://github.com/jordanbleu)
+- My best(est) friend [Alyssa](https://www.instagram.com/uhh.lyssarae?igsh=MTRmczExempnbjBwZw==), for your design knowledge and for making various artwork for *Jellify*. You’ve been instrumental in shaping it’s user experience
