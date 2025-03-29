@@ -26,7 +26,6 @@ export default function App(): React.JSX.Element {
 
   TrackPlayer.setupPlayer({
     autoHandleInterruptions: true,
-    maxCacheSize: 1000 * 100, // 100MB, TODO make this adjustable
     iosCategory: IOSCategory.Playback,
     iosCategoryOptions: [
         IOSCategoryOptions.AllowAirPlay,
