@@ -28,21 +28,21 @@ export type StackParamList = {
 
 	Discover: undefined
 
-	Library: undefined
-	Artists: {
-		query: QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
-	}
-	Albums: {
-		query: QueryKeys.FavoriteAlbums | QueryKeys.RecentlyAdded
-	}
-	Tracks: {
-		query: QueryKeys.FavoriteTracks | QueryKeys.RecentlyPlayed
-	}
-	Genres: undefined
-	Playlists: undefined
-	DeletePlaylist: {
-		playlist: BaseItemDto
-	}
+    Library: undefined;
+    Artists: {
+        query: QueryKeys.AllArtists | QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
+    };
+    Albums: {
+        query: QueryKeys.FavoriteAlbums | QueryKeys.RecentlyAdded
+    };
+    Tracks: {
+        query: QueryKeys.FavoriteTracks | QueryKeys.RecentlyPlayed
+    };
+    Genres: undefined;
+    Playlists: undefined;
+    DeletePlaylist: {
+        playlist: BaseItemDto
+    }
 
 	Search: undefined
 
