@@ -7,18 +7,20 @@ import { QueryKeys } from "../../enums/query-keys";
 import { fetchFavoriteAlbums } from "../../api/queries/functions/favorites";
 import { fetchRecentlyAdded } from "../../api/queries/functions/recents";
 import { QueryConfig } from "../../api/queries/query.config";
+import { fetchAlbums } from "../../api/queries/functions/albums";
 
 export default function Albums({ navigation, route }: AlbumsProps) : React.JSX.Element {
 
-    const fetchRecentlyAddedAlbums = route.params.query === QueryKeys.RecentlyAdded;
-
-    const { data: albums, refetch, isPending } = useQuery({
-        queryKey: [route.params.query],
-        queryFn: () => 
-            fetchRecentlyAddedAlbums 
-            ? fetchRecentlyAdded(QueryConfig.limits.recents * 4, QueryConfig.limits.recents) 
-            : fetchFavoriteAlbums()
-    });
+    const { data: albums, refetch, isPending } = 
+        useQuery({
+            queryKey: [route.params.query],
+            queryFn: () => 
+                QueryKeys.RecentlyAdded 
+                ? fetchRecentlyAdded(QueryConfig.limits.recents * 4, QueryConfig.limits.recents) 
+                : QueryKeys.FavoriteAlbums ?
+                    fetchFavoriteAlbums()
+                    : fetchAlbums()
+        });
 
     const { width } = useSafeAreaFrame();
 
