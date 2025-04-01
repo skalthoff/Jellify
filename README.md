@@ -153,5 +153,5 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
   - Tony (iOS, Android)
   - Trevor (Android)
   - [Laine](https://github.com/lainie-ftw) (Android)  
-  - [Jordan](https://github.com/jordanbleu)
+  - [Jordan](https://github.com/jordanbleu) (iOS)
 - My best(est) friend [Alyssa](https://www.instagram.com/uhh.lyssarae?igsh=MTRmczExempnbjBwZw==), for your design knowledge and for making various artwork for *Jellify*. You’ve been instrumental in shaping it’s user experience
