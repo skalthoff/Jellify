@@ -8,15 +8,11 @@ interface CategoryRoute {
 	}
 }
 
-const Categories: CategoryRoute[] = [
-	{
-		name: 'Artists',
-		iconName: 'microphone-variant',
-		params: { query: QueryKeys.FavoriteArtists },
-	},
-	{ name: 'Albums', iconName: 'music-box-multiple', params: { query: QueryKeys.FavoriteAlbums } },
-	{ name: 'Tracks', iconName: 'music-note', params: { query: QueryKeys.FavoriteTracks } },
-	{ name: 'Playlists', iconName: 'playlist-music' },
-]
+const Categories : CategoryRoute[] = [
+    { name: "Artists", iconName: "microphone-variant", params: { query: QueryKeys.AllArtists } },
+    { name: "Albums", iconName: "music-box-multiple", params: { query: QueryKeys.AllAlbums} },
+    { name: "Favorite Tracks", iconName: "music-note", params: { query: QueryKeys.FavoriteTracks } },
+    { name: "Playlists", iconName: "playlist-music" },
+];
 
 export default Categories
