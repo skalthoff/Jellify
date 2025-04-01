@@ -30,7 +30,7 @@ export type StackParamList = {
 
     Library: undefined;
     Artists: {
-        query: QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
+        query: QueryKeys.AllArtists | QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
     };
     Albums: {
         query: QueryKeys.FavoriteAlbums | QueryKeys.RecentlyAdded
