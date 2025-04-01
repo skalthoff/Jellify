@@ -50,6 +50,8 @@ export enum QueryKeys {
 	 * Invalidation occurs when the ID of the album or playlist is provided
 	 * as a query key
 	 */
+	AllArtists = "AllArtists",
+    AllAlbums = "AllAlbums",
 	ItemTracks = 'ItemTracks',
 	RefreshHome = 'RefreshHome',
 	FavoriteArtists = 'FavoriteArtists',
