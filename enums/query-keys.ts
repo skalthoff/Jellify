@@ -2,6 +2,8 @@ export enum QueryKeys {
     AddToQueue = "ADD_TO_QUEUE",
     AlbumTracks = "ALBUM_TRACKS",
     Api = "API",
+    AllArtists = "ARTISTS",
+    AllAlbums = "ALBUMS",
     ArtistAlbums = "ARTIST_ALBUMS",
     ArtistById = "ARTIST_BY_ID",
     Credentials = "CREDENTIALS",
