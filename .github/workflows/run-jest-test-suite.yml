@@ -2,7 +2,7 @@ name: Run Jest Unit Tests
 on:
   pull_request:
 jobs:
-  build-android:
+  run-jest-test-suite:
     runs-on: macos-latest
     steps:
       - name: 🛒 Checkout
