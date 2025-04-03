@@ -80,8 +80,9 @@ jest.mock('react-native-track-player', () => {
         },
       },
     },
-    useTrackPlayerProgress: () => ({
+    useProgress: () => ({
       position: 100,
+      buffered: 150,
       duration: 200,
     }),
   }
