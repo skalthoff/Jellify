@@ -42,17 +42,18 @@ jest.mock('react-native-track-player', () => {
         duration: 200,
       }),
       // constants
-      Capability: {
-          Play: 1,
-          PlayFromId: 2,
-          PlayFromSearch: 4,
-          Pause: 8,
-          Stop: 16,
-          SeekTo: 32,
-          Skip: 64,
-          SkipToNext: 128,
-          SkipToPrevious: 256,
-      },
+      constants: {
+            Capability: {
+                Play: 1,
+                PlayFromId: 2,
+                PlayFromSearch: 4,
+                Pause: 8,
+                Stop: 16,
+                SeekTo: 32,
+                Skip: 64,
+                SkipToNext: 128,
+                SkipToPrevious: 256,
+            },
         IOSCategoryOptions: {
           MixWithOthers: 'mixWithOthers',
           DuckOthers: 'duckOthers',
@@ -83,6 +84,7 @@ jest.mock('react-native-track-player', () => {
           Record: 'record',
           PlayAndRecord: 'playAndRecord',
         },
+      }, 
     },
   }
 });
