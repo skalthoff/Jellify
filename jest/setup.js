@@ -5,6 +5,14 @@ jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
 
+jest.mock('react-native-haptic-feedback', () => {
+  return {
+    default: {
+      trigger: jest.fn()
+    } 
+  }
+});
+
 // https://github.com/doublesymmetry/react-native-track-player/issues/501
 jest.mock('react-native-track-player', () => {
   return {
