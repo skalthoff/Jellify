@@ -1,3 +1,10 @@
+// https://github.com/react-native-device-info/react-native-device-info/issues/1360
+import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
+
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+
+jest.mock('react-native-device-info', () => mockRNDeviceInfo);
+
 // https://github.com/doublesymmetry/react-native-track-player/issues/501
 jest.mock('react-native-track-player', () => {
   return {
