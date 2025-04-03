@@ -36,6 +36,11 @@ jest.mock('react-native-track-player', () => {
       getBufferedPosition: jest.fn(),
       getState: jest.fn(),
       getRate: jest.fn(),
+      useProgress: () => ({
+        position: 100,
+        buffered: 150,
+        duration: 200,
+      }),
       // constants
       Capability: {
           PLAY: 1,
@@ -78,12 +83,6 @@ jest.mock('react-native-track-player', () => {
           Record: 'record',
           PlayAndRecord: 'playAndRecord',
         },
-      },
     },
-    useProgress: () => ({
-      position: 100,
-      buffered: 150,
-      duration: 200,
-    }),
   }
 });
