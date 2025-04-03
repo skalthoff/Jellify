@@ -5,6 +5,6 @@ module.exports = {
   setupFilesAfterEnv:  ["./jest/setup.js"],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   transformIgnorePatterns: [
-'node_modules/(?!((@)?react-native|react-native-url-polyfill|@react-navigation|react-native-track-player|@jellyfin)/)',
+'node_modules/(?!((@)?react-native|react-native-url-polyfill|@react-navigation|react-native-track-player|@jellyfin|burnt)/)',
   ],
 };
