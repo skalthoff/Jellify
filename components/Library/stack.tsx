@@ -1,47 +1,55 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import React from 'react'
-import { StackParamList } from '../types'
-import Library from './component'
-import { AlbumScreen } from '../Album'
-import { PlaylistScreen } from '../Playlist/screens'
-import ArtistsScreen from '../Artists/screen'
-import AlbumsScreen from '../Albums/screen'
-import TracksScreen from '../Tracks/screen'
-import DetailsScreen from '../ItemDetail/screen'
-import PlaylistsScreen from '../Playlists/screen'
-import AddPlaylist from './components/add-playlist'
-import DeletePlaylist from './components/delete-playlist'
-import { ArtistScreen } from '../Artist'
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import { StackParamList } from "../types";
+import Library from "./component";
+import { AlbumScreen } from "../Album";
+import { PlaylistScreen } from "../Playlist/screens";
+import ArtistsScreen from "../Artists/screen";
+import AlbumsScreen from "../Albums/screen";
+import TracksScreen from "../Tracks/screen";
+import DetailsScreen from "../ItemDetail/screen";
+import PlaylistsScreen from "../Playlists/screen";
+import AddPlaylist from "./components/add-playlist";
+import DeletePlaylist from "./components/delete-playlist";
+import { ArtistScreen } from "../Artist";
+import Favorites from "../Favorites/component";
+import FavoritesScreen from "../Favorites/screen";
+import LibraryTopBar from "./component";
 
 const Stack = createNativeStackNavigator<StackParamList>()
 
 export default function LibraryStack(): React.JSX.Element {
-	return (
-		<Stack.Navigator initialRouteName='Library'>
-			<Stack.Screen
-				name='Library'
-				component={Library}
-				options={{
-					headerLargeTitle: true,
-					headerLargeTitleStyle: {
-						fontFamily: 'Aileron-Bold',
-					},
-				}}
-			/>
+    return (
+        <Stack.Navigator
+            initialRouteName="Favorites"
+            screenOptions={({ route, navigation }) => ({
+                headerTitle: () => <LibraryTopBar route={route} navigation={navigation} />,
+                headerTitleAlign: "left",
+                headerLeft: () => null, // null didn't work, need to confirm this won't impact layout.
+                headerBackVisible: false,
 
-			<Stack.Screen
-				name='Artist'
-				component={ArtistScreen}
-				options={({ route }) => ({
-					title: route.params.artist.Name ?? 'Unknown Artist',
-					headerLargeTitle: true,
-					headerLargeTitleStyle: {
-						fontFamily: 'Aileron-Bold',
-					},
-				})}
-			/>
+            })}
+        >
+            <Stack.Screen
+                name="Favorites"
+                component={FavoritesScreen}
+            />
+            <Stack.Screen 
+                name="Artist" 
+                component={ArtistScreen} 
+                options={({ route }) => ({
+                    title: route.params.artist.Name ?? "Unknown Artist",
+                    headerLargeTitle: true,
+                    headerLargeTitleStyle: {
+                        fontFamily: 'Aileron-Bold'
+                    }
+                })}
+            />
 
-			<Stack.Screen name='Artists' component={ArtistsScreen} options={({ route }) => ({})} />
+            <Stack.Screen 
+                name="Artists" 
+                component={ArtistsScreen} 
+            />
 
 			<Stack.Screen
 				name='Album'
