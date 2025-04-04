@@ -42,7 +42,13 @@ export default function LibraryTopBar({
             {
                 Categories.map((item, index) => {
                     return <>
-                        <Button key={index} focus={route.name.toLowerCase() === item.name.toLowerCase() ? true : false}>
+                        <Button
+                            key={index}
+                            focus={route.name.toLowerCase() === item.name.toLowerCase() ? true : false}
+                            onPress={() => {
+                                navigation.navigate(item.name, item.params)
+                            }}
+                        >
                             {item.name}
                         </Button>
                     </>
