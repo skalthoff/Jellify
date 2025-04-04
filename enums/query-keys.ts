@@ -54,6 +54,7 @@ export enum QueryKeys {
     AllAlbums = "AllAlbums",
 	ItemTracks = 'ItemTracks',
 	RefreshHome = 'RefreshHome',
+	Favorites = "Favorites",
 	FavoriteArtists = 'FavoriteArtists',
 	FavoriteAlbums = 'FavoriteAlbums',
 	FavoriteTracks = 'FavoriteTracks',
