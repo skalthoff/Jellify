@@ -15,6 +15,8 @@ import { ArtistScreen } from "../Artist";
 import Favorites from "../Favorites/component";
 import FavoritesScreen from "../Favorites/screen";
 import LibraryTopBar from "./component";
+import { GenresScreen } from "../Genres/component";
+import LinearGradient from 'react-native-linear-gradient';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -25,9 +27,8 @@ export default function LibraryStack(): React.JSX.Element {
             screenOptions={({ route, navigation }) => ({
                 headerTitle: () => <LibraryTopBar route={route} navigation={navigation} />,
                 headerTitleAlign: "left",
-                headerLeft: () => null, // null didn't work, need to confirm this won't impact layout.
                 headerBackVisible: false,
-
+                headerTransparent: true,
             })}
         >
             <Stack.Screen
@@ -70,6 +71,13 @@ export default function LibraryStack(): React.JSX.Element {
             <Stack.Screen
                 name="Tracks"
                 component={TracksScreen}
+                options={{
+                }}
+            />
+
+            <Stack.Screen
+                name="Genres"
+                component={GenresScreen}
                 options={{
                 }}
             />
