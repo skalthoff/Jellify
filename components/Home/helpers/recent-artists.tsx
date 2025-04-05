@@ -20,25 +20,29 @@ export default function RecentArtists({
 		<View>
 			<H2 marginLeft={'$2'}>Recent Artists</H2>
 
-			<HorizontalCardList
-				data={recentArtists}
-				onSeeMore={() => {
-					navigation.navigate('Artists', {
-						query: QueryKeys.RecentlyPlayedArtists,
-					})
-				}}
-				renderItem={({ item: recentArtist }) => (
-					<ItemCard
-						item={recentArtist}
-						caption={recentArtist.Name ?? 'Unknown Artist'}
-						onPress={() => {
-							navigation.navigate('Artist', {
-								artist: recentArtist,
-							})
-						}}
-					></ItemCard>
-				)}
-			/>
-		</View>
-	)
+                <HorizontalCardList
+                    data={recentArtists}
+                    onSeeMore={() => {
+                        navigation.getParent()?.navigate('Library', {
+                            screen: 'Artists',
+                            params: {
+                                query: QueryKeys.RecentlyPlayedArtists
+                            }
+                          });
+                }}
+                renderItem={({ item: recentArtist}) => 
+                    <ItemCard 
+                        item={recentArtist} 
+                        caption={recentArtist.Name ?? "Unknown Artist"} 
+                        onPress={() => {
+                            navigation.navigate('Artist', 
+                                { 
+                                    artist: recentArtist, 
+                                }
+                            )}
+                        }>
+                    </ItemCard>
+                }/>
+        </View>
+    )
 }
