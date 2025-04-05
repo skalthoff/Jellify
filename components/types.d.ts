@@ -38,7 +38,9 @@ export type StackParamList = {
     Tracks: {
         query: QueryKeys.FavoriteTracks | QueryKeys.RecentlyPlayed
     };
-    Genres: undefined;
+    Genres: {
+        query: QueryKeys.Genres
+    };
     Playlists: undefined;
     DeletePlaylist: {
         playlist: BaseItemDto
