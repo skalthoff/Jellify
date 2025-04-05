@@ -29,6 +29,7 @@ export type StackParamList = {
 	Discover: undefined
 
     Library: undefined;
+    Favorites: undefined;
     Artists: {
         query: QueryKeys.AllArtists | QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
     };
