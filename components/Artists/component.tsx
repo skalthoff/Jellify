@@ -9,6 +9,7 @@ import { fetchArtists } from "../../api/queries/functions/artists";
 import { fetchRecentlyPlayedArtists } from "../../api/queries/functions/recents";
 import { fetchFavoriteArtists } from "../../api/queries/functions/favorites";
 import { QueryConfig } from "../../api/queries/query.config";
+import { useHeaderHeight } from '@react-navigation/elements';
 
 export default function Artists({ 
     navigation,
@@ -33,11 +34,14 @@ export default function Artists({
             })
 
     const { width } = useSafeAreaFrame();
+    const headerHeight = useHeaderHeight();
+
 
     return (
         <FlatList
+            style={{ paddingTop: headerHeight }}
             contentInsetAdjustmentBehavior="automatic"
-            numColumns={2}
+            numColumns={3}
             data={artists}
             refreshControl={
                 <RefreshControl
@@ -52,7 +56,7 @@ export default function Artists({
                     onPress={() => {
                         navigation.navigate("Artist", { artist })
                     }}
-                    width={width / 2.1}
+                    width={width / 3.3}
                 />
             }
         />

@@ -8,6 +8,7 @@ import { fetchFavoriteAlbums } from "../../api/queries/functions/favorites";
 import { fetchRecentlyAdded } from "../../api/queries/functions/recents";
 import { QueryConfig } from "../../api/queries/query.config";
 import { fetchAlbums } from "../../api/queries/functions/albums";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 export default function Albums({ navigation, route }: AlbumsProps) : React.JSX.Element {
 
@@ -23,9 +24,11 @@ export default function Albums({ navigation, route }: AlbumsProps) : React.JSX.E
         });
 
     const { width } = useSafeAreaFrame();
+    const headerHeight = useHeaderHeight();
 
         return (
             <FlatList
+                style={{ paddingTop: headerHeight }}
                 contentInsetAdjustmentBehavior="automatic"
                 numColumns={2}
                 data={albums}

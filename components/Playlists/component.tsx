@@ -10,15 +10,16 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function FavoritePlaylists({ navigation }: FavoritePlaylistsProps) : React.JSX.Element {
 
-    navigation.setOptions({
-        headerRight: () => {
-            return <Icon 
-                name="plus-circle-outline" 
-                color={getToken("$color.telemagenta")} 
-                onPress={() => navigation.navigate('AddPlaylist')}
-            />
-        }
-    });
+    // To reimplement below header buttons
+    // navigation.setOptions({
+    //     headerRight: () => {
+    //         return <Icon 
+    //             name="plus-circle-outline" 
+    //             color={getToken("$color.telemagenta")} 
+    //             onPress={() => navigation.navigate('AddPlaylist')}
+    //         />
+    //     }
+    // });
 
     const { data: playlists, isPending, refetch } = useQuery({
         queryKey: [QueryKeys.UserPlaylists],
