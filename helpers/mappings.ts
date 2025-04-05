@@ -30,7 +30,6 @@ export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) : Je
     const urlParams = {
         "Container": item.Container!,
         "TranscodingContainer": transcodingContainer,
-        "TranscodingProtocol": TrackType.HLS,
         "EnableRemoteMedia": "true",
         "EnableRedirection": "true",
         "api_key": Client.api!.accessToken,
@@ -42,7 +41,7 @@ export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType) : Je
 
     return {
         url: `${Client.api!.basePath}/Audio/${item.Id!}/universal?${new URLSearchParams(urlParams)}`,
-        type: TrackType.HLS,
+        type: TrackType.Default,
         headers: {
             "X-Emby-Token": Client.api!.accessToken
         },
