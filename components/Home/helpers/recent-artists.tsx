@@ -20,9 +20,12 @@ export default function RecentArtists({ navigation }: { navigation: NativeStackN
                 <HorizontalCardList
                     data={recentArtists}
                     onSeeMore={() => {
-                    navigation.navigate("Artists", {
-                        query: QueryKeys.RecentlyPlayedArtists
-                    })
+                        navigation.getParent()?.navigate('Library', {
+                            screen: 'Artists',
+                            params: {
+                                query: QueryKeys.RecentlyPlayedArtists
+                            }
+                          });
                 }}
                 renderItem={({ item: recentArtist}) => 
                     <ItemCard 
