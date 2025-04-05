@@ -41,6 +41,7 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 - [Support for Jellyfin Instant Mixes](https://github.com/anultravioletaurora/Jellify/issues/50)
 - [Shared, Public, and Collaborative Playlists](https://github.com/anultravioletaurora/Jellify/issues/175)
 - [Web / Desktop support](https://github.com/anultravioletaurora/Jellify/issues/71)
+- [Watch (Apple Watch / WearOS) Support](https://github.com/anultravioletaurora/Jellify/issues/61)
 - [TV (Android, Samsung) Support](https://github.com/anultravioletaurora/Jellify/issues/85)
 
 ## 👀 Lemme see!
@@ -145,14 +146,13 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 ## 🙏 Special Thanks To
 - The [Jellyfin Team](https://jellyfin.org/) for making this possible with their software, SDKs, and unequivocal helpfulness. 
-  - Extra thanks to [Niels](https://github.com/nielsvanvelzen) and [Bill](https://github.com/thornbill)
+  - Special thanks to [Niels](https://github.com/nielsvanvelzen) and [Bill](https://github.com/thornbill)
 - [James](https://github.com/jmshrv) and all other contributors of [Finamp](https://github.com/jmshrv/finamp). *Jellify* draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin. 
   - James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
-- [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) and for his assistance with getting Jest working
 - The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
 - My dear friends that have heard me talk about *Jellify* for literally **eons**. Thank you for testing *Jellify* during it's infancy and for supporting me all the way back at the beginning of this project 
   - Tony (iOS, Android)
   - Trevor (Android)
   - [Laine](https://github.com/lainie-ftw) (Android)  
-  - [Jordan](https://github.com/jordanbleu)
+  - [Jordan](https://github.com/jordanbleu) (iOS)
 - My best(est) friend [Alyssa](https://www.instagram.com/uhh.lyssarae?igsh=MTRmczExempnbjBwZw==), for your design knowledge and for making various artwork for *Jellify*. You’ve been instrumental in shaping it’s user experience
