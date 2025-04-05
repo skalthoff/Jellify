@@ -7,16 +7,13 @@ import { RunTimeTicks } from "../Global/helpers/time-codes";
 import Track from "../Global/components/track";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
-import BlurhashedImage from "../Global/components/blurhashed-image";
-import Avatar from "../Global/components/avatar";
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/query-keys";
-import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
+import { getImageApi, getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
 import { useMemo } from "react";
-import { useSharedValue } from "react-native-reanimated";
 import { ItemCard } from "../Global/components/item-card";
-
+import { Image } from 'expo-image'
 
 export function AlbumScreen({ 
     route, 
@@ -72,11 +69,13 @@ export function AlbumScreen({
                                 marginTop={"$4"}
                                 minHeight={width / 1.1}
                                 >
-                                <BlurhashedImage
-                                    item={album}
-                                    width={width / 1.1}
-                                    height={width / 1.1}
-                                    />
+                                <Image
+                                    source={getImageApi(Client.api!).getItemImageUrlById(album.Id!)}
+                                    style={{
+                                        width: width / 1.1,
+                                        height: width / 1.1
+                                    }}
+                                />
 
                                 <H5 textAlign="center">{ album.Name ?? "Untitled Album" }</H5>
                                 <Text>{ album.ProductionYear?.toString() ?? "" }</Text>
