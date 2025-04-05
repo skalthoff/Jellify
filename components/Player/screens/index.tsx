@@ -89,12 +89,13 @@ export default function PlayerScreen({
                                 minHeight={width / 1.1}
                                     >
                                     <Image
-                                        source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.id!)}
+                                        source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.Id!)}
+                                        placeholder={nowPlaying!.item.ImageBlurHashes?.Primary![0] ?? undefined}
                                         style={{
-                                            borderRadius: 2
+                                            borderRadius: 2,
                                             width: width / 1.1
                                         }}
-                                        />
+                                    />
                             </XStack>
                         </>
                         )
