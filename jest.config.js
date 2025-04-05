@@ -1,6 +1,6 @@
 // https://docs.swmansion.com/react-native-gesture-handler/docs/guides/testing
 module.exports = {
-  preset: 'react-native',
+  preset: 'jest-expo',
   setupFiles: ["./node_modules/react-native-gesture-handler/jestSetup.js"],
   setupFilesAfterEnv:  ["./jest/setup.js"],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
