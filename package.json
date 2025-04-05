@@ -51,7 +51,7 @@
     "react-native-gesture-handler": "^2.23.0",
     "react-native-haptic-feedback": "^2.3.3",
     "react-native-mmkv": "^2.12.2",
-    "react-native-reanimated": "^3.16.7",
+    "react-native-reanimated": "^3.17.2",
     "react-native-safe-area-context": "^5.2.0",
     "react-native-screens": "^4.6.0",
     "react-native-swipeable-item": "^2.0.9",
