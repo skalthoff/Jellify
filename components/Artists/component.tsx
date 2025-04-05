@@ -9,6 +9,7 @@ import { fetchArtists } from "../../api/queries/functions/artists";
 import { fetchRecentlyPlayedArtists } from "../../api/queries/functions/recents";
 import { fetchFavoriteArtists } from "../../api/queries/functions/favorites";
 import { QueryConfig } from "../../api/queries/query.config";
+import { useHeaderHeight } from '@react-navigation/elements';
 
 export default function Artists({ 
     navigation,
@@ -33,27 +34,31 @@ export default function Artists({
             })
 
     const { width } = useSafeAreaFrame();
+    const headerHeight = useHeaderHeight();
 
-	return (
-		<FlatList
-			contentContainerStyle={{
-				flexGrow: 1,
-				alignItems: 'center',
-			}}
-			contentInsetAdjustmentBehavior='automatic'
-			numColumns={2}
-			data={artists}
-			refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />}
-			renderItem={({ index, item: artist }) => (
-				<ItemCard
-					item={artist}
-					caption={artist.Name ?? 'Unknown Artist'}
-					onPress={() => {
-						navigation.navigate('Artist', { artist })
-					}}
-					size={'$14'}
-				/>
-			)}
-		/>
-	)
+
+    return (
+        <FlatList
+            style={{ paddingTop: headerHeight }}
+            contentInsetAdjustmentBehavior="automatic"
+            numColumns={3}
+            data={artists}
+            refreshControl={
+                <RefreshControl
+                    refreshing={isPending}
+                    onRefresh={refetch}
+                />
+            }
+            renderItem={({ index, item: artist}) =>
+                <ItemCard
+                    item={artist}
+                    caption={artist.Name ?? "Unknown Artist"}
+                    onPress={() => {
+                        navigation.navigate("Artist", { artist })
+                    }}
+                    width={width / 3.3}
+                />
+            }
+        />
+    )
 }

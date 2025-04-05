@@ -8,6 +8,7 @@ import { fetchFavoriteAlbums } from "../../api/queries/functions/favorites";
 import { fetchRecentlyAdded } from "../../api/queries/functions/recents";
 import { QueryConfig } from "../../api/queries/query.config";
 import { fetchAlbums } from "../../api/queries/functions/albums";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 export default function Albums({ navigation, route }: AlbumsProps) : React.JSX.Element {
 
@@ -23,29 +24,32 @@ export default function Albums({ navigation, route }: AlbumsProps) : React.JSX.E
         });
 
     const { width } = useSafeAreaFrame();
+    const headerHeight = useHeaderHeight();
 
-	return (
-		<FlatList
-			contentContainerStyle={{
-				flexGrow: 1,
-				alignItems: 'center',
-			}}
-			contentInsetAdjustmentBehavior='automatic'
-			numColumns={2}
-			data={albums}
-			refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />}
-			renderItem={({ index, item: album }) => (
-				<ItemCard
-					item={album}
-					caption={album.Name ?? 'Untitled Album'}
-					subCaption={album.ProductionYear?.toString() ?? ''}
-					squared
-					onPress={() => {
-						navigation.navigate('Album', { album })
-					}}
-					size={'$14'}
-				/>
-			)}
-		/>
-	)
-}
+        return (
+            <FlatList
+                style={{ paddingTop: headerHeight }}
+                contentInsetAdjustmentBehavior="automatic"
+                numColumns={2}
+                data={albums}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isPending}
+                        onRefresh={refetch}
+                    />
+                }
+                renderItem={({ index, item: album}) => 
+                    <ItemCard
+                        item={album}
+                        caption={album.Name ?? "Untitled Album"}
+                        subCaption={album.ProductionYear?.toString() ?? ""}
+                        squared
+                        onPress={() => {
+                            navigation.navigate("Album", { album })
+                        }}
+                        width={width / 2.1}
+                    />   
+                }
+            />
+        )
+    }

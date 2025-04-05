@@ -8,6 +8,7 @@ import { ScrollView, View } from "tamagui";
 import Button from "../Global/helpers/button";
 import Categories from "./categories";
 import LibraryTopBar from "../Library/component";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 export default function Favorites({ 
     route, 
@@ -18,9 +19,11 @@ export default function Favorites({
 }): React.JSX.Element {
 
     const { width } = useSafeAreaFrame();
+    const headerHeight = useHeaderHeight();
 
     return (
         <FlatList
+            style={{ paddingTop: headerHeight }}
             contentInsetAdjustmentBehavior="automatic"
             data={Categories}
             numColumns={2}

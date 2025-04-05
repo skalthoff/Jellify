@@ -8,29 +8,25 @@ import { fetchFavoritePlaylists } from '../../api/queries/functions/favorites'
 import { QueryKeys } from '../../enums/query-keys'
 import { useQuery } from '@tanstack/react-query'
 
-export default function FavoritePlaylists({
-	navigation,
-}: FavoritePlaylistsProps): React.JSX.Element {
-	navigation.setOptions({
-		headerRight: () => {
-			return (
-				<Icon
-					name='plus-circle-outline'
-					color={getToken('$color.telemagenta')}
-					onPress={() => navigation.navigate('AddPlaylist')}
-				/>
-			)
-		},
-	})
+export default function FavoritePlaylists({ navigation }: FavoritePlaylistsProps) : React.JSX.Element {
 
-	const {
-		data: playlists,
-		isPending,
-		refetch,
-	} = useQuery({
-		queryKey: [QueryKeys.UserPlaylists],
-		queryFn: () => fetchFavoritePlaylists(),
-	})
+    // To reimplement below header buttons
+    // navigation.setOptions({
+    //     headerRight: () => {
+    //         return <Icon 
+    //             name="plus-circle-outline" 
+    //             color={getToken("$color.telemagenta")} 
+    //             onPress={() => navigation.navigate('AddPlaylist')}
+    //         />
+    //     }
+    // });
+
+    const { data: playlists, isPending, refetch } = useQuery({
+        queryKey: [QueryKeys.UserPlaylists],
+        queryFn: () => fetchFavoritePlaylists()
+    });
+
+    const { width } = useSafeAreaFrame();
 
 	return (
 		<FlatList
