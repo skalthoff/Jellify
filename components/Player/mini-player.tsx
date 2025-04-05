@@ -9,7 +9,9 @@ import TextTicker from 'react-native-text-ticker';
 import PlayPauseButton from "./helpers/buttons";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { TextTickerConfig } from "./component.config";
-import BlurhashedImage from "../Global/components/blurhashed-image";
+import { Image } from "expo-image";
+import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
+import Client from "../../api/client";
 
 export function Miniplayer({ 
     navigation 
@@ -43,10 +45,12 @@ export function Miniplayer({
                                     justify="center"
                                     alignItems="flex-start"
                                     flex={1}>
-                                        <BlurhashedImage
-                                            item={nowPlaying!.item}
-                                            width={getToken("$12")}
-                                            borderRadius={2}
+                                        <Image
+                                            source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.Id!)}
+                                            style={{
+                                                width: getToken("$12"),
+                                                borderRadius: 2
+                                            }}
                                         />
 
                                 </YStack>
