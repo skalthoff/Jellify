@@ -5,7 +5,7 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { Text } from "../helpers/text";
 import { Image } from "expo-image";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 
 interface CardProps extends TamaguiCardProps {
     caption?: string | null | undefined;
