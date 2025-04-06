@@ -1,6 +1,6 @@
 import React from "react";
 import type { CardProps as TamaguiCardProps } from "tamagui"
-import { getToken, Card as TamaguiCard, View } from "tamagui";
+import { getToken, Card as TamaguiCard, View, YStack } from "tamagui";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { Text } from "../helpers/text";
 import { Image } from "expo-image";
@@ -16,24 +16,21 @@ interface CardProps extends TamaguiCardProps {
 
 export function ItemCard(props: CardProps) {
 
-    const dimensions = props.width && typeof(props.width) === "number" ? { width: props.width, height: props.width } : { width: 150, height: 150 };
-
-    const logoDimensions = props.width && typeof(props.width) === "number" ? { width: props.width / 2, height: props.width / 6 }: { width: 100, height: 75 };
-
     return (
         <View 
             alignItems="center"
             margin={5}
             >
             <TamaguiCard 
-                size="$4" 
+                size={"$12"}
+                height={props.size}
+                width={props.size}
                 backgroundColor={getToken("$color.amethyst")}
-                borderRadius={props.squared ? 5 : dimensions.width}
+                circular={!props.squared}
+                borderRadius={props.squared ? 5 : 'unset'}
                 animation="bouncy"
                 hoverStyle={props.onPress ? { scale: 0.925 } : {}}
                 pressStyle={props.onPress ? { scale: 0.875 } : {}}
-                width={props.width ?? 150}
-                height={props.width ?? 150}
                 {...props}
             >
                 <TamaguiCard.Header>
@@ -59,18 +56,18 @@ export function ItemCard(props: CardProps) {
                             )}
                         placeholder={props.item.ImageBlurHashes && props.item.ImageBlurHashes["Primary"] ? props.item.ImageBlurHashes["Primary"][0] : undefined}
                         style={{
-                            width: dimensions.width,
-                            height: dimensions.height,
-                            borderRadius: props.squared ? 5 : dimensions.width
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: props.squared ? 2 : 100
                         }}
                     />
                 </TamaguiCard.Background>
             </TamaguiCard>
             { props.caption && (
-                <View 
+                <YStack 
                     alignContent="center"
                     alignItems="center"
-                    width={dimensions.width}
+                    maxWidth={props.size}
                 >
                     <Text 
                         bold
@@ -89,7 +86,7 @@ export function ItemCard(props: CardProps) {
                             { props.subCaption }
                         </Text>
                     )}
-                </View>
+                </YStack>
             )}
         </View>
     )

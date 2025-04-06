@@ -85,7 +85,7 @@ export function ArtistScreen({
                 <FlatList
                     contentContainerStyle={{
                         flexGrow: 1,
-                        alignContent: 'center'
+                        alignItems: "center"
                     }}
                     data={albums}
                     numColumns={columns} // TODO: Make this adjustable
@@ -93,7 +93,7 @@ export function ArtistScreen({
                         <ItemCard
                             caption={album.Name}
                             subCaption={album.ProductionYear?.toString()}
-                            width={(width / 1.1) / columns}
+                            size={"$14"}
                             squared 
                             item={album}
                             onPress={() => {
