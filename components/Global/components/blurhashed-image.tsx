@@ -16,6 +16,11 @@ interface BlurhashLoadingProps {
 }
 
 /**
+ * @deprecated 
+ * 
+ * Please use the `Image` component from 
+ * the `expo-image` module instead, as that is more performant
+ * 
  * A React component that will render a Blurhash
  * string as an image while loading the full image
  * from the server
