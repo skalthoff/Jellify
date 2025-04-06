@@ -51,7 +51,8 @@ export function Miniplayer({
                                             source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.AlbumId!)}
                                             style={{
                                                 width: getToken("$12"),
-                                                height: getToken("$12")
+                                                height: getToken("$12"),
+                                                borderRadius: getToken("$1")
                                             }}
                                         />
 
