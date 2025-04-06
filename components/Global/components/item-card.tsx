@@ -51,7 +51,12 @@ export function ItemCard(props: CardProps) {
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
                     <Image
-                        source={getImageApi(Client.api!).getItemImageUrlById(props.item.Id!)}
+                        source={getImageApi(Client.api!)
+                            .getItemImageUrlById(
+                                props.item.Type === 'Audio' 
+                                ? props.item.AlbumId!
+                                : props.item.Id!
+                            )}
                         style={{
                             width: dimensions.width,
                             height: dimensions.height,
