@@ -3,7 +3,9 @@ import type { CardProps as TamaguiCardProps } from "tamagui"
 import { getToken, Card as TamaguiCard, View } from "tamagui";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { Text } from "../helpers/text";
-import BlurhashedImage from "./blurhashed-image";
+import { Image } from "expo-image";
+import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
+import Client from "../../../api/client";
 
 interface CardProps extends TamaguiCardProps {
     caption?: string | null | undefined;
@@ -48,11 +50,19 @@ export function ItemCard(props: CardProps) {
                         )} */}
                 </TamaguiCard.Footer>
                 <TamaguiCard.Background>
-                <BlurhashedImage
-                        item={props.item}
-                        width={dimensions.width}
-                        height={dimensions.height}
-                        borderRadius={props.squared ? 5 : dimensions.width}
+                    <Image
+                        source={getImageApi(Client.api!)
+                            .getItemImageUrlById(
+                                props.item.Type === 'Audio' 
+                                ? props.item.AlbumId!
+                                : props.item.Id!
+                            )}
+                        placeholder={props.item.ImageBlurHashes && props.item.ImageBlurHashes["Primary"] ? props.item.ImageBlurHashes["Primary"][0] : undefined}
+                        style={{
+                            width: dimensions.width,
+                            height: dimensions.height,
+                            borderRadius: props.squared ? 5 : dimensions.width
+                        }}
                     />
                 </TamaguiCard.Background>
             </TamaguiCard>

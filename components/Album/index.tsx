@@ -1,5 +1,5 @@
 import { HomeAlbumProps } from "../types";
-import { YStack, XStack, Separator } from "tamagui";
+import { YStack, XStack, Separator, getToken } from "tamagui";
 import { ItemSortBy } from "@jellyfin/sdk/lib/generated-client/models";
 import { H3, H5, Text } from "../Global/helpers/text";
 import { FlatList } from "react-native";
@@ -7,16 +7,13 @@ import { RunTimeTicks } from "../Global/helpers/time-codes";
 import Track from "../Global/components/track";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import FavoriteButton from "../Global/components/favorite-button";
-import BlurhashedImage from "../Global/components/blurhashed-image";
-import Avatar from "../Global/components/avatar";
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/query-keys";
-import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
+import { getImageApi, getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
 import { useMemo } from "react";
-import { useSharedValue } from "react-native-reanimated";
 import { ItemCard } from "../Global/components/item-card";
-
+import { Image } from 'expo-image'
 
 export function AlbumScreen({ 
     route, 
@@ -70,13 +67,16 @@ export function AlbumScreen({
                                 alignItems="center" 
                                 alignContent="center"
                                 marginTop={"$4"}
-                                minHeight={width / 1.1}
+                                minHeight={getToken("$20") + getToken("$15")}
                                 >
-                                <BlurhashedImage
-                                    item={album}
-                                    width={width / 1.1}
-                                    height={width / 1.1}
-                                    />
+                                <Image
+                                    source={getImageApi(Client.api!).getItemImageUrlById(album.Id!)}
+                                    style={{
+                                        borderRadius: getToken("$5"),
+                                        width: getToken("$20") + getToken("$15"),
+                                        height: getToken("$20") + getToken("$15")
+                                    }}
+                                />
 
                                 <H5 textAlign="center">{ album.Name ?? "Untitled Album" }</H5>
                                 <Text>{ album.ProductionYear?.toString() ?? "" }</Text>

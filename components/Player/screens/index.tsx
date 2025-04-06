@@ -7,12 +7,14 @@ import { YStack, XStack, Spacer, getTokens } from "tamagui";
 import { Text } from "../../../components/Global/helpers/text";
 import Icon from "../../../components/Global/helpers/icon";
 import FavoriteButton from "../../Global/components/favorite-button";
-import BlurhashedImage from "../../Global/components/blurhashed-image";
 import TextTicker from "react-native-text-ticker";
 import { TextTickerConfig } from "../component.config";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
 import Scrubber from "../helpers/scrubber";
 import Controls from "../helpers/controls";
+import { Image } from "expo-image";
+import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
+import Client from "../../../api/client";
 
 export default function PlayerScreen({ 
     navigation 
@@ -86,11 +88,14 @@ export default function PlayerScreen({
                                 alignContent="center"
                                 minHeight={width / 1.1}
                                     >
-                                    <BlurhashedImage
-                                        borderRadius={2}
-                                        item={nowPlaying!.item}
-                                        width={width / 1.1}
-                                        />
+                                    <Image
+                                        source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.AlbumId!)}
+                                        placeholder={nowPlaying!.item.ImageBlurHashes?.Primary![0] ?? undefined}
+                                        style={{
+                                            borderRadius: 2,
+                                            width: width / 1.1
+                                        }}
+                                    />
                             </XStack>
                         </>
                         )
