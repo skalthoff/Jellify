@@ -182,8 +182,6 @@ export default function TrackOptions({
                                         <XStack alignItems="center">
                                             <YStack 
                                                 flex={1}
-                                                minWidth={getToken("$10")}
-                                                minHeight={getToken("$10")}
                                             >
 
                                                 <Image
