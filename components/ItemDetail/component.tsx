@@ -74,8 +74,8 @@ export default function ItemDetail({
                 <XStack 
                     justifyContent="center"
                     alignItems="center"
-                    maxHeight={width / 1.5}
-                    maxWidth={width / 1.5}
+                    minHeight={width / 1.5}
+                    minWidth={width / 1.5}
                 >
 
                     <Image
