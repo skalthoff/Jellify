@@ -13,6 +13,14 @@ jest.mock('react-native-haptic-feedback', () => {
   }
 });
 
+jest.mock('burnt', () => {
+  return {
+    default: {
+      alert: jest.fn()
+    }
+  }
+})
+
 // https://github.com/doublesymmetry/react-native-track-player/issues/501
 jest.mock('react-native-track-player', () => {
   return {
