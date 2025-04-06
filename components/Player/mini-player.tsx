@@ -44,9 +44,16 @@ export function Miniplayer({
                                 <YStack
                                     justify="center"
                                     alignItems="flex-start"
-                                    flex={1}>
+                                    flex={1}
+                                    minHeight={"$12"}
+                                    minWidth={"$12"}
+                                >
                                         <Image
                                             source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.AlbumId!)}
+                                            style={{
+                                                width: getToken("$12"),
+                                                height: getToken("$12")
+                                            }}
                                         />
 
                                 </YStack>
