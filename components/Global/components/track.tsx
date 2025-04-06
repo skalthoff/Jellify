@@ -103,7 +103,7 @@ export default function Track({
                 >
                     { showArtwork ? (
                         <Image
-                            source={getImageApi(Client.api!).getItemImageUrlById(track.Id!)}
+                            source={getImageApi(Client.api!).getItemImageUrlById(track.AlbumId!)}
                             style={{
                                 width: getToken("$12"),
                                 height: getToken("$12"),
