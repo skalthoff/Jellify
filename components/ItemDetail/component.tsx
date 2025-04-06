@@ -12,7 +12,7 @@ import TextTicker from "react-native-text-ticker";
 import { TextTickerConfig } from "../Player/component.config";
 import { Image } from "expo-image";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import Client from "@/api/client";
+import Client from "../../api/client";
 
 export default function ItemDetail({ 
     item, 

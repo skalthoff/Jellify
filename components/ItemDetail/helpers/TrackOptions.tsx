@@ -20,7 +20,7 @@ import { fetchUserPlaylists } from "../../../api/queries/functions/playlists";
 import * as Burnt from "burnt";
 import { Image } from "expo-image";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 
 interface TrackOptionsProps {
     track: BaseItemDto;
