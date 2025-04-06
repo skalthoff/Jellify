@@ -5,6 +5,6 @@ module.exports = {
   setupFilesAfterEnv:  ["./jest/setup.js"],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   transformIgnorePatterns: [
-    'node_modules/(?!(@)?(react-native|react-native-vector-icons|react-native-url-polyfill|react-navigation|react-native-track-player|jellyfin|burnt|expo|expo-modules-core)/)',
+    'node_modules/(?!(@)?(react-native|react-native-vector-icons|react-native-url-polyfill|react-navigation|react-native-track-player|jellyfin|burnt|expo|expo-font|expo-modules-core)/)',
   ],
 };
