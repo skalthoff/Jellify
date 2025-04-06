@@ -28,7 +28,7 @@ export async function fetchSearchResults(searchString: string | undefined) : Pro
                     'MusicArtist',
                     'Playlist'
                 ],
-                limit: QueryConfig.limits.search
+                limit: QueryConfig.limits.search,
             })
             .then((response) => {
                 if (response.data.Items)
