@@ -103,18 +103,19 @@ Playlist
 ### 🎨 Frontend
 [Tamagui](https://tamagui.dev/)\
 [React Navigation](https://reactnavigation.org/)\
+[Burnt](https://github.com/nandorojo/burnt)\
+[React Native CarPlay](https://github.com/birkir/react-native-carplay)\
 [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
 - Specifically Material Community Icons
 
-[React Native CarPlay](https://github.com/birkir/react-native-carplay)\
-[React Native Blurhash](https://github.com/mrousavy/react-native-blurhash)
-
 ### 🎛️ Backend
 [Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
+[Expo SDK](https://expo.dev/)\
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)\
 [React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
 [React Native MMKV](https://github.com/mrousavy/react-native-mmkv)\
-[React Native File Access](https://github.com/alpha0010/react-native-file-access)
+[React Native File Access](https://github.com/alpha0010/react-native-file-access)\
+[React Native Boost](https://github.com/kuatsu/react-native-boost)
 
 ### 👩‍💻 Monitoring
 [GlitchTip](https://glitchtip.com/)
