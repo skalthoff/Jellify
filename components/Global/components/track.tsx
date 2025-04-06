@@ -1,6 +1,6 @@
 import { usePlayerContext } from "../../../player/provider";
 import React from "react";
-import { getTokens, Spacer, Theme, useTheme, XStack, YStack } from "tamagui";
+import { getToken, getTokens, Spacer, Theme, useTheme, XStack, YStack } from "tamagui";
 import { Text } from "../helpers/text";
 import { RunTimeTicks } from "../helpers/time-codes";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
@@ -9,9 +9,11 @@ import Icon from "../helpers/icon";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../../components/types";
 import { QueuingType } from "../../../enums/queuing-type";
-import BlurhashedImage from "./blurhashed-image";
 import { Queue } from "../../../player/types/queue-item";
 import FavoriteIcon from "./favorite-icon";
+import { Image } from "expo-image";
+import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
+import Client from "@/api/client";
 
 interface TrackProps {
     track: BaseItemDto;
@@ -100,10 +102,13 @@ export default function Track({
                     minHeight={showArtwork ? width / 9 : "unset"}
                 >
                     { showArtwork ? (
-                        <BlurhashedImage
-                            item={track}
-                            width={width / 9}
-                            borderRadius={2}
+                        <Image
+                            source={getImageApi(Client.api!).getItemImageUrlById(track.Id!)}
+                            style={{
+                                width: getToken("$12"),
+                                height: getToken("$12"),
+                                borderRadius: getToken("$1")
+                            }}
                         />
                     ) : (
                     <Text 
