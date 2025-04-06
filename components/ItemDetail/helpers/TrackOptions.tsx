@@ -188,15 +188,15 @@ export default function TrackOptions({
                                                     source={getImageApi(Client.api!).getItemImageUrlById(playlist.Id!)}
                                                     style={{
                                                         borderRadius: getToken("$1.5"),
-                                                        width: getToken("$15"),
-                                                        height: getToken("$15")
+                                                        width: getToken("$12"),
+                                                        height: getToken("$12")
                                                     }}
                                                 />
                                             </YStack>
 
                                             <YStack 
                                                 alignItems="flex-start"
-                                                flex={4} 
+                                                flex={5} 
                                             >
                                                 <Text bold fontSize={"$6"}>{playlist.Name ?? "Untitled Playlist"}</Text>
 
