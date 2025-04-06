@@ -103,7 +103,7 @@ export default function Track({
                 >
                     { showArtwork ? (
                         <Image
-                            source={getImageApi(Client.api!).getItemImageUrlById(track.Id!)}
+                            source={getImageApi(Client.api!).getItemImageUrlById(track.AlbumId!)}
                             style={{
                                 width: getToken("$12"),
                                 height: getToken("$12"),
@@ -163,7 +163,7 @@ export default function Track({
                         justifyContent="center"
                     >
                         <Icon 
-                            name={showRemove ? "close" : "dots-vertical"} 
+                            name={showRemove ? "close" : "dots-horizontal"} 
                             onPress={() => {
                                 if (!!showRemove) {
                                     if (onRemove)

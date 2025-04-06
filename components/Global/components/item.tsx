@@ -120,7 +120,7 @@ export default function Item({
                     {(item.Type === 'Audio' || item.Type === 'MusicAlbum') ? (
 
                         <Icon  
-                        name="dots-vertical"
+                        name="dots-horizontal"
                         onPress={() => {
                             navigation.navigate("Details", {
                                 item,
