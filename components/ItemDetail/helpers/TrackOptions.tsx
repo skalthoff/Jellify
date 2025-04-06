@@ -180,7 +180,11 @@ export default function TrackOptions({
                                         }}
                                     >
                                         <XStack alignItems="center">
-                                            <YStack flex={1}>
+                                            <YStack 
+                                                flex={1}
+                                                minWidth={getToken("$15")}
+                                                minHeight={getToken("$15")}
+                                            >
 
                                                 <Image
                                                     source={getImageApi(Client.api!).getItemImageUrlById(playlist.Id!)}
