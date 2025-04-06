@@ -5,7 +5,6 @@ import { MMKVStorageKeys } from "../enums/mmkv-storage-keys";
 import { findPlayNextIndexStart, findPlayQueueIndexStart } from "./helpers/index";
 import TrackPlayer, { Event, State, usePlaybackState, useTrackPlayerEvents } from "react-native-track-player";
 import { isEqual, isUndefined } from "lodash";
-import { getPlaystateApi } from "@jellyfin/sdk";
 import { handlePlaybackProgressUpdated, handlePlaybackState } from "./handlers";
 import { useUpdateOptions } from "../player/hooks";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
@@ -22,6 +21,7 @@ import { Queue } from "./types/queue-item";
 import * as Burnt from "burnt";
 import { markItemPlayed } from "../api/mutations/functions/item";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api";
 
 interface PlayerContext {
     initialized: boolean;
