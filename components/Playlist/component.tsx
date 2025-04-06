@@ -158,8 +158,8 @@ export default function Playlist({
                         source={getImageApi(Client.api!).getItemImageUrlById(playlist.Id!)}
                         style={{
                             borderRadius: getToken("$5"),
-                            width: getToken("$20") + getToken("$10"),
-                            height: getToken("$20") + getToken("$10")
+                            width: getToken("$20") + getToken("$15"),
+                            height: getToken("$20") + getToken("$15")
                         }}
                     />
 
