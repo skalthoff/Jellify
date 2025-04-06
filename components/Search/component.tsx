@@ -7,11 +7,13 @@ import { QueryKeys } from "../../enums/query-keys";
 import { fetchSearchResults } from "../../api/queries/functions/search";
 import { useQuery } from "@tanstack/react-query";
 import { FlatList } from "react-native";
-import { H3, Text } from "../Global/helpers/text";
+import { H3 } from "../Global/helpers/text";
 import { fetchSearchSuggestions } from "../../api/queries/functions/suggestions";
 import { Spinner, YStack } from "tamagui";
 import Suggestions from "./suggestions";
-import { isEmpty, isUndefined } from "lodash";
+import { isEmpty } from "lodash";
+import HorizontalCardList from "../Global/components/horizontal-list";
+import { ItemCard } from "../Global/components/item-card";
 
 export default function Search({ 
     navigation
@@ -37,14 +39,16 @@ export default function Search({
         
         return () => {
             clearTimeout(timeout);
-            timeout = setTimeout(() => refetch, 1000)
+            timeout = setTimeout(() => {
+                refetch();
+                refetchSuggestions();
+            }, 1000)
         }
     }, []);
 
     const handleSearchStringUpdate = (value: string | undefined) => {
         setSearchString(value)
         search();
-        refetchSuggestions();
     }
 
     return (
@@ -60,7 +64,27 @@ export default function Search({
                     />
 
                     { !isEmpty(items) && (
+                        <YStack>
                         <H3>Results</H3>
+
+                            <HorizontalCardList
+                                data={items?.filter(result => result.Type === 'MusicArtist')}
+                                renderItem={({ item: artistResult }) => {
+                                    return (
+                                        <ItemCard 
+                                            item={artistResult}
+                                            onPress={() => {
+                                                navigation.push('Artist', {
+                                                    artist: artistResult
+                                                })
+                                            }}
+                                            size={"$8"}
+                                            caption={artistResult.Name ?? "Untitled Artist"}
+                                        />
+                                    )
+                                }}
+                            />
+                        </YStack>
                     )}
                 </YStack>
             )}
@@ -79,7 +103,8 @@ export default function Search({
                     </YStack>
                 )
             }}
-            data={items}
+            // We're displaying artists separately so we're going to filter them out here
+            data={items?.filter((result) => result.Type !== 'MusicArtist')}
             refreshing={fetchingResults}
             renderItem={({ item }) => 
                 <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />

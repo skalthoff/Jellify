@@ -14,6 +14,7 @@ import { Image } from "expo-image";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
 import Icon from "../Global/helpers/icon";
+import { Platform } from "react-native";
 
 export default function ItemDetail({ 
     item, 
@@ -78,13 +79,21 @@ export default function ItemDetail({
                     minHeight={width / 1.5}
                     minWidth={width / 1.5}
                 >
-                    <Icon
-                        name="chevron-down"
-                        onPress={() => {
-                            navigation.goBack();
-                        }}
-                        small
-                    />
+                    {/**
+                     * Android needs a dismiss chevron here
+                     */}
+                    { Platform.OS === 'android' ? (
+                        <Icon
+                            name="chevron-down"
+                            onPress={() => {
+                                navigation.goBack();
+                            }}
+                            small
+                        />
+
+                    ) : (
+                        <Spacer />
+                    )}
 
                     <Spacer />
 
