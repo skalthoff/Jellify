@@ -49,7 +49,6 @@ export function Miniplayer({
                                             source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.Id!)}
                                             style={{
                                                 width: 60,
-                                                borderRadius: 2
                                             }}
                                         />
 
