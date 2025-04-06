@@ -13,7 +13,7 @@ import { Queue } from "../../../player/types/queue-item";
 import FavoriteIcon from "./favorite-icon";
 import { Image } from "expo-image";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
-import Client from "@/api/client";
+import Client from "../../../api/client";
 
 interface TrackProps {
     track: BaseItemDto;
