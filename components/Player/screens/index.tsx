@@ -89,7 +89,7 @@ export default function PlayerScreen({
                                 minHeight={width / 1.1}
                                     >
                                     <Image
-                                        source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.Id!)}
+                                        source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.AlbumId!)}
                                         placeholder={nowPlaying!.item.ImageBlurHashes?.Primary![0] ?? undefined}
                                         style={{
                                             borderRadius: 2,

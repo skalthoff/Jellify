@@ -46,7 +46,7 @@ export function Miniplayer({
                                     alignItems="flex-start"
                                     flex={1}>
                                         <Image
-                                            source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.Id!)}
+                                            source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.AlbumId!)}
                                             style={{
                                                 width: 60,
                                             }}
