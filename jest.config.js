@@ -4,6 +4,7 @@ module.exports = {
   setupFiles: ["./node_modules/react-native-gesture-handler/jestSetup.js"],
   setupFilesAfterEnv:  [
     "./jest/setup.js",
+    "./jest/setup-carplay.js",
     "./tamagui.config.ts",
   ],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
