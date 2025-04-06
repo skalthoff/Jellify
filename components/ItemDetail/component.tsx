@@ -13,6 +13,7 @@ import { TextTickerConfig } from "../Player/component.config";
 import { Image } from "expo-image";
 import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
+import Icon from "../Global/helpers/icon";
 
 export default function ItemDetail({ 
     item, 
@@ -73,10 +74,19 @@ export default function ItemDetail({
 
                 <XStack 
                     justifyContent="center"
-                    alignItems="center"
+                    alignItems="flex-start"
                     minHeight={width / 1.5}
                     minWidth={width / 1.5}
                 >
+                    <Icon
+                        name="chevron-down"
+                        onPress={() => {
+                            navigation.goBack();
+                        }}
+                        small
+                    />
+
+                    <Spacer />
 
                     <Image
                         source={getImageApi(Client.api!)
@@ -92,6 +102,9 @@ export default function ItemDetail({
                             borderRadius: item.Type === "MusicArtist" ? width / 1.5 : getToken("$5")
                         }}
                     />
+
+                    <Spacer />
+                    <Spacer />
                 </XStack>
 
                 {/* Item Name, Artist, Album, and Favorite Button */}
