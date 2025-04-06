@@ -46,7 +46,6 @@ export function Miniplayer({
                                     alignItems="flex-start"
                                     flex={1}
                                     minHeight={"$12"}
-                                    minWidth={"$12"}
                                 >
                                         <Image
                                             source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.AlbumId!)}
