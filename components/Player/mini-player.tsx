@@ -47,9 +47,6 @@ export function Miniplayer({
                                     flex={1}>
                                         <Image
                                             source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.AlbumId!)}
-                                            style={{
-                                                width: 60,
-                                            }}
                                         />
 
                                 </YStack>
