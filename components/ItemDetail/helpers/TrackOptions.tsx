@@ -186,7 +186,8 @@ export default function TrackOptions({
                                                     source={getImageApi(Client.api!).getItemImageUrlById(playlist.Id!)}
                                                     style={{
                                                         borderRadius: getToken("$2"),
-                                                        width: getToken("$15")
+                                                        width: getToken("$15"),
+                                                        height: getToken("$15")
                                                     }}
                                                 />
                                             </YStack>
