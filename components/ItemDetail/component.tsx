@@ -88,9 +88,10 @@ export default function ItemDetail({
                         }
                         style={{
                             width: width / 1.5,
+                            height: width / 1.5,
                             borderRadius: item.Type === "MusicArtist" ? width / 1.5 : getToken("$5")
                         }}
-                        />
+                    />
                 </XStack>
 
                 {/* Item Name, Artist, Album, and Favorite Button */}
