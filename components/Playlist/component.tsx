@@ -5,18 +5,18 @@ import { getToken, Separator, Spacer, XStack, YStack } from "tamagui";
 import { RunTimeTicks } from "../Global/helpers/time-codes";
 import { H4, H5, Text } from "../Global/helpers/text";
 import Track from "../Global/components/track";
-import BlurhashedImage from "../Global/components/blurhashed-image";
 import DraggableFlatList from "react-native-draggable-flatlist";
-import { removeFromPlaylist, reorderPlaylist, updatePlaylist } from "../../api/mutations/functions/playlists";
+import { removeFromPlaylist, updatePlaylist } from "../../api/mutations/functions/playlists";
 import { useEffect, useState } from "react";
 import Icon from "../Global/helpers/icon";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { trigger } from "react-native-haptic-feedback";
 import { queryClient } from "../../constants/query-client";
 import { QueryKeys } from "../../enums/query-keys";
-import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
+import { getImageApi, getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
 import { RefreshControl } from "react-native";
+import { Image } from "expo-image";
 
 interface PlaylistProps { 
     playlist: BaseItemDto;
@@ -154,9 +154,13 @@ export default function Playlist({
                     alignItems="center"
                     marginTop={"$4"}
                 >
-                    <BlurhashedImage
-                        item={playlist}
-                        width={300}
+                    <Image
+                        source={getImageApi(Client.api!).getItemImageUrlById(playlist.Id!)}
+                        style={{
+                            borderRadius: getToken("$5"),
+                            width: getToken("$20") + getToken("$15"),
+                            height: getToken("$20") + getToken("$15")
+                        }}
                     />
 
                     <H4>{ playlist.Name ?? "Untitled Playlist" }</H4>

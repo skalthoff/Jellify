@@ -103,18 +103,19 @@ Playlist
 ### 🎨 Frontend
 [Tamagui](https://tamagui.dev/)\
 [React Navigation](https://reactnavigation.org/)\
+[Burnt](https://github.com/nandorojo/burnt)\
+[React Native CarPlay](https://github.com/birkir/react-native-carplay)\
 [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
 - Specifically Material Community Icons
 
-[React Native CarPlay](https://github.com/birkir/react-native-carplay)\
-[React Native Blurhash](https://github.com/mrousavy/react-native-blurhash)
-
 ### 🎛️ Backend
 [Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
+[Expo SDK](https://expo.dev/)\
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)\
 [React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
 [React Native MMKV](https://github.com/mrousavy/react-native-mmkv)\
-[React Native File Access](https://github.com/alpha0010/react-native-file-access)
+[React Native File Access](https://github.com/alpha0010/react-native-file-access)\
+[React Native Boost](https://github.com/kuatsu/react-native-boost)
 
 ### 👩‍💻 Monitoring
 [GlitchTip](https://glitchtip.com/)
@@ -146,13 +147,16 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 ## 🙏 Special Thanks To
 - The [Jellyfin Team](https://jellyfin.org/) for making this possible with their software, SDKs, and unequivocal helpfulness. 
-  - Special thanks to [Niels](https://github.com/nielsvanvelzen) and [Bill](https://github.com/thornbill)
+  - Extra thanks to [Niels](https://github.com/nielsvanvelzen) and [Bill](https://github.com/thornbill)
 - [James](https://github.com/jmshrv) and all other contributors of [Finamp](https://github.com/jmshrv/finamp). *Jellify* draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin. 
   - James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
 - The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
+- My fellow [contributors](https://github.com/anultravioletaurora/Jellify/graphs/contributors) who have poured so much heart and a lot of sweat into making *Jellify* a great experience
+  - Extra thanks to [John Grant](https://github.com/johngrantdev) for shaping and designing the user experience in many places
 - My dear friends that have heard me talk about *Jellify* for literally **eons**. Thank you for testing *Jellify* during it's infancy and for supporting me all the way back at the beginning of this project 
   - Tony (iOS, Android)
   - Trevor (Android)
   - [Laine](https://github.com/lainie-ftw) (Android)  
   - [Jordan](https://github.com/jordanbleu) (iOS)
-- My best(est) friend [Alyssa](https://www.instagram.com/uhh.lyssarae?igsh=MTRmczExempnbjBwZw==), for your design knowledge and for making various artwork for *Jellify*. You’ve been instrumental in shaping it’s user experience
+- My best(est) friend [Alyssa](https://www.instagram.com/uhh.lyssarae?igsh=MTRmczExempnbjBwZw==), for your design knowledge and for making various artwork for *Jellify*.
+  - You’ve been instrumental in shaping it’s user experience, my rock during development, and an overall inspiration in my life

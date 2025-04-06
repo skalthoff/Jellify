@@ -1,21 +1,20 @@
-import { RouteProp, useIsFocused } from "@react-navigation/native";
+import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../types";
 import Client from "../../api/client";
 import { QueryKeys } from "../../enums/query-keys";
 import { BaseItemKind, ItemSortBy, SortOrder } from "@jellyfin/sdk/lib/generated-client/models";
-import { getItemsApi } from "@jellyfin/sdk/lib/utils/api";
+import { getImageApi, getItemsApi } from "@jellyfin/sdk/lib/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { ScrollView, FlatList } from "react-native";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { YStack } from "tamagui";
-import BlurhashedImage from "../Global/components/blurhashed-image";
 import FavoriteButton from "../Global/components/favorite-button";
 import { ItemCard } from "../Global/components/item-card";
-import { H2, H3 } from "../Global/helpers/text";
+import { H3 } from "../Global/helpers/text";
 import fetchSimilar from "../../api/queries/functions/similar";
-import HorizontalCardList from "../Global/components/horizontal-list";
+import { Image } from "expo-image";
 
 export function ArtistScreen({ 
     route, 
@@ -73,10 +72,12 @@ export function ArtistScreen({
             removeClippedSubviews
         >
             <YStack alignContent="center" justifyContent="center" minHeight={bannerHeight}>
-                <BlurhashedImage
-                    borderRadius={0}
-                    item={artist}
-                    width={width}
+                <Image
+                    source={getImageApi(Client.api!).getItemImageUrlById(artist.Id!)}
+                    style={{
+                        width: width,
+                        height: bannerHeight
+                    }}
                 />
             </YStack>
 

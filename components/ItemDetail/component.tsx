@@ -3,14 +3,17 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { StackParamList } from "../types";
 import TrackOptions from "./helpers/TrackOptions";
-import { getTokens, ScrollView, Spacer, View, XStack, YStack } from "tamagui";
-import BlurhashedImage from "../Global/components/blurhashed-image";
+import { getToken, getTokens, ScrollView, Spacer, View, XStack, YStack } from "tamagui";
 import { Text } from "../Global/helpers/text";
 import FavoriteButton from "../Global/components/favorite-button";
 import { useEffect } from "react";
 import { trigger } from "react-native-haptic-feedback";
 import TextTicker from "react-native-text-ticker";
 import { TextTickerConfig } from "../Player/component.config";
+import { Image } from "expo-image";
+import { getImageApi } from "@jellyfin/sdk/lib/utils/api";
+import Client from "../../api/client";
+import Icon from "../Global/helpers/icon";
 
 export default function ItemDetail({ 
     item, 
@@ -71,16 +74,37 @@ export default function ItemDetail({
 
                 <XStack 
                     justifyContent="center"
-                    alignItems="center"
-                    maxHeight={width / 1.5}
-                    maxWidth={width / 1.5}
+                    alignItems="flex-start"
+                    minHeight={width / 1.5}
+                    minWidth={width / 1.5}
                 >
+                    <Icon
+                        name="chevron-down"
+                        onPress={() => {
+                            navigation.goBack();
+                        }}
+                        small
+                    />
 
-                    <BlurhashedImage
-                        item={item}
-                        width={width / 1.5}
-                        borderRadius={item.Type === "MusicArtist" ? 100 : 2}
-                        />
+                    <Spacer />
+
+                    <Image
+                        source={getImageApi(Client.api!)
+                            .getItemImageUrlById(
+                                item.Type === 'Audio'
+                                ? item.AlbumId! 
+                                : item.Id!
+                            )
+                        }
+                        style={{
+                            width: width / 1.5,
+                            height: width / 1.5,
+                            borderRadius: item.Type === "MusicArtist" ? width / 1.5 : getToken("$5")
+                        }}
+                    />
+
+                    <Spacer />
+                    <Spacer />
                 </XStack>
 
                 {/* Item Name, Artist, Album, and Favorite Button */}
