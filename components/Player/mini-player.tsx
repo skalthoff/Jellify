@@ -49,6 +49,7 @@ export function Miniplayer({
                                 >
                                         <Image
                                             source={getImageApi(Client.api!).getItemImageUrlById(nowPlaying!.item.AlbumId!)}
+                                            placeholder={nowPlaying!.item.ImageBlurHashes?.Primary![0] ?? undefined}
                                             style={{
                                                 width: getToken("$12"),
                                                 height: getToken("$12"),
