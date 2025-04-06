@@ -72,6 +72,7 @@ export function AlbumScreen({
                                 <Image
                                     source={getImageApi(Client.api!).getItemImageUrlById(album.Id!)}
                                     style={{
+                                        borderRadius: getToken("$5"),
                                         width: getToken("$20") + getToken("$15"),
                                         height: getToken("$20") + getToken("$15")
                                     }}
