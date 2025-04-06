@@ -163,7 +163,7 @@ export default function Track({
                         justifyContent="center"
                     >
                         <Icon 
-                            name={showRemove ? "close" : "dots-vertical"} 
+                            name={showRemove ? "close" : "dots-horizontal"} 
                             onPress={() => {
                                 if (!!showRemove) {
                                     if (onRemove)
