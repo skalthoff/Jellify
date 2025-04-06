@@ -57,6 +57,7 @@ export function ItemCard(props: CardProps) {
                                 ? props.item.AlbumId!
                                 : props.item.Id!
                             )}
+                        placeholder={props.item.ImageBlurHashes?.Primary![0] ?? undefined}
                         style={{
                             width: dimensions.width,
                             height: dimensions.height,
