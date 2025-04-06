@@ -99,23 +99,26 @@ Playlist
 ### On the Server
 <img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking" width="300" height="200">
 
-## 🏗 Built with:
+## 🏗 Built with good stuff
 ### 🎨 Frontend
 [Tamagui](https://tamagui.dev/)\
-[React Navigation](https://reactnavigation.org/)\
 [Burnt](https://github.com/nandorojo/burnt)\
+[React Navigation](https://reactnavigation.org/)\
 [React Native CarPlay](https://github.com/birkir/react-native-carplay)\
+[React Native Draggable Flatlist](https://github.com/computerjazz/react-native-draggable-flatlist)\
+[React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)\
 [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
 - Specifically Material Community Icons
 
 ### 🎛️ Backend
-[Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
 [Expo SDK](https://expo.dev/)\
+[Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)\
-[React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
-[React Native MMKV](https://github.com/mrousavy/react-native-mmkv)\
+[React Native Boost](https://github.com/kuatsu/react-native-boost)\
 [React Native File Access](https://github.com/alpha0010/react-native-file-access)\
-[React Native Boost](https://github.com/kuatsu/react-native-boost)
+[React Native MMKV](https://github.com/mrousavy/react-native-mmkv)\
+[React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
+[React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill)
 
 ### 👩‍💻 Monitoring
 [GlitchTip](https://glitchtip.com/)
@@ -151,6 +154,7 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 - [James](https://github.com/jmshrv) and all other contributors of [Finamp](https://github.com/jmshrv/finamp). *Jellify* draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin. 
   - James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
 - The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
+- [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) module and for his assistance with getting Jest working!
 - My fellow [contributors](https://github.com/anultravioletaurora/Jellify/graphs/contributors) who have poured so much heart and a lot of sweat into making *Jellify* a great experience
   - Extra thanks to [John Grant](https://github.com/johngrantdev) for shaping and designing the user experience in many places
 - My dear friends that have heard me talk about *Jellify* for literally **eons**. Thank you for testing *Jellify* during it's infancy and for supporting me all the way back at the beginning of this project 
