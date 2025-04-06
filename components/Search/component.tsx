@@ -7,8 +7,11 @@ import { QueryKeys } from "../../enums/query-keys";
 import { fetchSearchResults } from "../../api/queries/functions/search";
 import { useQuery } from "@tanstack/react-query";
 import { FlatList } from "react-native";
-import { Text } from "../Global/helpers/text";
+import { H3, Text } from "../Global/helpers/text";
 import { fetchSearchSuggestions } from "../../api/queries/functions/suggestions";
+import { Spinner, YStack } from "tamagui";
+import Suggestions from "./suggestions";
+import { isEmpty, isUndefined } from "lodash";
 
 export default function Search({ 
     navigation
@@ -18,12 +21,12 @@ export default function Search({
 
     const [searchString, setSearchString] = useState<string | undefined>(undefined);
 
-    const { data: items, refetch, isFetching } = useQuery({
+    const { data: items, refetch, isFetching: fetchingResults } = useQuery({
         queryKey: [QueryKeys.Search, searchString],
         queryFn: () => fetchSearchResults(searchString)
     });
 
-    const { data } = useQuery({
+    const { data: suggestions, isFetching: fetchingSuggestions, refetch: refetchSuggestions } = useQuery({
         queryKey: [QueryKeys.SearchSuggestions],
         queryFn: () => fetchSearchSuggestions()
     });
@@ -41,6 +44,7 @@ export default function Search({
     const handleSearchStringUpdate = (value: string | undefined) => {
         setSearchString(value)
         search();
+        refetchSuggestions();
     }
 
     return (
@@ -48,17 +52,35 @@ export default function Search({
             contentInsetAdjustmentBehavior="automatic"
             progressViewOffset={10}
             ListHeaderComponent={(
-                <Input
-                    placeholder="Seek and ye shall find..."
-                    onChangeText={(value) => handleSearchStringUpdate(value)}
-                    value={searchString}
-                />
+                <YStack>
+                    <Input
+                        placeholder="Seek and ye shall find"
+                        onChangeText={(value) => handleSearchStringUpdate(value)}
+                        value={searchString}
+                    />
+
+                    { !isEmpty(items) && (
+                        <H3>Results</H3>
+                    )}
+                </YStack>
             )}
-            ListEmptyComponent={(
-                <Text>No results found</Text>
-            )}
+            ListEmptyComponent={() => {
+                return (
+                    <YStack
+                        alignContent="center"
+                        justifyContent="flex-end"
+                        marginTop={"$4"}
+                    >
+                        { fetchingResults ? (
+                            <Spinner />
+                        ) : (
+                            <Suggestions suggestions={suggestions} navigation={navigation} />
+                        )}
+                    </YStack>
+                )
+            }}
             data={items}
-            refreshing={isFetching}
+            refreshing={fetchingResults}
             renderItem={({ item }) => 
                 <Item item={item} queueName={searchString ?? "Search"} navigation={navigation} />
             }
