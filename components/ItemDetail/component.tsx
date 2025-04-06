@@ -79,7 +79,13 @@ export default function ItemDetail({
                 >
 
                     <Image
-                        source={getImageApi(Client.api!).getItemImageUrlById(item.Id!)}
+                        source={getImageApi(Client.api!)
+                            .getItemImageUrlById(
+                                item.Type === 'Audio'
+                                ? item.AlbumId! 
+                                : item.Id!
+                            )
+                        }
                         style={{
                             width: width / 1.5,
                             borderRadius: item.Type === "MusicArtist" ? width / 1.5 : getToken("$5")
