@@ -129,8 +129,8 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 ## 🏃‍♀️Running Locally
 
 #### Universal Dependencies
-- Ruby
-- NodeJS
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
+- [NodeJS v22](https://nodejs.org/en/download)
 
 #### iOS Instructions
 - Clone this repository
