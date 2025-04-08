@@ -44,11 +44,14 @@ jobs:
         with:
           commit_message: "[skip actions]"
           file_pattern: "ios/Jellify.xcodeproj/project.pbxproj"
-          
+
+      - name: 🔢 Set artifact version numbers
+        run: mkdir artifacts && mv ./ios/Jellify.ipa ./artifacts/Jellify-${{ env.VERSION_NUMBER }}.ipa && mv ./android/app/build/outputs/apk/release/app-release.apk ./artifacts/Jellify-${{ env.VERSION_NUMBER }}.apk
+
       - name: 🎉 Create Github release 
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "ios/Jellify.ipa,android/app/build/outputs/apk/release/app-release.apk"
+          artifacts: "./artifacts/*"
           name: ${{ env.VERSION_NUMBER }}
           prerelease: true
           tag: ${{ env.VERSION_NUMBER }}
