@@ -108,7 +108,7 @@ Playlist
 [React Native Draggable Flatlist](https://github.com/computerjazz/react-native-draggable-flatlist)\
 [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)\
 [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
-- Specifically Material Community Icons
+- Specifically using [Material Community Icons](https://oblador.github.io/react-native-vector-icons/#MaterialCommunityIcons)
 
 ### 🎛️ Backend
 [Expo SDK](https://expo.dev/)\
