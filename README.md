@@ -142,12 +142,13 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 - Run `npm run init` to initialize the project
   - This will install `npm` packages, install `bundler` and required gems, and installs CocoaPods
 - In the `ios` directory, run `fastlane match development --readonly` to fetch the development signing certificates
-  - You will need access to the *Jellify Signing* private repository
+  - *You will need access to the *Jellify Signing* private repository*
 
 ##### Running
 - Run `npm run start` to start the dev server
 - Open the `Jellify.xcodeworkspace` with Xcode, *not* the `Jellify.xcodeproject`
 - Run either on a device or in the simulator
+  - *You will need to wait for Xcode to finish it's "Indexing" step*
 
 ##### Building
 - To create a build, run `npm run fastlane:ios:build` to use fastlane to compile an `.ipa` for you
@@ -165,6 +166,7 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 ##### Running
 - Run `npm run start` to start the dev server
 - Open the `android` folder with Android Studio
+  - *Android Studio should automatically grab the "Run Configurations" and initialize Gradle*
 - Run either on a device or in the simulator
 
 ##### Building
