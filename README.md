@@ -128,33 +128,46 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 ## 🏃‍♀️Running Locally
 
-### Universal Dependencies
-- [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
-- [NodeJS v22](https://nodejs.org/en/download)
+### ⚛️ Universal Dependencies
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) for Fastlane
+- [NodeJS v22](https://nodejs.org/en/download) for React Native
 
-### iOS
+### 🍎 iOS
 #### Dependencies
-- Xcode
+- [Xcode](https://developer.apple.com/xcode/) for building
 
 #### Instructions
+##### Setup
 - Clone this repository
 - Run `npm run init` to initialize the project
   - This will install `npm` packages, install `bundler` and required gems, and installs CocoaPods
 - In the `ios` directory, run `fastlane match development --readonly` to fetch the development signing certificates
   - You will need access to the *Jellify Signing* private repository
-- To run locally, run `npm run start` then run the app on your device or in the simulator
-  - Make sure you open the `Jellify.xcodeworkspace`, *not* the `Jellify.xcodeproject`
+
+##### Running
+- Run `npm run start` to start the dev server
+- Open the `Jellify.xcodeworkspace` with Xcode, *not* the `Jellify.xcodeproject`
+- Run either on a device or in the simulator
+
+##### Building
 - To create a build, run `npm run fastlane:ios:build` to use fastlane to compile an `.ipa` for you
 
-### Android
+### 🤖 Android
 #### Dependencies
-- Android Studio
-- Java Development Kit
+- [Android Studio](https://developer.android.com/studio)
+- [Java Development Kit](https://www.oracle.com/th/java/technologies/downloads/)
 
 #### Instructions
+##### Setup
 - Clone this repository
 - Run `npm i` to install `npm` packages
-- To run locally, run `npm run start`, then run the app on your devvice or in the emulator
+
+##### Running
+- Run `npm run start` to start the dev server
+- Open the `android` folder with Android Studio
+- Run either on a device or in the simulator
+
+##### Building
 - To create a build, run `npm run fastlane:android:build` to use fastlane to compile an `.apk` for you  
 
 #### References
