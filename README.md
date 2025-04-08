@@ -128,11 +128,15 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 ## 🏃‍♀️Running Locally
 
-#### Universal Dependencies
+### Universal Dependencies
 - [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
 - [NodeJS v22](https://nodejs.org/en/download)
 
-#### iOS Instructions
+### iOS
+#### Dependencies
+- Xcode
+
+#### Instructions
 - Clone this repository
 - Run `npm run init` to initialize the project
   - This will install `npm` packages, install `bundler` and required gems, and installs CocoaPods
@@ -142,11 +146,20 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
   - Make sure you open the `Jellify.xcodeworkspace`, *not* the `Jellify.xcodeproject`
 - To create a build, run `npm run fastlane:ios:build` to use fastlane to compile an `.ipa` for you
 
-#### Android Instructions
+### Android
+#### Dependencies
+- Android Studio
+- Java Development Kit
+
+#### Instructions
 - Clone this repository
 - Run `npm i` to install `npm` packages
 - To run locally, run `npm run start`, then run the app on your devvice or in the emulator
 - To create a build, run `npm run fastlane:android:build` to use fastlane to compile an `.apk` for you  
+
+#### References
+- [Setting up Android SDK](https://developer.android.com/about/versions/14/setup-sdk)
+- [ANDROID_HOME not being set](https://stackoverflow.com/questions/26356359/error-android-home-is-not-set-and-android-command-not-in-your-path-you-must/54888107#54888107)
 
 ## 🙏 Special Thanks To
 - The [Jellyfin Team](https://jellyfin.org/) for making this possible with their software, SDKs, and unequivocal helpfulness. 
