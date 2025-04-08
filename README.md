@@ -42,7 +42,7 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 - [Shared, Public, and Collaborative Playlists](https://github.com/anultravioletaurora/Jellify/issues/175)
 - [Web / Desktop support](https://github.com/anultravioletaurora/Jellify/issues/71)
 - [Watch (Apple Watch / WearOS) Support](https://github.com/anultravioletaurora/Jellify/issues/61)
-- [TV (Android, Samsung) Support](https://github.com/anultravioletaurora/Jellify/issues/85)
+- [TV (Android, Apple, Samsung) Support](https://github.com/anultravioletaurora/Jellify/issues/85)
 
 ## 👀 Lemme see!
 ### Home
