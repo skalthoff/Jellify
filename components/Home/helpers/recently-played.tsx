@@ -36,10 +36,10 @@ export default function RecentlyPlayed({
                     }}
                     renderItem={({ index, item: recentlyPlayedTrack }) => 
                         <ItemCard
+                            size={"$12"}
                             caption={recentlyPlayedTrack.Name}
                             subCaption={`${recentlyPlayedTrack.Artists?.join(", ")}`}
                             squared
-                            width={150}
                             item={recentlyPlayedTrack}
                             onPress={() => {
                                 usePlayNewQueue.mutate({ 

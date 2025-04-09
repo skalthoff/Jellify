@@ -29,7 +29,7 @@ export default function ServerAuthentication({
 
     const useApiMutation = useMutation({
         mutationFn: async (credentials: JellyfinCredentials) => {
-            return await Client.api!.authenticateUserByName(credentials.username, credentials.password!);
+            return await Client.api!.authenticateUserByName(credentials.username, credentials.password);
         },
         onSuccess: async (authResult) => {
               
@@ -107,7 +107,7 @@ export default function ServerAuthentication({
                 )}
 
                 <Button 
-                    disabled={_.isEmpty(username) || _.isEmpty(password) || useApiMutation.isPending}
+                    disabled={_.isEmpty(username) || useApiMutation.isPending}
                     onPress={() => {
                         
                         if (!_.isUndefined(username)) {

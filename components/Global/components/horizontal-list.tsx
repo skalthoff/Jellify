@@ -10,7 +10,7 @@ interface HorizontalCardListProps extends FlatListProps<BaseItemDto> {
      * we cut it off and display a "Show More" card
      */
     cutoff?: number | undefined;
-    onSeeMore: () => void;
+    onSeeMore?: () => void | undefined;
 }
 
 /**
@@ -31,17 +31,17 @@ export default function HorizontalCardList({
             data={props.data}
             renderItem={props.renderItem}
             ListFooterComponent={() => {
-                return props.data ? (
-                <IconCard
-                    name={
-                        squared 
-                        ? "arrow-right-box" 
-                        : "arrow-right-circle"
-                    }
-                    circular={!squared}
-                    caption="See More"
-                    onPress={onSeeMore}
-                />
+                return props.data && onSeeMore ? (
+                    <IconCard
+                        name={
+                            squared 
+                            ? "arrow-right-box" 
+                            : "arrow-right-circle"
+                        }
+                        circular={!squared}
+                        caption="See More"
+                        onPress={onSeeMore}
+                    />
                 ) : undefined}
             }
             removeClippedSubviews
