@@ -103,17 +103,11 @@ Playlist
 [![Made with React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white)](https://reactjs.org “Go to React homepage”) [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org “Go to TypeScript homepage”)
 ### 🎨 Frontend
 [Tamagui](https://tamagui.dev/)\
-
 [Burnt](https://github.com/nandorojo/burnt)\
-
 [React Navigation](https://reactnavigation.org/)\
-
 [React Native CarPlay](https://github.com/birkir/react-native-carplay)\
-
 [React Native Draggable Flatlist](https://github.com/computerjazz/react-native-draggable-flatlist)\
-
 [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)\
-
 [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
 - Specifically using [Material Community Icons](https://oblador.github.io/react-native-vector-icons/#MaterialCommunityIcons)
 
