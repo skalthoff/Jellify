@@ -100,6 +100,7 @@ Playlist
 <img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking" width="300" height="200">
 
 ## 🏗 Built with good stuff
+[![Made with React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white)](https://reactjs.org “Go to React homepage”) [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org “Go to TypeScript homepage”)
 ### 🎨 Frontend
 [Tamagui](https://tamagui.dev/)\
 [Burnt](https://github.com/nandorojo/burnt)\
