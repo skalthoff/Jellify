@@ -1,8 +1,10 @@
-name: Build Android APK
+name: Run Jest Unit Tests
 on:
-  pull_request:
+  push:
+    branches:
+      - "!main"
 jobs:
-  build-android:
+  run-jest-test-suite:
     runs-on: macos-latest
     steps:
       - name: 🛒 Checkout
@@ -19,5 +21,5 @@ jobs:
       - name: 🟢 Run npm run init
         run: npm run init
       
-      - name: 🚀 Run fastlane build
-        run: npm run fastlane:android:build
+      - name: 🧪 Run npm test
+        run: npm run test

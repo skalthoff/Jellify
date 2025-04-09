@@ -39,6 +39,7 @@
     "expo-image": "^2.0.7",
     "gem": "^2.4.3",
     "invert-color": "^2.0.0",
+    "jest-expo": "^52.0.6",
     "lodash": "^4.17.21",
     "npm-bundle": "^3.0.3",
     "react": "18.3.1",
