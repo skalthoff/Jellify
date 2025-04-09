@@ -187,7 +187,10 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 - [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) module and for his assistance with getting Jest working
 - My fellow [contributors](https://github.com/anultravioletaurora/Jellify/graphs/contributors) who have poured so much heart and a lot of sweat into making *Jellify* a great experience
   - Extra thanks to [John Grant](https://github.com/johngrantdev) for shaping and designing the user experience in many places
-- My dear friends that have heard me talk about *Jellify* for literally **eons**. Thank you for testing *Jellify* during it's infancy and for supporting me all the way back at the beginning of this project 
+- The friends I made along the way that have been critical in fostering an amazing community around *Jellify*
+  - [Thalia](https://github.com/PercyGabriel1129)
+  - [BotBlake](https://github.com/BotBlake)
+- My long time friends that have heard me talk about *Jellify* for literally **eons**. Thank you for testing *Jellify* during it's infancy and for supporting me all the way back at the beginning of this project 
   - Tony (iOS, Android)
   - Trevor (Android)
   - [Laine](https://github.com/lainie-ftw) (Android)  
