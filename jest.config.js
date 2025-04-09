@@ -5,6 +5,7 @@ module.exports = {
   setupFilesAfterEnv:  [
     "./jest/setup.js",
     "./jest/setup-carplay.js",
+    "./jest/setup-blurhash.js",
     "./tamagui.config.ts",
   ],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
