@@ -23,12 +23,18 @@ export async function fetchSearchResults(searchString: string | undefined) : Pro
                 searchTerm: trim(searchString),
                 recursive: true,
                 includeItemTypes: [
+                    'MusicArtist',
                     'Audio',
                     'MusicAlbum',
-                    'MusicArtist',
                     'Playlist'
                 ],
-                limit: QueryConfig.limits.search
+                limit: QueryConfig.limits.search,
+                sortBy: [
+                    'IsFolder'
+                ],
+                sortOrder: [
+                    'Descending'
+                ]
             })
             .then((response) => {
                 if (response.data.Items)

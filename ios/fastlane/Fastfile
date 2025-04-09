@@ -56,7 +56,7 @@ platform :ios do
       api_key_path: "fastlane/appstore_connect_api_key.json",
       beta_app_feedback_email: "violet@cosmonautical.cloud",
       beta_app_description: "A music app for Jellyfin",
-      expire_previous_builds: true,
+      expire_previous_builds: false,
       distribute_external: true,
       changelog: "Updated Sign In components, Player Optimizations, 'See More' buttons",
       groups: [

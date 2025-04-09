@@ -1,5 +1,5 @@
 import { Card, getTokens, View } from "tamagui";
-import { H2, H4 } from "./text";
+import { H2, H4, H5 } from "./text";
 import Icon from "./icon";
 
 interface IconCardProps {
@@ -30,12 +30,12 @@ export default function IconCard({
                 borderRadius={circular ? 300 : 5}
                 hoverStyle={{ scale: 0.925 }}
                 pressStyle={{ scale: 0.875 }}
-                width={width ? width : 150}
-                height={width ? width : 150}
+                width={width ? width : "$12"}
+                height={width ? width : "$12"}
                 onPress={onPress}
             >
                 <Card.Header>
-                    <H4 color={getTokens().color.purpleDark}>{ caption ?? "" }</H4>
+                    <H5 color={getTokens().color.purpleDark}>{ caption ?? "" }</H5>
                     <Icon 
                         color={getTokens().color.purpleDark.val} 
                         name={name} 

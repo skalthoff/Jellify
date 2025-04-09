@@ -42,7 +42,7 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 - [Shared, Public, and Collaborative Playlists](https://github.com/anultravioletaurora/Jellify/issues/175)
 - [Web / Desktop support](https://github.com/anultravioletaurora/Jellify/issues/71)
 - [Watch (Apple Watch / WearOS) Support](https://github.com/anultravioletaurora/Jellify/issues/61)
-- [TV (Android, Samsung) Support](https://github.com/anultravioletaurora/Jellify/issues/85)
+- [TV (Android, Apple, Samsung) Support](https://github.com/anultravioletaurora/Jellify/issues/85)
 
 ## 👀 Lemme see!
 ### Home
@@ -99,23 +99,27 @@ Playlist
 ### On the Server
 <img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking" width="300" height="200">
 
-## 🏗 Built with:
+## 🏗 Built with good stuff
+[![Made with React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white)](https://reactjs.org “Go to React homepage”) [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org “Go to TypeScript homepage”)
 ### 🎨 Frontend
 [Tamagui](https://tamagui.dev/)\
-[React Navigation](https://reactnavigation.org/)\
 [Burnt](https://github.com/nandorojo/burnt)\
+[React Navigation](https://reactnavigation.org/)\
 [React Native CarPlay](https://github.com/birkir/react-native-carplay)\
+[React Native Draggable Flatlist](https://github.com/computerjazz/react-native-draggable-flatlist)\
+[React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)\
 [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
-- Specifically Material Community Icons
+- Specifically using [Material Community Icons](https://oblador.github.io/react-native-vector-icons/#MaterialCommunityIcons)
 
 ### 🎛️ Backend
-[Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
 [Expo SDK](https://expo.dev/)\
+[Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)\
-[React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
-[React Native MMKV](https://github.com/mrousavy/react-native-mmkv)\
+[React Native Boost](https://github.com/kuatsu/react-native-boost)\
 [React Native File Access](https://github.com/alpha0010/react-native-file-access)\
-[React Native Boost](https://github.com/kuatsu/react-native-boost)
+[React Native MMKV](https://github.com/mrousavy/react-native-mmkv)\
+[React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
+[React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill)
 
 ### 👩‍💻 Monitoring
 [GlitchTip](https://glitchtip.com/)
@@ -125,25 +129,53 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 ## 🏃‍♀️Running Locally
 
-#### Universal Dependencies
-- Ruby
-- NodeJS
+### ⚛️ Universal Dependencies
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) for Fastlane
+- [NodeJS v22](https://nodejs.org/en/download) for React Native
 
-#### iOS Instructions
+### 🍎 iOS
+#### Dependencies
+- [Xcode](https://developer.apple.com/xcode/) for building
+
+#### Instructions
+##### Setup
 - Clone this repository
 - Run `npm run init` to initialize the project
   - This will install `npm` packages, install `bundler` and required gems, and installs CocoaPods
 - In the `ios` directory, run `fastlane match development --readonly` to fetch the development signing certificates
-  - You will need access to the *Jellify Signing* private repository
-- To run locally, run `npm run start` then run the app on your device or in the simulator
-  - Make sure you open the `Jellify.xcodeworkspace`, *not* the `Jellify.xcodeproject`
+  - *You will need access to the *Jellify Signing* private repository*
+
+##### Running
+- Run `npm run start` to start the dev server
+- Open the `Jellify.xcodeworkspace` with Xcode, *not* the `Jellify.xcodeproject`
+- Run either on a device or in the simulator
+  - *You will need to wait for Xcode to finish it's "Indexing" step*
+
+##### Building
 - To create a build, run `npm run fastlane:ios:build` to use fastlane to compile an `.ipa` for you
 
-#### Android Instructions
+### 🤖 Android
+#### Dependencies
+- [Android Studio](https://developer.android.com/studio)
+- [Java Development Kit](https://www.oracle.com/th/java/technologies/downloads/)
+
+#### Instructions
+##### Setup
 - Clone this repository
 - Run `npm i` to install `npm` packages
-- To run locally, run `npm run start`, then run the app on your devvice or in the emulator
+
+##### Running
+- Run `npm run start` to start the dev server
+- Open the `android` folder with Android Studio
+  - *Android Studio should automatically grab the "Run Configurations" and initialize Gradle*
+- Run either on a device or in the simulator
+
+##### Building
 - To create a build, run `npm run fastlane:android:build` to use fastlane to compile an `.apk` for you  
+
+#### References
+- [Setting up Android SDK](https://developer.android.com/about/versions/14/setup-sdk)
+- [ANDROID_HOME not being set](https://stackoverflow.com/questions/26356359/error-android-home-is-not-set-and-android-command-not-in-your-path-you-must/54888107#54888107)
 
 ## 🙏 Special Thanks To
 - The [Jellyfin Team](https://jellyfin.org/) for making this possible with their software, SDKs, and unequivocal helpfulness. 
@@ -151,7 +183,8 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 - [James](https://github.com/jmshrv) and all other contributors of [Finamp](https://github.com/jmshrv/finamp). *Jellify* draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin. 
   - James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
 - The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
-  - Extra thanks to [Ritesh](https://github.com/riteshshukla04) for your help, knowledge, and guidance
+    - Extra thanks to [Ritesh](https://github.com/riteshshukla04) for your help, knowledge, and guidance
+- [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) module and for his assistance with getting Jest working
 - My fellow [contributors](https://github.com/anultravioletaurora/Jellify/graphs/contributors) who have poured so much heart and a lot of sweat into making *Jellify* a great experience
   - Extra thanks to [John Grant](https://github.com/johngrantdev) for shaping and designing the user experience in many places
 - My dear friends that have heard me talk about *Jellify* for literally **eons**. Thank you for testing *Jellify* during it's infancy and for supporting me all the way back at the beginning of this project 
