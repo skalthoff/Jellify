@@ -46,7 +46,16 @@ jobs:
           file_pattern: "ios/Jellify.xcodeproj/project.pbxproj"
 
       - name: 🔢 Set artifact version numbers
-        run: mkdir artifacts && mv ./ios/Jellify.ipa ./artifacts/Jellify-${{ env.VERSION_NUMBER }}.ipa && mv ./android/app/build/outputs/apk/release/app-release.apk ./artifacts/Jellify-${{ env.VERSION_NUMBER }}.apk
+        run: |
+          # Move the iOS IPA
+          mv ./ios/Jellify.ipa ./artifacts/Jellify-${{ env.VERSION_NUMBER }}.ipa
+
+          # Move and rename all android release APKs
+          for apk in ./android/app/build/outputs/apk/release/*.apk; do
+            filename=$(basename "$apk")
+            newname="Jellify-${{ env.VERSION_NUMBER }}-${filename}"
+            cp "$apk" "./artifacts/$newname"
+          done
 
       - name: 🎉 Create Github release 
         uses: ncipollo/release-action@v1
