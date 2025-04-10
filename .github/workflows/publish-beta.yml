@@ -47,6 +47,9 @@ jobs:
 
       - name: 🔢 Set artifact version numbers
         run: |
+          # Create artifacts folder for uploading to release
+          mkdir artifacts
+
           # Move the iOS IPA
           mv ./ios/Jellify.ipa ./artifacts/Jellify-${{ env.VERSION_NUMBER }}.ipa
 
