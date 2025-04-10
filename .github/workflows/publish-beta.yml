@@ -20,9 +20,7 @@ jobs:
       - name: 🟢 Run npm run init
         run: npm run init
 
-    
-    
-      - name: Version Up
+      - name: ➕ Version Up
         run: npx react-native bump-version --type patch  
 
     
@@ -54,8 +52,6 @@ jobs:
           git add android/app/build.gradle
           git commit -m "[skip actions]"
           git push origin main
-
-      - name: 🔢 Set artifact version numbers
 
       - name: 🔢 Set artifact version numbers
         run: |
