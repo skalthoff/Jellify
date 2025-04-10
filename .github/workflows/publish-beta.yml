@@ -20,13 +20,14 @@ jobs:
       - name: 🟢 Run npm run init
         run: npm run init
 
-      
-
-      - name: 💬 Echo package.json version to Github ENV
-        run: echo VERSION_NUMBER=$(node -p -e "require('./package.json').version") >> $GITHUB_ENV
+    
     
       - name: Version Up
         run: npx react-native bump-version --type patch  
+
+    
+      - name: 💬 Echo package.json version to Github ENV
+        run: echo VERSION_NUMBER=$(node -p -e "require('./package.json').version") >> $GITHUB_ENV
 
       - name: 🤫 Output App Store Connect API Key JSON to Fastlane
         run: echo -e '${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}' > appstore_connect_api_key.json
@@ -45,13 +46,16 @@ jobs:
 
       # Commit Fastlane Xcode build number increment
       - name: 🔢 Commit changes for version increment
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "[skip actions]"
-          file_pattern: |
-            ios/Jellify.xcodeproj/project.pbxproj
-            package.json
-            android/app/build.gradle
+        run: |
+          git config --global user.email "jellify@cosmonautical.com"
+          git config --global user.name "anultravioletaurora"
+          git add package.json
+          git add ios/Jellify.xcodeproj/project.pbxproj
+          git add android/app/build.gradle
+          git commit -m "[skip actions]"
+          git push origin main
+
+      - name: 🔢 Set artifact version numbers
 
       - name: 🔢 Set artifact version numbers
         run: |
