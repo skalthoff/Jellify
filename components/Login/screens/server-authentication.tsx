@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
 import { JellyfinCredentials } from "../../../api/types/jellyfin-credentials";
-import { getToken, Spacer, Spinner, YStack, ZStack } from "tamagui";
+import { getToken, Spacer, Spinner, XStack, YStack } from "tamagui";
 import { useAuthenticationContext } from "../provider";
 import { H2 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
@@ -67,18 +67,13 @@ export default function ServerAuthentication({
     });
 
     return (
-        <SafeAreaView>
-            <H2 marginHorizontal={"$2"} marginVertical={"$7"}>
-                { `Sign in to ${route.params.server.name}`}
-            </H2>
-            <Button onPress={() => { 
-                Client.switchServer()
-                navigation.push("ServerAddress");
-            }}>
-                    Switch Server
-            </Button>
-
-            <YStack marginHorizontal={"$2"} alignContent="space-between">
+        <SafeAreaView style={{flex:1}}>
+            <YStack  maxHeight={"$19"} flex={1} justifyContent="center">
+                <H2 marginHorizontal={"$2"} textAlign="center">
+                    { `Sign in to ${route.params.server.name}`}
+                </H2>
+            </YStack>
+            <YStack marginHorizontal={"$2"}>
                 <Input
                     prependElement={(<Icon small name="human-greeting-variant" color={getToken("$color.amethyst")} />)}
                     placeholder="Username"
@@ -99,27 +94,38 @@ export default function ServerAuthentication({
                     autoCorrect={false}
                     secureTextEntry
                 />
-            </YStack>
 
-            <ZStack>
-                { useApiMutation.isPending && (
-                    <Spinner />
-                )}
+                <Spacer />
 
-                <Button 
-                    disabled={_.isEmpty(username) || useApiMutation.isPending}
-                    onPress={() => {
-                        
-                        if (!_.isUndefined(username)) {
-                            console.log(`Signing in...`);
-                            useApiMutation.mutate({ username, password });
-                        }
-                    }}
-                    >
+                <XStack justifyContent="space-between">
+                    <Button
+                        marginVertical={0}
+                        icon={() => <Icon name="chevron-left" small />}
+                        bordered={0}
+                        onPress={() => { 
+                        Client.switchServer()
+                        navigation.push("ServerAddress");
+                    }}>
+                            Switch Server
+                    </Button>
+                    { useApiMutation.isPending ? (
+                        <Spinner />
+                    ) :
+                    <Button
+                        marginVertical={0}
+                        disabled={_.isEmpty(username) || useApiMutation.isPending}
+                        onPress={() => {
+                            if (!_.isUndefined(username)) {
+                                console.log(`Signing in...`);
+                                useApiMutation.mutate({ username, password });
+                            }
+                        }}
+                        >
                         Sign in
-                </Button>
-            </ZStack>
-            <Toast />
+                    </Button>}
+                </XStack>
+                <Toast />
+            </YStack>
         </SafeAreaView>
     );
 }

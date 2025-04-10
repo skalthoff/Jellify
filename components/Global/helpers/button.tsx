@@ -1,6 +1,6 @@
-import { Button as TamaguiButton } from 'tamagui';
+import { Button as TamaguiButton, ButtonProps as TamaguiButtonProps } from 'tamagui';
 
-interface ButtonProps {
+interface ButtonProps extends TamaguiButtonProps {
     children?: Element | string | undefined;
     onPress?: () => void | undefined;
     disabled?: boolean | undefined;
@@ -10,13 +10,11 @@ interface ButtonProps {
 export default function Button(props: ButtonProps): React.JSX.Element {
 
     return (
-        <TamaguiButton 
-            disabled={props.disabled}
+        <TamaguiButton
             bordered
+            opacity={props.disabled ? 0.5 : 1}
             marginVertical={30}
-            onPress={props.onPress}
-        >
-            { props.children }
-        </TamaguiButton>
+            {...props}
+        />
     )
 }

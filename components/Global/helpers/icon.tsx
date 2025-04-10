@@ -8,22 +8,26 @@ const regularSize = 36;
 
 const largeSize = 48
 
+const extraLargeSize = 96
+
 export default function Icon({ 
     name, 
     onPress, 
     small, 
     large, 
+    extraLarge,
     color 
 }: { 
     name: string, 
     onPress?: () => void, 
     small?: boolean, 
     large?: boolean, 
+    extraLarge?: boolean,
     color?: string | undefined
 }) : React.JSX.Element {
     
     const theme = useTheme();
-    let size = large ? largeSize : small ? smallSize : regularSize
+    let size = extraLarge? extraLargeSize : large ? largeSize : small ? smallSize : regularSize
     
     return (
         <MaterialCommunityIcons 
