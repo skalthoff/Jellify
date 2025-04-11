@@ -13,14 +13,15 @@ module.exports = {
 	},
 	rules: {
 		'react/react-in-jsx-scope': 'off',
-		'no-unused-vars': 'warn',
+		'no-unused-vars': 'off',
 		'react/prop-types': 'off',
 		'@typescript-eslint/no-explicit-any': 'error', // Disallow usage of any
 		'@typescript-eslint/explicit-module-boundary-types': 'error', // Ensure types are explicitly declared
+		semi: ['error', 'never'],
 	},
-  settings: {
-    "react": {
-      "version": "detect"
-    }
-  }
-};
+	settings: {
+		react: {
+			version: 'detect',
+		},
+	},
+}
