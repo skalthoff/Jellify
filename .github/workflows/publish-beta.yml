@@ -73,6 +73,7 @@ jobs:
         with:
           artifacts: "./artifacts/*"
           name: ${{ env.VERSION_NUMBER }}
+          generateReleaseNotes: true
           prerelease: true
           tag: ${{ env.VERSION_NUMBER }}
           token: ${{ secrets.SIGNING_REPO_PAT }}
