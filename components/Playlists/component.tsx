@@ -29,6 +29,10 @@ export default function FavoritePlaylists({ navigation }: FavoritePlaylistsProps
 
     return (
         <FlatList
+            contentContainerStyle={{
+                flexGrow: 1,
+                alignItems: "center"
+            }}
             contentInsetAdjustmentBehavior="automatic"
             numColumns={2}
             data={playlists}
@@ -45,7 +49,7 @@ export default function FavoritePlaylists({ navigation }: FavoritePlaylistsProps
                     onPress={() => {
                         navigation.navigate("Playlist", { playlist })
                     }}
-                    width={width / 2.1}
+                    size={"$14"}
                     squared
                 />
             }

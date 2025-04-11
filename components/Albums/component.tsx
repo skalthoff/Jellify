@@ -24,6 +24,10 @@ export default function Albums({ navigation, route }: AlbumsProps) : React.JSX.E
 
         return (
             <FlatList
+                contentContainerStyle={{
+                    flexGrow: 1,
+                    alignItems: "center"
+                }}
                 contentInsetAdjustmentBehavior="automatic"
                 numColumns={2}
                 data={albums}
@@ -42,7 +46,7 @@ export default function Albums({ navigation, route }: AlbumsProps) : React.JSX.E
                         onPress={() => {
                             navigation.navigate("Album", { album })
                         }}
-                        size={"$12"}
+                        size={"$14"}
                     />   
                 }
             />
