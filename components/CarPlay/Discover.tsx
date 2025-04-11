@@ -1,7 +1,7 @@
-import { ListTemplate } from "react-native-carplay";
+import { ListTemplate } from 'react-native-carplay'
 
 const CarPlayDiscover = new ListTemplate({
-    tabTitle: "Discover"
+	tabTitle: 'Discover',
 })
 
-export default CarPlayDiscover;
+export default CarPlayDiscover

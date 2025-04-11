@@ -16,7 +16,7 @@ module.exports = {
 		'@typescript-eslint/no-unused-vars': 'off',
 		'react/prop-types': 'off',
 		'@typescript-eslint/no-explicit-any': 'error', // Disallow usage of any
-		'@typescript-eslint/explicit-module-boundary-types': 'error', // Ensure types are explicitly declared
+		'no-mixed-spaces-and-tabs': 'off', // refer https://github.com/prettier/prettier/issues/4199
 		semi: ['error', 'never'],
 	},
 	settings: {
