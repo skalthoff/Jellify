@@ -100,6 +100,7 @@ Playlist
 <img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking" width="300" height="200">
 
 ## 🏗 Built with good stuff
+[![Made with React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white)](https://reactjs.org “Go to React homepage”) [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org “Go to TypeScript homepage”)
 ### 🎨 Frontend
 [Tamagui](https://tamagui.dev/)\
 [Burnt](https://github.com/nandorojo/burnt)\
@@ -182,10 +183,14 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 - [James](https://github.com/jmshrv) and all other contributors of [Finamp](https://github.com/jmshrv/finamp). *Jellify* draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin. 
   - James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
 - The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
-- [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) module and for his assistance with getting Jest working!
+    - Extra thanks to [Ritesh](https://github.com/riteshshukla04) for your help, knowledge, and guidance
+- [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) module and for his assistance with getting Jest working
 - My fellow [contributors](https://github.com/anultravioletaurora/Jellify/graphs/contributors) who have poured so much heart and a lot of sweat into making *Jellify* a great experience
   - Extra thanks to [John Grant](https://github.com/johngrantdev) for shaping and designing the user experience in many places
-- My dear friends that have heard me talk about *Jellify* for literally **eons**. Thank you for testing *Jellify* during it's infancy and for supporting me all the way back at the beginning of this project 
+- The friends I made along the way that have been critical in fostering an amazing community around *Jellify*
+  - [Thalia](https://github.com/PercyGabriel1129)
+  - [BotBlake](https://github.com/BotBlake)
+- My long time friends that have heard me talk about *Jellify* for literally **eons**. Thank you for testing *Jellify* during it's infancy and for supporting me all the way back at the beginning of this project 
   - Tony (iOS, Android)
   - Trevor (Android)
   - [Laine](https://github.com/lainie-ftw) (Android)  
