@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import _ from "lodash";
 import { useMutation } from "@tanstack/react-query";
 import { JellifyServer } from "../../../types/JellifyServer";
-import { Input, Spacer, Spinner, XStack, ZStack } from "tamagui";
+import { Input, Spinner, XStack, YStack } from "tamagui";
 import { SwitchWithLabel } from "../../Global/helpers/switch-with-label";
 import { H2 } from "../../Global/helpers/text";
 import Button from "../../Global/helpers/button";
@@ -17,6 +17,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackParamList } from "../../../components/types";
 
 import * as Burnt from "burnt";
+import { Image } from "react-native";
 
 export default function ServerAddress({ 
     navigation
@@ -80,42 +81,42 @@ export default function ServerAddress({
     });
 
     return (
-        <SafeAreaView>
-            <H2 marginVertical={"$7"} marginHorizontal={"$2"}>Connect to Jellyfin</H2>
-            <XStack marginHorizontal={"$2"} marginBottom={"$3"}>
+        <SafeAreaView style={{flex:1}}>
+            <YStack  maxHeight={"$19"} flex={1} justifyContent="center">
+                <H2 marginHorizontal={"$10"} textAlign="center">
+                    Connect to Jellyfin
+                </H2>
+            </YStack>
+            
+            <YStack marginHorizontal={"$2"}>
                 <SwitchWithLabel 
                     checked={useHttps} 
                     onCheckedChange={(checked) => setUseHttps(checked)} 
                     label="Use HTTPS" 
                     size="$2"
                     width={100}
-                 />
-                    
-                
-                <Spacer />
+                />
 
                 <Input 
                     onChangeText={setServerAddress}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    flexGrow={1}
                     placeholder="jellyfin.org"
                 />
-            </XStack>
-
-            <ZStack>
-            { useServerMutation.isPending && (
-                    <Spinner />
-            )}
-
+                
+                { useServerMutation.isPending ? (
+                        <Spinner />
+                ) : 
                 <Button 
                     disabled={_.isEmpty(serverAddress)}
                     onPress={() => {
                         useServerMutation.mutate();
                     }}>
                     Connect
-                </Button>
-            </ZStack>
+                </Button>}
+            </YStack>
+         
+      
         </SafeAreaView>
     )
 }
