@@ -42,7 +42,7 @@ export default function Albums({ navigation, route }: AlbumsProps) : React.JSX.E
                         onPress={() => {
                             navigation.navigate("Album", { album })
                         }}
-                        width={width / 2.1}
+                        size={"$12"}
                     />   
                 }
             />
