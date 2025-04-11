@@ -18,4 +18,9 @@ module.exports = {
 		'@typescript-eslint/no-explicit-any': 'error', // Disallow usage of any
 		'@typescript-eslint/explicit-module-boundary-types': 'error', // Ensure types are explicitly declared
 	},
+  settings: {
+    "react": {
+      "version": "detect"
+    }
+  }
 };
