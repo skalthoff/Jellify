@@ -1,11 +1,9 @@
-import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
+import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 
 export class ArtistModel {
+	name?: string | undefined | null
 
-    name?: string | undefined | null;
-
-    constructor(itemDto : BaseItemDto) {
-
-        this.name = itemDto.Name
-    }
+	constructor(itemDto: BaseItemDto) {
+		this.name = itemDto.Name
+	}
 }

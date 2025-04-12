@@ -80,7 +80,8 @@ export const JellifyProvider: ({ children }: { children: ReactNode }) => React.J
 				loggedIn,
 				setLoggedIn,
 				carPlayConnected,
-			}}>
+			}}
+		>
 			{children}
 		</JellifyContext.Provider>
 	)
