@@ -3,6 +3,7 @@ on:
   push:
     branches-ignore:
       - "main"
+  pull_request:
 jobs:
   run-jest-test-suite:
     runs-on: macos-latest
