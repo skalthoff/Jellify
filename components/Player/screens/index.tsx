@@ -77,8 +77,11 @@ export default function PlayerScreen({
 												nowPlaying!.item.AlbumId!,
 											)}
 											placeholder={
-												nowPlaying!.item.ImageBlurHashes?.Primary![0] ??
-												undefined
+												nowPlaying &&
+												nowPlaying.item.ImageBlurHashes &&
+												nowPlaying.item.ImageBlurHashes.Primary
+													? nowPlaying.item.ImageBlurHashes.Primary[0]
+													: undefined
 											}
 											style={{
 												borderRadius: 2,
