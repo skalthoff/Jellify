@@ -32,10 +32,12 @@ export default function FavoritePlaylists({
 		queryFn: () => fetchFavoritePlaylists(),
 	})
 
-	const { width } = useSafeAreaFrame()
-
 	return (
 		<FlatList
+			contentContainerStyle={{
+				flexGrow: 1,
+				alignItems: 'center',
+			}}
 			contentInsetAdjustmentBehavior='automatic'
 			numColumns={2}
 			data={playlists}
@@ -47,7 +49,7 @@ export default function FavoritePlaylists({
 					onPress={() => {
 						navigation.navigate('Playlist', { playlist })
 					}}
-					width={width / 2.1}
+					size={'$14'}
 					squared
 				/>
 			)}

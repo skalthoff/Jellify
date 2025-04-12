@@ -23,10 +23,12 @@ export default function Albums({ navigation, route }: AlbumsProps): React.JSX.El
 				: fetchFavoriteAlbums(),
 	})
 
-	const { width } = useSafeAreaFrame()
-
 	return (
 		<FlatList
+			contentContainerStyle={{
+				flexGrow: 1,
+				alignItems: 'center',
+			}}
 			contentInsetAdjustmentBehavior='automatic'
 			numColumns={2}
 			data={albums}
@@ -40,7 +42,7 @@ export default function Albums({ navigation, route }: AlbumsProps): React.JSX.El
 					onPress={() => {
 						navigation.navigate('Album', { album })
 					}}
-					width={width / 2.1}
+					size={'$14'}
 				/>
 			)}
 		/>

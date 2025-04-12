@@ -32,10 +32,12 @@ export default function Artists({ navigation, route }: ArtistsProps): React.JSX.
 				queryFn: () => fetchFavoriteArtists(),
 		  })
 
-	const { width } = useSafeAreaFrame()
-
 	return (
 		<FlatList
+			contentContainerStyle={{
+				flexGrow: 1,
+				alignItems: 'center',
+			}}
 			contentInsetAdjustmentBehavior='automatic'
 			numColumns={2}
 			data={artists}
@@ -47,7 +49,7 @@ export default function Artists({ navigation, route }: ArtistsProps): React.JSX.
 					onPress={() => {
 						navigation.navigate('Artist', { artist })
 					}}
-					width={width / 2.1}
+					size={'$14'}
 				/>
 			)}
 		/>
