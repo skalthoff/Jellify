@@ -3,7 +3,7 @@
   "version": "0.10.87",
   "private": true,
   "scripts": {
-    "init": "npm i && husky install ./husky",
+    "init": "npm i",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
