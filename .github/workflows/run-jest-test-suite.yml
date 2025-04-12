@@ -3,6 +3,7 @@ on:
   push:
     branches-ignore:
       - "main"
+  pull_request:
 jobs:
   run-jest-test-suite:
     runs-on: macos-latest
@@ -23,3 +24,6 @@ jobs:
       
       - name: 🧪 Run npm test
         run: npm run test
+
+      - name: 🦋 Check Styling 
+        run: npm run format:check
