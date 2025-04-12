@@ -114,7 +114,7 @@ Playlist
 
 ## 🏗 Built with good stuff
 
-[![Made with React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white)](https://reactjs.org “Go to React homepage”) [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org “Go to TypeScript homepage”)
+[![Made with React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white)](https://reactjs.org) [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 ### 🎨 Frontend
 
@@ -218,10 +218,10 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 -   [James](https://github.com/jmshrv) and all other contributors of [Finamp](https://github.com/jmshrv/finamp). _Jellify_ draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin.
     -   James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
 -   The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
-    -   Extra thanks to [Ritesh](https://github.com/riteshshukla04) for your help, knowledge, and guidance
 -   [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) module and for his assistance with getting Jest working
 -   My fellow [contributors](https://github.com/anultravioletaurora/Jellify/graphs/contributors) who have poured so much heart and a lot of sweat into making _Jellify_ a great experience
-    -   Extra thanks to [John Grant](https://github.com/johngrantdev) for shaping and designing the user experience in many places
+    -   Extra thanks to [John](https://github.com/johngrantdev) and [Vali-98](https://github.com/Vali-98) for shaping and designing the user experience in many places
+    -   Huge thank you to [Ritesh](https://github.com/riteshshukla04) for your project automation and backend knowledge (and for the memes)
 -   The friends I made along the way that have been critical in fostering an amazing community around _Jellify_
     -   [Thalia](https://github.com/PercyGabriel1129)
     -   [BotBlake](https://github.com/BotBlake)
