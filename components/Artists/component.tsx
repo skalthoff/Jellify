@@ -11,26 +11,31 @@ import { fetchFavoriteArtists } from "../../api/queries/functions/favorites";
 import { QueryConfig } from "../../api/queries/query.config";
 import { useHeaderHeight } from '@react-navigation/elements';
 
+const queryMap = {
+    [QueryKeys.RecentlyPlayedArtists] : {
+        key: [QueryKeys.RecentlyPlayedArtists, QueryConfig.limits.recents * 4, QueryConfig.limits.recents],
+        fn: () => fetchRecentlyPlayedArtists(QueryConfig.limits.recents * 4, QueryConfig.limits.recents)
+    },
+    [QueryKeys.FavoriteArtists] : {
+        key: [QueryKeys.FavoriteArtists],
+        fn: () => fetchFavoriteArtists()
+    },
+    [QueryKeys.AllArtists] : {
+        key: [QueryKeys.AllArtists],
+        fn: () => fetchArtists()
+    }
+}
+
 export default function Artists({ 
     navigation,
     route
 }: ArtistsProps): React.JSX.Element {
 
-    const { data: artists, refetch, isPending } = 
-        route.params.query === 
-            QueryKeys.RecentlyPlayedArtists ? useQuery({
-                queryKey: [QueryKeys.RecentlyPlayedArtists, QueryConfig.limits.recents * 4, QueryConfig.limits.recents],
-                queryFn: () => fetchRecentlyPlayedArtists(QueryConfig.limits.recents * 4, QueryConfig.limits.recents)
-            }) : 
-            route.params.query === 
-            QueryKeys.FavoriteArtists ? 
-            useQuery({
-                queryKey: [QueryKeys.FavoriteArtists],
-                queryFn: () => fetchFavoriteArtists()
-            }) :
-            useQuery({
-                queryKey: [QueryKeys.AllArtists],
-                queryFn: () => fetchArtists()
+    const queryType = queryMap[route.params.query] ?? queryMap[QueryKeys.AllArtists]
+ 
+    const { data: artists, refetch, isPending } = useQuery({
+                 queryKey: queryType.key,
+                 queryFn: queryType.fn,
             })
 
     const { width } = useSafeAreaFrame();
