@@ -23,3 +23,6 @@ jobs:
       
       - name: 🧪 Run npm test
         run: npm run test
+
+      - name: 🦋 Check Styling 
+        run: npm run format:check
