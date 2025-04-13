@@ -165,8 +165,8 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 ##### Setup
 
 -   Clone this repository
--   Run `npm run init` to initialize the project
-    -   This will install `npm` packages, install `bundler` and required gems, and installs CocoaPods
+-   Run `npm run init:ios` to initialize the project
+    -   This will install `npm` packages, install `bundler` and required gems, and install required CocoaPods
 -   In the `ios` directory, run `fastlane match development --readonly` to fetch the development signing certificates
     -   *You will need access to the *Jellify Signing* private repository*
 
@@ -179,7 +179,7 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 ##### Building
 
--   To create a build, run `npm run fastlane:ios:build` to use fastlane to compile an `.ipa` for you
+-   To create a build, run `npm run fastlane:ios:build` to use fastlane to compile an `.ipa`
 
 ### 🤖 Android
 
@@ -204,7 +204,7 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 ##### Building
 
--   To create a build, run `npm run fastlane:android:build` to use fastlane to compile an `.apk` for you
+-   To create a build, run `npm run fastlane:android:build` to use fastlane to compile an `.apk` for all architectures
 
 #### References
 
@@ -222,7 +222,7 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 -   [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) module and for his assistance with getting Jest working
 -   My fellow [contributors](https://github.com/anultravioletaurora/Jellify/graphs/contributors) who have poured so much heart and a lot of sweat into making _Jellify_ a great experience
     -   Extra thanks to [John](https://github.com/johngrantdev) and [Vali-98](https://github.com/Vali-98) for shaping and designing the user experience in many places
-    -   Huge thank you to [Ritesh](https://github.com/riteshshukla04) for your project automation and backend knowledge (and for the memes)
+    -   Huge thank you to [Ritesh](https://github.com/riteshshukla04) for your project automation and backend expertise (and for the memes)
 -   The friends I made along the way that have been critical in fostering an amazing community around _Jellify_
     -   [Thalia](https://github.com/PercyGabriel1129)
     -   [BotBlake](https://github.com/BotBlake)

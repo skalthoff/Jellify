@@ -42,8 +42,6 @@ const CarPlayHome: ListTemplate = new ListTemplate({
 						TrackPlayer.skip(
 							tracks?.findIndex((track) => track.Id! === item.templateId) ?? 0,
 						)
-
-						CarPlay.pushTemplate(CarPlayNowPlaying, true)
 					}),
 				)
 				break
