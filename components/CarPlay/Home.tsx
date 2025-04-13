@@ -5,8 +5,7 @@ import { queryClient } from '../../constants/query-client'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import ListItemTemplate from './ListTemplate'
 import TrackPlayer from 'react-native-track-player'
-import CarPlayNowPlaying from './NowPlaying'
-import { mapDtoToTrack } from '@/helpers/mappings'
+import { mapDtoToTrack } from '../../helpers/mappings'
 
 const CarPlayHome: ListTemplate = new ListTemplate({
 	id: 'Home',
