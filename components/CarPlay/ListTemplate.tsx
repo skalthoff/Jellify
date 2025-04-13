@@ -16,7 +16,9 @@ export default async function ListItemTemplate(
 		const itemImages: ListItemImage[] = await Promise.all(
 			items.map(async (item): Promise<ListItemImage> => {
 				return Image.getCachePathAsync(
-					getImageApi(Client.api!).getItemImageUrlById(item.Id!),
+					getImageApi(Client.api!).getItemImageUrlById(
+						item.Type === 'Audio' ? item.AlbumId! : item.Id!,
+					),
 				).then((imageUri) => {
 					if (imageUri)
 						return {
