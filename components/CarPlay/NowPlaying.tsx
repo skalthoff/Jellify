@@ -1,5 +1,9 @@
 import { NowPlayingTemplate } from 'react-native-carplay'
+import uuid from 'react-native-uuid'
 
-const CarPlayNowPlaying: NowPlayingTemplate = new NowPlayingTemplate({})
+const CarPlayNowPlaying = () =>
+	new NowPlayingTemplate({
+		id: uuid.v4(),
+	})
 
 export default CarPlayNowPlaying

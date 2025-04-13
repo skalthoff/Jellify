@@ -1,8 +1,10 @@
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { ListTemplate } from 'react-native-carplay'
+import uuid from 'react-native-uuid'
 
 const RecentTracksTemplate = (items: BaseItemDto[]) =>
 	new ListTemplate({
+		id: uuid.v4(),
 		sections: [
 			{
 				items:

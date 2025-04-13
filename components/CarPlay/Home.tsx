@@ -5,9 +5,10 @@ import { queryClient } from '../../constants/query-client'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import RecentTracksTemplate from './RecentTracks'
 import RecentArtistsTemplate from './RecentArtists'
+import uuid from 'react-native-uuid'
 
 const CarPlayHome: ListTemplate = new ListTemplate({
-	id: 'Home',
+	id: uuid.v4(),
 	title: 'Home',
 	tabTitle: 'Home',
 	sections: [
