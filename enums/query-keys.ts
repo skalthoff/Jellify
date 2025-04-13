@@ -5,6 +5,11 @@ export enum QueryKeys {
 	ArtistAlbums = 'ARTIST_ALBUMS',
 	ArtistById = 'ARTIST_BY_ID',
 	Credentials = 'CREDENTIALS',
+
+	/**
+	 * @deprecated Expo Image is being used instead of
+	 * querying for the images with Tanstack
+	 */
 	ItemImage = 'IMAGE_BY_ITEM_ID',
 	Libraries = 'LIBRARIES',
 	Pause = 'PAUSE',

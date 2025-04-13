@@ -27,7 +27,7 @@ const JellifyContextInitializer = () => {
 			setCarPlayConnected(true)
 
 			if (loggedIn) {
-				CarPlay.setRootTemplate(CarPlayNavigation, true)
+				CarPlay.setRootTemplate(CarPlayNavigation)
 				CarPlay.enableNowPlaying(true) // https://github.com/birkir/react-native-carplay/issues/185
 				CarPlay.pushTemplate(CarPlayNowPlaying())
 			}

@@ -1,6 +1,9 @@
+import { mapDtoToTrack } from '../..//helpers/mappings'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
-import { ListTemplate } from 'react-native-carplay'
+import { CarPlay, ListTemplate } from 'react-native-carplay'
+import TrackPlayer from 'react-native-track-player'
 import uuid from 'react-native-uuid'
+import CarPlayNowPlaying from './NowPlaying'
 
 const RecentTracksTemplate = (items: BaseItemDto[]) =>
 	new ListTemplate({
@@ -16,7 +19,15 @@ const RecentTracksTemplate = (items: BaseItemDto[]) =>
 					}) ?? [],
 			},
 		],
-		onItemSelect: async (item) => {},
+		onItemSelect: async (item) => {
+			await TrackPlayer.setQueue(items.map((item) => mapDtoToTrack(item)))
+
+			await TrackPlayer.skip(item.index)
+
+			await TrackPlayer.play()
+
+			CarPlay.pushTemplate(CarPlayNowPlaying())
+		},
 	})
 
 export default RecentTracksTemplate
