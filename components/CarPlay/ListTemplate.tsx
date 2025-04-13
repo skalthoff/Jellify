@@ -11,6 +11,7 @@ interface ListItemImage {
 
 export default async function ListItemTemplate(
 	items: BaseItemDto[] | undefined,
+	onItemSelect: (item: { templateId: string; index: number }) => Promise<void>,
 ): Promise<ListTemplate> {
 	if (items) {
 		const itemImages: ListItemImage[] = await Promise.all(
@@ -43,7 +44,7 @@ export default async function ListItemTemplate(
 					items:
 						items?.map((item) => {
 							return {
-								id: item.Id!,
+								templateId: item.Id!,
 								text: item.Name ?? 'Untitled',
 								image: {
 									uri:
@@ -54,6 +55,7 @@ export default async function ListItemTemplate(
 						}) ?? [],
 				},
 			],
+			onItemSelect,
 		})
 	} else {
 		return new ListTemplate({})
