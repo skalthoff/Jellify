@@ -3,6 +3,7 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { ListTemplate } from 'react-native-carplay'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../api/client'
+import uuid from 'react-native-uuid'
 
 interface ListItemImage {
 	id: string
@@ -39,6 +40,7 @@ export default async function ListItemTemplate(
 		)
 
 		return new ListTemplate({
+			id: uuid.v4(),
 			sections: [
 				{
 					items:
