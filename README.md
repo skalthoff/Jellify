@@ -210,6 +210,7 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 -   [Setting up Android SDK](https://developer.android.com/about/versions/14/setup-sdk)
 -   [ANDROID_HOME not being set](https://stackoverflow.com/questions/26356359/error-android-home-is-not-set-and-android-command-not-in-your-path-you-must/54888107#54888107)
+-   [Android Auto app not showing up](https://www.reddit.com/r/AndroidAuto/s/LGYHoSPdXm)
 
 ## 🙏 Special Thanks To
 
