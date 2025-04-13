@@ -22,12 +22,13 @@ export default async function ListItemTemplate(
 						item.Type === 'Audio' ? item.AlbumId! : item.Id!,
 					),
 				).then((imageUri) => {
-					if (imageUri)
+					if (imageUri) {
+						console.debug(imageUri)
 						return {
 							id: item.Id!,
 							url: imageUri,
 						} as ListItemImage
-					else {
+					} else {
 						return {
 							id: item.Id!,
 							url: getImageApi(Client.api!).getItemImageUrlById(
