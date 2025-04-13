@@ -12,11 +12,11 @@ import PlaylistsScreen from "../Playlists/screen";
 import AddPlaylist from "./components/add-playlist";
 import DeletePlaylist from "./components/delete-playlist";
 import { ArtistScreen } from "../Artist";
-import Favorites from "../Favorites/component";
 import FavoritesScreen from "../Favorites/screen";
-import LibraryTopBar from "./component";
+import LibraryTopBar from "./components/library-top-bar";
 import { GenresScreen } from "../Genres/component";
-import LinearGradient from 'react-native-linear-gradient';
+import Tracks from "../Tracks/component";
+import LinearGradient from 'react-native-linear-gradient'
 
 const Stack = createNativeStackNavigator<StackParamList>()
 
@@ -27,8 +27,21 @@ export default function LibraryStack(): React.JSX.Element {
             screenOptions={({ route, navigation }) => ({
                 headerTitle: () => <LibraryTopBar route={route} navigation={navigation} />,
                 headerTitleAlign: "left",
-                headerBackVisible: false,
                 headerTransparent: true,
+                headerStyle: {
+                    // height: 80,
+                    backgroundColor: 'transparent'
+                },
+                headerBackground: () => (
+                    <LinearGradient
+                      colors={['#0C0622', '#0C0622', 'transparent']}
+                      locations={[0, 0.5, 1]}
+                      style={{ flex: 1 }}
+                      start={{x: 0, y: 0}}
+                      end={{x: 0, y: 1}}
+                    />
+                  ),
+                headerBackVisible: false,
             })}
         >
             <Stack.Screen
@@ -37,14 +50,7 @@ export default function LibraryStack(): React.JSX.Element {
             />
             <Stack.Screen 
                 name="Artist" 
-                component={ArtistScreen} 
-                options={({ route }) => ({
-                    title: route.params.artist.Name ?? "Unknown Artist",
-                    headerLargeTitle: true,
-                    headerLargeTitleStyle: {
-                        fontFamily: 'Aileron-Bold'
-                    }
-                })}
+                component={ArtistScreen}
             />
 
             <Stack.Screen 
@@ -52,20 +58,16 @@ export default function LibraryStack(): React.JSX.Element {
                 component={ArtistsScreen} 
             />
 
-			<Stack.Screen
-				name='Album'
-				component={AlbumScreen}
-				options={({ route }) => ({
-					headerShown: true,
-					headerTitle: '',
-				})}
-			/>
+            <Stack.Screen
+                name="Album"
+                component={AlbumScreen}
+            />
 
 			<Stack.Screen name='Albums' component={AlbumsScreen} options={{}} />
 
             <Stack.Screen
                 name="Tracks"
-                component={TracksScreen}
+                component={Tracks}
                 options={{
                 }}
             />
