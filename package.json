@@ -19,8 +19,7 @@
     "androidBuild": "cd android && ./gradlew clean && ./gradlew assembleRelease && cd .. && echo 'find apk in android/app/build/outputs/apk/release'",
     "prepare": "husky",
     "format:check": "prettier --check .",
-    "format": "prettier --write .",
-    "postinstall": "patch-package"
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@jellyfin/sdk": "^0.11.0",
@@ -47,7 +46,6 @@
     "jest-expo": "^52.0.6",
     "lodash": "^4.17.21",
     "npm-bundle": "^3.0.3",
-    "patch-package": "^8.0.0",
     "react": "18.3.1",
     "react-freeze": "^1.0.4",
     "react-native": "0.77.0",
