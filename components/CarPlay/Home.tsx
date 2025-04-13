@@ -28,17 +28,17 @@ const CarPlayHome: ListTemplate = new ListTemplate({
 				const artists = queryClient.getQueryData<BaseItemDto[]>([
 					QueryKeys.RecentlyPlayedArtists,
 				])
-				CarPlay.pushTemplate(ListItemTemplate(artists))
+				CarPlay.pushTemplate(await ListItemTemplate(artists))
 				break
 			}
 			case 1: {
 				const tracks = await fetchRecentlyPlayed()
-				CarPlay.pushTemplate(ListItemTemplate(tracks))
+				CarPlay.pushTemplate(await ListItemTemplate(tracks))
 				break
 			}
 			case 2: {
 				const playlists = queryClient.getQueryData<BaseItemDto[]>([QueryKeys.UserPlaylists])
-				CarPlay.pushTemplate(ListItemTemplate(playlists))
+				CarPlay.pushTemplate(await ListItemTemplate(playlists))
 				break
 			}
 		}
