@@ -3,6 +3,7 @@ import { ListTemplate } from 'react-native-carplay'
 
 const RecentArtistsTemplate = (items: BaseItemDto[]) =>
 	new ListTemplate({
+		id: 'Recent Artists',
 		sections: [
 			{
 				items:
