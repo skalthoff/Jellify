@@ -1,13 +1,9 @@
 import { isUndefined } from 'lodash'
 import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
-import { CarPlayInterface } from 'react-native-carplay'
+import { CarPlay } from 'react-native-carplay'
 import Client from '../api/client'
-import { CarPlay as NativeCarPlay } from './NativeCarPlay'
-
-// 'react-native-carplay' has also been disabled for android builds in react-native.config.js
-const CarPlay = NativeCarPlay as CarPlayInterface | null
-const CarPlayNavigation = CarPlay ? require('./CarPlay/Navigation') : null
-const CarPlayNowPlaying = CarPlay ? require('./CarPlay/NowPlaying') : null
+import CarPlayNavigation from './CarPlay/Navigation'
+import CarPlayNowPlaying from './CarPlay/NowPlaying'
 
 interface JellifyContext {
 	loggedIn: boolean
