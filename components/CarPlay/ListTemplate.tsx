@@ -28,7 +28,9 @@ export default async function ListItemTemplate(
 					else {
 						return {
 							id: item.Id!,
-							url: getImageApi(Client.api!).getItemImageUrlById(item.Id!),
+							url: getImageApi(Client.api!).getItemImageUrlById(
+								item.Type === 'Audio' ? item.AlbumId! : item.Id!,
+							),
 						}
 					}
 				})
