@@ -6,6 +6,7 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import ListItemTemplate from './ListTemplate'
 import TrackPlayer from 'react-native-track-player'
 import { mapDtoToTrack } from '../../helpers/mappings'
+import CarPlayNowPlaying from './NowPlaying'
 
 const CarPlayHome: ListTemplate = new ListTemplate({
 	id: 'Home',
@@ -36,11 +37,17 @@ const CarPlayHome: ListTemplate = new ListTemplate({
 				const tracks = queryClient.getQueryData<BaseItemDto[]>([QueryKeys.RecentlyPlayed])
 				CarPlay.pushTemplate(
 					await ListItemTemplate(tracks, async (item) => {
-						TrackPlayer.setQueue(tracks?.map((track) => mapDtoToTrack(track)) ?? [])
+						await TrackPlayer.setQueue(
+							tracks?.map((track) => mapDtoToTrack(track)) ?? [],
+						)
 
-						TrackPlayer.skip(
+						await TrackPlayer.skip(
 							tracks?.findIndex((track) => track.Id! === item.templateId) ?? 0,
 						)
+
+						await TrackPlayer.play()
+
+						CarPlay.pushTemplate(CarPlayNowPlaying)
 					}),
 				)
 				break
