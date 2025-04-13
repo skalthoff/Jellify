@@ -4,6 +4,7 @@ import { CarPlay } from 'react-native-carplay'
 import Client from '../api/client'
 import CarPlayNavigation from './CarPlay/Navigation'
 import CarPlayNowPlaying from './CarPlay/NowPlaying'
+import { Platform } from 'react-native'
 
 interface JellifyContext {
 	loggedIn: boolean
@@ -27,9 +28,11 @@ const JellifyContextInitializer = () => {
 			setCarPlayConnected(true)
 
 			if (loggedIn) {
+				console.debug(CarPlay.bridge)
 				CarPlay.setRootTemplate(CarPlayNavigation)
-				CarPlay.enableNowPlaying(true) // https://github.com/birkir/react-native-carplay/issues/185
 				CarPlay.pushTemplate(CarPlayNowPlaying())
+
+				if (Platform.OS === 'ios') CarPlay.enableNowPlaying(true) // https://github.com/birkir/react-native-carplay/issues/185
 			}
 		}
 
