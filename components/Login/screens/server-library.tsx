@@ -50,7 +50,8 @@ export default function ServerLibrary(): React.JSX.Element {
 					type='single'
 					disableDeactivation={true}
 					value={libraryId}
-					onValueChange={setLibraryId}>
+					onValueChange={setLibraryId}
+				>
 					{libraries!
 						.filter((library) => library.CollectionType === 'music')
 						.map((library) => {
@@ -63,7 +64,8 @@ export default function ServerLibrary(): React.JSX.Element {
 										libraryId == library.Id!
 											? getToken('$color.purpleGray')
 											: 'unset'
-									}>
+									}
+								>
 									<Text>{library.Name ?? 'Unnamed Library'}</Text>
 								</ToggleGroup.Item>
 							)
@@ -88,7 +90,8 @@ export default function ServerLibrary(): React.JSX.Element {
 						playlistLibraryPrimaryImageId: playlistLibrary?.ImageTags!.Primary,
 					})
 					setLoggedIn(true)
-				}}>
+				}}
+			>
 				{`Let's Go!`}
 			</Button>
 
@@ -96,7 +99,8 @@ export default function ServerLibrary(): React.JSX.Element {
 				onPress={() => {
 					Client.switchUser()
 					setUser(undefined)
-				}}>
+				}}
+			>
 				Switch User
 			</Button>
 		</SafeAreaView>

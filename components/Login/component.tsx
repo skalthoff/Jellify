@@ -24,7 +24,8 @@ export default function Login(): React.JSX.Element {
 					? 'ServerAuthentication'
 					: 'LibrarySelection'
 			}
-			screenOptions={{ headerShown: false }}>
+			screenOptions={{ headerShown: false }}
+		>
 			<Stack.Screen
 				name='ServerAddress'
 				options={{
