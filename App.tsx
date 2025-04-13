@@ -15,6 +15,7 @@ import { createWorkletRuntime } from 'react-native-reanimated'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import { JellifyDarkTheme, JellifyLightTheme } from './components/theme'
+import { CarPlay } from 'react-native-carplay'
 
 export const backgroundRuntime = createWorkletRuntime('background')
 
