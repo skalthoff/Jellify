@@ -4,6 +4,8 @@ export const QueryConfig = {
 	limits: {
 		recents: 20,
 		search: 50, // TODO: make this a paginated search so limits don't even matter
+        pageSize: 20, // for infinite queries
+
 	},
 	images: {
 		height: 300,
