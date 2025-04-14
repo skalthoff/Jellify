@@ -12,6 +12,7 @@ const CarPlayHome = () =>
 		id: uuid.v4(),
 		title: 'Home',
 		tabTitle: 'Home',
+		tabSystemImageName: 'music.house.fill',
 		sections: [
 			{
 				header: `Hi ${Client.user?.name ?? 'there'}`,
