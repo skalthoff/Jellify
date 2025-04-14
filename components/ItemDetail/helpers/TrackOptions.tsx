@@ -169,7 +169,7 @@ export default function TrackOptions({
 					</Text>
 
 					<YGroup separator={<Separator />}>
-						{playlists.map((playlist) => {
+						{playlists?.map((playlist) => {
 							return (
 								<YGroup.Item key={playlist.Id!}>
 									<ListItem
