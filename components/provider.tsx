@@ -1,13 +1,10 @@
 import { isUndefined } from 'lodash'
 import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
-import { CarPlayInterface } from 'react-native-carplay'
+import { CarPlay } from 'react-native-carplay'
 import Client from '../api/client'
-import { CarPlay as NativeCarPlay } from './NativeCarPlay'
-
-// 'react-native-carplay' has also been disabled for android builds in react-native.config.js
-const CarPlay = NativeCarPlay as CarPlayInterface | null
-const CarPlayNavigation = CarPlay ? require('./CarPlay/Navigation') : null
-const CarPlayNowPlaying = CarPlay ? require('./CarPlay/NowPlaying') : null
+import CarPlayNavigation from './CarPlay/Navigation'
+import CarPlayNowPlaying from './CarPlay/NowPlaying'
+import { Platform } from 'react-native'
 
 interface JellifyContext {
 	loggedIn: boolean
@@ -30,13 +27,13 @@ const JellifyContextInitializer = () => {
 		function onConnect() {
 			setCarPlayConnected(true)
 
-			if (loggedIn && CarPlay) {
-				console.debug(CarPlayNavigation)
-				console.debug(CarPlayNowPlaying)
+			if (loggedIn) {
+				CarPlay.setRootTemplate(CarPlayNavigation)
+				CarPlay.pushTemplate(CarPlayNowPlaying)
 
-				CarPlay.setRootTemplate(CarPlayNavigation, true)
-				CarPlay.pushTemplate(CarPlayNowPlaying, true)
-				CarPlay.enableNowPlaying(true) // https://github.com/birkir/react-native-carplay/issues/185
+				if (Platform.OS === 'ios') {
+					CarPlay.enableNowPlaying(true) // https://github.com/birkir/react-native-carplay/issues/185
+				}
 			}
 		}
 
