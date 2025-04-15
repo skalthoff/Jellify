@@ -194,6 +194,9 @@ export default function Playlist({ playlist, navigation }: PlaylistProps): React
 					<RunTimeTicks>{playlist.RunTimeTicks}</RunTimeTicks>
 				</XStack>
 			}
+			style={{
+				marginHorizontal: 2,
+			}}
 		/>
 	)
 }

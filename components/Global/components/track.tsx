@@ -47,7 +47,6 @@ export default function Track({
 	onRemove,
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
-	const { width } = useSafeAreaFrame()
 	const { nowPlaying, playQueue, usePlayNewQueue } = usePlayerContext()
 
 	const isPlaying = nowPlaying?.item.Id === track.Id
@@ -82,7 +81,6 @@ export default function Track({
 						  }
 				}
 				paddingVertical={'$2'}
-				marginHorizontal={'$1'}
 			>
 				{prependElement && (
 					<YStack alignContent='center' justifyContent='center' flex={1}>
@@ -93,8 +91,9 @@ export default function Track({
 				<XStack
 					alignContent='center'
 					justifyContent='center'
-					flex={showArtwork ? 2 : 1}
-					minHeight={showArtwork ? width / 9 : 'unset'}
+					flex={1}
+					marginHorizontal={'$2'}
+					minHeight={showArtwork ? '$4' : 'unset'}
 				>
 					{showArtwork ? (
 						<Image
