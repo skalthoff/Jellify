@@ -2,6 +2,7 @@ import React from "react";
 import { QueryKeys } from "../../enums/query-keys";
 import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
 import { fetchItems, FetchItemsResponse, FetchItemsParams, LibrarySortBy, LibrarySortOrder, LibraryItemKind } from "../../api/queries/functions/items";
+import { fetchRecentlyPlayedArtists } from "../../api/queries/functions/artists";
 import { QueryConfig } from "../../api/queries/query.config";
 import { useHeaderHeight } from '@react-navigation/elements';
 import { Spinner, YStack } from "tamagui";
@@ -50,11 +51,15 @@ const createLibraryQuery = (
     switch (query) {
         case QueryKeys.RecentlyPlayedArtists:
             return {
-                key: [QueryKeys.RecentlyPlayedArtists, String(QueryConfig.limits.recents * 4), String(QueryConfig.limits.recents), itemType],
-                fn: () => fetchItems({
-                    ...baseParams,
-                    limit: QueryConfig.limits.recents * 4
-                })
+                key: [QueryKeys.RecentlyPlayedArtists, sortBy, sortOrder, itemType],
+                fn: (pageParam: number) => fetchRecentlyPlayedArtists(
+                    pageParam,
+                    QueryConfig.limits.pageSize,
+                    sortOrder && sortOrder[0] === 'Ascending' ? SortOrder.Ascending : SortOrder.Descending
+                ).then(items => ({
+                    items,
+                    hasMore: items.length === QueryConfig.limits.pageSize
+                }))
             };
         case QueryKeys.FavoriteArtists:
             return {
