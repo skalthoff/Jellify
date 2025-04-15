@@ -1,7 +1,7 @@
 import { HomeAlbumProps } from '../types'
 import { YStack, XStack, Separator, getToken } from 'tamagui'
 import { ItemSortBy } from '@jellyfin/sdk/lib/generated-client/models'
-import { H3, H5, Text } from '../Global/helpers/text'
+import { H5, Text } from '../Global/helpers/text'
 import { FlatList } from 'react-native'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
 import Track from '../Global/components/track'
@@ -52,23 +52,43 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 			ItemSeparatorComponent={() => <Separator />}
 			ListHeaderComponent={useMemo(() => {
 				return (
-					<YStack
-						alignItems='center'
-						alignContent='center'
-						marginTop={'$4'}
-						minHeight={getToken('$20') + getToken('$15')}
-					>
+					<YStack marginTop={'$2'} minHeight={getToken('$20') + getToken('$15')}>
 						<Image
 							source={getImageApi(Client.api!).getItemImageUrlById(album.Id!)}
 							style={{
 								borderRadius: getToken('$5'),
 								width: getToken('$20') + getToken('$15'),
 								height: getToken('$20') + getToken('$15'),
+								alignSelf: 'center',
 							}}
 						/>
 
 						<H5 textAlign='center'>{album.Name ?? 'Untitled Album'}</H5>
-						<Text>{album.ProductionYear?.toString() ?? ''}</Text>
+
+						<XStack justifyContent='space-evenly'>
+							<Text>{album.ProductionYear?.toString() ?? ''}</Text>
+						</XStack>
+
+						<FlatList
+							contentContainerStyle={{
+								marginHorizontal: 2,
+							}}
+							horizontal
+							keyExtractor={(item) => item.Id!}
+							data={album.ArtistItems}
+							renderItem={({ index, item: artist }) => (
+								<ItemCard
+									size={'$8'}
+									item={artist}
+									caption={artist.Name ?? 'Unknown Artist'}
+									onPress={() => {
+										navigation.navigate('Artist', {
+											artist,
+										})
+									}}
+								/>
+							)}
+						/>
 					</YStack>
 				)
 			}, [album])}
@@ -82,37 +102,12 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 				/>
 			)}
 			ListFooterComponent={
-				<YStack justifyContent='flex-start'>
-					<XStack flex={1} marginTop={'$3'} justifyContent='flex-end'>
-						<Text
-							color={'$borderColor'}
-							style={{ display: 'block' }}
-							marginRight={'$1'}
-						>
-							Total Runtime:
-						</Text>
-						<RunTimeTicks>{album.RunTimeTicks}</RunTimeTicks>
-					</XStack>
-
-					<H3>Album Artists</H3>
-					<FlatList
-						horizontal
-						keyExtractor={(item) => item.Id!}
-						data={album.ArtistItems}
-						renderItem={({ index, item: artist }) => (
-							<ItemCard
-								width={100}
-								item={artist}
-								caption={artist.Name ?? 'Unknown Artist'}
-								onPress={() => {
-									navigation.navigate('Artist', {
-										artist,
-									})
-								}}
-							/>
-						)}
-					/>
-				</YStack>
+				<XStack marginRight={'$2'} justifyContent='flex-end'>
+					<Text color={'$purpleGray'} paddingRight={'$1'}>
+						Total Runtime:
+					</Text>
+					<RunTimeTicks>{album.RunTimeTicks}</RunTimeTicks>
+				</XStack>
 			}
 		/>
 	)
