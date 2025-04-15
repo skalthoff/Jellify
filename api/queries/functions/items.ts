@@ -35,6 +35,17 @@ export interface FetchItemsResponse {
     hasMore: boolean;
 }
 
+function getDefaultSortOrder(sortBy: LibrarySortBy): LibrarySortOrder {
+    switch (sortBy) {
+        case ItemSortBy.DatePlayed:
+            return SortOrder.Descending;
+        case ItemSortBy.SortName:
+            return SortOrder.Ascending;
+        default:
+            return SortOrder.Ascending;
+    }
+}
+
 export function hasMoreItems(items: BaseItemDto[], limit: number = QueryConfig.limits.pageSize): boolean {
     return items.length === limit;
 }
@@ -45,7 +56,7 @@ export function fetchItems(params: FetchItemsParams): Promise<FetchItemsResponse
         isFavorite = false, 
         page,
         sortBy = [sortOptions[0].value], 
-        sortOrder = [sortOrderOptions[0].value], 
+        sortOrder = params.sortOrder || [getDefaultSortOrder(sortBy[0])], 
         limit = QueryConfig.limits.pageSize 
     } = params;
 
