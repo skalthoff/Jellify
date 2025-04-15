@@ -76,7 +76,7 @@ export function ArtistScreen({
 				/>
 			</YStack>
 
-			<H3>Albums</H3>
+			<H3 marginLeft={'$2'}>Albums</H3>
 			<FlatList
 				contentContainerStyle={{
 					flexGrow: 1,
@@ -100,7 +100,9 @@ export function ArtistScreen({
 				)}
 				ListFooterComponent={
 					<YStack>
-						<H3>{`Similar to ${artist.Name ?? 'Unknown Artist'}`} </H3>
+						<H3 marginLeft={'$2'}>
+							{`Similar to ${artist.Name ?? 'Unknown Artist'}`}{' '}
+						</H3>
 
 						<FlatList
 							data={similarArtists}

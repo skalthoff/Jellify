@@ -91,7 +91,7 @@ export default function Track({
 				<XStack
 					alignContent='center'
 					justifyContent='center'
-					flex={1}
+					flex={showArtwork ? 2 : 1}
 					marginHorizontal={'$2'}
 					minHeight={showArtwork ? '$4' : 'unset'}
 				>
@@ -132,7 +132,7 @@ export default function Track({
 					alignItems='center'
 					justifyContent='space-between'
 					alignContent='center'
-					flex={3}
+					flex={4}
 				>
 					<FavoriteIcon item={track} />
 
@@ -140,7 +140,7 @@ export default function Track({
 						<RunTimeTicks>{track.RunTimeTicks}</RunTimeTicks>
 					</YStack>
 
-					<YStack alignContent='center' justifyContent='center'>
+					<YStack alignContent='center' justifyContent='flex-start' marginRight={'$3'}>
 						<Icon
 							name={showRemove ? 'close' : 'dots-horizontal'}
 							onPress={() => {

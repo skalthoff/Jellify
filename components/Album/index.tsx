@@ -1,6 +1,6 @@
 import { HomeAlbumProps } from '../types'
 import { YStack, XStack, Separator, getToken } from 'tamagui'
-import { ItemSortBy } from '@jellyfin/sdk/lib/generated-client/models'
+import { BaseItemDto, ItemSortBy } from '@jellyfin/sdk/lib/generated-client/models'
 import { H5, Text } from '../Global/helpers/text'
 import { FlatList, SectionList } from 'react-native'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
@@ -26,47 +26,66 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 	})
 	const { width } = useSafeAreaFrame()
 
-	const { data: tracks } = useQuery({
+	const { data: discs } = useQuery({
 		queryKey: [QueryKeys.ItemTracks, album.Id!],
 		queryFn: () => {
 			let sortBy: ItemSortBy[] = []
 
 			sortBy = [ItemSortBy.ParentIndexNumber, ItemSortBy.IndexNumber, ItemSortBy.SortName]
 
-			return getItemsApi(Client.api!)
-				.getItems({
-					parentId: album.Id!,
-					sortBy,
-				})
-				.then(({ data }) => {
-					return data.Items ? data.Items : []
-				})
+			return new Promise<{ title: string; data: BaseItemDto[] }[]>((resolve, reject) => {
+				getItemsApi(Client.api!)
+					.getItems({
+						parentId: album.Id!,
+						sortBy,
+					})
+					.then(({ data }) => {
+						const discs = data.Items
+							? Object.keys(
+									groupBy(
+										data.Items,
+										(track) => track.ParentIndexNumber?.toString() ?? '0',
+									),
+							  ).map((discNumber) => {
+									console.debug(discNumber)
+									return {
+										title: discNumber,
+										data: data.Items!.filter((track: BaseItemDto) =>
+											track.ParentIndexNumber
+												? isEqual(
+														discNumber,
+														(track.ParentIndexNumber ?? 0).toString(),
+												  )
+												: track,
+										),
+									}
+							  })
+							: [{ title: '1', data: [] }]
+
+						resolve(discs)
+					})
+					.catch((error) => {
+						reject(error)
+					})
+			})
 		},
 	})
 
 	return (
 		<SectionList
 			contentInsetAdjustmentBehavior='automatic'
-			sections={
-				tracks
-					? Object.keys(groupBy(tracks, (track) => track.ParentIndexNumber ?? 0)).map(
-							(discNumber, index) => {
-								return {
-									title: discNumber,
-									data: tracks.filter((track) =>
-										isEqual(
-											discNumber,
-											(track.ParentIndexNumber ?? 0).toString(),
-										),
-									),
-								}
-							},
-					  )
-					: [{ title: '1', data: [] }]
-			}
+			sections={discs ?? [{ title: '1', data: [] }]}
 			keyExtractor={(item, index) => item.Id! + index}
 			ItemSeparatorComponent={() => <Separator />}
-			renderSectionHeader={({ section }) => <Text bold>{`Disc ${section.title}`}</Text>}
+			renderSectionHeader={({ section }) => {
+				return discs && discs.length >= 2 ? (
+					<Text
+						marginLeft={'$4.5'}
+						backgroundColor={'$background'}
+						bold
+					>{`Disc ${section.title}`}</Text>
+				) : null
+			}}
 			ListHeaderComponent={
 				<YStack marginTop={'$2'} minHeight={getToken('$20') + getToken('$15')}>
 					<Image
@@ -110,7 +129,7 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 			renderItem={({ item: track, index }) => (
 				<Track
 					track={track}
-					tracklist={tracks}
+					tracklist={discs?.flatMap((disc) => disc.data)}
 					index={index}
 					navigation={navigation}
 					queue={album}
@@ -124,9 +143,6 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 					<RunTimeTicks>{album.RunTimeTicks}</RunTimeTicks>
 				</XStack>
 			}
-			contentContainerStyle={{
-				marginHorizontal: 4,
-			}}
 		/>
 	)
 }
