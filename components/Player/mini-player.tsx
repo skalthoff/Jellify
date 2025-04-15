@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react'
-import { getToken, getTokens, Square, useTheme, View, XStack, YStack } from 'tamagui'
+import React from 'react'
+import { getToken, getTokens, useTheme, View, XStack, YStack } from 'tamagui'
 import { usePlayerContext } from '../../player/provider'
 import { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs'
 import { NavigationHelpers, ParamListBase } from '@react-navigation/native'
@@ -7,13 +7,10 @@ import Icon from '../Global/helpers/icon'
 import { Text } from '../Global/helpers/text'
 import TextTicker from 'react-native-text-ticker'
 import PlayPauseButton from './helpers/buttons'
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { TextTickerConfig } from './component.config'
 import { Image } from 'expo-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../api/client'
-import { useQuery } from '@tanstack/react-query'
-import { QueryKeys } from '../../enums/query-keys'
 
 export function Miniplayer({
 	navigation,
@@ -66,7 +63,7 @@ export function Miniplayer({
 						/>
 					</YStack>
 
-					<YStack alignContent='flex-start' marginLeft={'$2'} flex={4} maxWidth={'$20'}>
+					<YStack alignContent='flex-start' marginLeft={'$2'} flex={5} maxWidth={'$20'}>
 						<TextTicker {...TextTickerConfig}>
 							<Text bold>{nowPlaying?.title ?? 'Nothing Playing'}</Text>
 						</TextTicker>

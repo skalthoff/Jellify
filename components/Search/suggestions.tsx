@@ -51,6 +51,9 @@ export default function Suggestions(props: SuggestionsProps): React.JSX.Element 
 			renderItem={({ item }) => {
 				return <Item item={item} queueName={'Suggestions'} navigation={props.navigation} />
 			}}
+			style={{
+				marginHorizontal: 2,
+			}}
 		/>
 	)
 }

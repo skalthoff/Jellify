@@ -111,6 +111,9 @@ export default function Search({
 			renderItem={({ item }) => (
 				<Item item={item} queueName={searchString ?? 'Search'} navigation={navigation} />
 			)}
+			style={{
+				marginHorizontal: 2,
+			}}
 		/>
 	)
 }
