@@ -5,6 +5,7 @@ import { RouteProp } from '@react-navigation/native'
 import { Text } from '../Global/helpers/text'
 import { useArtistContext } from './provider'
 import Animated, { useAnimatedScrollHandler } from 'react-native-reanimated'
+import { ActivityIndicator } from 'react-native'
 
 export default function SimilarArtists({
 	route,
@@ -13,7 +14,7 @@ export default function SimilarArtists({
 	route: RouteProp<StackParamList, 'SimilarArtists'>
 	navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
-	const { similarArtists, scroll } = useArtistContext()
+	const { similarArtists, fetchingSimilarArtists, scroll } = useArtistContext()
 	const scrollHandler = useAnimatedScrollHandler({
 		onScroll: (event) => {
 			'worklet'
@@ -42,9 +43,13 @@ export default function SimilarArtists({
 				/>
 			)}
 			ListEmptyComponent={
-				<Text justify={'center'} textAlign='center'>
-					No similar artists
-				</Text>
+				fetchingSimilarArtists ? (
+					<ActivityIndicator />
+				) : (
+					<Text justify={'center'} textAlign='center'>
+						No similar artists
+					</Text>
+				)
 			}
 			onScroll={scrollHandler}
 		/>

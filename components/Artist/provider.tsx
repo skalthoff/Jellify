@@ -13,7 +13,8 @@ import { createContext, ReactNode, SetStateAction, useContext, useState } from '
 import { SharedValue, useSharedValue } from 'react-native-reanimated'
 
 interface ArtistContext {
-	refreshing: boolean
+	fetchingAlbums: boolean
+	fetchingSimilarArtists: boolean
 	refresh: () => void
 	albums: BaseItemDto[] | undefined
 	similarArtists: BaseItemDto[] | undefined
@@ -58,8 +59,6 @@ const ArtistContextInitializer = (artist: BaseItemDto) => {
 		queryFn: () => fetchSimilar(artist.Id!),
 	})
 
-	const refreshing = fetchingAlbums || fetchingSimilarArtists
-
 	const refresh = () => {
 		refetchAlbums()
 		refetchRefetchSimilarArtists()
@@ -71,7 +70,8 @@ const ArtistContextInitializer = (artist: BaseItemDto) => {
 		artist,
 		albums,
 		similarArtists,
-		refreshing,
+		fetchingAlbums,
+		fetchingSimilarArtists,
 		refresh,
 		scroll,
 		setScroll,
@@ -79,7 +79,8 @@ const ArtistContextInitializer = (artist: BaseItemDto) => {
 }
 
 const ArtistContext = createContext<ArtistContext>({
-	refreshing: false,
+	fetchingAlbums: false,
+	fetchingSimilarArtists: false,
 	artist: {},
 	albums: [],
 	similarArtists: [],

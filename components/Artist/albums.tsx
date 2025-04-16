@@ -5,11 +5,12 @@ import { Text } from '../Global/helpers/text'
 import { useArtistContext } from './provider'
 import { convertRunTimeTicksToSeconds } from '../../helpers/runtimeticks'
 import Animated, { useAnimatedScrollHandler } from 'react-native-reanimated'
+import { ActivityIndicator } from 'react-native'
 export default function Albums({
 	route,
 	navigation,
 }: ArtistAlbumsProps | ArtistEpsProps): React.JSX.Element {
-	const { albums, scroll } = useArtistContext()
+	const { albums, fetchingAlbums, scroll } = useArtistContext()
 	const scrollHandler = useAnimatedScrollHandler({
 		onScroll: (event) => {
 			'worklet'
@@ -60,9 +61,13 @@ export default function Albums({
 			)}
 			onScroll={scrollHandler}
 			ListEmptyComponent={
-				<Text textAlign='center' justifyContent='center'>
-					No albums
-				</Text>
+				fetchingAlbums ? (
+					<ActivityIndicator />
+				) : (
+					<Text textAlign='center' justifyContent='center'>
+						No albums
+					</Text>
+				)
 			}
 		/>
 	)
