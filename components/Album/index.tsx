@@ -14,6 +14,7 @@ import Client from '../../api/client'
 import { ItemCard } from '../Global/components/item-card'
 import { Image } from 'expo-image'
 import { groupBy, isEqual } from 'lodash'
+import { useEffect } from 'react'
 
 export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.Element {
 	const { album } = route.params
@@ -71,10 +72,14 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 		},
 	})
 
+	useEffect(() => {
+		console.debug(discs)
+	}, [discs])
+
 	return (
 		<SectionList
 			contentInsetAdjustmentBehavior='automatic'
-			sections={discs ?? [{ title: '1', data: [] }]}
+			sections={discs ? discs : [{ title: '1', data: [] }]}
 			keyExtractor={(item, index) => item.Id! + index}
 			ItemSeparatorComponent={() => <Separator />}
 			renderSectionHeader={({ section }) => {
