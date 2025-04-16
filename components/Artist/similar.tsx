@@ -9,6 +9,7 @@ import { StackParamList } from '../types'
 import { RouteProp } from '@react-navigation/native'
 import { Text } from '../Global/helpers/text'
 import { useArtistContext } from './provider'
+import { useAnimatedScrollHandler } from 'react-native-reanimated'
 
 export default function SimilarArtists({
 	route,
@@ -17,8 +18,13 @@ export default function SimilarArtists({
 	route: RouteProp<StackParamList, 'SimilarArtists'>
 	navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
-	const { similarArtists } = useArtistContext()
-
+	const { similarArtists, scroll } = useArtistContext()
+	const scrollHandler = useAnimatedScrollHandler({
+		onScroll: (event) => {
+			'worklet'
+			scroll.value = event.contentOffset.y
+		},
+	})
 	return (
 		<FlatList
 			contentContainerStyle={{
@@ -45,6 +51,7 @@ export default function SimilarArtists({
 					No similar artists
 				</Text>
 			}
+			onScroll={scrollHandler}
 		/>
 	)
 }
