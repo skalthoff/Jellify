@@ -80,10 +80,6 @@ Album
 
 <img src="screenshots/album.png" alt="Album" width="275" height="600">
 
-Album Artists
-
-<img src="screenshots/album_artists.png" alt="Album Artists" width="275" height="600">
-
 Track Options
 
 <img src="screenshots/track_options.png" alt="Track Options" width="275" height="600">
