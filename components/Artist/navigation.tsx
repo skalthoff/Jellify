@@ -7,7 +7,10 @@ import { YStack } from 'tamagui'
 import Albums from './albums'
 import SimilarArtists from './similar'
 import { Image } from 'expo-image'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import {
+	createMaterialTopTabNavigator,
+	MaterialTopTabBar,
+} from '@react-navigation/material-top-tabs'
 import { StackParamList } from '../types'
 import { useArtistContext } from './provider'
 
@@ -35,40 +38,45 @@ export default function ArtistNavigation(): React.JSX.Element {
 	}, [scroll])
 
 	return (
-		<>
-			<Animated.View>
-				<Image
-					source={getImageApi(Client.api!).getItemImageUrlById(artist.Id!)}
-					style={{
-						height: bannerHeight - animatedBannerScroll.value,
-						width: width,
-					}}
-				/>
-			</Animated.View>
-			<ArtistTabs.Navigator>
-				<ArtistTabs.Screen
-					name='ArtistAlbums'
-					options={{
-						title: 'Albums',
-					}}
-					component={Albums}
-				/>
+		<ArtistTabs.Navigator
+			tabBar={(props) => (
+				<>
+					<Animated.View>
+						<Image
+							source={getImageApi(Client.api!).getItemImageUrlById(artist.Id!)}
+							style={{
+								height: bannerHeight - animatedBannerScroll.value,
+								width: width,
+							}}
+						/>
+					</Animated.View>
 
-				<ArtistTabs.Screen
-					name='ArtistEps'
-					options={{
-						title: 'Singles & EPs',
-					}}
-					component={Albums}
-				/>
-				<ArtistTabs.Screen
-					name='SimilarArtists'
-					options={{
-						title: 'Similar',
-					}}
-					component={SimilarArtists}
-				/>
-			</ArtistTabs.Navigator>
-		</>
+					<MaterialTopTabBar {...props} />
+				</>
+			)}
+		>
+			<ArtistTabs.Screen
+				name='ArtistAlbums'
+				options={{
+					title: 'Albums',
+				}}
+				component={Albums}
+			/>
+
+			<ArtistTabs.Screen
+				name='ArtistEps'
+				options={{
+					title: 'Singles & EPs',
+				}}
+				component={Albums}
+			/>
+			<ArtistTabs.Screen
+				name='SimilarArtists'
+				options={{
+					title: 'Similar',
+				}}
+				component={SimilarArtists}
+			/>
+		</ArtistTabs.Navigator>
 	)
 }
