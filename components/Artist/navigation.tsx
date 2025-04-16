@@ -22,13 +22,16 @@ export default function ArtistNavigation(): React.JSX.Element {
 
 	const animatedBannerScroll = useSharedValue(bannerHeight)
 
+	const animatedBannerStyle = useAnimatedStyle(() => {
+		return {
+			translateY: animatedBannerScroll.value,
+		}
+	})
+
 	useEffect(() => {
 		console.debug(scroll)
 
-		if (scroll > 100) animatedBannerScroll.value = bannerHeight - scroll
-		else animatedBannerScroll.value = bannerHeight
-
-		console.debug(animatedBannerScroll.value)
+		animatedBannerScroll.value = scroll
 	}, [scroll])
 
 	return (
@@ -37,7 +40,7 @@ export default function ArtistNavigation(): React.JSX.Element {
 				<Image
 					source={getImageApi(Client.api!).getItemImageUrlById(artist.Id!)}
 					style={{
-						height: animatedBannerScroll.value,
+						height: bannerHeight - animatedBannerScroll.value,
 						width: width,
 					}}
 				/>
