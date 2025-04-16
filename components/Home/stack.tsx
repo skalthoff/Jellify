@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator<StackParamList>()
 export default function Home(): React.JSX.Element {
 	return (
 		<HomeProvider>
-			<Stack.Navigator initialRouteName='Home' screenOptions={{}}>
+			<Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: true }}>
 				<Stack.Group>
 					<Stack.Screen name='Home' component={ProvidedHome} />
 

@@ -5,15 +5,21 @@ import { ArtistAlbumsProps, ArtistEpsProps } from '../types'
 import { Text } from '../Global/helpers/text'
 import { useArtistContext } from './provider'
 import { convertRunTimeTicksToSeconds } from '../../helpers/runtimeticks'
-
+import Animated, { useAnimatedScrollHandler, useAnimatedStyle } from 'react-native-reanimated'
 export default function Albums({
 	route,
 	navigation,
 }: ArtistAlbumsProps | ArtistEpsProps): React.JSX.Element {
-	const { albums, setScroll } = useArtistContext()
+	const { albums, scroll } = useArtistContext()
+	const scrollHandler = useAnimatedScrollHandler({
+		onScroll: (event) => {
+			'worklet'
+			scroll.value = event.contentOffset.y
+		},
+	})
 
 	return (
-		<FlatList
+		<Animated.FlatList
 			contentContainerStyle={{
 				flexGrow: 1,
 				justifyContent: 'flex-start',
@@ -53,12 +59,7 @@ export default function Albums({
 					}}
 				/>
 			)}
-			onScroll={(event) => {
-				console.debug(event.nativeEvent.contentSize.height)
-
-				if (event.nativeEvent.contentSize.height > 1000)
-					setScroll(event.nativeEvent.contentOffset.y)
-			}}
+			onScroll={scrollHandler}
 			ListEmptyComponent={
 				<Text textAlign='center' justifyContent='center'>
 					No albums

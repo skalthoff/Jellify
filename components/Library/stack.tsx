@@ -41,7 +41,11 @@ export default function LibraryStack(): React.JSX.Element {
 				})}
 			/>
 
-			<Stack.Screen name='Artists' component={ArtistsScreen} options={({ route }) => ({})} />
+			<Stack.Screen
+				name='Artists'
+				component={ArtistsScreen}
+				options={({ route }) => ({ g })}
+			/>
 
 			<Stack.Screen
 				name='Album'

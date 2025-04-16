@@ -10,6 +10,7 @@ import {
 import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { useQuery } from '@tanstack/react-query'
 import { createContext, ReactNode, SetStateAction, useContext, useState } from 'react'
+import { SharedValue, useSharedValue } from 'react-native-reanimated'
 
 interface ArtistContext {
 	refreshing: boolean
@@ -17,8 +18,8 @@ interface ArtistContext {
 	albums: BaseItemDto[] | undefined
 	similarArtists: BaseItemDto[] | undefined
 	artist: BaseItemDto
-	scroll: number
 	setScroll: React.Dispatch<SetStateAction<number>>
+	scroll: SharedValue<number>
 }
 
 const ArtistContextInitializer = (artist: BaseItemDto) => {
@@ -64,8 +65,8 @@ const ArtistContextInitializer = (artist: BaseItemDto) => {
 		refetchRefetchSimilarArtists()
 	}
 
-	const [scroll, setScroll] = useState<number>(0)
-
+	const [_, setScroll] = useState<number>(0)
+	const scroll = useSharedValue(0)
 	return {
 		artist,
 		albums,
@@ -83,7 +84,7 @@ const ArtistContext = createContext<ArtistContext>({
 	albums: [],
 	similarArtists: [],
 	refresh: () => {},
-	scroll: 0,
+	scroll: { value: 0 } as SharedValue<number>,
 	setScroll: () => {},
 })
 

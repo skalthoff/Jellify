@@ -16,7 +16,7 @@ export default function Navigation(): React.JSX.Element {
 				name='Tabs'
 				component={Tabs}
 				options={{
-					headerShown: false,
+					headerShown: true,
 					navigationBarColor: theme.background.val,
 				}}
 			/>
@@ -24,7 +24,7 @@ export default function Navigation(): React.JSX.Element {
 				name='Player'
 				component={Player}
 				options={{
-					headerShown: false,
+					headerShown: true,
 					presentation: 'modal',
 				}}
 			/>
