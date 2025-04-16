@@ -16,7 +16,7 @@ export default function SearchStack(): React.JSX.Element {
 				component={SearchScreen}
 				options={{
 					headerLargeTitle: true,
-					headerLargeTitleStyle: {
+					headerTitleStyle: {
 						fontFamily: 'Aileron-Bold',
 					},
 				}}

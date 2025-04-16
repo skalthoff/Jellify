@@ -35,17 +35,13 @@ export default function LibraryStack(): React.JSX.Element {
 				options={({ route }) => ({
 					title: route.params.artist.Name ?? 'Unknown Artist',
 					headerLargeTitle: true,
-					headerLargeTitleStyle: {
+					headerTitleStyle: {
 						fontFamily: 'Aileron-Bold',
 					},
 				})}
 			/>
 
-			<Stack.Screen
-				name='Artists'
-				component={ArtistsScreen}
-				options={({ route }) => ({ g })}
-			/>
+			<Stack.Screen name='Artists' component={ArtistsScreen} options={({ route }) => ({})} />
 
 			<Stack.Screen
 				name='Album'
