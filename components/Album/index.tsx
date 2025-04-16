@@ -11,7 +11,6 @@ import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../enums/query-keys'
 import { getImageApi, getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../api/client'
-import { useEffect, useMemo } from 'react'
 import { ItemCard } from '../Global/components/item-card'
 import { Image } from 'expo-image'
 import { groupBy, isEqual } from 'lodash'
@@ -44,7 +43,7 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 							? Object.keys(
 									groupBy(
 										data.Items,
-										(track) => track.ParentIndexNumber?.toString() ?? '0',
+										(track) => track.ParentIndexNumber?.toString() ?? '1',
 									),
 							  ).map((discNumber) => {
 									console.debug(discNumber)
@@ -62,6 +61,7 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 							  })
 							: [{ title: '1', data: [] }]
 
+						console.debug(discs)
 						resolve(discs)
 					})
 					.catch((error) => {
