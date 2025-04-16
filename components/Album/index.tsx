@@ -5,7 +5,6 @@ import { H5, Text } from '../Global/helpers/text'
 import { FlatList, SectionList } from 'react-native'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
 import Track from '../Global/components/track'
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import FavoriteButton from '../Global/components/favorite-button'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../enums/query-keys'
@@ -14,7 +13,6 @@ import Client from '../../api/client'
 import { ItemCard } from '../Global/components/item-card'
 import { Image } from 'expo-image'
 import { groupBy, isEqual } from 'lodash'
-import { useEffect } from 'react'
 
 export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.Element {
 	const { album } = route.params
@@ -24,7 +22,6 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 			return <FavoriteButton item={album} />
 		},
 	})
-	const { width } = useSafeAreaFrame()
 
 	const { data: discs } = useQuery({
 		queryKey: [QueryKeys.ItemTracks, album.Id!],
@@ -59,7 +56,6 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 							  })
 							: [{ title: '1', data: [] }]
 
-						console.debug(discs)
 						resolve(discs)
 					})
 					.catch((error) => {
@@ -68,10 +64,6 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 			})
 		},
 	})
-
-	useEffect(() => {
-		console.debug(discs)
-	}, [discs])
 
 	return (
 		<SectionList
@@ -107,6 +99,9 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 					</XStack>
 
 					<FlatList
+						contentContainerStyle={{
+							marginLeft: 2,
+						}}
 						style={{
 							alignSelf: 'center',
 						}}
