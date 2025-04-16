@@ -24,7 +24,7 @@ export default function ArtistNavigation(): React.JSX.Element {
 
 	const animatedBannerStyle = useAnimatedStyle(() => {
 		return {
-			translateY: animatedBannerScroll.value,
+			height: animatedBannerScroll.value,
 		}
 	})
 
