@@ -61,6 +61,7 @@ export default function App(): React.JSX.Element {
 						 * same forever on the server
 						 */
 						maxAge: Infinity,
+						buster: '0.10.99',
 					}}
 				>
 					<GestureHandlerRootView>
