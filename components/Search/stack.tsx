@@ -27,8 +27,7 @@ export default function SearchStack(): React.JSX.Element {
 				component={ArtistScreen}
 				options={({ route }) => ({
 					title: route.params.artist.Name ?? 'Unknown Artist',
-					headerLargeTitle: true,
-					headerLargeTitleStyle: {
+					headerTitleStyle: {
 						fontFamily: 'Aileron-Bold',
 					},
 				})}
