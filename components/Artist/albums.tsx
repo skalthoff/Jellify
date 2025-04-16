@@ -1,11 +1,10 @@
 import React from 'react'
-import { FlatList } from 'react-native'
 import { ItemCard } from '../Global/components/item-card'
 import { ArtistAlbumsProps, ArtistEpsProps } from '../types'
 import { Text } from '../Global/helpers/text'
 import { useArtistContext } from './provider'
 import { convertRunTimeTicksToSeconds } from '../../helpers/runtimeticks'
-import Animated, { useAnimatedScrollHandler, useAnimatedStyle } from 'react-native-reanimated'
+import Animated, { useAnimatedScrollHandler } from 'react-native-reanimated'
 export default function Albums({
 	route,
 	navigation,
