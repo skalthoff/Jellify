@@ -54,8 +54,10 @@ export default function Albums({
 				/>
 			)}
 			onScroll={(event) => {
-				console.debug(event.nativeEvent.contentInset.top)
-				setScroll(event.nativeEvent.contentOffset.y)
+				console.debug(event.nativeEvent.contentSize.height)
+
+				if (event.nativeEvent.contentSize.height > 1000)
+					setScroll(event.nativeEvent.contentOffset.y)
 			}}
 			ListEmptyComponent={
 				<Text textAlign='center' justifyContent='center'>
