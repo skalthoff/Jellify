@@ -23,31 +23,22 @@ export default function ArtistNavigation(): React.JSX.Element {
 
 	const bannerHeight = 250
 
-	const animatedBannerScroll = useSharedValue(bannerHeight)
-
 	const animatedBannerStyle = useAnimatedStyle(() => {
+		'worklet'
+		const clampedScroll = Math.max(0, Math.min(scroll.value, bannerHeight))
 		return {
-			height: animatedBannerScroll.value,
+			height: bannerHeight - clampedScroll,
 		}
 	})
-
-	useEffect(() => {
-		console.debug(scroll)
-
-		animatedBannerScroll.value = scroll
-	}, [scroll])
 
 	return (
 		<ArtistTabs.Navigator
 			tabBar={(props) => (
 				<>
-					<Animated.View>
+					<Animated.View style={[animatedBannerStyle]}>
 						<Image
 							source={getImageApi(Client.api!).getItemImageUrlById(artist.Id!)}
-							style={{
-								height: bannerHeight - animatedBannerScroll.value,
-								width: width,
-							}}
+							style={{ width: width, height: '100%' }}
 						/>
 					</Animated.View>
 
