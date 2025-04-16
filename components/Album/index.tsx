@@ -42,10 +42,7 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 					.then(({ data }) => {
 						const discs = data.Items
 							? Object.keys(
-									groupBy(
-										data.Items,
-										(track) => track.ParentIndexNumber?.toString() ?? '1',
-									),
+									groupBy(data.Items, (track) => track.ParentIndexNumber),
 							  ).map((discNumber) => {
 									console.debug(discNumber)
 									return {
