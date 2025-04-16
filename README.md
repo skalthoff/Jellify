@@ -100,9 +100,9 @@ Playlist
 
 <img src='screenshots/favorite_track.png' alt='Favorite Track' width='275' height='600”'>
 
-### CarPlay (Sneak Preview)
+### CarPlay
 
-<img src="screenshots/carplay_nowplaying.jpeg" alt="Now Playing (CarPlay)" width="500" height="350">
+<img src="screenshots/carplay_home.png" alt="Home (CarPlay)" width="400" height="250">
 
 ### On the Server
 
