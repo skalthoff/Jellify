@@ -1,6 +1,6 @@
 import { QueryKeys } from '../enums/query-keys'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack'
 import { JellifyServer } from '../types/JellifyServer'
 import { JellifyUser } from '../types/JellifyUser'
 
@@ -54,7 +54,7 @@ export type StackParamList = {
 
 	Tabs: {
 		screen: string
-		params: any
+		params: object
 	}
 
 	Player: undefined
@@ -63,6 +63,14 @@ export type StackParamList = {
 	Artist: {
 		artist: BaseItemDto
 	}
+	ArtistAlbums: undefined
+
+	ArtistEps: undefined
+	SimilarArtists: {
+		artist: BaseItemDto
+		navigation: NativeStackNavigationProp
+	}
+
 	Album: {
 		album: BaseItemDto
 	}
@@ -94,6 +102,8 @@ export type UserPlaylistsProps = NativeStackScreenProps<StackParamList, 'UserPla
 export type DiscoverProps = NativeStackScreenProps<StackParamList, 'Discover'>
 
 export type HomeArtistProps = NativeStackScreenProps<StackParamList, 'Artist'>
+export type ArtistAlbumsProps = NativeStackScreenProps<StackParamList, 'ArtistAlbums'>
+export type ArtistEpsProps = NativeStackScreenProps<StackParamList, 'ArtistEps'>
 
 export type HomeAlbumProps = NativeStackScreenProps<StackParamList, 'Album'>
 
