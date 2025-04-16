@@ -74,7 +74,8 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 			renderSectionHeader={({ section }) => {
 				return discs && discs.length >= 2 ? (
 					<Text
-						marginLeft={'$4.5'}
+						paddingVertical={'$2'}
+						paddingLeft={'$4.5'}
 						backgroundColor={'$background'}
 						bold
 					>{`Disc ${section.title}`}</Text>
