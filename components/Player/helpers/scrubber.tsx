@@ -11,6 +11,7 @@ import { UPDATE_INTERVAL } from '../../../player/config'
 import { ProgressMultiplier } from '../component.config'
 import Icon from '../../../components/Global/helpers/icon'
 import PlayPauseButton from './buttons'
+import Animated from 'react-native-reanimated'
 
 const scrubGesture = Gesture.Pan()
 
@@ -42,56 +43,58 @@ export default function Scrubber(): React.JSX.Element {
 	}, [progress.position])
 
 	return (
-		<YStack>
-			<GestureDetector gesture={scrubGesture}>
-				<HorizontalSlider
-					value={position}
-					max={
-						progress && progress.duration > 0
-							? progress.duration * ProgressMultiplier
-							: 1
-					}
-					width={width / 1.125}
-					props={{
-						// If user swipes off of the slider we should seek to the spot
-						onPressOut: () => {
-							trigger('notificationSuccess')
-							useSeekTo.mutate(Math.floor(position / ProgressMultiplier))
-							setSeeking(false)
-						},
-						onSlideStart: (event, value) => {
-							setSeeking(true)
-							trigger('impactLight')
-						},
-						onSlideMove: (event, value) => {
-							trigger('clockTick')
-							setPosition(value)
-						},
-						onSlideEnd: (event, value) => {
-							trigger('notificationSuccess')
-							setPosition(value)
-							useSeekTo.mutate(Math.floor(value / ProgressMultiplier))
-							setSeeking(false)
-						},
-					}}
-				/>
-			</GestureDetector>
+		<Animated.View>
+			<YStack>
+				<GestureDetector gesture={scrubGesture}>
+					<HorizontalSlider
+						value={position}
+						max={
+							progress && progress.duration > 0
+								? progress.duration * ProgressMultiplier
+								: 1
+						}
+						width={width / 1.125}
+						props={{
+							// If user swipes off of the slider we should seek to the spot
+							onPressOut: () => {
+								trigger('notificationSuccess')
+								useSeekTo.mutate(Math.floor(position / ProgressMultiplier))
+								setSeeking(false)
+							},
+							onSlideStart: (event, value) => {
+								setSeeking(true)
+								trigger('impactLight')
+							},
+							onSlideMove: (event, value) => {
+								trigger('clockTick')
+								setPosition(value)
+							},
+							onSlideEnd: (event, value) => {
+								trigger('notificationSuccess')
+								setPosition(value)
+								useSeekTo.mutate(Math.floor(value / ProgressMultiplier))
+								setSeeking(false)
+							},
+						}}
+					/>
+				</GestureDetector>
 
-			<XStack margin={'$2'} marginTop={'$3'}>
-				<YStack flex={1} alignItems='flex-start'>
-					<RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
-				</YStack>
+				<XStack margin={'$2'} marginTop={'$3'}>
+					<YStack flex={1} alignItems='flex-start'>
+						<RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
+					</YStack>
 
-				<YStack flex={1} alignItems='center'>
-					{/** Track metadata can go here */}
-				</YStack>
+					<YStack flex={1} alignItems='center'>
+						{/** Track metadata can go here */}
+					</YStack>
 
-				<YStack flex={1} alignItems='flex-end'>
-					<RunTimeSeconds>
-						{progress && progress.duration ? Math.ceil(progress.duration) : 0}
-					</RunTimeSeconds>
-				</YStack>
-			</XStack>
-		</YStack>
+					<YStack flex={1} alignItems='flex-end'>
+						<RunTimeSeconds>
+							{progress && progress.duration ? Math.ceil(progress.duration) : 0}
+						</RunTimeSeconds>
+					</YStack>
+				</XStack>
+			</YStack>
+		</Animated.View>
 	)
 }
