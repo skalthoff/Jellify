@@ -11,7 +11,6 @@ import { UPDATE_INTERVAL } from '../../../player/config'
 import { ProgressMultiplier } from '../component.config'
 import Icon from '../../../components/Global/helpers/icon'
 import PlayPauseButton from './buttons'
-import { useSharedValue } from 'react-native-reanimated'
 
 const scrubGesture = Gesture.Pan()
 
@@ -24,7 +23,7 @@ export default function Scrubber(): React.JSX.Element {
 
 	const progress = useProgress(UPDATE_INTERVAL)
 
-	const position = useSharedValue<number>(
+	const [position, setPosition] = useState<number>(
 		progress && progress.position ? Math.floor(progress.position * ProgressMultiplier) : 0,
 	)
 
@@ -39,14 +38,14 @@ export default function Scrubber(): React.JSX.Element {
 			!useSeekTo.isPending &&
 			progress.position
 		)
-			position.value = Math.floor(progress.position * ProgressMultiplier)
+			setPosition(Math.floor(progress.position * ProgressMultiplier))
 	}, [progress.position])
 
 	return (
 		<YStack>
 			<GestureDetector gesture={scrubGesture}>
 				<HorizontalSlider
-					value={position.value}
+					value={position}
 					max={
 						progress && progress.duration > 0
 							? progress.duration * ProgressMultiplier
@@ -57,7 +56,7 @@ export default function Scrubber(): React.JSX.Element {
 						// If user swipes off of the slider we should seek to the spot
 						onPressOut: () => {
 							trigger('notificationSuccess')
-							useSeekTo.mutate(Math.floor(position.value / ProgressMultiplier))
+							useSeekTo.mutate(Math.floor(position / ProgressMultiplier))
 							setSeeking(false)
 						},
 						onSlideStart: (event, value) => {
@@ -66,11 +65,11 @@ export default function Scrubber(): React.JSX.Element {
 						},
 						onSlideMove: (event, value) => {
 							trigger('clockTick')
-							position.value = value
+							setPosition(value)
 						},
 						onSlideEnd: (event, value) => {
 							trigger('notificationSuccess')
-							position.value = value
+							setPosition(value)
 							useSeekTo.mutate(Math.floor(value / ProgressMultiplier))
 							setSeeking(false)
 						},
@@ -80,9 +79,7 @@ export default function Scrubber(): React.JSX.Element {
 
 			<XStack margin={'$2'} marginTop={'$3'}>
 				<YStack flex={1} alignItems='flex-start'>
-					<RunTimeSeconds>
-						{Math.floor(position.value / ProgressMultiplier)}
-					</RunTimeSeconds>
+					<RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
 				</YStack>
 
 				<YStack flex={1} alignItems='center'>
