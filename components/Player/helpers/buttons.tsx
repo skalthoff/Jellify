@@ -1,6 +1,6 @@
 import { State } from 'react-native-track-player'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
-import { Spinner, View } from 'tamagui'
+import { Circle, Spinner, View } from 'tamagui'
 import { usePlayerContext } from '../../../player/provider'
 import IconButton from '../../../components/Global/helpers/icon-button'
 
@@ -29,7 +29,11 @@ export default function PlayPauseButton({
 
 		case State.Buffering:
 		case State.Loading: {
-			button = <Spinner marginHorizontal={10} size='small' color={Colors.Primary} />
+			button = (
+				<Circle size={size} disabled>
+					<Spinner marginHorizontal={10} size='small' color={Colors.Primary} />
+				</Circle>
+			)
 			break
 		}
 
