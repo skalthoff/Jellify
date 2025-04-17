@@ -62,7 +62,6 @@ export default function Scrubber(): React.JSX.Element {
 						onSlideStart: (event, value) => {
 							setSeeking(true)
 							trigger('impactLight')
-							setPosition(value)
 						},
 						onSlideMove: (event, value) => {
 							trigger('clockTick')
