@@ -18,6 +18,7 @@ import Client from '../../../api/client'
 import { saveAudio, getAudioCache } from '../../../components/Network/offlineModeUtils'
 import { useActiveTrack } from 'react-native-track-player'
 import { Alert } from 'react-native'
+import { useQueryClient } from '@tanstack/react-query'
 
 export default function PlayerScreen({
 	navigation,
@@ -29,6 +30,7 @@ export default function PlayerScreen({
 	const [isDownloading, setIsDownloading] = useState(false)
 
 	const activeTrack = useActiveTrack()
+	const queryClient = useQueryClient()
 
 	const { width } = useSafeAreaFrame()
 	
@@ -37,7 +39,7 @@ export default function PlayerScreen({
 			return;
 		}
 		setIsDownloading(true)
-		await saveAudio(nowPlaying)
+		await saveAudio(nowPlaying,queryClient)
 		setIsDownloading(false)
 		Alert.alert("Downloaded")
 	}

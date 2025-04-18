@@ -5,13 +5,14 @@ import { useState } from 'react';
 import { Platform, Text } from 'react-native';
 import { View } from 'tamagui';
 import  NoInternetModal  from './modal';
+import { QueryKeys } from '../../enums/query-keys';
 
 const internetConnectionWatcher = {
     NO_INTERNET: 'No internet connection',
     BACK_ONLINE: 'Back online',
 };
 
-enum networkStatusTypes {
+export enum networkStatusTypes {
     ONLINE = 'ONLINE',
     DISCONNECTED = 'DISCONNECTED',
 }
@@ -25,6 +26,9 @@ const InternetConnectionWatcher = () => {
     const lastNetworkStatus = useRef<keyof typeof networkStatusTypes | null>();
     const queryClient = useQueryClient();
 
+    
+   
+
     const internetConnectionBack = () => {
         setNetworkStatus(networkStatusTypes.ONLINE);
         setTimeout(() => {
@@ -35,6 +39,13 @@ const InternetConnectionWatcher = () => {
         lastNetworkStatus.current = networkStatus;
     }, [networkStatus]);
 
+    useEffect(()=>{
+        if(networkStatus){
+            console.log("networkStatus",networkStatus)
+            queryClient.setQueryData([QueryKeys.NetworkStatus],networkStatus)
+        }
+
+    },[networkStatus])
     useEffect(() => {
         const networkWatcherListener = NetInfo.addEventListener(
             ({ isConnected, isInternetReachable }) => {

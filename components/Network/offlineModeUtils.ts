@@ -7,31 +7,54 @@ import { getLibraryApi } from "@jellyfin/sdk/lib/utils/api";
 import Client from "../../api/client";
 import { Buffer } from 'buffer'
 import axios from "axios";
+import { QueryClient } from "@tanstack/react-query";
+import { queryClient } from "@/constants/query-client";
 
-export async function downloadJellyfinFile(url: string, fallbackName: string = 'audio') {
+export async function downloadJellyfinFile(url: string, name: string,queryClient: QueryClient) {
 	try {
 		// Fetch the file
-		const response = await axios.get(url, {
-			responseType: 'arraybuffer',
-		});
+		const headRes = await axios.head(url)
+		const contentType = headRes.headers['content-type']
+		console.log('Content-Type:', contentType)
 
-		// Try to get extension from URL or headers
-		const contentType = response.headers['content-type'];
-		let extension = 'mp3'; // default fallback
-        console.log("contentType", contentType)
-		// Extract extension from content-type (e.g., "audio/m4a" -> "m4a")
+		// Step 2: Get extension from content-type
+		let extension = 'mp3' // default
 		if (contentType && contentType.includes('/')) {
-			const parts = contentType.split('/');
-			extension = parts[1];
+			const parts = contentType.split('/')
+			extension = parts[1].split(';')[0] // handles "audio/m4a; charset=utf-8"
 		}
 
-		const fileName = `${fallbackName}.${extension}`;
-		const path = `${RNFS.DocumentDirectoryPath}/${fileName}`;
+		// Step 3: Build path
+		const fileName = `${name}.${extension}`
+		const downloadDest = `${RNFS.DocumentDirectoryPath}/${fileName}`
 
-		// Write to file
-		await RNFS.writeFile(path, Buffer.from(response.data).toString('base64'), 'base64');
-		console.log('File saved to:', path);
-		return `file://${path}`;
+        queryClient.setQueryData(['downloads'], (prev: any = {}) => ({
+			...prev,
+			[url]: { progress: 0, name: fileName , songName: name},
+		}))
+
+
+		// Step 4: Start download with progress
+		const options = {
+			fromUrl: url,
+			toFile: downloadDest,
+			begin: (res: any) => {
+				console.log('Download started')
+			},
+			progress: (data: any) => {
+				const percent = +(data.bytesWritten / data.contentLength).toFixed(2)
+				queryClient.setQueryData(['downloads'], (prev: any = {}) => ({
+					...prev,
+					[url]: { progress: percent, name: fileName , songName: name},
+				}))
+			},
+			background: true,
+			progressDivider: 1,
+		}
+
+		const result = await RNFS.downloadFile(options).promise
+		console.log('Download complete:', result)
+		return `file://${downloadDest}`
 	} catch (error) {
 		console.error('Download failed:', error);
 		throw error;
@@ -51,7 +74,7 @@ const MMKV_OFFLINE_MODE_KEYS={
 }
 
 
-export const saveAudio = async (track:JellifyTrack) => {
+export const saveAudio = async (track:JellifyTrack,queryClient: QueryClient) => {
     const existingRaw = mmkv.getString(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE)
     let existingArray: JellifyTrack[] = []
     try{
@@ -64,8 +87,8 @@ export const saveAudio = async (track:JellifyTrack) => {
     try{    
         console.log("Downloading audio", track)
         
-        const downloadtrack = await downloadJellyfinFile(track.url, track.item.Id as string);
-        const dowloadalbum = await downloadJellyfinFile(track.artwork as string, track.item.Id as string);
+        const downloadtrack = await downloadJellyfinFile(track.url, track.item.Id as string,queryClient);
+        const dowloadalbum = await downloadJellyfinFile(track.artwork as string, track.item.Id as string,queryClient);
         console.log("downloadtrack", downloadtrack)
         if(downloadtrack){
             track.url = downloadtrack;
@@ -107,6 +130,11 @@ export const getAudioCache =  (): JellifyTrack[] => {
 }
 
 
+
+export const deleteAudioCache = async () => {
+  
+    mmkv.delete(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE)
+}
 
 
 

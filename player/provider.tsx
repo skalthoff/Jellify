@@ -72,7 +72,10 @@ const PlayerContextInitializer = () => {
 	const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(
 		nowPlayingJson ? JSON.parse(nowPlayingJson) : undefined,
 	)
+
+
 	const [isSkipping, setIsSkipping] = useState<boolean>(false)
+	
 
 	const [playQueue, setPlayQueue] = useState<JellifyTrack[]>(
 		playQueueJson ? JSON.parse(playQueueJson) : [],
