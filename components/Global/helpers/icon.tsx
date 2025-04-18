@@ -13,6 +13,7 @@ const extraLargeSize = 96
 export default function Icon({
 	name,
 	onPress,
+	onPressIn,
 	onLongPress,
 	small,
 	large,
@@ -21,6 +22,7 @@ export default function Icon({
 }: {
 	name: string
 	onPress?: () => void
+	onPressIn?: () => void
 	onLongPress?: () => void
 	small?: boolean
 	large?: boolean
@@ -35,6 +37,7 @@ export default function Icon({
 			color={color ? color : theme.color.val}
 			name={name}
 			onPress={onPress}
+			onPressIn={onPressIn}
 			onLongPress={onLongPress}
 			size={size}
 		/>
