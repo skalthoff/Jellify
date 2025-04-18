@@ -4,9 +4,8 @@ import { StackParamList } from '../../../components/types'
 import { usePlayerContext } from '../../../player/provider'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
-import DraggableFlatList from 'react-native-draggable-flatlist'
-import { trigger } from 'react-native-haptic-feedback'
 import { Separator } from 'tamagui'
+import DragList from 'react-native-draglist'
 
 export default function Queue({
 	navigation,
@@ -42,10 +41,10 @@ export default function Queue({
 	)
 
 	return (
-		<DraggableFlatList
+		<DragList
 			contentInsetAdjustmentBehavior='automatic'
 			data={playQueue}
-			dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
+			// dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
 			extraData={nowPlaying}
 			// enableLayoutAnimationExperimental
 			getItemLayout={(data, index) => ({
@@ -62,32 +61,22 @@ export default function Queue({
 				return `${index}-${item.Id}`
 			}}
 			numColumns={1}
-			onDragEnd={({ data, from, to }) => {
-				useReorderQueue.mutate({ newOrder: data, from, to })
-			}}
-			renderItem={({ item: queueItem, getIndex, drag, isActive }) => (
+			renderItem={({ item: queueItem, onDragStart, onDragEnd, isActive }) => (
 				<Track
-					prependElement={
-						<Icon
-							name='drag'
-							onPress={() => {
-								trigger('impactLight')
-								drag()
-							}}
-						/>
-					}
+					onDragStart={onDragStart}
+					onDragEnd={onDragEnd}
 					queue={queue}
 					navigation={navigation}
 					track={queueItem.item}
-					index={getIndex()}
+					index={playQueue.indexOf(queueItem)}
 					showArtwork
 					onPress={() => {
-						useSkip.mutate(getIndex())
+						useSkip.mutate(playQueue.indexOf(queueItem))
 					}}
 					isNested
 					showRemove
 					onRemove={() => {
-						if (getIndex()) useRemoveFromQueue.mutate(getIndex()!)
+						useRemoveFromQueue.mutate(playQueue.indexOf(queueItem))
 					}}
 				/>
 			)}

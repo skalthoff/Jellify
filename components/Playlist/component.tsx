@@ -5,7 +5,6 @@ import { getToken, Separator, Spacer, XStack, YStack } from 'tamagui'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
 import { H4, H5, Text } from '../Global/helpers/text'
 import Track from '../Global/components/track'
-import DraggableFlatList from 'react-native-draggable-flatlist'
 import { removeFromPlaylist, updatePlaylist } from '../../api/mutations/functions/playlists'
 import { useEffect, useState } from 'react'
 import Icon from '../Global/helpers/icon'
@@ -17,6 +16,7 @@ import { getImageApi, getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../api/client'
 import { RefreshControl } from 'react-native'
 import { Image } from 'expo-image'
+import DragList from 'react-native-draglist'
 
 interface PlaylistProps {
 	playlist: BaseItemDto
@@ -133,11 +133,11 @@ export default function Playlist({ playlist, navigation }: PlaylistProps): React
 	})
 
 	return (
-		<DraggableFlatList
+		<DragList
 			refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />}
 			contentInsetAdjustmentBehavior='automatic'
 			data={playlistTracks}
-			dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
+			// dragHitSlop={{ left: -50 }} // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
 			keyExtractor={({ Id }, index) => {
 				return `${index}-${Id}`
 			}}
@@ -161,28 +161,33 @@ export default function Playlist({ playlist, navigation }: PlaylistProps): React
 			onDragBegin={() => {
 				trigger('impactMedium')
 			}}
-			onDragEnd={({ data, from, to }) => {
-				console.debug(`Moving playlist item from ${from} to ${to}`)
+			// onDragEnd={({ data, from, to }) => {
+			// 	console.debug(`Moving playlist item from ${from} to ${to}`)
 
-				setPlaylistTracks(data)
-				useUpdatePlaylist.mutate({
-					playlist,
-					tracks: data,
-				})
-			}}
+			// 	setPlaylistTracks(data)
+			// 	useUpdatePlaylist.mutate({
+			// 		playlist,
+			// 		tracks: data,
+			// 	})
+			// }}
 			refreshing={isPending}
-			renderItem={({ item: track, getIndex, drag }) => (
+			renderItem={({ item: track, onDragStart, onDragEnd }) => (
 				<Track
+					onDragStart={editing ? onDragStart : undefined}
+					onDragEnd={editing ? onDragEnd : undefined}
 					navigation={navigation}
 					track={track}
 					tracklist={tracks!}
-					index={getIndex()}
+					index={tracks?.indexOf(track) ?? 0}
 					queue={playlist}
 					showArtwork
-					drag={editing ? drag : undefined}
 					showRemove={editing}
 					onRemove={() =>
-						useRemoveFromPlaylist.mutate({ playlist, track, index: getIndex()! })
+						useRemoveFromPlaylist.mutate({
+							playlist,
+							track,
+							index: tracks!.indexOf(track),
+						})
 					}
 				/>
 			)}

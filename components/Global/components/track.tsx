@@ -26,7 +26,8 @@ interface TrackProps {
 	onLongPress?: () => void | undefined
 	isNested?: boolean | undefined
 	invertedColors?: boolean | undefined
-	drag?: () => void | undefined
+	onDragStart?: () => void | undefined
+	onDragEnd?: () => void | undefined
 	showRemove?: boolean | undefined
 	onRemove?: () => void | undefined
 }
@@ -40,7 +41,8 @@ export default function Track({
 	showArtwork,
 	onPress,
 	onLongPress,
-	drag,
+	onDragStart,
+	onDragEnd,
 	isNested,
 	invertedColors,
 	showRemove,
@@ -82,9 +84,9 @@ export default function Track({
 				}
 				paddingVertical={'$2'}
 			>
-				{drag && (
+				{onDragStart && onDragEnd && (
 					<YStack alignContent='center' justifyContent='center' flex={1}>
-						{<Icon name='drag' onPressIn={drag} />}
+						{<Icon name='drag' onPressIn={onDragStart} onPressOut={onDragEnd} />}
 					</YStack>
 				)}
 

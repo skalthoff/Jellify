@@ -14,6 +14,7 @@ export default function Icon({
 	name,
 	onPress,
 	onPressIn,
+	onPressOut,
 	onLongPress,
 	small,
 	large,
@@ -23,6 +24,7 @@ export default function Icon({
 	name: string
 	onPress?: () => void
 	onPressIn?: () => void
+	onPressOut?: () => void
 	onLongPress?: () => void
 	small?: boolean
 	large?: boolean
@@ -38,6 +40,7 @@ export default function Icon({
 			name={name}
 			onPress={onPress}
 			onPressIn={onPressIn}
+			onPressOut={onPressOut}
 			onLongPress={onLongPress}
 			size={size}
 			style={{

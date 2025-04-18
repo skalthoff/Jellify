@@ -58,7 +58,7 @@
 		"react-native-boost": "^0.5.5",
 		"react-native-carplay": "^2.4.1-beta.0",
 		"react-native-device-info": "^14.0.4",
-		"react-native-draggable-flatlist": "^4.0.1",
+		"react-native-draglist": "^3.9.5",
 		"react-native-file-access": "^3.1.1",
 		"react-native-gesture-handler": "^2.23.0",
 		"react-native-haptic-feedback": "^2.3.3",
