@@ -4,6 +4,7 @@ import { Tabs } from './tabs'
 import { StackParamList } from './types'
 import { useTheme } from 'tamagui'
 import DetailsScreen from './ItemDetail/screen'
+import { OfflineList } from './offlineList'
 
 export default function Navigation(): React.JSX.Element {
 	const RootStack = createNativeStackNavigator<StackParamList>()
@@ -23,6 +24,14 @@ export default function Navigation(): React.JSX.Element {
 			<RootStack.Screen
 				name='Player'
 				component={Player}
+				options={{
+					headerShown: false,
+					presentation: 'modal',
+				}}
+			/>
+			<RootStack.Screen
+				name='Offline'
+				component={OfflineList}
 				options={{
 					headerShown: false,
 					presentation: 'modal',

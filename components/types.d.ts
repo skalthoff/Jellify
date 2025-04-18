@@ -81,6 +81,7 @@ export type StackParamList = {
 		item: BaseItemDto
 		isNested: boolean | undefined
 	}
+	Offline: undefined
 }
 
 export type ServerAddressProps = NativeStackScreenProps<StackParamList, 'ServerAddress'>

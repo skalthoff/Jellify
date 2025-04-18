@@ -1,7 +1,7 @@
 import { StackParamList } from '../../../components/types'
 import { usePlayerContext } from '../../../player/provider'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { SafeAreaView, useSafeAreaFrame } from 'react-native-safe-area-context'
 import { YStack, XStack, Spacer, getTokens } from 'tamagui'
 import { Text } from '../../../components/Global/helpers/text'
@@ -15,6 +15,9 @@ import Controls from '../helpers/controls'
 import { Image } from 'expo-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../../api/client'
+import { saveAudio, getAudioCache } from '../../../components/Network/offlineModeUtils'
+import { useActiveTrack } from 'react-native-track-player'
+import { Alert } from 'react-native'
 
 export default function PlayerScreen({
 	navigation,
@@ -23,8 +26,23 @@ export default function PlayerScreen({
 }): React.JSX.Element {
 	const { nowPlayingIsFavorite, setNowPlayingIsFavorite, nowPlaying, queue } = usePlayerContext()
 
-	const { width } = useSafeAreaFrame()
+	const [isDownloading, setIsDownloading] = useState(false)
 
+	const activeTrack = useActiveTrack()
+
+	const { width } = useSafeAreaFrame()
+	
+	const downloadAudio = async (url: string) => {
+		if(!nowPlaying){
+			return;
+		}
+		setIsDownloading(true)
+		await saveAudio(nowPlaying)
+		setIsDownloading(false)
+		Alert.alert("Downloaded")
+	}
+
+	console.log("activeTrack", activeTrack)
 	return (
 		<SafeAreaView edges={['right', 'left']}>
 			{nowPlaying && (
@@ -168,6 +186,11 @@ export default function PlayerScreen({
 
 						<XStack justifyContent='space-evenly' marginVertical={'$7'}>
 							<Icon name='speaker-multiple' />
+
+							<Spacer />
+							<Icon name={isDownloading ? 'download' : 'download-outline'} onPress={() => {
+								downloadAudio(nowPlaying!.url)
+							}} />
 
 							<Spacer />
 

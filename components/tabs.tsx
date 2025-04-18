@@ -10,7 +10,8 @@ import { getToken, getTokens, Separator } from 'tamagui'
 import { usePlayerContext } from '../player/provider'
 import SearchStack from './Search/stack'
 import LibraryStack from './Library/stack'
-import { useColorScheme } from 'react-native'
+import { useColorScheme, View } from 'react-native'
+import InternetConnectionWatcher from './Network/internetConnectionWatcher'
 
 const Tab = createBottomTabNavigator()
 
@@ -19,9 +20,11 @@ export function Tabs(): React.JSX.Element {
 	const { nowPlaying } = usePlayerContext()
 
 	return (
-		<Tab.Navigator
-			initialRouteName='Home'
-			screenOptions={{
+		<View style={{ flex: 1 }}>
+
+			<Tab.Navigator
+				initialRouteName='Home'
+				screenOptions={{
 				lazy: false,
 				animation: 'shift',
 				tabBarActiveTintColor: getTokens().color.telemagenta.val,
@@ -109,5 +112,7 @@ export function Tabs(): React.JSX.Element {
 				}}
 			/>
 		</Tab.Navigator>
+		<InternetConnectionWatcher />
+		</View>
 	)
 }
