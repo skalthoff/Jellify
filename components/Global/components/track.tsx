@@ -64,7 +64,7 @@ export default function Track({
 
 				<View
 					flexDirection='row'
-					flexGrow={9}
+					flex={9}
 					onPress={() => {
 						if (onPress) {
 							onPress()
