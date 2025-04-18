@@ -62,6 +62,7 @@ export default function Track({
 
 				<XStack
 					flex={9}
+					flexGrow={1}
 					onPress={() => {
 						if (onPress) {
 							onPress()
@@ -90,7 +91,7 @@ export default function Track({
 						alignContent='center'
 						justifyContent='center'
 						flex={showArtwork ? 2 : 1}
-						marginHorizontal={'$2'}
+						marginRight={'$2'}
 						minHeight={showArtwork ? '$4' : 'unset'}
 					>
 						{showArtwork ? (
