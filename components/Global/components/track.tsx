@@ -62,7 +62,6 @@ export default function Track({
 
 				<XStack
 					flex={9}
-					flexGrow={1}
 					onPress={() => {
 						if (onPress) {
 							onPress()
