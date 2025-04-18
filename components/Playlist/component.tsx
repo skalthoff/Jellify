@@ -173,9 +173,7 @@ export default function Playlist({ playlist, navigation }: PlaylistProps): React
 			refreshing={isPending}
 			renderItem={({ item: track, getIndex, drag }) => (
 				<Track
-					prependElement={
-						editing ? <Icon name='drag' onPressIn={() => drag()} /> : undefined
-					}
+					prependElement={editing ? <Icon name='drag' onLongPress={drag} /> : undefined}
 					navigation={navigation}
 					track={track}
 					tracklist={tracks!}
