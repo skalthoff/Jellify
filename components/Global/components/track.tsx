@@ -53,35 +53,7 @@ export default function Track({
 
 	return (
 		<Theme name={invertedColors ? 'inverted_purple' : undefined}>
-			<XStack
-				alignContent='center'
-				alignItems='center'
-				flex={1}
-				onPress={() => {
-					if (onPress) {
-						onPress()
-					} else {
-						usePlayNewQueue.mutate({
-							track,
-							index,
-							tracklist: tracklist ?? playQueue.map((track) => track.item),
-							queue,
-							queuingType: QueuingType.FromSelection,
-						})
-					}
-				}}
-				onLongPress={
-					onLongPress
-						? () => onLongPress()
-						: () => {
-								navigation.navigate('Details', {
-									item: track,
-									isNested: isNested,
-								})
-						  }
-				}
-				paddingVertical={'$2'}
-			>
+			<XStack alignContent='center' alignItems='center' flex={1} paddingVertical={'$2'}>
 				{prependElement && (
 					<YStack alignContent='center' justifyContent='center' flex={1}>
 						{prependElement}
@@ -89,72 +61,104 @@ export default function Track({
 				)}
 
 				<XStack
-					alignContent='center'
-					justifyContent='center'
-					flex={showArtwork ? 2 : 1}
-					marginHorizontal={'$2'}
-					minHeight={showArtwork ? '$4' : 'unset'}
-				>
-					{showArtwork ? (
-						<Image
-							source={getImageApi(Client.api!).getItemImageUrlById(track.AlbumId!)}
-							style={{
-								width: getToken('$12'),
-								height: getToken('$12'),
-								borderRadius: getToken('$1'),
-							}}
-						/>
-					) : (
-						<Text color={isPlaying ? getTokens().color.telemagenta : theme.color}>
-							{track.IndexNumber?.toString() ?? ''}
-						</Text>
-					)}
-				</XStack>
-
-				<YStack alignContent='center' justifyContent='flex-start' flex={6}>
-					<Text
-						bold
-						color={isPlaying ? getTokens().color.telemagenta : theme.color}
-						lineBreakStrategyIOS='standard'
-						numberOfLines={1}
-					>
-						{track.Name ?? 'Untitled Track'}
-					</Text>
-
-					{(showArtwork || (track.ArtistCount ?? 0 > 1)) && (
-						<Text lineBreakStrategyIOS='standard' numberOfLines={1}>
-							{track.Artists?.join(', ') ?? ''}
-						</Text>
-					)}
-				</YStack>
-
-				<XStack
-					alignItems='center'
-					justifyContent='space-between'
-					alignContent='center'
-					flex={4}
-				>
-					<FavoriteIcon item={track} />
-
-					<YStack alignContent='center' justifyContent='space-around'>
-						<RunTimeTicks>{track.RunTimeTicks}</RunTimeTicks>
-					</YStack>
-
-					<YStack alignContent='center' justifyContent='flex-start' marginRight={'$3'}>
-						<Icon
-							name={showRemove ? 'close' : 'dots-horizontal'}
-							onPress={() => {
-								if (showRemove) {
-									if (onRemove) onRemove()
-								} else {
+					onPress={() => {
+						if (onPress) {
+							onPress()
+						} else {
+							usePlayNewQueue.mutate({
+								track,
+								index,
+								tracklist: tracklist ?? playQueue.map((track) => track.item),
+								queue,
+								queuingType: QueuingType.FromSelection,
+							})
+						}
+					}}
+					onLongPress={
+						onLongPress
+							? () => onLongPress()
+							: () => {
 									navigation.navigate('Details', {
 										item: track,
 										isNested: isNested,
 									})
-								}
-							}}
-						/>
+							  }
+					}
+				>
+					<XStack
+						alignContent='center'
+						justifyContent='center'
+						flex={showArtwork ? 2 : 1}
+						marginHorizontal={'$2'}
+						minHeight={showArtwork ? '$4' : 'unset'}
+					>
+						{showArtwork ? (
+							<Image
+								source={getImageApi(Client.api!).getItemImageUrlById(
+									track.AlbumId!,
+								)}
+								style={{
+									width: getToken('$12'),
+									height: getToken('$12'),
+									borderRadius: getToken('$1'),
+								}}
+							/>
+						) : (
+							<Text color={isPlaying ? getTokens().color.telemagenta : theme.color}>
+								{track.IndexNumber?.toString() ?? ''}
+							</Text>
+						)}
+					</XStack>
+
+					<YStack alignContent='center' justifyContent='flex-start' flex={6}>
+						<Text
+							bold
+							color={isPlaying ? getTokens().color.telemagenta : theme.color}
+							lineBreakStrategyIOS='standard'
+							numberOfLines={1}
+						>
+							{track.Name ?? 'Untitled Track'}
+						</Text>
+
+						{(showArtwork || (track.ArtistCount ?? 0 > 1)) && (
+							<Text lineBreakStrategyIOS='standard' numberOfLines={1}>
+								{track.Artists?.join(', ') ?? ''}
+							</Text>
+						)}
 					</YStack>
+
+					<XStack
+						alignItems='center'
+						justifyContent='space-between'
+						alignContent='center'
+						flex={4}
+					>
+						<FavoriteIcon item={track} />
+
+						<YStack alignContent='center' justifyContent='space-around'>
+							<RunTimeTicks>{track.RunTimeTicks}</RunTimeTicks>
+						</YStack>
+
+						<YStack
+							alignContent='center'
+							justifyContent='flex-start'
+							marginRight={'$3'}
+						>
+							<Icon
+								name={showRemove ? 'close' : 'dots-horizontal'}
+								onPress={() => {
+									if (showRemove) {
+										if (onRemove) onRemove()
+									} else {
+										navigation.navigate('Details', {
+											item: track,
+											isNested: isNested,
+										})
+									}
+								}}
+							/>
+						</YStack>
+					</XStack>
 				</XStack>
 			</XStack>
 		</Theme>
