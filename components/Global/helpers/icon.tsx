@@ -1,6 +1,6 @@
 import React from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useTheme } from 'tamagui'
+import { getTokenValue, useTheme } from 'tamagui'
 
 const smallSize = 24
 
@@ -40,6 +40,9 @@ export default function Icon({
 			onPressIn={onPressIn}
 			onLongPress={onLongPress}
 			size={size}
+			style={{
+				padding: getTokenValue('$1'),
+			}}
 		/>
 	)
 }
