@@ -1,7 +1,7 @@
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StackParamList } from '../types'
-import { getToken, Separator, Spacer, XStack, YStack } from 'tamagui'
+import { getToken, Separator, Spacer, View, XStack, YStack } from 'tamagui'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
 import { H4, H5, Text } from '../Global/helpers/text'
 import Track from '../Global/components/track'
@@ -159,7 +159,7 @@ export default function Playlist({ playlist, navigation }: PlaylistProps): React
 			}
 			numColumns={1}
 			onDragBegin={() => {
-				trigger('impactLight')
+				trigger('impactMedium')
 			}}
 			onDragEnd={({ data, from, to }) => {
 				console.debug(`Moving playlist item from ${from} to ${to}`)
@@ -171,21 +171,29 @@ export default function Playlist({ playlist, navigation }: PlaylistProps): React
 				})
 			}}
 			refreshing={isPending}
-			renderItem={({ item: track, getIndex, drag }) => (
-				<Track
-					prependElement={editing ? <Icon name='drag' onLongPress={drag} /> : undefined}
-					navigation={navigation}
-					track={track}
-					tracklist={tracks!}
-					index={getIndex()}
-					queue={playlist}
-					showArtwork
-					showRemove={editing}
-					onRemove={() =>
-						useRemoveFromPlaylist.mutate({ playlist, track, index: getIndex()! })
-					}
-				/>
-			)}
+			renderItem={({ item: track, getIndex, drag }) => {
+				return (
+					<View flexDirection='row'>
+						{editing && <Icon name='drag' onLongPress={drag} />}
+						<Track
+							navigation={navigation}
+							track={track}
+							tracklist={tracks!}
+							index={getIndex()}
+							queue={playlist}
+							showArtwork
+							showRemove={editing}
+							onRemove={() =>
+								useRemoveFromPlaylist.mutate({
+									playlist,
+									track,
+									index: getIndex()!,
+								})
+							}
+						/>
+					</View>
+				)
+			}}
 			ListFooterComponent={
 				<XStack justifyContent='flex-end'>
 					<Text color={'$borderColor'} style={{ display: 'block' }}>
