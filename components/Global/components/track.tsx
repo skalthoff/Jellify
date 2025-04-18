@@ -57,8 +57,14 @@ export default function Track({
 		<Theme name={invertedColors ? 'inverted_purple' : undefined}>
 			<XStack alignContent='center' alignItems='center' flex={1} paddingVertical={'$2'}>
 				{onDragStart && onDragEnd && (
-					<YStack alignContent='center' justifyContent='center' flex={1}>
-						{<Icon name='drag' onPressIn={onDragStart} onPressOut={onDragEnd} />}
+					<YStack
+						alignContent='center'
+						justifyContent='center'
+						flex={1}
+						onPressIn={onDragStart}
+						onPressOut={onDragEnd}
+					>
+						{<Icon name='drag' />}
 					</YStack>
 				)}
 
