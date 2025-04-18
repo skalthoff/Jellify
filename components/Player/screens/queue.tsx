@@ -67,6 +67,15 @@ export default function Queue({
 			}}
 			renderItem={({ item: queueItem, getIndex, drag, isActive }) => (
 				<Track
+					prependElement={
+						<Icon
+							name='drag'
+							onPress={() => {
+								trigger('impactLight')
+								drag()
+							}}
+						/>
+					}
 					queue={queue}
 					navigation={navigation}
 					track={queueItem.item}
@@ -74,10 +83,6 @@ export default function Queue({
 					showArtwork
 					onPress={() => {
 						useSkip.mutate(getIndex())
-					}}
-					onLongPress={() => {
-						trigger('impactLight')
-						drag()
 					}}
 					isNested
 					showRemove

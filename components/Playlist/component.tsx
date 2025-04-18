@@ -159,7 +159,7 @@ export default function Playlist({ playlist, navigation }: PlaylistProps): React
 			}
 			numColumns={1}
 			onDragBegin={() => {
-				trigger('impactMedium')
+				trigger('impactLight')
 			}}
 			onDragEnd={({ data, from, to }) => {
 				console.debug(`Moving playlist item from ${from} to ${to}`)
@@ -173,13 +173,13 @@ export default function Playlist({ playlist, navigation }: PlaylistProps): React
 			refreshing={isPending}
 			renderItem={({ item: track, getIndex, drag }) => (
 				<Track
+					prependElement={editing ? <Icon name='drag' onPress={drag} /> : undefined}
 					navigation={navigation}
 					track={track}
 					tracklist={tracks!}
 					index={getIndex()}
 					queue={playlist}
 					showArtwork
-					onLongPress={editing ? drag : undefined}
 					showRemove={editing}
 					onRemove={() =>
 						useRemoveFromPlaylist.mutate({ playlist, track, index: getIndex()! })
