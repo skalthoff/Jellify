@@ -174,7 +174,7 @@ export default function Playlist({ playlist, navigation }: PlaylistProps): React
 			renderItem={({ item: track, getIndex, drag }) => (
 				<Track
 					prependElement={
-						editing ? <Icon name='drag' onPress={() => drag()} /> : undefined
+						editing ? <Icon name='drag' onPressIn={() => drag()} /> : undefined
 					}
 					navigation={navigation}
 					track={track}
