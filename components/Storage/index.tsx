@@ -18,7 +18,7 @@ import Animated, {
 import { deleteAudioCache,getAudioCache } from '../Network/offlineModeUtils'
 
 // 🔹 Single Download Item with animated progress bar
-const DownloadItem = ({ name, progress }: { name: string; progress: number }) => {
+const DownloadItem = ({ name, progress,fileName }: { name: string; progress: number,fileName:string }) => {
 	const progressValue = useSharedValue(progress)
 
 	useEffect(() => {
@@ -31,7 +31,7 @@ const DownloadItem = ({ name, progress }: { name: string; progress: number }) =>
 
 	return (
 		<View style={styles.item}>
-			<Text style={styles.label}>{name}</Text>
+			<Text style={styles.label}>{fileName}</Text>
 			<View style={styles.downloadBar}>
 				<Animated.View style={[styles.downloadFill, animatedStyle]} />
 			</View>
@@ -88,7 +88,7 @@ export const StorageBar = () => {
 		refreshStats()
 	}, [])
 
-	const downloadList = Object.entries(downloads || {}) as [string, { name: string; progress: number }][]
+	const downloadList = Object.entries(downloads || {}) as [string, { name: string; progress: number,songName:string }][]
 
 	return (
 		<View style={styles.container}>
@@ -109,8 +109,8 @@ export const StorageBar = () => {
 						data={downloadList}
 						keyExtractor={([url]) => url}
 						renderItem={({ item }) => {
-							const [url, { name, progress }] = item
-							return <DownloadItem name={name} progress={progress} />
+							const [url, { name, progress,songName }] = item
+							return <DownloadItem name={name} progress={progress} fileName={songName} />
 						}}
 						contentContainerStyle={{ paddingBottom: 40 }}
 					/>

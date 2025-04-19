@@ -16,12 +16,14 @@ export default function Icon({
 	small,
 	large,
 	extraLarge,
+	disabled,
 	color,
 }: {
 	name: string
 	onPress?: () => void
 	small?: boolean
 	large?: boolean
+	disabled?: boolean
 	extraLarge?: boolean
 	color?: string | undefined
 }): React.JSX.Element {
@@ -32,7 +34,9 @@ export default function Icon({
 		<MaterialCommunityIcons
 			color={color ? color : theme.color.val}
 			name={name}
+			
 			onPress={onPress}
+			disabled={disabled}
 			size={size}
 		/>
 	)

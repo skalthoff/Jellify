@@ -10,6 +10,10 @@ import axios from "axios";
 import { QueryClient } from "@tanstack/react-query";
 import { queryClient } from "@/constants/query-client";
 
+export type JellifyDownload = JellifyTrack & {
+   savedAt: string,
+   isAutoDownloaded: boolean,
+}
 export async function downloadJellyfinFile(url: string, name: string,queryClient: QueryClient) {
 	try {
 		// Fetch the file
@@ -74,9 +78,10 @@ const MMKV_OFFLINE_MODE_KEYS={
 }
 
 
-export const saveAudio = async (track:JellifyTrack,queryClient: QueryClient) => {
+
+export const saveAudio = async (track:JellifyTrack,queryClient: QueryClient,isAutoDownloaded: boolean=true) => {
     const existingRaw = mmkv.getString(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE)
-    let existingArray: JellifyTrack[] = []
+    let existingArray: JellifyDownload[] = []
     try{
         if(existingRaw){
             existingArray = JSON.parse(existingRaw)
@@ -107,18 +112,20 @@ export const saveAudio = async (track:JellifyTrack,queryClient: QueryClient) => 
   
     if (index >= 0) {
       // Replace existing
-      existingArray[index] = track
+      existingArray[index] = {...track,savedAt:new Date().toISOString(),isAutoDownloaded}
     } else {
       // Add new
-      existingArray.push(track)
+      existingArray.push({...track,savedAt:new Date().toISOString(),isAutoDownloaded})
     }
     mmkv.set(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE, JSON.stringify(existingArray))
     
 }
 
-export const getAudioCache =  (): JellifyTrack[] => {
+
+
+export const getAudioCache =  ():   JellifyDownload[] => {
     const existingRaw = mmkv.getString(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE)
-    let existingArray: JellifyTrack[] = []
+    let existingArray: JellifyDownload[] = []
     try{
         if(existingRaw){
             existingArray = JSON.parse(existingRaw)
@@ -139,3 +146,44 @@ export const deleteAudioCache = async () => {
 
 
 
+
+const AUDIO_CACHE_LIMIT = 20 // change as needed
+
+export const purneAudioCache = async () => {
+    const existingRaw = mmkv.getString(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE)
+    if (!existingRaw) return
+  
+    let existingArray: JellifyDownload[] = []
+  
+    try {
+      existingArray = JSON.parse(existingRaw)
+    } catch (e) {
+      return
+    }
+  
+    const autoDownloads = existingArray
+      .filter(item => item.isAutoDownloaded)
+      .sort((a, b) => new Date(a.savedAt).getTime() - new Date(b.savedAt).getTime()) // oldest first
+  
+    const excess = autoDownloads.length - AUDIO_CACHE_LIMIT
+    if (excess <= 0) return
+  
+    // Remove the oldest `excess` files
+    const itemsToDelete = autoDownloads.slice(0, excess)
+    for (const item of itemsToDelete) {
+      // Delete audio file
+      if (item.url && await RNFS.exists(item.url)) {
+        await RNFS.unlink(item.url).catch(() => {})
+      }
+  
+      // Delete artwork
+      if (item.artwork && await RNFS.exists(item.artwork)) {
+        await RNFS.unlink(item.artwork).catch(() => {})
+      }
+  
+      // Remove from the existingArray
+      existingArray = existingArray.filter(i => i.item.Id !== item.item.Id)
+    }
+  
+    mmkv.set(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE, JSON.stringify(existingArray))
+  }

@@ -73,7 +73,7 @@ const InternetConnectionWatcher = () => {
     }
     return (
         <View>
-                        <NoInternetModal open={networkStatus !== networkStatusTypes.ONLINE}/>
+                       
                         <View
             style={{
                 padding: 10,

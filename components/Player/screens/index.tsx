@@ -1,7 +1,7 @@
 import { StackParamList } from '../../../components/types'
 import { usePlayerContext } from '../../../player/provider'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaView, useSafeAreaFrame } from 'react-native-safe-area-context'
 import { YStack, XStack, Spacer, getTokens } from 'tamagui'
 import { Text } from '../../../components/Global/helpers/text'
@@ -15,9 +15,9 @@ import Controls from '../helpers/controls'
 import { Image } from 'expo-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../../api/client'
-import { saveAudio, getAudioCache } from '../../../components/Network/offlineModeUtils'
+import { saveAudio, getAudioCache, purneAudioCache } from '../../../components/Network/offlineModeUtils'
 import { useActiveTrack } from 'react-native-track-player'
-import { Alert } from 'react-native'
+import { ActivityIndicator, Alert } from 'react-native'
 import { useQueryClient } from '@tanstack/react-query'
 
 export default function PlayerScreen({
@@ -28,7 +28,7 @@ export default function PlayerScreen({
 	const { nowPlayingIsFavorite, setNowPlayingIsFavorite, nowPlaying, queue } = usePlayerContext()
 
 	const [isDownloading, setIsDownloading] = useState(false)
-
+	const isDownloaded =  getAudioCache().find(item => item?.item?.Id === nowPlaying?.item.Id)?.item?.Id
 	const activeTrack = useActiveTrack()
 	const queryClient = useQueryClient()
 
@@ -41,10 +41,16 @@ export default function PlayerScreen({
 		setIsDownloading(true)
 		await saveAudio(nowPlaying,queryClient)
 		setIsDownloading(false)
-		Alert.alert("Downloaded")
+		purneAudioCache()
 	}
 
-	console.log("activeTrack", activeTrack)
+	useEffect(() => {
+		if(!isDownloaded){
+			downloadAudio(nowPlaying!.url)
+		}
+	}, [])
+
+	
 	return (
 		<SafeAreaView edges={['right', 'left']}>
 			{nowPlaying && (
@@ -190,9 +196,9 @@ export default function PlayerScreen({
 							<Icon name='speaker-multiple' />
 
 							<Spacer />
-							<Icon name={isDownloading ? 'download' : 'download-outline'} onPress={() => {
+							{isDownloading ? <ActivityIndicator  /> : <Icon name={!isDownloaded?	'download': "check"}  onPress={() => {
 								downloadAudio(nowPlaying!.url)
-							}} />
+							}} disabled={isDownloading || !!isDownloaded} />}
 
 							<Spacer />
 
