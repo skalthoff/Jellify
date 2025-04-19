@@ -14,7 +14,7 @@ export type JellifyDownload = JellifyTrack & {
    savedAt: string,
    isAutoDownloaded: boolean,
 }
-export async function downloadJellyfinFile(url: string, name: string,queryClient: QueryClient) {
+export async function downloadJellyfinFile(url: string, name: string,songName:string,queryClient: QueryClient) {
 	try {
 		// Fetch the file
 		const headRes = await axios.head(url)
@@ -34,7 +34,7 @@ export async function downloadJellyfinFile(url: string, name: string,queryClient
 
         queryClient.setQueryData(['downloads'], (prev: any = {}) => ({
 			...prev,
-			[url]: { progress: 0, name: fileName , songName: name},
+			[url]: { progress: 0, name: fileName , songName: songName},
 		}))
 
 
@@ -49,7 +49,7 @@ export async function downloadJellyfinFile(url: string, name: string,queryClient
 				const percent = +(data.bytesWritten / data.contentLength).toFixed(2)
 				queryClient.setQueryData(['downloads'], (prev: any = {}) => ({
 					...prev,
-					[url]: { progress: percent, name: fileName , songName: name},
+					[url]: { progress: percent, name: fileName , songName: songName},
 				}))
 			},
 			background: true,
@@ -92,8 +92,8 @@ export const saveAudio = async (track:JellifyTrack,queryClient: QueryClient,isAu
     try{    
         console.log("Downloading audio", track)
         
-        const downloadtrack = await downloadJellyfinFile(track.url, track.item.Id as string,queryClient);
-        const dowloadalbum = await downloadJellyfinFile(track.artwork as string, track.item.Id as string,queryClient);
+        const downloadtrack = await downloadJellyfinFile(track.url, track.item.Id as string,track.title as string,queryClient);
+        const dowloadalbum = await downloadJellyfinFile(track.artwork as string, track.item.Id as string,track.title as string,queryClient);
         console.log("downloadtrack", downloadtrack)
         if(downloadtrack){
             track.url = downloadtrack;
