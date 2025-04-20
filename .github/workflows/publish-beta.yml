@@ -4,7 +4,7 @@ on:
     branches:
       - 'main'
 jobs:
-  publish-ios-beta:
+  publish-beta:
     runs-on: macos-latest
     steps:
       - name: 🛒 Checkout
@@ -34,6 +34,9 @@ jobs:
         run: echo -e '${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}' > appstore_connect_api_key.json
         working-directory: ./ios/fastlane
 
+      - name: 🚀 Run Android fastlane build
+        run: npm run fastlane:android:build
+
       - name: 🚀 Run iOS fastlane build and publish to TestFlight
         run: npm run fastlane:ios:beta
         env:
@@ -41,9 +44,6 @@ jobs:
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_REPO_PAT: "anultravioletaurora:${{ secrets.SIGNING_REPO_PAT }}"
-
-      - name: 🚀 Run Android fastlane build
-        run: npm run fastlane:android:build
 
       # Commit Fastlane Xcode build number increment
       - name: 🔢 Commit changes for version increment
@@ -84,14 +84,14 @@ jobs:
       
      
 
-      - name: Generate change log
+      - name: 📝 Generate changelog
         id: changelog
         uses: agronholm/release-notes@v1
         with:
           path: CHANGES.rst
 
 
-      - name: Generate Changelog
+      - name: 😎 Notify on Discord
         run: |
           cd ios
           bundle exec fastlane add_plugin discord_notifier
