@@ -73,6 +73,7 @@ jobs:
 
       - name: 🎉 Create Github release 
         uses: ncipollo/release-action@v1
+        id: githubRelease
         with:
           artifacts: "./artifacts/*"
           name: ${{ env.VERSION_NUMBER }}
@@ -80,3 +81,25 @@ jobs:
           prerelease: true
           tag: ${{ env.VERSION_NUMBER }}
           token: ${{ secrets.SIGNING_REPO_PAT }}
+      
+     
+
+      - name: Generate change log
+        id: changelog
+        uses: agronholm/release-notes@v1
+        with:
+          path: CHANGES.rst
+
+
+      - name: Generate Changelog
+        run: |
+          cd ios
+          bundle exec fastlane add_plugin discord_notifier
+          bundle exec fastlane notifyOnDiscord
+          cd ..
+
+        env: 
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          APP_VERSION: ${{ env.VERSION_NUMBER }}
+          CHANGELOG: ${{ steps.changelog.outputs.changelog }}
+          release_url: ${{ steps.githubRelease.outputs.html_url }}
