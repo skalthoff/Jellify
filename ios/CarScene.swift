@@ -9,10 +9,10 @@ class CarSceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate {
     
       if applicationDelegate.bridge == nil {
       
-          applicationDelegate.bridge = RCTBridge(delegate: applicationDelegate, launchOptions: [:])
+          applicationDelegate.bridge = RCTBridge.init(delegate: applicationDelegate, launchOptions: [:])
           
-          applicationDelegate.rootView = RCTRootView(
-              bridge: applicationDelegate.bridge,
+          applicationDelegate.rootView = RCTRootView.init(
+              bridge: applicationDelegate.bridge!,
               moduleName: "Jellify",
               initialProperties: nil
           )
