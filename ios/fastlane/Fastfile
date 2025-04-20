@@ -58,7 +58,7 @@ platform :ios do
       beta_app_description: "A music app for Jellyfin",
       expire_previous_builds: false,
       distribute_external: true,
-      changelog: "Updated Sign In components, Player Optimizations, 'See More' buttons",
+      changelog: "Reworked Artist page, CarPlay startup fix",
       groups: [
         "Selfhosters"
       ]
