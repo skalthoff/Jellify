@@ -1,6 +1,6 @@
 {
   "name": "jellify",
-  "version": "0.10.101",
+  "version": "0.10.102",
   "private": true,
   "scripts": {
     "init": "npm i",
