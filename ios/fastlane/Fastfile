@@ -51,6 +51,11 @@ platform :ios do
       scheme: "Jellify - Release",
       workspace: "Jellify.xcworkspace", 
     )
+    changelog_from_git_commits(
+      date_format: "short",
+      commits_count: 1,
+      match_lightweight_tag: false
+    )
     # http://docs.fastlane.tools/actions/upload_to_testflight/#upload_to_testflight
     upload_to_testflight(
       api_key_path: "fastlane/appstore_connect_api_key.json",
@@ -58,7 +63,6 @@ platform :ios do
       beta_app_description: "A music app for Jellyfin",
       expire_previous_builds: false,
       distribute_external: true,
-      changelog: "Reworked Artist page, CarPlay startup fix",
       groups: [
         "Selfhosters"
       ]
