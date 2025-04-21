@@ -8,7 +8,8 @@ import Client from './api/client'
 import Auto from './components/auto'
 
 // Initialize API client instance
-Client.instance()
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+Client.instance
 
 // Enable React Navigation freeze for detaching inactive screens
 // enableFreeze();
