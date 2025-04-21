@@ -1,10 +1,6 @@
 import { isUndefined } from 'lodash'
-import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
-import { CarPlay } from 'react-native-carplay'
+import { createContext, ReactNode, SetStateAction, useContext, useState } from 'react'
 import Client from '../api/client'
-import CarPlayNavigation from './CarPlay/Navigation'
-import CarPlayNowPlaying from './CarPlay/NowPlaying'
-import { Platform } from 'react-native'
 
 interface JellifyContext {
 	loggedIn: boolean
