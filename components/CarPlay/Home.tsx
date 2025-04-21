@@ -14,7 +14,7 @@ const CarPlayHome = new ListTemplate({
 	tabSystemImageName: 'music.house.fill',
 	sections: [
 		{
-			header: `Hi, ${Client.user}`,
+			header: `Hi, ${Client.user ?? 'there'}`,
 			items: [],
 		},
 		{
