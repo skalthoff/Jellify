@@ -5,6 +5,7 @@ import { name as appName } from './app.json'
 import { PlaybackService } from './player/service'
 import TrackPlayer from 'react-native-track-player'
 import Client from './api/client'
+import Auto from './components/auto'
 
 // Initialize API client instance
 /* eslint-disable @typescript-eslint/no-unused-expressions */
@@ -14,7 +15,7 @@ Client.instance
 // enableFreeze();
 
 AppRegistry.registerComponent(appName, () => App)
-AppRegistry.registerComponent('RNCarPlayScene', () => App)
+AppRegistry.registerComponent(`${appName}-Auto`, () => Auto)
 
 // Register RNTP playback service for remote controls
 TrackPlayer.registerPlaybackService(() => PlaybackService)

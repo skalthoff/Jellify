@@ -9,25 +9,28 @@ class CarSceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate {
     
       if applicationDelegate.bridge == nil {
       
-          applicationDelegate.bridge = RCTBridge.init(delegate: applicationDelegate, launchOptions: [:])
-          
-          applicationDelegate.rootView = RCTRootView.init(
-              bridge: applicationDelegate.bridge!,
-              moduleName: "Jellify",
-              initialProperties: nil
-          )
+        print("CarPlay cold start - initializing RCT Bridge")
 
-          applicationDelegate.window = UIWindow(frame: UIScreen.main.bounds)
+        applicationDelegate.bridge = RCTBridge.init(delegate: applicationDelegate, launchOptions: [:])
+        
+        applicationDelegate.rootView = RCTRootView.init(
+            bridge: applicationDelegate.bridge!,
+            moduleName: "Jellify",
+            initialProperties: nil
+        )
 
-          let rootViewController = UIViewController()
+        applicationDelegate.window = UIWindow(frame: UIScreen.main.bounds)
 
-          rootViewController.view = applicationDelegate.rootView
+        let rootViewController = UIViewController()
 
-          applicationDelegate.window?.rootViewController = rootViewController
-          applicationDelegate.window?.makeKeyAndVisible()
+        rootViewController.view = applicationDelegate.rootView
+
+        applicationDelegate.window?.rootViewController = rootViewController
+        applicationDelegate.window?.makeKeyAndVisible()
       }
     }                            
     
+    print("CarPlay connected, attaching to module")
     RNCarPlay.connect(with: interfaceController, window: templateApplicationScene.carWindow);
   }
 
