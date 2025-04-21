@@ -30,8 +30,12 @@ class CarSceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate {
       }
     }                            
     
-    print("CarPlay connected, attaching to module")
-    RNCarPlay.connect(with: interfaceController, window: templateApplicationScene.carWindow);
+    print("CarPlay connected, waiting for JS bridge to be ready")
+
+    NotificationCenter.default.addObserver(forName: NSNotification.Name.RCTJavaScriptDidLoad, object: nil, queue: .main) { _ in 
+      print("JS bridge loaded, engaging CarPlay")
+      RNCarPlay.connect(with: interfaceController, window: templateApplicationScene.carWindow);
+    }
   }
 
   func templateApplicationScene(_ templateApplicationScene: CPTemplateApplicationScene, didDisconnectInterfaceController interfaceController: CPInterfaceController) {
