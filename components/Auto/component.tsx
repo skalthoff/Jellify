@@ -21,7 +21,8 @@ export default function Auto(): React.JSX.Element {
 					CarPlay.enableNowPlaying(true) // https://github.com/birkir/react-native-carplay/issues/185
 				}
 			} else {
-				CarPlay.pushTemplate(LoginTemplate)
+				CarPlay.setRootTemplate(LoginTemplate)
+				CarPlay.popToRootTemplate()
 			}
 		}
 
