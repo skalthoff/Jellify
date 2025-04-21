@@ -15,7 +15,10 @@ Client.instance
 // enableFreeze();
 
 AppRegistry.registerComponent(appName, () => App)
-AppRegistry.registerComponent(`${appName}-Auto`, () => JellifyAuto)
+AppRegistry.registerComponent(`${appName}-Auto`, () => {
+	console.debug(`Registering Auto component`)
+	return JellifyAuto
+})
 
 // Register RNTP playback service for remote controls
 TrackPlayer.registerPlaybackService(() => PlaybackService)
