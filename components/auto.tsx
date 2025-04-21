@@ -12,7 +12,7 @@ export default function Auto(): React.JSX.Element {
 		function onConnect() {
 			setCarPlayConnected(true)
 
-			if (!isUndefined(Client.library)) {
+			if (!isUndefined(Client)) {
 				CarPlay.setRootTemplate(CarPlayNavigation)
 
 				if (Platform.OS === 'ios') {
