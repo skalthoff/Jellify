@@ -71,7 +71,7 @@ platform :ios do
    
   lane :notifyOnDiscord do
     app_version = ENV["APP_VERSION"] || "N/A"
-    changelog = ENV["CHANGELOG"] || "N/A"
+    changelog = sh("git log -n 3 --pretty=format:'• %s (%h) - %an'").split("\n").join("\n")
     discord_url = ENV["DISCORD_WEBHOOK_URL"] || "N/A"
     release_url = ENV["release_url"]
     testflight_url = "https://testflight.apple.com/join/etVSc7ZQ"
@@ -94,7 +94,7 @@ platform :ios do
             value: Time.now.strftime("%B %d, %Y at %I:%M %p")
           },
           {
-            name: "📝 Changelog",
+            name: "📝 Recent Commits",
             value: "```#{changelog}```"
           }
         ],

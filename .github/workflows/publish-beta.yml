@@ -82,13 +82,7 @@ jobs:
           tag: ${{ env.VERSION_NUMBER }}
           token: ${{ secrets.SIGNING_REPO_PAT }}
       
-     
 
-      - name: 📝 Generate changelog
-        id: changelog
-        uses: agronholm/release-notes@v1
-        with:
-          path: CHANGES.rst
 
 
       - name: 😎 Notify on Discord
@@ -101,5 +95,4 @@ jobs:
         env: 
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           APP_VERSION: ${{ env.VERSION_NUMBER }}
-          CHANGELOG: ${{ steps.changelog.outputs.changelog }}
           release_url: ${{ steps.githubRelease.outputs.html_url }}
