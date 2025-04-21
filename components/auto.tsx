@@ -1,4 +1,3 @@
-import { View } from 'react-native'
 import { JellyfinAuthenticationProvider } from './Login/provider'
 import Auto from './Auto/component'
 

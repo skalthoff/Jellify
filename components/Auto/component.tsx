@@ -10,6 +10,11 @@ export default function Auto(): React.JSX.Element {
 
 	const { user } = useAuthenticationContext()
 
+	// Connectedness logging
+	useEffect(() => {
+		console.debug(`CarPlay${!carPlayConnected && ' not '} connected`)
+	})
+
 	useEffect(() => {
 		function onConnect() {
 			setCarPlayConnected(true)
