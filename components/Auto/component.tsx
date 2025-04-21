@@ -4,6 +4,7 @@ import { Platform, View } from 'react-native'
 import { CarPlay } from 'react-native-carplay'
 import CarPlayNavigation from './Navigation'
 import { useAuthenticationContext } from '../Login/provider'
+import LoginTemplate from './Login'
 
 export default function Auto(): React.JSX.Element {
 	const [carPlayConnected, setCarPlayConnected] = useState(CarPlay ? CarPlay.connected : false)
@@ -20,6 +21,8 @@ export default function Auto(): React.JSX.Element {
 				if (Platform.OS === 'ios') {
 					CarPlay.enableNowPlaying(true) // https://github.com/birkir/react-native-carplay/issues/185
 				}
+			} else {
+				CarPlay.setRootTemplate(LoginTemplate)
 			}
 		}
 
