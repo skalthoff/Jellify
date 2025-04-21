@@ -14,10 +14,14 @@ const CarPlayHome = new ListTemplate({
 	tabSystemImageName: 'music.house.fill',
 	sections: [
 		{
-			header: `Hi ${Client.user?.name ?? 'there'}`,
+			header: `Hi, ${Client.user}`,
+			items: [],
+		},
+		{
+			header: 'Recents',
 			items: [
 				{ id: QueryKeys.RecentlyPlayedArtists, text: 'Recent Artists' },
-				{ id: QueryKeys.RecentlyPlayed, text: 'Recently Played' },
+				{ id: QueryKeys.RecentlyPlayed, text: 'Play it again' },
 				{ id: QueryKeys.UserPlaylists, text: 'Your Playlists' },
 			],
 		},
