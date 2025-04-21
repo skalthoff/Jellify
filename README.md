@@ -216,6 +216,7 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
     -   James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
 -   The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
 -   [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) module and for his assistance with getting Jest working
+-   The team behind [Podverse](https://github.com/podverse/podverse-rn) for their incredible open source project, of which was used as a reference extensively during development
 -   My fellow [contributors](https://github.com/anultravioletaurora/Jellify/graphs/contributors) who have poured so much heart and a lot of sweat into making _Jellify_ a great experience
     -   Extra thanks to [John](https://github.com/johngrantdev) and [Vali-98](https://github.com/Vali-98) for shaping and designing the user experience in many places
     -   Huge thank you to [Ritesh](https://github.com/riteshshukla04) for your project automation and backend expertise (and for the memes)
