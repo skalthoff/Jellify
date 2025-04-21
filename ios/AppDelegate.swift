@@ -2,11 +2,6 @@
 import UIKit
 import CarPlay
 import React
-#if DEBUG
-#if FB_SONARKIT_ENABLED
-import FlipperKit
-#endif
-#endif
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, RCTBridgeDelegate {
@@ -26,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RCTBridgeDelegate {
   }
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    initializeFlipper(with: application)
     self.bridge = RCTBridge.init(delegate: self, launchOptions: launchOptions)
     self.rootView = RCTRootView.init(bridge: self.bridge!, moduleName: "Jellify", initialProperties: nil)
     return true
@@ -45,19 +39,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RCTBridgeDelegate {
   }
 
   func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-  }
-
-  private func initializeFlipper(with application: UIApplication) {
-    #if DEBUG
-    #if FB_SONARKIT_ENABLED
-    let client = FlipperClient.shared()
-    let layoutDescriptorMapper = SKDescriptorMapper(defaults: ())
-    client?.add(FlipperKitLayoutPlugin(rootNode: application, with: layoutDescriptorMapper!))
-    client?.add(FKUserDefaultsPlugin(suiteName: nil))
-    client?.add(FlipperKitReactPlugin())
-    client?.add(FlipperKitNetworkPlugin(networkAdapter: SKIOSNetworkAdapter()))
-    client?.start()
-    #endif
-    #endif
   }
 }

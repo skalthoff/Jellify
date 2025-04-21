@@ -16,11 +16,19 @@ class CarSceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate {
               moduleName: "Jellify",
               initialProperties: nil
           )
+
+          applicationDelegate.window = UIWindow(frame: UIScreen.main.bounds)
+
+          let rootViewController = UIViewController()
+
+          rootViewController.view = applicationDelegate.rootView
+
+          applicationDelegate.window?.rootViewController = rootViewController
+          applicationDelegate.window?.makeKeyAndVisible()
       }
-  }                            
+    }                            
     
     RNCarPlay.connect(with: interfaceController, window: templateApplicationScene.carWindow);
-    
   }
 
   func templateApplicationScene(_ templateApplicationScene: CPTemplateApplicationScene, didDisconnectInterfaceController interfaceController: CPInterfaceController) {

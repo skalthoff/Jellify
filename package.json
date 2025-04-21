@@ -1,6 +1,7 @@
 {
   "name": "jellify",
   "version": "0.10.100",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "init": "npm i",
