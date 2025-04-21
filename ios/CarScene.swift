@@ -15,7 +15,7 @@ class CarSceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate {
         
         applicationDelegate.rootView = RCTRootView.init(
             bridge: applicationDelegate.bridge!,
-            moduleName: "Jellify",
+            moduleName: "Jellify-Auto",
             initialProperties: nil
         )
 
