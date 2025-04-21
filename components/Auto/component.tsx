@@ -1,4 +1,3 @@
-import Client from '@/api/client'
 import { useState, useEffect } from 'react'
 import { Platform, View } from 'react-native'
 import { CarPlay } from 'react-native-carplay'
@@ -16,7 +15,7 @@ export default function Auto(): React.JSX.Element {
 			setCarPlayConnected(true)
 
 			if (user) {
-				CarPlay.setRootTemplate(CarPlayNavigation)
+				CarPlay.setRootTemplate(CarPlayNavigation(user))
 
 				if (Platform.OS === 'ios') {
 					CarPlay.enableNowPlaying(true) // https://github.com/birkir/react-native-carplay/issues/185
