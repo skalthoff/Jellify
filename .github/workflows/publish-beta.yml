@@ -88,7 +88,6 @@ jobs:
       - name: 😎 Notify on Discord
         run: |
           cd ios
-          bundle exec fastlane add_plugin discord_notifier
           bundle exec fastlane notifyOnDiscord
           cd ..
 
