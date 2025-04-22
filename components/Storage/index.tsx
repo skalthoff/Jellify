@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import {
-	View,
-	Text,
-	StyleSheet,
-	Pressable,
-	Alert,
-	FlatList,
-} from 'react-native'
+import { View, Text, StyleSheet, Pressable, Alert, FlatList } from 'react-native'
 import { useQuery } from '@tanstack/react-query'
 import RNFS from 'react-native-fs'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Animated, {
-	useSharedValue,
-	useAnimatedStyle,
-	withTiming,
-} from 'react-native-reanimated'
-import { deleteAudioCache,getAudioCache } from '../Network/offlineModeUtils'
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import { deleteAudioCache, getAudioCache } from '../Network/offlineModeUtils'
 
 // 🔹 Single Download Item with animated progress bar
-const DownloadItem = ({ name, progress,fileName }: { name: string; progress: number,fileName:string }) => {
+const DownloadItem = ({
+	name,
+	progress,
+	fileName,
+}: {
+	name: string
+	progress: number
+	fileName: string
+}) => {
 	const progressValue = useSharedValue(progress)
 
 	useEffect(() => {
@@ -47,7 +44,6 @@ export const StorageBar = () => {
 	const { data: downloads } = useQuery({
 		queryKey: ['downloads'],
 		initialData: {},
-        
 	})
 
 	const usageShared = useSharedValue(0)
@@ -88,7 +84,10 @@ export const StorageBar = () => {
 		refreshStats()
 	}, [])
 
-	const downloadList = Object.entries(downloads || {}) as [string, { name: string; progress: number,songName:string }][]
+	const downloadList = Object.entries(downloads || {}) as [
+		string,
+		{ name: string; progress: number; songName: string },
+	][]
 
 	return (
 		<View style={styles.container}>
@@ -109,8 +108,10 @@ export const StorageBar = () => {
 						data={downloadList}
 						keyExtractor={([url]) => url}
 						renderItem={({ item }) => {
-							const [url, { name, progress,songName }] = item
-							return <DownloadItem name={name} progress={progress} fileName={songName} />
+							const [url, { name, progress, songName }] = item
+							return (
+								<DownloadItem name={name} progress={progress} fileName={songName} />
+							)
 						}}
 						contentContainerStyle={{ paddingBottom: 40 }}
 					/>
@@ -119,7 +120,7 @@ export const StorageBar = () => {
 
 			{/* Delete All Downloads */}
 			<Pressable style={styles.deleteButton} onPress={deleteAllDownloads}>
-				<MaterialIcons name="delete-outline" size={20} color="#ff4d4f" />
+				<MaterialIcons name='delete-outline' size={20} color='#ff4d4f' />
 				<Text style={styles.deleteText}> Delete Downloads</Text>
 			</Pressable>
 		</View>

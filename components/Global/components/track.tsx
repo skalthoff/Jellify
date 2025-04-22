@@ -51,14 +51,14 @@ export default function Track({
 	onRemove,
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
-	const { nowPlaying, playQueue, usePlayNewQueue,usePlayNewQueueOffline } = usePlayerContext()
-	const {data:networkStatus} = useQuery({queryKey:[QueryKeys.NetworkStatus]})
+	const { nowPlaying, playQueue, usePlayNewQueue, usePlayNewQueueOffline } = usePlayerContext()
+	const { data: networkStatus } = useQuery({ queryKey: [QueryKeys.NetworkStatus] })
 	const isPlaying = nowPlaying?.item.Id === track.Id
 
-	const offlineAudio = getAudioCache().find((t) => t.item.Id === track.Id);
+	const offlineAudio = getAudioCache().find((t) => t.item.Id === track.Id)
 	const isDownloaded = offlineAudio?.item?.Id
 
-	const isOffline = networkStatus === networkStatusTypes.DISCONNECTED;
+	const isOffline = networkStatus === networkStatusTypes.DISCONNECTED
 
 	return (
 		<Theme name={invertedColors ? 'inverted_purple' : undefined}>
@@ -70,11 +70,9 @@ export default function Track({
 					if (onPress) {
 						onPress()
 					} else {
-
-						if(isOffline && isDownloaded){
-							
-							usePlayNewQueueOffline.mutate({trackListOffline:offlineAudio});
-							return ;
+						if (isOffline && isDownloaded) {
+							usePlayNewQueueOffline.mutate({ trackListOffline: offlineAudio })
+							return
 						}
 						usePlayNewQueue.mutate({
 							track,
@@ -129,7 +127,15 @@ export default function Track({
 				<YStack alignContent='center' justifyContent='flex-start' flex={6}>
 					<Text
 						bold
-						color={(isPlaying ? getTokens().color.telemagenta : (isOffline ? (isDownloaded ? theme.color : '$purpleGray') : theme.color))}
+						color={
+							isPlaying
+								? getTokens().color.telemagenta
+								: isOffline
+								? isDownloaded
+									? theme.color
+									: '$purpleGray'
+								: theme.color
+						}
 						lineBreakStrategyIOS='standard'
 						numberOfLines={1}
 					>

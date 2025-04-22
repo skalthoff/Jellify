@@ -50,11 +50,11 @@ export default function App(): React.JSX.Element {
 			setPlayerIsReady(true)
 			requestStoragePermission()
 		})
-		const getActiveTrack = async () => {
-			const track = await TrackPlayer.getActiveTrack()
-			console.log("playerIsReady", track)
-		}
-		getActiveTrack()
+	const getActiveTrack = async () => {
+		const track = await TrackPlayer.getActiveTrack()
+		console.log('playerIsReady', track)
+	}
+	getActiveTrack()
 
 	return (
 		<SafeAreaProvider>

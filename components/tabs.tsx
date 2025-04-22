@@ -21,98 +21,97 @@ export function Tabs(): React.JSX.Element {
 
 	return (
 		<View style={{ flex: 1 }}>
-
 			<Tab.Navigator
 				initialRouteName='Home'
 				screenOptions={{
-				lazy: false,
-				animation: 'shift',
-				tabBarActiveTintColor: getTokens().color.telemagenta.val,
-				tabBarInactiveTintColor: isDarkMode
-					? getToken('$color.amethyst')
-					: getToken('$color.purpleGray'),
-			}}
-			tabBar={(props) => (
-				<>
-					{nowPlaying && (
-						/* Hide miniplayer if the queue is empty */
-						<>
-							<Separator />
-							<Miniplayer navigation={props.navigation} />
-						</>
-					)}
-					<BottomTabBar {...props} />
-				</>
-			)}
-		>
-			<Tab.Screen
-				name='Home'
-				component={Home}
-				options={{
-					headerShown: false,
-					tabBarIcon: ({ color, size }) => (
-						<MaterialCommunityIcons
-							name='jellyfish-outline'
-							color={color}
-							size={size}
-						/>
-					),
+					lazy: false,
+					animation: 'shift',
+					tabBarActiveTintColor: getTokens().color.telemagenta.val,
+					tabBarInactiveTintColor: isDarkMode
+						? getToken('$color.amethyst')
+						: getToken('$color.purpleGray'),
 				}}
-			/>
+				tabBar={(props) => (
+					<>
+						{nowPlaying && (
+							/* Hide miniplayer if the queue is empty */
+							<>
+								<Separator />
+								<Miniplayer navigation={props.navigation} />
+							</>
+						)}
+						<BottomTabBar {...props} />
+					</>
+				)}
+			>
+				<Tab.Screen
+					name='Home'
+					component={Home}
+					options={{
+						headerShown: false,
+						tabBarIcon: ({ color, size }) => (
+							<MaterialCommunityIcons
+								name='jellyfish-outline'
+								color={color}
+								size={size}
+							/>
+						),
+					}}
+				/>
 
-			<Tab.Screen
-				name='Library'
-				component={LibraryStack}
-				options={{
-					headerShown: false,
-					tabBarIcon: ({ color, size }) => (
-						<MaterialCommunityIcons
-							name='book-music-outline'
-							color={color}
-							size={size}
-						/>
-					),
-				}}
-			/>
+				<Tab.Screen
+					name='Library'
+					component={LibraryStack}
+					options={{
+						headerShown: false,
+						tabBarIcon: ({ color, size }) => (
+							<MaterialCommunityIcons
+								name='book-music-outline'
+								color={color}
+								size={size}
+							/>
+						),
+					}}
+				/>
 
-			<Tab.Screen
-				name='Search'
-				component={SearchStack}
-				options={{
-					headerShown: false,
-					tabBarIcon: ({ color, size }) => (
-						<MaterialCommunityIcons name='magnify' color={color} size={size} />
-					),
-				}}
-			/>
+				<Tab.Screen
+					name='Search'
+					component={SearchStack}
+					options={{
+						headerShown: false,
+						tabBarIcon: ({ color, size }) => (
+							<MaterialCommunityIcons name='magnify' color={color} size={size} />
+						),
+					}}
+				/>
 
-			<Tab.Screen
-				name='Discover'
-				component={Discover}
-				options={{
-					headerShown: false,
-					tabBarIcon: ({ color, size }) => (
-						<MaterialCommunityIcons
-							name='music-box-multiple-outline'
-							color={color}
-							size={size}
-						/>
-					),
-				}}
-			/>
+				<Tab.Screen
+					name='Discover'
+					component={Discover}
+					options={{
+						headerShown: false,
+						tabBarIcon: ({ color, size }) => (
+							<MaterialCommunityIcons
+								name='music-box-multiple-outline'
+								color={color}
+								size={size}
+							/>
+						),
+					}}
+				/>
 
-			<Tab.Screen
-				name='Settings'
-				component={Settings}
-				options={{
-					headerShown: false,
-					tabBarIcon: ({ color, size }) => (
-						<MaterialCommunityIcons name='dip-switch' color={color} size={size} />
-					),
-				}}
-			/>
-		</Tab.Navigator>
-		<InternetConnectionWatcher />
+				<Tab.Screen
+					name='Settings'
+					component={Settings}
+					options={{
+						headerShown: false,
+						tabBarIcon: ({ color, size }) => (
+							<MaterialCommunityIcons name='dip-switch' color={color} size={size} />
+						),
+					}}
+				/>
+			</Tab.Navigator>
+			<InternetConnectionWatcher />
 		</View>
 	)
 }

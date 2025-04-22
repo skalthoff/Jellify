@@ -7,7 +7,7 @@ import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { FlatList } from 'react-native'
 import IconCard from '../Global/helpers/icon-card'
 import Categories from './categories'
-import {StorageBar} from '../Storage'
+import { StorageBar } from '../Storage'
 
 export default function Root({
 	navigation,
@@ -32,10 +32,12 @@ export default function Root({
 					largeIcon
 				/>
 			)}
-			ListFooterComponent={<>
-			<StorageBar />
-			<SignOut />
-			</>}
+			ListFooterComponent={
+				<>
+					<StorageBar />
+					<SignOut />
+				</>
+			}
 		/>
 	)
 }

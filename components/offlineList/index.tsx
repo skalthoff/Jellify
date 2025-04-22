@@ -7,23 +7,20 @@ import { getAudioCache } from '../Network/offlineModeUtils'
 import { usePlayerContext } from '../../player/provider'
 import { useNavigation } from '@react-navigation/native'
 
-
 interface Props {
 	tracks: JellifyTrack[]
 	onPress: (track: JellifyTrack) => void
 }
 
 export function OfflineList() {
-
-    const tracks = getAudioCache();
-	const navigation = useNavigation();
-    const { usePlayNewQueueOffline } = usePlayerContext();
-    const onPress = (track: JellifyTrack) => {
-        console.log("onPress", track)
-        usePlayNewQueueOffline.mutate({trackListOffline:track});
-		navigation.navigate("Player")
-           
-    }
+	const tracks = getAudioCache()
+	const navigation = useNavigation()
+	const { usePlayNewQueueOffline } = usePlayerContext()
+	const onPress = (track: JellifyTrack) => {
+		console.log('onPress', track)
+		usePlayNewQueueOffline.mutate({ trackListOffline: track })
+		navigation.navigate('Player')
+	}
 
 	const renderItem = ({ item }: { item: JellifyTrack }) => (
 		<Animated.View
@@ -38,16 +35,16 @@ export function OfflineList() {
 			}}
 		>
 			<Pressable onPress={() => onPress(item)}>
-				<XStack padding={12} gap={12} alignItems="center">
+				<XStack padding={12} gap={12} alignItems='center'>
 					<Image
 						source={{ uri: item.artwork }}
 						style={{ width: 64, height: 64, borderRadius: 12 }}
 					/>
 					<YStack flex={1}>
-						<Text fontWeight="700" color="#fff" numberOfLines={1}>
+						<Text fontWeight='700' color='#fff' numberOfLines={1}>
 							{item.title || 'Unknown Title'}
 						</Text>
-						<Text color="#bbb" numberOfLines={1}>
+						<Text color='#bbb' numberOfLines={1}>
 							{item.artist || 'Unknown Artist'}
 						</Text>
 					</YStack>

@@ -73,9 +73,7 @@ const PlayerContextInitializer = () => {
 		nowPlayingJson ? JSON.parse(nowPlayingJson) : undefined,
 	)
 
-
 	const [isSkipping, setIsSkipping] = useState<boolean>(false)
-	
 
 	const [playQueue, setPlayQueue] = useState<JellifyTrack[]>(
 		playQueueJson ? JSON.parse(playQueueJson) : [],
@@ -100,6 +98,28 @@ const PlayerContextInitializer = () => {
 				data: playQueue.filter((track) => track.QueuingType === type),
 			} as Section
 		})
+	}
+
+	/**
+	 * Takes a {@link BaseItemDto} of a track on Jellyfin, and updates it's
+	 * position in the {@link queue}
+	 *
+	 *
+	 * @param track The Jellyfin track object to update and replace in the queue
+	 */
+	const replaceQueueItem: (track: BaseItemDto) => Promise<void> = async (track: BaseItemDto) => {
+		const queue = (await TrackPlayer.getQueue()) as JellifyTrack[]
+
+		const queueItemIndex = queue.findIndex((queuedTrack) => queuedTrack.item.Id === track.Id!)
+
+		// Update queued item at index if found, else silently do nothing
+		if (queueItemIndex !== -1) {
+			const queueItem = queue[queueItemIndex]
+
+			TrackPlayer.remove([queueItemIndex]).then(() => {
+				TrackPlayer.add(mapDtoToTrack(track, queueItem.QueuingType), queueItemIndex)
+			})
+		}
 	}
 
 	const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
@@ -150,7 +170,6 @@ const PlayerContextInitializer = () => {
 			trigger('notificationError')
 		},
 	})
-	
 
 	const useRemoveFromQueue = useMutation({
 		mutationFn: async (index: number) => {
@@ -280,15 +299,13 @@ const PlayerContextInitializer = () => {
 
 			// Optimistically set now playing
 
-			setNowPlaying(
-				mutation.trackListOffline
-			)
+			setNowPlaying(mutation.trackListOffline)
 
 			await resetQueue(false)
 
 			await addToQueue([mutation.trackListOffline as JellifyTrack])
 
-			setQueue("Recently Played");
+			setQueue('Recently Played')
 		},
 		onSuccess: async (data, mutation: QueueMutation) => {
 			setIsSkipping(false)
@@ -431,7 +448,6 @@ const PlayerContextInitializer = () => {
 		usePlayNewQueue,
 		playbackState,
 		usePlayNewQueueOffline,
-		
 	}
 	//#endregion return
 }

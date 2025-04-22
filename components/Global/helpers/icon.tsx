@@ -34,7 +34,6 @@ export default function Icon({
 		<MaterialCommunityIcons
 			color={color ? color : theme.color.val}
 			name={name}
-			
 			onPress={onPress}
 			disabled={disabled}
 			size={size}
