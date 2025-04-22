@@ -11,6 +11,7 @@ interface IconButtonProps {
 	circular?: boolean | undefined
 	size?: number
 	largeIcon?: boolean | undefined
+	disabled?: boolean | undefined
 }
 
 export default function IconButton({
@@ -20,6 +21,7 @@ export default function IconButton({
 	circular,
 	size,
 	largeIcon,
+	disabled,
 }: IconButtonProps): React.JSX.Element {
 	return (
 		<Theme name={'inverted_purple'}>
@@ -38,7 +40,7 @@ export default function IconButton({
 					justifyContent='center'
 					backgroundColor={'$background'}
 				>
-					<Icon large={largeIcon} small={!largeIcon} name={name} color={'$color'} />
+					<Icon large={largeIcon} small={!largeIcon} name={name} color={'$color'} disabled={disabled} />
 
 					{title && <Text>{title}</Text>}
 				</Square>

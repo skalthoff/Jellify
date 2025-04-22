@@ -17,7 +17,7 @@ import { QueuingType } from '../../../enums/queuing-type'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import IconButton from '../../../components/Global/helpers/icon-button'
 import { Text } from '../../../components/Global/helpers/text'
-import React from 'react'
+import React, { useState } from 'react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { AddToPlaylistMutation } from '../types'
 import { addToPlaylist } from '../../../api/mutations/functions/playlists'
@@ -31,6 +31,8 @@ import * as Burnt from 'burnt'
 import { Image } from 'expo-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../../api/client'
+import { mapDtoToTrack } from '../../../helpers/mappings'
+import { getAudioCache, saveAudio } from '../../../components/Network/offlineModeUtils'
 
 interface TrackOptionsProps {
 	track: BaseItemDto
@@ -52,6 +54,19 @@ export default function TrackOptions({
 		queryFn: () => fetchItem(track.AlbumId!),
 	})
 
+	const [isDownloading, setIsDownloading] = useState(false);
+	const jellifyTrack = mapDtoToTrack(track);
+
+	const onDownloadPress = async () => {
+		setIsDownloading(true);
+		await saveAudio(jellifyTrack, queryClient, true);
+		setIsDownloading(false);
+	}
+
+
+	const isDownloaded = !!getAudioCache().find((t) => t.item.Id === track.Id)?.item?.Id;
+
+	
 	const {
 		data: playlists,
 		isPending: playlistsFetchPending,
@@ -153,6 +168,16 @@ export default function TrackOptions({
 						useAddToQueue.mutate({
 							track: track,
 						})
+					}}
+					size={width / 6}
+				/>
+				<IconButton
+					disabled={isDownloaded || isDownloading}
+					circular
+					name={isDownloaded ? 'check' : 'download'}
+					title={isDownloaded ? 'Downloaded' : (isDownloading ? 'Downloading...' : 'Download')}
+					onPress={() => {
+						onDownloadPress()
 					}}
 					size={width / 6}
 				/>
