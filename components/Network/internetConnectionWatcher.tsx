@@ -1,8 +1,8 @@
 import NetInfo from '@react-native-community/netinfo'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
-import { Platform, Text } from 'react-native'
-import { View } from 'tamagui'
+import { Platform } from 'react-native'
+import { YStack } from 'tamagui'
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
@@ -12,10 +12,11 @@ import Animated, {
 } from 'react-native-reanimated'
 
 import { QueryKeys } from '../../enums/query-keys'
+import { Text } from '../Global/helpers/text'
 
 const internetConnectionWatcher = {
-	NO_INTERNET: 'No internet connection',
-	BACK_ONLINE: 'Back online',
+	NO_INTERNET: 'You are offline',
+	BACK_ONLINE: "And we're back!",
 }
 
 export enum networkStatusTypes {
@@ -108,19 +109,20 @@ const InternetConnectionWatcher = () => {
 
 	return (
 		<Animated.View style={[{ overflow: 'hidden' }, animatedStyle]}>
-			<View
-				style={{
-					padding: 10,
-					paddingBottom: isAndroid ? 12 : 15,
-					backgroundColor: networkStatus === networkStatusTypes.ONLINE ? 'green' : 'red',
-				}}
+			<YStack
+				height={'$4'}
+				justifyContent='center'
+				alignContent='center'
+				backgroundColor={
+					networkStatus === networkStatusTypes.ONLINE ? '$success' : '$danger'
+				}
 			>
-				<Text style={{ color: 'white', textAlign: 'center' }}>
+				<Text textAlign='center' color='$purpleDark'>
 					{networkStatus === networkStatusTypes.ONLINE
 						? internetConnectionWatcher.BACK_ONLINE
 						: internetConnectionWatcher.NO_INTERNET}
 				</Text>
-			</View>
+			</YStack>
 		</Animated.View>
 	)
 }
