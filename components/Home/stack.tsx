@@ -10,6 +10,7 @@ import AddPlaylist from '../Library/components/add-playlist'
 import ArtistsScreen from '../Artists/screen'
 import TracksScreen from '../Tracks/screen'
 import { ArtistScreen } from '../Artist'
+import { OfflineList } from '../offlineList'
 
 const Stack = createNativeStackNavigator<StackParamList>()
 
