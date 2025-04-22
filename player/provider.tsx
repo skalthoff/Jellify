@@ -35,6 +35,7 @@ import * as Burnt from 'burnt'
 import { markItemPlayed } from '../api/mutations/functions/item'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { getPlaystateApi } from '@jellyfin/sdk/lib/utils/api'
+import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
 
 interface PlayerContext {
 	initialized: boolean
@@ -225,10 +226,12 @@ const PlayerContextInitializer = () => {
 				(track) => track.item.Id === nowPlaying!.item.Id,
 			)
 
-			if (nowPlayingIndex > 0) {
+			const { position } = await TrackPlayer.getProgress()
+
+			if (nowPlayingIndex > 0 && position < SKIP_TO_PREVIOUS_THRESHOLD) {
 				setNowPlaying(playQueue[nowPlayingIndex - 1])
 				await skipToPrevious()
-			}
+			} else await seekTo(0)
 		},
 	})
 
