@@ -7,6 +7,7 @@ module.exports = {
 		'./jest/setup-carplay.js',
 		'./jest/setup-blurhash.js',
 		'./jest/setup-reanimated.js',
+		'./jest/setup-rnfs.js',
 		'./tamagui.config.ts',
 	],
 	extensionsToTreatAsEsm: ['.ts', '.tsx'],

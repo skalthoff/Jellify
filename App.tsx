@@ -15,7 +15,6 @@ import { createWorkletRuntime } from 'react-native-reanimated'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import { JellifyDarkTheme, JellifyLightTheme } from './components/theme'
-import InternetConnectionWatcher from './components/Network/internetConnectionWatcher'
 import { requestStoragePermission } from './helpers/permisson-helpers'
 
 export const backgroundRuntime = createWorkletRuntime('background')
