@@ -1,15 +1,21 @@
 import NetInfo from '@react-native-community/netinfo'
 import { useQueryClient } from '@tanstack/react-query'
-import { useEffect, useRef } from 'react'
-import { useState } from 'react'
-import { Platform } from 'react-native'
+import { useEffect, useRef, useState } from 'react'
+import { Platform, Text } from 'react-native'
 import { View } from 'tamagui'
+import Animated, {
+	useSharedValue,
+	useAnimatedStyle,
+	withTiming,
+	Easing,
+	runOnJS,
+} from 'react-native-reanimated'
+
 import { QueryKeys } from '../../enums/query-keys'
-import { Text } from '../Global/helpers/text'
 
 const internetConnectionWatcher = {
-	NO_INTERNET: 'You are offline',
-	BACK_ONLINE: "And we're back!",
+	NO_INTERNET: 'No internet connection',
+	BACK_ONLINE: 'Back online',
 }
 
 export enum networkStatusTypes {
@@ -24,23 +30,60 @@ const InternetConnectionWatcher = () => {
 	const lastNetworkStatus = useRef<keyof typeof networkStatusTypes | null>()
 	const queryClient = useQueryClient()
 
+	const bannerHeight = useSharedValue(0)
+	const opacity = useSharedValue(0)
+
+	const animateBannerIn = () => {
+		bannerHeight.value = withTiming(40, { duration: 300, easing: Easing.out(Easing.ease) })
+		opacity.value = withTiming(1, { duration: 300 })
+	}
+
+	const animateBannerOut = () => {
+		bannerHeight.value = withTiming(0, { duration: 300, easing: Easing.in(Easing.ease) })
+		opacity.value = withTiming(0, { duration: 200 })
+	}
+
+	const animatedStyle = useAnimatedStyle(() => {
+		return {
+			height: bannerHeight.value,
+			opacity: opacity.value,
+		}
+	})
+
+	const changeNetworkStatus = () => {
+		if (lastNetworkStatus.current !== networkStatusTypes.DISCONNECTED) {
+			setNetworkStatus(null)
+		}
+	}
+
 	const internetConnectionBack = () => {
 		setNetworkStatus(networkStatusTypes.ONLINE)
 		setTimeout(() => {
-			/* eslint-disable @typescript-eslint/no-unused-expressions */
-			lastNetworkStatus.current !== networkStatusTypes.DISCONNECTED && setNetworkStatus(null)
+			runOnJS(changeNetworkStatus)() // hide text after 3s
 		}, 3000)
 	}
+
 	useEffect(() => {
 		lastNetworkStatus.current = networkStatus
 	}, [networkStatus])
 
 	useEffect(() => {
 		if (networkStatus) {
-			console.log('networkStatus', networkStatus)
 			queryClient.setQueryData([QueryKeys.NetworkStatus], networkStatus)
 		}
+
+		if (networkStatus === networkStatusTypes.DISCONNECTED) {
+			animateBannerIn()
+		} else if (networkStatus === networkStatusTypes.ONLINE) {
+			animateBannerIn()
+			setTimeout(() => {
+				animateBannerOut()
+			}, 2800)
+		} else if (networkStatus === null) {
+			animateBannerOut()
+		}
 	}, [networkStatus])
+
 	useEffect(() => {
 		const networkWatcherListener = NetInfo.addEventListener(
 			({ isConnected, isInternetReachable }) => {
@@ -63,25 +106,22 @@ const InternetConnectionWatcher = () => {
 		}
 	}, [])
 
-	if (!networkStatus) {
-		return null
-	}
 	return (
-		<View>
+		<Animated.View style={[{ overflow: 'hidden' }, animatedStyle]}>
 			<View
-				padding={10}
-				paddingBottom={isAndroid ? 12 : 15}
-				backgroundColor={
-					networkStatus === networkStatusTypes.ONLINE ? '$success' : '$danger'
-				}
+				style={{
+					padding: 10,
+					paddingBottom: isAndroid ? 12 : 15,
+					backgroundColor: networkStatus === networkStatusTypes.ONLINE ? 'green' : 'red',
+				}}
 			>
-				<Text color={'$purpleDark'} textAlign='center'>
+				<Text style={{ color: 'white', textAlign: 'center' }}>
 					{networkStatus === networkStatusTypes.ONLINE
 						? internetConnectionWatcher.BACK_ONLINE
 						: internetConnectionWatcher.NO_INTERNET}
 				</Text>
 			</View>
-		</View>
+		</Animated.View>
 	)
 }
 
