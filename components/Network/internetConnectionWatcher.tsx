@@ -2,13 +2,14 @@ import NetInfo from '@react-native-community/netinfo'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { useState } from 'react'
-import { Platform, Text } from 'react-native'
+import { Platform } from 'react-native'
 import { View } from 'tamagui'
 import { QueryKeys } from '../../enums/query-keys'
+import { Text } from '../Global/helpers/text'
 
 const internetConnectionWatcher = {
-	NO_INTERNET: 'No internet connection',
-	BACK_ONLINE: 'Back online',
+	NO_INTERNET: 'You are offline',
+	BACK_ONLINE: "And we're back!",
 }
 
 export enum networkStatusTypes {
@@ -68,13 +69,13 @@ const InternetConnectionWatcher = () => {
 	return (
 		<View>
 			<View
-				style={{
-					padding: 10,
-					paddingBottom: isAndroid ? 12 : 15,
-					backgroundColor: networkStatus === networkStatusTypes.ONLINE ? 'green' : 'red',
-				}}
+				padding={10}
+				paddingBottom={isAndroid ? 12 : 15}
+				backgroundColor={
+					networkStatus === networkStatusTypes.ONLINE ? '$success' : '$danger'
+				}
 			>
-				<Text style={{ color: 'white', textAlign: 'center' }}>
+				<Text color={'$purpleDark'} textAlign='center'>
 					{networkStatus === networkStatusTypes.ONLINE
 						? internetConnectionWatcher.BACK_ONLINE
 						: internetConnectionWatcher.NO_INTERNET}
