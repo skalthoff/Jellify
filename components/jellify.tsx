@@ -8,6 +8,7 @@ import { useColorScheme } from 'react-native'
 import { PortalProvider } from '@tamagui/portal'
 import { JellifyProvider, useJellifyContext } from './provider'
 import { ToastProvider } from '@tamagui/toast'
+import { JellifyUserDataProvider } from './user-data-provider'
 
 export default function Jellify(): React.JSX.Element {
 	return (
@@ -26,9 +27,11 @@ function App(): React.JSX.Element {
 	const { loggedIn } = useJellifyContext()
 
 	return loggedIn ? (
-		<PlayerProvider>
-			<Navigation />
-		</PlayerProvider>
+		<JellifyUserDataProvider>
+			<PlayerProvider>
+				<Navigation />
+			</PlayerProvider>
+		</JellifyUserDataProvider>
 	) : (
 		<JellyfinAuthenticationProvider>
 			<Login />
