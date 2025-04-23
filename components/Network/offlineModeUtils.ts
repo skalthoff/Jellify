@@ -135,7 +135,7 @@ export const deleteAudio = async (trackItem: BaseItemDto) => {
 		RNFS.unlink(`${RNFS.DocumentDirectoryPath}/${download[0].item.Id}`)
 		setAudioCache([
 			...downloads.slice(0, downloads.indexOf(download[0])),
-			...downloads.slice(downloads.indexOf(download[0]), downloads.length - 1),
+			...downloads.slice(downloads.indexOf(download[0]) + 1, downloads.length - 1),
 		])
 	}
 }
