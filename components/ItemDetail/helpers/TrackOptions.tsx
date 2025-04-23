@@ -171,7 +171,7 @@ export default function TrackOptions({
 					</Circle>
 				) : (
 					<IconButton
-						disabled={!!isDownloaded || useDownload.isPending}
+						disabled={!!isDownloaded}
 						circular
 						name={isDownloaded ? 'delete' : 'download'}
 						title={isDownloaded ? 'Remove Download' : 'Download'}
