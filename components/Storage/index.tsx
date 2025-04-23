@@ -81,10 +81,6 @@ export const StorageBar = () => {
 		refreshStats()
 	}, [])
 
-	const downloadList = Object.entries(
-		(activeDownloads ?? []).filter((download) => download.progress < 100) || {},
-	) as [string, DownloadProgress][]
-
 	return (
 		<View style={styles.container}>
 			{/* Storage Usage */}
@@ -97,21 +93,28 @@ export const StorageBar = () => {
 			</View>
 
 			{/* Active Downloads */}
-			{downloadList.length > 0 && (
-				<>
-					<Text style={[styles.title, { marginTop: 24 }]}>⬇️ Active Downloads</Text>
-					<FlatList
-						data={downloadList}
-						keyExtractor={([url]) => url}
-						renderItem={({ item }) => {
-							const [url, { name, progress, songName }] = item
-							return (
-								<DownloadItem name={name} progress={progress} fileName={songName} />
-							)
-						}}
-						contentContainerStyle={{ paddingBottom: 40 }}
-					/>
-				</>
+			{activeDownloads?.length ? (
+				0 > 0 && (
+					<>
+						<Text style={[styles.title, { marginTop: 24 }]}>⬇️ Active Downloads</Text>
+						<FlatList
+							data={activeDownloads}
+							keyExtractor={(download) => download.name}
+							renderItem={({ item }) => {
+								return (
+									<DownloadItem
+										name={item.name}
+										progress={item.progress}
+										fileName={item.songName}
+									/>
+								)
+							}}
+							contentContainerStyle={{ paddingBottom: 40 }}
+						/>
+					</>
+				)
+			) : (
+				<View />
 			)}
 
 			{/* Delete All Downloads */}
