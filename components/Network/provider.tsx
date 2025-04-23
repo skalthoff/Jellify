@@ -1,11 +1,12 @@
 import React, { createContext, ReactNode, useContext } from 'react'
 import { JellifyDownload } from '../../types/JellifyDownload'
 import {
+	QueryObserverResult,
+	RefetchOptions,
 	useMutation,
 	UseMutationResult,
 	useQuery,
 	useQueryClient,
-	UseQueryResult,
 } from '@tanstack/react-query'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { mapDtoToTrack } from '../../helpers/mappings'
@@ -14,7 +15,10 @@ import { QueryKeys } from '../../enums/query-keys'
 
 interface NetworkContext {
 	useDownload: UseMutationResult<string, Error, BaseItemDto, unknown>
-	useDownloads: UseQueryResult<JellifyDownload[]>
+	downloadedTracks: JellifyDownload[] | undefined
+	refetchDownloadedTracks: (
+		options?: RefetchOptions,
+	) => Promise<QueryObserverResult<JellifyDownload[], Error>>
 }
 
 const NetworkContextInitializer = () => {
@@ -34,18 +38,21 @@ const NetworkContextInitializer = () => {
 		onSuccess: (data, variables) => {
 			console.debug(`Downloaded ${variables.Id} successfully`)
 
+			refetchDownloadedTracks()
 			return data
 		},
 	})
 
-	const useDownloads = useQuery({
+	const { data: downloadedTracks, refetch: refetchDownloadedTracks } = useQuery({
 		queryKey: [QueryKeys.AudioCache],
 		queryFn: () => getAudioCache(),
+		staleTime: 1000 * 60, // 1 minute
 	})
 
 	return {
 		useDownload,
-		useDownloads,
+		downloadedTracks,
+		refetchDownloadedTracks,
 	}
 }
 
@@ -68,33 +75,8 @@ const NetworkContext = createContext<NetworkContext>({
 		failureReason: null,
 		submittedAt: 0,
 	},
-	useDownloads: {
-		promise: new Promise(() => [] as JellifyDownload[]),
-		isFetched: false,
-		isFetchedAfterMount: false,
-		data: undefined,
-		error: null,
-		isError: false,
-		isPaused: false,
-		isPending: true,
-		isSuccess: false,
-		isLoadingError: false,
-		isRefetchError: false,
-		errorUpdatedAt: 0,
-		errorUpdateCount: 0,
-		dataUpdatedAt: 0,
-		isFetching: true,
-		isLoading: true,
-		isInitialLoading: true,
-		isRefetching: false,
-		isStale: true,
-		refetch: () => new Promise(() => [] as JellifyDownload[]),
-		isPlaceholderData: false,
-		status: 'pending',
-		fetchStatus: 'fetching',
-		failureCount: 0,
-		failureReason: null,
-	},
+	downloadedTracks: [],
+	refetchDownloadedTracks: () => new Promise(() => [] as JellifyDownload[]),
 })
 
 export const NetworkContextProvider: ({
@@ -102,13 +84,14 @@ export const NetworkContextProvider: ({
 }: {
 	children: ReactNode
 }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
-	const { useDownload, useDownloads } = NetworkContextInitializer()
+	const { useDownload, downloadedTracks, refetchDownloadedTracks } = NetworkContextInitializer()
 
 	return (
 		<NetworkContext.Provider
 			value={{
 				useDownload,
-				useDownloads,
+				downloadedTracks,
+				refetchDownloadedTracks,
 			}}
 		>
 			{children}
