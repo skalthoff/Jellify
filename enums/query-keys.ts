@@ -66,4 +66,5 @@ export enum QueryKeys {
 	Audio = 'Audio',
 	RecentlyAdded = 'RecentlyAdded',
 	SimilarItems = 'SimilarItems',
+	AudioCache = 'AudioCache',
 }

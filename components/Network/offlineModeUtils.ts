@@ -1,10 +1,11 @@
 import { MMKV } from 'react-native-mmkv'
 
 import RNFS from 'react-native-fs'
-import { JellifyTrack } from '@/types/JellifyTrack'
+import { JellifyTrack } from '../../types/JellifyTrack'
 import axios from 'axios'
 import { QueryClient } from '@tanstack/react-query'
 import { JellifyDownload } from '../../types/JellifyDownload'
+import { QueryKeys } from '../../enums/query-keys'
 
 export async function downloadJellyfinFile(
 	url: string,
@@ -59,6 +60,11 @@ export async function downloadJellyfinFile(
 
 		const result = await RNFS.downloadFile(options).promise
 		console.log('Download complete:', result)
+
+		queryClient.invalidateQueries({
+			queryKey: [QueryKeys.AudioCache],
+		})
+
 		return `file://${downloadDest}`
 	} catch (error) {
 		console.error('Download failed:', error)

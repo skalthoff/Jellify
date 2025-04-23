@@ -1,16 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useProgress } from 'react-native-track-player'
 import { HorizontalSlider } from '../../../components/Global/helpers/slider'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import { trigger } from 'react-native-haptic-feedback'
-import { getToken, XStack, YStack } from 'tamagui'
+import { XStack, YStack } from 'tamagui'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { usePlayerContext } from '../../../player/provider'
 import { RunTimeSeconds } from '../../../components/Global/helpers/time-codes'
 import { UPDATE_INTERVAL } from '../../../player/config'
 import { ProgressMultiplier } from '../component.config'
-import Icon from '../../../components/Global/helpers/icon'
-import PlayPauseButton from './buttons'
+import { useSharedValue } from 'react-native-reanimated'
 
 const scrubGesture = Gesture.Pan()
 
@@ -23,7 +22,7 @@ export default function Scrubber(): React.JSX.Element {
 
 	const progress = useProgress(UPDATE_INTERVAL)
 
-	const [position, setPosition] = useState<number>(
+	const position = useSharedValue<number>(
 		progress && progress.position ? Math.floor(progress.position * ProgressMultiplier) : 0,
 	)
 
@@ -38,14 +37,14 @@ export default function Scrubber(): React.JSX.Element {
 			!useSeekTo.isPending &&
 			progress.position
 		)
-			setPosition(Math.floor(progress.position * ProgressMultiplier))
+			position.value = Math.floor(progress.position * ProgressMultiplier)
 	}, [progress.position])
 
 	return (
 		<YStack>
 			<GestureDetector gesture={scrubGesture}>
 				<HorizontalSlider
-					value={position}
+					value={position.value}
 					max={
 						progress && progress.duration > 0
 							? progress.duration * ProgressMultiplier
@@ -56,7 +55,7 @@ export default function Scrubber(): React.JSX.Element {
 						// If user swipes off of the slider we should seek to the spot
 						onPressOut: () => {
 							trigger('notificationSuccess')
-							useSeekTo.mutate(Math.floor(position / ProgressMultiplier))
+							useSeekTo.mutate(Math.floor(position.value / ProgressMultiplier))
 							setSeeking(false)
 						},
 						onSlideStart: (event, value) => {
@@ -65,11 +64,11 @@ export default function Scrubber(): React.JSX.Element {
 						},
 						onSlideMove: (event, value) => {
 							trigger('clockTick')
-							setPosition(value)
+							position.value = value
 						},
 						onSlideEnd: (event, value) => {
 							trigger('notificationSuccess')
-							setPosition(value)
+							position.value = value
 							useSeekTo.mutate(Math.floor(value / ProgressMultiplier))
 							setSeeking(false)
 						},
@@ -79,7 +78,9 @@ export default function Scrubber(): React.JSX.Element {
 
 			<XStack margin={'$2'} marginTop={'$3'}>
 				<YStack flex={1} alignItems='flex-start'>
-					<RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
+					<RunTimeSeconds>
+						{Math.floor(position.value / ProgressMultiplier)}
+					</RunTimeSeconds>
 				</YStack>
 
 				<YStack flex={1} alignItems='center'>
