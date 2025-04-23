@@ -1,7 +1,7 @@
 import { StackParamList } from '../../../components/types'
 import { usePlayerContext } from '../../../player/provider'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { SafeAreaView, useSafeAreaFrame } from 'react-native-safe-area-context'
 import { YStack, XStack, Spacer, getTokens } from 'tamagui'
 import { Text } from '../../../components/Global/helpers/text'
@@ -15,14 +15,6 @@ import Controls from '../helpers/controls'
 import { Image } from 'expo-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../../api/client'
-import {
-	saveAudio,
-	getAudioCache,
-	purneAudioCache,
-} from '../../../components/Network/offlineModeUtils'
-import { useActiveTrack } from 'react-native-track-player'
-import { ActivityIndicator, Alert } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
 
 export default function PlayerScreen({
 	navigation,
@@ -31,29 +23,7 @@ export default function PlayerScreen({
 }): React.JSX.Element {
 	const { nowPlayingIsFavorite, setNowPlayingIsFavorite, nowPlaying, queue } = usePlayerContext()
 
-	const [isDownloading, setIsDownloading] = useState(false)
-	const isDownloaded = getAudioCache().find((item) => item?.item?.Id === nowPlaying?.item.Id)
-		?.item?.Id
-	const activeTrack = useActiveTrack()
-	const queryClient = useQueryClient()
-
 	const { width } = useSafeAreaFrame()
-
-	const downloadAudio = async (url: string) => {
-		if (!nowPlaying) {
-			return
-		}
-		setIsDownloading(true)
-		await saveAudio(nowPlaying, queryClient)
-		setIsDownloading(false)
-		purneAudioCache()
-	}
-
-	useEffect(() => {
-		if (!isDownloaded) {
-			downloadAudio(nowPlaying!.url)
-		}
-	}, [])
 
 	return (
 		<SafeAreaView edges={['right', 'left']}>
@@ -200,17 +170,8 @@ export default function PlayerScreen({
 							<Icon name='speaker-multiple' />
 
 							<Spacer />
-							{isDownloading ? (
-								<ActivityIndicator />
-							) : (
-								<Icon
-									name={!isDownloaded ? 'download' : 'check'}
-									onPress={() => {
-										downloadAudio(nowPlaying!.url)
-									}}
-									disabled={isDownloading || !!isDownloaded}
-								/>
-							)}
+
+							<Spacer />
 
 							<Spacer />
 

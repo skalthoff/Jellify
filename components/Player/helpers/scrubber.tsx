@@ -1,16 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useProgress } from 'react-native-track-player'
 import { HorizontalSlider } from '../../../components/Global/helpers/slider'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import { trigger } from 'react-native-haptic-feedback'
-import { getToken, XStack, YStack } from 'tamagui'
+import { XStack, YStack } from 'tamagui'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { usePlayerContext } from '../../../player/provider'
 import { RunTimeSeconds } from '../../../components/Global/helpers/time-codes'
 import { UPDATE_INTERVAL } from '../../../player/config'
 import { ProgressMultiplier } from '../component.config'
-import Icon from '../../../components/Global/helpers/icon'
-import PlayPauseButton from './buttons'
+import { useSharedValue } from 'react-native-reanimated'
 
 const scrubGesture = Gesture.Pan()
 

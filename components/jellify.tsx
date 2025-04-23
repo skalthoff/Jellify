@@ -9,6 +9,7 @@ import { PortalProvider } from '@tamagui/portal'
 import { JellifyProvider, useJellifyContext } from './provider'
 import { ToastProvider } from '@tamagui/toast'
 import { JellifyUserDataProvider } from './user-data-provider'
+import { NetworkContextProvider } from './Network/provider'
 
 export default function Jellify(): React.JSX.Element {
 	return (
@@ -28,9 +29,11 @@ function App(): React.JSX.Element {
 
 	return loggedIn ? (
 		<JellifyUserDataProvider>
-			<PlayerProvider>
-				<Navigation />
-			</PlayerProvider>
+			<NetworkContextProvider>
+				<PlayerProvider>
+					<Navigation />
+				</PlayerProvider>
+			</NetworkContextProvider>
 		</JellifyUserDataProvider>
 	) : (
 		<JellyfinAuthenticationProvider>

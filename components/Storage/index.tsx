@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Pressable, Alert, FlatList } from 'react-native'
-import { useQuery } from '@tanstack/react-query'
 import RNFS from 'react-native-fs'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
-import { deleteAudioCache, getAudioCache } from '../Network/offlineModeUtils'
+import { deleteAudioCache } from '../Network/offlineModeUtils'
+import { useNetworkContext } from '../Network/provider'
+import DownloadProgress from '../../types/DownloadProgress'
+import Icon from '../Global/helpers/icon'
 
 // 🔹 Single Download Item with animated progress bar
 const DownloadItem = ({
@@ -41,10 +42,7 @@ export const StorageBar = () => {
 	const [used, setUsed] = useState(0)
 	const [total, setTotal] = useState(1)
 
-	const { data: downloads } = useQuery({
-		queryKey: ['downloads'],
-		initialData: {},
-	})
+	const { downloadedTracks, activeDownloads } = useNetworkContext()
 
 	const usageShared = useSharedValue(0)
 	const percentUsed = used / total
@@ -71,8 +69,7 @@ export const StorageBar = () => {
 	}
 
 	const deleteAllDownloads = async () => {
-		const files = getAudioCache()
-		for (const file of files) {
+		for (const file of downloadedTracks ?? []) {
 			await RNFS.unlink(file.url).catch(() => {})
 		}
 		Alert.alert('Deleted', 'All downloads removed.')
@@ -83,11 +80,6 @@ export const StorageBar = () => {
 	useEffect(() => {
 		refreshStats()
 	}, [])
-
-	const downloadList = Object.entries(downloads || {}) as [
-		string,
-		{ name: string; progress: number; songName: string },
-	][]
 
 	return (
 		<View style={styles.container}>
@@ -101,16 +93,19 @@ export const StorageBar = () => {
 			</View>
 
 			{/* Active Downloads */}
-			{downloadList.length > 0 && (
+			{(activeDownloads ?? []).length > 0 && (
 				<>
 					<Text style={[styles.title, { marginTop: 24 }]}>⬇️ Active Downloads</Text>
 					<FlatList
-						data={downloadList}
-						keyExtractor={([url]) => url}
+						data={activeDownloads}
+						keyExtractor={(download) => download.name}
 						renderItem={({ item }) => {
-							const [url, { name, progress, songName }] = item
 							return (
-								<DownloadItem name={name} progress={progress} fileName={songName} />
+								<DownloadItem
+									name={item.name}
+									progress={item.progress}
+									fileName={item.songName}
+								/>
 							)
 						}}
 						contentContainerStyle={{ paddingBottom: 40 }}
@@ -120,7 +115,7 @@ export const StorageBar = () => {
 
 			{/* Delete All Downloads */}
 			<Pressable style={styles.deleteButton} onPress={deleteAllDownloads}>
-				<MaterialIcons name='delete-outline' size={20} color='#ff4d4f' />
+				<Icon name='delete-outline' small color='#ff4d4f' />
 				<Text style={styles.deleteText}> Delete Downloads</Text>
 			</Pressable>
 		</View>
