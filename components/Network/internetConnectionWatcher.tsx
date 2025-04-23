@@ -35,7 +35,7 @@ const InternetConnectionWatcher = () => {
 	const opacity = useSharedValue(0)
 
 	const animateBannerIn = () => {
-		bannerHeight.value = withTiming(getTokenValue('$12'), {
+		bannerHeight.value = withTiming(getTokenValue('$7'), {
 			duration: 300,
 			easing: Easing.out(Easing.ease),
 		})
