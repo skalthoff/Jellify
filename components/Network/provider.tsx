@@ -13,10 +13,12 @@ import { mapDtoToTrack } from '../../helpers/mappings'
 import { getAudioCache, saveAudio } from './offlineModeUtils'
 import { QueryKeys } from '../../enums/query-keys'
 import { networkStatusTypes } from './internetConnectionWatcher'
+import DownloadProgress from '../../types/DownloadProgress'
 
 interface NetworkContext {
 	useDownload: UseMutationResult<void, Error, BaseItemDto, unknown>
 	downloadedTracks: JellifyDownload[] | undefined
+	activeDownloads: DownloadProgress[] | undefined
 	networkStatus: networkStatusTypes | undefined
 }
 
@@ -41,6 +43,11 @@ const NetworkContextInitializer = () => {
 		queryKey: [QueryKeys.NetworkStatus],
 	})
 
+	const { data: activeDownloads } = useQuery<DownloadProgress[]>({
+		queryKey: ['downloads'],
+		initialData: [],
+	})
+
 	const { data: downloadedTracks, refetch: refetchDownloadedTracks } = useQuery({
 		queryKey: [QueryKeys.AudioCache],
 		queryFn: getAudioCache,
@@ -49,6 +56,7 @@ const NetworkContextInitializer = () => {
 
 	return {
 		useDownload,
+		activeDownloads,
 		downloadedTracks,
 		networkStatus,
 	}
@@ -74,6 +82,7 @@ const NetworkContext = createContext<NetworkContext>({
 		submittedAt: 0,
 	},
 	downloadedTracks: [],
+	activeDownloads: [],
 	networkStatus: networkStatusTypes.ONLINE,
 })
 
@@ -82,12 +91,14 @@ export const NetworkContextProvider: ({
 }: {
 	children: ReactNode
 }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
-	const { useDownload, downloadedTracks, networkStatus } = NetworkContextInitializer()
+	const { useDownload, downloadedTracks, activeDownloads, networkStatus } =
+		NetworkContextInitializer()
 
 	return (
 		<NetworkContext.Provider
 			value={{
 				useDownload,
+				activeDownloads,
 				downloadedTracks,
 				networkStatus,
 			}}

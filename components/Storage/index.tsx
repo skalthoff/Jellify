@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Pressable, Alert, FlatList } from 'react-native'
-import { useQuery } from '@tanstack/react-query'
 import RNFS from 'react-native-fs'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
-import { deleteAudioCache, getAudioCache } from '../Network/offlineModeUtils'
+import { deleteAudioCache } from '../Network/offlineModeUtils'
+import { useNetworkContext } from '../Network/provider'
+import DownloadProgress from '../../types/DownloadProgress'
+import Icon from '../Global/helpers/icon'
 
 // 🔹 Single Download Item with animated progress bar
 const DownloadItem = ({
@@ -41,10 +42,7 @@ export const StorageBar = () => {
 	const [used, setUsed] = useState(0)
 	const [total, setTotal] = useState(1)
 
-	const { data: downloads } = useQuery({
-		queryKey: ['downloads'],
-		initialData: {},
-	})
+	const { downloadedTracks, activeDownloads } = useNetworkContext()
 
 	const usageShared = useSharedValue(0)
 	const percentUsed = used / total
@@ -71,8 +69,7 @@ export const StorageBar = () => {
 	}
 
 	const deleteAllDownloads = async () => {
-		const files = getAudioCache()
-		for (const file of files) {
+		for (const file of downloadedTracks ?? []) {
 			await RNFS.unlink(file.url).catch(() => {})
 		}
 		Alert.alert('Deleted', 'All downloads removed.')
@@ -84,10 +81,9 @@ export const StorageBar = () => {
 		refreshStats()
 	}, [])
 
-	const downloadList = Object.entries(downloads || {}) as [
-		string,
-		{ name: string; progress: number; songName: string },
-	][]
+	const downloadList = Object.entries(
+		activeDownloads?.filter((download) => download.progress < 100) || {},
+	) as [string, DownloadProgress][]
 
 	return (
 		<View style={styles.container}>
@@ -120,7 +116,7 @@ export const StorageBar = () => {
 
 			{/* Delete All Downloads */}
 			<Pressable style={styles.deleteButton} onPress={deleteAllDownloads}>
-				<MaterialIcons name='delete-outline' size={20} color='#ff4d4f' />
+				<Icon name='delete-outline' small color='#ff4d4f' />
 				<Text style={styles.deleteText}> Delete Downloads</Text>
 			</Pressable>
 		</View>

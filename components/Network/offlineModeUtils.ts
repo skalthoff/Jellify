@@ -5,7 +5,7 @@ import { JellifyTrack } from '../../types/JellifyTrack'
 import axios from 'axios'
 import { QueryClient } from '@tanstack/react-query'
 import { JellifyDownload } from '../../types/JellifyDownload'
-import { QueryKeys } from '../../enums/query-keys'
+import DownloadProgress from '../../types/DownloadProgress'
 
 export async function downloadJellyfinFile(
 	url: string,
@@ -30,8 +30,7 @@ export async function downloadJellyfinFile(
 		const fileName = `${name}.${extension}`
 		const downloadDest = `${RNFS.DocumentDirectoryPath}/${fileName}`
 
-		/* eslint-disable @typescript-eslint/no-explicit-any */
-		queryClient.setQueryData(['downloads'], (prev: any = {}) => ({
+		queryClient.setQueryData(['downloads'], (prev: DownloadProgress) => ({
 			...prev,
 			[url]: { progress: 0, name: fileName, songName: songName },
 		}))
@@ -48,8 +47,7 @@ export async function downloadJellyfinFile(
 			progress: (data: any) => {
 				const percent = +(data.bytesWritten / data.contentLength).toFixed(2)
 
-				/* eslint-disable @typescript-eslint/no-explicit-any */
-				queryClient.setQueryData(['downloads'], (prev: any = {}) => ({
+				queryClient.setQueryData(['downloads'], (prev: DownloadProgress) => ({
 					...prev,
 					[url]: { progress: percent, name: fileName, songName: songName },
 				}))
