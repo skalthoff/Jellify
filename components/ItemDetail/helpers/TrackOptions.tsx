@@ -55,9 +55,9 @@ export default function TrackOptions({
 
 	const [isDownloading, setIsDownloading] = useState(false)
 
-	const { useDownload, useDownloads } = useNetworkContext()
+	const { useDownload, downloadedTracks } = useNetworkContext()
 
-	const isDownloaded = useDownloads.data?.find((t) => t.item.Id === track.Id)?.item?.Id
+	const isDownloaded = downloadedTracks?.find((t) => t.item.Id === track.Id)?.item?.Id
 
 	const {
 		data: playlists,
