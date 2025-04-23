@@ -12,13 +12,12 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { mapDtoToTrack } from '../../helpers/mappings'
 import { getAudioCache, saveAudio } from './offlineModeUtils'
 import { QueryKeys } from '../../enums/query-keys'
+import { networkStatusTypes } from './internetConnectionWatcher'
 
 interface NetworkContext {
 	useDownload: UseMutationResult<void, Error, BaseItemDto, unknown>
 	downloadedTracks: JellifyDownload[] | undefined
-	refetchDownloadedTracks: (
-		options?: RefetchOptions,
-	) => Promise<QueryObserverResult<JellifyDownload[], Error>>
+	networkStatus: networkStatusTypes | undefined
 }
 
 const NetworkContextInitializer = () => {
@@ -38,6 +37,10 @@ const NetworkContextInitializer = () => {
 		},
 	})
 
+	const { data: networkStatus } = useQuery<networkStatusTypes>({
+		queryKey: [QueryKeys.NetworkStatus],
+	})
+
 	const { data: downloadedTracks, refetch: refetchDownloadedTracks } = useQuery({
 		queryKey: [QueryKeys.AudioCache],
 		queryFn: getAudioCache,
@@ -47,7 +50,7 @@ const NetworkContextInitializer = () => {
 	return {
 		useDownload,
 		downloadedTracks,
-		refetchDownloadedTracks,
+		networkStatus,
 	}
 }
 
@@ -71,7 +74,7 @@ const NetworkContext = createContext<NetworkContext>({
 		submittedAt: 0,
 	},
 	downloadedTracks: [],
-	refetchDownloadedTracks: () => new Promise(() => [] as JellifyDownload[]),
+	networkStatus: networkStatusTypes.ONLINE,
 })
 
 export const NetworkContextProvider: ({
@@ -79,14 +82,14 @@ export const NetworkContextProvider: ({
 }: {
 	children: ReactNode
 }) => React.JSX.Element = ({ children }: { children: ReactNode }) => {
-	const { useDownload, downloadedTracks, refetchDownloadedTracks } = NetworkContextInitializer()
+	const { useDownload, downloadedTracks, networkStatus } = NetworkContextInitializer()
 
 	return (
 		<NetworkContext.Provider
 			value={{
 				useDownload,
 				downloadedTracks,
-				refetchDownloadedTracks,
+				networkStatus,
 			}}
 		>
 			{children}

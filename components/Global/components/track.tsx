@@ -1,10 +1,9 @@
 import { usePlayerContext } from '../../../player/provider'
 import React from 'react'
-import { getToken, getTokens, Spacer, Theme, useTheme, XStack, YStack } from 'tamagui'
+import { getToken, getTokens, Theme, useTheme, XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
 import { RunTimeTicks } from '../helpers/time-codes'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import Icon from '../helpers/icon'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StackParamList } from '../../../components/types'
@@ -14,10 +13,9 @@ import FavoriteIcon from './favorite-icon'
 import { Image } from 'expo-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../../api/client'
-import { QueryKeys } from '../../../enums/query-keys'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getAudioCache } from '../../../components/Network/offlineModeUtils'
 import { networkStatusTypes } from '../../../components/Network/internetConnectionWatcher'
+import { useNetworkContext } from '../../../components/Network/provider'
 
 interface TrackProps {
 	track: BaseItemDto
@@ -52,10 +50,11 @@ export default function Track({
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
 	const { nowPlaying, playQueue, usePlayNewQueue, usePlayNewQueueOffline } = usePlayerContext()
-	const { data: networkStatus } = useQuery({ queryKey: [QueryKeys.NetworkStatus] })
+	const { downloadedTracks, networkStatus } = useNetworkContext()
+
 	const isPlaying = nowPlaying?.item.Id === track.Id
 
-	const offlineAudio = getAudioCache().find((t) => t.item.Id === track.Id)
+	const offlineAudio = downloadedTracks?.find((t) => t.item.Id === track.Id)
 	const isDownloaded = offlineAudio?.item?.Id
 
 	const isOffline = networkStatus === networkStatusTypes.DISCONNECTED
