@@ -36,7 +36,7 @@ import { markItemPlayed } from '../api/mutations/functions/item'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { getPlaystateApi } from '@jellyfin/sdk/lib/utils/api'
 import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
-import { useNetworkContext } from '@/components/Network/provider'
+import { useNetworkContext } from '../components/Network/provider'
 
 interface PlayerContext {
 	initialized: boolean
