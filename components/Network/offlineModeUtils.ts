@@ -1,10 +1,12 @@
 import { MMKV } from 'react-native-mmkv'
 
 import RNFS from 'react-native-fs'
-import { JellifyTrack } from '@/types/JellifyTrack'
+import { JellifyTrack } from '../../types/JellifyTrack'
 import axios from 'axios'
 import { QueryClient } from '@tanstack/react-query'
 import { JellifyDownload } from '../../types/JellifyDownload'
+import DownloadProgress from '../../types/DownloadProgress'
+import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 
 export async function downloadJellyfinFile(
 	url: string,
@@ -29,8 +31,7 @@ export async function downloadJellyfinFile(
 		const fileName = `${name}.${extension}`
 		const downloadDest = `${RNFS.DocumentDirectoryPath}/${fileName}`
 
-		/* eslint-disable @typescript-eslint/no-explicit-any */
-		queryClient.setQueryData(['downloads'], (prev: any = {}) => ({
+		queryClient.setQueryData(['downloads'], (prev: DownloadProgress) => ({
 			...prev,
 			[url]: { progress: 0, name: fileName, songName: songName },
 		}))
@@ -47,8 +48,7 @@ export async function downloadJellyfinFile(
 			progress: (data: any) => {
 				const percent = +(data.bytesWritten / data.contentLength).toFixed(2)
 
-				/* eslint-disable @typescript-eslint/no-explicit-any */
-				queryClient.setQueryData(['downloads'], (prev: any = {}) => ({
+				queryClient.setQueryData(['downloads'], (prev: DownloadProgress) => ({
 					...prev,
 					[url]: { progress: percent, name: fileName, songName: songName },
 				}))
@@ -59,6 +59,7 @@ export async function downloadJellyfinFile(
 
 		const result = await RNFS.downloadFile(options).promise
 		console.log('Download complete:', result)
+
 		return `file://${downloadDest}`
 	} catch (error) {
 		console.error('Download failed:', error)
@@ -123,6 +124,24 @@ export const saveAudio = async (
 		existingArray.push({ ...track, savedAt: new Date().toISOString(), isAutoDownloaded })
 	}
 	mmkv.set(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE, JSON.stringify(existingArray))
+}
+
+export const deleteAudio = async (trackItem: BaseItemDto) => {
+	const downloads = getAudioCache()
+
+	const download = downloads.filter((download) => download.item.Id === trackItem.Id)
+
+	if (download.length === 1) {
+		RNFS.unlink(`${RNFS.DocumentDirectoryPath}/${download[0].item.Id}`)
+		setAudioCache([
+			...downloads.slice(0, downloads.indexOf(download[0])),
+			...downloads.slice(downloads.indexOf(download[0]) + 1, downloads.length - 1),
+		])
+	}
+}
+
+const setAudioCache = (downloads: JellifyDownload[]) => {
+	mmkv.set(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE, JSON.stringify(downloads))
 }
 
 export const getAudioCache = (): JellifyDownload[] => {

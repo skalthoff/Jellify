@@ -36,6 +36,7 @@ import { markItemPlayed } from '../api/mutations/functions/item'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { getPlaystateApi } from '@jellyfin/sdk/lib/utils/api'
 import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
+import { useNetworkContext } from '../components/Network/provider'
 
 interface PlayerContext {
 	initialized: boolean
@@ -327,6 +328,7 @@ const PlayerContextInitializer = () => {
 	//#region RNTP Setup
 
 	const { state: playbackState } = usePlaybackState()
+	const { useDownload, downloadedTracks } = useNetworkContext()
 
 	useTrackPlayerEvents(
 		[
@@ -364,6 +366,16 @@ const PlayerContextInitializer = () => {
 						nowPlaying!,
 						event,
 					)
+
+					// Cache playing track at 20 seconds if it's not already downloaded
+					if (
+						Math.floor(event.position) === 20 &&
+						downloadedTracks?.filter(
+							(download) => download.item.Id === nowPlaying!.item.Id,
+						).length === 0
+					)
+						useDownload.mutate(nowPlaying!.item)
+
 					break
 				}
 
