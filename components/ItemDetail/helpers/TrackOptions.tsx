@@ -59,7 +59,7 @@ export default function TrackOptions({
 
 	const onDownloadPress = async () => {
 		setIsDownloading(true)
-		await saveAudio(jellifyTrack, queryClient, true)
+		await saveAudio(jellifyTrack, queryClient, false)
 		setIsDownloading(false)
 	}
 
