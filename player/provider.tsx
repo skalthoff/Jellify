@@ -369,7 +369,7 @@ const PlayerContextInitializer = () => {
 
 					// Cache playing track at 20 seconds if it's not already downloaded
 					if (
-						event.position > 20 &&
+						Math.floor(event.position) === 20 &&
 						downloadedTracks?.filter(
 							(download) => download.item.Id === nowPlaying!.item.Id,
 						).length === 0
