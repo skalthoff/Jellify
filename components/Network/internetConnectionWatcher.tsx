@@ -110,7 +110,7 @@ const InternetConnectionWatcher = () => {
 	return (
 		<Animated.View style={[{ overflow: 'hidden' }, animatedStyle]}>
 			<YStack
-				height={'$4'}
+				height={'$2'}
 				justifyContent='center'
 				alignContent='center'
 				backgroundColor={
