@@ -10,11 +10,11 @@ import {
 } from '@tanstack/react-query'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { mapDtoToTrack } from '../../helpers/mappings'
-import { downloadJellyfinFile, getAudioCache } from './offlineModeUtils'
+import { getAudioCache, saveAudio } from './offlineModeUtils'
 import { QueryKeys } from '../../enums/query-keys'
 
 interface NetworkContext {
-	useDownload: UseMutationResult<string, Error, BaseItemDto, unknown>
+	useDownload: UseMutationResult<void, Error, BaseItemDto, unknown>
 	downloadedTracks: JellifyDownload[] | undefined
 	refetchDownloadedTracks: (
 		options?: RefetchOptions,
@@ -28,12 +28,7 @@ const NetworkContextInitializer = () => {
 		mutationFn: (trackItem: BaseItemDto) => {
 			const track = mapDtoToTrack(trackItem)
 
-			return downloadJellyfinFile(
-				track.url,
-				track.item.Id!,
-				track.title ?? 'Untitled Track',
-				queryClient,
-			)
+			return saveAudio(track, queryClient, false)
 		},
 		onSuccess: (data, variables) => {
 			console.debug(`Downloaded ${variables.Id} successfully`)
@@ -59,7 +54,7 @@ const NetworkContextInitializer = () => {
 const NetworkContext = createContext<NetworkContext>({
 	useDownload: {
 		mutate: () => {},
-		mutateAsync: async () => '',
+		mutateAsync: async () => {},
 		data: undefined,
 		error: null,
 		variables: undefined,

@@ -61,10 +61,6 @@ export async function downloadJellyfinFile(
 		const result = await RNFS.downloadFile(options).promise
 		console.log('Download complete:', result)
 
-		queryClient.invalidateQueries({
-			queryKey: [QueryKeys.AudioCache],
-		})
-
 		return `file://${downloadDest}`
 	} catch (error) {
 		console.error('Download failed:', error)
