@@ -3,6 +3,7 @@ import { StackParamList } from '../../../components/types'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import {
+	Circle,
 	getToken,
 	getTokens,
 	ListItem,
@@ -163,22 +164,23 @@ export default function TrackOptions({
 					}}
 					size={width / 6}
 				/>
-				<IconButton
-					disabled={!!isDownloaded || useDownload.isPending}
-					circular
-					name={isDownloaded ? 'delete' : 'download'}
-					title={
-						isDownloaded
-							? 'Remove Download'
-							: isDownloading
-							? 'Downloading...'
-							: 'Download'
-					}
-					onPress={() => {
-						(isDownloaded ? useRemoveDownload : useDownload).mutate(track)
-					}}
-					size={width / 6}
-				/>
+
+				{useDownload.isPending ? (
+					<Circle size={width / 6} disabled>
+						<Spinner marginHorizontal={10} size='small' color={'$amethyst'} />
+					</Circle>
+				) : (
+					<IconButton
+						disabled={!!isDownloaded || useDownload.isPending}
+						circular
+						name={isDownloaded ? 'delete' : 'download'}
+						title={isDownloaded ? 'Remove Download' : 'Download'}
+						onPress={() => {
+							(isDownloaded ? useRemoveDownload : useDownload).mutate(track)
+						}}
+						size={width / 6}
+					/>
+				)}
 			</XStack>
 
 			<Spacer />
