@@ -6,6 +6,7 @@ import axios from 'axios'
 import { QueryClient } from '@tanstack/react-query'
 import { JellifyDownload } from '../../types/JellifyDownload'
 import DownloadProgress from '../../types/DownloadProgress'
+import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 
 export async function downloadJellyfinFile(
 	url: string,
@@ -123,6 +124,24 @@ export const saveAudio = async (
 		existingArray.push({ ...track, savedAt: new Date().toISOString(), isAutoDownloaded })
 	}
 	mmkv.set(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE, JSON.stringify(existingArray))
+}
+
+export const deleteAudio = async (trackItem: BaseItemDto) => {
+	const downloads = getAudioCache()
+
+	const download = downloads.filter((download) => download.item.Id === trackItem.Id)
+
+	if (download.length === 1) {
+		RNFS.unlink(`${RNFS.DocumentDirectoryPath}/${download[0].item.Id}`)
+		setAudioCache([
+			...downloads.slice(0, downloads.indexOf(download[0])),
+			...downloads.slice(downloads.indexOf(download[0]), downloads.length - 1),
+		])
+	}
+}
+
+const setAudioCache = (downloads: JellifyDownload[]) => {
+	mmkv.set(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE, JSON.stringify(downloads))
 }
 
 export const getAudioCache = (): JellifyDownload[] => {

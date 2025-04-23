@@ -55,7 +55,7 @@ export default function TrackOptions({
 
 	const [isDownloading, setIsDownloading] = useState(false)
 
-	const { useDownload, downloadedTracks } = useNetworkContext()
+	const { useDownload, useRemoveDownload, downloadedTracks } = useNetworkContext()
 
 	const isDownloaded = downloadedTracks?.find((t) => t.item.Id === track.Id)?.item?.Id
 
@@ -166,12 +166,16 @@ export default function TrackOptions({
 				<IconButton
 					disabled={!!isDownloaded || useDownload.isPending}
 					circular
-					name={isDownloaded ? 'check' : 'download'}
+					name={isDownloaded ? 'delete' : 'download'}
 					title={
-						isDownloaded ? 'Downloaded' : isDownloading ? 'Downloading...' : 'Download'
+						isDownloaded
+							? 'Remove Download'
+							: isDownloading
+							? 'Downloading...'
+							: 'Download'
 					}
 					onPress={() => {
-						useDownload.mutate(track)
+						(isDownloaded ? useRemoveDownload : useDownload).mutate(track)
 					}}
 					size={width / 6}
 				/>
