@@ -93,28 +93,24 @@ export const StorageBar = () => {
 			</View>
 
 			{/* Active Downloads */}
-			{activeDownloads?.length ? (
-				0 > 0 && (
-					<>
-						<Text style={[styles.title, { marginTop: 24 }]}>⬇️ Active Downloads</Text>
-						<FlatList
-							data={activeDownloads}
-							keyExtractor={(download) => download.name}
-							renderItem={({ item }) => {
-								return (
-									<DownloadItem
-										name={item.name}
-										progress={item.progress}
-										fileName={item.songName}
-									/>
-								)
-							}}
-							contentContainerStyle={{ paddingBottom: 40 }}
-						/>
-					</>
-				)
-			) : (
-				<View />
+			{(activeDownloads ?? []).length > 0 && (
+				<>
+					<Text style={[styles.title, { marginTop: 24 }]}>⬇️ Active Downloads</Text>
+					<FlatList
+						data={activeDownloads}
+						keyExtractor={(download) => download.name}
+						renderItem={({ item }) => {
+							return (
+								<DownloadItem
+									name={item.name}
+									progress={item.progress}
+									fileName={item.songName}
+								/>
+							)
+						}}
+						contentContainerStyle={{ paddingBottom: 40 }}
+					/>
+				</>
 			)}
 
 			{/* Delete All Downloads */}
