@@ -2,7 +2,7 @@ import NetInfo from '@react-native-community/netinfo'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import { Platform } from 'react-native'
-import { YStack } from 'tamagui'
+import { getTokenValue, YStack } from 'tamagui'
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
@@ -35,7 +35,10 @@ const InternetConnectionWatcher = () => {
 	const opacity = useSharedValue(0)
 
 	const animateBannerIn = () => {
-		bannerHeight.value = withTiming(40, { duration: 300, easing: Easing.out(Easing.ease) })
+		bannerHeight.value = withTiming(getTokenValue('$1.5'), {
+			duration: 300,
+			easing: Easing.out(Easing.ease),
+		})
 		opacity.value = withTiming(1, { duration: 300 })
 	}
 
