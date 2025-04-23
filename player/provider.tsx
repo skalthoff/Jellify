@@ -366,6 +366,16 @@ const PlayerContextInitializer = () => {
 						nowPlaying!,
 						event,
 					)
+
+					// Cache playing track at 20 seconds if it's not already downloaded
+					if (
+						event.position > 20 &&
+						downloadedTracks?.filter(
+							(download) => download.item.Id === nowPlaying!.item.Id,
+						).length === 0
+					)
+						useDownload.mutate(nowPlaying!.item)
+
 					break
 				}
 
@@ -376,14 +386,6 @@ const PlayerContextInitializer = () => {
 							| undefined
 						if (activeTrack && !isEqual(activeTrack, nowPlaying)) {
 							setNowPlaying(activeTrack)
-
-							// Cache playing track if it's not already downloaded
-							if (
-								downloadedTracks?.filter(
-									(download) => download.item.Id === activeTrack.item.Id,
-								).length === 0
-							)
-								useDownload.mutate(activeTrack.item)
 
 							// Set player favorite state to user data IsFavorite
 							// This is super nullish so we need to do a lot of
