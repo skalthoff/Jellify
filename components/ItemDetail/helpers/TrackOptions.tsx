@@ -18,7 +18,7 @@ import { QueuingType } from '../../../enums/queuing-type'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import IconButton from '../../../components/Global/helpers/icon-button'
 import { Text } from '../../../components/Global/helpers/text'
-import React, { useState } from 'react'
+import React from 'react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { AddToPlaylistMutation } from '../types'
 import { addToPlaylist } from '../../../api/mutations/functions/playlists'
@@ -54,8 +54,6 @@ export default function TrackOptions({
 		queryFn: () => fetchItem(track.AlbumId!),
 	})
 
-	const [isDownloading, setIsDownloading] = useState(false)
-
 	const { useDownload, useRemoveDownload, downloadedTracks } = useNetworkContext()
 
 	const isDownloaded = downloadedTracks?.find((t) => t.item.Id === track.Id)?.item?.Id
@@ -64,7 +62,6 @@ export default function TrackOptions({
 		data: playlists,
 		isPending: playlistsFetchPending,
 		isSuccess: playlistsFetchSuccess,
-		refetch,
 	} = useQuery({
 		queryKey: [QueryKeys.UserPlaylists],
 		queryFn: () => fetchUserPlaylists(),
