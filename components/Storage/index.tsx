@@ -82,7 +82,7 @@ export const StorageBar = () => {
 	}, [])
 
 	const downloadList = Object.entries(
-		activeDownloads?.filter((download) => download.progress < 100) || {},
+		(activeDownloads ?? []).filter((download) => download.progress < 100) || {},
 	) as [string, DownloadProgress][]
 
 	return (
