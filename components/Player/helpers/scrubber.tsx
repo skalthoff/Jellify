@@ -9,7 +9,7 @@ import { usePlayerContext } from '../../../player/provider'
 import { RunTimeSeconds } from '../../../components/Global/helpers/time-codes'
 import { UPDATE_INTERVAL } from '../../../player/config'
 import { ProgressMultiplier } from '../component.config'
-import Animated, { useSharedValue } from 'react-native-reanimated'
+import { useSharedValue } from 'react-native-reanimated'
 
 const scrubGesture = Gesture.Pan()
 
@@ -22,7 +22,7 @@ export default function Scrubber(): React.JSX.Element {
 
 	const progress = useProgress(UPDATE_INTERVAL)
 
-	const position = useSharedValue<number>(
+	const [position, setPosition] = useState<number>(
 		progress && progress.position ? Math.floor(progress.position * ProgressMultiplier) : 0,
 	)
 
@@ -37,64 +37,60 @@ export default function Scrubber(): React.JSX.Element {
 			!useSeekTo.isPending &&
 			progress.position
 		)
-			position.value = Math.floor(progress.position * ProgressMultiplier)
+			setPosition(Math.floor(progress.position * ProgressMultiplier))
 	}, [progress.position])
 
 	return (
-		<Animated.View>
-			<YStack>
-				<GestureDetector gesture={scrubGesture}>
-					<HorizontalSlider
-						value={position.value}
-						max={
-							progress && progress.duration > 0
-								? progress.duration * ProgressMultiplier
-								: 1
-						}
-						width={width / 1.125}
-						props={{
-							// If user swipes off of the slider we should seek to the spot
-							onPressOut: () => {
-								trigger('notificationSuccess')
-								useSeekTo.mutate(Math.floor(position.value / ProgressMultiplier))
-								setSeeking(false)
-							},
-							onSlideStart: (event, value) => {
-								setSeeking(true)
-								trigger('impactLight')
-							},
-							onSlideMove: (event, value) => {
-								trigger('clockTick')
-								position.value = value
-							},
-							onSlideEnd: (event, value) => {
-								trigger('notificationSuccess')
-								position.value = value
-								useSeekTo.mutate(Math.floor(value / ProgressMultiplier))
-								setSeeking(false)
-							},
-						}}
-					/>
-				</GestureDetector>
+		<YStack>
+			<GestureDetector gesture={scrubGesture}>
+				<HorizontalSlider
+					value={position}
+					max={
+						progress && progress.duration > 0
+							? progress.duration * ProgressMultiplier
+							: 1
+					}
+					width={width / 1.125}
+					props={{
+						// If user swipes off of the slider we should seek to the spot
+						onPressOut: () => {
+							trigger('notificationSuccess')
+							useSeekTo.mutate(Math.floor(position / ProgressMultiplier))
+							setSeeking(false)
+						},
+						onSlideStart: (event, value) => {
+							setSeeking(true)
+							trigger('impactLight')
+						},
+						onSlideMove: (event, value) => {
+							trigger('clockTick')
+							setPosition(value)
+						},
+						onSlideEnd: (event, value) => {
+							trigger('notificationSuccess')
+							setPosition(value)
+							useSeekTo.mutate(Math.floor(value / ProgressMultiplier))
+							setSeeking(false)
+						},
+					}}
+				/>
+			</GestureDetector>
 
-				<XStack margin={'$2'} marginTop={'$3'}>
-					<YStack flex={1} alignItems='flex-start'>
-						<RunTimeSeconds>
-							{Math.floor(position.value / ProgressMultiplier)}
-						</RunTimeSeconds>
-					</YStack>
+			<XStack margin={'$2'} marginTop={'$3'}>
+				<YStack flex={1} alignItems='flex-start'>
+					<RunTimeSeconds>{Math.floor(position / ProgressMultiplier)}</RunTimeSeconds>
+				</YStack>
 
-					<YStack flex={1} alignItems='center'>
-						{/** Track metadata can go here */}
-					</YStack>
+				<YStack flex={1} alignItems='center'>
+					{/** Track metadata can go here */}
+				</YStack>
 
-					<YStack flex={1} alignItems='flex-end'>
-						<RunTimeSeconds>
-							{progress && progress.duration ? Math.ceil(progress.duration) : 0}
-						</RunTimeSeconds>
-					</YStack>
-				</XStack>
-			</YStack>
-		</Animated.View>
+				<YStack flex={1} alignItems='flex-end'>
+					<RunTimeSeconds>
+						{progress && progress.duration ? Math.ceil(progress.duration) : 0}
+					</RunTimeSeconds>
+				</YStack>
+			</XStack>
+		</YStack>
 	)
 }
