@@ -10,6 +10,7 @@ import { Separator } from 'tamagui'
 import { QueryConfig } from '../../api/queries/query.config'
 
 export default function TracksScreen({ route, navigation }: TracksProps): React.JSX.Element {
+	/* eslint-disable @typescript-eslint/no-explicit-any */
 	const queryKey: any[] = [route.params.query]
 
 	if (route.params.query === QueryKeys.RecentlyPlayed)
