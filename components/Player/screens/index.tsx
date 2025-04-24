@@ -171,6 +171,10 @@ export default function PlayerScreen({
 
 							<Spacer />
 
+							<Spacer />
+
+							<Spacer />
+
 							<Icon
 								name='playlist-music'
 								onPress={() => {

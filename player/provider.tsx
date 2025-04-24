@@ -35,6 +35,8 @@ import * as Burnt from 'burnt'
 import { markItemPlayed } from '../api/mutations/functions/item'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { getPlaystateApi } from '@jellyfin/sdk/lib/utils/api'
+import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
+import { useNetworkContext } from '../components/Network/provider'
 
 interface PlayerContext {
 	initialized: boolean
@@ -53,7 +55,9 @@ interface PlayerContext {
 	useSkip: UseMutationResult<void, Error, number | undefined, unknown>
 	usePrevious: UseMutationResult<void, Error, void, unknown>
 	usePlayNewQueue: UseMutationResult<void, Error, QueueMutation, unknown>
+	usePlayNewQueueOffline: UseMutationResult<void, Error, QueueMutation, unknown>
 	playbackState: State | undefined
+	setNowPlaying: (track: JellifyTrack) => void
 }
 
 const PlayerContextInitializer = () => {
@@ -70,6 +74,7 @@ const PlayerContextInitializer = () => {
 	const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(
 		nowPlayingJson ? JSON.parse(nowPlayingJson) : undefined,
 	)
+
 	const [isSkipping, setIsSkipping] = useState<boolean>(false)
 
 	const [playQueue, setPlayQueue] = useState<JellifyTrack[]>(
@@ -95,6 +100,28 @@ const PlayerContextInitializer = () => {
 				data: playQueue.filter((track) => track.QueuingType === type),
 			} as Section
 		})
+	}
+
+	/**
+	 * Takes a {@link BaseItemDto} of a track on Jellyfin, and updates it's
+	 * position in the {@link queue}
+	 *
+	 *
+	 * @param track The Jellyfin track object to update and replace in the queue
+	 */
+	const replaceQueueItem: (track: BaseItemDto) => Promise<void> = async (track: BaseItemDto) => {
+		const queue = (await TrackPlayer.getQueue()) as JellifyTrack[]
+
+		const queueItemIndex = queue.findIndex((queuedTrack) => queuedTrack.item.Id === track.Id!)
+
+		// Update queued item at index if found, else silently do nothing
+		if (queueItemIndex !== -1) {
+			const queueItem = queue[queueItemIndex]
+
+			TrackPlayer.remove([queueItemIndex]).then(() => {
+				TrackPlayer.add(mapDtoToTrack(track, queueItem.QueuingType), queueItemIndex)
+			})
+		}
 	}
 
 	const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
@@ -225,10 +252,12 @@ const PlayerContextInitializer = () => {
 				(track) => track.item.Id === nowPlaying!.item.Id,
 			)
 
-			if (nowPlayingIndex > 0) {
+			const { position } = await TrackPlayer.getProgress()
+
+			if (nowPlayingIndex > 0 && position < SKIP_TO_PREVIOUS_THRESHOLD) {
 				setNowPlaying(playQueue[nowPlayingIndex - 1])
 				await skipToPrevious()
-			}
+			} else await seekTo(0)
 		},
 	})
 
@@ -239,6 +268,7 @@ const PlayerContextInitializer = () => {
 			setIsSkipping(true)
 
 			// Optimistically set now playing
+
 			setNowPlaying(
 				mapDtoToTrack(mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection),
 			)
@@ -265,11 +295,40 @@ const PlayerContextInitializer = () => {
 		},
 	})
 
+	const usePlayNewQueueOffline = useMutation({
+		mutationFn: async (mutation: QueueMutation) => {
+			trigger('effectDoubleClick')
+
+			setIsSkipping(true)
+
+			// Optimistically set now playing
+
+			setNowPlaying(mutation.trackListOffline)
+
+			await resetQueue(false)
+
+			await addToQueue([mutation.trackListOffline as JellifyTrack])
+
+			setQueue('Recently Played')
+		},
+		onSuccess: async (data, mutation: QueueMutation) => {
+			setIsSkipping(false)
+			await play(0)
+
+			if (typeof mutation.queue === 'object') await markItemPlayed(queue as BaseItemDto)
+		},
+		onError: async () => {
+			setIsSkipping(false)
+			setNowPlaying((await TrackPlayer.getActiveTrack()) as JellifyTrack)
+		},
+	})
+
 	//#endregion
 
 	//#region RNTP Setup
 
 	const { state: playbackState } = usePlaybackState()
+	const { useDownload, downloadedTracks } = useNetworkContext()
 
 	useTrackPlayerEvents(
 		[
@@ -307,6 +366,16 @@ const PlayerContextInitializer = () => {
 						nowPlaying!,
 						event,
 					)
+
+					// Cache playing track at 20 seconds if it's not already downloaded
+					if (
+						Math.floor(event.position) === 20 &&
+						downloadedTracks?.filter(
+							(download) => download.item.Id === nowPlaying!.item.Id,
+						).length === 0
+					)
+						useDownload.mutate(nowPlaying!.item)
+
 					break
 				}
 
@@ -384,6 +453,7 @@ const PlayerContextInitializer = () => {
 		getQueueSectionData,
 		useAddToQueue,
 		useClearQueue,
+		setNowPlaying,
 		useReorderQueue,
 		useRemoveFromQueue,
 		useTogglePlayback,
@@ -392,6 +462,7 @@ const PlayerContextInitializer = () => {
 		usePrevious,
 		usePlayNewQueue,
 		playbackState,
+		usePlayNewQueueOffline,
 	}
 	//#endregion return
 }
@@ -402,6 +473,7 @@ export const PlayerContext = createContext<PlayerContext>({
 	nowPlayingIsFavorite: false,
 	setNowPlayingIsFavorite: () => {},
 	nowPlaying: undefined,
+	setNowPlaying: () => {},
 	playQueue: [],
 	queue: 'Recently Played',
 	getQueueSectionData: () => [],
@@ -567,6 +639,24 @@ export const PlayerContext = createContext<PlayerContext>({
 		failureReason: null,
 		submittedAt: 0,
 	},
+	usePlayNewQueueOffline: {
+		mutate: () => {},
+		mutateAsync: async () => {},
+		data: undefined,
+		error: null,
+		variables: undefined,
+		isError: false,
+		isIdle: true,
+		isPaused: false,
+		isPending: false,
+		isSuccess: false,
+		status: 'idle',
+		reset: () => {},
+		context: {},
+		failureCount: 0,
+		failureReason: null,
+		submittedAt: 0,
+	},
 	playbackState: undefined,
 })
 //#endregion Create PlayerContext
@@ -592,6 +682,8 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
 		useSeekTo,
 		useSkip,
 		usePrevious,
+		usePlayNewQueueOffline,
+		setNowPlaying,
 		usePlayNewQueue,
 		playbackState,
 	} = PlayerContextInitializer()
@@ -603,6 +695,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
 				nowPlayingIsFavorite,
 				setNowPlayingIsFavorite,
 				nowPlaying,
+				usePlayNewQueueOffline,
 				playQueue,
 				queue,
 				getQueueSectionData,
@@ -614,6 +707,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
 				useSeekTo,
 				useSkip,
 				usePrevious,
+				setNowPlaying,
 				usePlayNewQueue,
 				playbackState,
 			}}

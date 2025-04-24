@@ -3,6 +3,7 @@ import { JellifyTrack } from '../types/JellifyTrack'
 import { getUserLibraryApi } from '@jellyfin/sdk/lib/utils/api'
 import TrackPlayer, { Event, RatingType } from 'react-native-track-player'
 import { getActiveTrack, getActiveTrackIndex } from 'react-native-track-player/lib/src/trackPlayer'
+import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
 
 /**
  * Jellify Playback Service.
@@ -23,7 +24,10 @@ export async function PlaybackService() {
 	})
 
 	TrackPlayer.addEventListener(Event.RemotePrevious, async () => {
-		await TrackPlayer.skipToPrevious()
+		const progress = await TrackPlayer.getProgress()
+
+		if (progress.position < SKIP_TO_PREVIOUS_THRESHOLD) await TrackPlayer.skipToPrevious()
+		else await TrackPlayer.seekTo(0)
 	})
 
 	TrackPlayer.addEventListener(Event.RemoteSeek, async (event) => {

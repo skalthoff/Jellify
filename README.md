@@ -161,21 +161,21 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 ##### Setup
 
 -   Clone this repository
--   Run `npm run init:ios` to initialize the project
+-   Run `yarn init:ios` to initialize the project
     -   This will install `npm` packages, install `bundler` and required gems, and install required CocoaPods
 -   In the `ios` directory, run `fastlane match development --readonly` to fetch the development signing certificates
     -   *You will need access to the *Jellify Signing* private repository*
 
 ##### Running
 
--   Run `npm run start` to start the dev server
+-   Run `yarn start` to start the dev server
 -   Open the `Jellify.xcodeworkspace` with Xcode, _not_ the `Jellify.xcodeproject`
 -   Run either on a device or in the simulator
     -   _You will need to wait for Xcode to finish it's "Indexing" step_
 
 ##### Building
 
--   To create a build, run `npm run fastlane:ios:build` to use fastlane to compile an `.ipa`
+-   To create a build, run `yarn fastlane:ios:build` to use fastlane to compile an `.ipa`
 
 ### 🤖 Android
 
@@ -189,18 +189,18 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 ##### Setup
 
 -   Clone this repository
--   Run `npm i` to install `npm` packages
+-   Run `yarn install` to install `npm` packages
 
 ##### Running
 
--   Run `npm run start` to start the dev server
+-   Run `yarn start` to start the dev server
 -   Open the `android` folder with Android Studio
     -   _Android Studio should automatically grab the "Run Configurations" and initialize Gradle_
 -   Run either on a device or in the simulator
 
 ##### Building
 
--   To create a build, run `npm run fastlane:android:build` to use fastlane to compile an `.apk` for all architectures
+-   To create a build, run `yarn fastlane:android:build` to use fastlane to compile an `.apk` for all architectures
 
 #### References
 
@@ -216,6 +216,7 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
     -   James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
 -   The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
 -   [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) module and for his assistance with getting Jest working
+-   The team behind [Podverse](https://github.com/podverse/podverse-rn) for their incredible open source project, of which was used as a reference extensively during development
 -   My fellow [contributors](https://github.com/anultravioletaurora/Jellify/graphs/contributors) who have poured so much heart and a lot of sweat into making _Jellify_ a great experience
     -   Extra thanks to [John](https://github.com/johngrantdev) and [Vali-98](https://github.com/Vali-98) for shaping and designing the user experience in many places
     -   Huge thank you to [Ritesh](https://github.com/riteshshukla04) for your project automation and backend expertise (and for the memes)

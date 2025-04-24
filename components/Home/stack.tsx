@@ -10,6 +10,7 @@ import AddPlaylist from '../Library/components/add-playlist'
 import ArtistsScreen from '../Artists/screen'
 import TracksScreen from '../Tracks/screen'
 import { ArtistScreen } from '../Artist'
+import { OfflineList } from '../offlineList'
 
 const Stack = createNativeStackNavigator<StackParamList>()
 
@@ -36,8 +37,10 @@ export default function Home(): React.JSX.Element {
 					<Stack.Screen
 						name='Tracks'
 						component={TracksScreen}
-						options={{
-							title: 'Recent Tracks',
+						options={({ route }) => {
+							return {
+								title: route.params.queue.valueOf() as string,
+							}
 						}}
 					/>
 

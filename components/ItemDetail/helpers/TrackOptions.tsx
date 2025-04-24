@@ -3,6 +3,7 @@ import { StackParamList } from '../../../components/types'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import {
+	Circle,
 	getToken,
 	getTokens,
 	ListItem,
@@ -31,6 +32,7 @@ import * as Burnt from 'burnt'
 import { Image } from 'expo-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../../api/client'
+import { useNetworkContext } from '../../../components/Network/provider'
 
 interface TrackOptionsProps {
 	track: BaseItemDto
@@ -52,11 +54,14 @@ export default function TrackOptions({
 		queryFn: () => fetchItem(track.AlbumId!),
 	})
 
+	const { useDownload, useRemoveDownload, downloadedTracks } = useNetworkContext()
+
+	const isDownloaded = downloadedTracks?.find((t) => t.item.Id === track.Id)?.item?.Id
+
 	const {
 		data: playlists,
 		isPending: playlistsFetchPending,
 		isSuccess: playlistsFetchSuccess,
-		refetch,
 	} = useQuery({
 		queryKey: [QueryKeys.UserPlaylists],
 		queryFn: () => fetchUserPlaylists(),
@@ -156,6 +161,23 @@ export default function TrackOptions({
 					}}
 					size={width / 6}
 				/>
+
+				{useDownload.isPending ? (
+					<Circle size={width / 6} disabled>
+						<Spinner marginHorizontal={10} size='small' color={'$amethyst'} />
+					</Circle>
+				) : (
+					<IconButton
+						disabled={!!isDownloaded}
+						circular
+						name={isDownloaded ? 'delete' : 'download'}
+						title={isDownloaded ? 'Remove Download' : 'Download'}
+						onPress={() => {
+							(isDownloaded ? useRemoveDownload : useDownload).mutate(track)
+						}}
+						size={width / 6}
+					/>
+				)}
 			</XStack>
 
 			<Spacer />

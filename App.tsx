@@ -15,6 +15,7 @@ import { createWorkletRuntime } from 'react-native-reanimated'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import { JellifyDarkTheme, JellifyLightTheme } from './components/theme'
+import { requestStoragePermission } from './helpers/permisson-helpers'
 
 export const backgroundRuntime = createWorkletRuntime('background')
 
@@ -46,7 +47,13 @@ export default function App(): React.JSX.Element {
 		)
 		.finally(() => {
 			setPlayerIsReady(true)
+			requestStoragePermission()
 		})
+	const getActiveTrack = async () => {
+		const track = await TrackPlayer.getActiveTrack()
+		console.log('playerIsReady', track)
+	}
+	getActiveTrack()
 
 	return (
 		<SafeAreaProvider>

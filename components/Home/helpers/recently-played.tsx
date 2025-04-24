@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { View } from 'tamagui'
+import { View, XStack } from 'tamagui'
 import { useHomeContext } from '../provider'
 import { H2 } from '../../Global/helpers/text'
 import { ItemCard } from '../../Global/components/item-card'
@@ -10,6 +10,7 @@ import { trigger } from 'react-native-haptic-feedback'
 import { QueuingType } from '../../../enums/queuing-type'
 import HorizontalCardList from '../../../components/Global/components/horizontal-list'
 import { QueryKeys } from '../../../enums/query-keys'
+import Icon from '../../../components/Global/helpers/icon'
 
 export default function RecentlyPlayed({
 	navigation,
@@ -22,16 +23,24 @@ export default function RecentlyPlayed({
 	return useMemo(() => {
 		return (
 			<View>
-				<H2 marginLeft={'$2'}>Play it again</H2>
+				<XStack
+					alignItems='center'
+					onPress={() => {
+						navigation.navigate('Tracks', {
+							tracks: recentTracks,
+							queue: 'Recently Played',
+						})
+					}}
+				>
+					<H2 marginLeft={'$2'}>Play it again</H2>
+					<Icon name='arrow-right' />
+				</XStack>
 
 				<HorizontalCardList
 					squared
-					data={recentTracks}
-					onSeeMore={() => {
-						navigation.navigate('Tracks', {
-							query: QueryKeys.RecentlyPlayed,
-						})
-					}}
+					data={
+						recentTracks?.length ?? 0 > 10 ? recentTracks!.slice(0, 10) : recentTracks
+					}
 					renderItem={({ index, item: recentlyPlayedTrack }) => (
 						<ItemCard
 							size={'$12'}

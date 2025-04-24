@@ -3,6 +3,7 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack'
 import { JellifyServer } from '../types/JellifyServer'
 import { JellifyUser } from '../types/JellifyUser'
+import { Queue } from '../player/types/queue-item'
 
 export type StackParamList = {
 	ServerAddress: undefined
@@ -30,13 +31,14 @@ export type StackParamList = {
 
 	Library: undefined
 	Artists: {
-		query: QueryKeys.FavoriteArtists | QueryKeys.RecentlyPlayedArtists
+		artists: BaseItemDto[] | undefined
 	}
 	Albums: {
 		query: QueryKeys.FavoriteAlbums | QueryKeys.RecentlyAdded
 	}
 	Tracks: {
-		query: QueryKeys.FavoriteTracks | QueryKeys.RecentlyPlayed
+		tracks: BaseItemDto[] | undefined
+		queue: Queue
 	}
 	Genres: undefined
 	Playlists: undefined
@@ -81,6 +83,7 @@ export type StackParamList = {
 		item: BaseItemDto
 		isNested: boolean | undefined
 	}
+	Offline: undefined
 }
 
 export type ServerAddressProps = NativeStackScreenProps<StackParamList, 'ServerAddress'>
