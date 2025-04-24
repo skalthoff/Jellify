@@ -1,13 +1,12 @@
-import React, { useMemo } from 'react'
-import { View } from 'tamagui'
+import React from 'react'
+import { View, XStack } from 'tamagui'
 import { useHomeContext } from '../provider'
 import { H2 } from '../../Global/helpers/text'
 import { StackParamList } from '../../types'
 import { ItemCard } from '../../Global/components/item-card'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import HorizontalCardList from '../../../components/Global/components/horizontal-list'
-import { QueryKeys } from '../../../enums/query-keys'
-import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
+import Icon from '../../../components/Global/helpers/icon'
 
 export default function RecentArtists({
 	navigation,
@@ -18,15 +17,20 @@ export default function RecentArtists({
 
 	return (
 		<View>
-			<H2 marginLeft={'$2'}>Recent Artists</H2>
-
-			<HorizontalCardList
-				data={recentArtists}
-				onSeeMore={() => {
+			<XStack
+				alignItems='center'
+				onPress={() => {
 					navigation.navigate('Artists', {
-						query: QueryKeys.RecentlyPlayedArtists,
+						artists: recentArtists,
 					})
 				}}
+			>
+				<H2 marginLeft={'$2'}>Recent Artists</H2>
+				<Icon name='arrow-right' />
+			</XStack>
+
+			<HorizontalCardList
+				data={recentArtists?.length ?? 0 > 10 ? recentArtists!.slice(0, 10) : recentArtists}
 				renderItem={({ item: recentArtist }) => (
 					<ItemCard
 						item={recentArtist}

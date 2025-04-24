@@ -8,6 +8,8 @@ import { useHomeContext } from './provider'
 import { H3 } from '../Global/helpers/text'
 import Client from '../../api/client'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import FrequentArtists from './helpers/frequent-artists'
+import FrequentlyPlayedTracks from './helpers/frequent-tracks'
 
 export function ProvidedHome({
 	navigation,
@@ -37,7 +39,11 @@ export function ProvidedHome({
 
 				<Separator marginVertical={'$3'} />
 
-				<Playlists navigation={navigation} />
+				<FrequentArtists navigation={navigation} />
+
+				<Separator marginVertical={'$3'} />
+
+				<FrequentlyPlayedTracks navigation={navigation} />
 			</YStack>
 		</ScrollView>
 	)

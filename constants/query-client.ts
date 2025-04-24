@@ -19,8 +19,6 @@ export const queryClient = new QueryClient({
 			 * or higher than the `maxAge`
 			 */
 			gcTime: Infinity,
-			staleTime: 1000 * 60 * 60 * 1, // 1 hour, users can manually refresh stuff too!
-			refetchOnWindowFocus: false,
 		},
 	},
 })

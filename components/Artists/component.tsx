@@ -8,30 +8,15 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchRecentlyPlayedArtists } from '../../api/queries/functions/recents'
 import { fetchFavoriteArtists } from '../../api/queries/functions/favorites'
 import { QueryConfig } from '../../api/queries/query.config'
+import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
+import { YStack } from 'tamagui'
+import { Text } from '../Global/helpers/text'
+
+interface ArtistsComponentProps extends ArtistsProps {
+	artists: BaseItemDto[]
+}
 
 export default function Artists({ navigation, route }: ArtistsProps): React.JSX.Element {
-	const {
-		data: artists,
-		refetch,
-		isPending,
-	} = route.params.query === QueryKeys.RecentlyPlayedArtists
-		? useQuery({
-				queryKey: [
-					QueryKeys.RecentlyPlayedArtists,
-					QueryConfig.limits.recents * 4,
-					QueryConfig.limits.recents,
-				],
-				queryFn: () =>
-					fetchRecentlyPlayedArtists(
-						QueryConfig.limits.recents * 4,
-						QueryConfig.limits.recents,
-					),
-		  })
-		: useQuery({
-				queryKey: [QueryKeys.FavoriteArtists],
-				queryFn: () => fetchFavoriteArtists(),
-		  })
-
 	return (
 		<FlatList
 			contentContainerStyle={{
@@ -40,8 +25,7 @@ export default function Artists({ navigation, route }: ArtistsProps): React.JSX.
 			}}
 			contentInsetAdjustmentBehavior='automatic'
 			numColumns={2}
-			data={artists}
-			refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />}
+			data={route.params.artists}
 			renderItem={({ index, item: artist }) => (
 				<ItemCard
 					item={artist}
@@ -52,6 +36,11 @@ export default function Artists({ navigation, route }: ArtistsProps): React.JSX.
 					size={'$14'}
 				/>
 			)}
+			ListEmptyComponent={
+				<YStack justifyContent='center'>
+					<Text>No artists</Text>
+				</YStack>
+			}
 		/>
 	)
 }

@@ -37,8 +37,10 @@ export default function Home(): React.JSX.Element {
 					<Stack.Screen
 						name='Tracks'
 						component={TracksScreen}
-						options={{
-							title: 'Recent Tracks',
+						options={({ route }) => {
+							return {
+								title: route.params.queue.valueOf() as string,
+							}
 						}}
 					/>
 
