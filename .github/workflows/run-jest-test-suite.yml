@@ -19,11 +19,11 @@ jobs:
       - name: 💬 Echo package.json version to Github ENV
         run: echo VERSION_NUMBER=$(node -p -e "require('./package.json').version") >> $GITHUB_ENV
 
-      - name: 🟢 Run npm run init:ios
-        run: npm run init:ios
+      - name: 🟢 Run yarn init:ios
+        run: yarn init:ios
       
       - name: 🧪 Run npm test
-        run: npm run test
+        run: yarn test
 
       - name: 🦋 Check Styling 
-        run: npm run format:check
+        run: yarn format:check

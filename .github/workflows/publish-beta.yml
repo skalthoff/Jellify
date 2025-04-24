@@ -17,11 +17,11 @@ jobs:
         with:
           node-version: 20
       
-      - name: 🟢 Run npm run init
-        run: npm run init
+      - name: 🧵 Run yarn install
+        run: yarn install
 
       - name: 🍫 Install CocoaPods
-        run: npm run pod:install
+        run: yarn pod:install
 
       - name: ➕ Version Up
         run: npx react-native bump-version --type minor  
@@ -35,10 +35,10 @@ jobs:
         working-directory: ./ios/fastlane
 
       - name: 🚀 Run Android fastlane build
-        run: npm run fastlane:android:build
+        run: yarn fastlane:android:build
 
       - name: 🚀 Run iOS fastlane build and publish to TestFlight
-        run: npm run fastlane:ios:beta
+        run: yarn fastlane:ios:beta
         env:
           APPSTORE_CONNECT_API_KEY_JSON: ${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
