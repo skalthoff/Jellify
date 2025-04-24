@@ -24,7 +24,7 @@ jobs:
         run: yarn pod:install
 
       - name: ➕ Version Up
-        run: npx react-native bump-version --type minor  
+        run: yarn react-native bump-version --type minor  
 
     
       - name: 💬 Echo package.json version to Github ENV
