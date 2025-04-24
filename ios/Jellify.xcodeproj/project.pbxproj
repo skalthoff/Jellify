@@ -29,32 +29,16 @@
 		CF620D192CF2BB210045E433 /* Aileron-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D092CF2BB200045E433 /* Aileron-Black.otf */; };
 		CF620D1A2CF2BB210045E433 /* Aileron-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D0A2CF2BB200045E433 /* Aileron-ThinItalic.otf */; };
 		CF620D1B2CF2BB210045E433 /* Aileron-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF620D0B2CF2BB200045E433 /* Aileron-SemiBold.otf */; };
-		CF68914D2D45316A00F1279C /* Aileron-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891312D45316A00F1279C /* Aileron-Black.otf */; };
 		CF68914E2D45316A00F1279C /* icon_1024pt_1x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF68914A2D45316A00F1279C /* icon_1024pt_1x.jpg */; };
-		CF68914F2D45316A00F1279C /* Aileron-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891382D45316A00F1279C /* Aileron-Light.otf */; };
-		CF6891502D45316A00F1279C /* Aileron-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913A2D45316A00F1279C /* Aileron-Regular.otf */; };
-		CF6891512D45316A00F1279C /* Aileron-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891372D45316A00F1279C /* Aileron-Italic.otf */; };
-		CF6891522D45316A00F1279C /* Aileron-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891352D45316A00F1279C /* Aileron-Heavy.otf */; };
-		CF6891532D45316A00F1279C /* Aileron-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891342D45316A00F1279C /* Aileron-BoldItalic.otf */; };
 		CF6891542D45316A00F1279C /* icon_20pt_2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891422D45316A00F1279C /* icon_20pt_2x.jpg */; };
-		CF6891552D45316A00F1279C /* Aileron-UltraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913F2D45316A00F1279C /* Aileron-UltraLight.otf */; };
 		CF6891562D45316A00F1279C /* icon_29pt_2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891442D45316A00F1279C /* icon_29pt_2x.jpg */; };
-		CF6891572D45316A00F1279C /* Aileron-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891362D45316A00F1279C /* Aileron-HeavyItalic.otf */; };
 		CF6891582D45316A00F1279C /* icon_40pt_3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891472D45316A00F1279C /* icon_40pt_3x.jpg */; };
 		CF6891592D45316A00F1279C /* icon_40pt_2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891462D45316A00F1279C /* icon_40pt_2x.jpg */; };
 		CF68915A2D45316A00F1279C /* icon_original.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = CF68914B2D45316A00F1279C /* icon_original.jpeg */; };
-		CF68915B2D45316A00F1279C /* Aileron-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913C2D45316A00F1279C /* Aileron-SemiBoldItalic.otf */; };
-		CF68915C2D45316A00F1279C /* Aileron-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891332D45316A00F1279C /* Aileron-Bold.otf */; };
 		CF68915D2D45316A00F1279C /* icon_60pt_3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891492D45316A00F1279C /* icon_60pt_3x.jpg */; };
 		CF68915E2D45316A00F1279C /* icon_60pt_2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891482D45316A00F1279C /* icon_60pt_2x.jpg */; };
-		CF68915F2D45316A00F1279C /* Aileron-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891322D45316A00F1279C /* Aileron-BlackItalic.otf */; };
 		CF6891602D45316A00F1279C /* icon_20pt_3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891432D45316A00F1279C /* icon_20pt_3x.jpg */; };
-		CF6891612D45316A00F1279C /* Aileron-UltraLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891402D45316A00F1279C /* Aileron-UltraLightItalic.otf */; };
 		CF6891622D45316A00F1279C /* icon_29pt_3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF6891452D45316A00F1279C /* icon_29pt_3x.jpg */; };
-		CF6891632D45316A00F1279C /* Aileron-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF6891392D45316A00F1279C /* Aileron-LightItalic.otf */; };
-		CF6891642D45316A00F1279C /* Aileron-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913E2D45316A00F1279C /* Aileron-ThinItalic.otf */; };
-		CF6891652D45316A00F1279C /* Aileron-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913D2D45316A00F1279C /* Aileron-Thin.otf */; };
-		CF6891662D45316A00F1279C /* Aileron-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF68913B2D45316A00F1279C /* Aileron-SemiBold.otf */; };
 		CF6B19DD2D550FA7002464CB /* icon_dark_20pt_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CF6B19D42D550FA7002464CB /* icon_dark_20pt_2x.png */; };
 		CF6B19DE2D550FA7002464CB /* icon_dark_29pt_3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CF6B19D72D550FA7002464CB /* icon_dark_29pt_3x.png */; };
 		CF6B19DF2D550FA7002464CB /* icon_dark_60pt_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CF6B19DA2D550FA7002464CB /* icon_dark_60pt_2x.png */; };
@@ -418,7 +402,8 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1210;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
@@ -487,10 +472,8 @@
 				CF620D1B2CF2BB210045E433 /* Aileron-SemiBold.otf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				CF68914D2D45316A00F1279C /* Aileron-Black.otf in Resources */,
 				CF6B19E92D5510E0002464CB /* icon_dark_original.png in Resources */,
 				CF68914E2D45316A00F1279C /* icon_1024pt_1x.jpg in Resources */,
-				CF68914F2D45316A00F1279C /* Aileron-Light.otf in Resources */,
 				CF6B19DD2D550FA7002464CB /* icon_dark_20pt_2x.png in Resources */,
 				CF6B19DE2D550FA7002464CB /* icon_dark_29pt_3x.png in Resources */,
 				CF6B19DF2D550FA7002464CB /* icon_dark_60pt_2x.png in Resources */,
@@ -499,29 +482,15 @@
 				CF6B19E32D550FA7002464CB /* icon_dark_40pt_2x.png in Resources */,
 				CF6B19E42D550FA7002464CB /* icon_dark_40pt_3x.png in Resources */,
 				CF6B19E52D550FA7002464CB /* icon_dark_60pt_3x.png in Resources */,
-				CF6891502D45316A00F1279C /* Aileron-Regular.otf in Resources */,
-				CF6891512D45316A00F1279C /* Aileron-Italic.otf in Resources */,
-				CF6891522D45316A00F1279C /* Aileron-Heavy.otf in Resources */,
-				CF6891532D45316A00F1279C /* Aileron-BoldItalic.otf in Resources */,
 				CF6891542D45316A00F1279C /* icon_20pt_2x.jpg in Resources */,
-				CF6891552D45316A00F1279C /* Aileron-UltraLight.otf in Resources */,
 				CF6891562D45316A00F1279C /* icon_29pt_2x.jpg in Resources */,
-				CF6891572D45316A00F1279C /* Aileron-HeavyItalic.otf in Resources */,
 				CF6891582D45316A00F1279C /* icon_40pt_3x.jpg in Resources */,
 				CF6891592D45316A00F1279C /* icon_40pt_2x.jpg in Resources */,
 				CF68915A2D45316A00F1279C /* icon_original.jpeg in Resources */,
-				CF68915B2D45316A00F1279C /* Aileron-SemiBoldItalic.otf in Resources */,
-				CF68915C2D45316A00F1279C /* Aileron-Bold.otf in Resources */,
 				CF68915D2D45316A00F1279C /* icon_60pt_3x.jpg in Resources */,
 				CF68915E2D45316A00F1279C /* icon_60pt_2x.jpg in Resources */,
-				CF68915F2D45316A00F1279C /* Aileron-BlackItalic.otf in Resources */,
 				CF6891602D45316A00F1279C /* icon_20pt_3x.jpg in Resources */,
-				CF6891612D45316A00F1279C /* Aileron-UltraLightItalic.otf in Resources */,
 				CF6891622D45316A00F1279C /* icon_29pt_3x.jpg in Resources */,
-				CF6891632D45316A00F1279C /* Aileron-LightItalic.otf in Resources */,
-				CF6891642D45316A00F1279C /* Aileron-ThinItalic.otf in Resources */,
-				CF6891652D45316A00F1279C /* Aileron-Thin.otf in Resources */,
-				CF6891662D45316A00F1279C /* Aileron-SemiBold.otf in Resources */,
 				217EBE16A3E8C5FBF476C905 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,9 +522,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Jellify/Pods-Jellify-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Jellify/Pods-Jellify-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -570,9 +543,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Jellify/Pods-Jellify-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Jellify/Pods-Jellify-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -722,6 +699,7 @@
 				DEVELOPMENT_TEAM = WAH9CZ8BPG;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WAH9CZ8BPG;
 				ENABLE_BITCODE = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = Jellify/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -762,6 +740,7 @@
 				CURRENT_PROJECT_VERSION = 136;
 				DEVELOPMENT_TEAM = WAH9CZ8BPG;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WAH9CZ8BPG;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = Jellify/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -822,6 +801,7 @@
 				CXX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -871,10 +851,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -918,6 +895,7 @@
 				CXX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -959,12 +937,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;

@@ -161,21 +161,21 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 ##### Setup
 
 -   Clone this repository
--   Run `npm run init:ios` to initialize the project
+-   Run `yarn init:ios` to initialize the project
     -   This will install `npm` packages, install `bundler` and required gems, and install required CocoaPods
 -   In the `ios` directory, run `fastlane match development --readonly` to fetch the development signing certificates
     -   *You will need access to the *Jellify Signing* private repository*
 
 ##### Running
 
--   Run `npm run start` to start the dev server
+-   Run `yarn start` to start the dev server
 -   Open the `Jellify.xcodeworkspace` with Xcode, _not_ the `Jellify.xcodeproject`
 -   Run either on a device or in the simulator
     -   _You will need to wait for Xcode to finish it's "Indexing" step_
 
 ##### Building
 
--   To create a build, run `npm run fastlane:ios:build` to use fastlane to compile an `.ipa`
+-   To create a build, run `yarn fastlane:ios:build` to use fastlane to compile an `.ipa`
 
 ### 🤖 Android
 
@@ -189,18 +189,18 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 ##### Setup
 
 -   Clone this repository
--   Run `npm i` to install `npm` packages
+-   Run `yarn install` to install `npm` packages
 
 ##### Running
 
--   Run `npm run start` to start the dev server
+-   Run `yarn start` to start the dev server
 -   Open the `android` folder with Android Studio
     -   _Android Studio should automatically grab the "Run Configurations" and initialize Gradle_
 -   Run either on a device or in the simulator
 
 ##### Building
 
--   To create a build, run `npm run fastlane:android:build` to use fastlane to compile an `.apk` for all architectures
+-   To create a build, run `yarn fastlane:android:build` to use fastlane to compile an `.apk` for all architectures
 
 #### References
 

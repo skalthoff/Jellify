@@ -74,13 +74,32 @@ const mmkv = new MMKV({
 
 const MMKV_OFFLINE_MODE_KEYS = {
 	AUDIO_CACHE: 'audioCache',
+	AUDIO_CACHE_LIMIT: 'audioCacheLimit',
 }
+
+export const getDefaultAudioCacheLimit = () => {
+	if (!mmkv.contains(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE_LIMIT)) {
+		mmkv.set(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE_LIMIT, 20)
+	}
+}
+
+getDefaultAudioCacheLimit()
+const AUDIO_CACHE_LIMIT = mmkv.getNumber(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE_LIMIT)
 
 export const saveAudio = async (
 	track: JellifyTrack,
 	queryClient: QueryClient,
 	isAutoDownloaded: boolean = true,
 ) => {
+	if (
+		isAutoDownloaded &&
+		AUDIO_CACHE_LIMIT &&
+		(!Number.isFinite(AUDIO_CACHE_LIMIT) || AUDIO_CACHE_LIMIT <= 0)
+	) {
+		// If the cache limit is not set or is not a number, or is less than 0, Dont Auto Download
+		return
+	}
+
 	const existingRaw = mmkv.getString(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE)
 	let existingArray: JellifyDownload[] = []
 	try {
@@ -90,6 +109,7 @@ export const saveAudio = async (
 	} catch (error) {
 		//Ignore
 	}
+
 	try {
 		console.log('Downloading audio', track)
 
@@ -161,8 +181,6 @@ export const deleteAudioCache = async () => {
 	mmkv.delete(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE)
 }
 
-const AUDIO_CACHE_LIMIT = 20 // change as needed
-
 export const purneAudioCache = async () => {
 	const existingRaw = mmkv.getString(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE)
 	if (!existingRaw) return
@@ -179,7 +197,7 @@ export const purneAudioCache = async () => {
 		.filter((item) => item.isAutoDownloaded)
 		.sort((a, b) => new Date(a.savedAt).getTime() - new Date(b.savedAt).getTime()) // oldest first
 
-	const excess = autoDownloads.length - AUDIO_CACHE_LIMIT
+	const excess = autoDownloads.length - (AUDIO_CACHE_LIMIT ?? 20)
 	if (excess <= 0) return
 
 	// Remove the oldest `excess` files
@@ -200,4 +218,12 @@ export const purneAudioCache = async () => {
 	}
 
 	mmkv.set(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE, JSON.stringify(existingArray))
+}
+
+export const setAudioCacheLimit = (limit: number) => {
+	mmkv.set(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE_LIMIT, limit)
+}
+
+export const getAudioCacheLimit = () => {
+	return mmkv.getNumber(MMKV_OFFLINE_MODE_KEYS.AUDIO_CACHE_LIMIT)
 }

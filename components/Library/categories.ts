@@ -1,6 +1,7 @@
 import { QueryKeys } from '../../enums/query-keys'
 
 interface CategoryRoute {
+	/* eslint-disable @typescript-eslint/no-explicit-any */
 	name: any // ¯\_(ツ)_/¯
 	iconName: string
 	params?: {

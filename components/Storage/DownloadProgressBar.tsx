@@ -12,6 +12,7 @@ export const DownloadProgressBar = () => {
 
 	return (
 		<View style={styles.container}>
+			{/* eslint-disable @typescript-eslint/no-explicit-any */}
 			{Object.entries(downloads || {}).map(([url, item]: any) => {
 				const animatedWidth = useSharedValue(item.progress)
 				animatedWidth.value = withTiming(item.progress, { duration: 200 })
