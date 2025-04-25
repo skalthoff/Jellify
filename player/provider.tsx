@@ -38,7 +38,7 @@ import { getPlaystateApi } from '@jellyfin/sdk/lib/utils/api'
 import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
 import { useNetworkContext } from '../components/Network/provider'
 import { networkStatusCheck } from './helpers/queue'
-import { QueueContext, QueueProvider } from './queue-provider'
+import { QueueProvider } from './queue-provider'
 
 interface PlayerContext {
 	initialized: boolean
