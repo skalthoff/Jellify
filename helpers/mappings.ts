@@ -68,8 +68,6 @@ export function mapDtoToTrack(
 			)}`
 	}
 
-	console.debug(`URL: ${url}`)
-
 	return {
 		url,
 		type: TrackType.Default,

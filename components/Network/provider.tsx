@@ -20,8 +20,8 @@ const NetworkContextInitializer = () => {
 	const queryClient = useQueryClient()
 
 	const useDownload = useMutation({
-		mutationFn: async (trackItem: BaseItemDto) => {
-			const track = await mapDtoToTrack(trackItem, [])
+		mutationFn: (trackItem: BaseItemDto) => {
+			const track = mapDtoToTrack(trackItem, [])
 
 			return saveAudio(track, queryClient, false)
 		},

@@ -118,9 +118,9 @@ const PlayerContextInitializer = () => {
 		if (queueItemIndex !== -1) {
 			const queueItem = queue[queueItemIndex]
 
-			TrackPlayer.remove([queueItemIndex]).then(async () => {
+			TrackPlayer.remove([queueItemIndex]).then(() => {
 				TrackPlayer.add(
-					await mapDtoToTrack(track, downloadedTracks ?? [], queueItem.QueuingType),
+					mapDtoToTrack(track, downloadedTracks ?? [], queueItem.QueuingType),
 					queueItemIndex,
 				)
 			})
@@ -162,19 +162,11 @@ const PlayerContextInitializer = () => {
 
 			if (mutation.queuingType === QueuingType.PlayingNext)
 				return addToNext([
-					await mapDtoToTrack(
-						mutation.track,
-						downloadedTracks ?? [],
-						mutation.queuingType,
-					),
+					mapDtoToTrack(mutation.track, downloadedTracks ?? [], mutation.queuingType),
 				])
 			else
 				return addToQueue([
-					await mapDtoToTrack(
-						mutation.track,
-						downloadedTracks ?? [],
-						mutation.queuingType,
-					),
+					mapDtoToTrack(mutation.track, downloadedTracks ?? [], mutation.queuingType),
 				])
 		},
 		onSuccess: (data, { queuingType }) => {
