@@ -13,7 +13,6 @@ import FavoriteIcon from './favorite-icon'
 import { Image } from 'expo-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../../api/client'
-import { getAudioCache } from '../../../components/Network/offlineModeUtils'
 import { networkStatusTypes } from '../../../components/Network/internetConnectionWatcher'
 import { useNetworkContext } from '../../../components/Network/provider'
 
@@ -49,7 +48,7 @@ export default function Track({
 	onRemove,
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
-	const { nowPlaying, playQueue, usePlayNewQueue, usePlayNewQueueOffline } = usePlayerContext()
+	const { nowPlaying, playQueue, usePlayNewQueue } = usePlayerContext()
 	const { downloadedTracks, networkStatus } = useNetworkContext()
 
 	const isPlaying = nowPlaying?.item.Id === track.Id
@@ -69,10 +68,6 @@ export default function Track({
 					if (onPress) {
 						onPress()
 					} else {
-						if (isOffline && isDownloaded) {
-							usePlayNewQueueOffline.mutate({ trackListOffline: offlineAudio })
-							return
-						}
 						usePlayNewQueue.mutate({
 							track,
 							index,

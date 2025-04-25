@@ -5,6 +5,7 @@ import { QueuingType } from '../enums/queuing-type'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../api/client'
 import { isUndefined } from 'lodash'
+import { JellifyDownload } from '../types/JellifyDownload'
 
 /**
  * The container that the Jellyfin server will attempt to transcode to
@@ -26,7 +27,11 @@ const transcodingContainer = 'ts'
  * @param queuingType The type of queuing we are performing
  * @returns A `JellifyTrack`, which represents a Jellyfin library track queued in the player
  */
-export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType): JellifyTrack {
+export function mapDtoToTrack(
+	item: BaseItemDto,
+	downloadedTracks: JellifyDownload[],
+	queuingType?: QueuingType,
+): JellifyTrack {
 	const urlParams = {
 		Container: item.Container!,
 		TranscodingContainer: transcodingContainer,
@@ -39,10 +44,21 @@ export function mapDtoToTrack(item: BaseItemDto, queuingType?: QueuingType): Jel
 
 	const isFavorite = !isUndefined(item.UserData) && (item.UserData.IsFavorite ?? false)
 
-	return {
-		url: `${Client.api!.basePath}/Audio/${item.Id!}/universal?${new URLSearchParams(
+	const downloads = downloadedTracks.filter((download) => download.item.Id === item.Id)
+
+	let url: string
+
+	if (downloads.length > 0)
+		url =
+			downloads[0].path ??
+			`${Client.api!.basePath}/Audio/${item.Id!}/universal?${new URLSearchParams(urlParams)}`
+	else
+		url = `${Client.api!.basePath}/Audio/${item.Id!}/universal?${new URLSearchParams(
 			urlParams,
-		)}`,
+		)}`
+
+	return {
+		url,
 		type: TrackType.Default,
 		headers: {
 			'X-Emby-Token': Client.api!.accessToken,
