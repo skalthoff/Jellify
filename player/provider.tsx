@@ -55,7 +55,6 @@ interface PlayerContext {
 	useSkip: UseMutationResult<void, Error, number | undefined, unknown>
 	usePrevious: UseMutationResult<void, Error, void, unknown>
 	usePlayNewQueue: UseMutationResult<void, Error, QueueMutation, unknown>
-	usePlayNewQueueOffline: UseMutationResult<void, Error, QueueMutation, unknown>
 	playbackState: State | undefined
 	setNowPlaying: (track: JellifyTrack) => void
 }
@@ -119,7 +118,10 @@ const PlayerContextInitializer = () => {
 			const queueItem = queue[queueItemIndex]
 
 			TrackPlayer.remove([queueItemIndex]).then(() => {
-				TrackPlayer.add(mapDtoToTrack(track, queueItem.QueuingType), queueItemIndex)
+				TrackPlayer.add(
+					mapDtoToTrack(track, downloadedTracks ?? [], queueItem.QueuingType),
+					queueItemIndex,
+				)
 			})
 		}
 	}
@@ -156,8 +158,13 @@ const PlayerContextInitializer = () => {
 			trigger('impactLight')
 
 			if (mutation.queuingType === QueuingType.PlayingNext)
-				return addToNext([mapDtoToTrack(mutation.track, mutation.queuingType)])
-			else return addToQueue([mapDtoToTrack(mutation.track, mutation.queuingType)])
+				return addToNext([
+					mapDtoToTrack(mutation.track, downloadedTracks ?? [], mutation.queuingType),
+				])
+			else
+				return addToQueue([
+					mapDtoToTrack(mutation.track, downloadedTracks ?? [], mutation.queuingType),
+				])
 		},
 		onSuccess: (data, { queuingType }) => {
 			trigger('notificationSuccess')
@@ -261,6 +268,14 @@ const PlayerContextInitializer = () => {
 		},
 	})
 
+	/**
+	 * A mutation hook that adds tracks to the play queue
+	 *
+	 * Respects the network status of the app - if we are
+	 * online, tracks are always added to the queue for streaming
+	 * - if we are *offline* then only tracks that are downloaded
+	 * will be added to the queue
+	 */
 	const usePlayNewQueue = useMutation({
 		mutationFn: async (mutation: QueueMutation) => {
 			trigger('effectDoubleClick')
@@ -270,15 +285,31 @@ const PlayerContextInitializer = () => {
 			// Optimistically set now playing
 
 			setNowPlaying(
-				mapDtoToTrack(mutation.tracklist[mutation.index ?? 0], QueuingType.FromSelection),
+				mapDtoToTrack(
+					mutation.tracklist[mutation.index ?? 0],
+					downloadedTracks ?? [],
+					QueuingType.FromSelection,
+				),
 			)
 
 			await resetQueue(false)
 
 			await addToQueue(
-				mutation.tracklist.map((track) => {
-					return mapDtoToTrack(track, QueuingType.FromSelection)
-				}),
+				mutation.tracklist
+					.filter((track) =>
+						networkStatus && networkStatus === 'ONLINE'
+							? true
+							: downloadedTracks &&
+							  downloadedTracks.filter((download) => download.item.Id === track.Id)
+									.length > 0,
+					)
+					.map((track) => {
+						return mapDtoToTrack(
+							track,
+							downloadedTracks ?? [],
+							QueuingType.FromSelection,
+						)
+					}),
 			)
 
 			setQueue(mutation.queue)
@@ -294,41 +325,12 @@ const PlayerContextInitializer = () => {
 			setNowPlaying((await TrackPlayer.getActiveTrack()) as JellifyTrack)
 		},
 	})
-
-	const usePlayNewQueueOffline = useMutation({
-		mutationFn: async (mutation: QueueMutation) => {
-			trigger('effectDoubleClick')
-
-			setIsSkipping(true)
-
-			// Optimistically set now playing
-
-			setNowPlaying(mutation.trackListOffline)
-
-			await resetQueue(false)
-
-			await addToQueue([mutation.trackListOffline as JellifyTrack])
-
-			setQueue('Recently Played')
-		},
-		onSuccess: async (data, mutation: QueueMutation) => {
-			setIsSkipping(false)
-			await play(0)
-
-			if (typeof mutation.queue === 'object') await markItemPlayed(queue as BaseItemDto)
-		},
-		onError: async () => {
-			setIsSkipping(false)
-			setNowPlaying((await TrackPlayer.getActiveTrack()) as JellifyTrack)
-		},
-	})
-
 	//#endregion
 
 	//#region RNTP Setup
 
 	const { state: playbackState } = usePlaybackState()
-	const { useDownload, downloadedTracks } = useNetworkContext()
+	const { useDownload, downloadedTracks, networkStatus } = useNetworkContext()
 
 	useTrackPlayerEvents(
 		[
@@ -462,7 +464,6 @@ const PlayerContextInitializer = () => {
 		usePrevious,
 		usePlayNewQueue,
 		playbackState,
-		usePlayNewQueueOffline,
 	}
 	//#endregion return
 }
@@ -639,24 +640,6 @@ export const PlayerContext = createContext<PlayerContext>({
 		failureReason: null,
 		submittedAt: 0,
 	},
-	usePlayNewQueueOffline: {
-		mutate: () => {},
-		mutateAsync: async () => {},
-		data: undefined,
-		error: null,
-		variables: undefined,
-		isError: false,
-		isIdle: true,
-		isPaused: false,
-		isPending: false,
-		isSuccess: false,
-		status: 'idle',
-		reset: () => {},
-		context: {},
-		failureCount: 0,
-		failureReason: null,
-		submittedAt: 0,
-	},
 	playbackState: undefined,
 })
 //#endregion Create PlayerContext
@@ -682,7 +665,6 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
 		useSeekTo,
 		useSkip,
 		usePrevious,
-		usePlayNewQueueOffline,
 		setNowPlaying,
 		usePlayNewQueue,
 		playbackState,
@@ -695,7 +677,6 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
 				nowPlayingIsFavorite,
 				setNowPlayingIsFavorite,
 				nowPlaying,
-				usePlayNewQueueOffline,
 				playQueue,
 				queue,
 				getQueueSectionData,
