@@ -37,6 +37,7 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { getPlaystateApi } from '@jellyfin/sdk/lib/utils/api'
 import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
 import { useNetworkContext } from '../components/Network/provider'
+import { networkStatusCheck } from './helpers/queue'
 
 interface PlayerContext {
 	initialized: boolean
@@ -117,9 +118,9 @@ const PlayerContextInitializer = () => {
 		if (queueItemIndex !== -1) {
 			const queueItem = queue[queueItemIndex]
 
-			TrackPlayer.remove([queueItemIndex]).then(() => {
+			TrackPlayer.remove([queueItemIndex]).then(async () => {
 				TrackPlayer.add(
-					mapDtoToTrack(track, downloadedTracks ?? [], queueItem.QueuingType),
+					await mapDtoToTrack(track, downloadedTracks ?? [], queueItem.QueuingType),
 					queueItemIndex,
 				)
 			})
@@ -139,6 +140,8 @@ const PlayerContextInitializer = () => {
 		await TrackPlayer.add(tracks, insertIndex)
 
 		setPlayQueue((await getQueue()) as JellifyTrack[])
+
+		console.debug(`Queue has ${playQueue.length} tracks`)
 	}
 
 	const addToNext = async (tracks: JellifyTrack[]) => {
@@ -159,11 +162,19 @@ const PlayerContextInitializer = () => {
 
 			if (mutation.queuingType === QueuingType.PlayingNext)
 				return addToNext([
-					mapDtoToTrack(mutation.track, downloadedTracks ?? [], mutation.queuingType),
+					await mapDtoToTrack(
+						mutation.track,
+						downloadedTracks ?? [],
+						mutation.queuingType,
+					),
 				])
 			else
 				return addToQueue([
-					mapDtoToTrack(mutation.track, downloadedTracks ?? [], mutation.queuingType),
+					await mapDtoToTrack(
+						mutation.track,
+						downloadedTracks ?? [],
+						mutation.queuingType,
+					),
 				])
 		},
 		onSuccess: (data, { queuingType }) => {
@@ -294,23 +305,19 @@ const PlayerContextInitializer = () => {
 
 			await resetQueue(false)
 
-			await addToQueue(
-				mutation.tracklist
-					.filter((track) =>
-						networkStatus && networkStatus === 'ONLINE'
-							? true
-							: downloadedTracks &&
-							  downloadedTracks.filter((download) => download.item.Id === track.Id)
-									.length > 0,
-					)
-					.map((track) => {
-						return mapDtoToTrack(
-							track,
-							downloadedTracks ?? [],
-							QueuingType.FromSelection,
-						)
-					}),
+			const queueItems = networkStatusCheck(
+				networkStatus,
+				mutation.tracklist,
+				downloadedTracks ?? [],
 			)
+
+			console.debug(`Adding ${queueItems.length} to the queue`)
+
+			const queueTracks = queueItems.map((queueItem) => {
+				return mapDtoToTrack(queueItem, downloadedTracks ?? [], QueuingType.FromSelection)
+			})
+
+			await addToQueue(queueTracks)
 
 			setQueue(mutation.queue)
 		},

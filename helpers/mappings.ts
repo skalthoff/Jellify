@@ -1,4 +1,8 @@
-import { BaseItemDto, ImageType } from '@jellyfin/sdk/lib/generated-client/models'
+import {
+	BaseItemDto,
+	ImageType,
+	PlaybackInfoResponse,
+} from '@jellyfin/sdk/lib/generated-client/models'
 import { JellifyTrack } from '../types/JellifyTrack'
 import { RatingType, TrackType } from 'react-native-track-player'
 import { QueuingType } from '../enums/queuing-type'
@@ -6,6 +10,8 @@ import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../api/client'
 import { isUndefined } from 'lodash'
 import { JellifyDownload } from '../types/JellifyDownload'
+import { queryClient } from '../constants/query-client'
+import { QueryKeys } from '../enums/query-keys'
 
 /**
  * The container that the Jellyfin server will attempt to transcode to
@@ -48,14 +54,21 @@ export function mapDtoToTrack(
 
 	let url: string
 
-	if (downloads.length > 0)
-		url =
-			downloads[0].path ??
-			`${Client.api!.basePath}/Audio/${item.Id!}/universal?${new URLSearchParams(urlParams)}`
-	else
-		url = `${Client.api!.basePath}/Audio/${item.Id!}/universal?${new URLSearchParams(
-			urlParams,
-		)}`
+	if (downloads.length > 0 && downloads[0].path) url = downloads[0].path
+	else {
+		const { MediaSources } = queryClient.getQueryData([
+			QueryKeys.MediaSources,
+			item.Id!,
+		]) as PlaybackInfoResponse
+
+		if (MediaSources && MediaSources[0].TranscodingUrl) url = MediaSources![0].TranscodingUrl
+		else
+			url = `${Client.api!.basePath}/Audio/${item.Id!}/universal?${new URLSearchParams(
+				urlParams,
+			)}`
+	}
+
+	console.debug(`URL: ${url}`)
 
 	return {
 		url,

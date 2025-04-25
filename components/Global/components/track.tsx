@@ -15,6 +15,9 @@ import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../../api/client'
 import { networkStatusTypes } from '../../../components/Network/internetConnectionWatcher'
 import { useNetworkContext } from '../../../components/Network/provider'
+import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from '../../../enums/query-keys'
+import { fetchMediaInfo } from '../../../api/queries/functions/media'
 
 interface TrackProps {
 	track: BaseItemDto
@@ -57,6 +60,11 @@ export default function Track({
 	const isDownloaded = offlineAudio?.item?.Id
 
 	const isOffline = networkStatus === networkStatusTypes.DISCONNECTED
+
+	const mediaInfo = useQuery({
+		queryKey: [QueryKeys.MediaSources, track.Id!],
+		queryFn: () => fetchMediaInfo(track.Id!),
+	})
 
 	return (
 		<Theme name={invertedColors ? 'inverted_purple' : undefined}>
