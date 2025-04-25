@@ -522,13 +522,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Jellify/Pods-Jellify-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Jellify/Pods-Jellify-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -543,13 +539,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Jellify/Pods-Jellify-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Jellify/Pods-Jellify-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -695,7 +687,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Jack Caulfield (66Z9J9NX2X)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development: Jack Caulfield (66Z9J9NX2X)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 138;
+				CURRENT_PROJECT_VERSION = 139;
 				DEVELOPMENT_TEAM = WAH9CZ8BPG;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WAH9CZ8BPG;
 				ENABLE_BITCODE = NO;
@@ -706,7 +698,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.11.1;
+				MARKETING_VERSION = 0.11.2;
 				NEW_SETTING = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -737,7 +729,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 138;
+				CURRENT_PROJECT_VERSION = 139;
 				DEVELOPMENT_TEAM = WAH9CZ8BPG;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WAH9CZ8BPG;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -747,7 +739,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.11.1;
+				MARKETING_VERSION = 0.11.2;
 				NEW_SETTING = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -851,7 +843,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -937,7 +932,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
