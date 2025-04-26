@@ -88,9 +88,7 @@ export default function Track({
 								queuingType: QueuingType.FromSelection,
 							},
 							{
-								onSuccess: () => {
-									useStartPlayback.mutate()
-								},
+								onSuccess: () => useStartPlayback.mutate(),
 							},
 						)
 					}

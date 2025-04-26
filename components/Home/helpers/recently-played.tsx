@@ -59,9 +59,7 @@ export default function RecentlyPlayed({
 										queuingType: QueuingType.FromSelection,
 									},
 									{
-										onSuccess: () => {
-											useStartPlayback.mutate()
-										},
+										onSuccess: () => useStartPlayback.mutate(),
 									},
 								)
 							}}

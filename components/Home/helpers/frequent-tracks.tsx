@@ -59,9 +59,7 @@ export default function FrequentlyPlayedTracks({
 									queuingType: QueuingType.FromSelection,
 								},
 								{
-									onSuccess: () => {
-										useStartPlayback.mutate()
-									},
+									onSuccess: () => useStartPlayback.mutate(),
 								},
 							)
 						}}
