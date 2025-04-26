@@ -2,7 +2,6 @@ import { createContext, ReactNode, SetStateAction, useContext, useEffect, useSta
 import { JellifyTrack } from '../types/JellifyTrack'
 import { storage } from '../constants/storage'
 import { MMKVStorageKeys } from '../enums/mmkv-storage-keys'
-import { findPlayNextIndexStart, findPlayQueueIndexStart } from './helpers/index'
 import TrackPlayer, {
 	Event,
 	State,
@@ -13,58 +12,27 @@ import { isEqual, isUndefined } from 'lodash'
 import { handlePlaybackProgressUpdated, handlePlaybackState } from './handlers'
 import { useUpdateOptions } from '../player/hooks'
 import { useMutation, UseMutationResult } from '@tanstack/react-query'
-import { mapDtoToTrack } from '../helpers/mappings'
-import { QueuingType } from '../enums/queuing-type'
 import { trigger } from 'react-native-haptic-feedback'
-import {
-	getActiveTrackIndex,
-	getQueue,
-	pause,
-	seekTo,
-	skip,
-	skipToNext,
-	skipToPrevious,
-} from 'react-native-track-player/lib/src/trackPlayer'
+import { pause, seekTo } from 'react-native-track-player/lib/src/trackPlayer'
 import { convertRunTimeTicksToSeconds } from '../helpers/runtimeticks'
 import Client from '../api/client'
-import { AddToQueueMutation, QueueMutation, QueueOrderMutation } from './interfaces'
-import { Section } from '../components/Player/types'
-import { Queue } from './types/queue-item'
 
-import * as Burnt from 'burnt'
-import { markItemPlayed } from '../api/mutations/functions/item'
-import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { getPlaystateApi } from '@jellyfin/sdk/lib/utils/api'
-import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
 import { useNetworkContext } from '../components/Network/provider'
-import { networkStatusCheck } from './helpers/queue'
-import { QueueProvider } from './queue-provider'
+import { useQueueContext } from './queue-provider'
 
 interface PlayerContext {
 	initialized: boolean
 	nowPlayingIsFavorite: boolean
 	setNowPlayingIsFavorite: React.Dispatch<SetStateAction<boolean>>
 	nowPlaying: JellifyTrack | undefined
-	playQueue: JellifyTrack[]
-	queue: Queue
-	getQueueSectionData: () => Section[]
-	useAddToQueue: UseMutationResult<void, Error, AddToQueueMutation, unknown>
-	useClearQueue: UseMutationResult<void, Error, void, unknown>
-	useRemoveFromQueue: UseMutationResult<void, Error, number, unknown>
-	useReorderQueue: UseMutationResult<void, Error, QueueOrderMutation, unknown>
-	useTogglePlayback: UseMutationResult<void, Error, number | undefined, unknown>
+	useTogglePlayback: UseMutationResult<void, Error, void, unknown>
 	useSeekTo: UseMutationResult<void, Error, number, unknown>
-	useSkip: UseMutationResult<void, Error, number | undefined, unknown>
-	usePrevious: UseMutationResult<void, Error, void, unknown>
-	usePlayNewQueue: UseMutationResult<void, Error, QueueMutation, unknown>
 	playbackState: State | undefined
-	setNowPlaying: (track: JellifyTrack) => void
 }
 
 const PlayerContextInitializer = () => {
 	const nowPlayingJson = storage.getString(MMKVStorageKeys.NowPlaying)
-	const playQueueJson = storage.getString(MMKVStorageKeys.PlayQueue)
-	const queueJson = storage.getString(MMKVStorageKeys.Queue)
 
 	const playStateApi = getPlaystateApi(Client.api!)
 
@@ -76,146 +44,27 @@ const PlayerContextInitializer = () => {
 		nowPlayingJson ? JSON.parse(nowPlayingJson) : undefined,
 	)
 
-	const [isSkipping, setIsSkipping] = useState<boolean>(false)
+	const { playQueue, currentIndex } = useQueueContext()
 
-	const [playQueue, setPlayQueue] = useState<JellifyTrack[]>(
-		playQueueJson ? JSON.parse(playQueueJson) : [],
-	)
-
-	const [queue, setQueue] = useState<Queue>(queueJson ? JSON.parse(queueJson) : 'Queue')
 	//#endregion State
 
 	//#region Functions
-	const play = async (index?: number | undefined) => {
-		if (index && index > 0) {
-			TrackPlayer.skip(index)
-		}
-
+	const play = async () => {
 		TrackPlayer.play()
 	}
 
-	const getQueueSectionData: () => Section[] = () => {
-		return Object.keys(QueuingType).map((type) => {
-			return {
-				title: type,
-				data: playQueue.filter((track) => track.QueuingType === type),
-			} as Section
-		})
-	}
-
-	/**
-	 * Takes a {@link BaseItemDto} of a track on Jellyfin, and updates it's
-	 * position in the {@link queue}
-	 *
-	 *
-	 * @param track The Jellyfin track object to update and replace in the queue
-	 */
-	const replaceQueueItem: (track: BaseItemDto) => Promise<void> = async (track: BaseItemDto) => {
-		const queue = (await TrackPlayer.getQueue()) as JellifyTrack[]
-
-		const queueItemIndex = queue.findIndex((queuedTrack) => queuedTrack.item.Id === track.Id!)
-
-		// Update queued item at index if found, else silently do nothing
-		if (queueItemIndex !== -1) {
-			const queueItem = queue[queueItemIndex]
-
-			TrackPlayer.remove([queueItemIndex]).then(() => {
-				TrackPlayer.add(
-					mapDtoToTrack(track, downloadedTracks ?? [], queueItem.QueuingType),
-					queueItemIndex,
-				)
-			})
-		}
-	}
-
-	const resetQueue = async (hideMiniplayer?: boolean | undefined) => {
-		console.debug('Clearing queue')
-		await TrackPlayer.setQueue([])
-		setPlayQueue([])
-	}
-
-	const addToQueue = async (tracks: JellifyTrack[]) => {
-		const insertIndex = await findPlayQueueIndexStart(playQueue)
-		console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`)
-
-		await TrackPlayer.add(tracks, insertIndex)
-
-		setPlayQueue((await getQueue()) as JellifyTrack[])
-
-		console.debug(`Queue has ${playQueue.length} tracks`)
-	}
-
-	const addToNext = async (tracks: JellifyTrack[]) => {
-		const insertIndex = await findPlayNextIndexStart(playQueue)
-
-		console.debug(`Adding ${tracks.length} to queue at index ${insertIndex}`)
-
-		await TrackPlayer.add(tracks, insertIndex)
-
-		setPlayQueue((await getQueue()) as JellifyTrack[])
-	}
 	//#endregion Functions
 
 	//#region Hooks
-	const useAddToQueue = useMutation({
-		mutationFn: async (mutation: AddToQueueMutation) => {
-			trigger('impactLight')
-
-			if (mutation.queuingType === QueuingType.PlayingNext)
-				return addToNext([
-					mapDtoToTrack(mutation.track, downloadedTracks ?? [], mutation.queuingType),
-				])
-			else
-				return addToQueue([
-					mapDtoToTrack(mutation.track, downloadedTracks ?? [], mutation.queuingType),
-				])
-		},
-		onSuccess: (data, { queuingType }) => {
-			trigger('notificationSuccess')
-
-			Burnt.alert({
-				title: queuingType === QueuingType.PlayingNext ? 'Playing next' : 'Added to queue',
-				duration: 1,
-				preset: 'done',
-			})
-		},
-		onError: () => {
-			trigger('notificationError')
-		},
-	})
-
-	const useRemoveFromQueue = useMutation({
-		mutationFn: async (index: number) => {
-			trigger('impactMedium')
-
-			await TrackPlayer.remove([index])
-
-			setPlayQueue((await TrackPlayer.getQueue()) as JellifyTrack[])
-		},
-	})
-
-	const useClearQueue = useMutation({
-		mutationFn: async () => {
-			trigger('effectDoubleClick')
-
-			await TrackPlayer.removeUpcomingTracks()
-
-			setPlayQueue((await getQueue()) as JellifyTrack[])
-		},
-	})
-
-	const useReorderQueue = useMutation({
-		mutationFn: async (mutation: QueueOrderMutation) => {
-			setPlayQueue(mutation.newOrder)
-			await TrackPlayer.move(mutation.from, mutation.to)
-		},
+	const useStartPlayback = useMutation({
+		mutationFn: play,
 	})
 
 	const useTogglePlayback = useMutation({
-		mutationFn: (index?: number | undefined) => {
+		mutationFn: () => {
 			trigger('impactMedium')
 			if (playbackState === State.Playing) return pause()
-			else return play(index)
+			else return play()
 		},
 	})
 
@@ -229,102 +78,6 @@ const PlayerContextInitializer = () => {
 				position,
 				duration: convertRunTimeTicksToSeconds(nowPlaying!.duration!),
 			})
-		},
-	})
-
-	const useSkip = useMutation({
-		mutationFn: async (index?: number | undefined) => {
-			trigger('impactMedium')
-
-			// Handle if this is the last track in the queue
-			if (playQueue.length - 1 === (await getActiveTrackIndex())) return
-			else {
-				if (!isUndefined(index)) {
-					setIsSkipping(true)
-					setNowPlaying(playQueue[index])
-					await skip(index)
-					setIsSkipping(false)
-				} else {
-					const nowPlayingIndex = playQueue.findIndex(
-						(track) => track.item.Id === nowPlaying!.item.Id,
-					)
-					setNowPlaying(playQueue[nowPlayingIndex + 1])
-					await skipToNext()
-				}
-			}
-		},
-	})
-
-	const usePrevious = useMutation({
-		mutationFn: async () => {
-			trigger('impactMedium')
-
-			const nowPlayingIndex = playQueue.findIndex(
-				(track) => track.item.Id === nowPlaying!.item.Id,
-			)
-
-			const { position } = await TrackPlayer.getProgress()
-
-			if (nowPlayingIndex > 0 && position < SKIP_TO_PREVIOUS_THRESHOLD) {
-				setNowPlaying(playQueue[nowPlayingIndex - 1])
-				await skipToPrevious()
-			} else await seekTo(0)
-		},
-	})
-
-	/**
-	 * A mutation hook that adds tracks to the play queue
-	 *
-	 * Respects the network status of the app - if we are
-	 * online, tracks are always added to the queue for streaming
-	 * - if we are *offline* then only tracks that are downloaded
-	 * will be added to the queue
-	 */
-	const usePlayNewQueue = useMutation({
-		mutationFn: async (mutation: QueueMutation) => {
-			trigger('effectDoubleClick')
-
-			setIsSkipping(true)
-
-			// Optimistically set now playing
-
-			setNowPlaying(
-				mapDtoToTrack(
-					mutation.tracklist[mutation.index ?? 0],
-					downloadedTracks ?? [],
-					QueuingType.FromSelection,
-				),
-			)
-
-			await resetQueue(false)
-
-			const queueItems = networkStatusCheck(
-				networkStatus,
-				mutation.tracklist,
-				downloadedTracks ?? [],
-			)
-
-			console.debug(`Adding ${queueItems.length} to the queue`)
-
-			const queueTracks = queueItems.map((queueItem) => {
-				return mapDtoToTrack(queueItem, downloadedTracks ?? [], QueuingType.FromSelection)
-			})
-
-			console.debug(`Slotting ${queueTracks.length} track(s)`)
-
-			await addToQueue(queueTracks)
-
-			setQueue(mutation.queue)
-		},
-		onSuccess: async (data, mutation: QueueMutation) => {
-			setIsSkipping(false)
-			await play(mutation.index)
-
-			if (typeof mutation.queue === 'object') await markItemPlayed(queue as BaseItemDto)
-		},
-		onError: async () => {
-			setIsSkipping(false)
-			setNowPlaying((await TrackPlayer.getActiveTrack()) as JellifyTrack)
 		},
 	})
 	//#endregion
@@ -384,7 +137,7 @@ const PlayerContextInitializer = () => {
 				}
 
 				case Event.PlaybackActiveTrackChanged: {
-					if (initialized && !isSkipping) {
+					if (initialized) {
 						const activeTrack = (await TrackPlayer.getActiveTrack()) as
 							| JellifyTrack
 							| undefined
@@ -419,14 +172,6 @@ const PlayerContextInitializer = () => {
 	//#endregion RNTP Setup
 
 	//#region useEffects
-	useEffect(() => {
-		storage.set(MMKVStorageKeys.Queue, JSON.stringify(queue))
-	}, [queue])
-
-	useEffect(() => {
-		if (initialized && playQueue)
-			storage.set(MMKVStorageKeys.PlayQueue, JSON.stringify(playQueue))
-	}, [playQueue])
 
 	useEffect(() => {
 		if (initialized && nowPlaying)
@@ -435,15 +180,17 @@ const PlayerContextInitializer = () => {
 
 	useEffect(() => {
 		if (!initialized && playQueue.length > 0 && nowPlaying) {
-			TrackPlayer.setQueue(playQueue).then(() => {
-				TrackPlayer.skip(
-					playQueue.findIndex((track) => track.item.Id! === nowPlaying.item.Id!),
-				)
-			})
+			TrackPlayer.skip(playQueue.findIndex((track) => track.item.Id! === nowPlaying.item.Id!))
 		}
 
 		setInitialized(true)
 	}, [playQueue, nowPlaying])
+
+	useEffect(() => {
+		if (currentIndex > -1 && playQueue.length > currentIndex)
+			console.debug(`Setting now playing to queue index ${currentIndex}`)
+		setNowPlaying(playQueue[currentIndex])
+	}, [currentIndex])
 	//#endregion useEffects
 
 	//#region return
@@ -452,19 +199,8 @@ const PlayerContextInitializer = () => {
 		nowPlayingIsFavorite,
 		setNowPlayingIsFavorite,
 		nowPlaying,
-		playQueue,
-		queue,
-		getQueueSectionData,
-		useAddToQueue,
-		useClearQueue,
-		setNowPlaying,
-		useReorderQueue,
-		useRemoveFromQueue,
 		useTogglePlayback,
 		useSeekTo,
-		useSkip,
-		usePrevious,
-		usePlayNewQueue,
 		playbackState,
 	}
 	//#endregion return
@@ -476,82 +212,6 @@ export const PlayerContext = createContext<PlayerContext>({
 	nowPlayingIsFavorite: false,
 	setNowPlayingIsFavorite: () => {},
 	nowPlaying: undefined,
-	setNowPlaying: () => {},
-	playQueue: [],
-	queue: 'Recently Played',
-	getQueueSectionData: () => [],
-	useAddToQueue: {
-		mutate: () => {},
-		mutateAsync: async () => {},
-		data: undefined,
-		error: null,
-		variables: undefined,
-		isError: false,
-		isIdle: true,
-		isPaused: false,
-		isPending: false,
-		isSuccess: false,
-		status: 'idle',
-		reset: () => {},
-		context: {},
-		failureCount: 0,
-		failureReason: null,
-		submittedAt: 0,
-	},
-	useClearQueue: {
-		mutate: () => {},
-		mutateAsync: async () => {},
-		data: undefined,
-		error: null,
-		variables: undefined,
-		isError: false,
-		isIdle: true,
-		isPaused: false,
-		isPending: false,
-		isSuccess: false,
-		status: 'idle',
-		reset: () => {},
-		context: {},
-		failureCount: 0,
-		failureReason: null,
-		submittedAt: 0,
-	},
-	useRemoveFromQueue: {
-		mutate: () => {},
-		mutateAsync: async () => {},
-		data: undefined,
-		error: null,
-		variables: undefined,
-		isError: false,
-		isIdle: true,
-		isPaused: false,
-		isPending: false,
-		isSuccess: false,
-		status: 'idle',
-		reset: () => {},
-		context: {},
-		failureCount: 0,
-		failureReason: null,
-		submittedAt: 0,
-	},
-	useReorderQueue: {
-		mutate: () => {},
-		mutateAsync: async () => {},
-		data: undefined,
-		error: null,
-		variables: undefined,
-		isError: false,
-		isIdle: true,
-		isPaused: false,
-		isPending: false,
-		isSuccess: false,
-		status: 'idle',
-		reset: () => {},
-		context: {},
-		failureCount: 0,
-		failureReason: null,
-		submittedAt: 0,
-	},
 	useTogglePlayback: {
 		mutate: () => {},
 		mutateAsync: async () => {},
@@ -588,60 +248,6 @@ export const PlayerContext = createContext<PlayerContext>({
 		failureReason: null,
 		submittedAt: 0,
 	},
-	useSkip: {
-		mutate: () => {},
-		mutateAsync: async () => {},
-		data: undefined,
-		error: null,
-		variables: undefined,
-		isError: false,
-		isIdle: true,
-		isPaused: false,
-		isPending: false,
-		isSuccess: false,
-		status: 'idle',
-		reset: () => {},
-		context: {},
-		failureCount: 0,
-		failureReason: null,
-		submittedAt: 0,
-	},
-	usePrevious: {
-		mutate: () => {},
-		mutateAsync: async () => {},
-		data: undefined,
-		error: null,
-		variables: undefined,
-		isError: false,
-		isIdle: true,
-		isPaused: false,
-		isPending: false,
-		isSuccess: false,
-		status: 'idle',
-		reset: () => {},
-		context: {},
-		failureCount: 0,
-		failureReason: null,
-		submittedAt: 0,
-	},
-	usePlayNewQueue: {
-		mutate: () => {},
-		mutateAsync: async () => {},
-		data: undefined,
-		error: null,
-		variables: undefined,
-		isError: false,
-		isIdle: true,
-		isPaused: false,
-		isPending: false,
-		isSuccess: false,
-		status: 'idle',
-		reset: () => {},
-		context: {},
-		failureCount: 0,
-		failureReason: null,
-		submittedAt: 0,
-	},
 	playbackState: undefined,
 })
 //#endregion Create PlayerContext
@@ -651,55 +257,9 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
 }: {
 	children: ReactNode
 }) => {
-	const {
-		initialized,
-		nowPlayingIsFavorite,
-		setNowPlayingIsFavorite,
-		nowPlaying,
-		playQueue,
-		queue,
-		getQueueSectionData,
-		useAddToQueue,
-		useClearQueue,
-		useRemoveFromQueue,
-		useReorderQueue,
-		useTogglePlayback,
-		useSeekTo,
-		useSkip,
-		usePrevious,
-		setNowPlaying,
-		usePlayNewQueue,
-		playbackState,
-	} = PlayerContextInitializer()
+	const context = PlayerContextInitializer()
 
-	return (
-		<QueueProvider>
-			<PlayerContext.Provider
-				value={{
-					initialized,
-					nowPlayingIsFavorite,
-					setNowPlayingIsFavorite,
-					nowPlaying,
-					playQueue,
-					queue,
-					getQueueSectionData,
-					useAddToQueue,
-					useClearQueue,
-					useRemoveFromQueue,
-					useReorderQueue,
-					useTogglePlayback,
-					useSeekTo,
-					useSkip,
-					usePrevious,
-					setNowPlaying,
-					usePlayNewQueue,
-					playbackState,
-				}}
-			>
-				{children}
-			</PlayerContext.Provider>
-		</QueueProvider>
-	)
+	return <PlayerContext.Provider value={context}>{children}</PlayerContext.Provider>
 }
 
 export const usePlayerContext = () => useContext(PlayerContext)

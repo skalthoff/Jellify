@@ -18,12 +18,14 @@ import { useNetworkContext } from '../../../components/Network/provider'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../../enums/query-keys'
 import { fetchMediaInfo } from '../../../api/queries/functions/media'
+import { useQueueContext } from '../../../player/queue-provider'
+import { State } from 'react-native-track-player'
 
 interface TrackProps {
 	track: BaseItemDto
 	navigation: NativeStackNavigationProp<StackParamList>
 	tracklist?: BaseItemDto[] | undefined
-	index?: number | undefined
+	index: number
 	queue: Queue
 	showArtwork?: boolean | undefined
 	onPress?: () => void | undefined
@@ -51,7 +53,8 @@ export default function Track({
 	onRemove,
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
-	const { nowPlaying, playQueue, usePlayNewQueue } = usePlayerContext()
+	const { nowPlaying, playbackState, useTogglePlayback } = usePlayerContext()
+	const { playQueue, useLoadNewQueue } = useQueueContext()
 	const { downloadedTracks, networkStatus } = useNetworkContext()
 
 	const isPlaying = nowPlaying?.item.Id === track.Id
@@ -76,13 +79,22 @@ export default function Track({
 					if (onPress) {
 						onPress()
 					} else {
-						usePlayNewQueue.mutate({
+						useLoadNewQueue.mutate({
 							track,
 							index,
 							tracklist: tracklist ?? playQueue.map((track) => track.item),
 							queue,
 							queuingType: QueuingType.FromSelection,
 						})
+
+						console.debug(playbackState)
+
+						if (
+							![State.Buffering, State.Loading, State.Playing].includes(
+								playbackState ?? State.None,
+							)
+						)
+							useTogglePlayback.mutate()
 					}
 				}}
 				onLongPress={

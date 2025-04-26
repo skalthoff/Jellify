@@ -6,9 +6,9 @@ import HorizontalCardList from '../../../components/Global/components/horizontal
 import { ItemCard } from '../../../components/Global/components/item-card'
 import { QueuingType } from '../../../enums/queuing-type'
 import { trigger } from 'react-native-haptic-feedback'
-import { usePlayerContext } from '../../../player/provider'
 import { H2 } from '../../../components/Global/helpers/text'
 import Icon from '../../../components/Global/helpers/icon'
+import { useQueueContext } from '../../../player/queue-provider'
 
 export default function FrequentlyPlayedTracks({
 	navigation,
@@ -17,7 +17,7 @@ export default function FrequentlyPlayedTracks({
 }): React.JSX.Element {
 	const { frequentlyPlayed } = useHomeContext()
 
-	const { usePlayNewQueue } = usePlayerContext()
+	const { useLoadNewQueue } = useQueueContext()
 
 	return (
 		<View>
@@ -48,7 +48,7 @@ export default function FrequentlyPlayedTracks({
 						subCaption={`${track.Artists?.join(', ')}`}
 						squared
 						onPress={() => {
-							usePlayNewQueue.mutate({
+							useLoadNewQueue.mutate({
 								track,
 								index,
 								tracklist: frequentlyPlayed ?? [track],
