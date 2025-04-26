@@ -126,13 +126,12 @@ const QueueContextInitailizer = () => {
 		const playNextTrack = mapDtoToTrack(item, downloadedTracks ?? [], QueuingType.PlayingNext)
 
 		setUpdateRntp(false)
-		setPlayQueue([
-			...playQueue.slice(0, currentIndex),
-			playNextTrack,
-			...playQueue.slice(currentIndex + 1, playQueue.length - 1),
-		])
-
 		TrackPlayer.add([playNextTrack], currentIndex + 1)
+		setPlayQueue([
+			...playQueue.slice(0, currentIndex + 1),
+			playNextTrack,
+			...playQueue.slice(currentIndex + 1),
+		])
 	}
 
 	const playInQueue = async (items: BaseItemDto[]) => {
