@@ -127,11 +127,7 @@ const QueueContextInitailizer = () => {
 
 		setUpdateRntp(false)
 		TrackPlayer.add([playNextTrack], currentIndex + 1)
-		setPlayQueue([
-			...playQueue.slice(0, currentIndex + 1),
-			playNextTrack,
-			...playQueue.slice(currentIndex + 1),
-		])
+		setPlayQueue((await getQueue()) as JellifyTrack[])
 	}
 
 	const playInQueue = async (items: BaseItemDto[]) => {
@@ -189,10 +185,7 @@ const QueueContextInitailizer = () => {
 
 			setUpdateRntp(false)
 			TrackPlayer.remove([index])
-			setPlayQueue([
-				...playQueue.slice(0, index),
-				...playQueue.slice(index + 1, playQueue.length - 1),
-			])
+			setPlayQueue((await getQueue()) as JellifyTrack[])
 		},
 	})
 
