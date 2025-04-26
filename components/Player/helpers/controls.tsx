@@ -5,11 +5,14 @@ import Icon from '../../../components/Global/helpers/icon'
 import { getProgress, seekBy, skipToNext } from 'react-native-track-player/lib/src/trackPlayer'
 import { usePlayerContext } from '../../../player/provider'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
+import { useQueueContext } from '../../../player/queue-provider'
 
 export default function Controls(): React.JSX.Element {
 	const { width } = useSafeAreaFrame()
 
-	const { usePrevious, useSeekTo } = usePlayerContext()
+	const { useSeekTo } = usePlayerContext()
+
+	const { usePrevious } = useQueueContext()
 
 	return (
 		<XStack alignItems='center' justifyContent='space-evenly' marginVertical={'$2'}>
@@ -22,13 +25,7 @@ export default function Controls(): React.JSX.Element {
 			<Icon
 				color={getToken('$color.amethyst')}
 				name='skip-previous'
-				onPress={async () => {
-					const progress = await getProgress()
-					if (progress.position < 3) usePrevious.mutate()
-					else {
-						useSeekTo.mutate(0)
-					}
-				}}
+				onPress={() => usePrevious.mutate()}
 				large
 			/>
 
