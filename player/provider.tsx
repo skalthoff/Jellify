@@ -26,9 +26,9 @@ interface PlayerContext {
 	nowPlayingIsFavorite: boolean
 	setNowPlayingIsFavorite: React.Dispatch<SetStateAction<boolean>>
 	nowPlaying: JellifyTrack | undefined
+	useStartPlayback: UseMutationResult<void, Error, void, unknown>
 	useTogglePlayback: UseMutationResult<void, Error, void, unknown>
 	useSeekTo: UseMutationResult<void, Error, number, unknown>
-	playbackState: State | undefined
 }
 
 const PlayerContextInitializer = () => {
@@ -50,7 +50,7 @@ const PlayerContextInitializer = () => {
 
 	//#region Functions
 	const play = async () => {
-		TrackPlayer.play()
+		await TrackPlayer.play()
 	}
 
 	//#endregion Functions
@@ -199,6 +199,7 @@ const PlayerContextInitializer = () => {
 		nowPlayingIsFavorite,
 		setNowPlayingIsFavorite,
 		nowPlaying,
+		useStartPlayback,
 		useTogglePlayback,
 		useSeekTo,
 		playbackState,
@@ -212,6 +213,24 @@ export const PlayerContext = createContext<PlayerContext>({
 	nowPlayingIsFavorite: false,
 	setNowPlayingIsFavorite: () => {},
 	nowPlaying: undefined,
+	useStartPlayback: {
+		mutate: () => {},
+		mutateAsync: async () => {},
+		data: undefined,
+		error: null,
+		variables: undefined,
+		isError: false,
+		isIdle: true,
+		isPaused: false,
+		isPending: false,
+		isSuccess: false,
+		status: 'idle',
+		reset: () => {},
+		context: {},
+		failureCount: 0,
+		failureReason: null,
+		submittedAt: 0,
+	},
 	useTogglePlayback: {
 		mutate: () => {},
 		mutateAsync: async () => {},
@@ -248,7 +267,6 @@ export const PlayerContext = createContext<PlayerContext>({
 		failureReason: null,
 		submittedAt: 0,
 	},
-	playbackState: undefined,
 })
 //#endregion Create PlayerContext
 

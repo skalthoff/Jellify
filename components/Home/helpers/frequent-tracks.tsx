@@ -9,6 +9,7 @@ import { trigger } from 'react-native-haptic-feedback'
 import { H2 } from '../../../components/Global/helpers/text'
 import Icon from '../../../components/Global/helpers/icon'
 import { useQueueContext } from '../../../player/queue-provider'
+import { usePlayerContext } from '../../../player/provider'
 
 export default function FrequentlyPlayedTracks({
 	navigation,
@@ -17,6 +18,7 @@ export default function FrequentlyPlayedTracks({
 }): React.JSX.Element {
 	const { frequentlyPlayed } = useHomeContext()
 
+	const { useStartPlayback } = usePlayerContext()
 	const { useLoadNewQueue } = useQueueContext()
 
 	return (
@@ -48,13 +50,20 @@ export default function FrequentlyPlayedTracks({
 						subCaption={`${track.Artists?.join(', ')}`}
 						squared
 						onPress={() => {
-							useLoadNewQueue.mutate({
-								track,
-								index,
-								tracklist: frequentlyPlayed ?? [track],
-								queue: 'On Repeat',
-								queuingType: QueuingType.FromSelection,
-							})
+							useLoadNewQueue.mutate(
+								{
+									track,
+									index,
+									tracklist: frequentlyPlayed ?? [track],
+									queue: 'On Repeat',
+									queuingType: QueuingType.FromSelection,
+								},
+								{
+									onSuccess: () => {
+										useStartPlayback.mutate()
+									},
+								},
+							)
 						}}
 						onLongPress={() => {
 							trigger('impactMedium')

@@ -53,7 +53,7 @@ export default function Track({
 	onRemove,
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
-	const { nowPlaying, playbackState, useTogglePlayback } = usePlayerContext()
+	const { nowPlaying, useStartPlayback } = usePlayerContext()
 	const { playQueue, useLoadNewQueue } = useQueueContext()
 	const { downloadedTracks, networkStatus } = useNetworkContext()
 
@@ -79,22 +79,20 @@ export default function Track({
 					if (onPress) {
 						onPress()
 					} else {
-						useLoadNewQueue.mutate({
-							track,
-							index,
-							tracklist: tracklist ?? playQueue.map((track) => track.item),
-							queue,
-							queuingType: QueuingType.FromSelection,
-						})
-
-						console.debug(playbackState)
-
-						if (
-							![State.Buffering, State.Loading, State.Playing].includes(
-								playbackState ?? State.None,
-							)
+						useLoadNewQueue.mutate(
+							{
+								track,
+								index,
+								tracklist: tracklist ?? playQueue.map((track) => track.item),
+								queue,
+								queuingType: QueuingType.FromSelection,
+							},
+							{
+								onSuccess: () => {
+									useStartPlayback.mutate()
+								},
+							},
 						)
-							useTogglePlayback.mutate()
 					}
 				}}
 				onLongPress={

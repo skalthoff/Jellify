@@ -21,7 +21,7 @@ export default function Item({
 	queueName: string
 	navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
-	const { useTogglePlayback, playbackState } = usePlayerContext()
+	const { useStartPlayback } = usePlayerContext()
 	const { useLoadNewQueue } = useQueueContext()
 
 	const { width } = useSafeAreaFrame()
@@ -51,20 +51,20 @@ export default function Item({
 						}
 
 						case 'Audio': {
-							useLoadNewQueue.mutate({
-								track: item,
-								tracklist: [item],
-								index: 0,
-								queue: 'Search',
-								queuingType: QueuingType.FromSelection,
-							})
-
-							if (
-								![State.Buffering, State.Loading, State.Playing].includes(
-									playbackState ?? State.None,
-								)
+							useLoadNewQueue.mutate(
+								{
+									track: item,
+									tracklist: [item],
+									index: 0,
+									queue: 'Search',
+									queuingType: QueuingType.FromSelection,
+								},
+								{
+									onSuccess: () => {
+										useStartPlayback.mutate()
+									},
+								},
 							)
-								useTogglePlayback.mutate()
 							break
 						}
 					}

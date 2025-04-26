@@ -204,7 +204,7 @@ const QueueContextInitailizer = () => {
 		mutationFn: async () => {
 			setUpdateRntp(false)
 			TrackPlayer.removeUpcomingTracks()
-			setPlayQueue([...playQueue.slice(0, 1)])
+			setPlayQueue([...playQueue.slice(0, currentIndex + 1)])
 		},
 		onSuccess: () => {
 			trigger('notificationSuccess')
@@ -225,6 +225,12 @@ const QueueContextInitailizer = () => {
 	const useSkip = useMutation({
 		mutationFn: async (index?: number | undefined) => {
 			trigger('impactMedium')
+
+			console.debug(
+				`Skip to next triggered. Index is ${`using ${
+					index ? index : currentIndex
+				} as index ${index ? 'since it was provided' : ''}`}`,
+			)
 
 			if (index && index < playQueue.length - 1) setCurrentIndex(index)
 			else if (playQueue.length - 1 > currentIndex) setCurrentIndex(currentIndex + 1)

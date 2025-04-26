@@ -17,7 +17,7 @@ export default function RecentlyPlayed({
 }: {
 	navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
-	const { nowPlaying } = usePlayerContext()
+	const { nowPlaying, useStartPlayback } = usePlayerContext()
 	const { useLoadNewQueue } = useQueueContext()
 	const { recentTracks } = useHomeContext()
 
@@ -50,13 +50,20 @@ export default function RecentlyPlayed({
 							squared
 							item={recentlyPlayedTrack}
 							onPress={() => {
-								useLoadNewQueue.mutate({
-									track: recentlyPlayedTrack,
-									index: index,
-									tracklist: recentTracks ?? [recentlyPlayedTrack],
-									queue: 'Recently Played',
-									queuingType: QueuingType.FromSelection,
-								})
+								useLoadNewQueue.mutate(
+									{
+										track: recentlyPlayedTrack,
+										index: index,
+										tracklist: recentTracks ?? [recentlyPlayedTrack],
+										queue: 'Recently Played',
+										queuingType: QueuingType.FromSelection,
+									},
+									{
+										onSuccess: () => {
+											useStartPlayback.mutate()
+										},
+									},
+								)
 							}}
 							onLongPress={() => {
 								trigger('impactMedium')
