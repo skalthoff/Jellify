@@ -1,4 +1,4 @@
-import { usePlayerContext } from '../../../player/provider'
+import { usePlayerContext } from '../../../player/player-provider'
 import React from 'react'
 import { getToken, getTokens, Theme, useTheme, XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
@@ -19,7 +19,6 @@ import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../../enums/query-keys'
 import { fetchMediaInfo } from '../../../api/queries/functions/media'
 import { useQueueContext } from '../../../player/queue-provider'
-import { State } from 'react-native-track-player'
 
 interface TrackProps {
 	track: BaseItemDto

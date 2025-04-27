@@ -9,7 +9,7 @@ import { trigger } from 'react-native-haptic-feedback'
 import { H2 } from '../../../components/Global/helpers/text'
 import Icon from '../../../components/Global/helpers/icon'
 import { useQueueContext } from '../../../player/queue-provider'
-import { usePlayerContext } from '../../../player/provider'
+import { usePlayerContext } from '../../../player/player-provider'
 
 export default function FrequentlyPlayedTracks({
 	navigation,

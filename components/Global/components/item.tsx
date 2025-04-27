@@ -9,8 +9,7 @@ import Icon from '../helpers/icon'
 import { QueuingType } from '../../../enums/queuing-type'
 import { RunTimeTicks } from '../helpers/time-codes'
 import { useQueueContext } from '../../../player/queue-provider'
-import { usePlayerContext } from '../../../player/provider'
-import { State } from 'react-native-track-player'
+import { usePlayerContext } from '../../../player/player-provider'
 
 export default function Item({
 	item,
@@ -60,9 +59,7 @@ export default function Item({
 									queuingType: QueuingType.FromSelection,
 								},
 								{
-									onSuccess: () => {
-										useStartPlayback.mutate()
-									},
+									onSuccess: () => useStartPlayback.mutate(),
 								},
 							)
 							break

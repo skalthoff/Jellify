@@ -8,12 +8,10 @@ import TrackPlayer, {
 	usePlaybackState,
 	useTrackPlayerEvents,
 } from 'react-native-track-player'
-import { isEqual, isUndefined } from 'lodash'
 import { handlePlaybackProgressUpdated, handlePlaybackState } from './handlers'
-import { useUpdateOptions } from '../player/hooks'
 import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import { trigger } from 'react-native-haptic-feedback'
-import { pause, seekTo } from 'react-native-track-player/lib/src/trackPlayer'
+import { pause, play, seekBy, seekTo } from 'react-native-track-player/lib/src/trackPlayer'
 import { convertRunTimeTicksToSeconds } from '../helpers/runtimeticks'
 import Client from '../api/client'
 
@@ -22,13 +20,11 @@ import { useNetworkContext } from '../components/Network/provider'
 import { useQueueContext } from './queue-provider'
 
 interface PlayerContext {
-	initialized: boolean
-	nowPlayingIsFavorite: boolean
-	setNowPlayingIsFavorite: React.Dispatch<SetStateAction<boolean>>
 	nowPlaying: JellifyTrack | undefined
 	useStartPlayback: UseMutationResult<void, Error, void, unknown>
 	useTogglePlayback: UseMutationResult<void, Error, void, unknown>
 	useSeekTo: UseMutationResult<void, Error, number, unknown>
+	useSeekBy: UseMutationResult<void, Error, number, unknown>
 }
 
 const PlayerContextInitializer = () => {
@@ -37,9 +33,6 @@ const PlayerContextInitializer = () => {
 	const playStateApi = getPlaystateApi(Client.api!)
 
 	//#region State
-	const [initialized, setInitialized] = useState<boolean>(false)
-
-	const [nowPlayingIsFavorite, setNowPlayingIsFavorite] = useState<boolean>(false)
 	const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(
 		nowPlayingJson ? JSON.parse(nowPlayingJson) : undefined,
 	)
@@ -47,13 +40,6 @@ const PlayerContextInitializer = () => {
 	const { playQueue, currentIndex } = useQueueContext()
 
 	//#endregion State
-
-	//#region Functions
-	const play = async () => {
-		await TrackPlayer.play()
-	}
-
-	//#endregion Functions
 
 	//#region Hooks
 	const useStartPlayback = useMutation({
@@ -80,6 +66,14 @@ const PlayerContextInitializer = () => {
 			})
 		},
 	})
+
+	const useSeekBy = useMutation({
+		mutationFn: async (seekSeconds: number) => {
+			trigger('clockTick')
+
+			await seekBy(seekSeconds)
+		},
+	})
 	//#endregion
 
 	//#region RNTP Setup
@@ -88,22 +82,14 @@ const PlayerContextInitializer = () => {
 	const { useDownload, downloadedTracks, networkStatus } = useNetworkContext()
 
 	useTrackPlayerEvents(
-		[
-			Event.RemoteLike,
-			Event.RemoteDislike,
-			Event.PlaybackProgressUpdated,
-			Event.PlaybackState,
-			Event.PlaybackActiveTrackChanged,
-		],
+		[Event.RemoteLike, Event.RemoteDislike, Event.PlaybackProgressUpdated, Event.PlaybackState],
 		async (event) => {
 			switch (event.type) {
 				case Event.RemoteLike: {
-					setNowPlayingIsFavorite(true)
 					break
 				}
 
 				case Event.RemoteDislike: {
-					setNowPlayingIsFavorite(false)
 					break
 				}
 
@@ -135,36 +121,6 @@ const PlayerContextInitializer = () => {
 
 					break
 				}
-
-				case Event.PlaybackActiveTrackChanged: {
-					if (initialized) {
-						const activeTrack = (await TrackPlayer.getActiveTrack()) as
-							| JellifyTrack
-							| undefined
-						if (activeTrack && !isEqual(activeTrack, nowPlaying)) {
-							setNowPlaying(activeTrack)
-
-							// Set player favorite state to user data IsFavorite
-							// This is super nullish so we need to do a lot of
-							// checks on the fields
-							// TODO: Turn this check into a helper function
-							setNowPlayingIsFavorite(
-								isUndefined(activeTrack)
-									? false
-									: isUndefined(activeTrack!.item.UserData)
-									? false
-									: activeTrack.item.UserData.IsFavorite ?? false,
-							)
-
-							await useUpdateOptions(nowPlayingIsFavorite)
-						} else if (!activeTrack) {
-							setNowPlaying(undefined)
-							setNowPlayingIsFavorite(false)
-						} else {
-							// Do nothing
-						}
-					}
-				}
 			}
 		},
 	)
@@ -174,34 +130,24 @@ const PlayerContextInitializer = () => {
 	//#region useEffects
 
 	useEffect(() => {
-		if (initialized && nowPlaying)
-			storage.set(MMKVStorageKeys.NowPlaying, JSON.stringify(nowPlaying))
+		if (nowPlaying) storage.set(MMKVStorageKeys.NowPlaying, JSON.stringify(nowPlaying))
 	}, [nowPlaying])
 
 	useEffect(() => {
-		if (!initialized && playQueue.length > 0 && nowPlaying) {
-			TrackPlayer.skip(playQueue.findIndex((track) => track.item.Id! === nowPlaying.item.Id!))
-		}
-
-		setInitialized(true)
-	}, [playQueue, nowPlaying])
-
-	useEffect(() => {
-		if (currentIndex > -1 && playQueue.length > currentIndex)
+		if (currentIndex > -1 && playQueue.length > currentIndex) {
 			console.debug(`Setting now playing to queue index ${currentIndex}`)
-		setNowPlaying(playQueue[currentIndex])
+			setNowPlaying(playQueue[currentIndex])
+		}
 	}, [currentIndex])
 	//#endregion useEffects
 
 	//#region return
 	return {
-		initialized,
-		nowPlayingIsFavorite,
-		setNowPlayingIsFavorite,
 		nowPlaying,
 		useStartPlayback,
 		useTogglePlayback,
 		useSeekTo,
+		useSeekBy,
 		playbackState,
 	}
 	//#endregion return
@@ -209,9 +155,6 @@ const PlayerContextInitializer = () => {
 
 //#region Create PlayerContext
 export const PlayerContext = createContext<PlayerContext>({
-	initialized: false,
-	nowPlayingIsFavorite: false,
-	setNowPlayingIsFavorite: () => {},
 	nowPlaying: undefined,
 	useStartPlayback: {
 		mutate: () => {},
@@ -250,6 +193,24 @@ export const PlayerContext = createContext<PlayerContext>({
 		submittedAt: 0,
 	},
 	useSeekTo: {
+		mutate: () => {},
+		mutateAsync: async () => {},
+		data: undefined,
+		error: null,
+		variables: undefined,
+		isError: false,
+		isIdle: true,
+		isPaused: false,
+		isPending: false,
+		isSuccess: false,
+		status: 'idle',
+		reset: () => {},
+		context: {},
+		failureCount: 0,
+		failureReason: null,
+		submittedAt: 0,
+	},
+	useSeekBy: {
 		mutate: () => {},
 		mutateAsync: async () => {},
 		data: undefined,

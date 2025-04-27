@@ -1,6 +1,6 @@
 import React from 'react'
 import { getToken, getTokens, useTheme, View, XStack, YStack } from 'tamagui'
-import { usePlayerContext } from '../../player/provider'
+import { usePlayerContext } from '../../player/player-provider'
 import { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs'
 import { NavigationHelpers, ParamListBase } from '@react-navigation/native'
 import Icon from '../Global/helpers/icon'
