@@ -8,4 +8,4 @@ node_modules/
 *.md
 
 # Ignore iOS Pods directory
-ios/Pods/*/*.podspec.json
+ios/**/*
