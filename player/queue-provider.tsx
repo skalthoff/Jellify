@@ -100,6 +100,7 @@ const QueueContextInitailizer = () => {
 		 * then our useEffect won't fire - this ensures
 		 * it does
 		 */
+		setUpdateRntp(false)
 		setCurrentIndex(-1)
 
 		const availableAudioItems = filterTracksOnNetworkStatus(
@@ -157,6 +158,7 @@ const QueueContextInitailizer = () => {
 	const previous = async () => {
 		trigger('impactMedium')
 
+		setCurrentIndex(-1)
 		const { position } = await TrackPlayer.getProgress()
 
 		console.debug(
@@ -258,6 +260,10 @@ const QueueContextInitailizer = () => {
 	//#endregion Hooks
 
 	//#region useEffect(s)
+	useEffect(() => {
+		useUpdateRntpIndex.mutate(currentIndex)
+	}, [currentIndex])
+
 	/**
 	 * Update RNTP Queue when our queue
 	 * is updated
