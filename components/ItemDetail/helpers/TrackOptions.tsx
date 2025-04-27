@@ -173,7 +173,8 @@ export default function TrackOptions({
 						name={isDownloaded ? 'delete' : 'download'}
 						title={isDownloaded ? 'Remove Download' : 'Download'}
 						onPress={() => {
-							(isDownloaded ? useRemoveDownload : useDownload).mutate(track)
+							if (isDownloaded) useRemoveDownload.mutate(track)
+							else useDownload.mutate(track)
 						}}
 						size={width / 6}
 					/>
