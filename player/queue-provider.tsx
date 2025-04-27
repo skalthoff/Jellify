@@ -19,7 +19,7 @@ import * as Burnt from 'burnt'
 import { markItemPlayed } from '../api/mutations/functions/item'
 import { filterTracksOnNetworkStatus } from './helpers/queue'
 import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
-import { isNull, isUndefined } from 'lodash'
+import { isUndefined } from 'lodash'
 
 interface QueueContext {
 	queueRef: Queue
@@ -45,15 +45,12 @@ const QueueContextInitailizer = () => {
 	const [queueRef, setQueueRef] = useState<Queue>(queueRefInit)
 	const [playQueue, setPlayQueue] = useState<JellifyTrack[]>(playQueueInit)
 
-	const [updateRntp, setUpdateRntp] = useState<boolean>(true)
-
 	const [currentIndex, setCurrentIndex] = useState<number>(-1)
 
 	const { downloadedTracks, networkStatus } = useNetworkContext()
 
 	useTrackPlayerEvents([Event.PlaybackActiveTrackChanged], ({ index }) => {
-		const rntpSkippedTrackWithoutUs = !updateRntp && !isUndefined(index)
-		if (rntpSkippedTrackWithoutUs) setCurrentIndex(index)
+		if (!isUndefined(index)) setCurrentIndex(index)
 	})
 
 	//#region Functions
@@ -64,11 +61,6 @@ const QueueContextInitailizer = () => {
 				data: playQueue.filter((track) => track.QueuingType === type),
 			} as Section
 		})
-	}
-
-	const resetQueue = () => {
-		console.debug(`Clearing queue of ${playQueue.length}`)
-		setPlayQueue([])
 	}
 
 	/**
@@ -130,11 +122,8 @@ const QueueContextInitailizer = () => {
 		setQueueRef(queuingRef)
 
 		await TrackPlayer.setQueue(queue)
-		await TrackPlayer.skip(startIndex)
-
 		setPlayQueue(queue)
-
-		setUpdateRntp(false)
+		await TrackPlayer.skip(startIndex)
 
 		console.debug(`Queued ${queue.length} tracks, starting at ${startIndex}`)
 
@@ -146,7 +135,6 @@ const QueueContextInitailizer = () => {
 
 		const playNextTrack = mapDtoToTrack(item, downloadedTracks ?? [], QueuingType.PlayingNext)
 
-		setUpdateRntp(false)
 		TrackPlayer.add([playNextTrack], currentIndex + 1)
 		setPlayQueue((await getQueue()) as JellifyTrack[])
 	}
@@ -155,7 +143,6 @@ const QueueContextInitailizer = () => {
 		const insertIndex = await findPlayQueueIndexStart(playQueue)
 		console.debug(`Adding ${items.length} to queue at index ${insertIndex}`)
 
-		setUpdateRntp(false)
 		await TrackPlayer.add(
 			items.map((item) =>
 				mapDtoToTrack(item, downloadedTracks ?? [], QueuingType.DirectlyQueued),
@@ -174,9 +161,11 @@ const QueueContextInitailizer = () => {
 		setCurrentIndex(-1)
 		const { position } = await TrackPlayer.getProgress()
 
-		console.debug(`Skip to previous triggered. Index is ${currentIndex}`)
+		console.debug(
+			`Skip to previous triggered. Index is ${currentIndex}, position is ${position}`,
+		)
 
-		if (currentIndex > 0 && position < SKIP_TO_PREVIOUS_THRESHOLD) {
+		if (currentIndex > 0 && Math.floor(position) < SKIP_TO_PREVIOUS_THRESHOLD) {
 			TrackPlayer.skipToPrevious()
 		} else await seekTo(0)
 	}
@@ -232,7 +221,6 @@ const QueueContextInitailizer = () => {
 		mutationFn: async (index: number) => {
 			trigger('impactMedium')
 
-			setUpdateRntp(false)
 			TrackPlayer.remove([index])
 			setPlayQueue((await getQueue()) as JellifyTrack[])
 		},
@@ -243,7 +231,6 @@ const QueueContextInitailizer = () => {
 	 */
 	const useRemoveUpcomingTracks = useMutation({
 		mutationFn: async () => {
-			setUpdateRntp(false)
 			TrackPlayer.removeUpcomingTracks()
 			setPlayQueue([...playQueue.slice(0, currentIndex + 1)])
 		},
@@ -254,7 +241,6 @@ const QueueContextInitailizer = () => {
 
 	const useReorderQueue = useMutation({
 		mutationFn: async ({ from, to, newOrder }: QueueOrderMutation) => {
-			setUpdateRntp(false)
 			TrackPlayer.move(from, to)
 			setPlayQueue(newOrder)
 		},
@@ -271,18 +257,6 @@ const QueueContextInitailizer = () => {
 		mutationFn: previous,
 	})
 
-	const useUpdateRntpQueue = useMutation({
-		mutationFn: async () => {
-			if (updateRntp) await TrackPlayer.setQueue(playQueue)
-		},
-	})
-
-	const useUpdateRntpIndex = useMutation({
-		mutationFn: async (index: number) => {
-			if (updateRntp) await TrackPlayer.skip(index)
-		},
-	})
-
 	//#endregion Hooks
 
 	//#region useEffect(s)
@@ -295,7 +269,6 @@ const QueueContextInitailizer = () => {
 	 * is updated
 	 */
 	useEffect(() => {
-		useUpdateRntpQueue.mutate()
 		storage.set(MMKVStorageKeys.PlayQueue, JSON.stringify(playQueue))
 	}, [playQueue])
 
