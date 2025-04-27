@@ -23,7 +23,7 @@ export default function TracksScreen({ route, navigation }: TracksProps): React.
 				<Track
 					navigation={navigation}
 					showArtwork
-					index={index}
+					index={0}
 					track={track}
 					tracklist={
 						route.params.tracks

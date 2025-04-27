@@ -137,6 +137,8 @@ const QueueContextInitailizer = () => {
 		setUpdateRntp(false)
 
 		console.debug(`Queued ${queue.length} tracks, starting at ${startIndex}`)
+
+		await play()
 	}
 
 	const playNextInQueue = async (item: BaseItemDto) => {
