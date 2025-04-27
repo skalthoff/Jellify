@@ -11,9 +11,9 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { mapDtoToTrack } from '../helpers/mappings'
 import { useNetworkContext } from '../components/Network/provider'
 import { QueuingType } from '../enums/queuing-type'
-import TrackPlayer from 'react-native-track-player'
+import TrackPlayer, { Event, useTrackPlayerEvents } from 'react-native-track-player'
 import { findPlayQueueIndexStart } from './helpers'
-import { getQueue, seekTo } from 'react-native-track-player/lib/src/trackPlayer'
+import { getQueue, play, seekTo } from 'react-native-track-player/lib/src/trackPlayer'
 import { trigger } from 'react-native-haptic-feedback'
 import * as Burnt from 'burnt'
 import { markItemPlayed } from '../api/mutations/functions/item'
@@ -50,6 +50,13 @@ const QueueContextInitailizer = () => {
 	const [currentIndex, setCurrentIndex] = useState<number>(-1)
 
 	const { downloadedTracks, networkStatus } = useNetworkContext()
+
+	useTrackPlayerEvents([Event.PlaybackActiveTrackChanged], ({ lastIndex, index }) => {
+		const lastTrackFinished =
+			!isUndefined(index) && !isUndefined(lastIndex) && index - lastIndex === 1
+
+		if (lastTrackFinished) setCurrentIndex(currentIndex + 1)
+	})
 
 	//#region Functions
 	const fetchQueueSectionData: () => Section[] = () => {
@@ -98,6 +105,13 @@ const QueueContextInitailizer = () => {
 	) => {
 		console.debug(`Queuing ${audioItems.length} items`)
 
+		/**
+		 * If the start index matches the current index,
+		 * then our useEffect won't fire - this ensures
+		 * it does
+		 */
+		setCurrentIndex(-1)
+
 		const availableAudioItems = filterTracksOnNetworkStatus(
 			networkStatus,
 			audioItems,
@@ -119,6 +133,8 @@ const QueueContextInitailizer = () => {
 		setCurrentIndex(startIndex)
 
 		console.debug(`Queued ${queue.length} tracks, starting at ${startIndex}`)
+
+		await play()
 	}
 
 	const playNextInQueue = async (item: BaseItemDto) => {
@@ -146,6 +162,31 @@ const QueueContextInitailizer = () => {
 		setPlayQueue((await getQueue()) as JellifyTrack[])
 
 		console.debug(`Queue has ${playQueue.length} tracks`)
+	}
+
+	const previous = async () => {
+		trigger('impactMedium')
+
+		const { position } = await TrackPlayer.getProgress()
+
+		console.debug(`Skip to previous triggered. Index is ${currentIndex}`)
+
+		if (currentIndex > 0 && position < SKIP_TO_PREVIOUS_THRESHOLD) {
+			setCurrentIndex(currentIndex - 1)
+		} else await seekTo(0)
+	}
+
+	const skip = async (index?: number | undefined) => {
+		trigger('impactMedium')
+
+		console.debug(
+			`Skip to next triggered. Index is ${`using ${
+				!isUndefined(index) ? index : currentIndex
+			} as index ${!isUndefined(index) ? 'since it was provided' : ''}`}`,
+		)
+
+		if (isUndefined(index)) setCurrentIndex(currentIndex + 1)
+		else if (playQueue.length > index) setCurrentIndex(index)
 	}
 	//#endregion Functions
 
@@ -216,32 +257,11 @@ const QueueContextInitailizer = () => {
 	})
 
 	const useSkip = useMutation({
-		mutationFn: async (index?: number | undefined) => {
-			trigger('impactMedium')
-
-			console.debug(
-				`Skip to next triggered. Index is ${`using ${
-					!isUndefined(index) ? index : currentIndex
-				} as index ${!isUndefined(index) ? 'since it was provided' : ''}`}`,
-			)
-
-			if (isUndefined(index)) setCurrentIndex(currentIndex + 1)
-			else if (playQueue.length > index) setCurrentIndex(index)
-		},
+		mutationFn: skip,
 	})
 
 	const usePrevious = useMutation({
-		mutationFn: async () => {
-			trigger('impactMedium')
-
-			const { position } = await TrackPlayer.getProgress()
-
-			console.debug(`Skip to previous triggered. Index is ${currentIndex}`)
-
-			if (currentIndex > 0 && position < SKIP_TO_PREVIOUS_THRESHOLD) {
-				setCurrentIndex(currentIndex - 1)
-			} else await seekTo(0)
-		},
+		mutationFn: previous,
 	})
 
 	const useUpdateRntpQueue = useMutation({

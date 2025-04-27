@@ -2,7 +2,7 @@ import React from 'react'
 import { XStack, getToken } from 'tamagui'
 import PlayPauseButton from './buttons'
 import Icon from '../../../components/Global/helpers/icon'
-import { usePlayerContext } from '../../../player/provider'
+import { usePlayerContext } from '../../../player/player-provider'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { useQueueContext } from '../../../player/queue-provider'
 

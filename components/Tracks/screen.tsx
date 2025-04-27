@@ -23,13 +23,13 @@ export default function TracksScreen({ route, navigation }: TracksProps): React.
 				<Track
 					navigation={navigation}
 					showArtwork
-					index={index}
+					index={0}
 					track={track}
 					tracklist={
 						route.params.tracks
 							? route.params.tracks.slice(index, index + 50)
 							: favoriteTracks
-							? favoriteTracks
+							? favoriteTracks.slice(index, index + 50)
 							: []
 					}
 					queue={route.params.queue}

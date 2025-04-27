@@ -1,5 +1,5 @@
 import { StackParamList } from '../../../components/types'
-import { usePlayerContext } from '../../../player/provider'
+import { usePlayerContext } from '../../../player/player-provider'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { useMemo } from 'react'
 import { SafeAreaView, useSafeAreaFrame } from 'react-native-safe-area-context'

@@ -1,7 +1,7 @@
 import Icon from '../../../components/Global/helpers/icon'
 import Track from '../../../components/Global/components/track'
 import { StackParamList } from '../../../components/types'
-import { usePlayerContext } from '../../../player/provider'
+import { usePlayerContext } from '../../../player/player-provider'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import DraggableFlatList from 'react-native-draggable-flatlist'
