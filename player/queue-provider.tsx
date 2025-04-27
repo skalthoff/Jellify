@@ -51,11 +51,9 @@ const QueueContextInitailizer = () => {
 
 	const { downloadedTracks, networkStatus } = useNetworkContext()
 
-	useTrackPlayerEvents([Event.PlaybackActiveTrackChanged], ({ lastIndex, index }) => {
-		const lastTrackFinished =
-			!isUndefined(index) && !isUndefined(lastIndex) && index - lastIndex === 1
-
-		if (lastTrackFinished) setCurrentIndex(currentIndex + 1)
+	useTrackPlayerEvents([Event.PlaybackActiveTrackChanged], ({ index }) => {
+		const rntpSkippedTrackWithoutUs = !updateRntp && !isUndefined(index)
+		if (rntpSkippedTrackWithoutUs) setCurrentIndex(index)
 	})
 
 	//#region Functions
@@ -101,7 +99,7 @@ const QueueContextInitailizer = () => {
 	const loadQueue = async (
 		audioItems: BaseItemDto[],
 		queuingRef: Queue,
-		startIndex: number = 1,
+		startIndex: number = 0,
 	) => {
 		console.debug(`Queuing ${audioItems.length} items`)
 
@@ -110,6 +108,7 @@ const QueueContextInitailizer = () => {
 		 * then our useEffect won't fire - this ensures
 		 * it does
 		 */
+		setUpdateRntp(false)
 		setCurrentIndex(-1)
 
 		const availableAudioItems = filterTracksOnNetworkStatus(
@@ -128,9 +127,14 @@ const QueueContextInitailizer = () => {
 			mapDtoToTrack(item, downloadedTracks ?? [], QueuingType.FromSelection),
 		)
 
-		setPlayQueue(queue)
 		setQueueRef(queuingRef)
-		setCurrentIndex(startIndex)
+
+		await TrackPlayer.setQueue(queue)
+		await TrackPlayer.skip(startIndex)
+
+		setPlayQueue(queue)
+
+		setUpdateRntp(false)
 
 		console.debug(`Queued ${queue.length} tracks, starting at ${startIndex}`)
 
@@ -167,17 +171,20 @@ const QueueContextInitailizer = () => {
 	const previous = async () => {
 		trigger('impactMedium')
 
+		setCurrentIndex(-1)
 		const { position } = await TrackPlayer.getProgress()
 
 		console.debug(`Skip to previous triggered. Index is ${currentIndex}`)
 
 		if (currentIndex > 0 && position < SKIP_TO_PREVIOUS_THRESHOLD) {
-			setCurrentIndex(currentIndex - 1)
+			TrackPlayer.skipToPrevious()
 		} else await seekTo(0)
 	}
 
 	const skip = async (index?: number | undefined) => {
 		trigger('impactMedium')
+
+		setCurrentIndex(-1)
 
 		console.debug(
 			`Skip to next triggered. Index is ${`using ${
@@ -185,8 +192,8 @@ const QueueContextInitailizer = () => {
 			} as index ${!isUndefined(index) ? 'since it was provided' : ''}`}`,
 		)
 
-		if (isUndefined(index)) setCurrentIndex(currentIndex + 1)
-		else if (playQueue.length > index) setCurrentIndex(index)
+		if (!isUndefined(index)) TrackPlayer.skip(index)
+		else TrackPlayer.skipToNext()
 	}
 	//#endregion Functions
 
@@ -267,20 +274,22 @@ const QueueContextInitailizer = () => {
 	const useUpdateRntpQueue = useMutation({
 		mutationFn: async () => {
 			if (updateRntp) await TrackPlayer.setQueue(playQueue)
-
-			setUpdateRntp(true)
 		},
 	})
 
 	const useUpdateRntpIndex = useMutation({
 		mutationFn: async (index: number) => {
-			await TrackPlayer.skip(index)
+			if (updateRntp) await TrackPlayer.skip(index)
 		},
 	})
 
 	//#endregion Hooks
 
 	//#region useEffect(s)
+	useEffect(() => {
+		useUpdateRntpIndex.mutate(currentIndex)
+	}, [currentIndex])
+
 	/**
 	 * Update RNTP Queue when our queue
 	 * is updated
@@ -294,17 +303,12 @@ const QueueContextInitailizer = () => {
 		storage.set(MMKVStorageKeys.Queue, JSON.stringify(queueRef))
 	}, [queueRef])
 
-	useEffect(() => {
-		useUpdateRntpIndex.mutate(currentIndex)
-	}, [currentIndex])
-
 	//#endregion useEffect(s)
 
 	return {
 		queueRef,
 		playQueue,
 		currentIndex,
-		setCurrentIndex,
 		fetchQueueSectionData,
 		useAddToQueue,
 		useLoadNewQueue,
