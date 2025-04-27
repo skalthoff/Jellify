@@ -1,27 +1,4 @@
-// https://github.com/react-native-device-info/react-native-device-info/issues/1360
-import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock'
-
-jest.mock('../api/client')
-
-jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
-
-jest.mock('react-native-device-info', () => mockRNDeviceInfo)
-
-jest.mock('react-native-haptic-feedback', () => {
-	return {
-		default: {
-			trigger: jest.fn(),
-		},
-	}
-})
-
-jest.mock('burnt', () => {
-	return {
-		default: {
-			alert: jest.fn(),
-		},
-	}
-})
+import { usePlaybackState } from 'react-native-track-player'
 
 // https://github.com/doublesymmetry/react-native-track-player/issues/501
 jest.mock('react-native-track-player', () => {
@@ -68,6 +45,8 @@ jest.mock('react-native-track-player', () => {
 			buffered: 150,
 			duration: 200,
 		}),
+		useTrackPlayerEvents: (events: Event[], callback: () => void) => {},
+		usePlaybackState: () => 'playing',
 		Capability: {
 			Play: 1,
 			PlayFromId: 2,
@@ -107,6 +86,9 @@ jest.mock('react-native-track-player', () => {
 			SoloAmbient: 'soloAmbient',
 			Record: 'record',
 			PlayAndRecord: 'playAndRecord',
+		},
+		Event: {
+			PlaybackActiveTrackChanged: 'playbackActiveTrackChanged',
 		},
 	}
 })
