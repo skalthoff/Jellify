@@ -224,8 +224,8 @@ const QueueContextInitailizer = () => {
 				} as index ${index ? 'since it was provided' : ''}`}`,
 			)
 
-			if (index && index < playQueue.length - 1) setCurrentIndex(index)
-			else if (playQueue.length - 1 > currentIndex) setCurrentIndex(currentIndex + 1)
+			if (index && index > -1 && index < playQueue.length - 1) setCurrentIndex(index)
+			else if (playQueue.length > currentIndex) setCurrentIndex(currentIndex + 1)
 		},
 	})
 

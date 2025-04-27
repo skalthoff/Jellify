@@ -8,12 +8,10 @@ import TrackPlayer, {
 	usePlaybackState,
 	useTrackPlayerEvents,
 } from 'react-native-track-player'
-import { isEqual, isUndefined } from 'lodash'
 import { handlePlaybackProgressUpdated, handlePlaybackState } from './handlers'
-import { useUpdateOptions } from '../player/hooks'
 import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import { trigger } from 'react-native-haptic-feedback'
-import { pause, seekTo } from 'react-native-track-player/lib/src/trackPlayer'
+import { pause, seekBy, seekTo } from 'react-native-track-player/lib/src/trackPlayer'
 import { convertRunTimeTicksToSeconds } from '../helpers/runtimeticks'
 import Client from '../api/client'
 
@@ -29,6 +27,7 @@ interface PlayerContext {
 	useStartPlayback: UseMutationResult<void, Error, void, unknown>
 	useTogglePlayback: UseMutationResult<void, Error, void, unknown>
 	useSeekTo: UseMutationResult<void, Error, number, unknown>
+	useSeekBy: UseMutationResult<void, Error, number, unknown>
 }
 
 const PlayerContextInitializer = () => {
@@ -78,6 +77,14 @@ const PlayerContextInitializer = () => {
 				position,
 				duration: convertRunTimeTicksToSeconds(nowPlaying!.duration!),
 			})
+		},
+	})
+
+	const useSeekBy = useMutation({
+		mutationFn: async (seekSeconds: number) => {
+			trigger('clockTick')
+
+			await seekBy(seekSeconds)
 		},
 	})
 	//#endregion
@@ -135,36 +142,6 @@ const PlayerContextInitializer = () => {
 
 					break
 				}
-
-				case Event.PlaybackActiveTrackChanged: {
-					if (initialized) {
-						const activeTrack = (await TrackPlayer.getActiveTrack()) as
-							| JellifyTrack
-							| undefined
-						if (activeTrack && !isEqual(activeTrack, nowPlaying)) {
-							setNowPlaying(activeTrack)
-
-							// Set player favorite state to user data IsFavorite
-							// This is super nullish so we need to do a lot of
-							// checks on the fields
-							// TODO: Turn this check into a helper function
-							setNowPlayingIsFavorite(
-								isUndefined(activeTrack)
-									? false
-									: isUndefined(activeTrack!.item.UserData)
-									? false
-									: activeTrack.item.UserData.IsFavorite ?? false,
-							)
-
-							await useUpdateOptions(nowPlayingIsFavorite)
-						} else if (!activeTrack) {
-							setNowPlaying(undefined)
-							setNowPlayingIsFavorite(false)
-						} else {
-							// Do nothing
-						}
-					}
-				}
 			}
 		},
 	)
@@ -187,9 +164,10 @@ const PlayerContextInitializer = () => {
 	}, [playQueue, nowPlaying])
 
 	useEffect(() => {
-		if (currentIndex > -1 && playQueue.length > currentIndex)
+		if (currentIndex > -1 && playQueue.length > currentIndex) {
 			console.debug(`Setting now playing to queue index ${currentIndex}`)
-		setNowPlaying(playQueue[currentIndex])
+			setNowPlaying(playQueue[currentIndex])
+		}
 	}, [currentIndex])
 	//#endregion useEffects
 
@@ -202,6 +180,7 @@ const PlayerContextInitializer = () => {
 		useStartPlayback,
 		useTogglePlayback,
 		useSeekTo,
+		useSeekBy,
 		playbackState,
 	}
 	//#endregion return
@@ -250,6 +229,24 @@ export const PlayerContext = createContext<PlayerContext>({
 		submittedAt: 0,
 	},
 	useSeekTo: {
+		mutate: () => {},
+		mutateAsync: async () => {},
+		data: undefined,
+		error: null,
+		variables: undefined,
+		isError: false,
+		isIdle: true,
+		isPaused: false,
+		isPending: false,
+		isSuccess: false,
+		status: 'idle',
+		reset: () => {},
+		context: {},
+		failureCount: 0,
+		failureReason: null,
+		submittedAt: 0,
+	},
+	useSeekBy: {
 		mutate: () => {},
 		mutateAsync: async () => {},
 		data: undefined,
