@@ -19,6 +19,7 @@ import * as Burnt from 'burnt'
 import { markItemPlayed } from '../api/mutations/functions/item'
 import { filterTracksOnNetworkStatus } from './helpers/queue'
 import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
+import { isNull, isUndefined } from 'lodash'
 
 interface QueueContext {
 	queueRef: Queue
@@ -220,12 +221,12 @@ const QueueContextInitailizer = () => {
 
 			console.debug(
 				`Skip to next triggered. Index is ${`using ${
-					index ? index : currentIndex
-				} as index ${index ? 'since it was provided' : ''}`}`,
+					!isUndefined(index) ? index : currentIndex
+				} as index ${!isUndefined(index) ? 'since it was provided' : ''}`}`,
 			)
 
-			if (index && index > -1 && index < playQueue.length - 1) setCurrentIndex(index)
-			else if (playQueue.length > currentIndex) setCurrentIndex(currentIndex + 1)
+			if (isUndefined(index)) setCurrentIndex(currentIndex + 1)
+			else if (playQueue.length > index) setCurrentIndex(index)
 		},
 	})
 

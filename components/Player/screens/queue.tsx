@@ -9,6 +9,7 @@ import { trigger } from 'react-native-haptic-feedback'
 import { Separator } from 'tamagui'
 import { useQueueContext } from '../../../player/queue-provider'
 import Animated from 'react-native-reanimated'
+import { isUndefined } from 'lodash'
 
 export default function Queue({
 	navigation,
@@ -77,7 +78,9 @@ export default function Queue({
 						index={getIndex() ?? 0}
 						showArtwork
 						onPress={() => {
-							useSkip.mutate(getIndex() ?? 0)
+							const index = getIndex()
+							console.debug(`Skip triggered on index ${index}`)
+							useSkip.mutate(index)
 						}}
 						onLongPress={() => {
 							trigger('impactLight')
