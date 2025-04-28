@@ -9,7 +9,7 @@ export default function PlayPauseButton({
 }: {
 	size?: number | undefined
 }): React.JSX.Element {
-	const { playbackState, useTogglePlayback } = usePlayerContext()
+	const { useTogglePlayback, playbackState } = usePlayerContext()
 
 	let button: React.JSX.Element
 

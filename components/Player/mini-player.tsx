@@ -41,7 +41,6 @@ export function Miniplayer({
 					<YStack
 						justify='center'
 						alignItems='flex-start'
-						flex={1}
 						minHeight={'$12'}
 						marginLeft={'$2'}
 					>
@@ -59,13 +58,18 @@ export function Miniplayer({
 							style={{
 								width: getToken('$12'),
 								height: getToken('$12'),
-								borderRadius: getToken('$1'),
+								borderRadius: getToken('$2'),
 								backgroundColor: getToken('$color.amethyst'),
+								shadowRadius: getToken('$2'),
+								shadowOffset: {
+									width: 0,
+									height: -getToken('$2'),
+								},
 							}}
 						/>
 					</YStack>
 
-					<YStack alignContent='flex-start' marginLeft={'$2'} flex={5} maxWidth={'$20'}>
+					<YStack alignContent='flex-start' marginLeft={'$2'} flex={5}>
 						<TextTicker {...TextTickerConfig}>
 							<Text bold>{nowPlaying?.title ?? 'Nothing Playing'}</Text>
 						</TextTicker>

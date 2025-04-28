@@ -29,7 +29,7 @@ export default function Controls(): React.JSX.Element {
 			/>
 
 			{/* I really wanted a big clunky play button */}
-			<PlayPauseButton size={width / 5} />
+			<PlayPauseButton size={getToken('$13') - getToken('$5')} />
 
 			<Icon
 				color={getToken('$color.amethyst')}

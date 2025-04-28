@@ -22,6 +22,7 @@ import { PlaystateApi } from '@jellyfin/sdk/lib/generated-client/api/playstate-a
 
 interface PlayerContext {
 	nowPlaying: JellifyTrack | undefined
+	playbackState: State | undefined
 	useStartPlayback: UseMutationResult<void, Error, void, unknown>
 	useTogglePlayback: UseMutationResult<void, Error, void, unknown>
 	useSeekTo: UseMutationResult<void, Error, number, unknown>
@@ -159,6 +160,7 @@ const PlayerContextInitializer = () => {
 //#region Create PlayerContext
 export const PlayerContext = createContext<PlayerContext>({
 	nowPlaying: undefined,
+	playbackState: undefined,
 	useStartPlayback: {
 		mutate: () => {},
 		mutateAsync: async () => {},
