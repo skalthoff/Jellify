@@ -3,7 +3,7 @@ import { useProgress } from 'react-native-track-player'
 import { HorizontalSlider } from '../../../components/Global/helpers/slider'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import { trigger } from 'react-native-haptic-feedback'
-import { XStack, YStack } from 'tamagui'
+import { getToken, XStack, YStack } from 'tamagui'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { usePlayerContext } from '../../../player/player-provider'
 import { RunTimeSeconds } from '../../../components/Global/helpers/time-codes'
@@ -52,7 +52,7 @@ export default function Scrubber(): React.JSX.Element {
 							? progress.duration * ProgressMultiplier
 							: 1
 					}
-					width={width / 1.125}
+					width={getToken('$20') + getToken('$20')}
 					props={{
 						// If user swipes off of the slider we should seek to the spot
 						onPressOut: () => {
@@ -66,7 +66,12 @@ export default function Scrubber(): React.JSX.Element {
 						},
 						onSlideMove: (event, value) => {
 							trigger('clockTick')
-							setPosition(value)
+
+							if (
+								Math.floor(value / ProgressMultiplier) > -1 &&
+								Math.floor(value / ProgressMultiplier) < progress.duration
+							)
+								setPosition(value)
 						},
 						onSlideEnd: (event, value) => {
 							trigger('notificationSuccess')
@@ -89,7 +94,7 @@ export default function Scrubber(): React.JSX.Element {
 
 				<YStack flex={1} alignItems='flex-end'>
 					<RunTimeSeconds>
-						{progress && progress.duration ? Math.ceil(progress.duration) : 0}
+						{progress && progress.duration ? progress.duration : 0}
 					</RunTimeSeconds>
 				</YStack>
 			</XStack>

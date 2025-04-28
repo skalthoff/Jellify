@@ -3,7 +3,7 @@ import { usePlayerContext } from '../../../player/player-provider'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { useMemo } from 'react'
 import { SafeAreaView, useSafeAreaFrame } from 'react-native-safe-area-context'
-import { YStack, XStack, Spacer, getTokens } from 'tamagui'
+import { YStack, XStack, Spacer, getTokens, getToken } from 'tamagui'
 import { Text } from '../../../components/Global/helpers/text'
 import Icon from '../../../components/Global/helpers/icon'
 import FavoriteButton from '../../Global/components/favorite-button'
@@ -73,7 +73,7 @@ export default function PlayerScreen({
 									<XStack
 										justifyContent='center'
 										alignContent='center'
-										minHeight={width / 1.1}
+										minHeight={'$20'}
 									>
 										<Image
 											source={getImageApi(Client.api!).getItemImageUrlById(
@@ -87,8 +87,20 @@ export default function PlayerScreen({
 													: undefined
 											}
 											style={{
-												borderRadius: 2,
-												width: width / 1.1,
+												borderRadius: getToken('$4'),
+												width:
+													getToken('$20') +
+													getToken('$20') +
+													getToken('$5'),
+												height:
+													getToken('$20') +
+													getToken('$20') +
+													getToken('$5'),
+												shadowRadius: getToken('$4'),
+												shadowOffset: {
+													width: 0,
+													height: -getToken('$4'),
+												},
 											}}
 										/>
 									</XStack>
@@ -96,7 +108,12 @@ export default function PlayerScreen({
 							)
 						}, [nowPlaying, queueRef])}
 
-						<XStack marginHorizontal={20} paddingVertical={5}>
+						<XStack
+							justifyContent='center'
+							marginHorizontal={'auto'}
+							maxWidth={getToken('$20') + getToken('$20') + getToken('$5')}
+							paddingVertical={5}
+						>
 							{/** Memoize TextTickers otherwise they won't animate due to the progress being updated in the PlayerContext */}
 							{useMemo(() => {
 								return (
