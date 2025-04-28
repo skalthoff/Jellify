@@ -104,10 +104,9 @@ jest.mock('react-native-track-player', () => {
 export let eventHandler: any
 
 beforeEach(() => {
-	(TrackPlayer as any).useTrackPlayerEvents = (
-		events: Event[],
-		handler: (variables: any) => void,
-	) => {
+	const player = TrackPlayer as any
+
+	player.useTrackPlayerEvents = (events: Event[], handler: (variables: any) => void) => {
 		eventHandler = handler
 	}
 })
