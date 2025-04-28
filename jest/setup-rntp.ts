@@ -1,7 +1,11 @@
-import { usePlaybackState } from 'react-native-track-player'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import * as TrackPlayer from 'react-native-track-player'
 
 // https://github.com/doublesymmetry/react-native-track-player/issues/501
 jest.mock('react-native-track-player', () => {
+	const listeners = new Map()
+
 	return {
 		__esModule: true,
 		default: {
@@ -45,8 +49,12 @@ jest.mock('react-native-track-player', () => {
 			buffered: 150,
 			duration: 200,
 		}),
-		useTrackPlayerEvents: (events: Event[], callback: () => void) => {},
 		usePlaybackState: () => 'playing',
+
+		// eslint-disable @typescript-eslint/no-explicit-any
+		useTrackPlayerEvents: (events: TrackPlayer.Event[], handler: (variables: any) => void) => {
+			eventHandler = handler
+		},
 		Capability: {
 			Play: 1,
 			PlayFromId: 2,
@@ -90,5 +98,16 @@ jest.mock('react-native-track-player', () => {
 		Event: {
 			PlaybackActiveTrackChanged: 'playbackActiveTrackChanged',
 		},
+	}
+})
+
+export let eventHandler: any
+
+beforeEach(() => {
+	(TrackPlayer as any).useTrackPlayerEvents = (
+		events: Event[],
+		handler: (variables: any) => void,
+	) => {
+		eventHandler = handler
 	}
 })
