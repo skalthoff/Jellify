@@ -5,6 +5,7 @@ import { ItemCard } from '../../../components/Global/components/item-card'
 import { useDiscoverContext } from '../provider'
 import { View, XStack } from 'tamagui'
 import { H2 } from '../../../components/Global/helpers/text'
+import Icon from '../../../components/Global/helpers/icon'
 
 export default function RecentlyAdded({
 	navigation,
@@ -24,6 +25,7 @@ export default function RecentlyAdded({
 				}}
 			>
 				<H2 marginLeft={'$2'}>Recently Added</H2>
+				<Icon name='arrow-right' />
 			</XStack>
 
 			<HorizontalCardList
