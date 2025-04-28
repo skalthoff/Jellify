@@ -34,7 +34,7 @@ const PlayerContextInitializer = () => {
 
 	let playStateApi: PlaystateApi | undefined
 
-	if (Client.api) getPlaystateApi(Client.api)
+	if (Client.api) playStateApi = getPlaystateApi(Client.api)
 
 	//#region State
 	const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(
