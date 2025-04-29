@@ -41,7 +41,7 @@ export async function handlePlaybackState(
 		}
 }
 
-export async function handlePlaybackProgressUpdated(
+export async function handlePlaybackProgress(
 	sessionId: string,
 	playstateApi: PlaystateApi | undefined,
 	track: JellifyTrack,

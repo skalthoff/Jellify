@@ -2190,9 +2190,9 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
+  boost: c7db0cf32caf6315b467a902f922c7a38b1ae426
   Burnt: 0616363a206ed96ba9af3e2eb0e184dc97be1458
-  DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
+  DoubleConversion: 9aae6cc0ecb301224cc36b63bf0ff0d9ea15d00e
   EXConstants: fcfc75800824ac2d5c592b5bc74130bad17b146b
   Expo: a6ff273c618506b12129a0d06f2a08201bfbcf43
   ExpoAsset: 48386d40d53a8c1738929b3ed509bcad595b5516
@@ -2201,16 +2201,16 @@ SPEC CHECKSUMS:
   ExpoImage: d840b256050f4428d2942bc2b6e9251f9e0d7021
   ExpoKeepAwake: b0171a73665bfcefcfcc311742a72a956e6aa680
   ExpoModulesCore: 7cbb8499aa4f46aeefcf332922d4ab3d4b203fa8
-  fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
+  fast_float: afdfb7d8d5934a5dc225af0c5a7ef27085c03424
   FBLazyVector: 2bc03a5cf64e29c611bbc5d7eb9d9f7431f37ee6
-  fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
-  glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
-  hermes-engine: 1f783c3d53940aed0d2c84586f0b7a85ab7827ef
+  fmt: 793e14dfc270e0be50ff8f6679d6de663e337e16
+  glog: b42da0bc1da7ec6dfcd6f97e35918e3006e7b6e9
+  hermes-engine: ede441b1cde8bd1baa21244c4da01e7cbbe5d6a2
   libavif: 84bbb62fb232c3018d6f1bab79beea87e35de7b7
   libdav1d: 23581a4d8ec811ff171ed5e2e05cd27bad64c39f
   MMKV: ce484c1ac40bf76d5f09a0195d2ec5b3d3840d55
   MMKVCore: 1eb661c6c498ab88e3df9ce5d8ff94d05fcc0567
-  RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
+  RCT-Folly: 3c12715b5d41a41cda64c46bc7d2f5807bfa0e91
   RCTDeprecation: f5c19ebdb8804b53ed029123eb69914356192fc8
   RCTRequired: 6ae6cebe470486e0e0ce89c1c0eabb998e7c51f4
   RCTTypeSafety: 50d6ec72a3d13cf77e041ff43a0617050fb98e3f
