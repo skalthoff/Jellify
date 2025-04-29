@@ -1,24 +1,25 @@
-import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { JellifyTrack } from '../types/JellifyTrack'
 import { storage } from '../constants/storage'
 import { MMKVStorageKeys } from '../enums/mmkv-storage-keys'
-import TrackPlayer, {
+import {
 	Event,
+	Progress,
 	State,
 	usePlaybackState,
 	useTrackPlayerEvents,
 } from 'react-native-track-player'
-import { handlePlaybackProgressUpdated, handlePlaybackState } from './handlers'
+import { handlePlaybackProgress, handlePlaybackState } from './handlers'
 import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import { trigger } from 'react-native-haptic-feedback'
 import { pause, play, seekBy, seekTo } from 'react-native-track-player/lib/src/trackPlayer'
-import { convertRunTimeTicksToSeconds } from '../helpers/runtimeticks'
 import Client from '../api/client'
 
 import { getPlaystateApi } from '@jellyfin/sdk/lib/utils/api'
 import { useNetworkContext } from '../components/Network/provider'
 import { useQueueContext } from './queue-provider'
 import { PlaystateApi } from '@jellyfin/sdk/lib/generated-client/api/playstate-api'
+import { networkStatusTypes } from '../components/Network/internetConnectionWatcher'
 
 interface PlayerContext {
 	nowPlaying: JellifyTrack | undefined
@@ -45,6 +46,19 @@ const PlayerContextInitializer = () => {
 
 	//#endregion State
 
+	//#region Functions
+	const handlePlaybackStateChanged = async (state: State) => {
+		if (playStateApi && nowPlaying)
+			await handlePlaybackState(Client.sessionId, playStateApi, nowPlaying, state)
+	}
+
+	const handlePlaybackProgressUpdated = async (progress: Progress) => {
+		if (playStateApi && nowPlaying)
+			await handlePlaybackProgress(Client.sessionId, playStateApi, nowPlaying, progress)
+	}
+
+	//#endregion Functions
+
 	//#region Hooks
 	const useStartPlayback = useMutation({
 		mutationFn: play,
@@ -62,12 +76,6 @@ const PlayerContextInitializer = () => {
 		mutationFn: async (position: number) => {
 			trigger('impactLight')
 			await seekTo(position)
-
-			handlePlaybackProgressUpdated(Client.sessionId, playStateApi, nowPlaying!, {
-				buffered: 0,
-				position,
-				duration: convertRunTimeTicksToSeconds(nowPlaying!.duration!),
-			})
 		},
 	})
 
@@ -78,6 +86,14 @@ const PlayerContextInitializer = () => {
 			await seekBy(seekSeconds)
 		},
 	})
+
+	const usePlaybackStateChanged = useMutation({
+		mutationFn: async (state: State) => handlePlaybackStateChanged(state),
+	})
+
+	const usePlaybackProgressUpdated = useMutation({
+		mutationFn: async (progress: Progress) => handlePlaybackProgressUpdated(progress),
+	})
 	//#endregion
 
 	//#region RNTP Setup
@@ -87,7 +103,7 @@ const PlayerContextInitializer = () => {
 
 	useTrackPlayerEvents(
 		[Event.RemoteLike, Event.RemoteDislike, Event.PlaybackProgressUpdated, Event.PlaybackState],
-		async (event) => {
+		(event) => {
 			switch (event.type) {
 				case Event.RemoteLike: {
 					break
@@ -98,28 +114,19 @@ const PlayerContextInitializer = () => {
 				}
 
 				case Event.PlaybackState: {
-					handlePlaybackState(
-						Client.sessionId,
-						playStateApi,
-						(await TrackPlayer.getActiveTrack()) as JellifyTrack,
-						event.state,
-					)
+					usePlaybackStateChanged.mutate(event.state)
 					break
 				}
 				case Event.PlaybackProgressUpdated: {
-					handlePlaybackProgressUpdated(
-						Client.sessionId,
-						playStateApi,
-						nowPlaying!,
-						event,
-					)
+					usePlaybackProgressUpdated.mutate(event)
 
 					// Cache playing track at 20 seconds if it's not already downloaded
 					if (
 						Math.floor(event.position) === 20 &&
 						downloadedTracks?.filter(
 							(download) => download.item.Id === nowPlaying!.item.Id,
-						).length === 0
+						).length === 0 &&
+						networkStatus === networkStatusTypes.ONLINE
 					)
 						useDownload.mutate(nowPlaying!.item)
 
