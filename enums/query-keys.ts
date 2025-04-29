@@ -32,6 +32,7 @@ export enum QueryKeys {
 	ArtistImage = 'ArtistImage',
 	PlaybackStateChange = 'PlaybackStateChange',
 	Player = 'Player',
+	NetworkStatus = 'NetworkStatus',
 
 	/**
 	 * Query representing the fetching of a user's created playlist.
@@ -65,4 +66,8 @@ export enum QueryKeys {
 	Audio = 'Audio',
 	RecentlyAdded = 'RecentlyAdded',
 	SimilarItems = 'SimilarItems',
+	AudioCache = 'AudioCache',
+	MediaSources = 'MediaSources',
+	FrequentArtists = 'FrequentArtists',
+	FrequentlyPlayed = 'FrequentlyPlayed',
 }

@@ -23,6 +23,6 @@ export async function downloadTrack(itemId: string): Promise<void> {
 		})
 }
 
-function getTrackFilePath(itemId: string) {
+export function getTrackFilePath(itemId: string) {
 	return `${Dirs.DocumentDir}/downloads/${itemId}`
 }

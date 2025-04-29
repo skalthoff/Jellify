@@ -1,10 +1,9 @@
-import { usePlayerContext } from '../../../player/provider'
+import { usePlayerContext } from '../../../player/player-provider'
 import React from 'react'
-import { getToken, getTokens, Spacer, Theme, useTheme, XStack, YStack } from 'tamagui'
+import { getToken, getTokens, Theme, useTheme, XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
 import { RunTimeTicks } from '../helpers/time-codes'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import Icon from '../helpers/icon'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StackParamList } from '../../../components/types'
@@ -14,12 +13,18 @@ import FavoriteIcon from './favorite-icon'
 import { Image } from 'expo-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../../api/client'
+import { networkStatusTypes } from '../../../components/Network/internetConnectionWatcher'
+import { useNetworkContext } from '../../../components/Network/provider'
+import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from '../../../enums/query-keys'
+import { fetchMediaInfo } from '../../../api/queries/functions/media'
+import { useQueueContext } from '../../../player/queue-provider'
 
 interface TrackProps {
 	track: BaseItemDto
 	navigation: NativeStackNavigationProp<StackParamList>
 	tracklist?: BaseItemDto[] | undefined
-	index?: number | undefined
+	index: number
 	queue: Queue
 	showArtwork?: boolean | undefined
 	onPress?: () => void | undefined
@@ -47,9 +52,21 @@ export default function Track({
 	onRemove,
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
-	const { nowPlaying, playQueue, usePlayNewQueue } = usePlayerContext()
+	const { nowPlaying, useStartPlayback } = usePlayerContext()
+	const { playQueue, useLoadNewQueue } = useQueueContext()
+	const { downloadedTracks, networkStatus } = useNetworkContext()
 
 	const isPlaying = nowPlaying?.item.Id === track.Id
+
+	const offlineAudio = downloadedTracks?.find((t) => t.item.Id === track.Id)
+	const isDownloaded = offlineAudio?.item?.Id
+
+	const isOffline = networkStatus === networkStatusTypes.DISCONNECTED
+
+	const mediaInfo = useQuery({
+		queryKey: [QueryKeys.MediaSources, track.Id!],
+		queryFn: () => fetchMediaInfo(track.Id!),
+	})
 
 	return (
 		<Theme name={invertedColors ? 'inverted_purple' : undefined}>
@@ -61,13 +78,18 @@ export default function Track({
 					if (onPress) {
 						onPress()
 					} else {
-						usePlayNewQueue.mutate({
-							track,
-							index,
-							tracklist: tracklist ?? playQueue.map((track) => track.item),
-							queue,
-							queuingType: QueuingType.FromSelection,
-						})
+						useLoadNewQueue.mutate(
+							{
+								track,
+								index,
+								tracklist: tracklist ?? playQueue.map((track) => track.item),
+								queue,
+								queuingType: QueuingType.FromSelection,
+							},
+							{
+								onSuccess: () => useStartPlayback.mutate(),
+							},
+						)
 					}
 				}}
 				onLongPress={
@@ -114,7 +136,15 @@ export default function Track({
 				<YStack alignContent='center' justifyContent='flex-start' flex={6}>
 					<Text
 						bold
-						color={isPlaying ? getTokens().color.telemagenta : theme.color}
+						color={
+							isPlaying
+								? getTokens().color.telemagenta
+								: isOffline
+								? isDownloaded
+									? theme.color
+									: '$purpleGray'
+								: theme.color
+						}
 						lineBreakStrategyIOS='standard'
 						numberOfLines={1}
 					>

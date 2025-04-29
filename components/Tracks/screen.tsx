@@ -1,30 +1,16 @@
 import { TracksProps } from '../types'
 import React from 'react'
 import Track from '../Global/components/track'
-import { FlatList, RefreshControl } from 'react-native'
-import { QueryKeys } from '../../enums/query-keys'
-import { fetchRecentlyPlayed } from '../../api/queries/functions/recents'
-import { fetchFavoriteTracks } from '../../api/queries/functions/favorites'
-import { useQuery } from '@tanstack/react-query'
+import { FlatList } from 'react-native'
 import { Separator } from 'tamagui'
-import { QueryConfig } from '../../api/queries/query.config'
+import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from '../../enums/query-keys'
+import { fetchFavoriteTracks } from '../../api/queries/functions/favorites'
 
 export default function TracksScreen({ route, navigation }: TracksProps): React.JSX.Element {
-	const queryKey: any[] = [route.params.query]
-
-	if (route.params.query === QueryKeys.RecentlyPlayed)
-		queryKey.push([QueryConfig.limits.recents * 4, QueryConfig.limits.recents])
-
-	const {
-		data: tracks,
-		refetch,
-		isPending,
-	} = useQuery({
-		queryKey,
-		queryFn: () =>
-			route.params.query === QueryKeys.RecentlyPlayed
-				? fetchRecentlyPlayed(QueryConfig.limits.recents * 4, QueryConfig.limits.recents)
-				: fetchFavoriteTracks(),
+	const { data: favoriteTracks } = useQuery({
+		queryKey: [QueryKeys.FavoriteTracks],
+		queryFn: fetchFavoriteTracks,
 	})
 
 	return (
@@ -32,19 +18,21 @@ export default function TracksScreen({ route, navigation }: TracksProps): React.
 			contentInsetAdjustmentBehavior='automatic'
 			ItemSeparatorComponent={() => <Separator />}
 			numColumns={1}
-			data={tracks}
-			refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />}
+			data={route.params.tracks ? route.params.tracks : favoriteTracks ? favoriteTracks : []}
 			renderItem={({ index, item: track }) => (
 				<Track
 					navigation={navigation}
 					showArtwork
+					index={0}
 					track={track}
-					tracklist={tracks?.slice(index, index + 50) ?? []}
-					queue={
-						route.params.query === QueryKeys.RecentlyPlayed
-							? 'Recently Played'
-							: 'Favorite Tracks'
+					tracklist={
+						route.params.tracks
+							? route.params.tracks.slice(index, index + 50)
+							: favoriteTracks
+							? favoriteTracks.slice(index, index + 50)
+							: []
 					}
+					queue={route.params.queue}
 				/>
 			)}
 		/>

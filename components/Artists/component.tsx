@@ -1,36 +1,22 @@
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import React from 'react'
-import { FlatList, RefreshControl } from 'react-native'
 import { ItemCard } from '../Global/components/item-card'
 import { ArtistsProps } from '../types'
 import { QueryKeys } from '../../enums/query-keys'
 import { useQuery } from '@tanstack/react-query'
-import { fetchRecentlyPlayedArtists } from '../../api/queries/functions/recents'
 import { fetchFavoriteArtists } from '../../api/queries/functions/favorites'
-import { QueryConfig } from '../../api/queries/query.config'
+import { YStack } from 'tamagui'
+import { Text } from '../Global/helpers/text'
+import { FlatList } from 'react-native'
 
 export default function Artists({ navigation, route }: ArtistsProps): React.JSX.Element {
 	const {
-		data: artists,
+		data: favoriteArtists,
 		refetch,
 		isPending,
-	} = route.params.query === QueryKeys.RecentlyPlayedArtists
-		? useQuery({
-				queryKey: [
-					QueryKeys.RecentlyPlayedArtists,
-					QueryConfig.limits.recents * 4,
-					QueryConfig.limits.recents,
-				],
-				queryFn: () =>
-					fetchRecentlyPlayedArtists(
-						QueryConfig.limits.recents * 4,
-						QueryConfig.limits.recents,
-					),
-		  })
-		: useQuery({
-				queryKey: [QueryKeys.FavoriteArtists],
-				queryFn: () => fetchFavoriteArtists(),
-		  })
+	} = useQuery({
+		queryKey: [QueryKeys.FavoriteArtists],
+		queryFn: fetchFavoriteArtists,
+	})
 
 	return (
 		<FlatList
@@ -40,8 +26,9 @@ export default function Artists({ navigation, route }: ArtistsProps): React.JSX.
 			}}
 			contentInsetAdjustmentBehavior='automatic'
 			numColumns={2}
-			data={artists}
-			refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />}
+			data={
+				route.params.artists ? route.params.artists : favoriteArtists ? favoriteArtists : []
+			}
 			renderItem={({ index, item: artist }) => (
 				<ItemCard
 					item={artist}
@@ -52,6 +39,11 @@ export default function Artists({ navigation, route }: ArtistsProps): React.JSX.
 					size={'$14'}
 				/>
 			)}
+			ListEmptyComponent={
+				<YStack justifyContent='center'>
+					<Text>No artists</Text>
+				</YStack>
+			}
 		/>
 	)
 }

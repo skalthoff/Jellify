@@ -34,7 +34,7 @@ export default function ServerLibrary(): React.JSX.Element {
 	useEffect(() => {
 		if (!isPending && isSuccess)
 			setPlaylistLibrary(
-				libraries.filter((library) => library.CollectionType === 'playlists')[0],
+				libraries?.filter((library) => library.CollectionType === 'playlists')[0],
 			)
 	}, [isPending, isSuccess])
 

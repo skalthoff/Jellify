@@ -6,7 +6,6 @@ import { AlbumScreen } from '../Album'
 import { PlaylistScreen } from '../Playlist/screens'
 import { ProvidedHome } from './component'
 import DetailsScreen from '../ItemDetail/screen'
-import AddPlaylist from '../Library/components/add-playlist'
 import ArtistsScreen from '../Artists/screen'
 import TracksScreen from '../Tracks/screen'
 import { ArtistScreen } from '../Artist'
@@ -36,8 +35,10 @@ export default function Home(): React.JSX.Element {
 					<Stack.Screen
 						name='Tracks'
 						component={TracksScreen}
-						options={{
-							title: 'Recent Tracks',
+						options={({ route }) => {
+							return {
+								title: route.params.queue.valueOf() as string,
+							}
 						}}
 					/>
 

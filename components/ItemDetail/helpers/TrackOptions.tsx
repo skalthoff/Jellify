@@ -1,8 +1,8 @@
-import { usePlayerContext } from '../../../player/provider'
 import { StackParamList } from '../../../components/types'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import {
+	Circle,
 	getToken,
 	getTokens,
 	ListItem,
@@ -31,6 +31,8 @@ import * as Burnt from 'burnt'
 import { Image } from 'expo-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../../api/client'
+import { useNetworkContext } from '../../../components/Network/provider'
+import { useQueueContext } from '../../../player/queue-provider'
 
 interface TrackOptionsProps {
 	track: BaseItemDto
@@ -52,17 +54,20 @@ export default function TrackOptions({
 		queryFn: () => fetchItem(track.AlbumId!),
 	})
 
+	const { useDownload, useRemoveDownload, downloadedTracks } = useNetworkContext()
+
+	const isDownloaded = downloadedTracks?.find((t) => t.item.Id === track.Id)?.item?.Id
+
 	const {
 		data: playlists,
 		isPending: playlistsFetchPending,
 		isSuccess: playlistsFetchSuccess,
-		refetch,
 	} = useQuery({
 		queryKey: [QueryKeys.UserPlaylists],
 		queryFn: () => fetchUserPlaylists(),
 	})
 
-	const { useAddToQueue } = usePlayerContext()
+	const { useAddToQueue } = useQueueContext()
 
 	const { width } = useSafeAreaFrame()
 
@@ -100,8 +105,8 @@ export default function TrackOptions({
 	})
 
 	return (
-		<YStack width={width}>
-			<XStack justifyContent='space-evenly'>
+		<YStack>
+			<XStack marginHorizontal={'$2'} justifyContent='space-evenly'>
 				{albumFetchSuccess && album ? (
 					<IconButton
 						name='music-box'
@@ -126,7 +131,7 @@ export default function TrackOptions({
 									album,
 								})
 						}}
-						size={width / 6}
+						size={getToken('$12') + getToken('$10')}
 					/>
 				) : (
 					<Spacer />
@@ -142,7 +147,7 @@ export default function TrackOptions({
 							queuingType: QueuingType.PlayingNext,
 						})
 					}}
-					size={width / 6}
+					size={getToken('$12') + getToken('$10')}
 				/>
 
 				<IconButton
@@ -154,8 +159,26 @@ export default function TrackOptions({
 							track: track,
 						})
 					}}
-					size={width / 6}
+					size={getToken('$12') + getToken('$10')}
 				/>
+
+				{useDownload.isPending ? (
+					<Circle size={width / 6} disabled>
+						<Spinner marginHorizontal={10} size='small' color={'$amethyst'} />
+					</Circle>
+				) : (
+					<IconButton
+						disabled={!!isDownloaded}
+						circular
+						name={isDownloaded ? 'delete' : 'download'}
+						title={isDownloaded ? 'Remove Download' : 'Download'}
+						onPress={() => {
+							if (isDownloaded) useRemoveDownload.mutate(track)
+							else useDownload.mutate(track)
+						}}
+						size={getToken('$12') + getToken('$10')}
+					/>
+				)}
 			</XStack>
 
 			<Spacer />
