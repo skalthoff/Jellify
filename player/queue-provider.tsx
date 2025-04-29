@@ -157,7 +157,6 @@ const QueueContextInitailizer = () => {
 	const previous = async () => {
 		trigger('impactMedium')
 
-		setCurrentIndex(-1)
 		const { position } = await TrackPlayer.getProgress()
 
 		console.debug(

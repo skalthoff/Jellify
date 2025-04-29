@@ -1,23 +1,25 @@
 import 'react-native'
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react-native'
-
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native'
+import TrackPlayer, { Event } from 'react-native-track-player'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { QueueProvider, useQueueContext } from '../player/queue-provider'
 import { Button, Text } from 'react-native'
-import { Event } from 'react-native-track-player'
+
+import { QueueProvider, useQueueContext } from '../player/queue-provider'
 import { eventHandler } from './setup-rntp'
 
 const queryClient = new QueryClient()
 
 const QueueConsumer = () => {
-	const { currentIndex, useSkip } = useQueueContext()
+	const { currentIndex, useSkip, usePrevious } = useQueueContext()
 
 	return (
 		<>
 			<Text testID='current-index'>{currentIndex}</Text>
 
 			<Button title='skip' testID='use-skip' onPress={() => useSkip.mutate(undefined)} />
+
+			<Button title='previous' testID='use-previous' onPress={() => usePrevious.mutate()} />
 		</>
 	)
 }
@@ -35,13 +37,27 @@ test(`${QueueProvider.name} renders and functions correctly`, async () => {
 
 	expect(currentIndex.props.children).toBe(-1)
 
-	eventHandler({
-		type: Event.PlaybackActiveTrackChanged,
-		index: 3,
+	act(() => {
+		eventHandler({
+			type: Event.PlaybackActiveTrackChanged,
+			index: 3,
+		})
 	})
 
 	await waitFor(() => {
 		const updatedIndex = screen.getByTestId('current-index')
 		expect(updatedIndex.props.children).toBe(3)
+	})
+
+	act(() => {
+		eventHandler({
+			type: Event.PlaybackActiveTrackChanged,
+			index: 2,
+		})
+	})
+
+	await waitFor(() => {
+		const updatedIndex = screen.getByTestId('current-index')
+		expect(updatedIndex.props.children).toBe(2)
 	})
 })
