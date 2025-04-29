@@ -3,7 +3,7 @@ on:
   pull_request:
 jobs:
   build-android:
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       - name: 🛒 Checkout
         uses: actions/checkout@v4
