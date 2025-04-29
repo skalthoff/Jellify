@@ -1,58 +1,54 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import * as TrackPlayer from 'react-native-track-player'
+export let eventHandler: any
 
 // https://github.com/doublesymmetry/react-native-track-player/issues/501
 jest.mock('react-native-track-player', () => {
 	const listeners = new Map()
 
 	return {
-		__esModule: true,
-		default: {
-			addEventListener: () => ({
-				remove: jest.fn(),
-			}),
-			registerEventHandler: jest.fn(),
-			registerPlaybackService: jest.fn(),
-			setupPlayer: jest.fn().mockResolvedValue(undefined),
-			destroy: jest.fn(),
-			updateOptions: jest.fn(),
-			reset: jest.fn(),
-			add: jest.fn(),
+		addEventListener: () => ({
 			remove: jest.fn(),
-			skip: jest.fn(),
-			skipToNext: jest.fn(),
-			skipToPrevious: jest.fn(),
-			removeUpcomingTracks: jest.fn(),
-			// playback commands
-			play: jest.fn(),
-			pause: jest.fn(),
-			stop: jest.fn(),
-			seekTo: jest.fn(),
-			setVolume: jest.fn(),
-			setRate: jest.fn(),
-			// player getters
-			getQueue: jest.fn(),
-			getTrack: jest.fn(),
-			getActiveTrackIndex: jest.fn(),
-			getActiveTrack: jest.fn(),
-			getCurrentTrack: jest.fn(),
-			getVolume: jest.fn(),
-			getDuration: jest.fn(),
-			getPosition: jest.fn(),
-			getBufferedPosition: jest.fn(),
-			getState: jest.fn(),
-			getRate: jest.fn(),
-		},
+		}),
+		registerEventHandler: jest.fn(),
+		registerPlaybackService: jest.fn(),
+		setupPlayer: jest.fn().mockResolvedValue(undefined),
+		destroy: jest.fn(),
+		updateOptions: jest.fn(),
+		reset: jest.fn(),
+		add: jest.fn(),
+		remove: jest.fn(),
+		skip: jest.fn(),
+		skipToNext: jest.fn(),
+		skipToPrevious: jest.fn(),
+		removeUpcomingTracks: jest.fn(),
+		// playback commands
+		play: jest.fn(),
+		pause: jest.fn(),
+		stop: jest.fn(),
+		seekTo: jest.fn(),
+		setVolume: jest.fn(),
+		setRate: jest.fn(),
+		// player getters
+		getQueue: jest.fn(),
+		getTrack: jest.fn(),
+		getActiveTrackIndex: jest.fn(),
+		getActiveTrack: jest.fn(),
+		getCurrentTrack: jest.fn(),
+		getVolume: jest.fn(),
+		getDuration: jest.fn(),
+		getProgress: jest.fn().mockResolvedValue({ position: 0 }),
+		getBufferedPosition: jest.fn(),
+		getState: jest.fn(),
+		getRate: jest.fn(),
 		useProgress: () => ({
-			position: 100,
+			position: 0,
 			buffered: 150,
 			duration: 200,
 		}),
 		usePlaybackState: () => 'playing',
 
 		// eslint-disable @typescript-eslint/no-explicit-any
-		useTrackPlayerEvents: (events: TrackPlayer.Event[], handler: (variables: any) => void) => {
+		useTrackPlayerEvents: (events: Event[], handler: (variables: any) => void) => {
 			eventHandler = handler
 		},
 		Capability: {
@@ -98,15 +94,5 @@ jest.mock('react-native-track-player', () => {
 		Event: {
 			PlaybackActiveTrackChanged: 'playbackActiveTrackChanged',
 		},
-	}
-})
-
-export let eventHandler: any
-
-beforeEach(() => {
-	const player = TrackPlayer as any
-
-	player.useTrackPlayerEvents = (events: Event[], handler: (variables: any) => void) => {
-		eventHandler = handler
 	}
 })
