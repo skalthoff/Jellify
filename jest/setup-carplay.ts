@@ -1,17 +1,29 @@
+import {
+	ListTemplateConfig,
+	NowPlayingTemplateConfig,
+	TabBarTemplateConfig,
+} from 'react-native-carplay'
+
 jest.mock('react-native-carplay', () => {
 	return {
 		ListTemplate: class {
-			constructor(config) {
+			config: ListTemplateConfig
+
+			constructor(config: ListTemplateConfig) {
 				this.config = config
 			}
 		},
 		NowPlayingTemplate: class {
-			constructor(config) {
+			config: NowPlayingTemplateConfig
+
+			constructor(config: NowPlayingTemplateConfig) {
 				this.config = config
 			}
 		},
 		TabBarTemplate: class {
-			constructor(config) {
+			config: TabBarTemplateConfig
+
+			constructor(config: TabBarTemplateConfig) {
 				this.config = config
 			}
 		},
