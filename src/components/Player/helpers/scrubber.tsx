@@ -54,6 +54,7 @@ export default function Scrubber(): React.JSX.Element {
 					}
 					width={getToken('$20') + getToken('$20')}
 					props={{
+						maxWidth: width / 1.1,
 						// If user swipes off of the slider we should seek to the spot
 						onPressOut: () => {
 							trigger('notificationSuccess')
