@@ -12,6 +12,7 @@ import { JellifyUserDataProvider } from './user-data-provider'
 import { NetworkContextProvider } from './Network/provider'
 import { QueueProvider } from '../player/queue-provider'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { AutoProvider } from './Auto/provider'
 
 export default function Jellify(): React.JSX.Element {
 	const insets = useSafeAreaInsets()
@@ -32,22 +33,25 @@ export default function Jellify(): React.JSX.Element {
 }
 
 function App(): React.JSX.Element {
-	const isDarkMode = useColorScheme() === 'dark'
 	const { loggedIn } = useJellifyContext()
 
-	return loggedIn ? (
-		<JellifyUserDataProvider>
-			<NetworkContextProvider>
-				<QueueProvider>
-					<PlayerProvider>
-						<Navigation />
-					</PlayerProvider>
-				</QueueProvider>
-			</NetworkContextProvider>
-		</JellifyUserDataProvider>
-	) : (
+	return (
 		<JellyfinAuthenticationProvider>
-			<Login />
+			<AutoProvider>
+				{loggedIn ? (
+					<JellifyUserDataProvider>
+						<NetworkContextProvider>
+							<QueueProvider>
+								<PlayerProvider>
+									<Navigation />
+								</PlayerProvider>
+							</QueueProvider>
+						</NetworkContextProvider>
+					</JellifyUserDataProvider>
+				) : (
+					<Login />
+				)}
+			</AutoProvider>
 		</JellyfinAuthenticationProvider>
 	)
 }

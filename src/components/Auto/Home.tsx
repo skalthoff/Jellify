@@ -24,7 +24,13 @@ const CarPlayHome = (user: JellifyUser) =>
 				items: [
 					{ id: QueryKeys.RecentlyPlayedArtists, text: 'Recent Artists' },
 					{ id: QueryKeys.RecentlyPlayed, text: 'Play it again' },
-					{ id: QueryKeys.UserPlaylists, text: 'Your Playlists' },
+				],
+			},
+			{
+				header: 'Frequents',
+				items: [
+					{ id: QueryKeys.FrequentArtists, text: 'Most Played' },
+					{ id: QueryKeys.FrequentlyPlayed, text: 'On Repeat' },
 				],
 			},
 		],
@@ -47,6 +53,15 @@ const CarPlayHome = (user: JellifyUser) =>
 					break
 				}
 				case 2: {
+					const artists =
+						queryClient.getQueryData<BaseItemDto[]>([QueryKeys.FrequentArtists]) ?? []
+					CarPlay.pushTemplate(RecentArtistsTemplate(artists))
+					break
+				}
+				case 3: {
+					const items =
+						queryClient.getQueryData<BaseItemDto[]>([QueryKeys.FrequentlyPlayed]) ?? []
+					CarPlay.pushTemplate(RecentTracksTemplate(items))
 					break
 				}
 			}

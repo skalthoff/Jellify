@@ -7,14 +7,18 @@ import ReactAppDependencyProvider
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+        
+  static var appName: String = "Jellify"
   
   var window: UIWindow?
   
-  var reactNativeDelegate: ReactNativeDelegate?
-  var reactNativeFactory: RCTReactNativeFactory?
+  var reactNativeDelegate: ReactNativeDelegate? = nil
+  var reactNativeFactory: RCTReactNativeFactory? = nil
   
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    
+  func initReactNative(
+    launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+  ) -> Bool {
+    print("Creating React Native Delegate for \(AppDelegate.appName)")
     let delegate = ReactNativeDelegate()
     let factory = RCTReactNativeFactory(delegate: delegate)
     
@@ -23,15 +27,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     reactNativeDelegate = delegate
     reactNativeFactory = factory
     
-    window = UIWindow(frame: UIScreen.main.bounds)
-    
-    factory.startReactNative(
-      withModuleName: "Jellify",
+    reactNativeFactory?.startReactNative(
+      withModuleName: AppDelegate.appName,
       in: window,
       launchOptions: launchOptions
     )
     
     return true
+  }
+  
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
+    window = UIWindow(frame: UIScreen.main.bounds)
+
+    if (reactNativeDelegate == nil && reactNativeFactory == nil) {
+      return initReactNative(launchOptions: launchOptions)
+    } else {
+      return true
+    }
   }
   
   func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
@@ -48,19 +61,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
   }
-}
-
-class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
-
-  override func sourceURL(for bridge: RCTBridge) -> URL? {
-    self.bundleURL()
-  }
-
-  override func bundleURL() -> URL? {
-    #if DEBUG
-    return RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index");
-    #else
-    return Bundle.main.url(forResource:"main", withExtension:"jsbundle")
-    #endif
+  
+  func applicationDidBecomeActive(_ application: UIApplication) {
+    print("Jellify is alive!")
   }
 }
+
