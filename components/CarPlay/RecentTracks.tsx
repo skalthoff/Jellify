@@ -4,6 +4,8 @@ import { CarPlay, ListTemplate } from 'react-native-carplay'
 import TrackPlayer from 'react-native-track-player'
 import uuid from 'react-native-uuid'
 import CarPlayNowPlaying from './NowPlaying'
+import { queryClient } from '@/constants/query-client'
+import { QueryKeys } from '@/enums/query-keys'
 
 const RecentTracksTemplate = (items: BaseItemDto[]) =>
 	new ListTemplate({
@@ -20,13 +22,17 @@ const RecentTracksTemplate = (items: BaseItemDto[]) =>
 			},
 		],
 		onItemSelect: async (item) => {
-			await TrackPlayer.setQueue(items.map((item) => mapDtoToTrack(item)))
+			await TrackPlayer.setQueue(
+				items.map((item) =>
+					mapDtoToTrack(item, queryClient.getQueryData([QueryKeys.AudioCache]) ?? []),
+				),
+			)
 
 			await TrackPlayer.skip(item.index)
 
 			await TrackPlayer.play()
 
-			CarPlay.pushTemplate(CarPlayNowPlaying())
+			CarPlay.pushTemplate(CarPlayNowPlaying)
 		},
 	})
 

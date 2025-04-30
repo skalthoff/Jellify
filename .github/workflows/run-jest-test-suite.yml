@@ -22,7 +22,10 @@ jobs:
       - name: 🍎 Run yarn init-ios:new-arch
         run: yarn init-ios:new-arch
       
-      - name: 🧪 Run npm test
+      - name: 🔍 Run yarn tsc
+        run: yarn tsc
+
+      - name: 🧪 Run yarn test
         run: yarn test
 
       - name: 🦋 Check Styling 
