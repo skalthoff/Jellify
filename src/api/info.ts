@@ -1,6 +1,6 @@
 import { Jellyfin } from '@jellyfin/sdk'
 import { getModel, getUniqueIdSync } from 'react-native-device-info'
-import { name, version } from '../package.json'
+import { name, version } from '../../package.json'
 import { capitalize } from 'lodash'
 
 console.debug(`Building Jellyfin Info`)

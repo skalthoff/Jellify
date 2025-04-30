@@ -28,7 +28,7 @@ const isAndroid = Platform.OS === 'android'
 
 const InternetConnectionWatcher = () => {
 	const [networkStatus, setNetworkStatus] = useState<keyof typeof networkStatusTypes | null>(null)
-	const lastNetworkStatus = useRef<keyof typeof networkStatusTypes | null>()
+	const lastNetworkStatus = useRef<keyof typeof networkStatusTypes | null>('ONLINE')
 	const queryClient = useQueryClient()
 
 	const bannerHeight = useSharedValue(0)

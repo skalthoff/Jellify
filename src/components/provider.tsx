@@ -3,7 +3,6 @@ import { createContext, ReactNode, SetStateAction, useContext, useEffect, useSta
 import { CarPlay } from 'react-native-carplay'
 import Client from '../api/client'
 import CarPlayNavigation from './CarPlay/Navigation'
-import CarPlayNowPlaying from './CarPlay/NowPlaying'
 import { Platform } from 'react-native'
 
 interface JellifyContext {

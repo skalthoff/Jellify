@@ -9,7 +9,6 @@ import Icon from '../../../components/Global/helpers/icon'
 import FavoriteButton from '../../Global/components/favorite-button'
 import TextTicker from 'react-native-text-ticker'
 import { TextTickerConfig } from '../component.config'
-import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import Scrubber from '../helpers/scrubber'
 import Controls from '../helpers/controls'
 import { Image } from 'expo-image'
@@ -26,7 +25,7 @@ export default function PlayerScreen({
 
 	const { queueRef } = useQueueContext()
 
-	const { width } = useSafeAreaFrame()
+	const { width, height } = useSafeAreaFrame()
 
 	return (
 		<SafeAreaView edges={['right', 'left']}>
@@ -101,6 +100,8 @@ export default function PlayerScreen({
 													width: 0,
 													height: -getToken('$4'),
 												},
+												maxHeight: width / 1.1,
+												maxWidth: width / 1.1,
 											}}
 										/>
 									</XStack>
@@ -111,7 +112,8 @@ export default function PlayerScreen({
 						<XStack
 							justifyContent='center'
 							marginHorizontal={'auto'}
-							maxWidth={getToken('$20') + getToken('$20') + getToken('$5')}
+							width={getToken('$20') + getToken('$20') + getToken('$5')}
+							maxWidth={width / 1.1}
 							paddingVertical={5}
 						>
 							{/** Memoize TextTickers otherwise they won't animate due to the progress being updated in the PlayerContext */}
@@ -183,22 +185,24 @@ export default function PlayerScreen({
 
 						<Controls />
 
-						<XStack justifyContent='space-evenly' marginVertical={'$7'}>
-							<Icon name='speaker-multiple' />
+						<YStack justifyContent='flex-end' height={'$10'} maxHeight={height / 10}>
+							<XStack justifyContent='space-evenly' marginVertical={'$3'}>
+								<Icon name='speaker-multiple' />
 
-							<Spacer />
+								<Spacer />
 
-							<Spacer />
+								<Spacer />
 
-							<Spacer />
+								<Spacer />
 
-							<Icon
-								name='playlist-music'
-								onPress={() => {
-									navigation.navigate('Queue')
-								}}
-							/>
-						</XStack>
+								<Icon
+									name='playlist-music'
+									onPress={() => {
+										navigation.navigate('Queue')
+									}}
+								/>
+							</XStack>
+						</YStack>
 					</YStack>
 				</>
 			)}

@@ -69,7 +69,7 @@ export function Miniplayer({
 						/>
 					</YStack>
 
-					<YStack alignContent='flex-start' marginLeft={'$2'} flex={5}>
+					<YStack alignContent='flex-start' marginLeft={'$2'} flex={4}>
 						<TextTicker {...TextTickerConfig}>
 							<Text bold>{nowPlaying?.title ?? 'Nothing Playing'}</Text>
 						</TextTicker>

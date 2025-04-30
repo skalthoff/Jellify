@@ -14,7 +14,7 @@ export default function Controls(): React.JSX.Element {
 	const { usePrevious, useSkip } = useQueueContext()
 
 	return (
-		<XStack alignItems='center' justifyContent='space-evenly' marginVertical={'$2'}>
+		<XStack alignItems='center' justifyContent='space-evenly' marginVertical={'$4'}>
 			<Icon
 				color={getToken('$color.amethyst')}
 				name='rewind-15'

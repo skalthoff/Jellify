@@ -1,7 +1,6 @@
 import { StackParamList } from '../types'
 import { ScrollView, RefreshControl } from 'react-native'
 import { YStack, XStack, Separator } from 'tamagui'
-import Playlists from './helpers/playlists'
 import RecentArtists from './helpers/recent-artists'
 import RecentlyPlayed from './helpers/recently-played'
 import { useHomeContext } from './provider'
