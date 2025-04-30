@@ -1,6 +1,5 @@
-import { HomeAlbumProps } from '../types'
-import { YStack, XStack, Separator, getToken } from 'tamagui'
-import { BaseItemDto, ItemSortBy } from '@jellyfin/sdk/lib/generated-client/models'
+import { HomeAlbumProps, StackParamList } from '../types'
+import { YStack, XStack, Separator, getToken, Spacer } from 'tamagui'
 import { H5, Text } from '../Global/helpers/text'
 import { FlatList, SectionList } from 'react-native'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
@@ -8,61 +7,32 @@ import Track from '../Global/components/track'
 import FavoriteButton from '../Global/components/favorite-button'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../enums/query-keys'
-import { getImageApi, getItemsApi } from '@jellyfin/sdk/lib/utils/api'
+import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../api/client'
 import { ItemCard } from '../Global/components/item-card'
 import { Image } from 'expo-image'
-import { groupBy, isEqual } from 'lodash'
+import { fetchAlbumDiscs } from '../../api/queries/item'
+import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useSafeAreaFrame } from 'react-native-safe-area-context'
+import InstantMixButton from '../Global/components/instant-mix-button'
 
+/**
+ * The screen for an Album's track list
+ *
+ * @param route The route object from the parent screen,
+ * containing the {@link BaseItemDto} of the album to display in the params
+ *
+ * @param navigation The navigation object from the parent screen
+ *
+ * @returns A React component
+ */
 export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.Element {
 	const { album } = route.params
 
-	navigation.setOptions({
-		headerRight: () => {
-			return <FavoriteButton item={album} />
-		},
-	})
-
 	const { data: discs } = useQuery({
 		queryKey: [QueryKeys.ItemTracks, album.Id!],
-		queryFn: () => {
-			let sortBy: ItemSortBy[] = []
-
-			sortBy = [ItemSortBy.ParentIndexNumber, ItemSortBy.IndexNumber, ItemSortBy.SortName]
-
-			return new Promise<{ title: string; data: BaseItemDto[] }[]>((resolve, reject) => {
-				getItemsApi(Client.api!)
-					.getItems({
-						parentId: album.Id!,
-						sortBy,
-					})
-					.then(({ data }) => {
-						const discs = data.Items
-							? Object.keys(
-									groupBy(data.Items, (track) => track.ParentIndexNumber),
-							  ).map((discNumber) => {
-									console.debug(discNumber)
-									return {
-										title: discNumber,
-										data: data.Items!.filter((track: BaseItemDto) =>
-											track.ParentIndexNumber
-												? isEqual(
-														discNumber,
-														(track.ParentIndexNumber ?? 0).toString(),
-												  )
-												: track,
-										),
-									}
-							  })
-							: [{ title: '1', data: [] }]
-
-						resolve(discs)
-					})
-					.catch((error) => {
-						reject(error)
-					})
-			})
-		},
+		queryFn: () => fetchAlbumDiscs(album),
 	})
 
 	return (
@@ -81,49 +51,7 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 					>{`Disc ${section.title}`}</Text>
 				) : null
 			}}
-			ListHeaderComponent={
-				<YStack marginTop={'$2'} minHeight={getToken('$20') + getToken('$15')}>
-					<Image
-						source={getImageApi(Client.api!).getItemImageUrlById(album.Id!)}
-						style={{
-							borderRadius: getToken('$5'),
-							width: getToken('$20') + getToken('$15'),
-							height: getToken('$20') + getToken('$15'),
-							alignSelf: 'center',
-						}}
-					/>
-
-					<H5 textAlign='center'>{album.Name ?? 'Untitled Album'}</H5>
-
-					<XStack justifyContent='space-evenly'>
-						<Text>{album.ProductionYear?.toString() ?? ''}</Text>
-					</XStack>
-
-					<FlatList
-						contentContainerStyle={{
-							marginLeft: 2,
-						}}
-						style={{
-							alignSelf: 'center',
-						}}
-						horizontal
-						keyExtractor={(item) => item.Id!}
-						data={album.ArtistItems}
-						renderItem={({ index, item: artist }) => (
-							<ItemCard
-								size={'$8'}
-								item={artist}
-								caption={artist.Name ?? 'Unknown Artist'}
-								onPress={() => {
-									navigation.navigate('Artist', {
-										artist,
-									})
-								}}
-							/>
-						)}
-					/>
-				</YStack>
-			}
+			ListHeaderComponent={() => AlbumTrackListHeader(album, navigation)}
 			renderItem={({ item: track, index }) => (
 				<Track
 					track={track}
@@ -133,14 +61,85 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 					queue={album}
 				/>
 			)}
-			ListFooterComponent={
-				<XStack marginRight={'$2'} justifyContent='flex-end'>
-					<Text color={'$purpleGray'} paddingRight={'$1'}>
-						Total Runtime:
-					</Text>
-					<RunTimeTicks>{album.RunTimeTicks}</RunTimeTicks>
-				</XStack>
-			}
 		/>
+	)
+}
+
+/**
+ * Renders a header for an Album's track list
+ * @param album The {@link BaseItemDto} of the album to render the header for
+ * @param navigation The navigation object from the parent {@link AlbumScreen}
+ * @returns A React component
+ */
+function AlbumTrackListHeader(
+	album: BaseItemDto,
+	navigation: NativeStackNavigationProp<StackParamList>,
+): React.JSX.Element {
+	const { width } = useSafeAreaFrame()
+
+	return (
+		<YStack marginTop={'$2'} minHeight={getToken('$20') + getToken('$15')}>
+			<Image
+				source={getImageApi(Client.api!).getItemImageUrlById(album.Id!)}
+				style={{
+					borderRadius: getToken('$5'),
+					width: getToken('$20') + getToken('$15'),
+					height: getToken('$20') + getToken('$15'),
+					alignSelf: 'center',
+				}}
+			/>
+
+			<H5 textAlign='center'>{album.Name ?? 'Untitled Album'}</H5>
+
+			<FlatList
+				contentContainerStyle={{
+					marginLeft: 2,
+					marginTop: 2,
+				}}
+				style={{
+					alignSelf: 'center',
+				}}
+				horizontal
+				keyExtractor={(item) => item.Id!}
+				data={album.ArtistItems}
+				renderItem={({ index, item: artist }) => (
+					<ItemCard
+						size={'$8'}
+						item={artist}
+						caption={artist.Name ?? 'Unknown Artist'}
+						onPress={() => {
+							navigation.navigate('Artist', {
+								artist,
+							})
+						}}
+					/>
+				)}
+			/>
+
+			<XStack justify='center' marginVertical={'$2'}>
+				<YStack flex={1}>
+					{album.ProductionYear ? (
+						<Text
+							display='block'
+							textAlign='right'
+						>{`Released ${album.ProductionYear?.toString()}`}</Text>
+					) : null}
+				</YStack>
+
+				<Separator vertical marginHorizontal={'$3'} />
+
+				<YStack flex={1}>
+					<RunTimeTicks>{album.RunTimeTicks}</RunTimeTicks>
+				</YStack>
+			</XStack>
+
+			<XStack justifyContent='center' marginVertical={'$2'}>
+				<FavoriteButton item={album} />
+
+				<Spacer />
+
+				<InstantMixButton item={album} navigation={navigation} />
+			</XStack>
+		</YStack>
 	)
 }

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchRecentlyAdded } from '../../api/queries/functions/recents'
+import { fetchRecentlyAdded } from '../../api/queries/recents'
 import { QueryKeys } from '../../enums/query-keys'
 import { createContext, ReactNode, useContext, useState } from 'react'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
