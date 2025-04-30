@@ -10,8 +10,8 @@ import Client from './api/client'
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 Client.instance
 
-// Enable React Navigation freeze for detaching inactive screens
-// enableFreeze();
+Client.instance
+console.debug('Created Jellify client')
 
 AppRegistry.registerComponent(appName, () => App)
 AppRegistry.registerComponent('RNCarPlayScene', () => App)
