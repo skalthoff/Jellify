@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // Learn more https://docs.expo.io/guides/customizing-metro
+const { wrapWithReanimatedMetroConfig } = require('react-native-reanimated/metro-config')
+
 const { getDefaultConfig } = require('@react-native/metro-config')
 
 const config = getDefaultConfig(__dirname, {
@@ -10,6 +13,6 @@ const config = getDefaultConfig(__dirname, {
 // https://github.com/expo/expo/issues/23180
 config.resolver.sourceExts.push('mjs')
 
-config.watchFolders = ['components', 'api', 'player']
+config.watchFolders = ['src']
 
-module.exports = config
+module.exports = wrapWithReanimatedMetroConfig(config)

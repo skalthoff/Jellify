@@ -1,4 +1,4 @@
-jest.mock('../api/client')
+jest.mock('../src/api/client')
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 

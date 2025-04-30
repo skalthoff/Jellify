@@ -3,8 +3,8 @@ import React from 'react'
 import { render } from '@testing-library/react-native'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { QueueProvider } from '../player/queue-provider'
-import { PlayerProvider } from '../player/player-provider'
+import { QueueProvider } from '../src/player/queue-provider'
+import { PlayerProvider } from '../src/player/player-provider'
 import { View } from 'react-native'
 
 const queryClient = new QueryClient()
