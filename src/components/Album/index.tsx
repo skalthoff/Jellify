@@ -10,11 +10,11 @@ import { QueryKeys } from '../../enums/query-keys'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import Client from '../../api/client'
 import { ItemCard } from '../Global/components/item-card'
-import { Image } from 'expo-image'
 import { fetchAlbumDiscs } from '../../api/queries/item'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import InstantMixButton from '../Global/components/instant-mix-button'
+import FastImage from 'react-native-fast-image'
 
 /**
  * The screen for an Album's track list
@@ -76,8 +76,8 @@ function AlbumTrackListHeader(
 ): React.JSX.Element {
 	return (
 		<YStack marginTop={'$2'} minHeight={getToken('$20') + getToken('$15')}>
-			<Image
-				source={getImageApi(Client.api!).getItemImageUrlById(album.Id!)}
+			<FastImage
+				source={{ uri: getImageApi(Client.api!).getItemImageUrlById(album.Id!) }}
 				style={{
 					borderRadius: getToken('$5'),
 					width: getToken('$20') + getToken('$15'),

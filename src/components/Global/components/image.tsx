@@ -1,9 +1,9 @@
 import Client from '../../../api/client'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
-import { Image } from 'expo-image'
 import { isUndefined } from 'lodash'
-import { getToken, getTokenValue, FontSizeTokens } from 'tamagui'
+import FastImage from 'react-native-fast-image'
+import { FontSizeTokens, getToken, getTokenValue } from 'tamagui'
 
 interface ImageProps {
 	item: BaseItemDto
@@ -19,8 +19,8 @@ export default function ItemImage({
 	height,
 }: ImageProps): React.JSX.Element {
 	return (
-		<Image
-			source={getImageApi(Client.api!).getItemImageUrlById(item.Id!)}
+		<FastImage
+			source={{ uri: getImageApi(Client.api!).getItemImageUrlById(item.Id!) }}
 			style={{
 				borderRadius: circular
 					? width
