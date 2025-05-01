@@ -28,6 +28,12 @@ export async function fetchRecentlyAdded(
 		})
 }
 
+/**
+ * Fetches recently played tracks for a user from the Jellyfin server.
+ * @param limit The number of items to fetch. Defaults to 50
+ * @param offset The offset of the items to fetch.
+ * @returns The recently played items.
+ */
 export async function fetchRecentlyPlayed(
 	limit: number = QueryConfig.limits.recents,
 	offset?: number | undefined,
@@ -60,10 +66,10 @@ export function fetchRecentlyPlayedArtists(
 	limit: number = QueryConfig.limits.recents,
 	offset?: number | undefined,
 ): Promise<BaseItemDto[]> {
-	return fetchRecentlyPlayed(limit * 2, offset ? offset + 10 : undefined).then((tracks) => {
+	return fetchRecentlyPlayed(limit * 2, offset ? offset + 10 : undefined).then((albums) => {
 		return getItemsApi(Client.api!)
 			.getItems({
-				ids: tracks.map((track) => track.ArtistItems![0].Id!),
+				ids: albums.map((album) => album.ArtistItems![0].Id!),
 			})
 			.then((recentArtists) => {
 				return recentArtists.data.Items!
