@@ -61,7 +61,15 @@ export default function Home(): React.JSX.Element {
 						})}
 					/>
 
-					<Stack.Screen name='InstantMix' component={InstantMix} />
+					<Stack.Screen
+						name='InstantMix'
+						component={InstantMix}
+						options={({ route }) => ({
+							title: route.params.item.Name
+								? `${route.params.item.Name} Mix`
+								: 'Instant Mix',
+						})}
+					/>
 				</Stack.Group>
 
 				<Stack.Group screenOptions={{ presentation: 'modal' }}>

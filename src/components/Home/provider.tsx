@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../enums/query-keys'
 import { fetchRecentlyPlayed, fetchRecentlyPlayedArtists } from '../../api/queries/recents'
 import { queryClient } from '../../constants/query-client'
-import { QueryConfig } from '../../api/queries/query.config'
+import QueryConfig from '../../api/queries/query.config'
 import { fetchFrequentlyPlayed, fetchFrequentlyPlayedArtists } from '../../api/queries/frequents'
 
 interface HomeContext {

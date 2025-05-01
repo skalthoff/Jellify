@@ -2,7 +2,8 @@ import Client from '../../../api/client'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import { isUndefined } from 'lodash'
-import FastImage from 'react-native-fast-image'
+import { StyleProp } from 'react-native'
+import FastImage, { ImageStyle } from 'react-native-fast-image'
 import { FontSizeTokens, getToken, getTokenValue } from 'tamagui'
 
 interface ImageProps {
@@ -10,6 +11,7 @@ interface ImageProps {
 	circular?: boolean | undefined
 	width?: FontSizeTokens | undefined
 	height?: FontSizeTokens | undefined
+	style?: ImageStyle | undefined
 }
 
 export default function ItemImage({
@@ -17,6 +19,7 @@ export default function ItemImage({
 	circular,
 	width,
 	height,
+	style,
 }: ImageProps): React.JSX.Element {
 	return (
 		<FastImage
@@ -30,6 +33,7 @@ export default function ItemImage({
 				width: !isUndefined(width) ? width : getToken('$12') + getToken('$5'),
 				height: !isUndefined(height) ? height : getToken('$12') + getToken('$5'),
 				alignSelf: 'center',
+				...style,
 			}}
 		/>
 	)

@@ -1,7 +1,7 @@
 import { HomeAlbumProps, StackParamList } from '../types'
 import { YStack, XStack, Separator, getToken, Spacer } from 'tamagui'
 import { H5, Text } from '../Global/helpers/text'
-import { FlatList, SectionList } from 'react-native'
+import { FlatList, SectionList, useWindowDimensions } from 'react-native'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
 import Track from '../Global/components/track'
 import FavoriteButton from '../Global/components/favorite-button'
@@ -15,6 +15,8 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import InstantMixButton from '../Global/components/instant-mix-button'
 import FastImage from 'react-native-fast-image'
+import ItemImage from '../Global/components/image'
+import React from 'react'
 
 /**
  * The screen for an Album's track list
@@ -60,6 +62,7 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 					queue={album}
 				/>
 			)}
+			ListFooterComponent={() => AlbumTrackListFooter(album, navigation)}
 		/>
 	)
 }
@@ -74,34 +77,64 @@ function AlbumTrackListHeader(
 	album: BaseItemDto,
 	navigation: NativeStackNavigationProp<StackParamList>,
 ): React.JSX.Element {
-	return (
-		<YStack marginTop={'$2'} minHeight={getToken('$20') + getToken('$15')}>
-			<FastImage
-				source={{ uri: getImageApi(Client.api!).getItemImageUrlById(album.Id!) }}
-				style={{
-					borderRadius: getToken('$5'),
-					width: getToken('$20') + getToken('$15'),
-					height: getToken('$20') + getToken('$15'),
-					alignSelf: 'center',
-				}}
-			/>
+	const { width } = useWindowDimensions()
 
-			<H5 textAlign='center'>{album.Name ?? 'Untitled Album'}</H5>
+	return (
+		<YStack marginTop={'$4'} alignItems='center'>
+			<XStack justifyContent='center'>
+				<ItemImage item={album} width={getToken('$20')} height={getToken('$20')} />
+
+				<Spacer />
+
+				<YStack alignContent='center' width={width / 2.5}>
+					<H5
+						lineBreakStrategyIOS='standard'
+						textAlign='center'
+						numberOfLines={5}
+						maxWidth={width / 2}
+					>
+						{album.Name ?? 'Untitled Album'}
+					</H5>
+
+					<XStack justify='center' marginVertical={'$2'}>
+						<YStack flex={1}>
+							{album.ProductionYear ? (
+								<Text display='block' textAlign='right'>
+									{album.ProductionYear?.toString() ?? 'Unknown Year'}
+								</Text>
+							) : null}
+						</YStack>
+
+						<Separator vertical marginHorizontal={'$3'} />
+
+						<YStack flex={1}>
+							<RunTimeTicks>{album.RunTimeTicks}</RunTimeTicks>
+						</YStack>
+					</XStack>
+
+					<XStack justifyContent='center' marginVertical={'$2'}>
+						<FavoriteButton item={album} />
+
+						<Spacer />
+
+						<InstantMixButton item={album} navigation={navigation} />
+					</XStack>
+				</YStack>
+			</XStack>
 
 			<FlatList
 				contentContainerStyle={{
-					marginLeft: 2,
-					marginTop: 2,
+					marginTop: getToken('$4'),
 				}}
 				style={{
 					alignSelf: 'center',
 				}}
 				horizontal
 				keyExtractor={(item) => item.Id!}
-				data={album.ArtistItems}
+				data={album.AlbumArtists}
 				renderItem={({ index, item: artist }) => (
 					<ItemCard
-						size={'$8'}
+						size={'$10'}
 						item={artist}
 						caption={artist.Name ?? 'Unknown Artist'}
 						onPress={() => {
@@ -112,31 +145,38 @@ function AlbumTrackListHeader(
 					/>
 				)}
 			/>
+		</YStack>
+	)
+}
 
-			<XStack justify='center' marginVertical={'$2'}>
-				<YStack flex={1}>
-					{album.ProductionYear ? (
-						<Text
-							display='block'
-							textAlign='right'
-						>{`Released ${album.ProductionYear?.toString()}`}</Text>
-					) : null}
-				</YStack>
+function AlbumTrackListFooter(
+	album: BaseItemDto,
+	navigation: NativeStackNavigationProp<StackParamList>,
+): React.JSX.Element {
+	return (
+		<YStack marginLeft={'$2'}>
+			{album.ArtistItems && album.ArtistItems.length > 1 && (
+				<>
+					<H5>Featuring</H5>
 
-				<Separator vertical marginHorizontal={'$3'} />
-
-				<YStack flex={1}>
-					<RunTimeTicks>{album.RunTimeTicks}</RunTimeTicks>
-				</YStack>
-			</XStack>
-
-			<XStack justifyContent='center' marginVertical={'$2'}>
-				<FavoriteButton item={album} />
-
-				<Spacer />
-
-				<InstantMixButton item={album} navigation={navigation} />
-			</XStack>
+					<FlatList
+						data={album.ArtistItems}
+						horizontal
+						renderItem={({ item: artist }) => (
+							<ItemCard
+								size={'$8'}
+								item={artist}
+								caption={artist.Name ?? 'Unknown Artist'}
+								onPress={() => {
+									navigation.navigate('Artist', {
+										artist,
+									})
+								}}
+							/>
+						)}
+					/>
+				</>
+			)}
 		</YStack>
 	)
 }
