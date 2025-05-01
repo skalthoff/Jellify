@@ -2,21 +2,23 @@ import './gesture-handler'
 import React, { useState } from 'react'
 import 'react-native-url-polyfill/auto'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import Jellify from './components/jellify'
+import Jellify from './src/components/jellify'
 import { TamaguiProvider, Theme } from 'tamagui'
 import { useColorScheme } from 'react-native'
 import jellifyConfig from './tamagui.config'
-import { clientPersister } from './constants/storage'
-import { queryClient } from './constants/query-client'
+import { clientPersister } from './src/constants/storage'
+import { queryClient } from './src/constants/query-client'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import TrackPlayer, { IOSCategory, IOSCategoryOptions } from 'react-native-track-player'
-import { CAPABILITIES } from './player/constants'
+import { CAPABILITIES } from './src/player/constants'
 import { createWorkletRuntime } from 'react-native-reanimated'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
-import { JellifyDarkTheme, JellifyLightTheme } from './components/theme'
-import { requestStoragePermission } from './helpers/permisson-helpers'
-import ErrorBoundary from './components/ErrorBoundary'
+import { JellifyDarkTheme, JellifyLightTheme } from './src/components/theme'
+import { requestStoragePermission } from './src/helpers/permisson-helpers'
+import ErrorBoundary from './src/components/ErrorBoundary'
+import Toast from 'react-native-toast-message'
+import JellifyToastConfig from './src/constants/toast.config'
 
 export const backgroundRuntime = createWorkletRuntime('background')
 
@@ -84,6 +86,7 @@ export default function App(): React.JSX.Element {
 							</TamaguiProvider>
 						</GestureHandlerRootView>
 					</PersistQueryClientProvider>
+					<Toast config={JellifyToastConfig(isDarkMode)} />
 				</NavigationContainer>
 			</ErrorBoundary>
 		</SafeAreaProvider>

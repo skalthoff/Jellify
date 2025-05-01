@@ -1,11 +1,11 @@
 import 'react-native'
 import React from 'react'
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native'
-import TrackPlayer, { Event } from 'react-native-track-player'
+import { act, render, screen, waitFor } from '@testing-library/react-native'
+import { Event } from 'react-native-track-player'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Button, Text } from 'react-native'
 
-import { QueueProvider, useQueueContext } from '../player/queue-provider'
+import { QueueProvider, useQueueContext } from '../src/player/queue-provider'
 import { eventHandler } from './setup-rntp'
 
 const queryClient = new QueryClient()

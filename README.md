@@ -2,13 +2,14 @@
 
 ![Jellify App Icon](assets/icon_dark_60pt_3x.png)
 
-[![publish-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml/badge.svg?branch=main)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml)
+[![Latest Version](https://img.shields.io/github/package-json/version/anultravioletaurora/jellify?label=Latest%20Version&color=indigo)](https://github.com/anultravioletaurora/Jellify/releases)
+[![publish-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml/badge.svg?branch=main)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml) [![Sponsors](https://img.shields.io/github/sponsors/anultravioletaurora?label=Project%20Sponsors&color=magenta)](https://github.com/sponsors/anultravioletaurora)
 
 ## 🔗 Quick Links
 
-[Discord Server](https://discord.gg/yf8fBatktn)
-
 [TestFlight](https://testflight.apple.com/join/etVSc7ZQ)
+
+[![Discord Server](https://dcbadge.limes.pink/api/server/https://discord.gg/yf8fBatktn)](https://discord.gg/yf8fBatktn)
 
 ## ℹ️ About
 
@@ -114,26 +115,24 @@ Playlist
 
 ## 🏗 Built with good stuff
 
-[![Made with React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white)](https://reactjs.org) [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Made with React](https://img.shields.io/badge/React-19-blue?logo=react)](https://reactjs.org) [![React Native](https://img.shields.io/badge/React-Native-079?logo=react)](https://reactnative.dev) [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![GitHub License](https://img.shields.io/github/license/anultravioletaurora/jellify?color=indigo)](https://github.com/anultravioletaurora/jellify/blob/main/LICENSE)
 
 ### 🎨 Frontend
 
 [Tamagui](https://tamagui.dev/)\
-[Burnt](https://github.com/nandorojo/burnt)\
 [React Navigation](https://reactnavigation.org/)\
 [React Native CarPlay](https://github.com/birkir/react-native-carplay)\
 [React Native Draggable Flatlist](https://github.com/computerjazz/react-native-draggable-flatlist)\
 [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)\
+[React Native Toast Message](https://github.com/calintamas/react-native-toast-message)\
 [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
 
 - Specifically using [Material Community Icons](https://oblador.github.io/react-native-vector-icons/#MaterialCommunityIcons)
 
 ### 🎛️ Backend
 
-[Expo SDK](https://expo.dev/)\
 [Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)\
-[React Native Boost](https://github.com/kuatsu/react-native-boost)\
 [React Native File Access](https://github.com/alpha0010/react-native-file-access)\
 [React Native MMKV](https://github.com/mrousavy/react-native-mmkv)\
 [React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
