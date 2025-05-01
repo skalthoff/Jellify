@@ -86,7 +86,7 @@ function AlbumTrackListHeader(
 
 				<Spacer />
 
-				<YStack alignContent='center' width={width / 2.5}>
+				<YStack alignContent='center' justifyContent='center'>
 					<H5
 						lineBreakStrategyIOS='standard'
 						textAlign='center'
