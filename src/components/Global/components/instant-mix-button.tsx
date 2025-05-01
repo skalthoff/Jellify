@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchInstantMixFromItem } from '../../../api/queries/instant-mixes'
 import Icon from '../helpers/icon'
 import { getToken, Spacer, Spinner } from 'tamagui'
+import { useColorScheme } from 'react-native'
 
 export default function InstantMixButton({
 	item,
@@ -20,10 +21,11 @@ export default function InstantMixButton({
 		queryFn: () => fetchInstantMixFromItem(item),
 	})
 
+	const isDarkMode = useColorScheme() === 'dark'
 	return data ? (
 		<Icon
 			name='compass-outline'
-			color={getToken('$color.success')}
+			color={isDarkMode ? getToken('$color.success') : getToken('$color.grape')}
 			onPress={() =>
 				navigation.navigate('InstantMix', {
 					item,
