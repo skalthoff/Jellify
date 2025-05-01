@@ -136,6 +136,11 @@ const QueueContextInitailizer = () => {
 
 		TrackPlayer.add([playNextTrack], currentIndex + 1)
 		setPlayQueue((await getQueue()) as JellifyTrack[])
+
+		Toast.show({
+			text1: 'Playing next',
+			type: 'success',
+		})
 	}
 
 	const playInQueue = async (items: BaseItemDto[]) => {
