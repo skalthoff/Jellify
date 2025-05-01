@@ -2,13 +2,14 @@ import Client from '../../../api/client'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import { Image } from 'expo-image'
-import { getToken, getTokenValue, SizeTokens } from 'tamagui'
+import { isUndefined } from 'lodash'
+import { getToken, getTokenValue, FontSizeTokens } from 'tamagui'
 
 interface ImageProps {
 	item: BaseItemDto
 	circular?: boolean | undefined
-	width?: SizeTokens | undefined
-	height?: SizeTokens | undefined
+	width?: FontSizeTokens | undefined
+	height?: FontSizeTokens | undefined
 }
 
 export default function ItemImage({
@@ -26,8 +27,8 @@ export default function ItemImage({
 						? width
 						: getTokenValue('$12') + getToken('$5')
 					: getTokenValue('$2'),
-				width: width ? width : getToken('$12') + getToken('$5'),
-				height: height ? height : getToken('$12') + getToken('$5'),
+				width: !isUndefined(width) ? width : getToken('$12') + getToken('$5'),
+				height: !isUndefined(height) ? height : getToken('$12') + getToken('$5'),
 				alignSelf: 'center',
 			}}
 		/>

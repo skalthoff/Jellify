@@ -14,7 +14,6 @@ import { Image } from 'expo-image'
 import { fetchAlbumDiscs } from '../../api/queries/item'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import InstantMixButton from '../Global/components/instant-mix-button'
 
 /**
@@ -75,8 +74,6 @@ function AlbumTrackListHeader(
 	album: BaseItemDto,
 	navigation: NativeStackNavigationProp<StackParamList>,
 ): React.JSX.Element {
-	const { width } = useSafeAreaFrame()
-
 	return (
 		<YStack marginTop={'$2'} minHeight={getToken('$20') + getToken('$15')}>
 			<Image
