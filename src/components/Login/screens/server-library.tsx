@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { getToken, Spinner, ToggleGroup } from 'tamagui'
-import { useAuthenticationContext } from '../provider'
-import { H1, H2, Label, Text } from '../../Global/helpers/text'
+import { H2, Text } from '../../Global/helpers/text'
 import Button from '../../Global/helpers/button'
 import _ from 'lodash'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Client from '../../../api/client'
 import { useJellifyContext } from '../../provider'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { QueryKeys } from '../../../enums/query-keys'
 import { fetchUserViews } from '../../../api/queries/libraries'
 import { useQuery } from '@tanstack/react-query'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { StackParamList } from '../../../components/types'
 
-export default function ServerLibrary(): React.JSX.Element {
-	const { setUser } = useAuthenticationContext()
-
-	const { setLoggedIn } = useJellifyContext()
+export default function ServerLibrary({
+	navigation,
+}: {
+	navigation: NativeStackNavigationProp<StackParamList>
+}): React.JSX.Element {
+	const { api, user, setUser, setLibrary } = useJellifyContext()
 
 	const [libraryId, setLibraryId] = useState<string | undefined>(undefined)
 	const [playlistLibrary, setPlaylistLibrary] = useState<BaseItemDto | undefined>(undefined)
@@ -28,7 +30,7 @@ export default function ServerLibrary(): React.JSX.Element {
 		refetch,
 	} = useQuery({
 		queryKey: [QueryKeys.UserViews],
-		queryFn: () => fetchUserViews(),
+		queryFn: () => fetchUserViews(api, user),
 	})
 
 	useEffect(() => {
@@ -78,7 +80,7 @@ export default function ServerLibrary(): React.JSX.Element {
 			<Button
 				disabled={!libraryId}
 				onPress={() => {
-					Client.setLibrary({
+					setLibrary({
 						musicLibraryId: libraryId!,
 						musicLibraryName:
 							libraries?.filter((library) => library.Id == libraryId)[0].Name ??
@@ -89,7 +91,10 @@ export default function ServerLibrary(): React.JSX.Element {
 						playlistLibraryId: playlistLibrary?.Id,
 						playlistLibraryPrimaryImageId: playlistLibrary?.ImageTags!.Primary,
 					})
-					setLoggedIn(true)
+					navigation.navigate('Tabs', {
+						screen: 'Home',
+						params: {},
+					})
 				}}
 			>
 				{`Let's Go!`}
@@ -97,8 +102,10 @@ export default function ServerLibrary(): React.JSX.Element {
 
 			<Button
 				onPress={() => {
-					Client.switchUser()
 					setUser(undefined)
+					navigation.navigate('ServerAuthentication', undefined, {
+						pop: false,
+					})
 				}}
 			>
 				Switch User

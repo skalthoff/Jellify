@@ -3,11 +3,11 @@ import ServerAuthentication from './screens/server-authentication'
 import ServerAddress from './screens/server-address'
 import { createStackNavigator } from '@react-navigation/stack'
 import ServerLibrary from './screens/server-library'
-import { useAuthenticationContext } from './provider'
 import { useEffect } from 'react'
+import { useJellifyContext } from '../provider'
 
 export default function Login(): React.JSX.Element {
-	const { user, server, setTriggerAuth } = useAuthenticationContext()
+	const { user, server, setTriggerAuth } = useJellifyContext()
 
 	const Stack = createStackNavigator()
 
@@ -39,8 +39,6 @@ export default function Login(): React.JSX.Element {
 				options={{
 					headerShown: false,
 				}}
-				initialParams={{ server }}
-				//@ts-expect-error TOOD: Explain why this exists
 				component={ServerAuthentication}
 			/>
 			<Stack.Screen

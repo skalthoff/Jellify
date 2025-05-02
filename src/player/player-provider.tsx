@@ -13,13 +13,15 @@ import { handlePlaybackProgress, handlePlaybackState } from './handlers'
 import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import { trigger } from 'react-native-haptic-feedback'
 import { pause, play, seekBy, seekTo } from 'react-native-track-player/lib/src/trackPlayer'
-import Client from '../api/client'
 
 import { getPlaystateApi } from '@jellyfin/sdk/lib/utils/api'
 import { useNetworkContext } from '../components/Network/provider'
 import { useQueueContext } from './queue-provider'
 import { PlaystateApi } from '@jellyfin/sdk/lib/generated-client/api/playstate-api'
 import { networkStatusTypes } from '../components/Network/internetConnectionWatcher'
+import { useJellifyContext } from '../components/provider'
+import { isUndefined } from 'lodash'
+import uuid from 'react-native-uuid'
 
 interface PlayerContext {
 	nowPlaying: JellifyTrack | undefined
@@ -31,11 +33,13 @@ interface PlayerContext {
 }
 
 const PlayerContextInitializer = () => {
+	const { api, sessionId } = useJellifyContext()
+
 	const nowPlayingJson = storage.getString(MMKVStorageKeys.NowPlaying)
 
 	let playStateApi: PlaystateApi | undefined
 
-	if (Client.api) playStateApi = getPlaystateApi(Client.api)
+	if (!isUndefined(api)) playStateApi = getPlaystateApi(api)
 
 	//#region State
 	const [nowPlaying, setNowPlaying] = useState<JellifyTrack | undefined>(
@@ -49,12 +53,12 @@ const PlayerContextInitializer = () => {
 	//#region Functions
 	const handlePlaybackStateChanged = async (state: State) => {
 		if (playStateApi && nowPlaying)
-			await handlePlaybackState(Client.sessionId, playStateApi, nowPlaying, state)
+			await handlePlaybackState(sessionId, playStateApi, nowPlaying, state)
 	}
 
 	const handlePlaybackProgressUpdated = async (progress: Progress) => {
 		if (playStateApi && nowPlaying)
-			await handlePlaybackProgress(Client.sessionId, playStateApi, nowPlaying, progress)
+			await handlePlaybackProgress(sessionId, playStateApi, nowPlaying, progress)
 	}
 
 	//#endregion Functions

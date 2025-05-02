@@ -21,6 +21,7 @@ import { filterTracksOnNetworkStatus } from './helpers/queue'
 import { SKIP_TO_PREVIOUS_THRESHOLD } from './config'
 import { isUndefined } from 'lodash'
 import Toast from 'react-native-toast-message'
+import { useJellifyContext } from '../components/provider'
 interface QueueContext {
 	queueRef: Queue
 	playQueue: JellifyTrack[]
@@ -47,6 +48,7 @@ const QueueContextInitailizer = () => {
 
 	const [currentIndex, setCurrentIndex] = useState<number>(-1)
 
+	const { api, sessionId, user } = useJellifyContext()
 	const { downloadedTracks, networkStatus } = useNetworkContext()
 
 	useTrackPlayerEvents([Event.PlaybackActiveTrackChanged], ({ index }) => {
@@ -81,7 +83,13 @@ const QueueContextInitailizer = () => {
 
 			TrackPlayer.remove([queueItemIndex]).then(() => {
 				TrackPlayer.add(
-					mapDtoToTrack(track, downloadedTracks ?? [], queueItem.QueuingType),
+					mapDtoToTrack(
+						api!,
+						sessionId,
+						track,
+						downloadedTracks ?? [],
+						queueItem.QueuingType,
+					),
 					queueItemIndex,
 				)
 			})
@@ -115,7 +123,7 @@ const QueueContextInitailizer = () => {
 		)
 
 		const queue = availableAudioItems.map((item) =>
-			mapDtoToTrack(item, downloadedTracks ?? [], QueuingType.FromSelection),
+			mapDtoToTrack(api!, sessionId, item, downloadedTracks ?? [], QueuingType.FromSelection),
 		)
 
 		setQueueRef(queuingRef)
@@ -132,7 +140,13 @@ const QueueContextInitailizer = () => {
 	const playNextInQueue = async (item: BaseItemDto) => {
 		console.debug(`Playing item next in queue`)
 
-		const playNextTrack = mapDtoToTrack(item, downloadedTracks ?? [], QueuingType.PlayingNext)
+		const playNextTrack = mapDtoToTrack(
+			api!,
+			sessionId,
+			item,
+			downloadedTracks ?? [],
+			QueuingType.PlayingNext,
+		)
 
 		TrackPlayer.add([playNextTrack], currentIndex + 1)
 		setPlayQueue((await getQueue()) as JellifyTrack[])
@@ -149,7 +163,13 @@ const QueueContextInitailizer = () => {
 
 		await TrackPlayer.add(
 			items.map((item) =>
-				mapDtoToTrack(item, downloadedTracks ?? [], QueuingType.DirectlyQueued),
+				mapDtoToTrack(
+					api!,
+					sessionId,
+					item,
+					downloadedTracks ?? [],
+					QueuingType.DirectlyQueued,
+				),
 			),
 			insertIndex,
 		)
@@ -220,7 +240,7 @@ const QueueContextInitailizer = () => {
 		onSuccess: async (data, { queue }: QueueMutation) => {
 			trigger('notificationSuccess')
 
-			if (typeof queue === 'object') await markItemPlayed(queue)
+			if (typeof queue === 'object' && api && user) await markItemPlayed(api, user, queue)
 		},
 	})
 

@@ -1,19 +1,14 @@
 import { QueryKeys } from '../enums/query-keys'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack'
-import { JellifyServer } from '../types/JellifyServer'
-import { JellifyUser } from '../types/JellifyUser'
 import { Queue } from '../player/types/queue-item'
 
 export type StackParamList = {
+	Login: undefined
 	ServerAddress: undefined
-	ServerAuthentication: {
-		server: JellifyServer
-	}
+	ServerAuthentication: undefined
 
-	LibrarySelection: {
-		user: JellifyUser
-	}
+	LibrarySelection: undefined
 
 	Home: undefined
 	AddPlaylist: undefined
@@ -90,6 +85,7 @@ export type StackParamList = {
 	}
 }
 
+export type LoginProps = NativeStackScreenProps<StackParamList, 'Login'>
 export type ServerAddressProps = NativeStackScreenProps<StackParamList, 'ServerAddress'>
 export type ServerAuthenticationProps = NativeStackScreenProps<
 	StackParamList,
