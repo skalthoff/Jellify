@@ -1,6 +1,6 @@
 import React from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useTheme } from 'tamagui'
+import { ColorTokens, getToken, getTokenValue, Token, useTheme } from 'tamagui'
 
 const smallSize = 24
 
@@ -25,14 +25,14 @@ export default function Icon({
 	large?: boolean
 	disabled?: boolean
 	extraLarge?: boolean
-	color?: string | undefined
+	color?: ColorTokens | undefined
 }): React.JSX.Element {
 	const theme = useTheme()
 	const size = extraLarge ? extraLargeSize : large ? largeSize : small ? smallSize : regularSize
 
 	return (
 		<MaterialCommunityIcons
-			color={color ? color : theme.color.val}
+			color={color ? color.valueOf() : theme.color.val}
 			name={name}
 			onPress={onPress}
 			disabled={disabled}
