@@ -144,10 +144,6 @@ function AlbumTrackListHeader(
 					/>
 				)}
 			/>
-
-			<XStack>
-				<IconButton name='arrow-left' onPress={() => {}} />
-			</XStack>
 		</YStack>
 	)
 }
