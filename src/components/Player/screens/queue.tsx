@@ -19,7 +19,6 @@ export default function Queue({
 }: {
 	navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
-	const { width } = useSafeAreaFrame()
 	const { nowPlaying } = usePlayerContext()
 
 	const {
@@ -57,13 +56,12 @@ export default function Queue({
 				data={playQueue}
 				dragHitSlop={{
 					left: -50, // https://github.com/computerjazz/react-native-draggable-flatlist/issues/336
-					right: isReordering ? -(width * 0.95 - 20) : width,
 				}}
 				extraData={nowPlaying}
 				// enableLayoutAnimationExperimental
 				getItemLayout={(data, index) => ({
-					length: width / 9,
-					offset: (width / 9) * index,
+					length: 20,
+					offset: (20 / 9) * index,
 					index,
 				})}
 				initialScrollIndex={scrollIndex !== -1 ? scrollIndex : 0}
@@ -85,7 +83,7 @@ export default function Queue({
 				renderItem={({ item: queueItem, getIndex, drag, isActive }) => (
 					<XStack
 						alignItems='center'
-						onPress={(event) => {
+						onLongPress={(event) => {
 							trigger('impactLight')
 							drag()
 						}}
@@ -95,7 +93,6 @@ export default function Queue({
 						</YStack>
 
 						<Track
-							invertedColors={isActive}
 							queue={queueRef}
 							navigation={navigation}
 							track={queueItem.item}
@@ -107,10 +104,8 @@ export default function Queue({
 								useSkip.mutate(index)
 							}}
 							onLongPress={() => {
-								navigation.navigate('Details', {
-									item: queueItem.item,
-									isNested: true,
-								})
+								trigger('impactLight')
+								drag()
 							}}
 							isNested
 							showRemove

@@ -1,7 +1,7 @@
 import { HomeAlbumProps, StackParamList } from '../types'
 import { YStack, XStack, Separator, getToken, Spacer } from 'tamagui'
 import { H5, Text } from '../Global/helpers/text'
-import { FlatList, SectionList, useWindowDimensions } from 'react-native'
+import { ActivityIndicator, FlatList, SectionList, useWindowDimensions } from 'react-native'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
 import Track from '../Global/components/track'
 import FavoriteButton from '../Global/components/favorite-button'
@@ -14,7 +14,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import InstantMixButton from '../Global/components/instant-mix-button'
 import ItemImage from '../Global/components/image'
 import React from 'react'
-import IconButton from '../Global/helpers/icon-button'
+import { useJellifyContext } from '../provider'
 
 /**
  * The screen for an Album's track list
@@ -29,9 +29,11 @@ import IconButton from '../Global/helpers/icon-button'
 export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.Element {
 	const { album } = route.params
 
-	const { data: discs } = useQuery({
+	const { api } = useJellifyContext()
+
+	const { data: discs, isPending } = useQuery({
 		queryKey: [QueryKeys.ItemTracks, album.Id!],
-		queryFn: () => fetchAlbumDiscs(album),
+		queryFn: () => fetchAlbumDiscs(api, album),
 	})
 
 	return (
@@ -61,6 +63,15 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 				/>
 			)}
 			ListFooterComponent={() => AlbumTrackListFooter(album, navigation)}
+			ListEmptyComponent={() => (
+				<YStack>
+					{isPending ? (
+						<ActivityIndicator size='large' color={'$background'} />
+					) : (
+						<Text>No tracks found</Text>
+					)}
+				</YStack>
+			)}
 		/>
 	)
 }
