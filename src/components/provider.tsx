@@ -69,14 +69,17 @@ const JellifyContextInitializer = () => {
 
 	useEffect(() => {
 		if (server) storage.set(MMKVStorageKeys.Server, JSON.stringify(server))
+		else storage.delete(MMKVStorageKeys.Server)
 	}, [server])
 
 	useEffect(() => {
 		if (user) storage.set(MMKVStorageKeys.User, JSON.stringify(user))
+		else storage.delete(MMKVStorageKeys.User)
 	}, [user])
 
 	useEffect(() => {
 		if (library) storage.set(MMKVStorageKeys.Library, JSON.stringify(library))
+		else storage.delete(MMKVStorageKeys.Library)
 	}, [library])
 
 	useEffect(() => {
