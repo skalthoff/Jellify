@@ -9,6 +9,8 @@ import { networkStatusTypes } from './internetConnectionWatcher'
 import DownloadProgress from '../../types/DownloadProgress'
 import { useJellifyContext } from '../provider'
 import { isUndefined } from 'lodash'
+import NetInfo from '@react-native-community/netinfo'
+
 interface NetworkContext {
 	useDownload: UseMutationResult<void, Error, BaseItemDto, unknown>
 	useRemoveDownload: UseMutationResult<void, Error, BaseItemDto, unknown>
@@ -48,10 +50,21 @@ const NetworkContextInitializer = () => {
 
 	const { data: networkStatus } = useQuery<networkStatusTypes>({
 		queryKey: [QueryKeys.NetworkStatus],
+		queryFn: async () => {
+			const state = await NetInfo.fetch()
+			return state.isConnected ? networkStatusTypes.ONLINE : networkStatusTypes.DISCONNECTED
+		},
 	})
 
 	const { data: activeDownloads } = useQuery<DownloadProgress[]>({
 		queryKey: ['downloads'],
+		queryFn: () => {
+			const queryClientDownloads = queryClient.getQueryData<{
+				[url: string]: DownloadProgress
+			}>('downloads')
+			if (!queryClientDownloads) return []
+			return Object.values(queryClientDownloads)
+		},
 		initialData: [],
 	})
 

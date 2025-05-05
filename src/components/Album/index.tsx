@@ -15,6 +15,8 @@ import InstantMixButton from '../Global/components/instant-mix-button'
 import ItemImage from '../Global/components/image'
 import React from 'react'
 import { useJellifyContext } from '../provider'
+import IconButton from '../Global/helpers/icon-button'
+import { useNetworkContext } from '../Network/provider'
 
 /**
  * The screen for an Album's track list
@@ -52,7 +54,7 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 					>{`Disc ${section.title}`}</Text>
 				) : null
 			}}
-			ListHeaderComponent={() => AlbumTrackListHeader(album, navigation)}
+			ListHeaderComponent={() => AlbumTrackListHeader(album, navigation, discs)}
 			renderItem={({ item: track, index }) => (
 				<Track
 					track={track}
@@ -85,6 +87,7 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 function AlbumTrackListHeader(
 	album: BaseItemDto,
 	navigation: NativeStackNavigationProp<StackParamList>,
+	discs?: { title: string; data: BaseItemDto[] }[],
 ): React.JSX.Element {
 	const { width } = useWindowDimensions()
 
@@ -126,8 +129,37 @@ function AlbumTrackListHeader(
 						<FavoriteButton item={album} />
 
 						<Spacer />
-
 						<InstantMixButton item={album} navigation={navigation} />
+						<Spacer />
+						{/* Download all / Remove all button */}
+						{(() => {
+							const { downloadedTracks, useDownload, useRemoveDownload } =
+								useNetworkContext()
+							const allTracks = discs?.flatMap((d) => d.data) ?? []
+							const downloadedIds = downloadedTracks?.map((dt) => dt.item.Id) ?? []
+							const remaining = allTracks.filter(
+								(t) => !downloadedIds.includes(t.Id!),
+							)
+							const isAllDownloaded = remaining.length === 0 && allTracks.length > 0
+							const iconName = isAllDownloaded ? 'delete' : 'download'
+							const title = isAllDownloaded ? 'Remove All' : 'Download All'
+							const handlePress = () => {
+								if (isAllDownloaded) {
+									allTracks.forEach((track) => useRemoveDownload.mutate(track))
+								} else {
+									allTracks.forEach((track) => useDownload.mutate(track))
+								}
+							}
+							return (
+								<IconButton
+									circular
+									name={iconName}
+									title={title}
+									onPress={handlePress}
+									size={getToken('$12') + getToken('$10')}
+								/>
+							)
+						})()}
 					</XStack>
 				</YStack>
 			</XStack>

@@ -1,19 +1,17 @@
 // DownloadProgressBar.tsx
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { useQueryClient, useQuery } from '@tanstack/react-query'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import { useNetworkContext } from '../Network/provider'
 
 export const DownloadProgressBar = () => {
-	const { data: downloads } = useQuery({
-		queryKey: ['downloads'],
-		initialData: {},
-	})
+	const { activeDownloads } = useNetworkContext()
+	const downloads = activeDownloads ?? []
 
 	return (
 		<View style={styles.container}>
-			{/* eslint-disable @typescript-eslint/no-explicit-any */}
-			{Object.entries(downloads || {}).map(([url, item]: any) => {
+			{/* Map activeDownloads array instead of useQuery */}
+			{downloads.map((item) => {
 				const animatedWidth = useSharedValue(item.progress)
 				animatedWidth.value = withTiming(item.progress, { duration: 200 })
 
@@ -22,7 +20,7 @@ export const DownloadProgressBar = () => {
 				}))
 
 				return (
-					<View key={url} style={styles.item}>
+					<View key={item.name} style={styles.item}>
 						<Text style={styles.label}>{item.name}</Text>
 						<View style={styles.bar}>
 							<Animated.View style={[styles.fill, animatedStyle]} />
