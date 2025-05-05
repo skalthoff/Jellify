@@ -38,6 +38,16 @@ function DownloadItem({
 	)
 }
 
+// 🔹 Downloaded Track Item
+function DownloadedTrackItem({ track }: { track: JellifyDownload }): React.JSX.Element {
+	return (
+		<View style={styles.item}>
+			<Text style={styles.label}>{track.title ?? track.item.Name ?? 'Unknown Title'}</Text>
+			<Text style={styles.usage}>{track.artist ?? track.item.Artists?.join(', ') ?? ''}</Text>
+		</View>
+	)
+}
+
 // 🔹 Main UI Component
 export default function StorageBar(): React.JSX.Element {
 	const [used, setUsed] = useState(0)
@@ -111,6 +121,19 @@ export default function StorageBar(): React.JSX.Element {
 								/>
 							)
 						}}
+						contentContainerStyle={{ paddingBottom: 20 }}
+					/>
+				</>
+			)}
+
+			{/* Downloaded Tracks */}
+			{(downloadedTracks ?? []).length > 0 && (
+				<>
+					<Text style={[styles.title, { marginTop: 24 }]}>🎵 Downloaded Tracks</Text>
+					<FlatList
+						data={downloadedTracks}
+						keyExtractor={(track) => track.item.Id}
+						renderItem={({ item }) => <DownloadedTrackItem track={item} />}
 						contentContainerStyle={{ paddingBottom: 40 }}
 					/>
 				</>

@@ -10,6 +10,7 @@ import FrequentArtists from './helpers/frequent-artists'
 import FrequentlyPlayedTracks from './helpers/frequent-tracks'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useJellifyContext } from '../provider'
+import Icon from '../Global/helpers/icon'
 export function ProvidedHome({
 	navigation,
 }: {
@@ -26,8 +27,14 @@ export function ProvidedHome({
 			removeClippedSubviews // Save memory usage
 		>
 			<YStack alignContent='flex-start'>
-				<XStack margin={'$2'}>
+				<XStack margin={'$2'} alignItems='center' justifyContent='space-between'>
 					<H3>{`Hi, ${user?.name ?? 'there'}`}</H3>
+					<Icon
+						name='download-outline'
+						small
+						onPress={() => navigation.navigate('Storage')}
+						title='View Downloads'
+					/>
 				</XStack>
 
 				<Separator marginVertical={'$2'} />

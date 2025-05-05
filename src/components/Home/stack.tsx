@@ -11,6 +11,7 @@ import TracksScreen from '../Tracks/screen'
 import { ArtistScreen } from '../Artist'
 import InstantMix from '../InstantMix/component'
 import { getToken, getTokens, useTheme } from 'tamagui'
+import StorageBar from '../Storage'
 
 const Stack = createNativeStackNavigator<StackParamList>()
 
@@ -22,6 +23,14 @@ export default function Home(): React.JSX.Element {
 			<Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: true }}>
 				<Stack.Group>
 					<Stack.Screen name='Home' component={ProvidedHome} />
+
+					<Stack.Screen
+						name='Storage'
+						component={StorageBar}
+						options={{
+							title: 'Storage',
+						}}
+					/>
 
 					<Stack.Screen
 						name='Artist'
