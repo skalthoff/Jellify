@@ -131,7 +131,9 @@ export const saveAudio = async (
 			track.artwork = dowloadalbum
 		}
 
-		const index = existingArray.findIndex((t) => t.item.Id === track.item.Id)
+		// Use a unique key for each downloaded track: track.Id (not album Id)
+		const uniqueTrackId = track.Id || track.item.Id
+		const index = existingArray.findIndex((t) => (t.Id || t.item.Id) === uniqueTrackId)
 
 		if (index >= 0) {
 			// Replace existing
