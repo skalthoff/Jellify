@@ -6,8 +6,8 @@ import { isUndefined } from 'lodash'
 import { getTokens, Spinner } from 'tamagui'
 import { QueryKeys } from '../../../enums/query-keys'
 import { fetchUserData } from '../../../api/queries/favorites'
-import { useJellifyUserDataContext } from '../../../components/user-data-provider'
-import { useJellifyContext } from '../../provider'
+import { useJellifyUserDataContext } from '../../../providers/UserData'
+import { useJellifyContext } from '../../../providers'
 
 interface SetFavoriteMutation {
 	item: BaseItemDto

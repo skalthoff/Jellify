@@ -1,6 +1,6 @@
 import React from 'react'
 import { getToken, getTokens, Image, useTheme, View, XStack, YStack } from 'tamagui'
-import { usePlayerContext } from '../../player/player-provider'
+import { usePlayerContext } from '../../providers/Player'
 import { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs'
 import { NavigationHelpers, ParamListBase } from '@react-navigation/native'
 import Icon from '../Global/helpers/icon'
@@ -10,8 +10,8 @@ import PlayPauseButton from './helpers/buttons'
 import { TextTickerConfig } from './component.config'
 import FastImage from 'react-native-fast-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
-import { useQueueContext } from '../../player/queue-provider'
-import { useJellifyContext } from '../provider'
+import { useQueueContext } from '../../providers/Player/queue'
+import { useJellifyContext } from '../../providers'
 export function Miniplayer({
 	navigation,
 }: {
@@ -68,7 +68,7 @@ export function Miniplayer({
 						</TextTicker>
 
 						<TextTicker {...TextTickerConfig}>
-							<Text color={getTokens().color.telemagenta}>
+							<Text bold color={getTokens().color.telemagenta}>
 								{nowPlaying?.artist ?? ''}
 							</Text>
 						</TextTicker>

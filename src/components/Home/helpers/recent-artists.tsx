@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, XStack } from 'tamagui'
-import { useHomeContext } from '../provider'
-import { H2 } from '../../Global/helpers/text'
+import { useHomeContext } from '../../../providers/Home'
+import { H2, H4 } from '../../Global/helpers/text'
 import { StackParamList } from '../../types'
 import { ItemCard } from '../../Global/components/item-card'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
@@ -13,25 +13,31 @@ export default function RecentArtists({
 }: {
 	navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
-	const { recentArtists } = useHomeContext()
+	const { recentArtists, fetchNextRecentArtists, hasNextRecentArtists, isFetchingRecentArtists } =
+		useHomeContext()
 
 	return (
 		<View>
 			<XStack
 				alignItems='center'
 				onPress={() => {
-					navigation.navigate('Artists', {
+					navigation.navigate('RecentArtists', {
 						artists: recentArtists,
+						fetchNextPage: fetchNextRecentArtists,
+						hasNextPage: hasNextRecentArtists,
+						isPending: isFetchingRecentArtists,
 					})
 				}}
 			>
-				<H2 marginLeft={'$2'}>Recent Artists</H2>
+				<H4 marginLeft={'$2'}>Recent Artists</H4>
 				<Icon name='arrow-right' />
 			</XStack>
 
 			<HorizontalCardList
 				data={
-					(recentArtists?.length ?? 0 > 10) ? recentArtists!.slice(0, 10) : recentArtists
+					(recentArtists?.pages.flatMap((page) => page).length ?? 0 > 10)
+						? recentArtists?.pages.flatMap((page) => page).slice(0, 10)
+						: recentArtists?.pages.flatMap((page) => page)
 				}
 				renderItem={({ item: recentArtist }) => (
 					<ItemCard
@@ -42,7 +48,7 @@ export default function RecentArtists({
 								artist: recentArtist,
 							})
 						}}
-						size={'$12'}
+						size={'$11'}
 					></ItemCard>
 				)}
 			/>
