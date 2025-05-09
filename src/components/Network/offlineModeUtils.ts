@@ -10,9 +10,10 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 
 export async function downloadJellyfinFile(
 	url: string,
-	name: string,
-	songName: string,
+	id: string, // unique track or artwork id
+	title: string, // track title
 	queryClient: QueryClient,
+	suffix: string = '', // optional suffix for artwork
 ) {
 	try {
 		// Fetch the file
@@ -27,13 +28,14 @@ export async function downloadJellyfinFile(
 			extension = parts[1].split(';')[0] // handles "audio/m4a; charset=utf-8"
 		}
 
-		// Step 3: Build path
-		const fileName = `${name}.${extension}`
+		// Sanitize title for file system
+		const safeTitle = title.replace(/[^a-zA-Z0-9-_]/g, '_')
+		const fileName = `${safeTitle}_${id}${suffix}.${extension}`
 		const downloadDest = `${RNFS.DocumentDirectoryPath}/${fileName}`
 
 		queryClient.setQueryData(['downloads'], (prev: DownloadProgress) => ({
 			...prev,
-			[url]: { progress: 0, name: fileName, songName: songName },
+			[url]: { progress: 0, name: fileName, songName: title },
 		}))
 
 		// Step 4: Start download with progress
@@ -50,7 +52,7 @@ export async function downloadJellyfinFile(
 
 				queryClient.setQueryData(['downloads'], (prev: DownloadProgress) => ({
 					...prev,
-					[url]: { progress: percent, name: fileName, songName: songName },
+					[url]: { progress: percent, name: fileName, songName: title },
 				}))
 			},
 			background: true,
@@ -61,8 +63,17 @@ export async function downloadJellyfinFile(
 		console.log('Download complete:', result)
 
 		return `file://${downloadDest}`
-	} catch (error) {
-		console.error('Download failed:', error)
+	} catch (error: any) {
+		if (axios.isAxiosError(error)) {
+			console.error('Axios network error when downloading:', url)
+			console.error('Axios error message:', error.message)
+			if (error.response) {
+				console.error('Axios response status:', error.response.status)
+				console.error('Axios response data:', error.response.data)
+			}
+		} else {
+			console.error('Download failed:', error)
+		}
 		throw error
 	}
 }
@@ -113,22 +124,33 @@ export const saveAudio = async (
 	try {
 		console.log('Downloading audio', track)
 
+		// Use unique track ID for file naming
+		const trackId = track.Id || track.item.Id
+		const safeTitle = (track.title || track.item.Name || 'track').replace(
+			/[^a-zA-Z0-9-_]/g,
+			'_',
+		)
+
 		const downloadtrack = await downloadJellyfinFile(
 			track.url,
-			track.item.Id as string,
-			track.title as string,
+			trackId as string, // unique track ID
+			safeTitle,
 			queryClient,
 		)
-		const dowloadalbum = await downloadJellyfinFile(
-			track.artwork as string,
-			track.item.Id as string,
-			track.title as string,
-			queryClient,
-		)
+		let downloadartwork = undefined
+		if (track.artwork) {
+			downloadartwork = await downloadJellyfinFile(
+				track.artwork as string,
+				trackId as string, // unique track ID for artwork too
+				safeTitle,
+				queryClient,
+				'_artwork',
+			)
+		}
 		console.log('downloadtrack', downloadtrack)
 		if (downloadtrack) {
 			track.url = downloadtrack
-			track.artwork = dowloadalbum
+			track.artwork = downloadartwork
 		}
 
 		// Use a unique key for each downloaded track: track.Id (not album Id)
