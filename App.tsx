@@ -19,6 +19,10 @@ import { requestStoragePermission } from './src/helpers/permisson-helpers'
 import ErrorBoundary from './src/components/ErrorBoundary'
 import Toast from 'react-native-toast-message'
 import JellifyToastConfig from './src/constants/toast.config'
+import { TelemetryDeckProvider, createTelemetryDeck } from '@typedigital/telemetrydeck-react'
+import telemetryDeckConfig from './telemetrydeck.json'
+import glitchtipConfig from './glitchtip.json'
+import * as Sentry from '@sentry/react-native'
 
 export const backgroundRuntime = createWorkletRuntime('background')
 
@@ -36,6 +40,7 @@ export default function App(): React.JSX.Element {
 				capabilities: CAPABILITIES,
 				notificationCapabilities: CAPABILITIES,
 				compactCapabilities: CAPABILITIES,
+				progressUpdateEventInterval: 10,
 			}),
 		)
 		.finally(() => {

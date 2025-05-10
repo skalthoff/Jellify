@@ -4,8 +4,8 @@ import HorizontalCardList from '../../../components/Global/components/horizontal
 import { ItemCard } from '../../../components/Global/components/item-card'
 import { useDiscoverContext } from '../../../providers/Discover'
 import { View, XStack } from 'tamagui'
-import { H2 } from '../../../components/Global/helpers/text'
-import Icon from '../../../components/Global/helpers/icon'
+import { H2, H4 } from '../../../components/Global/helpers/text'
+import Icon from '../../Global/components/icon'
 
 export default function RecentlyAdded({
 	navigation,
@@ -29,12 +29,11 @@ export default function RecentlyAdded({
 					})
 				}}
 			>
-				<H2 marginLeft={'$2'}>Recently Added</H2>
+				<H4 marginLeft={'$2'}>Recently Added</H4>
 				<Icon name='arrow-right' />
 			</XStack>
 
 			<HorizontalCardList
-				squared
 				data={
 					(recentlyAdded?.pages[0].length ?? 0 > 10)
 						? recentlyAdded!.pages[0].slice(0, 10)
