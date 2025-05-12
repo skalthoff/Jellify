@@ -3,7 +3,7 @@
 ![Jellify App Icon](assets/icon_dark_60pt_3x.png)
 
 [![Latest Version](https://img.shields.io/github/package-json/version/anultravioletaurora/jellify?label=Latest%20Version&color=indigo)](https://github.com/anultravioletaurora/Jellify/releases)
-[![publish-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml/badge.svg?branch=main)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml) [![Sponsors](https://img.shields.io/github/sponsors/anultravioletaurora?label=Project%20Sponsors&color=magenta)](https://github.com/sponsors/anultravioletaurora)
+[![publish-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml/badge.svg?branch=main)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml) [![Sponsors](https://img.shields.io/github/sponsors/anultravioletaurora?label=Project%20Sponsors&color=magenta)](https://github.com/sponsors/anultravioletaurora) [![Patreon](https://img.shields.io/badge/Patreon-F96854?logo=patreon&logoColor=white)](https://patreon.com/anultravioletaurora?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink)
 
 ## 🔗 Quick Links
 
@@ -140,7 +140,11 @@ Playlist
 [React Native Track Player](https://github.com/doublesymmetry/react-native-track-player)\
 [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill)
 
-### 👩‍💻 *Opt-In* Monitoring
+### 👩‍💻 Opt-In Monitoring
+
+All logging and metrics gathering is _opt-in_ __by default__. This is merely here to help us make _Jellify_ better. 
+
+All logs and metrics are completely anonymized. No data can be traced back to you.
 
 [GlitchTip](https://glitchtip.com/)\
 [TelemetryDeck](https://telemetrydeck.com)
@@ -148,6 +152,10 @@ Playlist
 ### 💜 Love from Wisconsin 🧀
 
 This is undoubtedly a passion project of [mine](https://github.com/anultravioletaurora), and I've learned a lot from working on it (and the many failed attempts before it). I hope you enjoy using it! Feature requests and bug reports are welcome :)
+
+## 🙏 Support the Project
+
+You can support _Jellify_ development via [Patreon](https://patreon.com/anultravioletaurora?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink) or [GitHub Sponsors](https://github.com/sponsors/anultravioletaurora).
 
 ## 🏃‍♀️Running Locally
 
