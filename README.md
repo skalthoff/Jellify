@@ -155,7 +155,10 @@ This is undoubtedly a passion project of [mine](https://github.com/anultraviolet
 
 ## 🙏 Support the Project
 
-You can support _Jellify_ development via [Patreon](https://patreon.com/anultravioletaurora?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink) or [GitHub Sponsors](https://github.com/sponsors/anultravioletaurora).
+You can support _Jellify_ development via [Patreon](https://patreon.com/anultravioletaurora?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink) or [GitHub Sponsors](https://github.com/sponsors/anultravioletaurora) starting at $1.
+
+This allows me to prioritize specific features, acquire additional hardware for testing and development, and helps cover operational costs like Apple Developer Licenses.
+
 
 ## 🏃‍♀️Running Locally
 
