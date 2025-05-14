@@ -52,10 +52,7 @@ jobs:
       - name: ✅ Validate Glitchtip.json
         run: |
           node -e "JSON.parse(require('fs').readFileSync('glitchtip.json'))"
-          
-      - name: 🚀 Run Android fastlane build
-        run: yarn fastlane:android:build
-          
+                    
       - name: 🚀 Run iOS fastlane build and publish to TestFlight
         run: yarn fastlane:ios:beta
         env:
@@ -63,6 +60,9 @@ jobs:
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_REPO_PAT: "anultravioletaurora:${{ secrets.SIGNING_REPO_PAT }}"
+
+      - name: 🚀 Run Android fastlane build
+        run: yarn fastlane:android:build
 
       - name: 👩‍💻 Configure Git
         run: |
