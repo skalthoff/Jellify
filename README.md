@@ -11,6 +11,11 @@
 
 [![Discord Server](https://dcbadge.limes.pink/api/server/https://discord.gg/yf8fBatktn)](https://discord.gg/yf8fBatktn)
 
+## 📄 Contents
+
+- [About](#ℹ️ About)
+- [Screenshots](👀 Lemme See!)
+
 ## ℹ️ About
 
 > **jellify** (verb) - _to make gelatinous_ <br>
