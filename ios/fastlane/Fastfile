@@ -36,7 +36,6 @@ platform :ios do
     match(
       type: "appstore",
       app_identifier: "com.cosmonautical.jellify",
-      readonly: true
     )
     # we dont need to increment version number here anymore, because we  will increment it in the github action
     # increment_version_number(
