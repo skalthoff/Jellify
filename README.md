@@ -16,40 +16,15 @@
 > **jellify** (verb) - _to make gelatinous_ <br>
 > [see also](https://www.merriam-webster.com/dictionary/jellify)
 
-_Jellify_ is a free and open source music player for [Jellyfin](https://jellyfin.org/). Built with [React Native](https://reactnative.dev/), _Jellify_ provides a user experience that feels familar to other popular music apps and a has featureset to match
+_Jellify_ is a free and open source music player for the [Jellyfin Media Server](https://jellyfin.org/). Built with [React Native](https://reactnative.dev/), it is available for both iOS and Android.
 
-> _Jellify_ requires a connection to a [Jellyfin](https://jellyfin.org/) server to work.
+> _Jellify_ requires a connection to a [Jellyfin Media Server](https://jellyfin.org/) server to work. [See also](https://jellyfin.org/docs/)
 
-### 🤓 Background
+_Jellify_ is a music app for Jellyfin that showcases the artwork of your library. It has a user interface congruent to what _the big guys_ do, and provides algorithmic curation of your music (not that you have to use _Jellify_ that way). It's designed to be lightweight, and scale to even the largest of music libraries (...like 100K tracks large).
 
-I was after a music app for Jellyfin that showcased my music with artwork, had a user interface congruent with what the big guys do, and had the ability to algorithmically curate music (not that you have to use _Jellify_ that way). I also wanted to create a music app that could handle my extremely large music libraries (i.e., 100K+ songs) and not get bogged down.
+### 😇 Background
 
-This app was designed with me and my dad in mind, since I wanted to give him a sleek, one stop shop for live recordings of bands he likes (read: the Grateful Dead). The UI was designed so that he'd find it instantly familiar and useful. CarPlay / Android Auto support was also a must for us, as we both use CarPlay religiously.
-
-**TL;DR** Designed to be lightweight and scalable, _Jellify_ caters to those who want a mobile Jellyfin music experience similar to what's provided by the big music streaming services.
-
-## 💡 Features
-
-### ✨ Current
-
-- Available via Testflight and Android APK
-  - APKs are associated with each [release](https://github.com/anultravioletaurora/Jellify/releases)
-- Light and Dark modes
-- Home screen access to previously played tracks, artists, and your playlists
-- Quick access to similar artists and items for discovering music in your library
-- Jellyfin playback reporting and [Last.FM Plugin](https://github.com/jesseward/jellyfin-plugin-lastfm) support
-- Library of Favorited Music, not too dissimilar to how streaming services handle your 'library'
-- Full playlist support, including creating, updating, and reordering
-- Offline Playback
-
-### 🛠 Roadmap
-
-- [CarPlay / Android Auto Support](https://github.com/anultravioletaurora/Jellify/issues/5)
-- [Support for Jellyfin Instant Mixes](https://github.com/anultravioletaurora/Jellify/issues/50)
-- [Shared, Public, and Collaborative Playlists](https://github.com/anultravioletaurora/Jellify/issues/175)
-- [Web / Desktop support](https://github.com/anultravioletaurora/Jellify/issues/71)
-- [Watch (Apple Watch / WearOS) Support](https://github.com/anultravioletaurora/Jellify/issues/61)
-- [TV (Android, Apple, Samsung) Support](https://github.com/anultravioletaurora/Jellify/issues/85)
+This app was designed with me and my dad in mind. I wanted us to have a sleek, one stop shop for live recordings of bands we like (read: the Grateful Dead). The UI was designed so that we'd find it instantly familiar and useful. CarPlay / Android Auto support was also a must for us, as we both use CarPlay religiously.
 
 ## 👀 Lemme see!
 
@@ -117,7 +92,32 @@ Playlist
 
 <img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking" width="300" height="200">
 
-## 🏗 Built with good stuff
+## 💡 Features
+
+### ✨ Current
+
+- Available via Testflight and Android APK
+  - APKs are associated with each [release](https://github.com/anultravioletaurora/Jellify/releases)
+- Light and Dark modes
+- Home screen access to previously played tracks, artists, and your playlists
+- Quick access to similar artists and items for discovering music in your library
+- Jellyfin playback reporting and [Last.FM Plugin](https://github.com/jesseward/jellyfin-plugin-lastfm) support
+- Full Library Browsing
+- Playlist support, including creating, updating, and reordering
+- Offline Playback
+- Support for Jellyfin Instant Mixes
+
+### 🛠 Roadmap (in order of priority)
+
+- ["Smart Shuffle"](https://github.com/anultravioletaurora/Jellify/issues/57)
+- [CarPlay / Android Auto Support](https://github.com/anultravioletaurora/Jellify/issues/5)
+- [App Store / Google Play / FDroid Release](https://github.com/anultravioletaurora/Jellify/issues/361)
+- [Web / Desktop support](https://github.com/anultravioletaurora/Jellify/issues/71)
+- [Shared, Public, and Collaborative Playlists](https://github.com/anultravioletaurora/Jellify/issues/175)
+- [Watch (Apple Watch / WearOS) Support](https://github.com/anultravioletaurora/Jellify/issues/61)
+- [TV (Android, Apple, Samsung) Support](https://github.com/anultravioletaurora/Jellify/issues/85)
+
+## 🏗 Truly Open Source
 
 [![Made with React](https://img.shields.io/badge/React-19-blue?logo=react)](https://reactjs.org) [![React Native](https://img.shields.io/badge/React-Native-079?logo=react)](https://reactnative.dev) [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![GitHub License](https://img.shields.io/github/license/anultravioletaurora/jellify?color=indigo)](https://github.com/anultravioletaurora/jellify/blob/main/LICENSE)
 
