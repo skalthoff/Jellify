@@ -20,7 +20,7 @@ _Jellify_ is a free and open source music player for the [Jellyfin Media Server]
 
 > _Jellify_ requires a connection to a [Jellyfin Media Server](https://jellyfin.org/) server to work. [See also](https://jellyfin.org/docs/)
 
-_Jellify_ is a music app for Jellyfin that showcases the artwork of your library. It has a user interface congruent to what _the big guys_ do, and provides algorithmic curation of your music (not that you have to use _Jellify_ that way). It's designed to be lightweight, and scale to even the largest of music libraries (...like 100K tracks large).
+Showcasing the artwork of your library, it has a user interface congruent to what _the big guys_ do. _Jellify_ also provides algorithmic curation of your music (not that you have to use _Jellify_ that way). It's designed to be lightweight, and scale to even the largest of music libraries (...like 100K tracks large).
 
 ### 😇 Background
 
