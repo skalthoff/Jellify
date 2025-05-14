@@ -13,9 +13,13 @@
 
 ## 📄 Contents
 
-- [About](#ℹ️-info)
+- [Info](#ℹ️-info)
 - [Screenshots](#-screenshots)
 - [Features](#-features)
+- [Built with](#-built-with-good-stuff)
+- [Support](#-support-the-project)
+- [Running Locally](#️running-locally)
+- [Special Thanks](#-special-thanks-to)
 
 ## ℹ️ Info
 
