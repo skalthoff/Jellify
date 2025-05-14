@@ -26,7 +26,7 @@ Showcasing the artwork of your library, it has a user interface congruent to wha
 
 This app was designed with me and my dad in mind. I wanted us to have a sleek, one stop shop for live recordings of bands we like (read: the Grateful Dead). The UI was designed so that we'd find it instantly familiar and useful. CarPlay / Android Auto support was also a must for us, as we both use CarPlay religiously.
 
-## 👀 Lemme see!
+## 👀 Lemme See!
 
 *Screenshots taken on iPhone 15 Pro Max*
 
@@ -117,7 +117,7 @@ Playlist
 - [Watch (Apple Watch / WearOS) Support](https://github.com/anultravioletaurora/Jellify/issues/61)
 - [TV (Android, Apple, Samsung) Support](https://github.com/anultravioletaurora/Jellify/issues/85)
 
-## 🏗 Truly Open Source
+## 🏗 Built with Good Stuff
 
 [![Made with React](https://img.shields.io/badge/React-19-blue?logo=react)](https://reactjs.org) [![React Native](https://img.shields.io/badge/React-Native-079?logo=react)](https://reactnative.dev) [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![GitHub License](https://img.shields.io/github/license/anultravioletaurora/jellify?color=indigo)](https://github.com/anultravioletaurora/jellify/blob/main/LICENSE)
 
