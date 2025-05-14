@@ -125,6 +125,7 @@ Playlist
 - ["Smart Shuffle"](https://github.com/anultravioletaurora/Jellify/issues/57)
 - [CarPlay / Android Auto Support](https://github.com/anultravioletaurora/Jellify/issues/5)
 - [App Store / Google Play / FDroid Release](https://github.com/anultravioletaurora/Jellify/issues/361)
+- [Translations](https://github.com/anultravioletaurora/Jellify/issues/317)
 - [Web / Desktop support](https://github.com/anultravioletaurora/Jellify/issues/71)
 - [Shared, Public, and Collaborative Playlists](https://github.com/anultravioletaurora/Jellify/issues/175)
 - [Watch (Apple Watch / WearOS) Support](https://github.com/anultravioletaurora/Jellify/issues/61)
