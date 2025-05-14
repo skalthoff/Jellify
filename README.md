@@ -26,6 +26,7 @@ Showcasing the artwork of your library, it has a user interface congruent to wha
 
 This app was designed with me and my dad in mind. I wanted us to have a sleek, one stop shop for live recordings of bands we like (read: the Grateful Dead). The UI was designed so that we'd find it instantly familiar and useful. CarPlay / Android Auto support was also a must for us, as we both use CarPlay religiously.
 
+
 ## 👀 Lemme See!
 
 *Screenshots taken on iPhone 15 Pro Max*
@@ -91,6 +92,7 @@ Playlist
 ### On the Server
 
 <img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking" width="300" height="200">
+
 
 ## 💡 Features
 
@@ -238,7 +240,7 @@ This allows me to prioritize specific features, acquire additional hardware for 
 - The team behind [Podverse](https://github.com/podverse/podverse-rn) for their incredible open source project, of which was used as a reference extensively during development
 - My fellow [contributors](https://github.com/anultravioletaurora/Jellify/graphs/contributors) who have poured so much heart and a lot of sweat into making _Jellify_ a great experience
   - Extra thanks to [John](https://github.com/johngrantdev) and [Vali-98](https://github.com/Vali-98) for shaping and designing the user experience in many places
-    - Huge thank you to [Ritesh](https://github.com/riteshshukla04) for your project automation and backend expertise (and for the memes)
+  - Huge thank you to [Ritesh](https://github.com/riteshshukla04) for your project automation and backend expertise (and for the memes)
 - The friends I made along the way that have been critical in fostering an amazing community around _Jellify_
   - [Thalia](https://github.com/PercyGabriel1129)
   - [BotBlake](https://github.com/BotBlake)
