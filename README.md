@@ -13,10 +13,11 @@
 
 ## 📄 Contents
 
-- [About](#ℹ️ About)
-- [Screenshots](👀 Lemme See!)
+- [About](#info)
+- [Screenshots](#screenshots)
+- [Features](#-features)
 
-## ℹ️ About
+## Info
 
 > **jellify** (verb) - _to make gelatinous_ <br>
 > [see also](https://www.merriam-webster.com/dictionary/jellify)
@@ -32,7 +33,7 @@ Showcasing the artwork of your library, it has a user interface congruent to wha
 This app was designed with me and my dad in mind. I wanted us to have a sleek, one stop shop for live recordings of bands we like (read: the Grateful Dead). The UI was designed so that we'd find it instantly familiar and useful. CarPlay / Android Auto support was also a must for us, as we both use CarPlay religiously.
 
 
-## 👀 Lemme See!
+## Screenshots
 
 *Screenshots taken on iPhone 15 Pro Max*
 
