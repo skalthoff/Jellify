@@ -57,15 +57,17 @@ This app was designed with me and my dad in mind, since I wanted to give him a s
 
 ### Home
 
-Home
-
 <img src="screenshots/home.png" alt="Jellify Home" width="275" height="600">
 
 ### Library
 
-Library Artists
+Artists
 
 <img src="screenshots/library_artists.png" alt="Library Artists" width="275" height="600">
+
+Downloaded Tracks
+
+<img src="screenshots/library_downloaded_tracks.PNG" alt="Library Tracks" width="275" height="600">
 
 Artist
 
