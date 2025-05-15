@@ -20,6 +20,12 @@ jobs:
       - name: 🧵 Run yarn 
         run: yarn 
     
+      - name: 👩‍💻 Configure Git
+        run: |
+          git config --global user.email "violet@cosmonautical.cloud"
+          git config --global user.name "anultravioletaurora"
+          git remote set-url origin https://x-access-token:${{ secrets.SIGNING_REPO_PAT }}@github.com/Jellify-Music/App-Bundles.git
+
       - name: 🤖 Publish Android Update
         run: yarn sendOTA:android
 
