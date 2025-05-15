@@ -45,8 +45,6 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 *Screenshots taken on iPhone 15 Pro Max*
 
-## 📱 App Screenshots
-
 ---
 
 ### 🏠 Home
@@ -91,7 +89,7 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
   <img src="screenshots/offline_album.png" alt="Offline Album" width="275" height="600">
 </p>
 
-**Track Options & Playlist**
+**Track Options & Add to Playlist**
 
 <p align="center">
   <img src="screenshots/track_options.png" alt="Track Options" width="275" height="600">
