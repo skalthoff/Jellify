@@ -68,6 +68,8 @@ jobs:
         run: |
           git config --global user.email "violet@cosmonautical.cloud"
           git config --global user.name "anultravioletaurora"
+          git remote set-url origin https://x-access-token:${{ secrets.SIGNING_REPO_PAT }}@github.com/Jellify-Music/App.git
+
 
       - name: 🧹 Clean up Glitchtip and TelemetryDeck files
         run: |
