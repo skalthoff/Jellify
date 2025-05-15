@@ -51,7 +51,7 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 ### 🏠 Home
 
-<p align="left">
+<p align="center">
   <img src="screenshots/home.png" alt="Jellify Home" width="275" height="600">
 </p>
 
@@ -61,31 +61,31 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 **Artists**
 
-<p align="left">
+<p align="center">
   <img src="screenshots/library_artists.png" alt="Library Artists" width="275" height="600">
 </p>
 
 **Downloaded Tracks**
 
-<p align="left">
+<p align="center">
   <img src="screenshots/library_downloaded_tracks.PNG" alt="Library Tracks" width="275" height="600">
 </p>
 
 **Artist View**
 
-<p align="left">
+<p align="center">
   <img src="screenshots/artist.png" alt="Artist" width="275" height="600">
 </p>
 
 **Similar Artists**
 
-<p align="left">
+<p align="center">
   <img src="screenshots/artist_similarto.png" alt="Similar Artists" width="275" height="600">
 </p>
 
 **Album Views**
 
-<p align="left">
+<p align="center">
   <img src="screenshots/album.png" alt="Album" width="275" height="600">
   <img src="screenshots/album_multiple_artists.png" alt="MultiArtist Album" width="275" height="600">
   <img src="screenshots/offline_album.png" alt="Offline Album" width="275" height="600">
@@ -93,7 +93,7 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 **Track Options & Playlist**
 
-<p align="left">
+<p align="center">
   <img src="screenshots/track_options.png" alt="Track Options" width="275" height="600">
   <img src="screenshots/playlist.png" alt="Playlist" width="275" height="600">
 </p>
@@ -102,7 +102,7 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 ### 🔍 Search
 
-<p align="left">
+<p align="center">
   <img src="screenshots/search.png" alt="Search" width="275" height="600">
 </p>
 
@@ -110,7 +110,7 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 ### ▶️ Player
 
-<p align="left">
+<p align="center">
   <img src="screenshots/player.png" alt="Player" width="275" height="600">
   <img src="screenshots/player_queue.png" alt="Queue" width="275" height="600">
   <img src="screenshots/favorite_track.png" alt="Favorite Track" width="275" height="600">
@@ -120,7 +120,7 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 ### 🚗 CarPlay
 
-<p align="left">
+<p align="center">
   <img src="screenshots/carplay_home.png" alt="Home (CarPlay)" width="400" height="250">
 </p>
 
@@ -128,7 +128,7 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 ### 🖥️ On the Server
 
-<p align="left">
+<p align="center">
   <img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking" width="300" height="200">
 </p>
 
