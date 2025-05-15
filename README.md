@@ -45,67 +45,92 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 *Screenshots taken on iPhone 15 Pro Max*
 
-### Home
+## 📱 App Screenshots
 
-<img src="screenshots/home.png" alt="Jellify Home" width="275" height="600">
+---
 
-### Library
+### 🏠 Home
 
-Artists
+<p align="left">
+  <img src="screenshots/home.png" alt="Jellify Home" width="275" height="600">
+</p>
 
-<img src="screenshots/library_artists.png" alt="Library Artists" width="275" height="600">
+---
 
-Downloaded Tracks
+### 🎵 Library
 
-<img src="screenshots/library_downloaded_tracks.PNG" alt="Library Tracks" width="275" height="600">
+**Artists**
 
-Artist
+<p align="left">
+  <img src="screenshots/library_artists.png" alt="Library Artists" width="275" height="600">
+</p>
 
-<img src="screenshots/artist.png" alt="Artist" width="275" height="600">
+**Downloaded Tracks**
 
-Similar Artists
+<p align="left">
+  <img src="screenshots/library_downloaded_tracks.PNG" alt="Library Tracks" width="275" height="600">
+</p>
 
-<img src="screenshots/artist_similarto.png" alt="Similar Artists" width="275" height="600">
+**Artist View**
 
-Album
+<p align="left">
+  <img src="screenshots/artist.png" alt="Artist" width="275" height="600">
+</p>
 
-<img src="screenshots/album.png" alt="Album" width="275" height="600">
+**Similar Artists**
 
-Album (Multiple Artists)
+<p align="left">
+  <img src="screenshots/artist_similarto.png" alt="Similar Artists" width="275" height="600">
+</p>
 
-<img src="screenshots/album_multiple_artists.png" alt="MultiArtist Album" width="275" height="600">
+**Album Views**
 
-Album (Offline Mode)
+<p align="left">
+  <img src="screenshots/album.png" alt="Album" width="275" height="600">
+  <img src="screenshots/album_multiple_artists.png" alt="MultiArtist Album" width="275" height="600">
+  <img src="screenshots/offline_album.png" alt="Offline Album" width="275" height="600">
+</p>
 
-<img src="screenshots/offline_album.png" alt="Offline Album" width="275" height="600">
+**Track Options & Playlist**
 
-Track Options
+<p align="left">
+  <img src="screenshots/track_options.png" alt="Track Options" width="275" height="600">
+  <img src="screenshots/playlist.png" alt="Playlist" width="275" height="600">
+</p>
 
-<img src="screenshots/track_options.png" alt="Track Options" width="275" height="600">
+---
 
-Playlist
+### 🔍 Search
 
-<img src="screenshots/playlist.png" alt="Playlist" width="275" height="600">
+<p align="left">
+  <img src="screenshots/search.png" alt="Search" width="275" height="600">
+</p>
 
-### Search
+---
 
-<img src="screenshots/search.png" alt="Search" width="275" height="600">
+### ▶️ Player
 
-### Player
+<p align="left">
+  <img src="screenshots/player.png" alt="Player" width="275" height="600">
+  <img src="screenshots/player_queue.png" alt="Queue" width="275" height="600">
+  <img src="screenshots/favorite_track.png" alt="Favorite Track" width="275" height="600">
+</p>
 
-<img src="screenshots/player.png" alt="Player" width="275" height="600">
+---
 
-<img src="screenshots/player_queue.png" alt="Queue" width="275" height="600">
+### 🚗 CarPlay
 
-<img src='screenshots/favorite_track.png' alt='Favorite Track' width='275' height='600”'>
+<p align="left">
+  <img src="screenshots/carplay_home.png" alt="Home (CarPlay)" width="400" height="250">
+</p>
 
-### CarPlay
+---
 
-<img src="screenshots/carplay_home.png" alt="Home (CarPlay)" width="400" height="250">
+### 🖥️ On the Server
 
-### On the Server
-
-<img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking" width="300" height="200">
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/741884a2-b9b7-4081-b3a0-6655d08071dc" alt="Playback Tracking" width="300" height="200">
+</p>
 
 
 ## 💡 Features
