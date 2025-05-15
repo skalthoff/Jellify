@@ -273,3 +273,8 @@ This allows me to prioritize specific features, acquire additional hardware for 
   - [Jordan](https://github.com/jordanbleu) (iOS)
 - My best(est) friend [Alyssa](https://www.instagram.com/uhh.lyssarae?igsh=MTRmczExempnbjBwZw==), for your design knowledge and for making various artwork for _Jellify_.
   - You’ve been instrumental in shaping it’s user experience, my rock during development, and an overall inspiration in my life
+
+
+## ⭐️ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=anultravioletaurora/Jellify,Jellify-Music/App&type=Date)](https://www.star-history.com/#anultravioletaurora/Jellify&Jellify-Music/App&Date)
