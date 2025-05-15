@@ -8,7 +8,7 @@ import { QueryKeys } from '../../../../enums/query-keys'
 import { useJellifyContext } from '../../../../providers'
 import fetchPatrons from '../../../../api/queries/patrons'
 import { FlatList, Linking } from 'react-native'
-import { H6, Separator, XStack, YStack } from 'tamagui'
+import { H6, ScrollView, Separator, XStack, YStack } from 'tamagui'
 import Icon from '../../../Global/components/icon'
 
 export default function InfoTabIndex({ navigation }: InfoTabStackNavigationProp) {
@@ -20,7 +20,7 @@ export default function InfoTabIndex({ navigation }: InfoTabStackNavigationProp)
 	})
 
 	return (
-		<SafeAreaView>
+		<ScrollView contentInsetAdjustmentBehavior='automatic'>
 			<SettingsListGroup
 				settingsList={[
 					{
@@ -136,6 +136,6 @@ export default function InfoTabIndex({ navigation }: InfoTabStackNavigationProp)
 					},
 				]}
 			/>
-		</SafeAreaView>
+		</ScrollView>
 	)
 }
