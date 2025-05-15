@@ -9,7 +9,7 @@ yarn createBundle:ios
 cd ios/App-Bundles
 git add .
 git commit -m "OTA-Update - $(date +'%b %d %H:%M')"
-git push origin head
+git push https://x-access-token:$SIGNING_REPO_PAT@github.com/Jellify-Music/App-Bundles.git iOS
 cd ..
 rm -rf App-Bundles
 cd ..
