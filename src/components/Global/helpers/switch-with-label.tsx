@@ -1,6 +1,8 @@
-import { SizeTokens, XStack, Separator, Switch, Theme, styled, getToken } from 'tamagui'
+import { SizeTokens, XStack, Separator, Switch, styled, getToken } from 'tamagui'
 import { Label } from './text'
-import { useColorScheme } from 'react-native'
+import { useEffect } from 'react'
+import { trigger } from 'react-native-haptic-feedback'
+import { usePreviousValue } from '../../../hooks/use-previous-value'
 
 interface SwitchWithLabelProps {
 	onCheckedChange: (value: boolean) => void
@@ -16,29 +18,32 @@ const JellifySliderThumb = styled(Switch.Thumb, {
 })
 
 export function SwitchWithLabel(props: SwitchWithLabelProps) {
-	const isDarkMode = useColorScheme() === 'dark'
-
 	const id = `switch-${props.size.toString().slice(1)}-${props.checked ?? ''}}`
+
+	const previousChecked = usePreviousValue(props.checked)
+
+	useEffect(() => {
+		if (previousChecked !== props.checked) {
+			trigger('impactMedium')
+		}
+	}, [props.checked])
+
 	return (
 		<XStack alignItems='center' gap='$3'>
-			<Label size={props.size} htmlFor={id}>
-				{props.label}
-			</Label>
-			<Separator minHeight={20} vertical />
 			<Switch
 				id={id}
 				size={props.size}
 				checked={props.checked}
 				onCheckedChange={(checked: boolean) => props.onCheckedChange(checked)}
-				backgroundColor={
-					props.checked ? getToken('$color.telemagenta') : getToken('$color.purpleGray')
-				}
-				borderColor={
-					isDarkMode ? getToken('$color.amethyst') : getToken('$color.purpleDark')
-				}
+				backgroundColor={props.checked ? '$success' : '$borderColor'}
+				borderColor={'$borderColor'}
 			>
 				<JellifySliderThumb animation='bouncy' />
 			</Switch>
+			<Separator minHeight={20} vertical />
+			<Label size={props.size} htmlFor={id}>
+				{props.label}
+			</Label>
 		</XStack>
 	)
 }

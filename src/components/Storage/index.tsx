@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Pressable, Alert, FlatList } from 'react-native'
 import RNFS from 'react-native-fs'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
-import { deleteAudioCache } from '../Network/offlineModeUtils'
-import { useNetworkContext } from '../Network/provider'
-import Icon from '../Global/helpers/icon'
+import { deleteAudioCache } from '../../components/Network/offlineModeUtils'
+import { useNetworkContext } from '../../providers/Network'
+import Icon from '../Global/components/icon'
 import { getToken, View } from 'tamagui'
 import { Text } from '../Global/helpers/text'
 
@@ -43,7 +43,7 @@ export default function StorageBar(): React.JSX.Element {
 	const [used, setUsed] = useState(0)
 	const [total, setTotal] = useState(1)
 
-	const { downloadedTracks, activeDownloads } = useNetworkContext()
+	const { downloadedTracks, activeDownloads: activeDownloadsArray } = useNetworkContext()
 
 	const usageShared = useSharedValue(0)
 	const percentUsed = used / total
@@ -81,6 +81,11 @@ export default function StorageBar(): React.JSX.Element {
 	useEffect(() => {
 		refreshStats()
 	}, [])
+	const activeDownloads = Object.values(activeDownloadsArray ?? {}).map((item) => ({
+		name: item.name,
+		progress: item.progress,
+		songName: item.songName,
+	}))
 
 	return (
 		<View style={styles.container}>

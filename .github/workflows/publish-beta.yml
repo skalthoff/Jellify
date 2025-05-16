@@ -1,8 +1,7 @@
 name: Publish Android APK and TestFlight Betas
 on:
-  push:
-    branches:
-      - 'main'
+  workflow_dispatch:
+    
 jobs:
   publish-beta:
     runs-on: macos-15
@@ -29,10 +28,30 @@ jobs:
       - name: 🤫 Output App Store Connect API Key JSON to Fastlane
         run: echo -e '${{ secrets.APPSTORE_CONNECT_API_KEY_JSON }}' > appstore_connect_api_key.json
         working-directory: ./ios/fastlane
+
+      - name: 🤫 Output TelemetryDeck Secrets to TelemetryDeck.json          
+        run: |
+          echo "{" > telemetrydeck.json
+          echo "\"appID\": \"${{ secrets.TELEMETRYDECK_APPID }}\"," >> telemetrydeck.json
+          echo "\"clientUser\": \"anonymous\"," >> telemetrydeck.json
+          echo "\"app\": \"Jellify\"" >> telemetrydeck.json
+          echo "}" >> telemetrydeck.json
+
           
-      - name: 🚀 Run Android fastlane build
-        run: yarn fastlane:android:build
-          
+      - name: 🤫 Output Glitchtip Secrets to Glitchtip.json
+        run: |
+          echo "{" > glitchtip.json
+          echo "\"dsn\": \"${{ secrets.GLITCHTIP_DSN }}\"" >> glitchtip.json
+          echo "}" >> glitchtip.json
+                
+      - name: ✅ Validate TelemetryDeck.json
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('telemetrydeck.json'))"
+
+      - name: ✅ Validate Glitchtip.json
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('glitchtip.json'))"
+                    
       - name: 🚀 Run iOS fastlane build and publish to TestFlight
         run: yarn fastlane:ios:beta
         env:
@@ -41,11 +60,24 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_REPO_PAT: "anultravioletaurora:${{ secrets.SIGNING_REPO_PAT }}"
 
+      - name: 🚀 Run Android fastlane build
+        run: yarn fastlane:android:build
+
+      - name: 👩‍💻 Configure Git
+        run: |
+          git config --global user.email "violet@cosmonautical.cloud"
+          git config --global user.name "anultravioletaurora"
+          git remote set-url origin https://x-access-token:${{ secrets.SIGNING_REPO_PAT }}@github.com/Jellify-Music/App.git
+
+
+      - name: 🧹 Clean up Glitchtip and TelemetryDeck files
+        run: |
+          git restore telemetrydeck.json
+          git restore glitchtip.json
+
       # Commit Fastlane Xcode build number increment
       - name: 🔢 Commit changes for version increment
         run: |
-          git config --global user.email "jellify@cosmonautical.com"
-          git config --global user.name "anultravioletaurora"
           git add package.json
           git add ios/Jellify.xcodeproj/project.pbxproj
           git add android/app/build.gradle
@@ -77,9 +109,6 @@ jobs:
           prerelease: true
           tag: ${{ env.VERSION_NUMBER }}
           token: ${{ secrets.SIGNING_REPO_PAT }}
-      
-
-
 
       - name: 🗣️ Notify on Discord
         run: |

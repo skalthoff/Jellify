@@ -80,4 +80,10 @@ export enum QueryKeys {
 	 * are already in playlists to prevent adding duplicates
 	 */
 	PlaylistItemCheckCache = 'PlaylistItemCheckCache',
+	ArtistFeaturedOn = 'ArtistFeaturedOn',
+	AllArtists = 'AllArtists',
+	AllTracks = 'AllTracks',
+	AllAlbums = 'AllAlbums',
+	StorageInUse = 'StorageInUse',
+	Patrons = 'Patrons',
 }

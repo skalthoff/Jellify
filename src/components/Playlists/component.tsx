@@ -1,16 +1,21 @@
 import { FlatList, RefreshControl } from 'react-native-gesture-handler'
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { ItemCard } from '../Global/components/item-card'
-import { FavoritePlaylistsProps } from '../types'
-import Icon from '../Global/helpers/icon'
-import { getToken } from 'tamagui'
+import Icon from '../Global/components/icon'
+import { getToken, getTokens } from 'tamagui'
 import { fetchFavoritePlaylists } from '../../api/queries/favorites'
 import { QueryKeys } from '../../enums/query-keys'
 import { useQuery } from '@tanstack/react-query'
+import { useJellifyContext } from '../../providers'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { StackParamList } from '../types'
+import { useDisplayContext } from '../../providers/Display/display-provider'
 
-export default function FavoritePlaylists({
+export default function Playlists({
 	navigation,
-}: FavoritePlaylistsProps): React.JSX.Element {
+}: {
+	navigation: NativeStackNavigationProp<StackParamList>
+}): React.JSX.Element {
+	const { api, user, library } = useJellifyContext()
 	navigation.setOptions({
 		headerRight: () => {
 			return (
@@ -29,17 +34,20 @@ export default function FavoritePlaylists({
 		refetch,
 	} = useQuery({
 		queryKey: [QueryKeys.UserPlaylists],
-		queryFn: () => fetchFavoritePlaylists(),
+		queryFn: () => fetchFavoritePlaylists(api, user, library),
 	})
+
+	const { numberOfColumns } = useDisplayContext()
 
 	return (
 		<FlatList
 			contentContainerStyle={{
 				flexGrow: 1,
 				alignItems: 'center',
+				marginVertical: getTokens().size.$1.val,
 			}}
 			contentInsetAdjustmentBehavior='automatic'
-			numColumns={2}
+			numColumns={numberOfColumns}
 			data={playlists}
 			refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />}
 			renderItem={({ index, item: playlist }) => (
@@ -49,10 +57,11 @@ export default function FavoritePlaylists({
 					onPress={() => {
 						navigation.navigate('Playlist', { playlist })
 					}}
-					size={'$14'}
+					size={'$11'}
 					squared
 				/>
 			)}
+			removeClippedSubviews
 		/>
 	)
 }

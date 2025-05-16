@@ -19,7 +19,7 @@ import IconButton from '../../../components/Global/helpers/icon-button'
 import { Text } from '../../../components/Global/helpers/text'
 import React, { useMemo } from 'react'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { AddToPlaylistMutation } from '../types'
+import { AddToPlaylistMutation } from '../../../components/Detail/types'
 import { addToPlaylist } from '../../../api/mutations/playlists'
 import { trigger } from 'react-native-haptic-feedback'
 import { queryClient } from '../../../constants/query-client'
@@ -27,10 +27,10 @@ import { QueryKeys } from '../../../enums/query-keys'
 import { fetchItem } from '../../../api/queries/item'
 import { fetchUserPlaylists } from '../../../api/queries/playlists'
 
-import { getImageApi, getItemsApi } from '@jellyfin/sdk/lib/utils/api'
-import Client from '../../../api/client'
-import { useNetworkContext } from '../../../components/Network/provider'
-import { useQueueContext } from '../../../player/queue-provider'
+import { useJellifyContext } from '../../../providers'
+import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
+import { useNetworkContext } from '../../../providers/Network'
+import { useQueueContext } from '../../../providers/Player/queue'
 import Toast from 'react-native-toast-message'
 import FastImage from 'react-native-fast-image'
 import Icon from '../../../components/Global/helpers/icon'
@@ -50,9 +50,11 @@ export default function TrackOptions({
 	navigation,
 	isNested,
 }: TrackOptionsProps): React.JSX.Element {
+	const { api, user, library } = useJellifyContext()
+
 	const { data: album, isSuccess: albumFetchSuccess } = useQuery({
 		queryKey: [QueryKeys.Item, track.AlbumId!],
-		queryFn: () => fetchItem(track.AlbumId!),
+		queryFn: () => fetchItem(api, track.AlbumId!),
 	})
 
 	const { useDownload, useRemoveDownload, downloadedTracks } = useNetworkContext()
@@ -65,7 +67,7 @@ export default function TrackOptions({
 		isSuccess: playlistsFetchSuccess,
 	} = useQuery({
 		queryKey: [QueryKeys.UserPlaylists],
-		queryFn: () => fetchUserPlaylists(),
+		queryFn: () => fetchUserPlaylists(api, user, library),
 	})
 
 	// Fetch all playlist tracks to check if the current track is already in any playlists
@@ -108,7 +110,7 @@ export default function TrackOptions({
 	const useAddToPlaylist = useMutation({
 		mutationFn: ({ track, playlist }: AddToPlaylistMutation) => {
 			trigger('impactLight')
-			return addToPlaylist(track, playlist)
+			return addToPlaylist(api, user, track, playlist)
 		},
 		onSuccess: (data, { playlist }) => {
 			Toast.show({
@@ -251,9 +253,9 @@ export default function TrackOptions({
 											<YStack flex={1}>
 												<FastImage
 													source={{
-														uri: getImageApi(
-															Client.api!,
-														).getItemImageUrlById(playlist.Id!),
+														uri: getImageApi(api!).getItemImageUrlById(
+															playlist.Id!,
+														),
 													}}
 													style={{
 														borderRadius: getToken('$1.5'),

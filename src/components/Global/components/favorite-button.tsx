@@ -1,12 +1,13 @@
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import React, { useEffect, useState } from 'react'
-import Icon from '../helpers/icon'
+import Icon from './icon'
 import { useQuery } from '@tanstack/react-query'
 import { isUndefined } from 'lodash'
 import { getTokens, Spinner } from 'tamagui'
 import { QueryKeys } from '../../../enums/query-keys'
 import { fetchUserData } from '../../../api/queries/favorites'
-import { useJellifyUserDataContext } from '../../../components/user-data-provider'
+import { useJellifyUserDataContext } from '../../../providers/UserData'
+import { useJellifyContext } from '../../../providers'
 
 interface SetFavoriteMutation {
 	item: BaseItemDto
@@ -21,11 +22,12 @@ export default function FavoriteButton({
 }): React.JSX.Element {
 	const [isFavorite, setFavorite] = useState<boolean>(isFavoriteItem(item))
 
+	const { api, user } = useJellifyContext()
 	const { toggleFavorite } = useJellifyUserDataContext()
 
 	const { data, isFetching, refetch } = useQuery({
 		queryKey: [QueryKeys.UserData, item.Id!],
-		queryFn: () => fetchUserData(item.Id!),
+		queryFn: () => fetchUserData(api, user, item.Id!),
 	})
 
 	useEffect(() => {
@@ -41,7 +43,7 @@ export default function FavoriteButton({
 	) : (
 		<Icon
 			name={isFavorite ? 'heart' : 'heart-outline'}
-			color={getTokens().color.telemagenta.val}
+			color={'$primary'}
 			onPress={() =>
 				toggleFavorite(isFavorite, {
 					item,

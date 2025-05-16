@@ -1,13 +1,23 @@
-import { PlaybackInfoResponse } from '@jellyfin/sdk/lib/generated-client/models'
-import Client from '../client'
+import { Api } from '@jellyfin/sdk'
+import { BaseItemDto, PlaybackInfoResponse } from '@jellyfin/sdk/lib/generated-client/models'
 import { getAudioApi, getMediaInfoApi } from '@jellyfin/sdk/lib/utils/api'
+import { isUndefined } from 'lodash'
+import { JellifyUser } from '../../types/JellifyUser'
+export async function fetchMediaInfo(
+	api: Api | undefined,
+	user: JellifyUser | undefined,
+	item: BaseItemDto,
+): Promise<PlaybackInfoResponse> {
+	console.debug('Fetching media info')
 
-export async function fetchMediaInfo(itemId: string): Promise<PlaybackInfoResponse> {
 	return new Promise((resolve, reject) => {
-		getMediaInfoApi(Client.api!)
+		if (isUndefined(api)) return reject('Client instance not set')
+		if (isUndefined(user)) return reject('User instance not set')
+
+		getMediaInfoApi(api)
 			.getPlaybackInfo({
-				itemId,
-				userId: Client.user?.id,
+				itemId: item.Id!,
+				userId: user.id,
 			})
 			.then(({ data }) => {
 				console.debug('Received media info response')

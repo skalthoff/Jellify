@@ -7,11 +7,12 @@ import { JellifyTrack } from '../types/JellifyTrack'
 import { RatingType, TrackType } from 'react-native-track-player'
 import { QueuingType } from '../enums/queuing-type'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
-import Client from '../api/client'
 import { isUndefined } from 'lodash'
 import { JellifyDownload } from '../types/JellifyDownload'
 import { queryClient } from '../constants/query-client'
 import { QueryKeys } from '../enums/query-keys'
+import { Api } from '@jellyfin/sdk/lib/api'
+import RNFS from 'react-native-fs'
 
 /**
  * The container that the Jellyfin server will attempt to transcode to
@@ -34,6 +35,8 @@ const transcodingContainer = 'ts'
  * @returns A `JellifyTrack`, which represents a Jellyfin library track queued in the player
  */
 export function mapDtoToTrack(
+	api: Api,
+	sessionId: string,
 	item: BaseItemDto,
 	downloadedTracks: JellifyDownload[],
 	queuingType?: QueuingType,
@@ -43,9 +46,9 @@ export function mapDtoToTrack(
 		TranscodingContainer: transcodingContainer,
 		EnableRemoteMedia: 'true',
 		EnableRedirection: 'true',
-		api_key: Client.api!.accessToken,
+		api_key: api.accessToken,
 		StartTimeTicks: '0',
-		PlaySessionId: Client.sessionId,
+		PlaySessionId: sessionId,
 	}
 
 	console.debug(`Mapping BaseItemDTO to Track object`)
@@ -55,7 +58,8 @@ export function mapDtoToTrack(
 
 	let url: string
 
-	if (downloads.length > 0 && downloads[0].path) url = downloads[0].path
+	if (downloads.length > 0 && downloads[0].path)
+		url = `file://${RNFS.DocumentDirectoryPath}/${downloads[0].path.split('/').pop()}`
 	else {
 		const PlaybackInfoResponse = queryClient.getQueryData([
 			QueryKeys.MediaSources,
@@ -68,10 +72,7 @@ export function mapDtoToTrack(
 			PlaybackInfoResponse.MediaSources[0].TranscodingUrl
 		)
 			url = PlaybackInfoResponse.MediaSources![0].TranscodingUrl
-		else
-			url = `${Client.api!.basePath}/Audio/${item.Id!}/universal?${new URLSearchParams(
-				urlParams,
-			)}`
+		else url = `${api.basePath}/Audio/${item.Id!}/universal?${new URLSearchParams(urlParams)}`
 	}
 
 	console.debug(url.length)
@@ -79,14 +80,14 @@ export function mapDtoToTrack(
 		url,
 		type: TrackType.Default,
 		headers: {
-			'X-Emby-Token': Client.api!.accessToken,
+			'X-Emby-Token': api.accessToken,
 		},
 		title: item.Name,
 		album: item.Album,
 		artist: item.Artists?.join(', '),
 		duration: item.RunTimeTicks,
 		artwork: item.AlbumId
-			? getImageApi(Client.api!).getItemImageUrlById(item.AlbumId, ImageType.Primary, {
+			? getImageApi(api).getItemImageUrlById(item.AlbumId, ImageType.Primary, {
 					width: 300,
 					height: 300,
 				})

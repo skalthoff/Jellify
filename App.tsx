@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import 'react-native-url-polyfill/auto'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import Jellify from './src/components/jellify'
-import { TamaguiProvider, Theme } from 'tamagui'
+import { TamaguiProvider, Theme, useTheme } from 'tamagui'
 import { useColorScheme } from 'react-native'
 import jellifyConfig from './tamagui.config'
 import { clientPersister } from './src/constants/storage'
@@ -19,6 +19,7 @@ import { requestStoragePermission } from './src/helpers/permisson-helpers'
 import ErrorBoundary from './src/components/ErrorBoundary'
 import Toast from 'react-native-toast-message'
 import JellifyToastConfig from './src/constants/toast.config'
+import OTAUpdateScreen from './src/components/OtaUpdates'
 
 export const backgroundRuntime = createWorkletRuntime('background')
 
@@ -33,36 +34,24 @@ export default function App(): React.JSX.Element {
 	})
 		.then(() =>
 			TrackPlayer.updateOptions({
-				progressUpdateEventInterval: 1,
 				capabilities: CAPABILITIES,
 				notificationCapabilities: CAPABILITIES,
 				compactCapabilities: CAPABILITIES,
-				// ratingType: RatingType.Heart,
-				// likeOptions: {
-				//     isActive: false,
-				//     title: "Favorite"
-				// },
-				// dislikeOptions: {
-				//     isActive: true,
-				//     title: "Unfavorite"
-				// }
+				progressUpdateEventInterval: 10,
 			}),
 		)
 		.finally(() => {
 			setPlayerIsReady(true)
 			requestStoragePermission()
 		})
-	const getActiveTrack = async () => {
-		const track = await TrackPlayer.getActiveTrack()
-		console.log('playerIsReady', track)
-	}
-	getActiveTrack()
+
 	const [reloader, setReloader] = useState(0)
 
 	const handleRetry = () => setReloader((r) => r + 1)
 
 	return (
 		<SafeAreaProvider>
+			<OTAUpdateScreen />
 			<ErrorBoundary reloader={reloader} onRetry={handleRetry}>
 				<NavigationContainer theme={isDarkMode ? JellifyDarkTheme : JellifyLightTheme}>
 					<PersistQueryClientProvider
@@ -86,7 +75,6 @@ export default function App(): React.JSX.Element {
 							</TamaguiProvider>
 						</GestureHandlerRootView>
 					</PersistQueryClientProvider>
-					<Toast config={JellifyToastConfig(isDarkMode)} />
 				</NavigationContainer>
 			</ErrorBoundary>
 		</SafeAreaProvider>

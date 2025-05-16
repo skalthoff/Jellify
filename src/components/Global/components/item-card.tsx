@@ -5,11 +5,10 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { Text } from '../helpers/text'
 import FastImage from 'react-native-fast-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
-import Client from '../../../api/client'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../../enums/query-keys'
 import { fetchMediaInfo } from '../../../api/queries/media'
-
+import { useJellifyContext } from '../../../providers'
 interface CardProps extends TamaguiCardProps {
 	caption?: string | null | undefined
 	subCaption?: string | null | undefined
@@ -18,13 +17,17 @@ interface CardProps extends TamaguiCardProps {
 }
 
 export function ItemCard(props: CardProps) {
+	const { api, user } = useJellifyContext()
+
 	const mediaInfo = useQuery({
 		queryKey: [QueryKeys.MediaSources, props.item.Id!],
-		queryFn: () => fetchMediaInfo(props.item.Id!),
+		queryFn: () => fetchMediaInfo(api, user, props.item),
+		staleTime: Infinity,
+		enabled: props.item.Type === 'Audio',
 	})
 
 	return (
-		<View alignItems='center' margin={5}>
+		<View alignItems='center' margin={'$1.5'}>
 			<TamaguiCard
 				size={'$12'}
 				height={props.size}
@@ -52,7 +55,7 @@ export function ItemCard(props: CardProps) {
 				<TamaguiCard.Background>
 					<FastImage
 						source={{
-							uri: getImageApi(Client.api!).getItemImageUrlById(
+							uri: getImageApi(api!).getItemImageUrlById(
 								props.item.Type === 'Audio' ? props.item.AlbumId! : props.item.Id!,
 							),
 						}}
@@ -71,7 +74,13 @@ export function ItemCard(props: CardProps) {
 					</Text>
 
 					{props.subCaption && (
-						<Text lineBreakStrategyIOS='standard' numberOfLines={1} textAlign='center'>
+						<Text
+							lineBreakStrategyIOS='standard'
+							numberOfLines={1}
+							textAlign='center'
+							bold
+							color={getToken('$color.amethyst')}
+						>
 							{props.subCaption}
 						</Text>
 					)}

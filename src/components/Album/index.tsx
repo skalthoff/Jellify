@@ -1,7 +1,7 @@
 import { HomeAlbumProps, StackParamList } from '../types'
 import { YStack, XStack, Separator, getToken, Spacer } from 'tamagui'
 import { H5, Text } from '../Global/helpers/text'
-import { FlatList, SectionList, useWindowDimensions } from 'react-native'
+import { ActivityIndicator, FlatList, SectionList } from 'react-native'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
 import Track from '../Global/components/track'
 import FavoriteButton from '../Global/components/favorite-button'
@@ -14,7 +14,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import InstantMixButton from '../Global/components/instant-mix-button'
 import ItemImage from '../Global/components/image'
 import React from 'react'
-import IconButton from '../Global/helpers/icon-button'
+import { useJellifyContext } from '../../providers'
+import { useSafeAreaFrame } from 'react-native-safe-area-context'
+import Icon from '../Global/components/icon'
+import { mapDtoToTrack } from '../../helpers/mappings'
+import { useNetworkContext } from '../../providers/Network'
 
 /**
  * The screen for an Album's track list
@@ -29,11 +33,25 @@ import IconButton from '../Global/helpers/icon-button'
 export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.Element {
 	const { album } = route.params
 
-	const { data: discs } = useQuery({
+	const { api, sessionId } = useJellifyContext()
+	const {
+		useDownloadMultiple,
+		pendingDownloads,
+		downloadingDownloads,
+		downloadedTracks,
+		failedDownloads,
+	} = useNetworkContext()
+
+	const { data: discs, isPending } = useQuery({
 		queryKey: [QueryKeys.ItemTracks, album.Id!],
-		queryFn: () => fetchAlbumDiscs(album),
+		queryFn: () => fetchAlbumDiscs(api, album),
 	})
 
+	const downloadAlbum = (item: BaseItemDto[]) => {
+		if (!api || !sessionId) return
+		const jellifyTracks = item.map((item) => mapDtoToTrack(api, sessionId, item, []))
+		useDownloadMultiple.mutate(jellifyTracks)
+	}
 	return (
 		<SectionList
 			contentInsetAdjustmentBehavior='automatic'
@@ -41,14 +59,33 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 			keyExtractor={(item, index) => item.Id! + index}
 			ItemSeparatorComponent={() => <Separator />}
 			renderSectionHeader={({ section }) => {
-				return discs && discs.length >= 2 ? (
-					<Text
-						paddingVertical={'$2'}
-						paddingLeft={'$4.5'}
+				return (
+					<XStack
+						width='100%'
+						justifyContent={discs && discs.length >= 2 ? 'space-between' : 'flex-end'}
+						alignItems='center'
 						backgroundColor={'$background'}
-						bold
-					>{`Disc ${section.title}`}</Text>
-				) : null
+						paddingHorizontal={'$4.5'}
+					>
+						{discs && discs.length >= 2 && (
+							<Text
+								paddingVertical={'$2'}
+								paddingLeft={'$4.5'}
+								bold
+							>{`Disc ${section.title}`}</Text>
+						)}
+						<Icon
+							name={pendingDownloads?.length ? 'progress-download' : 'download'}
+							small
+							onPress={() => {
+								if (pendingDownloads.length) {
+									return
+								}
+								downloadAlbum(section.data)
+							}}
+						/>
+					</XStack>
+				)
 			}}
 			ListHeaderComponent={() => AlbumTrackListHeader(album, navigation)}
 			renderItem={({ item: track, index }) => (
@@ -61,6 +98,15 @@ export function AlbumScreen({ route, navigation }: HomeAlbumProps): React.JSX.El
 				/>
 			)}
 			ListFooterComponent={() => AlbumTrackListFooter(album, navigation)}
+			ListEmptyComponent={() => (
+				<YStack>
+					{isPending ? (
+						<ActivityIndicator size='large' color={'$background'} />
+					) : (
+						<Text>No tracks found</Text>
+					)}
+				</YStack>
+			)}
 		/>
 	)
 }
@@ -75,7 +121,7 @@ function AlbumTrackListHeader(
 	album: BaseItemDto,
 	navigation: NativeStackNavigationProp<StackParamList>,
 ): React.JSX.Element {
-	const { width } = useWindowDimensions()
+	const { width } = useSafeAreaFrame()
 
 	return (
 		<YStack marginTop={'$4'} alignItems='center'>
