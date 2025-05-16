@@ -38,8 +38,6 @@ export default function ServerAddress({
 
 	const useServerMutation = useMutation({
 		mutationFn: async () => {
-			console.debug(`Connecting to ${useHttps ? https : http}${serverAddress}`)
-
 			const jellyfin = new Jellyfin(JellyfinInfo)
 
 			if (!serverAddress) throw new Error('Server address was empty')
