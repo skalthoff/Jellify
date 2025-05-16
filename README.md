@@ -179,6 +179,7 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 [Jellyfin SDK](https://typescript-sdk.jellyfin.org/)\
 [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)\
+[React Native DNS Lookup](https://github.com/tableau/react-native-dns-lookup)\
 [React Native File Access](https://github.com/alpha0010/react-native-file-access)\
 [React Native MMKV](https://github.com/mrousavy/react-native-mmkv)\
 [React Native OTA Hot Update](https://github.com/vantuan88291/react-native-ota-hot-update)\
