@@ -8139,6 +8139,11 @@ react-native-device-info@^14.0.4:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-14.0.4.tgz#56b24ace9ff29a66bdfc667209086421ed6cfdce"
   integrity sha512-NX0wMAknSDBeFnEnSFQ8kkAcQrFHrG4Cl0mVjoD+0++iaKrOupiGpBXqs8xR0SeJyPC5zpdPl4h/SaBGly6UxA==
 
+react-native-dns-lookup@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-dns-lookup/-/react-native-dns-lookup-1.0.6.tgz#dc170ff2d4f5a0b1ff2f6ed8d07912192a52b20b"
+  integrity sha512-47pdg4h50CEume23HzUs9FwhCqsXGYtXIRRnb0olY62ThifQGVN0eETRenY4YaKv4g9jIt1GVKDTSkH//uXXRg==
+
 react-native-draggable-flatlist@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/react-native-draggable-flatlist/-/react-native-draggable-flatlist-4.0.3.tgz#eb0bb3149059f48855b53aeb9728ab2eb361e4db"

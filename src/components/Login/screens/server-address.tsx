@@ -17,6 +17,8 @@ import Toast from 'react-native-toast-message'
 import { useJellifyContext } from '../../../providers'
 import { useSettingsContext } from '../../../providers/Settings'
 import Icon from '../../Global/components/icon'
+import { PublicSystemInfo } from '@jellyfin/sdk/lib/generated-client/models'
+import { getIpAddressesForHostname } from 'react-native-dns-lookup'
 
 export default function ServerAddress({
 	navigation,
@@ -35,7 +37,7 @@ export default function ServerAddress({
 	}, [])
 
 	const useServerMutation = useMutation({
-		mutationFn: () => {
+		mutationFn: async () => {
 			console.debug(`Connecting to ${useHttps ? https : http}${serverAddress}`)
 
 			const jellyfin = new Jellyfin(JellyfinInfo)
@@ -44,20 +46,62 @@ export default function ServerAddress({
 
 			const api = jellyfin.createApi(`${useHttps ? https : http}${serverAddress}`)
 
-			return getSystemApi(api).getPublicSystemInfo()
+			const connectViaHostnamePromise = () =>
+				new Promise<PublicSystemInfo>((resolve, reject) => {
+					getSystemApi(api)
+						.getPublicSystemInfo()
+						.then((response) => {
+							if (!response.data.Version)
+								return reject(
+									new Error(
+										'Jellyfin instance did not respond to our hostname request',
+									),
+								)
+							return resolve(response.data)
+						})
+						.catch((error) => {
+							console.error('An error occurred getting public system info', error)
+							return reject(new Error('Unable to connect to Jellyfin via hostname'))
+						})
+				})
+
+			const ipAddress = await getIpAddressesForHostname(serverAddress.split(':')[0])
+			const ipAddressApi = jellyfin.createApi(
+				`http://${ipAddress[0]}:${serverAddress.split(':')[1]}`,
+			)
+			const connectViaLocalNetworkPromise = () =>
+				new Promise<PublicSystemInfo>((resolve, reject) => {
+					getSystemApi(ipAddressApi)
+						.getPublicSystemInfo()
+						.then((response) => {
+							if (!response.data.Version)
+								return reject(
+									new Error(
+										'Jellyfin instance did not respond to our IP Address request',
+									),
+								)
+							return resolve(response.data)
+						})
+						.catch((error) => {
+							console.error('An error occurred getting public system info', error)
+							return reject(new Error('Unable to connect to Jellyfin via IP Address'))
+						})
+				})
+
+			return Promise.race([connectViaHostnamePromise(), connectViaLocalNetworkPromise()])
 		},
 		onSuccess: (publicSystemInfoResponse) => {
-			if (!publicSystemInfoResponse.data.Version)
+			if (!publicSystemInfoResponse.Version)
 				throw new Error('Jellyfin instance did not respond')
 
-			console.log(`Connected to Jellyfin ${publicSystemInfoResponse.data.Version!}`)
+			console.log(`Connected to Jellyfin ${publicSystemInfoResponse.Version!}`)
 
 			const server: JellifyServer = {
 				url: `${useHttps ? https : http}${serverAddress!}`,
 				address: serverAddress!,
-				name: publicSystemInfoResponse.data.ServerName!,
-				version: publicSystemInfoResponse.data.Version!,
-				startUpComplete: publicSystemInfoResponse.data.StartupWizardCompleted!,
+				name: publicSystemInfoResponse.ServerName!,
+				version: publicSystemInfoResponse.Version!,
+				startUpComplete: publicSystemInfoResponse.StartupWizardCompleted!,
 			}
 
 			setServer(server)

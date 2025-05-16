@@ -63,6 +63,7 @@
     "react-native-blob-util": "^0.21.2",
     "react-native-carplay": "^2.4.1-beta.0",
     "react-native-device-info": "^14.0.4",
+    "react-native-dns-lookup": "^1.0.6",
     "react-native-draggable-flatlist": "^4.0.3",
     "react-native-fast-image": "^8.6.3",
     "react-native-fs": "^2.20.0",
