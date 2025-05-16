@@ -32,42 +32,21 @@
 		<true/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
-		<key>nip.io</key>
+		<key>NSAllowsLocalNetworkingUsageDescription</key>
 		<dict>
-			<key>NSIncludesSubdomains</key>
-			<true/>
-			<key>NSExceptionAllowsInsecureHTTPLoads</key>
-			<true/>
-			<key>NSExceptionRequiresForwardSecrecy</key>
-			<false/>
+			<key>NSATSExceptionThirdPartyServiceConnectionUsage</key>
+			<dict>
+				<key>NSATSExceptionThirdPartyServiceConnectionPurpose</key>
+				<array>
+					<dict>
+						<key>NSThirdPartyMediaStreaming</key>
+						<true/>
+					</dict>
+				</array>
+			</dict>
 		</dict>
-		<key>sslip.io</key>
-		<dict>
-			<key>NSIncludesSubdomains</key>
-			<true/>
-			<key>NSExceptionAllowsInsecureHTTPLoads</key>
-			<true/>
-			<key>NSExceptionRequiresForwardSecrecy</key>
-			<false/>
-		</dict>
-		<key>xip.io</key>
-		<dict>
-			<key>NSIncludesSubdomains</key>
-			<true/>
-			<key>NSExceptionAllowsInsecureHTTPLoads</key>
-			<true/>
-			<key>NSExceptionRequiresForwardSecrecy</key>
-			<false/>
-		</dict>
-		<key>hipio</key>
-		<dict>
-			<key>NSIncludesSubdomains</key>
-			<true/>
-			<key>NSExceptionAllowsInsecureHTTPLoads</key>
-			<true/>
-			<key>NSExceptionRequiresForwardSecrecy</key>
-			<false/>
-		</dict>
+		<key>NSAllowsArbitraryLoadsForMedia</key>
+		<true/>
 	</dict>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>${PRODUCT_NAME} uses the local network to connect to one&apos;s Jellyfin server for streaming music</string>

@@ -66,8 +66,9 @@ export default function ServerAddress({
 				})
 
 			const ipAddress = await getIpAddressesForHostname(serverAddress.split(':')[0])
+
 			const ipAddressApi = jellyfin.createApi(
-				`http://${ipAddress[0]}:${serverAddress.split(':')[1]}`,
+				`${useHttps ? https : http}${ipAddress[0]}:${serverAddress.split(':')[1]}`,
 			)
 			const connectViaLocalNetworkPromise = () =>
 				new Promise<PublicSystemInfo>((resolve, reject) => {
@@ -88,7 +89,7 @@ export default function ServerAddress({
 						})
 				})
 
-			return Promise.race([connectViaHostnamePromise(), connectViaLocalNetworkPromise()])
+			return connectViaHostnamePromise().catch(() => connectViaLocalNetworkPromise())
 		},
 		onSuccess: (publicSystemInfoResponse) => {
 			if (!publicSystemInfoResponse.Version)
