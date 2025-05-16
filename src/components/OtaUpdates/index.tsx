@@ -40,7 +40,7 @@ const GitUpdateModal = () => {
 				// Alert.alert('Clone project faile .d!', msg)
 			},
 			onCloneSuccess() {
-				Alert.alert('Clone project success!', 'Restart to apply the changes', [
+				Alert.alert('Jellify has been updated!', 'Restart to apply the changes', [
 					{ text: 'OK', onPress: () => hotUpdate.resetApp() },
 					{ text: 'Cancel', style: 'cancel' },
 				])
@@ -50,7 +50,7 @@ const GitUpdateModal = () => {
 				// Alert.alert('Pull project failed!', msg)
 			},
 			onPullSuccess() {
-				Alert.alert('Pull project success!', 'Restart to apply the changes', [
+				Alert.alert('Jellify has been updated!', 'Restart to apply the changes', [
 					{ text: 'OK', onPress: () => hotUpdate.resetApp() },
 					{ text: 'Cancel', style: 'cancel' },
 				])
