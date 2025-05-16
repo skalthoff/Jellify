@@ -203,7 +203,9 @@ All logging and metrics gathering is _opt-in_ __by default__. This is merely her
 
 All logs and metrics are completely anonymized. No data can be traced back to you.
 
-[GlitchTip](https://glitchtip.com/)\
+[GlitchTip](https://glitchtip.com/)
+- [See logging statements](https://github.com/search?q=repo%3AJellify-Music%2FApp+console.&type=code&p=1)
+
 [TelemetryDeck](https://telemetrydeck.com)
 
 ### 💜 Love from Wisconsin 🧀
