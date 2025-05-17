@@ -168,6 +168,30 @@ const PlayerContextInitializer = () => {
 				)
 					useDownload.mutate(nowPlaying!.item)
 
+				// --- GAPLESS PLAYBACK PREFETCH LOGIC ---
+				// If within 10 seconds of end, prefetch next track if not already downloaded
+				if (
+					nowPlaying &&
+					playQueue &&
+					typeof currentIndex === 'number' &&
+					playQueue.length > currentIndex + 1 &&
+					Math.floor(event.duration) - Math.floor(event.position) <= 10
+				) {
+					const nextTrack = playQueue[currentIndex + 1]
+					const isNextDownloaded = downloadedTracks?.some(
+						(download) => download.item.Id === nextTrack.item.Id,
+					)
+					if (
+						!isNextDownloaded &&
+						[networkStatusTypes.ONLINE, undefined, null].includes(
+							networkStatus as networkStatusTypes,
+						) &&
+						autoDownload
+					) {
+						useDownload.mutate(nextTrack.item)
+					}
+				}
+
 				break
 			}
 		}
