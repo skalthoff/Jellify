@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useRef, useState } from 'react'
 import { JellifyTrack } from '../../types/JellifyTrack'
 import { storage } from '../../constants/storage'
 import { MMKVStorageKeys } from '../../enums/mmkv-storage-keys'
@@ -135,8 +135,10 @@ const PlayerContextInitializer = () => {
 	//#region RNTP Setup
 
 	const { state: playbackState } = usePlaybackState()
-	const { useDownload, downloadedTracks, networkStatus } = useNetworkContext()
+	const { useDownload, useDownloadMultiple, downloadedTracks, networkStatus } =
+		useNetworkContext()
 	const { autoDownload } = useSettingsContext()
+	const prefetchedTrackIds = useRef<Set<string>>(new Set())
 
 	/**
 	 * Use the {@link useTrackPlayerEvents} hook to listen for events from the player.
@@ -178,17 +180,10 @@ const PlayerContextInitializer = () => {
 					Math.floor(event.duration) - Math.floor(event.position) <= 10
 				) {
 					const nextTrack = playQueue[currentIndex + 1]
-					const isNextDownloaded = downloadedTracks?.some(
-						(download) => download.item.Id === nextTrack.item.Id,
-					)
-					if (
-						!isNextDownloaded &&
-						[networkStatusTypes.ONLINE, undefined, null].includes(
-							networkStatus as networkStatusTypes,
-						) &&
-						autoDownload
-					) {
-						useDownload.mutate(nextTrack.item)
+					const nextId = nextTrack.item.Id!
+					if (!prefetchedTrackIds.current.has(nextId)) {
+						useDownloadMultiple.mutate([nextTrack])
+						prefetchedTrackIds.current.add(nextId)
 					}
 				}
 
