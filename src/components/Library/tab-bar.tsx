@@ -6,12 +6,9 @@ import { useLibrarySortAndFilterContext } from '../../providers/Library/sorting-
 import { Text } from '../Global/helpers/text'
 import { FadeIn, FadeOut } from 'react-native-reanimated'
 import Animated from 'react-native-reanimated'
+import { isUndefined } from 'lodash'
 
 export default function LibraryTabBar(props: MaterialTopTabBarProps) {
-	useEffect(() => {
-		console.debug(`LibraryTabBar:`, props.state.routes[props.state.index].name)
-	}, [props])
-
 	const {
 		sortDescending,
 		setSortDescending,
@@ -25,7 +22,7 @@ export default function LibraryTabBar(props: MaterialTopTabBarProps) {
 		<YStack>
 			<MaterialTopTabBar {...props} />
 
-			{props.state.routes[props.state.index].name === 'Artists' ? null : (
+			{[''].includes(props.state.routes[props.state.index].name) ? null : (
 				<XStack
 					paddingHorizontal={'$4'}
 					paddingVertical={'$2'}
@@ -52,7 +49,9 @@ export default function LibraryTabBar(props: MaterialTopTabBarProps) {
 					) : (
 						<XStack
 							flex={1}
-							onPress={() => setIsFavorites(!isFavorites)}
+							onPress={() =>
+								setIsFavorites(!isUndefined(isFavorites) ? undefined : true)
+							}
 							alignItems={'center'}
 							justifyContent={'center'}
 						>

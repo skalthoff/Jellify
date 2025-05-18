@@ -5,7 +5,7 @@ import { ActivityIndicator, RefreshControl } from 'react-native'
 import { ArtistsProps } from '../types'
 import Item from '../Global/components/item'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
-import { alphabet } from '../../providers/Library'
+import { alphabet, useLibrarySortAndFilterContext } from '../../providers/Library'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models/base-item-dto'
 import { trigger } from 'react-native-haptic-feedback'
 import { FlashList } from '@shopify/flash-list'
@@ -24,6 +24,8 @@ export default function Artists({
 	const { width, height } = useSafeAreaFrame()
 
 	const { artistPageParams } = useLibraryContext()
+
+	const { isFavorites } = useLibrarySortAndFilterContext()
 
 	const memoizedAlphabet = useMemo(() => alphabet, [])
 
@@ -81,6 +83,7 @@ export default function Artists({
 					paddingTop: getToken('$1'),
 				}}
 				contentInsetAdjustmentBehavior='automatic'
+				extraData={isFavorites}
 				keyExtractor={(item) =>
 					typeof item === 'string'
 						? item

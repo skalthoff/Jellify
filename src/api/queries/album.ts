@@ -7,16 +7,26 @@ import {
 import { JellifyLibrary } from '../../types/JellifyLibrary'
 import { Api } from '@jellyfin/sdk'
 import { fetchItems } from './item'
-
+import { JellifyUser } from '../../types/JellifyUser'
 export function fetchAlbums(
 	api: Api | undefined,
+	user: JellifyUser | undefined,
 	library: JellifyLibrary | undefined,
 	page: string,
-	isFavorite: boolean = false,
+	isFavorite: boolean | undefined,
 	sortBy: ItemSortBy[] = [ItemSortBy.SortName],
 	sortOrder: SortOrder[] = [SortOrder.Ascending],
 ): Promise<{ title: string | number; data: BaseItemDto[] }> {
 	console.debug('Fetching albums', page)
 
-	return fetchItems(api, library, [BaseItemKind.MusicAlbum], page, sortBy, sortOrder, isFavorite)
+	return fetchItems(
+		api,
+		user,
+		library,
+		[BaseItemKind.MusicAlbum],
+		page,
+		sortBy,
+		sortOrder,
+		isFavorite,
+	)
 }

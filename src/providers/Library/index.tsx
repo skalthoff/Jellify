@@ -79,9 +79,10 @@ const LibraryContextInitializer = () => {
 		queryFn: ({ pageParam }) =>
 			fetchArtists(
 				api,
+				user,
 				library,
 				pageParam,
-				false,
+				isFavorites,
 				[ItemSortBy.SortName],
 				[sortDescending ? SortOrder.Descending : SortOrder.Ascending],
 			),
@@ -126,6 +127,7 @@ const LibraryContextInitializer = () => {
 		queryFn: ({ pageParam }) =>
 			fetchTracks(
 				api,
+				user,
 				library,
 				pageParam,
 				isFavorites,
@@ -149,15 +151,16 @@ const LibraryContextInitializer = () => {
 		isFetchingNextPage: isFetchingNextAlbumsPage,
 		hasNextPage: hasNextAlbumsPage,
 	} = useInfiniteQuery({
-		queryKey: [QueryKeys.AllAlbumsAlphabetical, isFavorites, sortDescending],
+		queryKey: [QueryKeys.AllAlbumsAlphabetical, isFavorites],
 		queryFn: ({ pageParam }) =>
 			fetchAlbums(
 				api,
+				user,
 				library,
 				pageParam,
 				isFavorites,
 				[ItemSortBy.SortName],
-				[sortDescending ? SortOrder.Descending : SortOrder.Ascending],
+				[SortOrder.Ascending],
 			),
 		initialPageParam: alphabet[0],
 		select: (data) => data.pages.flatMap((page) => [page.title, ...page.data]),
