@@ -72,7 +72,7 @@ export default function Settings(): React.JSX.Element {
 			/>
 
 			<SettingsTabsNavigator.Screen
-				name='Account'
+				name='User'
 				component={AccountTab}
 				options={{
 					tabBarIcon: ({ focused, color }) => (
