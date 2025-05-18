@@ -80,7 +80,7 @@ export default function Artists({
 					marginRight: getToken('$4'),
 				}}
 				contentContainerStyle={{
-					paddingTop: getToken('$1'),
+					paddingTop: getToken('$3'),
 				}}
 				contentInsetAdjustmentBehavior='automatic'
 				extraData={isFavorites}
@@ -143,27 +143,23 @@ export default function Artists({
 			{showAlphabeticalSelector && (
 				<YStack
 					maxWidth={'$4'}
-					margin={'$2'}
+					marginVertical={'auto'}
 					minWidth={'$2'}
 					width={width / 8}
-					height={height - getTokens().size.$15.val}
+					height={height - getTokens().size.$20.val}
 					alignItems='center'
 					justifyContent='center'
-					borderWidth={'$1'}
-					borderColor={'$borderColor'}
-					borderRadius={'$5'}
-					gap={0}
 					flex={1}
+					alignContent='center'
 				>
 					{memoizedAlphabet.map((letter) => (
 						<Text
-							display='flex'
-							paddingHorizontal={'$3'}
-							flex={1}
-							alignItems='center'
-							justifyContent='center'
+							paddingHorizontal={'$4'}
+							marginHorizontal={'auto'}
+							textAlign='center'
 							key={letter}
 							bold
+							color={'$borderColor'}
 							fontSize={'$6'}
 							onPressOut={() => {
 								trigger('impactLight')
