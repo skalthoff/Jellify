@@ -8,6 +8,8 @@ interface SettingsContext {
 	setSendMetrics: React.Dispatch<React.SetStateAction<boolean>>
 	autoDownload: boolean
 	setAutoDownload: React.Dispatch<React.SetStateAction<boolean>>
+	downloadQuality: number
+	setDownloadQuality: React.Dispatch<React.SetStateAction<number>>
 }
 
 /**
@@ -23,14 +25,14 @@ interface SettingsContext {
  */
 const SettingsContextInitializer = () => {
 	const sendMetricsInit = storage.getBoolean(MMKVStorageKeys.SendMetrics)
-
 	const autoDownloadInit = storage.getBoolean(MMKVStorageKeys.AutoDownload)
+	const downloadQualityInit = storage.getNumber(MMKVStorageKeys.DownloadQuality)
 
 	const [sendMetrics, setSendMetrics] = useState(sendMetricsInit ?? false)
-
 	const [autoDownload, setAutoDownload] = useState(
 		autoDownloadInit ?? ['ios', 'android'].includes(Platform.OS),
 	)
+	const [downloadQuality, setDownloadQuality] = useState(downloadQualityInit ?? 192)
 
 	useEffect(() => {
 		storage.set(MMKVStorageKeys.SendMetrics, sendMetrics)
@@ -40,11 +42,17 @@ const SettingsContextInitializer = () => {
 		storage.set(MMKVStorageKeys.AutoDownload, autoDownload)
 	}, [autoDownload])
 
+	useEffect(() => {
+		storage.set(MMKVStorageKeys.DownloadQuality, downloadQuality)
+	}, [downloadQuality])
+
 	return {
 		sendMetrics,
 		setSendMetrics,
 		autoDownload,
 		setAutoDownload,
+		downloadQuality,
+		setDownloadQuality,
 	}
 }
 
@@ -53,6 +61,8 @@ export const SettingsContext = createContext<SettingsContext>({
 	setSendMetrics: () => {},
 	autoDownload: false,
 	setAutoDownload: () => {},
+	downloadQuality: 192,
+	setDownloadQuality: () => {},
 })
 
 export const SettingsProvider = ({ children }: { children: React.ReactNode }) => {

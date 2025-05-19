@@ -12,6 +12,8 @@ import { JellifyDownload } from '../types/JellifyDownload'
 import { queryClient } from '../constants/query-client'
 import { QueryKeys } from '../enums/query-keys'
 import { Api } from '@jellyfin/sdk/lib/api'
+import { storage } from '../constants/storage'
+import { MMKVStorageKeys } from '../enums/mmkv-storage-keys'
 import RNFS from 'react-native-fs'
 
 /**
@@ -41,7 +43,7 @@ export function mapDtoToTrack(
 	downloadedTracks: JellifyDownload[],
 	queuingType?: QueuingType,
 ): JellifyTrack {
-	const urlParams = {
+	const urlParams: Record<string, string> = {
 		Container: item.Container!,
 		TranscodingContainer: transcodingContainer,
 		EnableRemoteMedia: 'true',
@@ -50,6 +52,10 @@ export function mapDtoToTrack(
 		StartTimeTicks: '0',
 		PlaySessionId: sessionId,
 	}
+	// Include desired download/transcoding quality (kbps)
+	const qualityKbps = storage.getNumber(MMKVStorageKeys.DownloadQuality) ?? 192
+	// MaxStreamingBitrate expects bits per second
+	urlParams.MaxStreamingBitrate = (qualityKbps * 1000).toString()
 
 	console.debug(`Mapping BaseItemDTO to Track object`)
 	const isFavorite = !isUndefined(item.UserData) && (item.UserData.IsFavorite ?? false)
