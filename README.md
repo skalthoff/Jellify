@@ -46,7 +46,7 @@ This app was designed with me and my dad in mind. I wanted us to have a sleek, o
 
 - [lyarenei/jellyfin-plugin-itunes](https://github.com/lyarenei/jellyfin-plugin-itunes)
   - Really good at fetching missing artist artwork for obscure / less popular artists
-
+  - Recommended to set this as a lower priority, Apple likes to respond with HTTP 429s when refetching all images with large libraries
 
 ## ⬇️ Downloading
 
