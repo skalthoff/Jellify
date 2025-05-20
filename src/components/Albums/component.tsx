@@ -2,7 +2,7 @@ import { ItemCard } from '../Global/components/item-card'
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native'
 import { AlbumsProps } from '../types'
 import { useDisplayContext } from '../../providers/Display/display-provider'
-import { getToken, getTokens, XStack, YStack } from 'tamagui'
+import { getToken, getTokens, Separator, XStack, YStack } from 'tamagui'
 import Item from '../Global/components/item'
 import React from 'react'
 import { Text } from '../Global/helpers/text'
@@ -64,6 +64,7 @@ export default function Albums({
 					if (hasNextPage) fetchNextPage()
 				}}
 				ListFooterComponent={isPending ? <ActivityIndicator /> : null}
+				ItemSeparatorComponent={() => <Separator />}
 				refreshControl={<RefreshControl refreshing={isPending} />}
 				stickyHeaderIndices={
 					showAlphabeticalSelector

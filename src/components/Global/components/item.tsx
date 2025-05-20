@@ -11,6 +11,9 @@ import { useQueueContext } from '../../../providers/Player/queue'
 import { usePlayerContext } from '../../../providers/Player'
 import ItemImage from './image'
 import FavoriteIcon from './favorite-icon'
+import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import { UseMutationResult } from '@tanstack/react-query'
+import { QueueMutation } from '@/src/player/interfaces'
 
 export default function Item({
 	item,
@@ -24,16 +27,42 @@ export default function Item({
 	const { useStartPlayback } = usePlayerContext()
 	const { useLoadNewQueue } = useQueueContext()
 
-	const { width } = useSafeAreaFrame()
+	const gesture = Gesture.Tap()
+		.maxDistance(10)
+		.onEnd((e, success) => {
+			if (success) {
+				switch (item.Type) {
+					case 'Audio': {
+						useLoadNewQueue.mutate(
+							{
+								track: item,
+								tracklist: [item],
+								index: 0,
+								queue: 'Search',
+								queuingType: QueuingType.FromSelection,
+							},
+							{
+								onSuccess: () => useStartPlayback.mutate(),
+							},
+						)
+						break
+					}
+				}
+			}
+		})
 
 	return (
-		<View>
-			<Separator />
-
+		<GestureDetector gesture={gesture}>
 			<XStack
 				alignContent='center'
 				minHeight={'$7'}
 				width={'100%'}
+				onLongPress={() => {
+					navigation.navigate('Details', {
+						item,
+						isNested: false,
+					})
+				}}
 				onPress={() => {
 					switch (item.Type) {
 						case 'MusicArtist': {
@@ -49,29 +78,7 @@ export default function Item({
 							})
 							break
 						}
-
-						case 'Audio': {
-							useLoadNewQueue.mutate(
-								{
-									track: item,
-									tracklist: [item],
-									index: 0,
-									queue: 'Search',
-									queuingType: QueuingType.FromSelection,
-								},
-								{
-									onSuccess: () => useStartPlayback.mutate(),
-								},
-							)
-							break
-						}
 					}
-				}}
-				onLongPress={() => {
-					navigation.navigate('Details', {
-						item,
-						isNested: false,
-					})
 				}}
 				paddingVertical={'$2'}
 				paddingRight={'$2'}
@@ -122,6 +129,6 @@ export default function Item({
 					) : null}
 				</XStack>
 			</XStack>
-		</View>
+		</GestureDetector>
 	)
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { getToken, getTokens, XStack, YStack } from 'tamagui'
+import { getToken, getTokens, Separator, XStack, YStack } from 'tamagui'
 import { Text } from '../Global/helpers/text'
 import { ActivityIndicator, RefreshControl } from 'react-native'
 import { ArtistsProps } from '../types'
@@ -91,6 +91,7 @@ export default function Artists({
 							? item.toString()
 							: item.Id!
 				}
+				ItemSeparatorComponent={() => <Separator />}
 				estimatedItemSize={itemHeight}
 				data={artists}
 				refreshControl={<RefreshControl refreshing={isPending} />}
