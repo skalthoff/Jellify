@@ -145,11 +145,11 @@ export default function Artists({
 				<YStack
 					maxWidth={'$4'}
 					marginVertical={'auto'}
-					minWidth={'$2'}
-					width={width / 8}
+					width={width / 6}
+					minWidth={'$3'}
 					alignItems='center'
 					justifyContent='center'
-					flex={1}
+					flex={2}
 					alignContent='center'
 				>
 					{memoizedAlphabet.map((letter) => (
