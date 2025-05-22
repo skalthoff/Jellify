@@ -147,7 +147,6 @@ export default function Artists({
 					marginVertical={'auto'}
 					minWidth={'$2'}
 					width={width / 8}
-					height={'$20'}
 					alignItems='center'
 					justifyContent='center'
 					flex={1}
@@ -155,6 +154,7 @@ export default function Artists({
 				>
 					{memoizedAlphabet.map((letter) => (
 						<Text
+							height={'$1'}
 							paddingHorizontal={'$4'}
 							marginHorizontal={'auto'}
 							textAlign='center'
@@ -162,10 +162,12 @@ export default function Artists({
 							bold
 							color={'$borderColor'}
 							fontSize={'$6'}
-							onPressOut={() => {
+							onPress={() => {
 								trigger('impactLight')
 								alphabeticalSelectorCallback(letter)
 							}}
+							animation={'bouncy'}
+							pressStyle={{ scale: 0.875 }}
 						>
 							{letter.toUpperCase()}
 						</Text>
