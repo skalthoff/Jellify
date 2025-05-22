@@ -147,7 +147,7 @@ export default function Artists({
 					marginVertical={'auto'}
 					minWidth={'$2'}
 					width={width / 8}
-					height={height - getTokens().size.$20.val}
+					height={'$20'}
 					alignItems='center'
 					justifyContent='center'
 					flex={1}
