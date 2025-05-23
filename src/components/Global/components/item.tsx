@@ -1,9 +1,8 @@
 import { StackParamList } from '../../../components/types'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { getTokens, Separator, Spacer, View, XStack, YStack } from 'tamagui'
+import { XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import Icon from './icon'
 import { QueuingType } from '../../../enums/queuing-type'
 import { RunTimeTicks } from '../helpers/time-codes'
@@ -12,8 +11,7 @@ import { usePlayerContext } from '../../../providers/Player'
 import ItemImage from './image'
 import FavoriteIcon from './favorite-icon'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
-import { UseMutationResult } from '@tanstack/react-query'
-import { QueueMutation } from '@/src/player/interfaces'
+import { runOnJS } from 'react-native-reanimated'
 
 export default function Item({
 	item,
@@ -27,29 +25,30 @@ export default function Item({
 	const { useStartPlayback } = usePlayerContext()
 	const { useLoadNewQueue } = useQueueContext()
 
-	const gesture = Gesture.Tap()
-		.maxDistance(10)
-		.onEnd((e, success) => {
-			if (success) {
-				switch (item.Type) {
-					case 'Audio': {
-						useLoadNewQueue.mutate(
-							{
-								track: item,
-								tracklist: [item],
-								index: 0,
-								queue: 'Search',
-								queuingType: QueuingType.FromSelection,
-							},
-							{
-								onSuccess: () => useStartPlayback.mutate(),
-							},
-						)
-						break
-					}
-				}
+	const gestureCallback = runOnJS(() => {
+		switch (item.Type) {
+			case 'Audio': {
+				useLoadNewQueue.mutate(
+					{
+						track: item,
+						tracklist: [item],
+						index: 0,
+						queue: 'Search',
+						queuingType: QueuingType.FromSelection,
+					},
+					{
+						onSuccess: () => useStartPlayback.mutate(),
+					},
+				)
+				break
 			}
-		})
+			default: {
+				break
+			}
+		}
+	})
+
+	const gesture = Gesture.Tap().onEnd(gestureCallback)
 
 	return (
 		<GestureDetector gesture={gesture}>
