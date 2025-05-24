@@ -128,12 +128,9 @@ const HomeContextInitializer = () => {
 			],
 		})
 
-		await Promise.all([
-			refetchRecentTracks(),
-			refetchRecentArtists(),
-			refetchFrequentArtists(),
-			refetchFrequentlyPlayed(),
-		])
+		await Promise.all([refetchRecentTracks(), refetchFrequentlyPlayed()])
+
+		await Promise.all([refetchRecentArtists(), refetchFrequentArtists()])
 
 		setRefreshing(false)
 	}

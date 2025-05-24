@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { getToken, getTokens, Separator, XStack, YStack } from 'tamagui'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { getToken, Separator, XStack, YStack } from 'tamagui'
 import { Text } from '../Global/helpers/text'
 import { ActivityIndicator, RefreshControl } from 'react-native'
 import { ArtistsProps } from '../types'
@@ -7,10 +7,10 @@ import Item from '../Global/components/item'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { alphabet, useLibrarySortAndFilterContext } from '../../providers/Library'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models/base-item-dto'
-import { trigger } from 'react-native-haptic-feedback'
 import { FlashList } from '@shopify/flash-list'
 import { useLibraryContext } from '../../providers/Library'
 import { sleepify } from '../../helpers/sleep'
+import { AZScroller } from '../Global/components/alphabetical-selector'
 
 export default function Artists({
 	artists,
@@ -37,9 +37,8 @@ export default function Artists({
 
 	const artistsRef = useRef<(string | number | BaseItemDto)[]>(artists ?? [])
 
-	const [refreshing, setRefreshing] = useState(false)
-
-	const alphabeticalSelectorCallback = useCallback(async (letter: string) => {
+	const alphabeticalSelectorCallback = async (letter: string) => {
+		console.debug(`Alphabetical Selector Callback: ${letter}`)
 		do {
 			await sleepify(100)
 			fetchNextPage()
@@ -47,25 +46,21 @@ export default function Artists({
 				`Alphabetical Selector Callback: ${letter}, ${artistPageParams.current.join(', ')}`,
 			)
 		} while (
-			artistsRef.current?.indexOf(letter) === -1 ||
-			!artistPageParams.current.includes(letter)
+			(artistsRef.current?.indexOf(letter) === -1 ||
+				!artistPageParams.current.includes(letter)) &&
+			hasNextPage
 		)
 
-		sleepify(250).then(() => {
-			sectionListRef.current?.scrollToIndex({
-				index:
-					(artistsRef.current?.indexOf(letter) ?? 0) > -1
-						? artistsRef.current!.indexOf(letter)
-						: 0,
-				viewPosition: 0.2,
-				animated: true,
-			})
+		await sleepify(250)
+		sectionListRef.current?.scrollToIndex({
+			index:
+				(artistsRef.current?.indexOf(letter) ?? 0) > -1
+					? artistsRef.current!.indexOf(letter)
+					: 0,
+			viewPosition: 0.1,
+			animated: true,
 		})
-	}, [])
-
-	useEffect(() => {
-		console.debug(`Fetching Artist Component: ${artistPageParams.current.join(', ')}`)
-	}, [artistPageParams])
+	}
 
 	useEffect(() => {
 		artistsRef.current = artists ?? []
@@ -142,37 +137,7 @@ export default function Artists({
 			/>
 
 			{showAlphabeticalSelector && (
-				<YStack
-					maxWidth={'$4'}
-					marginVertical={'auto'}
-					width={width / 6}
-					minWidth={'$3'}
-					alignItems='center'
-					justifyContent='center'
-					flex={2}
-					alignContent='center'
-				>
-					{memoizedAlphabet.map((letter) => (
-						<Text
-							height={'$1'}
-							paddingHorizontal={'$4'}
-							marginHorizontal={'auto'}
-							textAlign='center'
-							key={letter}
-							bold
-							color={'$borderColor'}
-							fontSize={'$6'}
-							onPress={() => {
-								trigger('impactLight')
-								alphabeticalSelectorCallback(letter)
-							}}
-							animation={'bouncy'}
-							pressStyle={{ scale: 0.875 }}
-						>
-							{letter.toUpperCase()}
-						</Text>
-					))}
-				</YStack>
+				<AZScroller onLetterSelect={alphabeticalSelectorCallback} />
 			)}
 		</XStack>
 	)
