@@ -1,13 +1,14 @@
 import HorizontalCardList from '../../../components/Global/components/horizontal-list'
 import { StackParamList } from '../../../components/types'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ItemCard } from '../../../components/Global/components/item-card'
 import { View, XStack } from 'tamagui'
 import { H2, H4, Text } from '../../../components/Global/helpers/text'
 import Icon from '../../Global/components/icon'
 import { useHomeContext } from '../../../providers/Home'
 import { ActivityIndicator } from 'react-native'
+import { useDisplayContext } from '../../../providers/Display/display-provider'
 
 export default function FrequentArtists({
 	navigation,
@@ -20,6 +21,8 @@ export default function FrequentArtists({
 		hasNextFrequentArtists,
 		isFetchingFrequentArtists,
 	} = useHomeContext()
+
+	const { horizontalItems } = useDisplayContext()
 
 	return (
 		<View>
@@ -39,7 +42,7 @@ export default function FrequentArtists({
 			</XStack>
 
 			<HorizontalCardList
-				data={frequentArtists?.slice(0, 10) ?? []}
+				data={frequentArtists?.slice(0, horizontalItems) ?? []}
 				renderItem={({ item: artist }) => (
 					<ItemCard
 						item={artist}

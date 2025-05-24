@@ -10,6 +10,7 @@ import Icon from '../../Global/components/icon'
 import { useQueueContext } from '../../../providers/Player/queue'
 import { usePlayerContext } from '../../../providers/Player'
 import { H4 } from '../../../components/Global/helpers/text'
+import { useDisplayContext } from '../../../providers/Display/display-provider'
 export default function FrequentlyPlayedTracks({
 	navigation,
 }: {
@@ -24,6 +25,7 @@ export default function FrequentlyPlayedTracks({
 
 	const { useStartPlayback } = usePlayerContext()
 	const { useLoadNewQueue } = useQueueContext()
+	const { horizontalItems } = useDisplayContext()
 
 	return (
 		<View>
@@ -44,8 +46,8 @@ export default function FrequentlyPlayedTracks({
 
 			<HorizontalCardList
 				data={
-					(frequentlyPlayed?.pages.flatMap((page) => page).length ?? 0 > 10)
-						? frequentlyPlayed?.pages.flatMap((page) => page).slice(0, 10)
+					(frequentlyPlayed?.pages.flatMap((page) => page).length ?? 0 > horizontalItems)
+						? frequentlyPlayed?.pages.flatMap((page) => page).slice(0, horizontalItems)
 						: frequentlyPlayed?.pages.flatMap((page) => page)
 				}
 				renderItem={({ item: track, index }) => (

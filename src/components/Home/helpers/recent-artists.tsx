@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, XStack } from 'tamagui'
 import { useHomeContext } from '../../../providers/Home'
-import { H2, H4 } from '../../Global/helpers/text'
+import { H4 } from '../../Global/helpers/text'
 import { StackParamList } from '../../types'
 import { ItemCard } from '../../Global/components/item-card'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import HorizontalCardList from '../../../components/Global/components/horizontal-list'
 import Icon from '../../Global/components/icon'
+import { useDisplayContext } from '../../../providers/Display/display-provider'
 
 export default function RecentArtists({
 	navigation,
@@ -16,6 +17,7 @@ export default function RecentArtists({
 	const { recentArtists, fetchNextRecentArtists, hasNextRecentArtists, isFetchingRecentArtists } =
 		useHomeContext()
 
+	const { horizontalItems } = useDisplayContext()
 	return (
 		<View>
 			<XStack
@@ -34,7 +36,7 @@ export default function RecentArtists({
 			</XStack>
 
 			<HorizontalCardList
-				data={recentArtists?.slice(0, 10) ?? []}
+				data={recentArtists?.slice(0, horizontalItems) ?? []}
 				renderItem={({ item: recentArtist }) => (
 					<ItemCard
 						item={recentArtist}
