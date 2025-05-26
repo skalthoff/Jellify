@@ -21,6 +21,15 @@ import { networkStatusTypes } from '../../components/Network/internetConnectionW
 import { useJellifyContext } from '..'
 import { isUndefined } from 'lodash'
 import { useSettingsContext } from '../Settings'
+import {
+	getTracksToPreload,
+	shouldStartPrefetching,
+	optimizePlayerQueue,
+} from '../../player/helpers/gapless'
+import {
+	PREFETCH_THRESHOLD_SECONDS,
+	QUEUE_PREPARATION_THRESHOLD_SECONDS,
+} from '../../player/gapless-config'
 
 interface PlayerContext {
 	nowPlaying: JellifyTrack | undefined
@@ -72,6 +81,38 @@ const PlayerContextInitializer = () => {
 			await handlePlaybackProgress(sessionId, playStateApi, nowPlaying, progress)
 		else if (!playStateApi) console.warn('No play state API found')
 		else console.warn('No now playing track found')
+	}
+
+	/**
+	 * Clean up prefetched track IDs that are no longer relevant
+	 * to prevent memory leaks
+	 */
+	const cleanupPrefetchedIds = (currentIndex: number, playQueue: JellifyTrack[]) => {
+		const idsToKeep = new Set<string>()
+
+		// Keep IDs for current track and next 5 tracks
+		for (
+			let i = Math.max(0, currentIndex - 1);
+			i < Math.min(playQueue.length, currentIndex + 6);
+			i++
+		) {
+			const track = playQueue[i]
+			if (track?.item?.Id) {
+				idsToKeep.add(track.item.Id)
+			}
+		}
+
+		// Remove old IDs that are no longer relevant
+		const oldSize = prefetchedTrackIds.current.size
+		prefetchedTrackIds.current = new Set(
+			[...prefetchedTrackIds.current].filter((id) => idsToKeep.has(id)),
+		)
+
+		if (oldSize !== prefetchedTrackIds.current.size) {
+			console.debug(
+				`Cleaned up ${oldSize - prefetchedTrackIds.current.size} old prefetched track IDs`,
+			)
+		}
 	}
 
 	//#endregion Functions
@@ -170,20 +211,61 @@ const PlayerContextInitializer = () => {
 				)
 					useDownload.mutate(nowPlaying!.item)
 
-				// --- GAPLESS PLAYBACK PREFETCH LOGIC ---
-				// If within 10 seconds of end, prefetch next track if not already downloaded
-				if (
-					nowPlaying &&
-					playQueue &&
-					typeof currentIndex === 'number' &&
-					playQueue.length > currentIndex + 1 &&
-					Math.floor(event.duration) - Math.floor(event.position) <= 10
-				) {
-					const nextTrack = playQueue[currentIndex + 1]
-					const nextId = nextTrack.item.Id!
-					if (!prefetchedTrackIds.current.has(nextId)) {
-						useDownloadMultiple.mutate([nextTrack])
-						prefetchedTrackIds.current.add(nextId)
+				// --- ENHANCED GAPLESS PLAYBACK LOGIC ---
+				if (nowPlaying && playQueue && typeof currentIndex === 'number') {
+					const position = Math.floor(event.position)
+					const duration = Math.floor(event.duration)
+					const timeRemaining = duration - position
+
+					// Check if we should start prefetching tracks
+					if (shouldStartPrefetching(position, duration, PREFETCH_THRESHOLD_SECONDS)) {
+						const tracksToPreload = getTracksToPreload(
+							playQueue,
+							currentIndex,
+							prefetchedTrackIds.current,
+						)
+
+						if (tracksToPreload.length > 0) {
+							console.debug(
+								`Gapless: Found ${tracksToPreload.length} tracks to preload (${timeRemaining}s remaining)`,
+							)
+
+							// Filter tracks that aren't already downloaded
+							const tracksToDownload = tracksToPreload.filter(
+								(track) =>
+									downloadedTracks?.filter(
+										(download) => download.item.Id === track.item.Id,
+									).length === 0,
+							)
+
+							if (
+								tracksToDownload.length > 0 &&
+								[networkStatusTypes.ONLINE, undefined, null].includes(
+									networkStatus as networkStatusTypes,
+								)
+							) {
+								console.debug(
+									`Gapless: Starting download of ${tracksToDownload.length} tracks`,
+								)
+								useDownloadMultiple.mutate(tracksToDownload)
+								// Mark tracks as prefetched
+								tracksToDownload.forEach((track) => {
+									if (track.item.Id) {
+										prefetchedTrackIds.current.add(track.item.Id)
+									}
+								})
+							}
+						}
+					}
+
+					// Optimize the TrackPlayer queue for smooth transitions
+					if (timeRemaining <= QUEUE_PREPARATION_THRESHOLD_SECONDS) {
+						console.debug(
+							`Gapless: Optimizing player queue (${timeRemaining}s remaining)`,
+						)
+						optimizePlayerQueue(playQueue, currentIndex).catch((error) =>
+							console.warn('Failed to optimize player queue:', error),
+						)
 					}
 				}
 
@@ -231,6 +313,15 @@ const PlayerContextInitializer = () => {
 			setInitialized(true)
 		}
 	}, [])
+
+	/**
+	 * Clean up prefetched track IDs when the current index changes significantly
+	 */
+	useEffect(() => {
+		if (playQueue.length > 0 && typeof currentIndex === 'number' && currentIndex > -1) {
+			cleanupPrefetchedIds(currentIndex, playQueue)
+		}
+	}, [currentIndex, playQueue])
 	//#endregion useEffects
 
 	//#region return
