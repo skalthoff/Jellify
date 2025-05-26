@@ -8,6 +8,7 @@ import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { Api } from '@jellyfin/sdk'
 import { isUndefined } from 'lodash'
 import { JellifyLibrary } from '../../types/JellifyLibrary'
+import { fetchItem } from './item'
 
 /**
  * Fetches the 100 most frequently played items from the user's library
@@ -66,26 +67,41 @@ export function fetchFrequentlyPlayedArtists(
 		if (isUndefined(api)) return reject('Client instance not set')
 		if (isUndefined(library)) return reject('Library instance not set')
 
-		getItemsApi(api!)
-			.getItems({
-				includeItemTypes: [BaseItemKind.MusicArtist],
-				parentId: library!.musicLibraryId,
-				recursive: true,
-				limit: 100,
-				startIndex: page * 100,
-				sortBy: [ItemSortBy.PlayCount],
-				sortOrder: [SortOrder.Descending],
+		fetchFrequentlyPlayed(api, library, 0)
+			.then((frequentTracks) => {
+				return frequentTracks
+					.filter((track) => !isUndefined(track.AlbumArtists))
+					.map((track) => {
+						return {
+							artistId: track.AlbumArtists![0].Id!,
+							playCount: track.UserData?.PlayCount ?? 0,
+						}
+					})
 			})
-			.then(({ data }) => {
-				if (data.Items) return data.Items
-				else return []
+			.then((albumArtistsWithPlayCounts) => {
+				return albumArtistsWithPlayCounts.reduce(
+					(acc, { artistId, playCount }) => {
+						const existing = acc.find((a) => a.artistId === artistId)
+						if (existing) {
+							existing.playCount += playCount
+						} else {
+							acc.push({ artistId, playCount })
+						}
+						return acc
+					},
+					[] as { artistId: string; playCount: number }[],
+				)
+			})
+			.then((artistsWithPlayCounts) => {
+				console.debug('Fetching artists', artistsWithPlayCounts)
+				const artists = artistsWithPlayCounts.map((artist) => {
+					return fetchItem(api, artist.artistId)
+				})
+
+				return Promise.all(artists)
 			})
 			.then((artists) => {
-				resolve(
-					artists.filter((item, index, artists) => {
-						return index === artists.findIndex((artist) => artist.Id === item.Id)
-					}),
-				)
+				return resolve(artists.filter((artist) => !isUndefined(artist)))
 			})
 			.catch((error) => {
 				reject(error)

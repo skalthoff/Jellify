@@ -86,4 +86,7 @@ export enum QueryKeys {
 	AllAlbums = 'AllAlbums',
 	StorageInUse = 'StorageInUse',
 	Patrons = 'Patrons',
+	AllArtistsAlphabetical = 'AllArtistsAlphabetical',
+	AllAlbumsAlphabetical = 'AllAlbumsAlphabetical',
+	RecentlyAddedAlbums = 'RecentlyAddedAlbums',
 }
