@@ -9,27 +9,32 @@ import {
 import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { isUndefined } from 'lodash'
 import QueryConfig from './query.config'
+import { JellifyUser } from '../../types/JellifyUser'
 
 export function fetchTracks(
 	api: Api | undefined,
+	user: JellifyUser | undefined,
 	library: JellifyLibrary | undefined,
 	pageParam: number,
-	isFavorite: boolean = false,
+	isFavorite: boolean | undefined,
 	sortBy: ItemSortBy = ItemSortBy.SortName,
 	sortOrder: SortOrder = SortOrder.Ascending,
 ) {
+	console.debug('Fetching tracks', isFavorite)
 	return new Promise<BaseItemDto[]>((resolve, reject) => {
 		if (isUndefined(api)) return reject('Client instance not set')
 		if (isUndefined(library)) return reject('Library instance not set')
+		if (isUndefined(user)) return reject('User instance not set')
 
 		getItemsApi(api)
 			.getItems({
 				includeItemTypes: [BaseItemKind.Audio],
 				parentId: library.musicLibraryId,
+				userId: user.id,
 				recursive: true,
 				isFavorite: isFavorite,
-				limit: QueryConfig.limits.library * 2,
-				startIndex: pageParam * QueryConfig.limits.library * 2,
+				limit: QueryConfig.limits.library,
+				startIndex: pageParam * QueryConfig.limits.library,
 				sortBy: [sortBy],
 				sortOrder: [sortOrder],
 			})

@@ -4,6 +4,7 @@ import { getTokens } from 'tamagui'
 
 interface DisplayContext {
 	numberOfColumns: number
+	horizontalItems: number
 
 	display: 'grid' | 'list'
 
@@ -14,13 +15,16 @@ const DisplayContextInitializer = () => {
 	const { width } = useSafeAreaFrame()
 
 	const [numberOfColumns, setNumberOfColumns] = useState<number>(
-		Math.floor(width / getTokens().size.$11.val),
+		Math.floor(width / getTokens().size.$12.val),
 	)
 
 	const [display, setDisplay] = useState<'grid' | 'list'>('grid')
 
+	const [horizontalItems, setHorizontalItems] = useState<number>(width > 800 ? 30 : 15)
+
 	return {
 		numberOfColumns,
+		horizontalItems,
 		display,
 		setDisplay,
 	}
@@ -28,6 +32,7 @@ const DisplayContextInitializer = () => {
 
 const DisplayContext = createContext<DisplayContext>({
 	numberOfColumns: 0,
+	horizontalItems: 0,
 	display: 'grid',
 	setDisplay: () => {},
 })

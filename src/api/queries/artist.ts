@@ -8,17 +8,27 @@ import {
 } from '@jellyfin/sdk/lib/generated-client/models'
 import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { fetchItems } from './item'
-
+import { JellifyUser } from '../../types/JellifyUser'
 export function fetchArtists(
 	api: Api | undefined,
+	user: JellifyUser | undefined,
 	library: JellifyLibrary | undefined,
-	page: number,
-	isFavorite: boolean,
+	page: string | number,
+	isFavorite: boolean | undefined,
 	sortBy: ItemSortBy[] = [ItemSortBy.SortName],
 	sortOrder: SortOrder[] = [SortOrder.Ascending],
-): Promise<BaseItemDto[]> {
+): Promise<{ title: string | number; data: BaseItemDto[] }> {
 	console.debug('Fetching artists', page)
-	return fetchItems(api, library, [BaseItemKind.MusicArtist], page, sortBy, sortOrder, isFavorite)
+	return fetchItems(
+		api,
+		user,
+		library,
+		[BaseItemKind.MusicArtist],
+		page,
+		sortBy,
+		sortOrder,
+		isFavorite,
+	)
 }
 
 /**

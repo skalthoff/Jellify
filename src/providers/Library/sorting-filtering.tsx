@@ -6,8 +6,8 @@ import { createContext } from 'react'
 interface LibrarySortAndFilterContext {
 	sortDescending: boolean
 	setSortDescending: (sortDescending: boolean) => void
-	isFavorites: boolean
-	setIsFavorites: (isFavorites: boolean) => void
+	isFavorites: boolean | undefined
+	setIsFavorites: (isFavorites: boolean | undefined) => void
 	isDownloaded: boolean
 	setIsDownloaded: (isDownloaded: boolean) => void
 }
@@ -18,13 +18,15 @@ const LibrarySortAndFilterContextInitializer = () => {
 	const isDownloadedInit = storage.getBoolean(MMKVStorageKeys.LibraryIsDownloaded)
 
 	const [sortDescending, setSortDescending] = useState(sortDescendingInit ?? false)
-	const [isFavorites, setIsFavorites] = useState(isFavoritesInit ?? false)
+	const [isFavorites, setIsFavorites] = useState<boolean | undefined>(isFavoritesInit)
 	const [isDownloaded, setIsDownloaded] = useState(isDownloadedInit ?? false)
 
 	useEffect(() => {
 		storage.set(MMKVStorageKeys.LibrarySortDescending, sortDescending)
-		storage.set(MMKVStorageKeys.LibraryIsFavorites, isFavorites)
 		storage.set(MMKVStorageKeys.LibraryIsDownloaded, isDownloaded)
+
+		if (isFavorites !== undefined) storage.set(MMKVStorageKeys.LibraryIsFavorites, isFavorites)
+		else storage.delete(MMKVStorageKeys.LibraryIsFavorites)
 	}, [sortDescending, isFavorites, isDownloaded])
 
 	return {

@@ -10,7 +10,7 @@ import { useJellifyContext } from '..'
 interface HomeContext {
 	refreshing: boolean
 	onRefresh: () => void
-	recentArtists: InfiniteData<BaseItemDto[], unknown> | undefined
+	recentArtists: BaseItemDto[] | undefined
 	recentTracks: InfiniteData<BaseItemDto[], unknown> | undefined
 
 	fetchNextRecentTracks: () => void
@@ -25,7 +25,7 @@ interface HomeContext {
 	fetchNextFrequentlyPlayed: () => void
 	hasNextFrequentlyPlayed: boolean
 
-	frequentArtists: InfiniteData<BaseItemDto[], unknown> | undefined
+	frequentArtists: BaseItemDto[] | undefined
 	frequentlyPlayed: InfiniteData<BaseItemDto[], unknown> | undefined
 
 	isFetchingRecentTracks: boolean
@@ -65,12 +65,13 @@ const HomeContextInitializer = () => {
 	} = useInfiniteQuery({
 		queryKey: [QueryKeys.RecentlyPlayedArtists],
 		queryFn: ({ pageParam }) => fetchRecentlyPlayedArtists(pageParam),
+		select: (data) => data.pages.flatMap((page) => page),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
 			console.debug('Getting next page for recent artists')
 			return lastPage.length > 0 ? lastPageParam + 1 : undefined
 		},
-		enabled: !isErrorRecentTracks && recentTracks && recentTracks.pages.length > 0,
+		enabled: !!recentTracks && recentTracks.pages.length > 0,
 	})
 
 	const {
@@ -100,6 +101,7 @@ const HomeContextInitializer = () => {
 	} = useInfiniteQuery({
 		queryKey: [QueryKeys.FrequentArtists],
 		queryFn: ({ pageParam }) => fetchFrequentlyPlayedArtists(api, library, pageParam),
+		select: (data) => data.pages.flatMap((page) => page),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
 			console.debug('Getting next page for frequent artists')
@@ -126,12 +128,9 @@ const HomeContextInitializer = () => {
 			],
 		})
 
-		await Promise.all([
-			refetchRecentTracks(),
-			refetchRecentArtists(),
-			refetchFrequentArtists(),
-			refetchFrequentlyPlayed(),
-		])
+		await Promise.all([refetchRecentTracks(), refetchFrequentlyPlayed()])
+
+		await Promise.all([refetchRecentArtists(), refetchFrequentArtists()])
 
 		setRefreshing(false)
 	}

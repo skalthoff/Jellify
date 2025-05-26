@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { View, XStack } from 'tamagui'
 import { useHomeContext } from '../../../providers/Home'
-import { H2, H4 } from '../../Global/helpers/text'
+import { H4 } from '../../Global/helpers/text'
 import { ItemCard } from '../../Global/components/item-card'
 import { usePlayerContext } from '../../../providers/Player'
 import { StackParamList } from '../../../components/types'
@@ -11,6 +11,7 @@ import { QueuingType } from '../../../enums/queuing-type'
 import HorizontalCardList from '../../../components/Global/components/horizontal-list'
 import Icon from '../../Global/components/icon'
 import { useQueueContext } from '../../../providers/Player/queue'
+import { useDisplayContext } from '../../../providers/Display/display-provider'
 
 export default function RecentlyPlayed({
 	navigation,
@@ -18,10 +19,13 @@ export default function RecentlyPlayed({
 	navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 	const { nowPlaying, useStartPlayback } = usePlayerContext()
+
 	const { useLoadNewQueue } = useQueueContext()
+
 	const { recentTracks, fetchNextRecentTracks, hasNextRecentTracks, isFetchingRecentTracks } =
 		useHomeContext()
 
+	const { horizontalItems } = useDisplayContext()
 	return useMemo(() => {
 		return (
 			<View>
@@ -42,8 +46,8 @@ export default function RecentlyPlayed({
 
 				<HorizontalCardList
 					data={
-						(recentTracks?.pages.flatMap((page) => page).length ?? 0 > 10)
-							? recentTracks?.pages.flatMap((page) => page).slice(0, 10)
+						(recentTracks?.pages.flatMap((page) => page).length ?? 0 > horizontalItems)
+							? recentTracks?.pages.flatMap((page) => page).slice(0, horizontalItems)
 							: recentTracks?.pages.flatMap((page) => page)
 					}
 					renderItem={({ index, item: recentlyPlayedTrack }) => (

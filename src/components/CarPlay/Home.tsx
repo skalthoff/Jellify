@@ -7,6 +7,7 @@ import ArtistsTemplate from './Artists'
 import uuid from 'react-native-uuid'
 import { Api } from '@jellyfin/sdk'
 import { JellifyUser } from '../../types/JellifyUser'
+import { InfiniteData } from '@tanstack/react-query'
 
 const CarPlayHome = (api: Api, user: JellifyUser, sessionId: string) =>
 	new ListTemplate({
@@ -40,35 +41,41 @@ const CarPlayHome = (api: Api, user: JellifyUser, sessionId: string) =>
 			switch (index) {
 				case 0: {
 					// Recent Artists
-					const artists =
-						queryClient.getQueryData<BaseItemDto[]>([
-							QueryKeys.RecentlyPlayedArtists,
-						]) ?? []
-					CarPlay.pushTemplate(ArtistsTemplate(artists))
+					const artists = queryClient.getQueryData<InfiniteData<BaseItemDto[], unknown>>([
+						QueryKeys.RecentlyPlayedArtists,
+					]) ?? { pages: [], pageParams: [] }
+					CarPlay.pushTemplate(ArtistsTemplate(artists.pages.flat()))
 					break
 				}
 
 				case 1: {
 					// Recent Tracks
-					const items =
-						queryClient.getQueryData<BaseItemDto[]>([QueryKeys.RecentlyPlayed]) ?? []
-					CarPlay.pushTemplate(TracksTemplate(api, sessionId, items, 'Recently Played'))
+					const items = queryClient.getQueryData<InfiniteData<BaseItemDto[], unknown>>([
+						QueryKeys.RecentlyPlayed,
+					]) ?? { pages: [], pageParams: [] }
+					CarPlay.pushTemplate(
+						TracksTemplate(api, sessionId, items.pages.flat(), 'Recently Played'),
+					)
 					break
 				}
 
 				case 2: {
 					// Most Played Artists
-					const artists =
-						queryClient.getQueryData<BaseItemDto[]>([QueryKeys.FrequentArtists]) ?? []
-					CarPlay.pushTemplate(ArtistsTemplate(artists))
+					const artists = queryClient.getQueryData<InfiniteData<BaseItemDto[], unknown>>([
+						QueryKeys.FrequentArtists,
+					]) ?? { pages: [], pageParams: [] }
+					CarPlay.pushTemplate(ArtistsTemplate(artists.pages.flat()))
 					break
 				}
 
 				case 3: {
 					// On Repeat
-					const items =
-						queryClient.getQueryData<BaseItemDto[]>([QueryKeys.FrequentlyPlayed]) ?? []
-					CarPlay.pushTemplate(TracksTemplate(api, sessionId, items, 'On Repeat'))
+					const items = queryClient.getQueryData<InfiniteData<BaseItemDto[], unknown>>([
+						QueryKeys.FrequentlyPlayed,
+					]) ?? { pages: [], pageParams: [] }
+					CarPlay.pushTemplate(
+						TracksTemplate(api, sessionId, items.pages.flat(), 'On Repeat'),
+					)
 					break
 				}
 			}

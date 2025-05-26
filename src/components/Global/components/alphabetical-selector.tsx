@@ -1,0 +1,167 @@
+import React, { useMemo, useRef, useState } from 'react'
+import { LayoutChangeEvent, View as RNView } from 'react-native'
+import { getToken, View, YStack } from 'tamagui'
+import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import Animated, {
+	useSharedValue,
+	useAnimatedStyle,
+	runOnJS,
+	withTiming,
+} from 'react-native-reanimated'
+import { trigger } from 'react-native-haptic-feedback'
+import { Text } from '../helpers/text'
+import { useSafeAreaFrame, useSafeAreaInsets } from 'react-native-safe-area-context'
+
+const alphabet = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+/**
+ * A component that displays a list of hardcoded alphabet letters and a selected letter overlay
+ * When a letter is selected, the overlay will be shown and the callback function will be called
+ * with the selected letter
+ *
+ * The overlay will be hidden after 200ms
+ *
+ * @param onLetterSelect - Callback function to be called when a letter is selected
+ * @returns A component that displays a list of letters and a selected letter overlay
+ */
+export function AZScroller({ onLetterSelect }: { onLetterSelect: (letter: string) => void }) {
+	const { width, height } = useSafeAreaFrame()
+	const { top } = useSafeAreaInsets()
+
+	const overlayOpacity = useSharedValue(0)
+
+	const alphabetSelectorRef = useRef<RNView>(null)
+
+	const alphabetSelectorTopY = useRef(0)
+	const letterHeight = useRef(0)
+	const selectedLetter = useSharedValue('')
+
+	const [overlayLetter, setOverlayLetter] = useState('')
+
+	const showOverlay = () => {
+		overlayOpacity.value = withTiming(1)
+	}
+
+	const hideOverlay = () => {
+		overlayOpacity.value = withTiming(0)
+	}
+
+	const panGesture = useMemo(
+		() =>
+			Gesture.Pan()
+				.runOnJS(true)
+				.onBegin((e) => {
+					const relativeY = e.absoluteY - alphabetSelectorTopY.current
+					const index = Math.floor(relativeY / letterHeight.current)
+					if (alphabet[index]) {
+						const letter = alphabet[index]
+						selectedLetter.value = letter
+						setOverlayLetter(letter)
+						runOnJS(showOverlay)()
+					}
+				})
+				.onUpdate((e) => {
+					const relativeY = e.absoluteY - alphabetSelectorTopY.current
+					const index = Math.floor(relativeY / letterHeight.current)
+					if (alphabet[index]) {
+						const letter = alphabet[index]
+						selectedLetter.value = letter
+						setOverlayLetter(letter)
+						runOnJS(showOverlay)()
+					}
+				})
+				.onEnd(() => {
+					runOnJS(hideOverlay)()
+					if (selectedLetter.value) {
+						runOnJS(onLetterSelect)(selectedLetter.value.toLowerCase())
+					}
+				}),
+		[onLetterSelect],
+	)
+
+	const animatedOverlayStyle = useAnimatedStyle(() => ({
+		opacity: overlayOpacity.value,
+		transform: [{ scale: overlayOpacity.value }],
+	}))
+
+	const handleLetterLayout = (event: LayoutChangeEvent) => {
+		letterHeight.current = event.nativeEvent.layout.height
+	}
+
+	return (
+		<>
+			<GestureDetector gesture={panGesture}>
+				<YStack
+					minWidth={'$3'}
+					maxWidth={'$5'}
+					marginVertical={'auto'}
+					width={width / 6}
+					justifyContent='flex-start'
+					alignItems='center'
+					alignContent='center'
+					onLayout={() => {
+						requestAnimationFrame(() => {
+							alphabetSelectorRef.current?.measureInWindow((x, y, width, height) => {
+								alphabetSelectorTopY.current = y
+							})
+						})
+					}}
+					ref={alphabetSelectorRef}
+				>
+					{alphabet.map((letter, index) => {
+						const letterElement = (
+							<Text
+								key={letter}
+								fontSize='$6'
+								textAlign='center'
+								color='$borderColor'
+								height={'$1'}
+								userSelect='none'
+								onPress={() => {
+									setOverlayLetter(letter)
+									showOverlay()
+									setTimeout(() => {
+										onLetterSelect(letter.toLowerCase())
+										hideOverlay()
+									}, 200)
+								}}
+							>
+								{letter}
+							</Text>
+						)
+
+						return index === 0 ? (
+							<View height={'$1'} key={letter} onLayout={handleLetterLayout}>
+								{letterElement}
+							</View>
+						) : (
+							letterElement
+						)
+					})}
+				</YStack>
+			</GestureDetector>
+
+			<Animated.View
+				pointerEvents='none'
+				style={[
+					{
+						position: 'absolute',
+						top: height / 2,
+						left: width / 2,
+					},
+					animatedOverlayStyle,
+				]}
+			>
+				<Animated.Text
+					style={{
+						fontSize: getToken('$10'),
+						color: 'white',
+						textAlign: 'center',
+						fontFamily: 'Aileron-Bold',
+					}}
+				>
+					{overlayLetter}
+				</Animated.Text>
+			</Animated.View>
+		</>
+	)
+}

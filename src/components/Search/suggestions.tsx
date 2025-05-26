@@ -4,7 +4,7 @@ import { StackParamList } from '../types'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import Item from '../Global/components/item'
 import { H3, Text } from '../Global/helpers/text'
-import { YStack } from 'tamagui'
+import { Separator, YStack } from 'tamagui'
 import { ItemCard } from '../Global/components/item-card'
 import HorizontalCardList from '../Global/components/horizontal-list'
 
@@ -43,6 +43,7 @@ export default function Suggestions(props: SuggestionsProps): React.JSX.Element 
 					/>
 				</YStack>
 			}
+			ItemSeparatorComponent={() => <Separator />}
 			ListEmptyComponent={
 				<Text textAlign='center'>
 					Wake now, discover that you are the eyes of the world...
