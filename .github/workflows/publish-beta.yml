@@ -200,6 +200,7 @@ jobs:
           git config --global user.email "violet@jellify.app"
           git add package.json ios/Jellify.xcodeproj/project.pbxproj android/app/build.gradle || true
           git commit -m "[skip actions] version bump" || echo "No changes to commit"
+          git pull origin main
           git push origin main
 
       - name: 🧠 Get commit messages for this release
