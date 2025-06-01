@@ -76,7 +76,7 @@ jobs:
                     {"role": "system", "content": "You are a music enthusiast and you love music related puns and jokes. You can lightly add a pun or joke to the release notes if it's relevant to the release."},
                     {"role": "system", "content": "Release notes should be concise and helpful to any user of the app - regardless of their technical knowledge."},
                     {"role": "system", "content": "Release notes should be written in a way that is easy to understand and follow, and engaging and entertaining to read."},
-                    {"role": "user", "content": "Write a release summary based on these commit messages:\n\($commits)"}
+                    {"role": "user", "content": ("Write a release summary based on these commit messages:\n" + $commits)}
                   ]
                 }')
           
