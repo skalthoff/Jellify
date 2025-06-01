@@ -37,20 +37,21 @@ jobs:
       - name: 🧠 Collect commit messages
         id: commits
         run: |
-            git fetch --quiet origin main
+          git fetch --tags --quiet
 
-            # Find common ancestor between HEAD and origin/main
-            BASE_SHA=$(git merge-base origin/main HEAD)
+          # Find the latest tag reachable from current HEAD
+          LAST_TAG=$(git describe --tags --abbrev=0)
 
-            # Get all non-merge commit messages since that base
-            COMMIT_MESSAGES=$(git log --no-merges --pretty=format:"- %s" "${BASE_SHA}..HEAD")
+          # Get all non-merge commit messages since that tag
+          COMMIT_MESSAGES=$(git log --no-merges --pretty=format:"- %s" "${LAST_TAG}..HEAD")
 
-            # Print them to the GitHub Actions output
-            {
-                echo "messages<<EOF"
-                echo "$COMMIT_MESSAGES"
-                echo "EOF"
-            } >> "$GITHUB_OUTPUT"
+          # Output for GitHub Actions
+          {
+            echo "messages<<EOF"
+            echo "$COMMIT_MESSAGES"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
 
           
       - name: ✨ Generate release notes with ChatGPT
