@@ -27,14 +27,11 @@ jobs:
   generate-release-notes:
     runs-on: ubuntu-latest
     outputs:
-      release_notes: ${{ steps.ai_release_notes.outputs.release_notes }}
+      release_notes: ${{ steps.set-output.outputs.release_notes }}
     steps:
-      - name: 🛒 Checkout
+      - name: 📦 Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.SIGNING_REPO_PAT }}
-          fetch-depth: 0
-
+        
       - name: 🧠 Collect commit messages
         id: commits
         run: |
@@ -54,42 +51,19 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
 
-          
-      - name: ✨ Generate release notes with ChatGPT
-        id: ai_release_notes
+      - name: 📜 Generate release notes using Node.js
+        run: |
+          yarn add openai
+          node scripts/generate-release-notes.js "${{ steps.commits.outputs.messages }}"
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: 🧾 Read release notes from file and export
+        id: set-output
         run: |
-          MESSAGES=$(cat <<-EOF
-          ${{ steps.commits.outputs.messages }}
-          EOF
-          )
-          
-          JSON=$(jq -n \
-          --arg commits "$MESSAGES" \
-          --arg prompt "Write a release summary based on these commit messages:\n" \
-          '{
-            model: "gpt-4o",
-            temperature: 0.7,
-            messages: [
-              {"role": "system", "content": "You are a React Native developer named Violet that is writing concise and friendly mobile app release notes from commit messages."},
-              {"role": "system", "content": "You are writing release notes for a mobile app called Jellify. The app is a music player that allows you to play music from your Jellyfin media server and stream music from the internet."},
-              {"role": "system", "content": "You are a music enthusiast and you love music related puns and jokes. You can lightly add a pun or joke to the release notes if it's relevant to the release."},
-              {"role": "system", "content": "Release notes should be concise and helpful to any user of the app - regardless of their technical knowledge."},
-              {"role": "system", "content": "Release notes should be written in a way that is easy to understand and follow, and engaging and entertaining to read."},
-              {"role": "user", "content": ($prompt + $commits)}
-            ]
-          }')
-          
-          RESPONSE=$(curl -s https://api.openai.com/v1/chat/completions \
-            -H "Authorization: Bearer $OPENAI_API_KEY" \
-            -H "Content-Type: application/json" \
-            -d "$JSON")
-      
-          RELEASE_BODY=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
-      
+          NOTES=$(cat release_notes.txt)
           echo "release_notes<<EOF" >> $GITHUB_OUTPUT
-          echo "$RELEASE_BODY" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
   publish-android:
