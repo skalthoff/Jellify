@@ -31,7 +31,10 @@ jobs:
     steps:
       - name: 📦 Checkout
         uses: actions/checkout@v4
-        
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SIGNING_REPO_PAT }}  
+  
       - name: 🧠 Collect commit messages
         id: commits
         run: |
@@ -54,7 +57,7 @@ jobs:
       - name: 📜 Generate release notes using Node.js
         run: |
           yarn add openai
-          node scripts/generate-release-notes.js "${{ steps.commits.outputs.messages }}"
+          node scripts/generateReleaseNotes.js "${{ steps.commits.outputs.messages }}"
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
