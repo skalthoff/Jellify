@@ -94,7 +94,7 @@ jobs:
       - name: 🍎 Run yarn init-android
         run: yarn install --network-concurrency 1
 
-      - name: + Version Up
+      - name: ➕ Version Up
         if: ${{ github.event.inputs['version-bump'] != 'No Bump' }}
         run: yarn react-native bump-version --type ${{ github.event.inputs['version-bump'] }} 
       
@@ -156,7 +156,7 @@ jobs:
       - name: 🍎 Run yarn init-ios:new-arch
         run: yarn init-ios:new-arch
       
-      - name: + Version Up
+      - name: ➕ Version Up
         if: ${{ github.event.inputs['version-bump'] != 'No Bump' }}
         run: yarn react-native bump-version --type ${{ github.event.inputs['version-bump'] }}  
 
@@ -258,6 +258,10 @@ jobs:
         with:
           name: ios-artifacts
           path: artifacts/
+
+      - name: ➕ Version Up
+        if: ${{ github.event.inputs['version-bump'] != 'No Bump' }}
+        run: yarn react-native bump-version --type ${{ github.event.inputs['version-bump'] }}
       
       - name: 🔢 Set artifact version numbers
         run: |

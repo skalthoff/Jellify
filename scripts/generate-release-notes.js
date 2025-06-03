@@ -43,6 +43,10 @@ async function main() {
 					'Release notes should be written in a way that is easy to understand and follow, and engaging and entertaining to read.',
 			},
 			{
+				role: 'system',
+				content: 'Do not include emojis in the release notes.',
+			},
+			{
 				role: 'user',
 				content: `Write a release summary based on these commit messages:\n${commitMessages}`,
 			},
