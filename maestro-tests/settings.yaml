@@ -54,16 +54,6 @@ appId: com.jellify
 - tapOn:
     text: "Cancel"
 
-# Test sign out button (but cancel it)
-- assertVisible:
-    text: "Sign Out"
-- tapOn:
-    text: "Sign Out"
-- assertVisible:
-    text: "Sign out of Cosmonautical?"
-- tapOn:
-    text: "Cancel"
-
 # Test About (Info) Tab
 - tapOn:
     text: "About"
@@ -73,3 +63,27 @@ appId: com.jellify
     text: "View Source"
 - assertVisible:
     text: "Join Discord"
+
+# Test sign out button (but cancel it)
+- tapOn:
+    text: "User"
+- assertVisible:
+    text: "Sign Out"
+- tapOn:
+    text: "Sign Out"
+- assertVisible:
+    text: "Sign out of Cosmonautical?"
+- tapOn:
+    text: "Cancel"
+
+# Sign out this time
+- tapOn:
+    text: "Sign Out"
+- assertVisible:
+    id: "sign-out-button"
+- tapOn:
+    id: "sign-out-button"
+
+# Verify we're on the login page
+- assertVisible:
+    id: "server_address_input"
