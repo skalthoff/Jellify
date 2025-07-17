@@ -37,7 +37,6 @@ export default function Root(): React.JSX.Element {
 				options={{
 					headerShown: false,
 					presentation: 'modal',
-					sheetAllowedDetents: Platform.OS === 'ios' ? 'fitToContents' : [1.0],
 				}}
 			/>
 			<RootStack.Screen
