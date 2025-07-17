@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { getToken, Separator, XStack, YStack } from 'tamagui'
+import React, { useEffect, useRef } from 'react'
+import { getToken, getTokenValue, Separator, XStack, YStack } from 'tamagui'
 import { Text } from '../Global/helpers/text'
-import { ActivityIndicator, FlatList, RefreshControl } from 'react-native'
+import { RefreshControl } from 'react-native'
 import { ArtistsProps } from '../types'
 import ItemRow from '../Global/components/item-row'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
-import { alphabet, useLibrarySortAndFilterContext } from '../../providers/Library'
+import { useLibrarySortAndFilterContext } from '../../providers/Library'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models/base-item-dto'
 import { FlashList } from '@shopify/flash-list'
 import { useLibraryContext } from '../../providers/Library'
@@ -21,14 +21,13 @@ export default function Artists({
 	isPending,
 	isFetchingNextPage,
 	showAlphabeticalSelector,
+	isFetchPreviousPageError,
 }: ArtistsProps): React.JSX.Element {
 	const { width, height } = useSafeAreaFrame()
 
 	const { artistPageParams } = useLibraryContext()
 
 	const { isFavorites } = useLibrarySortAndFilterContext()
-
-	const memoizedAlphabet = useMemo(() => alphabet, [])
 
 	const sectionListRef = useRef<FlashList<string | number | BaseItemDto>>(null)
 
@@ -49,7 +48,8 @@ export default function Artists({
 		} while (
 			(artistsRef.current?.indexOf(letter) === -1 ||
 				!artistPageParams.current.includes(letter)) &&
-			hasNextPage
+			hasNextPage &&
+			!isFetchPreviousPageError
 		)
 	}
 
@@ -93,7 +93,11 @@ export default function Artists({
 				estimatedItemSize={itemHeight}
 				data={artists}
 				refreshControl={
-					<RefreshControl refreshing={isPending || isAlphabetSelectorPending} />
+					<RefreshControl
+						colors={['$primary']}
+						refreshing={isPending || isAlphabetSelectorPending}
+						progressViewOffset={getTokenValue('$10')}
+					/>
 				}
 				renderItem={({ index, item: artist }) =>
 					typeof artist === 'string' ? (

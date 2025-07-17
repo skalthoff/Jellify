@@ -2,16 +2,13 @@ import { QueryKeys } from '../../enums/query-keys'
 import { BaseItemDto, ItemSortBy, SortOrder } from '@jellyfin/sdk/lib/generated-client/models'
 import {
 	FetchNextPageOptions,
-	FetchPreviousPageOptions,
 	InfiniteData,
 	InfiniteQueryObserverResult,
-	QueryObserverResult,
 	useInfiniteQuery,
 } from '@tanstack/react-query'
 import { useJellifyContext } from '..'
 import { fetchArtists } from '../../api/queries/artist'
-import { createContext, RefObject, useContext, useRef, useState } from 'react'
-import { useDisplayContext } from '../Display/display-provider'
+import { createContext, RefObject, useContext, useRef } from 'react'
 import QueryConfig from '../../api/queries/query.config'
 import { fetchTracks } from '../../api/queries/tracks'
 import { fetchAlbums } from '../../api/queries/album'
@@ -54,12 +51,11 @@ interface LibraryContext {
 	isFetchingNextArtistsPage: boolean
 	isFetchingNextTracksPage: boolean
 	isFetchingNextAlbumsPage: boolean
+	isFetchPreviousArtistsPageError: boolean
 }
 
 const LibraryContextInitializer = () => {
 	const { api, user, library } = useJellifyContext()
-
-	const { numberOfColumns } = useDisplayContext()
 
 	const { sortDescending, isFavorites } = useLibrarySortAndFilterContext()
 
@@ -71,6 +67,7 @@ const LibraryContextInitializer = () => {
 		data: artists,
 		isPending: isPendingArtists,
 		refetch: refetchArtists,
+		isFetchPreviousPageError: isFetchPreviousArtistsPageError,
 		fetchNextPage: fetchNextArtistsPage,
 		hasNextPage: hasNextArtistsPage,
 		isFetchingNextPage: isFetchingNextArtistsPage,
@@ -210,6 +207,7 @@ const LibraryContextInitializer = () => {
 		isFetchingNextArtistsPage,
 		isFetchingNextTracksPage,
 		isFetchingNextAlbumsPage,
+		isFetchPreviousArtistsPageError,
 	}
 }
 
@@ -318,6 +316,7 @@ const LibraryContext = createContext<LibraryContext>({
 	isFetchingNextArtistsPage: false,
 	isFetchingNextTracksPage: false,
 	isFetchingNextAlbumsPage: false,
+	isFetchPreviousArtistsPageError: false,
 })
 
 export const LibraryProvider = ({ children }: { children: React.ReactNode }) => {

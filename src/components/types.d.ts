@@ -164,6 +164,7 @@ export type ArtistsProps = {
 	isPending: boolean
 	isFetchingNextPage: boolean
 	showAlphabeticalSelector: boolean
+	isFetchPreviousPageError: boolean
 }
 export type AlbumsProps = {
 	albums: (string | number | BaseItemDto)[] | undefined

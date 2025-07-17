@@ -32,7 +32,6 @@ export function fetchArtists(
 				sortBy: sortBy,
 				sortOrder: sortOrder,
 				startIndex: typeof page === 'number' ? page * QueryConfig.limits.library : 0,
-				limit: QueryConfig.limits.library,
 				isFavorite: isFavorite,
 				nameStartsWith: typeof page === 'string' && page !== alphabet[0] ? page : undefined,
 				nameLessThan: typeof page === 'string' && page === alphabet[0] ? 'A' : undefined,
