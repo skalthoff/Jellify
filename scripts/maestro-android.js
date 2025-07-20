@@ -41,10 +41,14 @@ async function stopRecording(pid) {
 	})
 	execSync(`adb shell monkey -p com.jellify 1`, { stdio: 'inherit' })
 
-	const recording = spawn('adb', ['shell', 'screenrecord', '/sdcard/screen.mp4'], {
-		stdio: 'ignore',
-		detached: true,
-	})
+	const recording = spawn(
+		'adb',
+		['shell', 'screenrecord', '--time-limit=1800', '/sdcard/screen.mp4'],
+		{
+			stdio: 'ignore',
+			detached: true,
+		},
+	)
 	const pid = recording.pid
 
 	try {

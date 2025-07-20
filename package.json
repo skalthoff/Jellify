@@ -30,6 +30,7 @@
     "createBundle:ios": "mkdir -p ios/App-Bundles && react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/App-Bundles/main.jsbundle --assets-dest ios/App-Bundles",
     "sendOTA:android": "bash scripts/ota-android.sh",
     "sendOTA:iOS": "bash scripts/ota-iOS.sh",
+    "android-build": "cd android && ./gradlew generateCodegenArtifactsFromSchema && ./gradlew assembleRelease",
     "postinstall": "patch-package"
   },
   "dependencies": {
@@ -134,5 +135,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "packageManager": "yarn@1.22.22"
 }
