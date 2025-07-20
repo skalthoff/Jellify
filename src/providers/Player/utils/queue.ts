@@ -14,9 +14,11 @@ export function buildNewQueue(
 
 	let newQueue: JellifyTrack[] = []
 
-	if (_.isEmpty(existingQueue)) newQueue = tracksToInsert
-	else {
-		newQueue = _.cloneDeep(existingQueue).splice(insertIndex, 0, ...tracksToInsert)
+	if (_.isEmpty(existingQueue)) {
+		newQueue = tracksToInsert
+	} else {
+		newQueue = _.cloneDeep(existingQueue)
+		newQueue.splice(insertIndex, 0, ...tracksToInsert)
 	}
 
 	console.debug(`Built new queue of ${newQueue.length} items`)
