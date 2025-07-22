@@ -173,10 +173,13 @@ const QueueContextInitailizer = () => {
 
 	//#endregion Context
 
-	useTrackPlayerEvents([Event.PlaybackActiveTrackChanged], async ({ index, track }) => {
-		console.debug('Active track changed')
+	useTrackPlayerEvents([Event.PlaybackActiveTrackChanged], async ({ track }) => {
+		if (skipping) return
 
 		let newIndex = -1
+		const activeTrack = track as JellifyTrack
+
+		console.debug(`Active track changed to ${JSON.stringify(activeTrack)}`)
 
 		if (!isUndefined(track)) {
 			/**
@@ -185,11 +188,9 @@ const QueueContextInitailizer = () => {
 			 * We are using the track object from the event, because the index is not always accurate
 			 * when referencing our Jellify play queue
 			 */
-			const itemIndex = playQueue.findIndex(
-				(t) => t.item.Id === (track as JellifyTrack).item.Id,
-			)
+			const itemIndex = playQueue.findIndex((t) => t.item.Id === activeTrack.item.Id)
 
-			if (!isUndefined(itemIndex) && itemIndex !== -1) {
+			if (itemIndex !== -1) {
 				newIndex = itemIndex
 				console.debug(`Active track changed to index ${itemIndex}`)
 
@@ -202,22 +203,17 @@ const QueueContextInitailizer = () => {
 				// } catch (error) {
 				// 	console.debug('Failed to ensure upcoming tracks on track change:', error)
 				// }
-			} else if (!isUndefined(index) && index !== -1) {
-				newIndex = index
-				console.debug(`Active track changed to index ${index}`)
 			} else {
 				console.warn('No index found for active track')
 			}
-		} else if (!isUndefined(index) && index !== -1) {
-			newIndex = index
-			console.debug(`Active track changed to index ${index}`)
 		} else {
 			console.warn('No active track found')
 		}
 
 		if (newIndex !== -1) {
+			console.debug(`Setting current index to ${newIndex}`)
 			setCurrentIndex(newIndex)
-		}
+		} else console.debug('No new index found')
 	})
 
 	//#region Functions
@@ -351,6 +347,8 @@ const QueueContextInitailizer = () => {
 		setPlayQueue(queue)
 		await TrackPlayer.setQueue(queue)
 		await TrackPlayer.skip(finalStartIndex)
+
+		setCurrentIndex(finalStartIndex)
 
 		setTimeout(() => setSkipping(false), 100)
 
