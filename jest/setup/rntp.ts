@@ -35,8 +35,8 @@ jest.mock('react-native-track-player', () => {
 		// player getters
 		getQueue: jest.fn(),
 		getTrack: jest.fn(),
-		getActiveTrackIndex: jest.fn(),
-		getActiveTrack: jest.fn(),
+		getActiveTrackIndex: jest.fn().mockResolvedValue(0),
+		getActiveTrack: jest.fn().mockResolvedValue({ id: '1', index: 0, item: { Id: '1' } }),
 		getCurrentTrack: jest.fn(),
 		getVolume: jest.fn(),
 		getDuration: jest.fn(),
@@ -103,10 +103,16 @@ jest.mock('react-native-track-player', () => {
 			Track: 1,
 			Queue: 2,
 		},
+		TrackType: {
+			Default: 'default',
+			HLS: 'hls',
+			SmoothStreaming: 'smoothStreaming',
+			Dash: 'dash',
+		},
 	}
 })
 
 // Mock the gapless helper to avoid dynamic import issues in tests
-jest.mock('../src/player/helpers/gapless', () => ({
+jest.mock('../../src/player/helpers/gapless', () => ({
 	ensureUpcomingTracksInQueue: jest.fn().mockResolvedValue(undefined),
 }))
