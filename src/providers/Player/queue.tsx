@@ -175,14 +175,14 @@ const QueueContextInitailizer = () => {
 
 	useTrackPlayerEvents(
 		[Event.PlaybackActiveTrackChanged],
-		async ({ index, track }: { index?: number; track?: Track }) => {
+		async ({ index, track }: { index?: number | undefined; track?: Track | undefined }) => {
 			console.debug(`Active Track Changed to: ${index}. Skipping: ${skipping}`)
 			if (skipping) return
 
 			let newIndex = -1
 
 			if (!isUndefined(track)) {
-				const itemIndex = playQueue.findIndex((t) => t.url === track.url)
+				const itemIndex = playQueue.findIndex((t) => t.item.Id === track.item.Id)
 
 				if (itemIndex !== -1) {
 					newIndex = itemIndex
@@ -193,17 +193,21 @@ const QueueContextInitailizer = () => {
 				} else {
 					console.warn('No index found for active track')
 				}
-			} else if (!isUndefined(index) && index !== -1) {
+			}
+
+			// If we didn't get an index from the track, use the index provided
+			if (newIndex === -1 && !isUndefined(index)) {
 				console.debug(`Track is undefined, setting index of active track to ${index}`)
 				newIndex = index
-			} else {
-				console.warn('No active track found')
-			}
+
+				// Ensure upcoming tracks are in correct order (important for shuffle)
+				await ensureUpcomingTracksInQueue(playQueue, index)
+			} else console.warn('No active track found')
 
 			if (newIndex !== -1) {
 				console.debug(`Setting index of active track to ${newIndex}`)
 				setCurrentIndex(newIndex)
-			} else console.debug('No new index found for active track')
+			} else console.warn('No new index found for active track')
 		},
 	)
 
@@ -336,6 +340,7 @@ const QueueContextInitailizer = () => {
 		setQueueRef(queuingRef)
 
 		setPlayQueue(queue)
+		await TrackPlayer.pause()
 		await TrackPlayer.setQueue(queue)
 		await TrackPlayer.skip(finalStartIndex)
 		setCurrentIndex(finalStartIndex)
@@ -345,7 +350,9 @@ const QueueContextInitailizer = () => {
 		)
 
 		// Set skipping to false after a short delay to prevent flickering
-		setTimeout(() => setSkipping(false), 100)
+		// IDK why this needs to be 1000ms, but there are a lot of events are emitted
+		// by RNTP at this time so we need to wait for it to settle
+		setTimeout(() => setSkipping(false), 1000)
 	}
 
 	/**
@@ -516,6 +523,10 @@ const QueueContextInitailizer = () => {
 		},
 		onError: () => {
 			trigger('notificationError')
+			Toast.show({
+				text1: 'Failed to add to queue',
+				type: 'error',
+			})
 		},
 	})
 
@@ -838,11 +849,8 @@ export const QueueProvider: ({ children }: { children: ReactNode }) => React.JSX
 		() => context,
 		[
 			context.currentIndex,
-			context.playQueue.length,
-			context.queueRef,
 			context.shuffled,
 			context.skipping,
-			context.unshuffledQueue.length,
 			// Functions are stable since they're defined inside the initializer
 			// Arrays are memoized by length to avoid reference changes
 		],
