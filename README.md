@@ -152,7 +152,7 @@ Install via [Altstore](https://altstore.io) or your favorite sideloading utility
 ### 🚗 CarPlay
 
 <p align="center">
-  <img src="screenshots/carplay_home.png" alt="Home (CarPlay)" width="400" height="250">
+  <img src="screenshots/carplay.gif" alt="CarPlay" width="400" height="250">
 </p>
 
 ---
