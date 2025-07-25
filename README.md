@@ -144,7 +144,6 @@ Install via [Altstore](https://altstore.io) or your favorite sideloading utility
 <p align="center">
   <img src="screenshots/player.png" alt="Player" width="275" height="600">
   <img src="screenshots/player_queue.png" alt="Queue" width="275" height="600">
-  <img src="screenshots/favorite_track.png" alt="Favorite Track" width="275" height="600">
 </p>
 
 ---
