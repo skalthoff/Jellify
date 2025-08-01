@@ -180,6 +180,7 @@ Install via [Altstore](https://altstore.io) or your favorite sideloading utility
 - Over-the-Air Updates
   - Powered by [react-native-ota-hot-update](https://github.com/vantuan88291/react-native-ota-hot-update), incremental app updates are automatically fetched and applied from our [App Bundles Repository](https://github.com/Jellify-Music/App-Bundles)
 - Shuffling
+- Switching Music Libraries
 
 ### 🛠 Roadmap (in order of priority)
 
@@ -245,7 +246,7 @@ This allows me to prioritize specific features, acquire additional hardware for 
 
 - The [Jellyfin Team](https://jellyfin.org/) for making this possible with their software, SDKs, and unequivocal helpfulness.
   - Extra thanks to [Niels](https://github.com/nielsvanvelzen) and [Bill](https://github.com/thornbill)
-- [James](https://github.com/jmshrv) and all other contributors of [Finamp](https://github.com/jmshrv/finamp). _Jellify_ draws inspiration and wisdom from it, and is another fantastic music app for Jellyfin.
+- [James](https://github.com/jmshrv), [Chaphasilor](https://github.com/Chaphasilor) and all other contributors of [Finamp](https://github.com/jmshrv/finamp). It's been surreal bolstering the selfhosted music ecosystem with you all!
   - James’ [API Blog Post](https://jmshrv.com/posts/jellyfin-api/) proved to be exceptionally valuable during development
 - The folks in the [Margelo Community Discord](https://discord.com/invite/6CSHz2qAvA) for their assistance
 - [Nicolas Charpentier](https://github.com/charpeni) for his [React Native URL Polyfill](https://github.com/charpeni/react-native-url-polyfill) module and for his assistance with getting Jest working
