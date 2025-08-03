@@ -25,7 +25,17 @@ import { trigger } from 'react-native-haptic-feedback'
 
 import { getPlaystateApi } from '@jellyfin/sdk/lib/utils/api'
 import { useNetworkContext } from '../Network'
-import { useQueueContext } from './queue'
+import {
+	usePlayQueueContext,
+	useCurrentIndexContext,
+	useQueueRefContext,
+	useShuffledContext,
+	useUnshuffledQueueContext,
+	useSetUnshuffledQueueContext,
+	useSetPlayQueueContext,
+	useSetShuffledContext,
+	useSetCurrentIndexContext,
+} from './queue'
 import { PlaystateApi } from '@jellyfin/sdk/lib/generated-client/api/playstate-api'
 import { networkStatusTypes } from '../../components/Network/internetConnectionWatcher'
 import { useJellifyContext } from '..'
@@ -34,13 +44,9 @@ import { useSettingsContext } from '../Settings'
 import {
 	getTracksToPreload,
 	shouldStartPrefetching,
-	optimizePlayerQueue,
 	ensureUpcomingTracksInQueue,
 } from '../../player/helpers/gapless'
-import {
-	PREFETCH_THRESHOLD_SECONDS,
-	QUEUE_PREPARATION_THRESHOLD_SECONDS,
-} from '../../player/gapless-config'
+import { PREFETCH_THRESHOLD_SECONDS } from '../../player/gapless-config'
 import Toast from 'react-native-toast-message'
 import { shuffleJellifyTracks } from './utils/shuffle'
 
@@ -58,19 +64,16 @@ interface PlayerContext {
 
 const PlayerContextInitializer = () => {
 	const { api, sessionId } = useJellifyContext()
-	const {
-		playQueue,
-		currentIndex,
-		queueRef,
-		skipping,
-		setShuffled,
-		setCurrentIndex,
-		unshuffledQueue,
-		setUnshuffledQueue,
-		shuffled,
-		setPlayQueue,
-	} = useQueueContext()
 
+	const playQueue = usePlayQueueContext()
+	const currentIndex = useCurrentIndexContext()
+	const queueRef = useQueueRefContext()
+	const unshuffledQueue = useUnshuffledQueueContext()
+	const setUnshuffledQueue = useSetUnshuffledQueueContext()
+	const setPlayQueue = useSetPlayQueueContext()
+	const shuffled = useShuffledContext()
+	const setShuffled = useSetShuffledContext()
+	const setCurrentIndex = useSetCurrentIndexContext()
 	const nowPlayingJson = storage.getString(MMKVStorageKeys.NowPlaying)
 	const repeatModeJson = storage.getString(MMKVStorageKeys.RepeatMode)
 
@@ -565,7 +568,7 @@ const PlayerContextInitializer = () => {
 	 * Set the now playing track to the track at the current index in the play queue
 	 */
 	useEffect(() => {
-		if (currentIndex > -1 && playQueue.length > currentIndex && !skipping) {
+		if (currentIndex > -1 && playQueue.length > currentIndex) {
 			console.debug(`Setting now playing to queue index ${currentIndex}`)
 			setNowPlaying(playQueue[currentIndex])
 		}
@@ -573,7 +576,7 @@ const PlayerContextInitializer = () => {
 		if (currentIndex === -1) {
 			setNowPlaying(undefined)
 		}
-	}, [currentIndex, playQueue, skipping])
+	}, [currentIndex, playQueue])
 
 	/**
 	 * Initialize the player. This is used to load the queue from the {@link QueueProvider}
