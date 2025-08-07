@@ -1,6 +1,7 @@
 import {
 	BaseItemDto,
 	BaseItemKind,
+	ItemFields,
 	ItemSortBy,
 	SortOrder,
 } from '@jellyfin/sdk/lib/generated-client/models'
@@ -27,6 +28,7 @@ export async function fetchItem(api: Api | undefined, itemId: string): Promise<B
 		getItemsApi(api)
 			.getItems({
 				ids: [itemId],
+				fields: [ItemFields.Tags],
 			})
 			.then((response) => {
 				if (response.data.Items && response.data.TotalRecordCount == 1)
@@ -59,6 +61,7 @@ export async function fetchItems(
 	sortOrder: SortOrder[] = [SortOrder.Ascending],
 	isFavorite: boolean | undefined,
 	parentId?: string | undefined,
+	ids?: string[] | undefined,
 ): Promise<{ title: string | number; data: BaseItemDto[] }> {
 	console.debug('Fetching items', page)
 	return new Promise((resolve, reject) => {
@@ -74,11 +77,13 @@ export async function fetchItems(
 				sortBy,
 				recursive: true,
 				sortOrder,
+				fields: [ItemFields.ChildCount, ItemFields.SortName],
 				startIndex: typeof page === 'number' ? page * QueryConfig.limits.library : 0,
 				limit: QueryConfig.limits.library,
 				nameStartsWith: typeof page === 'string' && page !== alphabet[0] ? page : undefined,
 				nameLessThan: typeof page === 'string' && page === alphabet[0] ? 'A' : undefined,
 				isFavorite,
+				ids,
 			})
 			.then(({ data }) => {
 				resolve({ title: page, data: data.Items ?? [] })

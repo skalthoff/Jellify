@@ -1,9 +1,9 @@
 import { usePlayerContext } from '../../../providers/Player'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { getToken, Theme, useTheme, XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
 import { RunTimeTicks } from '../helpers/time-codes'
-import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
+import { BaseItemDto, ImageType } from '@jellyfin/sdk/lib/generated-client/models'
 import Icon from './icon'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StackParamList } from '../../types'
@@ -17,6 +17,11 @@ import { useNetworkContext } from '../../../providers/Network'
 import { useLoadQueueContext, usePlayQueueContext } from '../../../providers/Player/queue'
 import { useJellifyContext } from '../../../providers'
 import DownloadedIcon from './downloaded-icon'
+import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from '../../../enums/query-keys'
+import { fetchMediaInfo } from '../../../api/queries/media'
+import { useSettingsContext } from '../../../providers/Settings'
+import { getQualityParams } from '../../../utils/mappings'
 
 export interface TrackProps {
 	track: BaseItemDto
@@ -51,11 +56,12 @@ export default function Track({
 	onRemove,
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
-	const { api } = useJellifyContext()
+	const { api, user } = useJellifyContext()
 	const { nowPlaying } = usePlayerContext()
 	const playQueue = usePlayQueueContext()
 	const useLoadNewQueue = useLoadQueueContext()
 	const { downloadedTracks, networkStatus } = useNetworkContext()
+	const { streamingQuality } = useSettingsContext()
 
 	const isPlaying = nowPlaying?.item.Id === track.Id
 
@@ -63,6 +69,15 @@ export default function Track({
 	const isDownloaded = offlineAudio?.item?.Id
 
 	const isOffline = networkStatus === networkStatusTypes.DISCONNECTED
+
+	const { data: mediaInfo } = useQuery({
+		queryKey: [QueryKeys.MediaSources, streamingQuality, track.Id],
+		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), track),
+	})
+
+	useEffect(() => {
+		console.log(`MediaInfo: ${JSON.stringify(mediaInfo)}`)
+	}, [mediaInfo])
 
 	return (
 		<Theme name={invertedColors ? 'inverted_purple' : undefined}>
@@ -109,9 +124,14 @@ export default function Track({
 						<FastImage
 							key={`${track.Id}-${track.AlbumId || track.Id}`}
 							source={{
-								uri: getImageApi(api!).getItemImageUrlById(
-									track.AlbumId! || track.Id!,
-								),
+								uri:
+									getImageApi(api!).getItemImageUrlById(
+										track.AlbumId! || track.Id!,
+										ImageType.Primary,
+										{
+											tag: track.ImageTags?.Primary,
+										},
+									) || '',
 							}}
 							style={{
 								width: getToken('$12'),
