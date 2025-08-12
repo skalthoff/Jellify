@@ -31,11 +31,12 @@ jest.mock('react-native-haptic-feedback', () => {
 	}
 })
 
-import refreshControl from './refresh-control'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const mockRefreshControl = require('./refresh-control').default
 
 jest.mock('react-native/Libraries/Components/RefreshControl/RefreshControl', () => ({
 	__esModule: true,
-	default: refreshControl,
+	default: mockRefreshControl,
 }))
 
 jest.mock('react-native-toast-message', () => {
