@@ -69,9 +69,8 @@ export default function FrequentlyPlayedTracks({
 						}}
 						onLongPress={() => {
 							trigger('impactMedium')
-							navigation.navigate('Details', {
+							navigation.navigate('Context', {
 								item: track,
-								isNested: false,
 							})
 						}}
 					/>

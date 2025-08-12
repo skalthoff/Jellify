@@ -18,7 +18,7 @@ export default function Controls(): React.JSX.Element {
 	const shuffled = useShuffledContext()
 
 	return (
-		<XStack alignItems='center' justifyContent='space-evenly' flex={3} marginHorizontal={'$2'}>
+		<XStack alignItems='center' justifyContent='space-evenly' flex={2} marginHorizontal={'$2'}>
 			<Icon
 				small
 				color={shuffled ? '$primary' : '$color'}

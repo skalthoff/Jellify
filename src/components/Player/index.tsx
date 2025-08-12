@@ -3,7 +3,17 @@ import { usePlayerContext } from '../../providers/Player'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { useCallback, useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { YStack, XStack, getToken, useTheme, ZStack, useWindowDimensions, View } from 'tamagui'
+import {
+	YStack,
+	XStack,
+	getToken,
+	useTheme,
+	ZStack,
+	useWindowDimensions,
+	View,
+	getTokenValue,
+	Text,
+} from 'tamagui'
 import Scrubber from './components/scrubber'
 import Controls from './components/controls'
 import Toast from 'react-native-toast-message'
@@ -38,12 +48,12 @@ export default function PlayerScreen({
 	const { bottom } = useSafeAreaInsets()
 
 	return (
-		<View flex={1}>
+		<View flex={1} width={width} height={height}>
 			{nowPlaying && (
-				<ZStack fullscreen>
+				<ZStack flex={1}>
 					<BlurredBackground width={width} height={height} />
 
-					<YStack flex={1} marginBottom={bottom}>
+					<YStack fullscreen marginBottom={bottom + getTokenValue('$12')}>
 						<PlayerHeader navigation={navigation} />
 
 						<XStack

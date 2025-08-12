@@ -49,6 +49,7 @@ import {
 import { PREFETCH_THRESHOLD_SECONDS } from '../../player/gapless-config'
 import Toast from 'react-native-toast-message'
 import { shuffleJellifyTracks } from './utils/shuffle'
+import calculateTrackVolume from './utils/normalization'
 
 interface PlayerContext {
 	nowPlaying: JellifyTrack | undefined
@@ -572,10 +573,10 @@ const PlayerContextInitializer = () => {
 			console.debug(`Setting now playing to queue index ${currentIndex}`)
 
 			// Set player volume to the normalization gain of the track if it exists
-			TrackPlayer.setVolume(1 - (playQueue[currentIndex].item.NormalizationGain ?? 0) / 100)
+			TrackPlayer.setVolume(calculateTrackVolume(playQueue[currentIndex]))
 			setNowPlaying(playQueue[currentIndex])
 
-			console.debug('Normalization gain', playQueue[currentIndex].item.NormalizationGain)
+			console.debug('Normalization gain', calculateTrackVolume(playQueue[currentIndex]))
 		}
 
 		if (currentIndex === -1) {

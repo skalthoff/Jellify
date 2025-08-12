@@ -132,6 +132,10 @@ export type StackParamList = {
 		item: BaseItemDto
 		mix: BaseItemDto[]
 	}
+
+	Context: {
+		item: BaseItemDto
+	}
 }
 
 export type LoginProps = NativeStackScreenProps<StackParamList, 'Login'>
@@ -220,4 +224,4 @@ export type LabsProps = NativeStackScreenProps<StackParamList, 'Labs'>
 
 export type InstantMixProps = NativeStackScreenProps<StackParamList, 'InstantMix'>
 
-export type useState<T> = [T, React.Dispatch<T>]
+export type ContextProps = NativeStackScreenProps<StackParamList, 'Context'>

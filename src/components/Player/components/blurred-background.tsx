@@ -59,7 +59,7 @@ export default function BlurredBackground({
 						style={{
 							width,
 							height,
-							flex: 3,
+							flex: 2,
 						}}
 					/>
 				</YStack>

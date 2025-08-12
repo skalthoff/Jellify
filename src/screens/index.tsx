@@ -5,6 +5,8 @@ import { getToken, useTheme } from 'tamagui'
 import { useJellifyContext } from '../providers'
 import Login from './Login'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import Context from './Context'
+import { Platform } from 'react-native'
 
 const RootStack = createNativeStackNavigator<StackParamList>()
 
@@ -35,7 +37,8 @@ export default function Root(): React.JSX.Element {
 				component={Player}
 				options={{
 					headerShown: false,
-					presentation: 'modal',
+					presentation: 'formSheet',
+					sheetAllowedDetents: [1.0],
 				}}
 			/>
 			<RootStack.Screen
@@ -43,6 +46,16 @@ export default function Root(): React.JSX.Element {
 				component={Login}
 				options={{
 					headerShown: false,
+				}}
+			/>
+			<RootStack.Screen
+				name='Context'
+				component={Context}
+				options={{
+					headerShown: false,
+					presentation: 'formSheet',
+					sheetAllowedDetents: [0.65],
+					sheetGrabberVisible: true,
 				}}
 			/>
 		</RootStack.Navigator>
