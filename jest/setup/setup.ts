@@ -31,9 +31,11 @@ jest.mock('react-native-haptic-feedback', () => {
 	}
 })
 
+import refreshControl from './refresh-control'
+
 jest.mock('react-native/Libraries/Components/RefreshControl/RefreshControl', () => ({
 	__esModule: true,
-	default: require('./refresh-control'),
+	default: refreshControl,
 }))
 
 jest.mock('react-native-toast-message', () => {
