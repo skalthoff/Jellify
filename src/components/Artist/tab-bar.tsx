@@ -3,7 +3,7 @@ import { getTokens, useTheme, XStack, YStack } from 'tamagui'
 import { H5 } from '../Global/helpers/text'
 import FavoriteButton from '../Global/components/favorite-button'
 import InstantMixButton from '../Global/components/instant-mix-button'
-import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated'
+import Animated, { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import FastImage from 'react-native-fast-image'
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import { ImageType } from '@jellyfin/sdk/lib/generated-client/models'
@@ -63,9 +63,9 @@ export default function ArtistTabBar(
 		'worklet'
 		const clampedScroll = Math.max(0, Math.min(scroll.value, bannerHeight))
 		return {
-			height: withSpring(bannerHeight - clampedScroll, {
-				stiffness: 100,
-				damping: 25,
+			height: withTiming(bannerHeight - clampedScroll, {
+				duration: 500,
+				easing: Easing.inOut(Easing.ease),
 			}),
 		}
 	})
