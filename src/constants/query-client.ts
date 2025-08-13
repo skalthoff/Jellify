@@ -21,9 +21,9 @@ export const queryClient = new QueryClient({
 			gcTime: Infinity,
 
 			/**
-			 * 2 hours as a default.
+			 * 24 hours as a default.
 			 */
-			staleTime: 1000 * 60 * 60 * 2, // 2 hours
+			staleTime: 1000 * 60 * 60 * 24, // 24 hours
 			retry(failureCount, error) {
 				if (failureCount > 2) return false
 

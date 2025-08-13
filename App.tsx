@@ -60,11 +60,8 @@ export default function App(): React.JSX.Element {
 			TrackPlayer.updateOptions({
 				capabilities: CAPABILITIES,
 				notificationCapabilities: CAPABILITIES,
-				compactCapabilities: CAPABILITIES,
 				// Reduced interval for smoother progress tracking and earlier prefetch detection
-				progressUpdateEventInterval: 5,
-				// Enable gapless playback
-				alwaysPauseOnInterruption: false,
+				progressUpdateEventInterval: 8,
 			}),
 		)
 		.finally(() => {

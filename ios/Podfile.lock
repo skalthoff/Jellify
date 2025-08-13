@@ -1999,6 +1999,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - SwiftAudioEx (= 1.1.0)
+    - Yoga
   - React-NativeModulesApple (0.81.0):
     - boost
     - DoubleConversion
@@ -2776,7 +2777,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNSentry (6.18.1):
+  - RNSentry (6.17.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -2803,7 +2804,7 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - Sentry/HybridSDK (= 8.53.2)
+    - Sentry/HybridSDK (= 8.53.1)
     - SocketRocket
     - Yoga
   - RNVectorIcons (10.2.0):
@@ -2926,7 +2927,7 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry/HybridSDK (8.53.2)
+  - Sentry/HybridSDK (8.53.1)
   - SocketRocket (0.7.1)
   - SSZipArchive (2.4.3)
   - SwiftAudioEx (1.1.0)
@@ -3291,7 +3292,7 @@ SPEC CHECKSUMS:
   react-native-ota-hot-update: 5c8fe703c7a789f6de651030e4740923c77fc610
   react-native-pager-view: 0b0b445d3cb9f8e9972842edf6ddf892b46bdc55
   react-native-safe-area-context: a72764e0eb5d6b79b7450e5d0ae919eb1a4567b4
-  react-native-track-player: 6dc2e2633265704b8ab6d8124b80239d4ed1f911
+  react-native-track-player: 89d8e641c83a89bea5dee43c381be743282553e9
   React-NativeModulesApple: b3766e1f87b08064ebc459b9e1538da2447ca874
   React-oscompat: 34f3d3c06cadcbc470bc4509c717fb9b919eaa8b
   React-perflogger: a1edb025fd5d44f61bf09307e248f7608d7b2dcf
@@ -3337,7 +3338,7 @@ SPEC CHECKSUMS:
   RNWorklets: e8335dff9d27004709f58316985769040cd1e8f2
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  Sentry: 59993bffde4a1ac297ba6d268dc4bbce068d7c1b
+  Sentry: 1e4e974d45f09d153af4b30b42acfb1c79e957d3
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SwiftAudioEx: f6aa653770f3a0d3851edaf8d834a30aee4a7646

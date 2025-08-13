@@ -36,10 +36,7 @@ export const Miniplayer = React.memo(function Miniplayer({
 	const nowPlaying = useNowPlayingContext()
 	const useSkip = useSkipContext()
 	const usePrevious = usePreviousContext()
-	// Get progress from the track player with the specified update interval
-	const progress = useProgress(UPDATE_INTERVAL)
 
-	const { width } = useWindowDimensions()
 	const translateX = useSharedValue(0)
 	const translateY = useSharedValue(0)
 
@@ -92,17 +89,7 @@ export const Miniplayer = React.memo(function Miniplayer({
 				<>
 					<GestureDetector gesture={gesture}>
 						<YStack>
-							<Progress
-								size={'$1'}
-								value={calculateProgressPercentage(progress)}
-								backgroundColor={'$borderColor'}
-								borderRadius={0}
-							>
-								<Progress.Indicator
-									borderColor={'$primary'}
-									backgroundColor={'$primary'}
-								/>
-							</Progress>
+							<MiniPlayerProgress />
 
 							<XStack
 								alignItems='flex-start'
@@ -148,46 +135,23 @@ export const Miniplayer = React.memo(function Miniplayer({
 								</YStack>
 
 								<YStack alignContent='flex-start' marginLeft={'$2'} flex={6}>
-									<XStack gap={'$1'} justifyContent='flex-start' height={'$1'}>
-										<YStack
-											justifyContent='center'
-											marginRight={'$2'}
-											paddingRight={'auto'}
-										>
-											<RunTimeSeconds alignment='left'>
-												{Math.max(0, Math.floor(progress?.position ?? 0))}
-											</RunTimeSeconds>
-										</YStack>
+									<MiniPlayerRuntime />
 
-										<Text color={'$neutral'} textAlign='center'>
-											/
-										</Text>
+									{
+										<View width={'100%'}>
+											<TextTicker {...TextTickerConfig}>
+												<Text bold width={'100%'}>
+													{nowPlaying?.title ?? 'Nothing Playing'}
+												</Text>
+											</TextTicker>
 
-										<YStack justifyContent='center' marginLeft={'$2'}>
-											<RunTimeSeconds color={'$neutral'} alignment='right'>
-												{Math.max(0, Math.floor(progress?.duration ?? 0))}
-											</RunTimeSeconds>
-										</YStack>
-									</XStack>
-
-									{useMemo(
-										() => (
-											<View width={'100%'}>
-												<TextTicker {...TextTickerConfig}>
-													<Text bold width={'100%'}>
-														{nowPlaying?.title ?? 'Nothing Playing'}
-													</Text>
-												</TextTicker>
-
-												<TextTicker {...TextTickerConfig}>
-													<Text height={'$0.5'} width={'100%'}>
-														{nowPlaying?.artist ?? ''}
-													</Text>
-												</TextTicker>
-											</View>
-										),
-										[nowPlaying],
-									)}
+											<TextTicker {...TextTickerConfig}>
+												<Text height={'$0.5'} width={'100%'}>
+													{nowPlaying?.artist ?? ''}
+												</Text>
+											</TextTicker>
+										</View>
+									}
 								</YStack>
 
 								<XStack
@@ -207,6 +171,45 @@ export const Miniplayer = React.memo(function Miniplayer({
 		</ZStack>
 	)
 })
+
+function MiniPlayerRuntime(): React.JSX.Element {
+	const progress = useProgress(UPDATE_INTERVAL)
+
+	return (
+		<XStack gap={'$1'} justifyContent='flex-start' height={'$1'}>
+			<YStack justifyContent='center' marginRight={'$2'} paddingRight={'auto'}>
+				<RunTimeSeconds alignment='left'>
+					{Math.max(0, Math.floor(progress?.position ?? 0))}
+				</RunTimeSeconds>
+			</YStack>
+
+			<Text color={'$neutral'} textAlign='center'>
+				/
+			</Text>
+
+			<YStack justifyContent='center' marginLeft={'$2'}>
+				<RunTimeSeconds color={'$neutral'} alignment='right'>
+					{Math.max(0, Math.floor(progress?.duration ?? 0))}
+				</RunTimeSeconds>
+			</YStack>
+		</XStack>
+	)
+}
+
+function MiniPlayerProgress(): React.JSX.Element {
+	const progress = useProgress(UPDATE_INTERVAL)
+
+	return (
+		<Progress
+			size={'$1'}
+			value={calculateProgressPercentage(progress)}
+			backgroundColor={'$borderColor'}
+			borderRadius={0}
+		>
+			<Progress.Indicator borderColor={'$primary'} backgroundColor={'$primary'} />
+		</Progress>
+	)
+}
 
 function calculateProgressPercentage(progress: TrackPlayerProgress | undefined): number {
 	return Math.round(

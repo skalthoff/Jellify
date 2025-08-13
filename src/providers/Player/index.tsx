@@ -460,7 +460,6 @@ const PlayerContextInitializer = () => {
 	useTrackPlayerEvents([Event.PlaybackProgressUpdated], (event) => {
 		switch (event.type) {
 			case Event.PlaybackProgressUpdated: {
-				console.debug('Playback progress updated')
 				usePlaybackProgressUpdated.mutate(event)
 
 				// Cache playing track at 20 seconds if it's not already downloaded
