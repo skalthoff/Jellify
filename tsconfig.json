@@ -6,6 +6,8 @@
 		"paths": {
 			"@/*": ["./*"]
 		},
-		"jsx": "react-native"
+		"jsx": "react-native",
+		"types": ["jest"],
+		"skipLibCheck": true
 	}
 }

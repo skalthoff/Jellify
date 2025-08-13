@@ -3524,6 +3524,13 @@
   dependencies:
     undici-types "~7.8.0"
 
+"@types/node@^24.2.1":
+  version "24.2.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.2.1.tgz#83e41543f0a518e006594bb394e2cd961de56727"
+  integrity sha512-DRh5K+ka5eJic8CjH7td8QpYEV6Zo10gfRkjHCO3weqZHWDtAaSTFtl4+VMqOJ4N5jcuhZ9/l+yy8rVgw7BQeQ==
+  dependencies:
+    undici-types "~7.10.0"
+
 "@types/react-native-vector-icons@^6.4.18":
   version "6.4.18"
   resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.18.tgz#18671c617b9d0958747bc959903470dde91a8c79"
@@ -8419,11 +8426,6 @@ react-native-haptic-feedback@^2.3.3:
   resolved "https://registry.yarnpkg.com/react-native-haptic-feedback/-/react-native-haptic-feedback-2.3.3.tgz#88b6876e91399a69bd1b551fe1681b2f3dc1214e"
   integrity sha512-svS4D5PxfNv8o68m9ahWfwje5NqukM3qLS48+WTdhbDkNUkOhP9rDfDSRHzlhk4zq+ISjyw95EhLeh8NkKX5vQ==
 
-react-native-is-edge-to-edge@1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.1.7.tgz#28947688f9fafd584e73a4f935ea9603bd9b1939"
-  integrity sha512-EH6i7E8epJGIcu7KpfXYXiV2JFIYITtq+rVS8uEb+92naMRBdxhTuS8Wn2Q7j9sqyO0B+Xbaaf9VdipIAmGW4w==
-
 react-native-is-edge-to-edge@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.2.1.tgz#64e10851abd9d176cbf2b40562f751622bde3358"
@@ -8452,30 +8454,20 @@ react-native-pager-view@^7.0.0:
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-7.0.0.tgz#09e72960776d2a95d7b0bc5c71aa2b808a7ca4a4"
   integrity sha512-RgpGiTqE7UoSvCMG//AkiMrReF3NxtCfeCiRSvqxhYlTwHq3jMFWqAyZsyEepvCHYCYnMSmRGTMxv9koziat7g==
 
-react-native-reanimated@^3.19.0:
-  version "3.19.0"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.19.0.tgz#3413dd8865eec549642a4a63cd4e5354a25043c7"
-  integrity sha512-FNfqLuPuVHsW9KcsZtnJqIPlMQvuySnSFJXgSt9fVDPqptbSUkiAF6MthUwd4Mxt05hCRcbV+T65CENgVS5iCg==
+react-native-reanimated@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-4.0.2.tgz#c986bff36ce90cd1df83506d6fb5d62db6f2d3b7"
+  integrity sha512-RVD/jeTWrkloRVJmTAEtgXtihEnfA7aO6SgoaTBy3jbU1zblE3Oztq0ktVO5q/rxl96l9w2+6LLcuZ6N8D7aKQ==
   dependencies:
-    "@babel/plugin-transform-arrow-functions" "^7.0.0-0"
-    "@babel/plugin-transform-class-properties" "^7.0.0-0"
-    "@babel/plugin-transform-classes" "^7.0.0-0"
-    "@babel/plugin-transform-nullish-coalescing-operator" "^7.0.0-0"
-    "@babel/plugin-transform-optional-chaining" "^7.0.0-0"
-    "@babel/plugin-transform-shorthand-properties" "^7.0.0-0"
-    "@babel/plugin-transform-template-literals" "^7.0.0-0"
-    "@babel/plugin-transform-unicode-regex" "^7.0.0-0"
-    "@babel/preset-typescript" "^7.16.7"
-    convert-source-map "^2.0.0"
-    invariant "^2.2.4"
-    react-native-is-edge-to-edge "1.1.7"
+    react-native-is-edge-to-edge "^1.2.1"
+    semver "7.7.2"
 
 react-native-safe-area-context@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-5.6.0.tgz#0ab284c291bb57d59330abf7dfe65156d6340e78"
   integrity sha512-tJas3YOdsuCg3kepCTGF3LWZp9onMbb9Agju2xfs2kRX8d/5TMUPmupBpjerk/B7Tv/zeJnk+qp5neA96Y0otQ==
 
-react-native-screens@4.13.1:
+react-native-screens@^4.13.1:
   version "4.13.1"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-4.13.1.tgz#bf19f09b76dee90b5f7bd8aab3c951a565dd111d"
   integrity sha512-EESsMAtyzYcL3gpAI2NKKiIo+Ew0fnX4P4b3Zy/+MTc6SJIo3foJbZwdIWd/SUBswOf7IYCvWBppg+D8tbwnsw==
@@ -8532,6 +8524,22 @@ react-native-vector-icons@^10.2.0:
   dependencies:
     prop-types "^15.7.2"
     yargs "^16.1.1"
+
+react-native-worklets@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-worklets/-/react-native-worklets-0.4.1.tgz#563d39160195101d9cf236b54b383d6950508263"
+  integrity sha512-QXAMZ8jz0sLEoNrc3ej050z6Sd+UJ/Gef4SACeMuoLRinwHIy4uel7XtMPJZMqKhFerkwXZ7Ips5vIjnNyPDBA==
+  dependencies:
+    "@babel/plugin-transform-arrow-functions" "^7.0.0-0"
+    "@babel/plugin-transform-class-properties" "^7.0.0-0"
+    "@babel/plugin-transform-classes" "^7.0.0-0"
+    "@babel/plugin-transform-nullish-coalescing-operator" "^7.0.0-0"
+    "@babel/plugin-transform-optional-chaining" "^7.0.0-0"
+    "@babel/plugin-transform-shorthand-properties" "^7.0.0-0"
+    "@babel/plugin-transform-template-literals" "^7.0.0-0"
+    "@babel/plugin-transform-unicode-regex" "^7.0.0-0"
+    "@babel/preset-typescript" "^7.16.7"
+    convert-source-map "^2.0.0"
 
 react-native@0.81.0:
   version "0.81.0"
@@ -8838,6 +8846,11 @@ scheduler@0.26.0, scheduler@^0.26.0:
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.26.0.tgz#4ce8a8c2a2095f13ea11bf9a445be50c555d6337"
   integrity sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==
 
+semver@7.7.2, semver@^7.1.3, semver@^7.3.7, semver@^7.5.2, semver@^7.5.3, semver@^7.5.4, semver@^7.6.0, semver@^7.7.2:
+  version "7.7.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.2.tgz#67d99fdcd35cec21e6f8b87a7fd515a33f982b58"
+  integrity sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==
+
 semver@^5.6.0:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.2.tgz#48d55db737c3287cd4835e17fa13feace1c41ef8"
@@ -8847,11 +8860,6 @@ semver@^6.3.0, semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
-
-semver@^7.1.3, semver@^7.3.7, semver@^7.5.2, semver@^7.5.3, semver@^7.5.4, semver@^7.6.0, semver@^7.7.2:
-  version "7.7.2"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.2.tgz#67d99fdcd35cec21e6f8b87a7fd515a33f982b58"
-  integrity sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==
 
 send@0.19.0:
   version "0.19.0"
@@ -9630,6 +9638,11 @@ underscore@*:
   version "1.13.7"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.7.tgz#970e33963af9a7dda228f17ebe8399e5fbe63a10"
   integrity sha512-GMXzWtsc57XAtguZgaQViUOzs0KTkk8ojr3/xAxXLITqf/3EMwxC0inyETfDFjH/Krbhuep0HNbbjI9i/q3F3g==
+
+undici-types@~7.10.0:
+  version "7.10.0"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.10.0.tgz#4ac2e058ce56b462b056e629cc6a02393d3ff350"
+  integrity sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag==
 
 undici-types@~7.8.0:
   version "7.8.0"
