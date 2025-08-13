@@ -15,7 +15,7 @@ import TrackPlayer, { Event, Track, useTrackPlayerEvents } from 'react-native-tr
 import { findPlayQueueIndexStart } from './utils'
 import { trigger } from 'react-native-haptic-feedback'
 import { usePerformanceMonitor } from '../../hooks/use-performance-monitor'
-import { createContext, useContext, useContextSelector } from 'use-context-selector'
+import { createContext, useContextSelector } from 'use-context-selector'
 import { filterTracksOnNetworkStatus } from './utils/queue'
 import { shuffleJellifyTracks } from './utils/shuffle'
 import { SKIP_TO_PREVIOUS_THRESHOLD } from '../../player/config'
@@ -860,8 +860,6 @@ export const QueueProvider: ({ children }: { children: ReactNode }) => React.JSX
 
 	return <QueueContext.Provider value={context}>{children}</QueueContext.Provider>
 }
-
-export const useQueueContext = () => useContext(QueueContext)
 
 export const useCurrentIndexContext = () =>
 	useContextSelector(QueueContext, (context) => context.currentIndex)

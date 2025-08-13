@@ -1,4 +1,3 @@
-import { usePlayerContext } from '../../../providers/Player'
 import React, { useEffect } from 'react'
 import { getToken, Theme, useTheme, XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
@@ -22,6 +21,7 @@ import { QueryKeys } from '../../../enums/query-keys'
 import { fetchMediaInfo } from '../../../api/queries/media'
 import { useSettingsContext } from '../../../providers/Settings'
 import { getQualityParams } from '../../../utils/mappings'
+import { useNowPlayingContext } from '../../../providers/Player'
 
 export interface TrackProps {
 	track: BaseItemDto
@@ -57,7 +57,7 @@ export default function Track({
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
 	const { api, user } = useJellifyContext()
-	const { nowPlaying } = usePlayerContext()
+	const nowPlaying = useNowPlayingContext()
 	const playQueue = usePlayQueueContext()
 	const useLoadNewQueue = useLoadQueueContext()
 	const { downloadedTracks, networkStatus } = useNetworkContext()

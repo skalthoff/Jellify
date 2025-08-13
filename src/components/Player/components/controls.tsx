@@ -2,7 +2,11 @@ import React from 'react'
 import { Spacer, XStack, getToken } from 'tamagui'
 import PlayPauseButton from './buttons'
 import Icon from '../../Global/components/icon'
-import { usePlayerContext } from '../../../providers/Player'
+import {
+	useRepeatModeContext,
+	useToggleRepeatModeContext,
+	useToggleShuffleContext,
+} from '../../../providers/Player'
 import {
 	usePreviousContext,
 	useShuffledContext,
@@ -13,7 +17,9 @@ import { RepeatMode } from 'react-native-track-player'
 export default function Controls(): React.JSX.Element {
 	const usePrevious = usePreviousContext()
 	const useSkip = useSkipContext()
-	const { useToggleShuffle, useToggleRepeatMode, repeatMode } = usePlayerContext()
+	const useToggleShuffle = useToggleShuffleContext()
+	const repeatMode = useRepeatModeContext()
+	const useToggleRepeatMode = useToggleRepeatModeContext()
 
 	const shuffled = useShuffledContext()
 

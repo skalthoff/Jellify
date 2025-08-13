@@ -9,7 +9,7 @@ import {
 	YStack,
 	ZStack,
 } from 'tamagui'
-import { usePlayerContext } from '../../providers/Player'
+import { useNowPlayingContext } from '../../providers/Player'
 import { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs'
 import { NavigationHelpers, ParamListBase } from '@react-navigation/native'
 import { Text } from '../Global/helpers/text'
@@ -33,7 +33,7 @@ export const Miniplayer = React.memo(function Miniplayer({
 	navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>
 }): React.JSX.Element {
 	const { api } = useJellifyContext()
-	const { nowPlaying } = usePlayerContext()
+	const nowPlaying = useNowPlayingContext()
 	const useSkip = useSkipContext()
 	const usePrevious = usePreviousContext()
 	// Get progress from the track player with the specified update interval

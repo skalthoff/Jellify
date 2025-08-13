@@ -6,7 +6,7 @@ import SettingsScreen from './Settings'
 import { Discover } from './Discover'
 import { Miniplayer } from '../components/Player/mini-player'
 import { useTheme } from 'tamagui'
-import { usePlayerContext } from '../providers/Player'
+import { useNowPlayingContext } from '../providers/Player'
 import SearchStack from './Search'
 import LibraryStack from './Library'
 import InternetConnectionWatcher from '../components/Network/internetConnectionWatcher'
@@ -15,7 +15,7 @@ const Tab = createBottomTabNavigator()
 
 export function Tabs(): React.JSX.Element {
 	const theme = useTheme()
-	const { nowPlaying } = usePlayerContext()
+	const nowPlaying = useNowPlayingContext()
 
 	return (
 		<Tab.Navigator

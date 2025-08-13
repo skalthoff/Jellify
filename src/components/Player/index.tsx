@@ -1,5 +1,5 @@
 import { StackParamList } from '../types'
-import { usePlayerContext } from '../../providers/Player'
+import { useNowPlayingContext } from '../../providers/Player'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { useCallback, useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -31,7 +31,7 @@ export default function PlayerScreen({
 }): React.JSX.Element {
 	const [showToast, setShowToast] = useState(true)
 
-	const { nowPlaying } = usePlayerContext()
+	const nowPlaying = useNowPlayingContext()
 
 	const theme = useTheme()
 

@@ -15,7 +15,7 @@ import {
 	useSetUnshuffledQueueContext,
 	useUnshuffledQueueContext,
 } from '../../src/providers/Player/queue'
-import { PlayerProvider, usePlayerContext } from '../../src/providers/Player'
+import { PlayerProvider, useToggleShuffleContext } from '../../src/providers/Player'
 import JellifyTrack from '../../src/types/JellifyTrack'
 import { QueuingType } from '../../src/enums/queuing-type'
 import { storage } from '../../src/constants/storage'
@@ -98,7 +98,8 @@ const TestComponent = () => {
 	const shuffled = useShuffledContext()
 	const unshuffledQueue = useUnshuffledQueueContext()
 	const setUnshuffledQueue = useSetUnshuffledQueueContext()
-	const { useToggleShuffle, shuffled: playerShuffled } = usePlayerContext()
+	const toggleShuffle = useToggleShuffleContext()
+	const playerShuffled = useShuffledContext()
 
 	const testTracks = createMockTracks(5)
 
@@ -130,7 +131,7 @@ const TestComponent = () => {
 				onPress={() => setCurrentIndex(2)}
 			/>
 
-			<Button title='Toggle Shuffle' testID='toggle-shuffle' onPress={useToggleShuffle} />
+			<Button title='Toggle Shuffle' testID='toggle-shuffle' onPress={toggleShuffle} />
 		</>
 	)
 }

@@ -1,13 +1,4 @@
-import {
-	createContext,
-	ReactNode,
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-	useMemo,
-	useCallback,
-} from 'react'
+import { ReactNode, useEffect, useRef, useState, useMemo, useCallback } from 'react'
 import JellifyTrack from '../../types/JellifyTrack'
 import { storage } from '../../constants/storage'
 import { MMKVStorageKeys } from '../../enums/mmkv-storage-keys'
@@ -50,6 +41,7 @@ import { PREFETCH_THRESHOLD_SECONDS } from '../../player/gapless-config'
 import Toast from 'react-native-toast-message'
 import { shuffleJellifyTracks } from './utils/shuffle'
 import calculateTrackVolume from './utils/normalization'
+import { useContextSelector, createContext } from 'use-context-selector'
 
 interface PlayerContext {
 	nowPlaying: JellifyTrack | undefined
@@ -726,4 +718,20 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
  * {@link PlayerProvider}.
  * @returns The {@link PlayerContext}
  */
-export const usePlayerContext = () => useContext(PlayerContext)
+
+export const useNowPlayingContext = () =>
+	useContextSelector(PlayerContext, (context) => context.nowPlaying)
+export const useRepeatModeContext = () =>
+	useContextSelector(PlayerContext, (context) => context.repeatMode)
+export const usePlaybackStateContext = () =>
+	useContextSelector(PlayerContext, (context) => context.playbackState)
+export const useToggleRepeatModeContext = () =>
+	useContextSelector(PlayerContext, (context) => context.useToggleRepeatMode)
+export const useTogglePlaybackContext = () =>
+	useContextSelector(PlayerContext, (context) => context.useTogglePlayback)
+export const useToggleShuffleContext = () =>
+	useContextSelector(PlayerContext, (context) => context.useToggleShuffle)
+export const useSeekToContext = () =>
+	useContextSelector(PlayerContext, (context) => context.useSeekTo)
+export const useSeekByContext = () =>
+	useContextSelector(PlayerContext, (context) => context.useSeekBy)

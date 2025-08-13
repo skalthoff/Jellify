@@ -1,5 +1,5 @@
 import { useJellifyContext } from '../../../providers'
-import { usePlayerContext } from '../../../providers/Player'
+import { useNowPlayingContext, usePlaybackStateContext } from '../../../providers/Player'
 import { useQueueRefContext } from '../../../providers/Player/queue'
 import { getToken, useWindowDimensions, XStack, YStack, useTheme } from 'tamagui'
 import { Text } from '../../Global/helpers/text'
@@ -17,7 +17,8 @@ export default function PlayerHeader({
 }): React.JSX.Element {
 	const { api } = useJellifyContext()
 
-	const { nowPlaying, playbackState } = usePlayerContext()
+	const nowPlaying = useNowPlayingContext()
+	const playbackState = usePlaybackStateContext()
 
 	const isPlaying = playbackState === State.Playing
 

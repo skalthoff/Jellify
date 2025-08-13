@@ -1,5 +1,5 @@
 import React from 'react'
-import { usePlayerContext } from '../../../providers/Player'
+import { useNowPlayingContext } from '../../../providers/Player'
 import { getToken, useTheme, View, YStack, ZStack } from 'tamagui'
 import { useColorScheme } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
@@ -14,7 +14,7 @@ export default function BlurredBackground({
 	width: number
 	height: number
 }): React.JSX.Element {
-	const { nowPlaying } = usePlayerContext()
+	const nowPlaying = useNowPlayingContext()
 
 	const { theme: themeSetting } = useSettingsContext()
 

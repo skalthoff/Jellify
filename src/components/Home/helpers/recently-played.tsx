@@ -3,7 +3,7 @@ import { View, XStack } from 'tamagui'
 import { useHomeContext } from '../../../providers/Home'
 import { H4 } from '../../Global/helpers/text'
 import { ItemCard } from '../../Global/components/item-card'
-import { usePlayerContext } from '../../../providers/Player'
+import { useNowPlayingContext } from '../../../providers/Player'
 import { StackParamList } from '../../types'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { trigger } from 'react-native-haptic-feedback'
@@ -18,7 +18,7 @@ export default function RecentlyPlayed({
 }: {
 	navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
-	const { nowPlaying } = usePlayerContext()
+	const nowPlaying = useNowPlayingContext()
 
 	const useLoadNewQueue = useLoadQueueContext()
 

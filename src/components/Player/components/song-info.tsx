@@ -1,7 +1,7 @@
 import TextTicker from 'react-native-text-ticker'
 import { getToken, XStack, YStack } from 'tamagui'
 import { TextTickerConfig } from '../component.config'
-import { usePlayerContext } from '../../../providers/Player'
+import { useNowPlayingContext } from '../../../providers/Player'
 import { Text } from '../../Global/helpers/text'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StackParamList } from '../../types'
@@ -18,7 +18,7 @@ export default function SongInfo({
 	navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
 	const { api } = useJellifyContext()
-	const { nowPlaying } = usePlayerContext()
+	const nowPlaying = useNowPlayingContext()
 
 	const { data: album } = useQuery({
 		queryKey: ['album', nowPlaying!.item.AlbumId],
