@@ -6,7 +6,6 @@ import { StackParamList } from '../types'
 import { BaseItemDto, UserItemDataDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { Queue } from '../../player/types/queue-item'
-import { InfiniteData } from '@tanstack/react-query'
 import { useNetworkContext } from '../../providers/Network'
 import { queryClient } from '../../constants/query-client'
 import { QueryKeys } from '../../enums/query-keys'
@@ -21,7 +20,7 @@ export default function Tracks({
 	filterDownloaded,
 	filterFavorites,
 }: {
-	tracks: InfiniteData<BaseItemDto[], unknown> | undefined
+	tracks: BaseItemDto[] | undefined
 	queue: Queue
 	fetchNextPage: () => void
 	hasNextPage: boolean
@@ -51,7 +50,7 @@ export default function Tracks({
 					}) ?? []
 			)
 		}
-		return tracks?.pages.flatMap((page) => page) ?? []
+		return tracks ?? []
 	}, [filterDownloaded, downloadedTracks, tracks, filterFavorites])
 
 	return (

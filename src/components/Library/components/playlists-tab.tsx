@@ -3,29 +3,22 @@ import { StackParamList } from '../../types'
 import Playlists from '../../Playlists/component'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { useLibraryContext } from '../../../providers/Library'
+import { usePlaylistsInfiniteQueryContext } from '../../../providers/Library'
 
 export default function PlaylistsTab(): React.JSX.Element {
 	const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>()
 
-	const {
-		playlists,
-		refetchPlaylists,
-		fetchNextPlaylistsPage,
-		hasNextPlaylistsPage,
-		isPendingPlaylists,
-		isFetchingNextPlaylistsPage,
-	} = useLibraryContext()
+	const playlistsInfiniteQuery = usePlaylistsInfiniteQueryContext()
 
 	return (
 		<Playlists
 			navigation={navigation}
-			playlists={playlists}
-			refetch={refetchPlaylists}
-			fetchNextPage={fetchNextPlaylistsPage}
-			hasNextPage={hasNextPlaylistsPage}
-			isPending={isPendingPlaylists}
-			isFetchingNextPage={isFetchingNextPlaylistsPage}
+			playlists={playlistsInfiniteQuery.data}
+			refetch={playlistsInfiniteQuery.refetch}
+			fetchNextPage={playlistsInfiniteQuery.fetchNextPage}
+			hasNextPage={playlistsInfiniteQuery.hasNextPage}
+			isPending={playlistsInfiniteQuery.isPending}
+			isFetchingNextPage={playlistsInfiniteQuery.isFetchingNextPage}
 			canEdit
 		/>
 	)

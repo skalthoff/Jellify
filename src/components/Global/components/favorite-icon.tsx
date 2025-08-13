@@ -6,6 +6,7 @@ import { QueryKeys } from '../../../enums/query-keys'
 import { fetchUserData } from '../../../api/queries/favorites'
 import { useEffect, useState } from 'react'
 import { useJellifyContext } from '../../../providers'
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
 
 /**
  * This component is used to display a favorite icon for a given item.
@@ -22,7 +23,7 @@ export default function FavoriteIcon({ item }: { item: BaseItemDto }): React.JSX
 	const { data: userData, isPending } = useQuery({
 		queryKey: [QueryKeys.UserData, item.Id!],
 		queryFn: () => fetchUserData(api, user, item.Id!),
-		staleTime: 1000 * 60 * 5, // 5 minutes,
+		staleTime: 1000 * 60 * 60 * 1, // 1 hour,
 	})
 
 	useEffect(() => {
@@ -30,7 +31,9 @@ export default function FavoriteIcon({ item }: { item: BaseItemDto }): React.JSX
 	}, [userData, isPending])
 
 	return isFavorite ? (
-		<Icon small name='heart' color={'$primary'} flex={1} />
+		<Animated.View entering={FadeIn} exiting={FadeOut}>
+			<Icon small name='heart' color={'$primary'} flex={1} />
+		</Animated.View>
 	) : (
 		<Spacer flex={0.5} />
 	)

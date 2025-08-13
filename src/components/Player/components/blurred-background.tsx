@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import { useSettingsContext } from '../../../providers/Settings'
 import { getPrimaryBlurhashFromDto } from '../../../utils/blurhash'
 import { Blurhash } from 'react-native-blurhash'
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
 
 export default function BlurredBackground({
 	width,
@@ -27,16 +28,22 @@ export default function BlurredBackground({
 
 	return (
 		<ZStack flex={1} width={width} height={height}>
-			{blurhash && (
-				<Blurhash
-					blurhash={blurhash}
-					style={{
-						flex: 1,
-						width: width,
-						height: height,
-					}}
-				/>
-			)}
+			<Animated.View
+				style={{ flex: 1, width: width, height: height }}
+				entering={FadeIn}
+				exiting={FadeOut}
+				key={`${nowPlaying!.item.AlbumId}-blurred-background`}
+			>
+				{blurhash && (
+					<Blurhash
+						blurhash={blurhash}
+						style={{
+							width: width,
+							height: height,
+						}}
+					/>
+				)}
+			</Animated.View>
 
 			{isDarkMode ? (
 				<YStack width={width} height={height} position='absolute' flex={1}>

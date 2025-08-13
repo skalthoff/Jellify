@@ -9,6 +9,7 @@ import { StackParamList } from '../../types'
 import React from 'react'
 import { State } from 'react-native-track-player'
 import ItemImage from '../../Global/components/image'
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
 
 export default function PlayerHeader({
 	navigation,
@@ -66,12 +67,18 @@ export default function PlayerHeader({
 			</XStack>
 
 			<XStack justifyContent='center' alignContent='center' paddingVertical={'$8'}>
-				<ItemImage
-					item={nowPlaying!.item}
-					testID='player-image-test-id'
-					width={getToken('$20') * 2}
-					height={getToken('$20') * 2}
-				/>
+				<Animated.View
+					entering={FadeIn}
+					exiting={FadeOut}
+					key={`${nowPlaying!.item.AlbumId}-item-image`}
+				>
+					<ItemImage
+						item={nowPlaying!.item}
+						testID='player-image-test-id'
+						width={getToken('$20') * 2}
+						height={getToken('$20') * 2}
+					/>
+				</Animated.View>
 			</XStack>
 		</YStack>
 	)

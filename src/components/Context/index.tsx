@@ -1,11 +1,12 @@
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
 import { useNavigation } from '@react-navigation/native'
-import { ListItem, Separator, View, XStack, YGroup, YStack } from 'tamagui'
+import { Separator, View, XStack, YGroup, YStack, ZStack } from 'tamagui'
 import { StackParamList } from '../types'
 import { Text } from '../Global/helpers/text'
 import ItemImage from '../Global/components/image'
-import Button from '../Global/helpers/button'
-import Icon from '../Global/components/icon'
+import FavoriteContextMenuRow from '../Global/components/favorite-context-menu-row'
+import { Blurhash } from 'react-native-blurhash'
+import { getPrimaryBlurhashFromDto } from '../../utils/blurhash'
 
 interface ContextProps {
 	item: BaseItemDto
@@ -20,19 +21,33 @@ export default function ItemContext({ item }: ContextProps): React.JSX.Element {
 	const isPlaylist = item.Type === BaseItemKind.Playlist
 
 	return (
-		<View flex={1} margin={'$2'}>
-			{renderContextHeader(item)}
+		<ZStack flex={1}>
+			<View flex={1}>{renderBackgroundBlur(item)}</View>
 
-			<YGroup separator={<Separator />}>
-				<YGroup.Item>
-					<ListItem>
-						<Button>
-							<Icon name='heart-outline' small color={'$borderColor'} />
-						</Button>
-					</ListItem>
-				</YGroup.Item>
-			</YGroup>
-		</View>
+			<View flex={1}>
+				{renderContextHeader(item)}
+
+				<Separator />
+
+				<YGroup>
+					<FavoriteContextMenuRow item={item} />
+				</YGroup>
+			</View>
+		</ZStack>
+	)
+}
+
+function renderBackgroundBlur(item: BaseItemDto): React.JSX.Element {
+	const blurhash = getPrimaryBlurhashFromDto(item)
+
+	return (
+		<Blurhash
+			blurhash={blurhash!}
+			style={{
+				height: '100%',
+				width: '100%',
+			}}
+		/>
 	)
 }
 
@@ -45,7 +60,7 @@ function renderContextHeader(item: BaseItemDto): React.JSX.Element {
 	const itemName = item.Name ?? getNamePlaceholder(item.Type)
 
 	return (
-		<XStack alignItems='center' marginTop={'$2'} gap={'$2'}>
+		<XStack alignItems='center' marginBottom={'$2'} margin={'$4'} gap={'$2'} minHeight={'$6'}>
 			<ItemImage item={item} circular={isArtist} />
 
 			<YStack gap={'$1'}>

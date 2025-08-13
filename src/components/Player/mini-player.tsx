@@ -24,7 +24,13 @@ import { RunTimeSeconds } from '../Global/helpers/time-codes'
 import { UPDATE_INTERVAL } from '../../player/config'
 import { useProgress, Progress as TrackPlayerProgress } from 'react-native-track-player'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
-import { runOnJS, useSharedValue, withSpring } from 'react-native-reanimated'
+import Animated, {
+	FadeIn,
+	FadeOut,
+	runOnJS,
+	useSharedValue,
+	withSpring,
+} from 'react-native-reanimated'
 import { ImageType } from '@jellyfin/sdk/lib/generated-client/models'
 
 export const Miniplayer = React.memo(function Miniplayer({
@@ -106,38 +112,48 @@ export const Miniplayer = React.memo(function Miniplayer({
 									marginLeft={'$2'}
 								>
 									{api && (
-										<FastImage
-											source={{
-												uri:
-													getImageApi(api)?.getItemImageUrlById(
-														nowPlaying!.item.AlbumId! ||
-															nowPlaying!.item.Id!,
-														ImageType.Primary,
-														{
-															tag: nowPlaying!.item.ImageTags
-																?.Primary,
-														},
-													) || '',
-											}}
-											style={{
-												width: getToken('$12'),
-												height: getToken('$12'),
-												borderRadius: getToken('$2'),
-												backgroundColor: '$borderColor',
-												shadowRadius: getToken('$2'),
-												shadowOffset: {
-													width: 0,
-													height: -getToken('$2'),
-												},
-											}}
-										/>
+										<Animated.View
+											entering={FadeIn}
+											exiting={FadeOut}
+											key={`${nowPlaying!.item.AlbumId}-album-image`}
+										>
+											<FastImage
+												source={{
+													uri:
+														getImageApi(api)?.getItemImageUrlById(
+															nowPlaying!.item.AlbumId! ||
+																nowPlaying!.item.Id!,
+															ImageType.Primary,
+															{
+																tag: nowPlaying!.item.ImageTags
+																	?.Primary,
+															},
+														) || '',
+												}}
+												style={{
+													width: getToken('$12'),
+													height: getToken('$12'),
+													borderRadius: getToken('$2'),
+													backgroundColor: '$borderColor',
+													shadowRadius: getToken('$2'),
+													shadowOffset: {
+														width: 0,
+														height: -getToken('$2'),
+													},
+												}}
+											/>
+										</Animated.View>
 									)}
 								</YStack>
 
 								<YStack alignContent='flex-start' marginLeft={'$2'} flex={6}>
 									<MiniPlayerRuntime />
 
-									{
+									<Animated.View
+										entering={FadeIn}
+										exiting={FadeOut}
+										key={`${nowPlaying!.item.AlbumId}-mini-player-song-info`}
+									>
 										<View width={'100%'}>
 											<TextTicker {...TextTickerConfig}>
 												<Text bold width={'100%'}>
@@ -151,7 +167,7 @@ export const Miniplayer = React.memo(function Miniplayer({
 												</Text>
 											</TextTicker>
 										</View>
-									}
+									</Animated.View>
 								</YStack>
 
 								<XStack
@@ -174,25 +190,32 @@ export const Miniplayer = React.memo(function Miniplayer({
 
 function MiniPlayerRuntime(): React.JSX.Element {
 	const progress = useProgress(UPDATE_INTERVAL)
+	const nowPlaying = useNowPlayingContext()
 
 	return (
-		<XStack gap={'$1'} justifyContent='flex-start' height={'$1'}>
-			<YStack justifyContent='center' marginRight={'$2'} paddingRight={'auto'}>
-				<RunTimeSeconds alignment='left'>
-					{Math.max(0, Math.floor(progress?.position ?? 0))}
-				</RunTimeSeconds>
-			</YStack>
+		<Animated.View
+			entering={FadeIn}
+			exiting={FadeOut}
+			key={`${nowPlaying!.item.AlbumId}-mini-player-runtime`}
+		>
+			<XStack gap={'$1'} justifyContent='flex-start' height={'$1'}>
+				<YStack justifyContent='center' marginRight={'$2'} paddingRight={'auto'}>
+					<RunTimeSeconds alignment='left'>
+						{Math.max(0, Math.floor(progress?.position ?? 0))}
+					</RunTimeSeconds>
+				</YStack>
 
-			<Text color={'$neutral'} textAlign='center'>
-				/
-			</Text>
+				<Text color={'$neutral'} textAlign='center'>
+					/
+				</Text>
 
-			<YStack justifyContent='center' marginLeft={'$2'}>
-				<RunTimeSeconds color={'$neutral'} alignment='right'>
-					{Math.max(0, Math.floor(progress?.duration ?? 0))}
-				</RunTimeSeconds>
-			</YStack>
-		</XStack>
+				<YStack justifyContent='center' marginLeft={'$2'}>
+					<RunTimeSeconds color={'$neutral'} alignment='right'>
+						{Math.max(0, Math.floor(progress?.duration ?? 0))}
+					</RunTimeSeconds>
+				</YStack>
+			</XStack>
+		</Animated.View>
 	)
 }
 

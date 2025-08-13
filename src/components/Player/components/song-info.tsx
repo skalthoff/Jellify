@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchItem } from '../../../api/queries/item'
 import { useJellifyContext } from '../../../providers'
 import FavoriteButton from '../../Global/components/favorite-button'
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
 
 export default function SongInfo({
 	navigation,
@@ -46,44 +47,56 @@ export default function SongInfo({
 					}}
 					justifyContent='center'
 				>
-					<ItemImage item={nowPlaying!.item} width={'$11'} height={'$11'} />
+					<Animated.View
+						entering={FadeIn}
+						exiting={FadeOut}
+						key={`${nowPlaying!.item.AlbumId}-album-image`}
+					>
+						<ItemImage item={nowPlaying!.item} width={'$11'} height={'$11'} />
+					</Animated.View>
 				</YStack>
 
 				<YStack justifyContent='flex-start' flex={1} gap={'$0.25'}>
-					<TextTicker {...TextTickerConfig} style={{ height: getToken('$9') }}>
-						<Text bold fontSize={'$6'}>
-							{nowPlaying!.title ?? 'Untitled Track'}
-						</Text>
-					</TextTicker>
+					<Animated.View
+						entering={FadeIn}
+						exiting={FadeOut}
+						key={`${nowPlaying!.item.AlbumId}-song-info`}
+					>
+						<TextTicker {...TextTickerConfig} style={{ height: getToken('$9') }}>
+							<Text bold fontSize={'$6'}>
+								{nowPlaying!.title ?? 'Untitled Track'}
+							</Text>
+						</TextTicker>
 
-					<TextTicker {...TextTickerConfig} style={{ height: getToken('$8') }}>
-						<Text
-							fontSize={'$6'}
-							color={'$color'}
-							onPress={() => {
-								if (nowPlaying!.item.ArtistItems) {
-									if (nowPlaying!.item.ArtistItems!.length > 1) {
-										navigation.navigate('MultipleArtists', {
-											artists: nowPlaying!.item.ArtistItems!,
-										})
-									} else {
-										navigation.goBack() // Dismiss player modal
-										navigation.navigate('Tabs', {
-											screen: 'Library',
-											params: {
-												screen: 'Artist',
+						<TextTicker {...TextTickerConfig} style={{ height: getToken('$8') }}>
+							<Text
+								fontSize={'$6'}
+								color={'$color'}
+								onPress={() => {
+									if (nowPlaying!.item.ArtistItems) {
+										if (nowPlaying!.item.ArtistItems!.length > 1) {
+											navigation.navigate('MultipleArtists', {
+												artists: nowPlaying!.item.ArtistItems!,
+											})
+										} else {
+											navigation.goBack() // Dismiss player modal
+											navigation.navigate('Tabs', {
+												screen: 'Library',
 												params: {
-													artist: nowPlaying!.item.ArtistItems![0],
+													screen: 'Artist',
+													params: {
+														artist: nowPlaying!.item.ArtistItems![0],
+													},
 												},
-											},
-										})
+											})
+										}
 									}
-								}
-							}}
-						>
-							{nowPlaying?.artist ?? 'Unknown Artist'}
-						</Text>
-					</TextTicker>
+								}}
+							>
+								{nowPlaying?.artist ?? 'Unknown Artist'}
+							</Text>
+						</TextTicker>
+					</Animated.View>
 				</YStack>
 
 				<XStack justifyContent='flex-end' alignItems='center' flexShrink={1}>

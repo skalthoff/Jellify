@@ -53,7 +53,7 @@ export default function PlayerScreen({
 				<ZStack flex={1}>
 					<BlurredBackground width={width} height={height} />
 
-					<YStack fullscreen marginBottom={bottom + getTokenValue('$12')}>
+					<YStack fullscreen marginBottom={bottom}>
 						<PlayerHeader navigation={navigation} />
 
 						<XStack
