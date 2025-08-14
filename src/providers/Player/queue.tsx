@@ -494,13 +494,13 @@ const QueueContextInitailizer = () => {
 	//#endregion Functions
 
 	//#region Hooks
-	const useAddToQueue = useMutation({
+	const useAddToQueue = useMutation<void>({
 		mutationFn: ({ tracks, queuingType }: AddToQueueMutation) => {
 			return queuingType === QueuingType.PlayingNext
 				? playNextInQueue(tracks)
 				: playInQueue(tracks)
 		},
-		onSuccess: (data, { queuingType }) => {
+		onSuccess: (data: void, { queuingType }: { queuingType: QueuingType }) => {
 			trigger('notificationSuccess')
 			console.debug(
 				`${queuingType === QueuingType.PlayingNext ? 'Played next' : 'Added to queue'}`,
@@ -510,7 +510,7 @@ const QueueContextInitailizer = () => {
 				type: 'success',
 			})
 		},
-		onError: async (error, { queuingType }) => {
+		onError: async (error: void, { queuingType }: { queuingType: QueuingType }) => {
 			trigger('notificationError')
 			console.error(
 				`Failed to ${queuingType === QueuingType.PlayingNext ? 'play next' : 'add to queue'}`,
@@ -535,13 +535,13 @@ const QueueContextInitailizer = () => {
 			queue,
 			shuffled,
 		}: QueueMutation) => loadQueue(tracklist, queue, index, shuffled),
-		onSuccess: async (data, { startPlayback }: QueueMutation) => {
+		onSuccess: async (data: void, { startPlayback }: QueueMutation) => {
 			trigger('notificationSuccess')
 			console.debug(`Loaded new queue`)
 
 			if (startPlayback) await TrackPlayer.play()
 		},
-		onError: async (error) => {
+		onError: async (error: Error) => {
 			trigger('notificationError')
 			console.error('Failed to load new queue:', error)
 		},
@@ -568,10 +568,10 @@ const QueueContextInitailizer = () => {
 			// Then update RNTP
 			await TrackPlayer.remove([index])
 		},
-		onSuccess: async (data, index: number) => {
+		onSuccess: async (data: void, index: number) => {
 			console.debug(`Removed track at index ${index}`)
 		},
-		onError: async (error, index: number) => {
+		onError: async (error: Error, index: number) => {
 			console.error(`Failed to remove track at index ${index}:`, error)
 		},
 	})
@@ -604,7 +604,7 @@ const QueueContextInitailizer = () => {
 		onSuccess: () => {
 			trigger('notificationSuccess')
 		},
-		onError: async (error) => {
+		onError: async (error: Error) => {
 			trigger('notificationError')
 			console.error('Failed to remove upcoming tracks:', error)
 			await ensureUpcomingTracksInQueue(playQueue, currentIndex)
@@ -625,12 +625,12 @@ const QueueContextInitailizer = () => {
 
 			return newQueue
 		},
-		onMutate: async ({ from, to }) => {
+		onMutate: async ({ from, to }: { from: number; to: number }) => {
 			console.debug(`Reordering queue from ${from} to ${to}`)
 			console.debug(`App queue before reorder:`, playQueue.length)
 			setSkipping(true)
 		},
-		onSuccess: async (newQueue, { from, to }) => {
+		onSuccess: async (newQueue: JellifyTrack[], { from, to }: { from: number; to: number }) => {
 			trigger('notificationSuccess')
 			console.debug(`Reordered queue from ${from} to ${to} successfully`)
 			console.debug(`App queue after reorder:`, newQueue.length)
@@ -643,7 +643,7 @@ const QueueContextInitailizer = () => {
 
 			setPlayQueue(newQueue)
 		},
-		onError: async (error) => {
+		onError: async (error: Error) => {
 			trigger('notificationError')
 			console.error('Failed to reorder queue:', error)
 
@@ -683,7 +683,7 @@ const QueueContextInitailizer = () => {
 		onSuccess: async () => {
 			console.debug('Skipped to next track')
 		},
-		onError: async (error) => {
+		onError: async (error: Error) => {
 			console.error('Failed to skip to next track:', error)
 		},
 		networkMode: 'always',
@@ -696,7 +696,7 @@ const QueueContextInitailizer = () => {
 		onSuccess: async () => {
 			console.debug('Skipped to previous track')
 		},
-		onError: async (error) => {
+		onError: async (error: Error) => {
 			console.error('Failed to skip to previous track:', error)
 		},
 	})

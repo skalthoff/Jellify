@@ -16,7 +16,7 @@ import Icon from '../../Global/components/icon'
 import { useNavigation } from '@react-navigation/native'
 import navigate from '../../../../navigation'
 import { QueryKeys } from '../../../enums/query-keys'
-import { BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
+import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
 
 export default function SongInfo(): React.JSX.Element {
 	const { api, user, library } = useJellifyContext()
@@ -32,7 +32,7 @@ export default function SongInfo(): React.JSX.Element {
 	const { data: artists } = useQuery({
 		queryKey: [QueryKeys.TrackArtists, nowPlaying!.item.ArtistItems],
 		queryFn: () => fetchItems(api, user, library, [BaseItemKind.MusicArtist]),
-		select: (data) => data.data,
+		select: (data: { title: string; data: BaseItemDto[] }) => data.data,
 	})
 
 	return useMemo(() => {

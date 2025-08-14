@@ -3379,38 +3379,38 @@
   resolved "https://registry.yarnpkg.com/@tamagui/z-index-stack/-/z-index-stack-1.132.18.tgz#a293c1b6637695ee1701a6ddc6fd294bf519c869"
   integrity sha512-yYbuGqtKVh5X13tZ7+dDDKACNPkaF5pvtotjJJU1/BXVGXtk/C7BOyR9VjO/WBUk8+eCHdfr0QTnkADiwPO9Eg==
 
-"@tanstack/query-async-storage-persister@^5.83.1":
-  version "5.83.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-async-storage-persister/-/query-async-storage-persister-5.83.1.tgz#526ca229cfbeba542525d5c10603d1d4f4760b39"
-  integrity sha512-P3QzGBn9/nxaCst1hNYDQbbJDKFxTBsGTMjf0YtsKs7sSeNp7wVgUKjOVJpbvhdpFKHqTDYOdjOf2Qeb4bJ9tQ==
+"@tanstack/query-async-storage-persister@^5.85.2":
+  version "5.85.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-async-storage-persister/-/query-async-storage-persister-5.85.2.tgz#ef97622c8579e81526e739f9609772d3d7584b67"
+  integrity sha512-UIaCAdB02EaMcoLvh8WxOD+K1wX2TqgXEDfB+9fAD3tdco3TwK/TIpGbUmcz348QJHUhPYg9WRMq8b54sOb4JA==
   dependencies:
-    "@tanstack/query-persist-client-core" "5.83.1"
+    "@tanstack/query-persist-client-core" "5.85.2"
 
-"@tanstack/query-core@5.83.1":
-  version "5.83.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.83.1.tgz#eed82970b30cb24536f561613b5630e03d349628"
-  integrity sha512-OG69LQgT7jSp+5pPuCfzltq/+7l2xoweggjme9vlbCPa/d7D7zaqv5vN/S82SzSYZ4EDLTxNO1PWrv49RAS64Q==
+"@tanstack/query-core@5.85.2":
+  version "5.85.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.85.2.tgz#843cc63e64b6513d6fb7915d930150c4f98605b7"
+  integrity sha512-h9vFUVYKoNNgXzb5mK4dP686yawJp9CLLTMjB2PF4KA1D5AbUI2KfxnxBdEQKnLwzzMjmBpucmmsGChZK7RqcQ==
 
-"@tanstack/query-persist-client-core@5.83.1":
-  version "5.83.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-persist-client-core/-/query-persist-client-core-5.83.1.tgz#9242ec86bd26d95bb1e3f29cfd9319c89071f7b9"
-  integrity sha512-GPWt1tj8kmo3LA1WPpSmJA3JGCdQfaggb1LheFEfr3RuwbTchWd09xD/fZ40m9ai0pJupvyguLiWF8On8sQWPw==
+"@tanstack/query-persist-client-core@5.85.2":
+  version "5.85.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-persist-client-core/-/query-persist-client-core-5.85.2.tgz#d1b61c44390e07be5fdafb4159a5fd50dac58906"
+  integrity sha512-WAX8LHmsLKMTFumV+1s26G+8g6A+REUM0cABR9j7lxYTpkBgKOl6lKVzYKyt0WSWflVaNoBrZGx0bQ+FaRlWgw==
   dependencies:
-    "@tanstack/query-core" "5.83.1"
+    "@tanstack/query-core" "5.85.2"
 
-"@tanstack/react-query-persist-client@^5.83.1":
-  version "5.84.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query-persist-client/-/react-query-persist-client-5.84.0.tgz#8bc1279c1207d1a603a14ecf2e1a71aa3168a7e6"
-  integrity sha512-vpe2KnCkbcZmbk4SXObKxJL9BKP6IlZxBOi5Ua7oZFa8LKoECBHR+oK0YoEhtQKVaBaRbSc7G0YsuUZWct7vRQ==
+"@tanstack/react-query-persist-client@^5.85.2":
+  version "5.85.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-persist-client/-/react-query-persist-client-5.85.2.tgz#8cf3336b8207c1ad33d6440e349788fd1695b641"
+  integrity sha512-ZP2vuLWv3dGwjd3yEQaUF+bnuvAyEjb7aCNyojByRU271RyavufgkXf9V7YXgIqDHUO9395WiDZgOujJ+Cbn/g==
   dependencies:
-    "@tanstack/query-persist-client-core" "5.83.1"
+    "@tanstack/query-persist-client-core" "5.85.2"
 
-"@tanstack/react-query@^5.83.1":
-  version "5.84.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.84.0.tgz#4e369b5f94114a9e15d01f0ada4726bfc1de406b"
-  integrity sha512-iPycFGLq5lltDE16Jf13Nx7SOvtfoopfOH/+Ahbdd+z4QqOfYu/SOkY86AVYVcKjneuqPxTm8e85lSGhwe0cog==
+"@tanstack/react-query@^5.85.2":
+  version "5.85.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.85.2.tgz#7f85bdc4fbc4081a52b4dc41de563edebd5b0e0c"
+  integrity sha512-B/sLNHkhGi3hVZg3xsH82sCSkEqdyfZXBrkumo7FeIKuXgsCRp4tmLSCC/2YU/oPyQuoVGzQhyzM8p3UjO19kw==
   dependencies:
-    "@tanstack/query-core" "5.83.1"
+    "@tanstack/query-core" "5.85.2"
 
 "@telemetrydeck/sdk@^2.0.4":
   version "2.0.4"
@@ -8523,10 +8523,10 @@ react-native-safe-area-context@^5.6.0:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-5.6.0.tgz#0ab284c291bb57d59330abf7dfe65156d6340e78"
   integrity sha512-tJas3YOdsuCg3kepCTGF3LWZp9onMbb9Agju2xfs2kRX8d/5TMUPmupBpjerk/B7Tv/zeJnk+qp5neA96Y0otQ==
 
-react-native-screens@4.14.0:
-  version "4.14.0"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-4.14.0.tgz#585c84954f2c0a60b8726deb5940c2c0b20b0f1b"
-  integrity sha512-BMTQ30IozI8ZkqqPw71LbiaEcU+F5wDmfXDFlVn0wupZnxt0l7x7lUh2nljxR7rNHQneNIZoRTlu0ExK0R0xmA==
+react-native-screens@4.14.1:
+  version "4.14.1"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-4.14.1.tgz#7d440cb19752dc8dd46c07cca46222df10e4e38d"
+  integrity sha512-/7zxVdk2H4BH/dvqpQQh45VCA05UeC+LCE8TPtGfjn5A+9/UJfKPB8LHhAcWxciLYfMCyW8J2u5dGLGQJH/Ecg==
   dependencies:
     react-freeze "^1.0.0"
     react-native-is-edge-to-edge "^1.2.1"
