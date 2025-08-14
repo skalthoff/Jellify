@@ -494,13 +494,13 @@ const QueueContextInitailizer = () => {
 	//#endregion Functions
 
 	//#region Hooks
-	const useAddToQueue = useMutation<void>({
+	const useAddToQueue = useMutation<void, Error, AddToQueueMutation>({
 		mutationFn: ({ tracks, queuingType }: AddToQueueMutation) => {
 			return queuingType === QueuingType.PlayingNext
 				? playNextInQueue(tracks)
 				: playInQueue(tracks)
 		},
-		onSuccess: (data: void, { queuingType }: { queuingType: QueuingType }) => {
+		onSuccess: (data: void, { queuingType }: AddToQueueMutation) => {
 			trigger('notificationSuccess')
 			console.debug(
 				`${queuingType === QueuingType.PlayingNext ? 'Played next' : 'Added to queue'}`,
@@ -510,7 +510,7 @@ const QueueContextInitailizer = () => {
 				type: 'success',
 			})
 		},
-		onError: async (error: void, { queuingType }: { queuingType: QueuingType }) => {
+		onError: async (error: Error, { queuingType }: AddToQueueMutation) => {
 			trigger('notificationError')
 			console.error(
 				`Failed to ${queuingType === QueuingType.PlayingNext ? 'play next' : 'add to queue'}`,

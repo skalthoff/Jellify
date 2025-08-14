@@ -29,10 +29,14 @@ export default function SongInfo(): React.JSX.Element {
 		queryFn: () => fetchItem(api, nowPlaying!.item.AlbumId!),
 	})
 
-	const { data: artists } = useQuery({
+	const { data: artists } = useQuery<
+		{ title: string | number; data: BaseItemDto[] },
+		Error,
+		void
+	>({
 		queryKey: [QueryKeys.TrackArtists, nowPlaying!.item.ArtistItems],
 		queryFn: () => fetchItems(api, user, library, [BaseItemKind.MusicArtist]),
-		select: (data: { title: string; data: BaseItemDto[] }) => data.data,
+		select: (data: { title: string | number; data: BaseItemDto[] }) => data.data,
 	})
 
 	return useMemo(() => {
