@@ -59,7 +59,7 @@ export default function App(): React.JSX.Element {
 				capabilities: CAPABILITIES,
 				notificationCapabilities: CAPABILITIES,
 				// Reduced interval for smoother progress tracking and earlier prefetch detection
-				progressUpdateEventInterval: 8,
+				progressUpdateEventInterval: 10,
 			}),
 		)
 		.finally(() => {

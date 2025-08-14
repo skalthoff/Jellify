@@ -36,8 +36,12 @@ import {
 	getTracksToPreload,
 	shouldStartPrefetching,
 	ensureUpcomingTracksInQueue,
+	optimizePlayerQueue,
 } from '../../player/helpers/gapless'
-import { PREFETCH_THRESHOLD_SECONDS } from '../../player/gapless-config'
+import {
+	PREFETCH_THRESHOLD_SECONDS,
+	QUEUE_PREPARATION_THRESHOLD_SECONDS,
+} from '../../player/gapless-config'
 import Toast from 'react-native-toast-message'
 import { shuffleJellifyTracks } from './utils/shuffle'
 import calculateTrackVolume from './utils/normalization'
@@ -524,14 +528,14 @@ const PlayerContextInitializer = () => {
 					}
 
 					// Optimize the TrackPlayer queue for smooth transitions
-					// if (timeRemaining <= QUEUE_PREPARATION_THRESHOLD_SECONDS) {
-					// 	console.debug(
-					// 		`Gapless: Optimizing player queue (${timeRemaining}s remaining)`,
-					// 	)
-					// 	optimizePlayerQueue(playQueue, currentIndex).catch((error) =>
-					// 		console.warn('Failed to optimize player queue:', error),
-					// 	)
-					// }
+					if (timeRemaining <= QUEUE_PREPARATION_THRESHOLD_SECONDS) {
+						console.debug(
+							`Gapless: Optimizing player queue (${timeRemaining}s remaining)`,
+						)
+						optimizePlayerQueue(playQueue, currentIndex).catch((error) =>
+							console.warn('Failed to optimize player queue:', error),
+						)
+					}
 				}
 
 				break

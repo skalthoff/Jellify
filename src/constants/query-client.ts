@@ -24,7 +24,7 @@ export const queryClient = new QueryClient({
 			 * 24 hours as a default.
 			 */
 			staleTime: 1000 * 60 * 60 * 24, // 24 hours
-			retry(failureCount, error) {
+			retry(failureCount: number, error: Error) {
 				if (failureCount > 2) return false
 
 				if (error.message.includes('Network Error')) return false

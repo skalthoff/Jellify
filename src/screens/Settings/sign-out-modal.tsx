@@ -39,11 +39,8 @@ export default function SignOutModal({ navigation }: SignOutModalProps): React.J
 					borderColor={'$danger'}
 					onPress={() => {
 						navigation.goBack()
-						navigate('Tabs', {
-							screen: 'Login',
-							params: {
-								screen: 'ServerAddress',
-							},
+						navigate('Login', {
+							screen: 'ServerAddress',
 						})
 
 						clearDownloads()

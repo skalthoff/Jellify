@@ -10,7 +10,6 @@ import { useNowPlayingContext } from '../../providers/Player'
 import SearchStack from '../Search'
 import LibraryStack from '../Library'
 import InternetConnectionWatcher from '../../components/Network/internetConnectionWatcher'
-import { Platform } from 'react-native'
 import TabParamList from './types'
 
 const Tab = createBottomTabNavigator<TabParamList>()
@@ -26,7 +25,6 @@ export function Tabs(): React.JSX.Element {
 				animation: 'shift',
 				tabBarActiveTintColor: theme.primary.val,
 				tabBarInactiveTintColor: theme.neutral.val,
-				lazy: Platform.OS === 'ios',
 			}}
 			tabBar={(props) => (
 				<>
