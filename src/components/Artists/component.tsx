@@ -31,8 +31,6 @@ export default function Artists({
 
 	const pendingLetterRef = useRef<string | null>(null)
 
-	const MemoizedItem = React.memo(ItemRow)
-
 	const alphabeticalSelectorCallback = async (letter: string) => {
 		console.debug(`Alphabetical Selector Callback: ${letter}`)
 
@@ -140,7 +138,7 @@ export default function Artists({
 							</XStack>
 						)
 					) : typeof artist === 'number' ? null : typeof artist === 'object' ? (
-						<MemoizedItem
+						<ItemRow
 							circular
 							item={artist}
 							queueName={artist.Name ?? 'Unknown Artist'}

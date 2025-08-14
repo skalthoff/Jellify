@@ -25,7 +25,8 @@ export default function Tracks({
 }): React.JSX.Element {
 	const { downloadedTracks } = useNetworkContext()
 
-	const tracksToDisplay: () => BaseItemDto[] = useCallback(() => {
+	// Memoize the expensive tracks processing to prevent memory leaks
+	const tracksToDisplay = React.useMemo(() => {
 		if (filterDownloaded) {
 			return (
 				downloadedTracks
@@ -48,6 +49,23 @@ export default function Tracks({
 		return tracks ?? []
 	}, [filterDownloaded, downloadedTracks, tracks, filterFavorites])
 
+	// Memoize key extraction for FlashList performance
+	const keyExtractor = React.useCallback((item: BaseItemDto) => item.Id!, [])
+
+	// Memoize render item to prevent recreation
+	const renderItem = React.useCallback(
+		({ index, item: track }: { index: number; item: BaseItemDto }) => (
+			<Track
+				showArtwork
+				index={0}
+				track={track}
+				tracklist={tracksToDisplay.slice(index, index + 50)}
+				queue={queue}
+			/>
+		),
+		[tracksToDisplay, queue],
+	)
+
 	return (
 		<FlashList
 			contentInsetAdjustmentBehavior='automatic'
@@ -56,16 +74,9 @@ export default function Tracks({
 			}}
 			ItemSeparatorComponent={() => <Separator />}
 			numColumns={1}
-			data={tracksToDisplay()}
-			renderItem={({ index, item: track }) => (
-				<Track
-					showArtwork
-					index={0}
-					track={track}
-					tracklist={tracksToDisplay().slice(index, index + 50)}
-					queue={queue}
-				/>
-			)}
+			data={tracksToDisplay}
+			keyExtractor={keyExtractor}
+			renderItem={renderItem}
 			onEndReached={() => {
 				if (hasNextPage) fetchNextPage()
 			}}

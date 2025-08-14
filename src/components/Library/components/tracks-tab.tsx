@@ -1,10 +1,15 @@
-import { RootStackParamList } from '../../../screens/types'
+import { BaseStackParamList, RootStackParamList } from '../../../screens/types'
+import React from 'react'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+
+import { useNavigation } from '@react-navigation/native'
 import Tracks from '../../Tracks/component'
 import { useTracksInfiniteQueryContext } from '../../../providers/Library'
 import { useLibrarySortAndFilterContext } from '../../../providers/Library/sorting-filtering'
 
-export default function TracksTab(): React.JSX.Element {
+function TracksTab(): React.JSX.Element {
 	const tracksInfiniteQuery = useTracksInfiniteQueryContext()
+	const navigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
 
 	const { isFavorites, isDownloaded } = useLibrarySortAndFilterContext()
 
@@ -19,3 +24,5 @@ export default function TracksTab(): React.JSX.Element {
 		/>
 	)
 }
+
+export default TracksTab

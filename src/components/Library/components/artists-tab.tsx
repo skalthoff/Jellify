@@ -4,7 +4,7 @@ import {
 	useArtistsInfiniteQueryContext,
 } from '../../../providers/Library'
 
-export default function ArtistsTab(): React.JSX.Element {
+function ArtistsTab(): React.JSX.Element {
 	const artistsInfiniteQuery = useArtistsInfiniteQueryContext()
 	const artistPageParams = useArtistPageParamsContext()
 
@@ -16,3 +16,5 @@ export default function ArtistsTab(): React.JSX.Element {
 		/>
 	)
 }
+
+export default ArtistsTab

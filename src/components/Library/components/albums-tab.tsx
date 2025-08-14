@@ -1,7 +1,7 @@
 import Albums from '../../Albums/component'
 import { useAlbumsInfiniteQueryContext } from '../../../providers/Library'
 
-export default function AlbumsTab(): React.JSX.Element {
+function AlbumsTab(): React.JSX.Element {
 	const albumsInfiniteQuery = useAlbumsInfiniteQueryContext()
 
 	return (
@@ -15,3 +15,5 @@ export default function AlbumsTab(): React.JSX.Element {
 		/>
 	)
 }
+
+export default AlbumsTab
