@@ -18,11 +18,12 @@ import { mapDtoToTrack } from '../../../utils/mappings'
 import { useLoadQueueContext } from '../../../providers/Player/queue'
 import { QueuingType } from '../../../enums/queuing-type'
 import { useDownloadQualityContext, useStreamingQualityContext } from '../../../providers/Settings'
-import navigate from '../../../../navigation'
+import { useNavigation } from '@react-navigation/native'
+import LibraryStackParamList from '@/src/screens/Library/types'
+import DiscoverStackParamList from '@/src/screens/Discover/types'
 
 export default function PlayliistTracklistHeader(
 	playlist: BaseItemDto,
-	navigation: NativeStackNavigationProp<BaseStackParamList>,
 	editing: boolean,
 	playlistTracks: BaseItemDto[],
 	canEdit: boolean | undefined,
@@ -155,6 +156,8 @@ function PlaylistHeaderControls({
 	const isDownloading = pendingDownloads.length != 0
 	const { sessionId, api } = useJellifyContext()
 
+	const navigation = useNavigation<NativeStackNavigationProp<LibraryStackParamList>>()
+
 	const downloadPlaylist = () => {
 		if (!api || !sessionId) return
 		const jellifyTracks = playlistTracks.map((item) =>
@@ -185,13 +188,7 @@ function PlaylistHeaderControls({
 						color={'$danger'}
 						name='delete-sweep-outline' // otherwise use "delete-circle"
 						onPress={() => {
-							navigate('Tabs', {
-								screen: 'Library',
-								params: {
-									screen: 'DeletePlaylist',
-									params: { playlist },
-								},
-							})
+							navigation.push('DeletePlaylist', { playlist })
 						}}
 						small
 					/>

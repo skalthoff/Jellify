@@ -1,5 +1,4 @@
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
-import { useNavigation } from '@react-navigation/native'
 import { getToken, ListItem, YGroup, ZStack } from 'tamagui'
 import { RootStackParamList } from '../../screens/types'
 import { Text } from '../Global/helpers/text'
@@ -19,18 +18,24 @@ import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { useAddToQueueContext } from '../../providers/Player/queue'
 import { AddToQueueMutation } from '../../providers/Player/interfaces'
 import { QueuingType } from '../../enums/queuing-type'
-import LibraryStackParamList from '../../screens/Library/types'
-import DiscoverStackParamList from '@/src/screens/Discover/types'
+import LibraryStackParamList, { LibraryNavigation } from '../../screens/Library/types'
+import DiscoverStackParamList from '../../screens/Discover/types'
 import HomeStackParamList from '../../screens/Home/types'
+import { useCallback } from 'react'
 
 interface ContextProps {
 	item: BaseItemDto
-	navigation?: NativeStackNavigationProp<
+	stackNavigation?: NativeStackNavigationProp<
 		HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
 	>
+	navigation: NativeStackNavigationProp<RootStackParamList>
 }
 
-export default function ItemContext({ item, navigation }: ContextProps): React.JSX.Element {
+export default function ItemContext({
+	item,
+	stackNavigation,
+	navigation,
+}: ContextProps): React.JSX.Element {
 	const { api, user, library } = useJellifyContext()
 
 	const isArtist = item.Type === BaseItemKind.MusicArtist
@@ -76,9 +81,21 @@ export default function ItemContext({ item, navigation }: ContextProps): React.J
 					<AddToQueueMenuRow tracks={isTrack ? [item] : tracks} />
 				)}
 
-				{album && <ViewAlbumMenuRow item={album} navigation={navigation} />}
+				{(!isArtist || !isPlaylist) && (
+					<ViewAlbumMenuRow
+						item={isAlbum ? item : album!}
+						stackNavigation={stackNavigation}
+						rootNavigation={navigation}
+					/>
+				)}
 
-				{artist && <ViewArtistMenuRow item={artist} navigation={navigation} />}
+				{!isPlaylist && (
+					<ViewArtistMenuRow
+						item={isArtist ? item : artist}
+						stackNavigation={stackNavigation}
+						rootNavigation={navigation}
+					/>
+				)}
 			</YGroup>
 		</ZStack>
 	)
@@ -149,8 +166,30 @@ function BackgroundGradient(): React.JSX.Element {
 	return <LinearGradient style={{ flex: 1 }} colors={gradientColors} />
 }
 
-function ViewAlbumMenuRow({ item: album, navigation }: ContextProps): React.JSX.Element {
-	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+interface MenuRowProps {
+	item: BaseItemDto | undefined
+	stackNavigation?: NativeStackNavigationProp<
+		HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
+	>
+	rootNavigation: NativeStackNavigationProp<RootStackParamList>
+}
+
+function ViewAlbumMenuRow({
+	item: album,
+	stackNavigation,
+	rootNavigation,
+}: MenuRowProps): React.JSX.Element {
+	const goToAlbum = useCallback(() => {
+		if (stackNavigation && album) stackNavigation.navigate('Album', { album })
+		else if (album) {
+			rootNavigation.popTo('Tabs', {
+				screen: 'Library',
+				merge: true,
+			})
+
+			LibraryNavigation.album = album
+		}
+	}, [album, stackNavigation, rootNavigation])
 
 	return (
 		<ListItem
@@ -158,22 +197,7 @@ function ViewAlbumMenuRow({ item: album, navigation }: ContextProps): React.JSX.
 			backgroundColor={'transparent'}
 			gap={'$2'}
 			justifyContent='flex-start'
-			onPress={() => {
-				if (navigation) navigation.navigate('Album', { album })
-				else {
-					rootNavigation.goBack()
-					rootNavigation.goBack()
-					rootNavigation.navigate('Tabs', {
-						screen: 'Library',
-						params: {
-							screen: 'Album',
-							params: {
-								album,
-							},
-						},
-					})
-				}
-			}}
+			onPress={goToAlbum}
 			pressStyle={{ opacity: 0.5 }}
 		>
 			<Icon color='$primary' name='disc' />
@@ -183,8 +207,22 @@ function ViewAlbumMenuRow({ item: album, navigation }: ContextProps): React.JSX.
 	)
 }
 
-function ViewArtistMenuRow({ item: artist, navigation }: ContextProps): React.JSX.Element {
-	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+function ViewArtistMenuRow({
+	item: artist,
+	stackNavigation,
+	rootNavigation,
+}: MenuRowProps): React.JSX.Element {
+	const goToArtist = useCallback(() => {
+		if (stackNavigation && artist) stackNavigation.navigate('Artist', { artist })
+		else if (artist) {
+			rootNavigation.popTo('Tabs', {
+				screen: 'Library',
+				merge: true,
+			})
+
+			LibraryNavigation.artist = artist
+		}
+	}, [artist, stackNavigation, rootNavigation])
 
 	return (
 		<ListItem
@@ -192,22 +230,7 @@ function ViewArtistMenuRow({ item: artist, navigation }: ContextProps): React.JS
 			backgroundColor={'transparent'}
 			gap={'$2'}
 			justifyContent='flex-start'
-			onPress={() => {
-				if (navigation) navigation.navigate('Artist', { artist })
-				else {
-					rootNavigation.goBack()
-					rootNavigation.goBack()
-					rootNavigation.navigate('Tabs', {
-						screen: 'Library',
-						params: {
-							screen: 'Artist',
-							params: {
-								artist,
-							},
-						},
-					})
-				}
-			}}
+			onPress={goToArtist}
 			pressStyle={{ opacity: 0.5 }}
 		>
 			<Icon color='$primary' name='microphone-variant' />

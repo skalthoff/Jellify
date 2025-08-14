@@ -14,7 +14,6 @@ import FavoriteButton from '../../Global/components/favorite-button'
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
 import Icon from '../../Global/components/icon'
 import { useNavigation } from '@react-navigation/native'
-import navigate from '../../../../navigation'
 import { QueryKeys } from '../../../enums/query-keys'
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
 
@@ -46,9 +45,7 @@ export default function SongInfo(): React.JSX.Element {
 					marginHorizontal={'$1.5'}
 					onPress={() => {
 						if (album) {
-							navigation.goBack() // Dismiss player modal
-
-							navigate('Tabs', {
+							navigation.popTo('Tabs', {
 								screen: 'Library',
 								params: {
 									screen: 'Album',
@@ -93,8 +90,7 @@ export default function SongInfo(): React.JSX.Element {
 												artists: nowPlaying!.item.ArtistItems!,
 											})
 										} else {
-											navigation.goBack() // Dismiss player modal
-											navigate('Tabs', {
+											navigation.popTo('Tabs', {
 												screen: 'Library',
 												params: {
 													screen: 'Artist',

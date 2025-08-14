@@ -6,19 +6,12 @@ import TracksTab from './components/tracks-tab'
 import ArtistsTab from './components/artists-tab'
 import AlbumsTab from './components/albums-tab'
 import LibraryTabBar from './tab-bar'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RouteProp } from '@react-navigation/native'
-import LibraryStackParamList from '../../screens/Library/types'
+import { LibraryScreenProps } from '../../screens/Library/types'
+import React from 'react'
 
 const LibraryTabsNavigator = createMaterialTopTabNavigator()
 
-export default function Library({
-	route,
-	navigation,
-}: {
-	route: RouteProp<LibraryStackParamList, 'Library'>
-	navigation: NativeStackNavigationProp<LibraryStackParamList, 'Library'>
-}): React.JSX.Element {
+export default function Library({ route, navigation }: LibraryScreenProps): React.JSX.Element {
 	const theme = useTheme()
 
 	return (
@@ -65,7 +58,6 @@ export default function Library({
 					),
 					tabBarButtonTestID: 'library-albums-tab-button',
 				}}
-				initialParams={{ navigation }}
 			/>
 
 			<LibraryTabsNavigator.Screen
@@ -96,7 +88,6 @@ export default function Library({
 					),
 					tabBarButtonTestID: 'library-playlists-tab-button',
 				}}
-				initialParams={{ navigation }}
 			/>
 		</LibraryTabsNavigator.Navigator>
 	)

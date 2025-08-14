@@ -2,8 +2,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import ItemRow from '../../Global/components/item-row'
 import { FlashList } from '@shopify/flash-list'
 import { PlayerParamList } from '../../../screens/Player/types'
-import { RouteProp } from '@react-navigation/native'
-import navigate from '../../../../navigation'
+import { RouteProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../../../screens/types'
 
 interface MultipleArtistsProps {
 	navigation: NativeStackNavigationProp<PlayerParamList, 'MultipleArtists'>
@@ -13,6 +13,7 @@ export default function MultipleArtists({
 	navigation,
 	route,
 }: MultipleArtistsProps): React.JSX.Element {
+	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 	return (
 		<FlashList
 			data={route.params.artists}
@@ -23,11 +24,11 @@ export default function MultipleArtists({
 					item={artist}
 					queueName={''}
 					onPress={() => {
-						navigation.goBack() // Dismiss multiple artists modal
-						navigation.goBack() // Dismiss player modal
-						navigate('Tabs', {
+						navigation.popToTop()
+
+						rootNavigation.popTo('Tabs', {
 							screen: 'Library',
-							param: {
+							params: {
 								screen: 'Artist',
 								params: {
 									artist,

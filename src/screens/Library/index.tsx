@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Library from '../../components/Library/component'
 import { PlaylistScreen } from '../Playlist'
 import AddPlaylist from './add-playlist'
@@ -9,13 +9,44 @@ import { LibraryProvider } from '../../providers/Library'
 import { LibrarySortAndFilterProvider } from '../../providers/Library/sorting-filtering'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import AlbumScreen from '../Album'
-import LibraryStackParamList from './types'
+import LibraryStackParamList, { LibraryNavigation } from './types'
 import { LibraryTabProps } from '../Tabs/types'
+import { useIsFocused } from '@react-navigation/native'
 
 const Stack = createNativeStackNavigator<LibraryStackParamList>()
 
 export default function LibraryStack({ route, navigation }: LibraryTabProps): React.JSX.Element {
 	const theme = useTheme()
+
+	const isFocused = useIsFocused()
+
+	useEffect(() => {
+		if (!isFocused) return
+
+		if (LibraryNavigation.album) {
+			navigation.navigate('Library', {
+				screen: 'Album',
+				params: { album: LibraryNavigation.album },
+			})
+			LibraryNavigation.album = undefined
+		}
+
+		if (LibraryNavigation.artist) {
+			navigation.navigate('Library', {
+				screen: 'Artist',
+				params: { artist: LibraryNavigation.artist },
+			})
+			LibraryNavigation.artist = undefined
+		}
+
+		if (LibraryNavigation.playlist) {
+			navigation.navigate('Library', {
+				screen: 'Playlist',
+				params: { playlist: LibraryNavigation.playlist },
+			})
+			LibraryNavigation.playlist = undefined
+		}
+	}, [isFocused])
 
 	return (
 		<LibrarySortAndFilterProvider>
@@ -72,7 +103,7 @@ export default function LibraryStack({ route, navigation }: LibraryTabProps): Re
 					<Stack.Group
 						screenOptions={{
 							presentation: 'formSheet',
-							sheetAllowedDetents: [0.35],
+							sheetAllowedDetents: 'fitToContents',
 						}}
 					>
 						<Stack.Screen
@@ -82,14 +113,7 @@ export default function LibraryStack({ route, navigation }: LibraryTabProps): Re
 								title: 'Add Playlist',
 							}}
 						/>
-					</Stack.Group>
 
-					<Stack.Group
-						screenOptions={{
-							presentation: 'formSheet',
-							sheetAllowedDetents: [0.2],
-						}}
-					>
 						<Stack.Screen
 							name='DeletePlaylist'
 							component={DeletePlaylist}

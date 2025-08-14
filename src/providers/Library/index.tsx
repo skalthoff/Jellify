@@ -380,9 +380,13 @@ export const LibraryProvider = ({ children }: { children: React.ReactNode }) => 
 		() => context,
 		[
 			context.artistsInfiniteQuery.data,
+			context.artistsInfiniteQuery.isPending,
 			context.tracksInfiniteQuery.data,
+			context.tracksInfiniteQuery.isPending,
 			context.albumsInfiniteQuery.data,
+			context.albumsInfiniteQuery.isPending,
 			context.playlistsInfiniteQuery.data,
+			context.playlistsInfiniteQuery.isPending,
 		],
 	)
 	return <LibraryContext.Provider value={value}>{children}</LibraryContext.Provider>

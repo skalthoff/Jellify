@@ -11,10 +11,8 @@ export function ArtistScreen({
 	route: RouteProp<BaseStackParamList, 'Artist'>
 	navigation: NativeStackNavigationProp<BaseStackParamList, 'Artist'>
 }): React.JSX.Element {
-	const { artist } = route.params
-
 	return (
-		<ArtistProvider artist={artist}>
+		<ArtistProvider artist={route.params.artist}>
 			<ArtistNavigation />
 		</ArtistProvider>
 	)

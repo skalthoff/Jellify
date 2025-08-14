@@ -22,6 +22,9 @@ import { QueuingType } from '../../enums/queuing-type'
 import { useAlbumContext } from '../../providers/Album'
 import { useNavigation } from '@react-navigation/native'
 import { isUndefined } from 'lodash'
+import HomeStackParamList from '@/src/screens/Home/types'
+import LibraryStackParamList from '@/src/screens/Library/types'
+import DiscoverStackParamList from '@/src/screens/Discover/types'
 
 /**
  * The screen for an Album's track list
@@ -136,7 +139,12 @@ function AlbumTrackListHeader(
 ): React.JSX.Element {
 	const { width } = useSafeAreaFrame()
 
-	const navigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
+	const navigation =
+		useNavigation<
+			NativeStackNavigationProp<
+				HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
+			>
+		>()
 
 	return (
 		<YStack marginTop={'$4'} alignItems='center'>
@@ -217,7 +225,12 @@ function AlbumTrackListHeader(
 }
 
 function AlbumTrackListFooter(album: BaseItemDto): React.JSX.Element {
-	const navigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
+	const navigation =
+		useNavigation<
+			NativeStackNavigationProp<
+				HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
+			>
+		>()
 
 	return (
 		<YStack marginLeft={'$2'}>
