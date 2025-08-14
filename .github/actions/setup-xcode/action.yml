@@ -14,4 +14,4 @@ runs:
         xcode-version: ${{ inputs.xcode-version }}
     - name: Install iOS SDK
       run: |
-        xcodebuild -downloadPlatform iOS -buildVersion 18.1
+        xcodebuild -downloadPlatform iOS -buildVersion 18.2
