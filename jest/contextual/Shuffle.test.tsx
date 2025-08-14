@@ -44,6 +44,12 @@ jest.mock('../../src/providers/Settings', () => ({
 	useAutoDownloadContext: () => ({
 		autoDownload: false,
 	}),
+	useDownloadQualityContext: () => ({
+		downloadQuality: 'original',
+	}),
+	useStreamingQualityContext: () => ({
+		streamingQuality: 'original',
+	}),
 }))
 
 let queryClient: QueryClient
