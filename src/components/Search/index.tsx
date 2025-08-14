@@ -43,7 +43,7 @@ export default function Search({
 	})
 
 	const search = useCallback(() => {
-		let timeout: NodeJS.Timeout
+		let timeout: ReturnType<typeof setTimeout>
 
 		return () => {
 			clearTimeout(timeout)
