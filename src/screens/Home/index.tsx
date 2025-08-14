@@ -1,18 +1,17 @@
 import _ from 'lodash'
 import { HomeProvider } from '../../providers/Home'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { StackParamList } from '../../components/types'
 import { PlaylistScreen } from '../Playlist'
 import { ProvidedHome } from '../../components/Home'
-import DetailsScreen from '../Detail'
 import { ArtistScreen } from '../Artist'
-import InstantMix from '../../components/InstantMix/component'
 import { useTheme } from 'tamagui'
 import HomeArtistsScreen from './artists'
 import HomeTracksScreen from './tracks'
 import AlbumScreen from '../Album'
+import HomeStackParamList from './types'
+import { HomeTabProps } from '../Tabs/types'
 
-const HomeStack = createNativeStackNavigator<StackParamList>()
+const HomeStack = createNativeStackNavigator<HomeStackParamList>()
 
 /**
  * The main screen for the home tab.
@@ -23,13 +22,10 @@ export default function Home(): React.JSX.Element {
 
 	return (
 		<HomeProvider>
-			<HomeStack.Navigator
-				initialRouteName='HomeScreen'
-				screenOptions={{ headerShown: true }}
-			>
+			<HomeStack.Navigator initialRouteName='Home' screenOptions={{ headerShown: true }}>
 				<HomeStack.Group>
 					<HomeStack.Screen
-						name='HomeScreen'
+						name='Home'
 						component={ProvidedHome}
 						options={{
 							title: 'Home',
@@ -93,26 +89,6 @@ export default function Home(): React.JSX.Element {
 								color: theme.background.val,
 							},
 						})}
-					/>
-
-					<HomeStack.Screen
-						name='InstantMix'
-						component={InstantMix}
-						options={({ route }) => ({
-							title: route.params.item.Name
-								? `${route.params.item.Name} Mix`
-								: 'Instant Mix',
-						})}
-					/>
-				</HomeStack.Group>
-
-				<HomeStack.Group screenOptions={{ presentation: 'modal' }}>
-					<HomeStack.Screen
-						name='Details'
-						component={DetailsScreen}
-						options={{
-							headerShown: false,
-						}}
 					/>
 				</HomeStack.Group>
 			</HomeStack.Navigator>

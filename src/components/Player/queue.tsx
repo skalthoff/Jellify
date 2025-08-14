@@ -1,6 +1,6 @@
 import Icon from '../Global/components/icon'
 import Track from '../Global/components/track'
-import { StackParamList } from '../types'
+import { RootStackParamList } from '../../screens/types'
 import { useNowPlayingContext } from '../../providers/Player'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import DraggableFlatList from 'react-native-draggable-flatlist'
@@ -20,7 +20,7 @@ import { useLayoutEffect } from 'react'
 export default function Queue({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<StackParamList>
+	navigation: NativeStackNavigationProp<RootStackParamList>
 }): React.JSX.Element {
 	const nowPlaying = useNowPlayingContext()
 
@@ -84,7 +84,6 @@ export default function Queue({
 				>
 					<Track
 						queue={queueRef}
-						navigation={navigation}
 						track={queueItem.item}
 						index={getIndex() ?? 0}
 						showArtwork

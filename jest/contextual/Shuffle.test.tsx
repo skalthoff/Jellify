@@ -41,7 +41,7 @@ jest.mock('../../src/providers/Network', () => ({
 
 // Mock the SettingsProvider to avoid dependency issues
 jest.mock('../../src/providers/Settings', () => ({
-	useSettingsContext: () => ({
+	useAutoDownloadContext: () => ({
 		autoDownload: false,
 	}),
 }))

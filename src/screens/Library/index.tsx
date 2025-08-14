@@ -1,19 +1,17 @@
 import React from 'react'
-import { StackParamList } from '../../components/types'
 import Library from '../../components/Library/component'
 import { PlaylistScreen } from '../Playlist'
-import DetailsScreen from '../Detail'
 import AddPlaylist from './add-playlist'
 import DeletePlaylist from './delete-playlist'
 import { ArtistScreen } from '../Artist'
-import InstantMix from '../../components/InstantMix/component'
 import { useTheme } from 'tamagui'
 import { LibraryProvider } from '../../providers/Library'
 import { LibrarySortAndFilterProvider } from '../../providers/Library/sorting-filtering'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import AlbumScreen from '../Album'
+import LibraryStackParamList from './types'
 
-const Stack = createNativeStackNavigator<StackParamList>()
+const Stack = createNativeStackNavigator<LibraryStackParamList>()
 
 export default function LibraryStack(): React.JSX.Element {
 	const theme = useTheme()
@@ -21,9 +19,9 @@ export default function LibraryStack(): React.JSX.Element {
 	return (
 		<LibrarySortAndFilterProvider>
 			<LibraryProvider>
-				<Stack.Navigator initialRouteName='LibraryScreen'>
+				<Stack.Navigator initialRouteName='Library'>
 					<Stack.Screen
-						name='LibraryScreen'
+						name='Library'
 						component={Library}
 						options={{
 							title: 'Library',
@@ -69,26 +67,6 @@ export default function LibraryStack(): React.JSX.Element {
 							},
 						})}
 					/>
-
-					<Stack.Screen
-						name='InstantMix'
-						component={InstantMix}
-						options={({ route }) => ({
-							title: route.params.item.Name
-								? `${route.params.item.Name} Mix`
-								: 'Instant Mix',
-						})}
-					/>
-
-					<Stack.Group screenOptions={{ presentation: 'modal' }}>
-						<Stack.Screen
-							name='Details'
-							component={DetailsScreen}
-							options={{
-								headerShown: false,
-							}}
-						/>
-					</Stack.Group>
 
 					<Stack.Group
 						screenOptions={{

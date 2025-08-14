@@ -1,5 +1,4 @@
-import TrackPlayer from 'react-native-track-player'
-import { Spacer, View, XStack, YStack } from 'tamagui'
+import { XStack, YStack } from 'tamagui'
 import { SignOutModalProps } from './types'
 import { H5, Text } from '../../components/Global/helpers/text'
 import Button from '../../components/Global/helpers/button'
@@ -7,6 +6,7 @@ import Icon from '../../components/Global/components/icon'
 import { useJellifyContext } from '../../providers'
 import { useNetworkContext } from '../../providers/Network'
 import { useResetQueueContext } from '../../providers/Player/queue'
+import navigate from '../../../navigation'
 
 export default function SignOutModal({ navigation }: SignOutModalProps): React.JSX.Element {
 	const { server } = useJellifyContext()
@@ -39,12 +39,11 @@ export default function SignOutModal({ navigation }: SignOutModalProps): React.J
 					borderColor={'$danger'}
 					onPress={() => {
 						navigation.goBack()
-						navigation.navigate('Login', {
-							screen: 'ServerAddress',
-						})
-						navigation.reset({
-							index: 0,
-							routes: [{ name: 'Login', params: { screen: 'ServerAddress' } }],
+						navigate('Tabs', {
+							screen: 'Login',
+							params: {
+								screen: 'ServerAddress',
+							},
 						})
 
 						clearDownloads()

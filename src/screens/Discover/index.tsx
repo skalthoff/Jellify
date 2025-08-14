@@ -1,18 +1,16 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { StackParamList } from '../../components/types'
 import Index from '../../components/Discover/component'
-import DetailsScreen from '../Detail'
 import AlbumScreen from '../Album'
 import { ArtistScreen } from '../Artist'
 import { DiscoverProvider } from '../../providers/Discover'
-import InstantMix from '../../components/InstantMix/component'
 import { useTheme } from 'tamagui'
 import RecentlyAdded from './albums'
 import PublicPlaylists from './playlists'
 import { PlaylistScreen } from '../Playlist'
 import SuggestedArtists from './artists'
+import DiscoverStackParamList from './types'
 
-export const DiscoverStack = createNativeStackNavigator<StackParamList>()
+export const DiscoverStack = createNativeStackNavigator<DiscoverStackParamList>()
 
 export function Discover(): React.JSX.Element {
 	const theme = useTheme()
@@ -90,26 +88,6 @@ export function Discover(): React.JSX.Element {
 						title: 'Suggested Artists',
 					}}
 				/>
-
-				<DiscoverStack.Screen
-					name='InstantMix'
-					component={InstantMix}
-					options={({ route }) => ({
-						title: route.params.item.Name
-							? `${route.params.item.Name} Mix`
-							: 'Instant Mix',
-					})}
-				/>
-
-				<DiscoverStack.Group screenOptions={{ presentation: 'modal' }}>
-					<DiscoverStack.Screen
-						name='Details'
-						component={DetailsScreen}
-						options={{
-							headerShown: false,
-						}}
-					/>
-				</DiscoverStack.Group>
 			</DiscoverStack.Navigator>
 		</DiscoverProvider>
 	)

@@ -11,11 +11,11 @@ import { FlatList, Linking } from 'react-native'
 import { H6, ScrollView, Separator, XStack, YStack } from 'tamagui'
 import Icon from '../../../Global/components/icon'
 import { useEffect, useState } from 'react'
-import { useSettingsContext } from '../../../../providers/Settings'
+import { useSetDevToolsContext } from '../../../../providers/Settings'
 export default function InfoTabIndex({ navigation }: InfoTabNativeStackNavigationProp) {
 	const { api } = useJellifyContext()
 
-	const { setDevTools } = useSettingsContext()
+	const setDevTools = useSetDevToolsContext()
 
 	const [versionNumberPresses, setVersionNumberPresses] = useState(0)
 
@@ -66,7 +66,7 @@ export default function InfoTabIndex({ navigation }: InfoTabNativeStackNavigatio
 											Linking.openURL('https://discord.gg/yf8fBatktn')
 										}
 									>
-										<Icon name='discord' small color='$borderColor' />
+										<Icon name='chat' small color='$borderColor' />
 										<Text>Join Discord</Text>
 									</XStack>
 								</XStack>

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react'
-import { getToken, Separator, useTheme, XStack, YStack, Spinner } from 'tamagui'
+import { getToken, Separator, useTheme, XStack } from 'tamagui'
 import { Text } from '../Global/helpers/text'
-import { ActivityIndicator, RefreshControl } from 'react-native'
-import { ArtistsProps } from '../types'
+import { RefreshControl } from 'react-native'
+import { ArtistsProps } from '../../screens/types'
 import ItemRow from '../Global/components/item-row'
 import { useLibrarySortAndFilterContext } from '../../providers/Library'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models/base-item-dto'
@@ -20,7 +20,6 @@ import { isString } from 'lodash'
  */
 export default function Artists({
 	artistsInfiniteQuery,
-	navigation,
 	showAlphabeticalSelector,
 	artistPageParams,
 }: ArtistsProps): React.JSX.Element {
@@ -145,7 +144,6 @@ export default function Artists({
 							circular
 							item={artist}
 							queueName={artist.Name ?? 'Unknown Artist'}
-							navigation={navigation}
 						/>
 					) : null
 				}

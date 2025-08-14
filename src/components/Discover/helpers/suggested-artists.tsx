@@ -5,12 +5,12 @@ import { ItemCard } from '../../Global/components/item-card'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useDiscoverContext } from '../../../providers/Discover'
 import { H4 } from '../../Global/helpers/text'
-import { StackParamList } from '../../types'
+import { RootStackParamList } from '../../../screens/types'
 
 export default function SuggestedArtists({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<StackParamList>
+	navigation: NativeStackNavigationProp<RootStackParamList>
 }): React.JSX.Element {
 	const { suggestedArtistsInfiniteQuery } = useDiscoverContext()
 	return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ItemCard } from '../Global/components/item-card'
-import { ArtistAlbumsProps, ArtistEpsProps, ArtistFeaturedOnProps } from '../types'
+import { ArtistAlbumsProps, ArtistEpsProps, ArtistFeaturedOnProps } from './types'
 import { Text } from '../Global/helpers/text'
 import { useArtistContext } from '../../providers/Artist'
 import { convertRunTimeTicksToSeconds } from '../../utils/runtimeticks'

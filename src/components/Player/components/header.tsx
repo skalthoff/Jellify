@@ -5,18 +5,15 @@ import { getToken, useWindowDimensions, XStack, YStack, useTheme } from 'tamagui
 import { Text } from '../../Global/helpers/text'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import Icon from '../../Global/components/icon'
-import { StackParamList } from '../../types'
+import { RootStackParamList } from '../../../screens/types'
 import React from 'react'
 import { State } from 'react-native-track-player'
 import ItemImage from '../../Global/components/image'
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
+import { useNavigation } from '@react-navigation/native'
 
-export default function PlayerHeader({
-	navigation,
-}: {
-	navigation: NativeStackNavigationProp<StackParamList>
-}): React.JSX.Element {
-	const { api } = useJellifyContext()
+export default function PlayerHeader(): React.JSX.Element {
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
 	const nowPlaying = useNowPlayingContext()
 	const playbackState = usePlaybackStateContext()
@@ -57,7 +54,7 @@ export default function PlayerHeader({
 						small
 						name='dots-vertical'
 						onPress={() => {
-							navigation.navigate('Details', {
+							navigation.navigate('Context', {
 								item: nowPlaying!.item,
 								isNested: true,
 							})

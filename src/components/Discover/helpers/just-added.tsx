@@ -1,4 +1,4 @@
-import { StackParamList } from '../../types'
+import { RootStackParamList } from '../../../screens/types'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import HorizontalCardList from '../../../components/Global/components/horizontal-list'
 import { ItemCard } from '../../../components/Global/components/item-card'
@@ -10,7 +10,7 @@ import Icon from '../../Global/components/icon'
 export default function RecentlyAdded({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<StackParamList>
+	navigation: NativeStackNavigationProp<RootStackParamList>
 }): React.JSX.Element {
 	const {
 		recentlyAdded,

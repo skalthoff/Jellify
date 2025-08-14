@@ -3,13 +3,12 @@ import { XStack } from 'tamagui'
 import Icon from '../../Global/components/icon'
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { StackParamList } from '../../types'
+import { RootStackParamList } from '../../../screens/types'
+import { useNavigation } from '@react-navigation/native'
 
-export default function Footer({
-	navigation,
-}: {
-	navigation: NativeStackNavigationProp<StackParamList>
-}): React.JSX.Element {
+export default function Footer(): React.JSX.Element {
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
 	return (
 		<XStack justifyContent='flex-end' alignItems='center' marginHorizontal={'$5'} flex={1}>
 			<XStack alignItems='center' justifyContent='flex-start' flex={1}>

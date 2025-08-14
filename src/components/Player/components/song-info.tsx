@@ -4,26 +4,35 @@ import { TextTickerConfig } from '../component.config'
 import { useNowPlayingContext } from '../../../providers/Player'
 import { Text } from '../../Global/helpers/text'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { StackParamList } from '../../types'
+import { RootStackParamList } from '../../../screens/types'
 import React, { useMemo } from 'react'
 import ItemImage from '../../Global/components/image'
 import { useQuery } from '@tanstack/react-query'
-import { fetchItem } from '../../../api/queries/item'
+import { fetchItem, fetchItems } from '../../../api/queries/item'
 import { useJellifyContext } from '../../../providers'
 import FavoriteButton from '../../Global/components/favorite-button'
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
+import Icon from '../../Global/components/icon'
+import { useNavigation } from '@react-navigation/native'
+import navigate from '../../../../navigation'
+import { QueryKeys } from '../../../enums/query-keys'
+import { BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
 
-export default function SongInfo({
-	navigation,
-}: {
-	navigation: NativeStackNavigationProp<StackParamList>
-}): React.JSX.Element {
-	const { api } = useJellifyContext()
+export default function SongInfo(): React.JSX.Element {
+	const { api, user, library } = useJellifyContext()
 	const nowPlaying = useNowPlayingContext()
 
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
 	const { data: album } = useQuery({
-		queryKey: ['album', nowPlaying!.item.AlbumId],
+		queryKey: [QueryKeys.Album, nowPlaying!.item.AlbumId],
 		queryFn: () => fetchItem(api, nowPlaying!.item.AlbumId!),
+	})
+
+	const { data: artists } = useQuery({
+		queryKey: [QueryKeys.TrackArtists, nowPlaying!.item.ArtistItems],
+		queryFn: () => fetchItems(api, user, library, [BaseItemKind.MusicArtist]),
+		select: (data) => data.data,
 	})
 
 	return useMemo(() => {
@@ -34,7 +43,8 @@ export default function SongInfo({
 					onPress={() => {
 						if (album) {
 							navigation.goBack() // Dismiss player modal
-							navigation.navigate('Tabs', {
+
+							navigate('Tabs', {
 								screen: 'Library',
 								params: {
 									screen: 'Album',
@@ -80,12 +90,12 @@ export default function SongInfo({
 											})
 										} else {
 											navigation.goBack() // Dismiss player modal
-											navigation.navigate('Tabs', {
+											navigate('Tabs', {
 												screen: 'Library',
 												params: {
 													screen: 'Artist',
 													params: {
-														artist: nowPlaying!.item.ArtistItems![0],
+														artist: nowPlaying!.item.ArtistItems[0],
 													},
 												},
 											})
@@ -99,7 +109,16 @@ export default function SongInfo({
 					</Animated.View>
 				</YStack>
 
-				<XStack justifyContent='flex-end' alignItems='center' flexShrink={1}>
+				<XStack gap={'$3'} justifyContent='flex-end' alignItems='center' flexShrink={1}>
+					<Icon
+						name='dots-horizontal-circle-outline'
+						onPress={() => {
+							navigation.navigate('Context', {
+								item: nowPlaying!.item,
+								isNested: true,
+							})
+						}}
+					/>
 					<FavoriteButton item={nowPlaying!.item} />
 				</XStack>
 			</XStack>

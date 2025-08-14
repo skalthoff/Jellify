@@ -1,14 +1,14 @@
 import Player from './Player'
-import { Tabs } from './tabs'
-import { StackParamList } from '../components/types'
+import { Tabs } from './Tabs'
+import { RootStackParamList } from './types'
 import { getToken, useTheme } from 'tamagui'
 import { useJellifyContext } from '../providers'
 import Login from './Login'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Context from './Context'
-import { Platform } from 'react-native'
+import { getItemName } from '../utils/text'
 
-const RootStack = createNativeStackNavigator<StackParamList>()
+const RootStack = createNativeStackNavigator<RootStackParamList>()
 
 export default function Root(): React.JSX.Element {
 	const theme = useTheme()
@@ -36,8 +36,8 @@ export default function Root(): React.JSX.Element {
 				name='Player'
 				component={Player}
 				options={{
-					headerShown: false,
 					presentation: 'modal',
+					headerShown: false,
 				}}
 			/>
 			<RootStack.Screen
@@ -47,15 +47,17 @@ export default function Root(): React.JSX.Element {
 					headerShown: false,
 				}}
 			/>
+
 			<RootStack.Screen
 				name='Context'
 				component={Context}
-				options={{
-					headerShown: false,
+				options={({ route }) => ({
+					headerTitle: getItemName(route.params.item),
 					presentation: 'formSheet',
-					sheetAllowedDetents: [0.65],
+					sheetAllowedDetents: [0.5],
 					sheetGrabberVisible: true,
-				}}
+					headerTransparent: true,
+				})}
 			/>
 		</RootStack.Navigator>
 	)

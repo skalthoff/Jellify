@@ -1,5 +1,4 @@
 import { View, XStack } from 'tamagui'
-import { DeletePlaylistProps } from '../../components/types'
 import Button from '../../components/Global/helpers/button'
 import { H5, Text } from '../../components/Global/helpers/text'
 import { useMutation } from '@tanstack/react-query'
@@ -10,12 +9,13 @@ import { queryClient } from '../../constants/query-client'
 import { QueryKeys } from '../../enums/query-keys'
 import { useJellifyContext } from '../../providers'
 import Icon from '../../components/Global/components/icon'
+import { LibraryDeletePlaylistProps } from './types'
 // import * as Burnt from 'burnt'
 
 export default function DeletePlaylist({
 	navigation,
 	route,
-}: DeletePlaylistProps): React.JSX.Element {
+}: LibraryDeletePlaylistProps): React.JSX.Element {
 	const { api, user, library } = useJellifyContext()
 	const useDeletePlaylist = useMutation({
 		mutationFn: (playlist: BaseItemDto) => deletePlaylist(api, playlist.Id!),

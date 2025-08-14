@@ -1,6 +1,6 @@
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { StackParamList } from '../../types'
+import { BaseStackParamList } from '../../../screens/types'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { getToken, getTokens, Separator, View, XStack, YStack } from 'tamagui'
 import { AnimatedH5 } from '../../Global/helpers/text'
@@ -13,15 +13,16 @@ import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import { useJellifyContext } from '../../../providers'
 import { ImageType } from '@jellyfin/sdk/lib/generated-client/models'
 import { useNetworkContext } from '../../../../src/providers/Network'
-import { useSettingsContext } from '../../../../src/providers/Settings'
 import { ActivityIndicator } from 'react-native'
 import { mapDtoToTrack } from '../../../utils/mappings'
 import { useLoadQueueContext } from '../../../providers/Player/queue'
 import { QueuingType } from '../../../enums/queuing-type'
+import { useDownloadQualityContext, useStreamingQualityContext } from '../../../providers/Settings'
+import navigate from '../../../../navigation'
 
 export default function PlayliistTracklistHeader(
 	playlist: BaseItemDto,
-	navigation: NativeStackNavigationProp<StackParamList>,
+	navigation: NativeStackNavigationProp<BaseStackParamList>,
 	editing: boolean,
 	playlistTracks: BaseItemDto[],
 	canEdit: boolean | undefined,
@@ -123,7 +124,6 @@ export default function PlayliistTracklistHeader(
 					<PlaylistHeaderControls
 						editing={editing}
 						setEditing={setEditing}
-						navigation={navigation}
 						playlist={playlist}
 						playlistTracks={playlistTracks}
 						canEdit={canEdit}
@@ -138,20 +138,19 @@ export default function PlayliistTracklistHeader(
 function PlaylistHeaderControls({
 	editing,
 	setEditing,
-	navigation,
 	playlist,
 	playlistTracks,
 	canEdit,
 }: {
 	editing: boolean
 	setEditing: (editing: boolean) => void
-	navigation: NativeStackNavigationProp<StackParamList>
 	playlist: BaseItemDto
 	playlistTracks: BaseItemDto[]
 	canEdit: boolean | undefined
 }): React.JSX.Element {
 	const { useDownloadMultiple, pendingDownloads } = useNetworkContext()
-	const { downloadQuality, streamingQuality } = useSettingsContext()
+	const downloadQuality = useDownloadQualityContext()
+	const streamingQuality = useStreamingQualityContext()
 	const useLoadNewQueue = useLoadQueueContext()
 	const isDownloading = pendingDownloads.length != 0
 	const { sessionId, api } = useJellifyContext()
@@ -185,11 +184,19 @@ function PlaylistHeaderControls({
 					<Icon
 						color={'$danger'}
 						name='delete-sweep-outline' // otherwise use "delete-circle"
-						onPress={() => navigation.navigate('DeletePlaylist', { playlist })}
+						onPress={() => {
+							navigate('Tabs', {
+								screen: 'Library',
+								params: {
+									screen: 'DeletePlaylist',
+									params: { playlist },
+								},
+							})
+						}}
 						small
 					/>
 				) : (
-					<InstantMixButton item={playlist} navigation={navigation} />
+					<InstantMixButton item={playlist} />
 				)}
 			</YStack>
 

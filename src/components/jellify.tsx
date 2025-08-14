@@ -7,7 +7,7 @@ import { JellifyUserDataProvider } from '../providers/UserData'
 import { NetworkContextProvider } from '../providers/Network'
 import { QueueProvider } from '../providers/Player/queue'
 import { DisplayProvider } from '../providers/Display/display-provider'
-import { SettingsProvider, useSettingsContext } from '../providers/Settings'
+import { useSendMetricsContext, useThemeSettingContext } from '../providers/Settings'
 import {
 	createTelemetryDeck,
 	TelemetryDeckProvider,
@@ -26,7 +26,7 @@ import { CarPlayProvider } from '../providers/CarPlay'
  * @returns The {@link Jellify} component
  */
 export default function Jellify(): React.JSX.Element {
-	const { theme } = useSettingsContext()
+	const theme = useThemeSettingContext()
 
 	const isDarkMode = useColorScheme() === 'dark'
 
@@ -44,7 +44,7 @@ export default function Jellify(): React.JSX.Element {
 }
 
 function JellifyLoggingWrapper({ children }: { children: React.ReactNode }): React.JSX.Element {
-	const { sendMetrics } = useSettingsContext()
+	const sendMetrics = useSendMetricsContext()
 
 	/**
 	 * Create the TelemetryDeck instance, which is used to send telemetry data to the server
@@ -68,7 +68,7 @@ function JellifyLoggingWrapper({ children }: { children: React.ReactNode }): Rea
  * @returns The {@link App} component
  */
 function App(): React.JSX.Element {
-	const { sendMetrics } = useSettingsContext()
+	const sendMetrics = useSendMetricsContext()
 	const telemetrydeck = useTelemetryDeck()
 	const theme = useTheme()
 

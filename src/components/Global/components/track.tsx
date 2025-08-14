@@ -5,7 +5,7 @@ import { RunTimeTicks } from '../helpers/time-codes'
 import { BaseItemDto, ImageType } from '@jellyfin/sdk/lib/generated-client/models'
 import Icon from './icon'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { StackParamList } from '../../types'
+import { BaseStackParamList, RootStackParamList } from '../../../screens/types'
 import { QueuingType } from '../../../enums/queuing-type'
 import { Queue } from '../../../player/types/queue-item'
 import FavoriteIcon from './favorite-icon'
@@ -19,13 +19,13 @@ import DownloadedIcon from './downloaded-icon'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../../enums/query-keys'
 import { fetchMediaInfo } from '../../../api/queries/media'
-import { useSettingsContext } from '../../../providers/Settings'
+import { useStreamingQualityContext } from '../../../providers/Settings'
 import { getQualityParams } from '../../../utils/mappings'
 import { useNowPlayingContext } from '../../../providers/Player'
+import { useNavigation } from '@react-navigation/native'
 
 export interface TrackProps {
 	track: BaseItemDto
-	navigation: NativeStackNavigationProp<StackParamList>
 	tracklist?: BaseItemDto[] | undefined
 	index: number
 	queue: Queue
@@ -43,7 +43,6 @@ export interface TrackProps {
 export default function Track({
 	track,
 	tracklist,
-	navigation,
 	index,
 	queue,
 	showArtwork,
@@ -56,12 +55,16 @@ export default function Track({
 	onRemove,
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
+
+	const stackNavigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
+	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
 	const { api, user } = useJellifyContext()
 	const nowPlaying = useNowPlayingContext()
 	const playQueue = usePlayQueueContext()
 	const useLoadNewQueue = useLoadQueueContext()
 	const { downloadedTracks, networkStatus } = useNetworkContext()
-	const { streamingQuality } = useSettingsContext()
+	const streamingQuality = useStreamingQualityContext()
 
 	const isPlaying = nowPlaying?.item.Id === track.Id
 
@@ -102,9 +105,8 @@ export default function Track({
 					onLongPress
 						? () => onLongPress()
 						: () => {
-								navigation.navigate('Details', {
+								rootNavigation.navigate('Context', {
 									item: track,
-									isNested: isNested,
 								})
 							}
 				}
@@ -202,9 +204,8 @@ export default function Track({
 						if (showRemove) {
 							if (onRemove) onRemove()
 						} else {
-							navigation.navigate('Details', {
+							rootNavigation.navigate('Context', {
 								item: track,
-								isNested: isNested,
 							})
 						}
 					}}

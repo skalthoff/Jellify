@@ -1,4 +1,4 @@
-import { StackParamList } from '../types'
+import { RootStackParamList } from '../../screens/types'
 import { useNowPlayingContext } from '../../providers/Player'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { useCallback, useState } from 'react'
@@ -27,7 +27,7 @@ import SongInfo from './components/song-info'
 export default function PlayerScreen({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<StackParamList>
+	navigation: NativeStackNavigationProp<RootStackParamList>
 }): React.JSX.Element {
 	const [showToast, setShowToast] = useState(true)
 
@@ -54,7 +54,7 @@ export default function PlayerScreen({
 					<BlurredBackground width={width} height={height} />
 
 					<YStack fullscreen marginBottom={bottom}>
-						<PlayerHeader navigation={navigation} />
+						<PlayerHeader />
 
 						<XStack
 							justifyContent='center'
@@ -64,7 +64,7 @@ export default function PlayerScreen({
 							maxWidth={width / 1.1}
 							flex={2}
 						>
-							<SongInfo navigation={navigation} />
+							<SongInfo />
 						</XStack>
 
 						<XStack justifyContent='center' flex={1}>
@@ -74,7 +74,7 @@ export default function PlayerScreen({
 
 						<Controls />
 
-						<Footer navigation={navigation} />
+						<Footer />
 					</YStack>
 				</ZStack>
 			)}

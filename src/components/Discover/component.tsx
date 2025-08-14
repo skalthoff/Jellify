@@ -2,7 +2,7 @@ import React from 'react'
 import { getToken, ScrollView, Separator, View } from 'tamagui'
 import RecentlyAdded from './helpers/just-added'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { StackParamList } from '../types'
+import { RootStackParamList } from '../../screens/types'
 import { useDiscoverContext } from '../../providers/Discover'
 import { RefreshControl } from 'react-native'
 import PublicPlaylists from './helpers/public-playlists'
@@ -11,7 +11,7 @@ import SuggestedArtists from './helpers/suggested-artists'
 export default function Index({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<StackParamList>
+	navigation: NativeStackNavigationProp<RootStackParamList>
 }): React.JSX.Element {
 	const { refreshing, refresh, recentlyAdded, publicPlaylists, suggestedArtistsInfiniteQuery } =
 		useDiscoverContext()

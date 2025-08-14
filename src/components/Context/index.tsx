@@ -1,102 +1,235 @@
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
 import { useNavigation } from '@react-navigation/native'
-import { Separator, View, XStack, YGroup, YStack, ZStack } from 'tamagui'
-import { StackParamList } from '../types'
+import { getToken, ListItem, View, YGroup, ZStack } from 'tamagui'
+import { BaseStackParamList, RootStackParamList } from '../../screens/types'
 import { Text } from '../Global/helpers/text'
-import ItemImage from '../Global/components/image'
 import FavoriteContextMenuRow from '../Global/components/favorite-context-menu-row'
 import { Blurhash } from 'react-native-blurhash'
 import { getPrimaryBlurhashFromDto } from '../../utils/blurhash'
+import { useColorScheme, useWindowDimensions } from 'react-native'
+import { useThemeSettingContext } from '../../providers/Settings'
+import LinearGradient from 'react-native-linear-gradient'
+import Icon from '../Global/components/icon'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from '../../enums/query-keys'
+import { fetchItem } from '../../api/queries/item'
+import { useJellifyContext } from '../../providers'
+import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
+import { useAddToQueueContext } from '../../providers/Player/queue'
+import { AddToQueueMutation } from '../../providers/Player/interfaces'
+import { QueuingType } from '../../enums/queuing-type'
+import LibraryStackParamList from '../../screens/Library/types'
+import navigate from '../../../navigation'
+import DiscoverStackParamList from '@/src/screens/Discover/types'
+import { screen } from '@testing-library/react-native'
+import HomeStackParamList from '../../screens/Home/types'
 
 interface ContextProps {
 	item: BaseItemDto
+	isNested?: boolean | undefined
+	navigation?: NativeStackNavigationProp<
+		HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
+	>
 }
 
-export default function ItemContext({ item }: ContextProps): React.JSX.Element {
-	const navigation = useNavigation<StackParamList>()
+export default function ItemContext({
+	item,
+	isNested,
+	navigation,
+}: ContextProps): React.JSX.Element {
+	const { api, user, library } = useJellifyContext()
 
 	const isArtist = item.Type === BaseItemKind.MusicArtist
 	const isAlbum = item.Type === BaseItemKind.MusicAlbum
 	const isTrack = item.Type === BaseItemKind.Audio
 	const isPlaylist = item.Type === BaseItemKind.Playlist
 
+	const albumArtists = item.AlbumArtists ?? []
+
+	const { data: album, isSuccess: albumFetchSuccess } = useQuery({
+		queryKey: [QueryKeys.Item, item.AlbumId],
+		queryFn: () => fetchItem(api, item.AlbumId!),
+		enabled: isTrack,
+	})
+
+	const { data: artist, isSuccess: artistFetchSuccess } = useQuery({
+		queryKey: [QueryKeys.ArtistById, albumArtists.length > 0 ? albumArtists[0].Id : item.Id],
+		queryFn: () => fetchItem(api, albumArtists[0].Id!),
+		enabled: (isTrack || isAlbum) && albumArtists.length > 0,
+	})
+
+	const { data: tracks, isSuccess: tracksFetchSuccess } = useQuery({
+		queryKey: [QueryKeys.ItemTracks, item.Id],
+		queryFn: () =>
+			getItemsApi(api!)
+				.getItems({ parentId: item.Id! })
+				.then(({ data }) => {
+					if (data.Items) return data.Items
+					else return []
+				}),
+	})
+
+	const renderAddToQueueRow = isTrack || isAlbum || isPlaylist
+
 	return (
-		<ZStack flex={1}>
-			<View flex={1}>{renderBackgroundBlur(item)}</View>
+		<ZStack>
+			<ItemContextBackground item={item} />
 
-			<View flex={1}>
-				{renderContextHeader(item)}
+			<YGroup unstyled flex={1} marginTop={'$8'}>
+				<FavoriteContextMenuRow item={item} />
 
-				<Separator />
+				{renderAddToQueueRow && tracks && (
+					<AddToQueueMenuRow tracks={isTrack ? [item] : tracks} />
+				)}
 
-				<YGroup>
-					<FavoriteContextMenuRow item={item} />
-				</YGroup>
-			</View>
+				{album && (
+					<ViewAlbumMenuRow item={album} isNested={isNested} navigation={navigation} />
+				)}
+
+				{artist && (
+					<ViewArtistMenuRow item={artist} isNested={isNested} navigation={navigation} />
+				)}
+			</YGroup>
 		</ZStack>
 	)
 }
 
-function renderBackgroundBlur(item: BaseItemDto): React.JSX.Element {
+function ItemContextBackground({ item }: { item: BaseItemDto }): React.JSX.Element {
+	return (
+		<ZStack flex={1}>
+			<BackgroundBlur item={item} />
+
+			<BackgroundGradient />
+		</ZStack>
+	)
+}
+
+function BackgroundBlur({ item }: { item: BaseItemDto }): React.JSX.Element {
 	const blurhash = getPrimaryBlurhashFromDto(item)
 
 	return (
 		<Blurhash
 			blurhash={blurhash!}
 			style={{
-				height: '100%',
-				width: '100%',
+				flex: 1,
 			}}
 		/>
 	)
 }
 
-function renderContextHeader(item: BaseItemDto): React.JSX.Element {
-	const isArtist = item.Type === BaseItemKind.MusicArtist
-	const isAlbum = item.Type === BaseItemKind.MusicAlbum
-	const isTrack = item.Type === BaseItemKind.Audio
-	const isPlaylist = item.Type === BaseItemKind.Playlist
+function AddToQueueMenuRow({ tracks }: { tracks: BaseItemDto[] }): React.JSX.Element {
+	const useAddToQueue = useAddToQueueContext()
 
-	const itemName = item.Name ?? getNamePlaceholder(item.Type)
+	const mutation: AddToQueueMutation = {
+		tracks,
+		queuingType: QueuingType.DirectlyQueued,
+	}
 
 	return (
-		<XStack alignItems='center' marginBottom={'$2'} margin={'$4'} gap={'$2'} minHeight={'$6'}>
-			<ItemImage item={item} circular={isArtist} />
+		<ListItem
+			animation={'quick'}
+			backgroundColor={'transparent'}
+			flex={1}
+			gap={'$2'}
+			justifyContent='flex-start'
+			onPress={() => {
+				useAddToQueue.mutate(mutation)
+			}}
+			pressStyle={{ opacity: 0.5 }}
+		>
+			<Icon color='$primary' name='playlist-plus' />
 
-			<YStack gap={'$1'}>
-				<Text bold>{itemName}</Text>
-
-				{!isArtist && !isPlaylist ? (
-					isAlbum ? (
-						<Text>
-							{item.AlbumArtists?.map((artist) => artist.Name).join(', ') ||
-								'Unknown Artist'}
-						</Text>
-					) : (
-						<Text>
-							{item.ArtistItems?.map((artist) => artist.Name).join(', ') ||
-								'Unknown Artist'}
-						</Text>
-					)
-				) : (
-					<Text>{`${item.ChildCount?.toString() ?? '0'} ${item.ChildCount === 1 ? 'track' : 'tracks'}`}</Text>
-				)}
-			</YStack>
-		</XStack>
+			<Text bold>Add to Queue</Text>
+		</ListItem>
 	)
 }
 
-function getNamePlaceholder(type: BaseItemKind | undefined): string {
-	switch (type) {
-		case BaseItemKind.MusicArtist:
-			return 'Artist'
-		case BaseItemKind.MusicAlbum:
-			return 'Album'
-		case BaseItemKind.Audio:
-			return 'Track'
-		case BaseItemKind.Playlist:
-			return 'Playlist'
-		default:
-			return 'Item'
-	}
+function BackgroundGradient(): React.JSX.Element {
+	const themeSetting = useThemeSettingContext()
+
+	const colorScheme = useColorScheme()
+
+	const isDarkMode =
+		(themeSetting === 'system' && colorScheme === 'dark') || themeSetting === 'dark'
+
+	const gradientColors = isDarkMode
+		? [getToken('$black'), getToken('$black75')]
+		: [getToken('$lightTranslucent'), getToken('$lightTranslucent')]
+
+	return <LinearGradient style={{ flex: 1 }} colors={gradientColors} />
+}
+
+function ViewAlbumMenuRow({ item: album, isNested, navigation }: ContextProps): React.JSX.Element {
+	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
+	return (
+		<ListItem
+			animation='quick'
+			backgroundColor={'transparent'}
+			gap={'$2'}
+			justifyContent='flex-start'
+			onPress={() => {
+				rootNavigation.goBack()
+
+				if (isNested) rootNavigation.goBack()
+
+				if (navigation) navigation?.navigate('Album', { album })
+				else
+					navigate('Tabs', {
+						screen: 'Library',
+						params: {
+							screen: 'Album',
+							params: {
+								album,
+							},
+						},
+					})
+			}}
+			pressStyle={{ opacity: 0.5 }}
+		>
+			<Icon color='$primary' name='disc' />
+
+			<Text bold>Go to Album</Text>
+		</ListItem>
+	)
+}
+
+function ViewArtistMenuRow({
+	item: artist,
+	isNested,
+	navigation,
+}: ContextProps): React.JSX.Element {
+	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
+	return (
+		<ListItem
+			animation={'quick'}
+			backgroundColor={'transparent'}
+			gap={'$2'}
+			justifyContent='flex-start'
+			onPress={() => {
+				rootNavigation.goBack()
+
+				if (isNested) rootNavigation.goBack()
+
+				if (navigation) navigation.navigate('Artist', { artist })
+				else
+					navigate('Tabs', {
+						screen: 'Library',
+						params: {
+							screen: 'Artist',
+							params: {
+								artist,
+							},
+						},
+					})
+			}}
+			pressStyle={{ opacity: 0.5 }}
+		>
+			<Icon color='$primary' name='microphone-variant' />
+
+			<Text bold>Go to Artist</Text>
+		</ListItem>
+	)
 }

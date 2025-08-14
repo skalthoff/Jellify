@@ -8,6 +8,9 @@ import PlayliistTracklistHeader from './components/header'
 import { usePlaylistContext } from '../../providers/Playlist'
 import { useAnimatedScrollHandler } from 'react-native-reanimated'
 import AnimatedDraggableFlatList from '../Global/components/animated-draggable-flat-list'
+import { useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../../screens/types'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 export default function Playlist({
 	playlist,
@@ -24,6 +27,8 @@ export default function Playlist({
 		useUpdatePlaylist,
 		useRemoveFromPlaylist,
 	} = usePlaylistContext()
+
+	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
 	const scrollOffsetHandler = useAnimatedScrollHandler({
 		onScroll: (event) => {
@@ -77,7 +82,6 @@ export default function Playlist({
 					{editing && canEdit && <Icon name='drag' onPress={drag} />}
 
 					<Track
-						navigation={navigation}
 						track={track}
 						tracklist={playlistTracks ?? []}
 						index={getIndex() ?? 0}
@@ -86,9 +90,8 @@ export default function Playlist({
 						onLongPress={() => {
 							editing
 								? drag()
-								: navigation.navigate('Details', {
+								: rootNavigation.navigate('Context', {
 										item: track,
-										isNested: false,
 									})
 						}}
 						showRemove={editing}

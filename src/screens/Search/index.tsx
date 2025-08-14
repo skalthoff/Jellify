@@ -1,14 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { StackParamList } from '../../components/types'
 import { ArtistScreen } from '../Artist'
 import AlbumScreen from '../Album'
 import { PlaylistScreen } from '../Playlist'
-import DetailsScreen from '../Detail'
-import InstantMix from '../../components/InstantMix/component'
 import { useTheme } from 'tamagui'
 import Search from '../../components/Search'
+import SearchParamList from './types'
 
-const Stack = createNativeStackNavigator<StackParamList>()
+const Stack = createNativeStackNavigator<SearchParamList>()
 
 export default function SearchStack(): React.JSX.Element {
 	const theme = useTheme()
@@ -57,23 +55,6 @@ export default function SearchStack(): React.JSX.Element {
 					headerTitleStyle: {
 						color: theme.background.val,
 					},
-				})}
-			/>
-
-			<Stack.Screen
-				name='Details'
-				component={DetailsScreen}
-				options={{
-					headerShown: false,
-					presentation: 'modal',
-				}}
-			/>
-
-			<Stack.Screen
-				name='InstantMix'
-				component={InstantMix}
-				options={({ route }) => ({
-					title: route.params.item.Name ? `${route.params.item.Name} Mix` : 'Instant Mix',
 				})}
 			/>
 		</Stack.Navigator>

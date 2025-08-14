@@ -7,7 +7,7 @@ import { H2, H5, Text } from '../../components/Global/helpers/text'
 import Button from '../../components/Global/helpers/button'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { JellifyUser } from '../../types/JellifyUser'
-import { StackParamList } from '../../components/types'
+import { RootStackParamList } from '../types'
 import Input from '../../components/Global/helpers/input'
 import Icon from '../../components/Global/components/icon'
 import { useJellifyContext } from '../../providers'
@@ -18,7 +18,7 @@ import { IS_MAESTRO_BUILD } from '../../configs/config'
 export default function ServerAuthentication({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<StackParamList>
+	navigation: NativeStackNavigationProp<RootStackParamList>
 }): React.JSX.Element {
 	const { api } = useJellifyContext()
 	const [username, setUsername] = useState<string | undefined>(undefined)

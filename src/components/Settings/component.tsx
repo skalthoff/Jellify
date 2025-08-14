@@ -9,13 +9,13 @@ import PlaybackTab from './components/playback-tab'
 import InfoTab from './components/info-tab'
 import SettingsTabBar from './components/tab-bar'
 import StorageTab from './components/storage-tab'
-import { useSettingsContext } from '../../providers/Settings'
+import { useDevToolsContext } from '../../providers/Settings'
 const SettingsTabsNavigator = createMaterialTopTabNavigator()
 
 export default function Settings(): React.JSX.Element {
 	const theme = useTheme()
 
-	const { devTools } = useSettingsContext()
+	const devTools = useDevToolsContext()
 
 	return (
 		<SettingsTabsNavigator.Navigator

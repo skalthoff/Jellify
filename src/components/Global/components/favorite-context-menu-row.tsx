@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../../enums/query-keys'
 import { fetchUserData } from '../../../api/queries/favorites'
 import { useJellifyContext } from '../../../providers'
-import { ListItem, XStack, YGroup } from 'tamagui'
+import { getToken, ListItem } from 'tamagui'
 import Icon from './icon'
 import { useJellifyUserDataContext } from '../../../providers/UserData'
 import { useEffect, useState } from 'react'
@@ -28,11 +28,20 @@ export default function FavoriteContextMenuRow({ item }: { item: BaseItemDto }):
 		setIsFavorite(userData?.IsFavorite ?? false)
 	}, [userData])
 
-	return (
-		<YGroup.Item>
+	return isFavorite ? (
+		<Animated.View
+			entering={FadeIn}
+			exiting={FadeOut}
+			key={`${item.Id}-remove-favorite-row`}
+			style={{
+				flex: 1,
+			}}
+		>
 			<ListItem
-				pressStyle={{ opacity: 0.5 }}
 				animation={'quick'}
+				backgroundColor={'transparent'}
+				gap={'$2'}
+				justifyContent='flex-start'
 				onPress={() => {
 					toggleFavorite(isFavorite, {
 						item,
@@ -40,37 +49,35 @@ export default function FavoriteContextMenuRow({ item }: { item: BaseItemDto }):
 						onToggle: () => refetch(),
 					})
 				}}
+				pressStyle={{ opacity: 0.5 }}
 			>
-				{isFavorite ? (
-					<Animated.View
-						entering={FadeIn}
-						exiting={FadeOut}
-						key={`${item.Id}-remove-favorite-row`}
-					>
-						<XStack alignContent='center' justifyContent='flex-start' gap={'$2'}>
-							<Icon name={'heart'} small color={'$primary'} />
+				<Icon name={'heart'} small color={'$primary'} />
 
-							<Text marginVertical={'$1.5'} bold>
-								Remove from favorites
-							</Text>
-						</XStack>
-					</Animated.View>
-				) : (
-					<Animated.View
-						entering={FadeIn}
-						exiting={FadeOut}
-						key={`${item.Id}-favorite-row`}
-					>
-						<XStack alignContent='center' justifyContent='flex-start' gap={'$2'}>
-							<Icon name={'heart-outline'} small color={'$primary'} />
-
-							<Text marginVertical={'$1.5'} bold>
-								Add to favorites
-							</Text>
-						</XStack>
-					</Animated.View>
-				)}
+				<Text bold>Remove from favorites</Text>
 			</ListItem>
-		</YGroup.Item>
+		</Animated.View>
+	) : (
+		<Animated.View entering={FadeIn} exiting={FadeOut} key={`${item.Id}-favorite-row`}>
+			<ListItem
+				animation={'quick'}
+				backgroundColor={'transparent'}
+				justifyContent='flex-start'
+				gap={'$2'}
+				onPress={() => {
+					toggleFavorite(isFavorite, {
+						item,
+						setFavorite: setIsFavorite,
+						onToggle: () => refetch(),
+					})
+				}}
+				pressStyle={{ opacity: 0.5 }}
+			>
+				<Icon name={'heart-outline'} small color={'$primary'} />
+
+				<Text marginVertical={'$1.5'} bold>
+					Add to favorites
+				</Text>
+			</ListItem>
+		</Animated.View>
 	)
 }

@@ -1,4 +1,3 @@
-import { StackParamList } from '../types'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import PlaylistsTab from './components/playlists-tab'
 import { getToken, useTheme } from 'tamagui'
@@ -8,13 +7,17 @@ import ArtistsTab from './components/artists-tab'
 import AlbumsTab from './components/albums-tab'
 import LibraryTabBar from './tab-bar'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RouteProp } from '@react-navigation/native'
+import LibraryStackParamList from '../../screens/Library/types'
 
 const LibraryTabsNavigator = createMaterialTopTabNavigator()
 
 export default function Library({
+	route,
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<StackParamList>
+	route: RouteProp<LibraryStackParamList, 'Library'>
+	navigation: NativeStackNavigationProp<LibraryStackParamList, 'Library'>
 }): React.JSX.Element {
 	const theme = useTheme()
 

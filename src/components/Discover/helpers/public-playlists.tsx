@@ -1,6 +1,6 @@
 import { View, XStack } from 'tamagui'
 import { useDiscoverContext } from '../../../providers/Discover'
-import { StackParamList } from '../../types'
+import { RootStackParamList } from '../../../screens/types'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import Icon from '../../Global/components/icon'
 import { useJellifyContext } from '../../../providers'
@@ -12,7 +12,7 @@ import { useSafeAreaFrame } from 'react-native-safe-area-context'
 export default function PublicPlaylists({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<StackParamList>
+	navigation: NativeStackNavigationProp<RootStackParamList>
 }) {
 	const {
 		publicPlaylists,

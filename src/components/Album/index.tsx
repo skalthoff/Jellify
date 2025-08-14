@@ -1,5 +1,5 @@
-import { AlbumProps, StackParamList } from '../types'
-import { YStack, XStack, Separator, getToken, Spacer } from 'tamagui'
+import { BaseStackParamList } from '../../screens/types'
+import { YStack, XStack, Separator, getToken, Spacer, Spinner } from 'tamagui'
 import { H5, Text } from '../Global/helpers/text'
 import { ActivityIndicator, FlatList, SectionList } from 'react-native'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
@@ -16,10 +16,12 @@ import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import Icon from '../Global/components/icon'
 import { mapDtoToTrack } from '../../utils/mappings'
 import { useNetworkContext } from '../../providers/Network'
-import { useSettingsContext } from '../../providers/Settings'
+import { useDownloadQualityContext, useStreamingQualityContext } from '../../providers/Settings'
 import { useLoadQueueContext } from '../../providers/Player/queue'
 import { QueuingType } from '../../enums/queuing-type'
 import { useAlbumContext } from '../../providers/Album'
+import { useNavigation } from '@react-navigation/native'
+import { isUndefined } from 'lodash'
 
 /**
  * The screen for an Album's track list
@@ -29,18 +31,13 @@ import { useAlbumContext } from '../../providers/Album'
  *
  * @returns A React component
  */
-export function Album({ navigation }: AlbumProps): React.JSX.Element {
+export function Album(): React.JSX.Element {
 	const { album, discs, isPending } = useAlbumContext()
 
 	const { api, sessionId } = useJellifyContext()
-	const {
-		useDownloadMultiple,
-		pendingDownloads,
-		downloadingDownloads,
-		downloadedTracks,
-		failedDownloads,
-	} = useNetworkContext()
-	const { downloadQuality, streamingQuality } = useSettingsContext()
+	const { useDownloadMultiple, pendingDownloads } = useNetworkContext()
+	const downloadQuality = useDownloadQualityContext()
+	const streamingQuality = useStreamingQualityContext()
 	const useLoadNewQueue = useLoadQueueContext()
 
 	const downloadAlbum = (item: BaseItemDto[]) => {
@@ -54,7 +51,7 @@ export function Album({ navigation }: AlbumProps): React.JSX.Element {
 	const playAlbum = (shuffled: boolean = false) => {
 		if (!discs || discs.length === 0) return
 
-		const allTracks = discs.flatMap((disc) => disc.data)
+		const allTracks = discs?.flatMap((disc) => disc.data) ?? []
 		if (allTracks.length === 0) return
 
 		useLoadNewQueue({
@@ -71,14 +68,14 @@ export function Album({ navigation }: AlbumProps): React.JSX.Element {
 	return (
 		<SectionList
 			contentInsetAdjustmentBehavior='automatic'
-			sections={discs ? discs : [{ title: '1', data: [] }]}
+			sections={!isUndefined(discs) ? discs : []}
 			keyExtractor={(item, index) => item.Id! + index}
 			ItemSeparatorComponent={() => <Separator />}
 			renderSectionHeader={({ section }) => {
 				return (
 					<XStack
 						width='100%'
-						justifyContent={discs && discs.length >= 2 ? 'space-between' : 'flex-end'}
+						justifyContent={discs && discs?.length >= 2 ? 'space-between' : 'flex-end'}
 						alignItems='center'
 						backgroundColor={'$background'}
 						paddingHorizontal={'$4.5'}
@@ -103,21 +100,20 @@ export function Album({ navigation }: AlbumProps): React.JSX.Element {
 					</XStack>
 				)
 			}}
-			ListHeaderComponent={() => AlbumTrackListHeader(album, navigation, playAlbum)}
+			ListHeaderComponent={() => AlbumTrackListHeader(album, playAlbum)}
 			renderItem={({ item: track, index }) => (
 				<Track
 					track={track}
 					tracklist={discs?.flatMap((disc) => disc.data)}
 					index={discs?.flatMap((disc) => disc.data).indexOf(track) ?? index}
-					navigation={navigation}
 					queue={album}
 				/>
 			)}
-			ListFooterComponent={() => AlbumTrackListFooter(album, navigation)}
+			ListFooterComponent={() => AlbumTrackListFooter(album)}
 			ListEmptyComponent={() => (
 				<YStack>
 					{isPending ? (
-						<ActivityIndicator size='large' color={'$background'} />
+						<Spinner size='large' color={'$background'} />
 					) : (
 						<Text>No tracks found</Text>
 					)}
@@ -136,10 +132,11 @@ export function Album({ navigation }: AlbumProps): React.JSX.Element {
  */
 function AlbumTrackListHeader(
 	album: BaseItemDto,
-	navigation: NativeStackNavigationProp<StackParamList>,
 	playAlbum: (shuffled?: boolean) => void,
 ): React.JSX.Element {
 	const { width } = useSafeAreaFrame()
+
+	const navigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
 
 	return (
 		<YStack marginTop={'$4'} alignItems='center'>
@@ -183,7 +180,7 @@ function AlbumTrackListHeader(
 					>
 						<FavoriteButton item={album} />
 
-						<InstantMixButton item={album} navigation={navigation} />
+						<InstantMixButton item={album} />
 
 						<Icon name='play' onPress={() => playAlbum(false)} small />
 
@@ -219,10 +216,9 @@ function AlbumTrackListHeader(
 	)
 }
 
-function AlbumTrackListFooter(
-	album: BaseItemDto,
-	navigation: NativeStackNavigationProp<StackParamList>,
-): React.JSX.Element {
+function AlbumTrackListFooter(album: BaseItemDto): React.JSX.Element {
+	const navigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
+
 	return (
 		<YStack marginLeft={'$2'}>
 			{album.ArtistItems && album.ArtistItems.length > 1 && (

@@ -9,10 +9,10 @@ import Button from '../../components/Global/helpers/button'
 import { http, https } from '../../components/Login/utils/constants'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { StackParamList } from '../../components/types'
+import { RootStackParamList } from '../types'
 import Toast from 'react-native-toast-message'
 import { useJellifyContext } from '../../providers'
-import { useSettingsContext } from '../../providers/Settings'
+import { useSendMetricsContext, useSetSendMetricsContext } from '../../providers/Settings'
 import Icon from '../../components/Global/components/icon'
 import { PublicSystemInfo } from '@jellyfin/sdk/lib/generated-client/models'
 import { connectToServer } from '../../api/mutations/login'
@@ -22,7 +22,7 @@ import { sleepify } from '../../utils/sleep'
 export default function ServerAddress({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<StackParamList>
+	navigation: NativeStackNavigationProp<RootStackParamList>
 }): React.JSX.Element {
 	const [serverAddressContainsProtocol, setServerAddressContainsProtocol] =
 		useState<boolean>(false)
@@ -33,7 +33,8 @@ export default function ServerAddress({
 
 	const { server, setServer, signOut } = useJellifyContext()
 
-	const { setSendMetrics, sendMetrics } = useSettingsContext()
+	const sendMetrics = useSendMetricsContext()
+	const setSendMetrics = useSetSendMetricsContext()
 
 	useEffect(() => {
 		setServerAddressContainsProtocol(

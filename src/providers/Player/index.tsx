@@ -31,7 +31,7 @@ import { PlaystateApi } from '@jellyfin/sdk/lib/generated-client/api/playstate-a
 import { networkStatusTypes } from '../../components/Network/internetConnectionWatcher'
 import { useJellifyContext } from '..'
 import { isUndefined } from 'lodash'
-import { useSettingsContext } from '../Settings'
+import { useAutoDownloadContext } from '../Settings'
 import {
 	getTracksToPreload,
 	shouldStartPrefetching,
@@ -448,7 +448,7 @@ const PlayerContextInitializer = () => {
 	const { state: playbackState } = usePlaybackState()
 	const { useDownload, useDownloadMultiple, downloadedTracks, networkStatus } =
 		useNetworkContext()
-	const { autoDownload } = useSettingsContext()
+	const autoDownload = useAutoDownloadContext()
 	const prefetchedTrackIds = useRef<Set<string>>(new Set())
 
 	/**

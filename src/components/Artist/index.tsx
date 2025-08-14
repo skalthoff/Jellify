@@ -2,23 +2,18 @@ import React from 'react'
 import Albums from './albums'
 import SimilarArtists from './similar'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { StackParamList } from '../types'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import ArtistTabBar from './tab-bar'
 import { useArtistContext } from '../../providers/Artist'
+import ArtistTabList from './types'
 
-const ArtistTabs = createMaterialTopTabNavigator<StackParamList>()
+const ArtistTabs = createMaterialTopTabNavigator<ArtistTabList>()
 
-export default function ArtistNavigation({
-	navigation,
-}: {
-	navigation: NativeStackNavigationProp<StackParamList>
-}): React.JSX.Element {
+export default function ArtistNavigation(): React.JSX.Element {
 	const { featuredOn, artist } = useArtistContext()
 
 	return (
 		<ArtistTabs.Navigator
-			tabBar={(props) => ArtistTabBar(props, navigation)}
+			tabBar={(props) => ArtistTabBar(props)}
 			screenOptions={{
 				tabBarLabelStyle: {
 					fontFamily: 'Figtree-Bold',

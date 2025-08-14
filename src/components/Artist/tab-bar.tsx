@@ -10,18 +10,13 @@ import { ImageType } from '@jellyfin/sdk/lib/generated-client/models'
 import { useArtistContext } from '../../providers/Artist'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { useJellifyContext } from '../../providers'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { StackParamList } from '../types'
 import React from 'react'
 import Icon from '../Global/components/icon'
 import { useLoadQueueContext } from '../../providers/Player/queue'
 import { QueuingType } from '../../enums/queuing-type'
 import { fetchAlbumDiscs } from '../../api/queries/item'
 
-export default function ArtistTabBar(
-	props: MaterialTopTabBarProps,
-	stackNavigator: NativeStackNavigationProp<StackParamList>,
-) {
+export default function ArtistTabBar(props: MaterialTopTabBarProps) {
 	const { api } = useJellifyContext()
 	const { artist, scroll, albums } = useArtistContext()
 	const useLoadNewQueue = useLoadQueueContext()
@@ -102,7 +97,7 @@ export default function ArtistTabBar(
 				<XStack alignItems='center' justifyContent='center' flex={1} gap={'$6'}>
 					<FavoriteButton item={artist} />
 
-					<InstantMixButton item={artist} navigation={stackNavigator} />
+					<InstantMixButton item={artist} />
 
 					<Icon name='play' onPress={() => playArtist(false)} />
 

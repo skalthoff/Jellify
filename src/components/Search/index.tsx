@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import Input from '../Global/helpers/input'
 import ItemRow from '../Global/components/item-row'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { StackParamList } from '../types'
+import { RootStackParamList } from '../../screens/types'
 import { QueryKeys } from '../../enums/query-keys'
 import { fetchSearchResults } from '../../api/queries/search'
 import { useQuery } from '@tanstack/react-query'
@@ -15,10 +15,11 @@ import { isEmpty } from 'lodash'
 import HorizontalCardList from '../Global/components/horizontal-list'
 import { ItemCard } from '../Global/components/item-card'
 import { useJellifyContext } from '../../providers'
+import SearchParamList from '../../screens/Search/types'
 export default function Search({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<StackParamList>
+	navigation: NativeStackNavigationProp<SearchParamList, 'Search'>
 }): React.JSX.Element {
 	const { api, library, user } = useJellifyContext()
 
@@ -104,20 +105,14 @@ export default function Search({
 			ListEmptyComponent={() => {
 				return (
 					<YStack alignContent='center' justifyContent='flex-end' marginTop={'$4'}>
-						{fetchingResults ? (
-							<Spinner />
-						) : (
-							<Suggestions suggestions={suggestions} navigation={navigation} />
-						)}
+						{fetchingResults ? <Spinner /> : <Suggestions suggestions={suggestions} />}
 					</YStack>
 				)
 			}}
 			// We're displaying artists separately so we're going to filter them out here
 			data={items?.filter((result) => result.Type !== 'MusicArtist')}
 			refreshing={fetchingResults}
-			renderItem={({ item }) => (
-				<ItemRow item={item} queueName={searchString ?? 'Search'} navigation={navigation} />
-			)}
+			renderItem={({ item }) => <ItemRow item={item} queueName={searchString ?? 'Search'} />}
 			style={{
 				marginHorizontal: getToken('$2'),
 				marginTop: getToken('$4'),

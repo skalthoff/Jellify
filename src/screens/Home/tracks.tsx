@@ -1,6 +1,6 @@
 import Tracks from '../../components/Tracks/component'
-import { MostPlayedTracksProps, RecentTracksProps } from '../../components/types'
 import { useHomeContext } from '../../providers/Home'
+import { MostPlayedTracksProps, RecentTracksProps } from './types'
 
 export default function HomeTracksScreen({
 	navigation,
@@ -18,7 +18,6 @@ export default function HomeTracksScreen({
 	if (route.name === 'MostPlayedTracks') {
 		return (
 			<Tracks
-				navigation={navigation}
 				tracks={frequentlyPlayed}
 				fetchNextPage={fetchNextFrequentlyPlayed}
 				hasNextPage={hasNextFrequentlyPlayed}
@@ -29,7 +28,6 @@ export default function HomeTracksScreen({
 
 	return (
 		<Tracks
-			navigation={navigation}
 			tracks={recentTracks}
 			fetchNextPage={fetchNextRecentTracks}
 			hasNextPage={hasNextRecentTracks}

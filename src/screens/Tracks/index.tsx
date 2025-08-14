@@ -1,10 +1,9 @@
-import { TracksProps } from '../../components/types'
 import Tracks from '../../components/Tracks/component'
+import { TracksProps } from '../types'
 
-export default function TracksScreen({ route, navigation }: TracksProps): React.JSX.Element {
+export default function TracksScreen({ route }: TracksProps): React.JSX.Element {
 	return (
 		<Tracks
-			navigation={navigation}
 			tracks={route.params.tracks}
 			queue={route.params.queue}
 			fetchNextPage={route.params.fetchNextPage}

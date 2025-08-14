@@ -1,10 +1,7 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import Track from '../Global/components/track'
-import { FlatList } from 'react-native'
 import { getTokens, Separator } from 'tamagui'
-import { StackParamList } from '../types'
 import { BaseItemDto, UserItemDataDto } from '@jellyfin/sdk/lib/generated-client/models'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { Queue } from '../../player/types/queue-item'
 import { useNetworkContext } from '../../providers/Network'
 import { queryClient } from '../../constants/query-client'
@@ -16,7 +13,6 @@ export default function Tracks({
 	queue,
 	fetchNextPage,
 	hasNextPage,
-	navigation,
 	filterDownloaded,
 	filterFavorites,
 }: {
@@ -24,7 +20,6 @@ export default function Tracks({
 	queue: Queue
 	fetchNextPage: () => void
 	hasNextPage: boolean
-	navigation: NativeStackNavigationProp<StackParamList>
 	filterDownloaded?: boolean | undefined
 	filterFavorites?: boolean | undefined
 }): React.JSX.Element {
@@ -64,7 +59,6 @@ export default function Tracks({
 			data={tracksToDisplay()}
 			renderItem={({ index, item: track }) => (
 				<Track
-					navigation={navigation}
 					showArtwork
 					index={0}
 					track={track}

@@ -9,7 +9,7 @@ import JellifyTrack from '../../types/JellifyTrack'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { mapDtoToTrack } from '../../utils/mappings'
 import { useNetworkContext } from '../Network'
-import { useSettingsContext } from '../Settings'
+import { useDownloadQualityContext, useStreamingQualityContext } from '../Settings'
 import { QueuingType } from '../../enums/queuing-type'
 import TrackPlayer, { Event, Track, useTrackPlayerEvents } from 'react-native-track-player'
 import { findPlayQueueIndexStart } from './utils'
@@ -22,7 +22,7 @@ import { SKIP_TO_PREVIOUS_THRESHOLD } from '../../player/config'
 import { isUndefined } from 'lodash'
 import Toast from 'react-native-toast-message'
 import { useJellifyContext } from '..'
-import { networkStatusTypes } from '@/src/components/Network/internetConnectionWatcher'
+import { networkStatusTypes } from '../../components/Network/internetConnectionWatcher'
 import { ensureUpcomingTracksInQueue } from '../../player/helpers/gapless'
 
 /**
@@ -166,7 +166,8 @@ const QueueContextInitailizer = () => {
 	//#region Context
 	const { api, sessionId } = useJellifyContext()
 	const { downloadedTracks, networkStatus } = useNetworkContext()
-	const { downloadQuality, streamingQuality } = useSettingsContext()
+	const downloadQuality = useDownloadQualityContext()
+	const streamingQuality = useStreamingQualityContext()
 
 	//#endregion Context
 
@@ -359,36 +360,38 @@ const QueueContextInitailizer = () => {
 	 *
 	 * @param item The track to play next
 	 */
-	const playNextInQueue = async (item: BaseItemDto) => {
+	const playNextInQueue = async (items: BaseItemDto[]) => {
 		console.debug(`Playing item next in queue`)
 
-		const playNextTrack = mapDtoToTrack(
-			api!,
-			sessionId,
-			item,
-			downloadedTracks ?? [],
-			QueuingType.PlayingNext,
-			downloadQuality,
-			streamingQuality,
+		const tracksToPlayNext = items.map((item) =>
+			mapDtoToTrack(
+				api!,
+				sessionId,
+				item,
+				downloadedTracks ?? [],
+				QueuingType.PlayingNext,
+				downloadQuality,
+				streamingQuality,
+			),
 		)
 
 		// Update app state first to prevent race conditions
 		const newQueue = [
 			...playQueue.slice(0, currentIndex + 1),
-			playNextTrack,
+			...tracksToPlayNext,
 			...playQueue.slice(currentIndex + 1),
 		]
 		setPlayQueue(newQueue)
 
 		// Then update RNTP
-		await TrackPlayer.add([playNextTrack], currentIndex + 1)
+		await TrackPlayer.add(tracksToPlayNext, currentIndex + 1)
 
 		const nowPlaying = playQueue[currentIndex]
 
 		// Add to the state unshuffled queue, using the currently playing track as the index
 		setUnshuffledQueue([
 			...unshuffledQueue.slice(0, unshuffledQueue.indexOf(nowPlaying) + 1),
-			playNextTrack,
+			...tracksToPlayNext,
 			...unshuffledQueue.slice(unshuffledQueue.indexOf(nowPlaying) + 1),
 		])
 
@@ -492,10 +495,10 @@ const QueueContextInitailizer = () => {
 
 	//#region Hooks
 	const useAddToQueue = useMutation({
-		mutationFn: ({ track, queuingType }: AddToQueueMutation) => {
+		mutationFn: ({ tracks, queuingType }: AddToQueueMutation) => {
 			return queuingType === QueuingType.PlayingNext
-				? playNextInQueue(track)
-				: playInQueue([track])
+				? playNextInQueue(tracks)
+				: playInQueue(tracks)
 		},
 		onSuccess: (data, { queuingType }) => {
 			trigger('notificationSuccess')

@@ -1,26 +1,32 @@
 import { ActivityIndicator, RefreshControl } from 'react-native'
-import { AlbumsProps } from '../types'
 import { useDisplayContext } from '../../providers/Display/display-provider'
 import { getToken, Separator, XStack, YStack } from 'tamagui'
 import ItemRow from '../Global/components/item-row'
 import React from 'react'
 import { Text } from '../Global/helpers/text'
 import { FlashList } from '@shopify/flash-list'
+import { FetchNextPageOptions } from '@tanstack/react-query'
+import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
+
+interface AlbumsProps {
+	albums: (string | number | BaseItemDto)[] | undefined
+	fetchNextPage: (options?: FetchNextPageOptions | undefined) => void
+	hasNextPage: boolean
+	isPending: boolean
+	isFetchingNextPage: boolean
+	showAlphabeticalSelector: boolean
+}
 
 export default function Albums({
 	albums,
-	navigation,
 	fetchNextPage,
 	hasNextPage,
 	isPending,
-	isFetchingNextPage,
 	showAlphabeticalSelector,
 }: AlbumsProps): React.JSX.Element {
-	const { numberOfColumns } = useDisplayContext()
+	useDisplayContext()
 
 	const MemoizedItem = React.memo(ItemRow)
-
-	const itemHeight = getToken('$6')
 
 	return (
 		<XStack flex={1}>
@@ -30,7 +36,7 @@ export default function Albums({
 				}}
 				contentInsetAdjustmentBehavior='automatic'
 				data={albums ?? []}
-				renderItem={({ index, item: album }) =>
+				renderItem={({ item: album }) =>
 					typeof album === 'string' ? (
 						<XStack
 							padding={'$2'}
@@ -43,11 +49,7 @@ export default function Albums({
 							<Text>{album.toUpperCase()}</Text>
 						</XStack>
 					) : typeof album === 'number' ? null : typeof album === 'object' ? (
-						<MemoizedItem
-							item={album}
-							queueName={album.Name ?? 'Unknown Album'}
-							navigation={navigation}
-						/>
+						<MemoizedItem item={album} queueName={album.Name ?? 'Unknown Album'} />
 					) : null
 				}
 				ListEmptyComponent={
@@ -68,9 +70,7 @@ export default function Albums({
 				stickyHeaderIndices={
 					showAlphabeticalSelector
 						? albums
-								?.map((album, index, albums) =>
-									typeof album === 'string' ? index : 0,
-								)
+								?.map((album, index) => (typeof album === 'string' ? index : 0))
 								.filter((value, index, indices) => indices.indexOf(value) === index)
 						: []
 				}
