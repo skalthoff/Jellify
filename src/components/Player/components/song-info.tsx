@@ -119,7 +119,6 @@ export default function SongInfo(): React.JSX.Element {
 						onPress={() => {
 							navigation.navigate('Context', {
 								item: nowPlaying!.item,
-								isNested: true,
 							})
 						}}
 					/>

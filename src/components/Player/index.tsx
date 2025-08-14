@@ -1,19 +1,7 @@
-import { RootStackParamList } from '../../screens/types'
 import { useNowPlayingContext } from '../../providers/Player'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { useCallback, useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import {
-	YStack,
-	XStack,
-	getToken,
-	useTheme,
-	ZStack,
-	useWindowDimensions,
-	View,
-	getTokenValue,
-	Text,
-} from 'tamagui'
+import { YStack, XStack, getToken, useTheme, ZStack, useWindowDimensions, View } from 'tamagui'
 import Scrubber from './components/scrubber'
 import Controls from './components/controls'
 import Toast from 'react-native-toast-message'
@@ -24,11 +12,7 @@ import BlurredBackground from './components/blurred-background'
 import PlayerHeader from './components/header'
 import SongInfo from './components/song-info'
 
-export default function PlayerScreen({
-	navigation,
-}: {
-	navigation: NativeStackNavigationProp<RootStackParamList>
-}): React.JSX.Element {
+export default function PlayerScreen(): React.JSX.Element {
 	const [showToast, setShowToast] = useState(true)
 
 	const nowPlaying = useNowPlayingContext()

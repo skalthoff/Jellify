@@ -49,7 +49,7 @@ export default function Artists({
 
 	const { mutate: alphabetSelectorMutate, isPending: isAlphabetSelectorPending } = useMutation({
 		mutationFn: (letter: string) => alphabeticalSelectorCallback(letter),
-		onSuccess: (data, letter) => {
+		onSuccess: (data: void, letter: string) => {
 			pendingLetterRef.current = letter.toUpperCase()
 		},
 	})

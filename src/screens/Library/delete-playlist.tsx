@@ -19,7 +19,7 @@ export default function DeletePlaylist({
 	const { api, user, library } = useJellifyContext()
 	const useDeletePlaylist = useMutation({
 		mutationFn: (playlist: BaseItemDto) => deletePlaylist(api, playlist.Id!),
-		onSuccess: (data, playlist) => {
+		onSuccess: (data: void, playlist: BaseItemDto) => {
 			trigger('notificationSuccess')
 
 			navigation.goBack()

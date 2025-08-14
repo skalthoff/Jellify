@@ -63,7 +63,6 @@ export type RootStackParamList = {
 
 	Context: {
 		item: BaseItemDto
-		isNested?: boolean | undefined
 		navigation?: NativeStackNavigationProp<
 			HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
 		>

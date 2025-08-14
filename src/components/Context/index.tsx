@@ -1,12 +1,12 @@
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
 import { useNavigation } from '@react-navigation/native'
-import { getToken, ListItem, View, YGroup, ZStack } from 'tamagui'
-import { BaseStackParamList, RootStackParamList } from '../../screens/types'
+import { getToken, ListItem, YGroup, ZStack } from 'tamagui'
+import { RootStackParamList } from '../../screens/types'
 import { Text } from '../Global/helpers/text'
 import FavoriteContextMenuRow from '../Global/components/favorite-context-menu-row'
 import { Blurhash } from 'react-native-blurhash'
 import { getPrimaryBlurhashFromDto } from '../../utils/blurhash'
-import { useColorScheme, useWindowDimensions } from 'react-native'
+import { useColorScheme } from 'react-native'
 import { useThemeSettingContext } from '../../providers/Settings'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from '../Global/components/icon'
@@ -20,24 +20,17 @@ import { useAddToQueueContext } from '../../providers/Player/queue'
 import { AddToQueueMutation } from '../../providers/Player/interfaces'
 import { QueuingType } from '../../enums/queuing-type'
 import LibraryStackParamList from '../../screens/Library/types'
-import navigate from '../../../navigation'
 import DiscoverStackParamList from '@/src/screens/Discover/types'
-import { screen } from '@testing-library/react-native'
 import HomeStackParamList from '../../screens/Home/types'
 
 interface ContextProps {
 	item: BaseItemDto
-	isNested?: boolean | undefined
 	navigation?: NativeStackNavigationProp<
 		HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
 	>
 }
 
-export default function ItemContext({
-	item,
-	isNested,
-	navigation,
-}: ContextProps): React.JSX.Element {
+export default function ItemContext({ item, navigation }: ContextProps): React.JSX.Element {
 	const { api, user, library } = useJellifyContext()
 
 	const isArtist = item.Type === BaseItemKind.MusicArtist
@@ -83,13 +76,9 @@ export default function ItemContext({
 					<AddToQueueMenuRow tracks={isTrack ? [item] : tracks} />
 				)}
 
-				{album && (
-					<ViewAlbumMenuRow item={album} isNested={isNested} navigation={navigation} />
-				)}
+				{album && <ViewAlbumMenuRow item={album} navigation={navigation} />}
 
-				{artist && (
-					<ViewArtistMenuRow item={artist} isNested={isNested} navigation={navigation} />
-				)}
+				{artist && <ViewArtistMenuRow item={artist} navigation={navigation} />}
 			</YGroup>
 		</ZStack>
 	)
@@ -160,7 +149,7 @@ function BackgroundGradient(): React.JSX.Element {
 	return <LinearGradient style={{ flex: 1 }} colors={gradientColors} />
 }
 
-function ViewAlbumMenuRow({ item: album, isNested, navigation }: ContextProps): React.JSX.Element {
+function ViewAlbumMenuRow({ item: album, navigation }: ContextProps): React.JSX.Element {
 	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
 	return (
@@ -170,13 +159,11 @@ function ViewAlbumMenuRow({ item: album, isNested, navigation }: ContextProps): 
 			gap={'$2'}
 			justifyContent='flex-start'
 			onPress={() => {
-				rootNavigation.goBack()
-
-				if (isNested) rootNavigation.goBack()
-
-				if (navigation) navigation?.navigate('Album', { album })
-				else
-					navigate('Tabs', {
+				if (navigation) navigation.navigate('Album', { album })
+				else {
+					rootNavigation.goBack()
+					rootNavigation.goBack()
+					rootNavigation.navigate('Tabs', {
 						screen: 'Library',
 						params: {
 							screen: 'Album',
@@ -185,6 +172,7 @@ function ViewAlbumMenuRow({ item: album, isNested, navigation }: ContextProps): 
 							},
 						},
 					})
+				}
 			}}
 			pressStyle={{ opacity: 0.5 }}
 		>
@@ -195,11 +183,7 @@ function ViewAlbumMenuRow({ item: album, isNested, navigation }: ContextProps): 
 	)
 }
 
-function ViewArtistMenuRow({
-	item: artist,
-	isNested,
-	navigation,
-}: ContextProps): React.JSX.Element {
+function ViewArtistMenuRow({ item: artist, navigation }: ContextProps): React.JSX.Element {
 	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
 	return (
@@ -209,13 +193,11 @@ function ViewArtistMenuRow({
 			gap={'$2'}
 			justifyContent='flex-start'
 			onPress={() => {
-				rootNavigation.goBack()
-
-				if (isNested) rootNavigation.goBack()
-
 				if (navigation) navigation.navigate('Artist', { artist })
-				else
-					navigate('Tabs', {
+				else {
+					rootNavigation.goBack()
+					rootNavigation.goBack()
+					rootNavigation.navigate('Tabs', {
 						screen: 'Library',
 						params: {
 							screen: 'Artist',
@@ -224,6 +206,7 @@ function ViewArtistMenuRow({
 							},
 						},
 					})
+				}
 			}}
 			pressStyle={{ opacity: 0.5 }}
 		>

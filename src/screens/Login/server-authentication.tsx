@@ -14,6 +14,8 @@ import { useJellifyContext } from '../../providers'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import Toast from 'react-native-toast-message'
 import { IS_MAESTRO_BUILD } from '../../configs/config'
+import { AxiosResponse } from 'axios'
+import { AuthenticationResult } from '@jellyfin/sdk/lib/generated-client/models'
 
 export default function ServerAuthentication({
 	navigation,
@@ -30,7 +32,7 @@ export default function ServerAuthentication({
 		mutationFn: async (credentials: JellyfinCredentials) => {
 			return await api!.authenticateUserByName(credentials.username, credentials.password)
 		},
-		onSuccess: async (authResult) => {
+		onSuccess: async (authResult: AxiosResponse<AuthenticationResult>) => {
 			console.log(`Received auth response from server`)
 			if (_.isUndefined(authResult))
 				return Promise.reject(new Error('Authentication result was empty'))

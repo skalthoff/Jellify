@@ -56,7 +56,6 @@ export default function PlayerHeader(): React.JSX.Element {
 						onPress={() => {
 							navigation.navigate('Context', {
 								item: nowPlaying!.item,
-								isNested: true,
 							})
 						}}
 					/>

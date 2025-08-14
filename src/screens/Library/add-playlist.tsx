@@ -25,7 +25,7 @@ export default function AddPlaylist({
 
 	const useAddPlaylist = useMutation({
 		mutationFn: ({ name }: { name: string }) => createPlaylist(api, user, name),
-		onSuccess: (data, { name }) => {
+		onSuccess: (data: void, { name }: { name: string }) => {
 			trigger('notificationSuccess')
 
 			// Burnt.alert({

@@ -1,8 +1,10 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
+import { NavigatorScreenParams } from '@react-navigation/native'
+import LibraryStackParamList from '../Library/types'
 
 type TabParamList = {
 	Home: undefined
-	Library: undefined
+	Library: NavigatorScreenParams<LibraryStackParamList>
 	Search: undefined
 	Discover: undefined
 	Settings: undefined

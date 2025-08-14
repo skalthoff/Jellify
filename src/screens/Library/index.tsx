@@ -10,10 +10,11 @@ import { LibrarySortAndFilterProvider } from '../../providers/Library/sorting-fi
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import AlbumScreen from '../Album'
 import LibraryStackParamList from './types'
+import { LibraryTabProps } from '../Tabs/types'
 
 const Stack = createNativeStackNavigator<LibraryStackParamList>()
 
-export default function LibraryStack(): React.JSX.Element {
+export default function LibraryStack({ route, navigation }: LibraryTabProps): React.JSX.Element {
 	const theme = useTheme()
 
 	return (
