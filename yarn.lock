@@ -8523,7 +8523,7 @@ react-native-safe-area-context@^5.6.0:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-5.6.0.tgz#0ab284c291bb57d59330abf7dfe65156d6340e78"
   integrity sha512-tJas3YOdsuCg3kepCTGF3LWZp9onMbb9Agju2xfs2kRX8d/5TMUPmupBpjerk/B7Tv/zeJnk+qp5neA96Y0otQ==
 
-react-native-screens@^4.14.0:
+react-native-screens@4.14.0:
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-4.14.0.tgz#585c84954f2c0a60b8726deb5940c2c0b20b0f1b"
   integrity sha512-BMTQ30IozI8ZkqqPw71LbiaEcU+F5wDmfXDFlVn0wupZnxt0l7x7lUh2nljxR7rNHQneNIZoRTlu0ExK0R0xmA==
