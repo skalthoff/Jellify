@@ -98,7 +98,7 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 					<AddToQueueMenuRow tracks={isTrack ? [item] : tracks} />
 				)}
 
-				{(!isArtist || !isPlaylist) && (
+				{!isArtist && !isPlaylist && (
 					<ViewAlbumMenuRow
 						item={isAlbum ? item : album!}
 						stackNavigation={stackNavigation}
