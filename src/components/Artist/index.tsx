@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Albums from './albums'
 import SimilarArtists from './similar'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
@@ -11,9 +11,11 @@ const ArtistTabs = createMaterialTopTabNavigator<ArtistTabList>()
 export default function ArtistNavigation(): React.JSX.Element {
 	const { featuredOn, artist } = useArtistContext()
 
+	const hasFeaturedOn = useMemo(() => featuredOn && featuredOn.length > 0, [artist])
+
 	return (
 		<ArtistTabs.Navigator
-			tabBar={(props) => ArtistTabBar(props)}
+			tabBar={ArtistTabBar}
 			screenOptions={{
 				tabBarLabelStyle: {
 					fontFamily: 'Figtree-Bold',
@@ -36,7 +38,7 @@ export default function ArtistNavigation(): React.JSX.Element {
 				component={Albums}
 			/>
 
-			{featuredOn && featuredOn.length > 0 && (
+			{hasFeaturedOn && (
 				<ArtistTabs.Screen
 					name='ArtistFeaturedOn'
 					options={{

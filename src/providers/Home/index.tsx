@@ -1,4 +1,11 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react'
+import React, {
+	createContext,
+	ReactNode,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from 'react'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import {
 	InfiniteData,
@@ -12,6 +19,7 @@ import { queryClient } from '../../constants/query-client'
 import QueryConfig from '../../api/queries/query.config'
 import { fetchFrequentlyPlayed, fetchFrequentlyPlayedArtists } from '../../api/queries/frequents'
 import { useJellifyContext } from '..'
+import { useIsFocused } from '@react-navigation/native'
 interface HomeContext {
 	refreshing: boolean
 	onRefresh: () => void
@@ -35,6 +43,12 @@ interface HomeContext {
 const HomeContextInitializer = () => {
 	const { api, library, user } = useJellifyContext()
 	const [refreshing, setRefreshing] = useState<boolean>(false)
+
+	const isFocused = useIsFocused()
+
+	useEffect(() => {
+		console.debug(`Home focused: ${isFocused}`)
+	}, [isFocused])
 
 	const {
 		data: recentTracks,
@@ -98,7 +112,7 @@ const HomeContextInitializer = () => {
 		enabled: !!frequentlyPlayed && frequentlyPlayed.length > 0 && !isStaleFrequentlyPlayed,
 	})
 
-	const onRefresh = async () => {
+	const onRefresh = useCallback(async () => {
 		setRefreshing(true)
 
 		queryClient.invalidateQueries({ queryKey: [QueryKeys.RecentlyPlayedArtists] })
@@ -114,7 +128,12 @@ const HomeContextInitializer = () => {
 		])
 
 		setRefreshing(false)
-	}
+	}, [
+		refetchRecentTracks,
+		refetchFrequentlyPlayed,
+		recentArtistsInfiniteQuery.refetch,
+		frequentArtistsInfiniteQuery.refetch,
+	])
 
 	return {
 		refreshing,

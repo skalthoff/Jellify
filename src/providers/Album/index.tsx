@@ -17,6 +17,7 @@ function AlbumContextInitializer(album: BaseItemDto): AlbumContext {
 	const { data: discs, isPending } = useQuery({
 		queryKey: [QueryKeys.ItemTracks, album.Id!],
 		queryFn: () => fetchAlbumDiscs(api, album),
+		enabled: true,
 	})
 
 	return {
@@ -41,7 +42,7 @@ export const AlbumProvider: ({
 }) => React.JSX.Element = ({ album, children }) => {
 	const context = AlbumContextInitializer(album)
 
-	return <AlbumContext.Provider value={{ ...context }}>{children}</AlbumContext.Provider>
+	return <AlbumContext.Provider value={context}>{children}</AlbumContext.Provider>
 }
 
 export const useAlbumContext = () => useContext(AlbumContext)

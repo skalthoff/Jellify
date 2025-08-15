@@ -6,14 +6,11 @@ import { useHomeContext } from '../../providers/Home'
 import FrequentArtists from './helpers/frequent-artists'
 import FrequentlyPlayedTracks from './helpers/frequent-tracks'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useJellifyContext } from '../../providers'
 import { usePreventRemove } from '@react-navigation/native'
 
 export function ProvidedHome(): React.JSX.Element {
 	usePreventRemove(true, () => {})
-	const { user } = useJellifyContext()
 	const { refreshing: refetching, onRefresh } = useHomeContext()
-	const insets = useSafeAreaInsets()
 
 	return (
 		<ScrollView

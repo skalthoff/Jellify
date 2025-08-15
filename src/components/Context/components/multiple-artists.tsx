@@ -6,8 +6,8 @@ import { RouteProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../../../screens/types'
 
 interface MultipleArtistsProps {
-	navigation: NativeStackNavigationProp<PlayerParamList, 'MultipleArtists'>
-	route: RouteProp<PlayerParamList, 'MultipleArtists'>
+	navigation: NativeStackNavigationProp<PlayerParamList, 'MultipleArtistsSheet'>
+	route: RouteProp<PlayerParamList, 'MultipleArtistsSheet'>
 }
 export default function MultipleArtists({
 	navigation,
@@ -27,7 +27,7 @@ export default function MultipleArtists({
 						navigation.popToTop()
 
 						rootNavigation.popTo('Tabs', {
-							screen: 'Library',
+							screen: 'LibraryTab',
 							params: {
 								screen: 'Artist',
 								params: {

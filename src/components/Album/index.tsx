@@ -73,7 +73,7 @@ export function Album(): React.JSX.Element {
 			contentInsetAdjustmentBehavior='automatic'
 			sections={!isUndefined(discs) ? discs : []}
 			keyExtractor={(item, index) => item.Id! + index}
-			ItemSeparatorComponent={() => <Separator />}
+			ItemSeparatorComponent={Separator}
 			renderSectionHeader={({ section }) => {
 				return (
 					<XStack

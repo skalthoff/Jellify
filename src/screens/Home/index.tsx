@@ -21,77 +21,75 @@ export default function Home(): React.JSX.Element {
 	const theme = useTheme()
 
 	return (
-		<HomeProvider>
-			<HomeStack.Navigator initialRouteName='Home' screenOptions={{ headerShown: true }}>
-				<HomeStack.Group>
-					<HomeStack.Screen
-						name='Home'
-						component={ProvidedHome}
-						options={{
-							title: 'Home',
-							headerTitleStyle: {
-								fontFamily: 'Figtree-Bold',
-							},
-						}}
-					/>
-					<HomeStack.Screen
-						name='Artist'
-						component={ArtistScreen}
-						options={({ route }) => ({
-							title: route.params.artist.Name ?? 'Unknown Artist',
-							headerTitleStyle: {
-								color: theme.background.val,
-								fontFamily: 'Figtree-Bold',
-							},
-						})}
-					/>
+		<HomeStack.Navigator initialRouteName='HomeScreen' screenOptions={{ headerShown: true }}>
+			<HomeStack.Group>
+				<HomeStack.Screen
+					name='HomeScreen'
+					component={ProvidedHome}
+					options={{
+						title: 'Home',
+						headerTitleStyle: {
+							fontFamily: 'Figtree-Bold',
+						},
+					}}
+				/>
+				<HomeStack.Screen
+					name='Artist'
+					component={ArtistScreen}
+					options={({ route }) => ({
+						title: route.params.artist.Name ?? 'Unknown Artist',
+						headerTitleStyle: {
+							color: theme.background.val,
+							fontFamily: 'Figtree-Bold',
+						},
+					})}
+				/>
 
-					<HomeStack.Screen
-						name='RecentArtists'
-						component={HomeArtistsScreen}
-						options={{ title: 'Recent Artists' }}
-					/>
-					<HomeStack.Screen
-						name='MostPlayedArtists'
-						component={HomeArtistsScreen}
-						options={{ title: 'Most Played' }}
-					/>
+				<HomeStack.Screen
+					name='RecentArtists'
+					component={HomeArtistsScreen}
+					options={{ title: 'Recent Artists' }}
+				/>
+				<HomeStack.Screen
+					name='MostPlayedArtists'
+					component={HomeArtistsScreen}
+					options={{ title: 'Most Played' }}
+				/>
 
-					<HomeStack.Screen
-						name='RecentTracks'
-						component={HomeTracksScreen}
-						options={{ title: 'Recently Played' }}
-					/>
+				<HomeStack.Screen
+					name='RecentTracks'
+					component={HomeTracksScreen}
+					options={{ title: 'Recently Played' }}
+				/>
 
-					<HomeStack.Screen
-						name='MostPlayedTracks'
-						component={HomeTracksScreen}
-						options={{ title: 'On Repeat' }}
-					/>
+				<HomeStack.Screen
+					name='MostPlayedTracks'
+					component={HomeTracksScreen}
+					options={{ title: 'On Repeat' }}
+				/>
 
-					<HomeStack.Screen
-						name='Album'
-						component={AlbumScreen}
-						options={({ route }) => ({
-							title: route.params.album.Name ?? 'Untitled Album',
-							headerTitleStyle: {
-								color: theme.background.val,
-							},
-						})}
-					/>
+				<HomeStack.Screen
+					name='Album'
+					component={AlbumScreen}
+					options={({ route }) => ({
+						title: route.params.album.Name ?? 'Untitled Album',
+						headerTitleStyle: {
+							color: theme.background.val,
+						},
+					})}
+				/>
 
-					<HomeStack.Screen
-						name='Playlist'
-						component={PlaylistScreen}
-						options={({ route }) => ({
-							headerShown: true,
-							headerTitleStyle: {
-								color: theme.background.val,
-							},
-						})}
-					/>
-				</HomeStack.Group>
-			</HomeStack.Navigator>
-		</HomeProvider>
+				<HomeStack.Screen
+					name='Playlist'
+					component={PlaylistScreen}
+					options={({ route }) => ({
+						headerShown: true,
+						headerTitleStyle: {
+							color: theme.background.val,
+						},
+					})}
+				/>
+			</HomeStack.Group>
+		</HomeStack.Navigator>
 	)
 }

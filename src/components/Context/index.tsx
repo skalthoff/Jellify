@@ -5,7 +5,7 @@ import { Text } from '../Global/helpers/text'
 import FavoriteContextMenuRow from '../Global/components/favorite-context-menu-row'
 import { Blurhash } from 'react-native-blurhash'
 import { getPrimaryBlurhashFromDto } from '../../utils/blurhash'
-import { useColorScheme } from 'react-native'
+import { InteractionManager, useColorScheme } from 'react-native'
 import { useThemeSettingContext } from '../../providers/Settings'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from '../Global/components/icon'
@@ -18,10 +18,13 @@ import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { useAddToQueueContext } from '../../providers/Player/queue'
 import { AddToQueueMutation } from '../../providers/Player/interfaces'
 import { QueuingType } from '../../enums/queuing-type'
-import LibraryStackParamList, { LibraryNavigation } from '../../screens/Library/types'
+import LibraryStackParamList from '../../screens/Library/types'
 import DiscoverStackParamList from '../../screens/Discover/types'
 import HomeStackParamList from '../../screens/Home/types'
 import { useCallback } from 'react'
+import { StackActions, TabActions } from '@react-navigation/native'
+import navigationRef from '../../../navigation'
+import { goToAlbumFromContextSheet, goToArtistFromContextSheet } from './utils/navigation'
 
 interface ContextProps {
 	item: BaseItemDto
@@ -29,14 +32,11 @@ interface ContextProps {
 		HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
 	>
 	navigation: NativeStackNavigationProp<RootStackParamList>
+	navigationCallback?: (screen: 'Album' | 'Artist', item: BaseItemDto) => void
 }
 
-export default function ItemContext({
-	item,
-	stackNavigation,
-	navigation,
-}: ContextProps): React.JSX.Element {
-	const { api, user, library } = useJellifyContext()
+export default function ItemContext({ item, stackNavigation }: ContextProps): React.JSX.Element {
+	const { api } = useJellifyContext()
 
 	const isArtist = item.Type === BaseItemKind.MusicArtist
 	const isAlbum = item.Type === BaseItemKind.MusicAlbum
@@ -45,19 +45,19 @@ export default function ItemContext({
 
 	const albumArtists = item.AlbumArtists ?? []
 
-	const { data: album, isSuccess: albumFetchSuccess } = useQuery({
+	const { data: album } = useQuery({
 		queryKey: [QueryKeys.Item, item.AlbumId],
 		queryFn: () => fetchItem(api, item.AlbumId!),
 		enabled: isTrack,
 	})
 
-	const { data: artist, isSuccess: artistFetchSuccess } = useQuery({
+	const { data: artist } = useQuery({
 		queryKey: [QueryKeys.ArtistById, albumArtists.length > 0 ? albumArtists[0].Id : item.Id],
 		queryFn: () => fetchItem(api, albumArtists[0].Id!),
 		enabled: (isTrack || isAlbum) && albumArtists.length > 0,
 	})
 
-	const { data: tracks, isSuccess: tracksFetchSuccess } = useQuery({
+	const { data: tracks } = useQuery({
 		queryKey: [QueryKeys.ItemTracks, item.Id],
 		queryFn: () =>
 			getItemsApi(api!)
@@ -85,7 +85,6 @@ export default function ItemContext({
 					<ViewAlbumMenuRow
 						item={isAlbum ? item : album!}
 						stackNavigation={stackNavigation}
-						rootNavigation={navigation}
 					/>
 				)}
 
@@ -93,7 +92,6 @@ export default function ItemContext({
 					<ViewArtistMenuRow
 						item={isArtist ? item : artist}
 						stackNavigation={stackNavigation}
-						rootNavigation={navigation}
 					/>
 				)}
 			</YGroup>
@@ -171,25 +169,13 @@ interface MenuRowProps {
 	stackNavigation?: NativeStackNavigationProp<
 		HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
 	>
-	rootNavigation: NativeStackNavigationProp<RootStackParamList>
 }
 
-function ViewAlbumMenuRow({
-	item: album,
-	stackNavigation,
-	rootNavigation,
-}: MenuRowProps): React.JSX.Element {
+function ViewAlbumMenuRow({ item: album, stackNavigation }: MenuRowProps): React.JSX.Element {
 	const goToAlbum = useCallback(() => {
 		if (stackNavigation && album) stackNavigation.navigate('Album', { album })
-		else if (album) {
-			rootNavigation.popTo('Tabs', {
-				screen: 'Library',
-				merge: true,
-			})
-
-			LibraryNavigation.album = album
-		}
-	}, [album, stackNavigation, rootNavigation])
+		else goToAlbumFromContextSheet(album)
+	}, [album, stackNavigation, navigationRef])
 
 	return (
 		<ListItem
@@ -207,22 +193,11 @@ function ViewAlbumMenuRow({
 	)
 }
 
-function ViewArtistMenuRow({
-	item: artist,
-	stackNavigation,
-	rootNavigation,
-}: MenuRowProps): React.JSX.Element {
+function ViewArtistMenuRow({ item: artist, stackNavigation }: MenuRowProps): React.JSX.Element {
 	const goToArtist = useCallback(() => {
 		if (stackNavigation && artist) stackNavigation.navigate('Artist', { artist })
-		else if (artist) {
-			rootNavigation.popTo('Tabs', {
-				screen: 'Library',
-				merge: true,
-			})
-
-			LibraryNavigation.artist = artist
-		}
-	}, [artist, stackNavigation, rootNavigation])
+		else goToArtistFromContextSheet(artist)
+	}, [artist, stackNavigation, navigationRef])
 
 	return (
 		<ListItem

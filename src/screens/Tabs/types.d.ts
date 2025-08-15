@@ -3,14 +3,14 @@ import { NavigatorScreenParams } from '@react-navigation/native'
 import LibraryStackParamList from '../Library/types'
 
 type TabParamList = {
-	Home: undefined
-	Library: NavigatorScreenParams<LibraryStackParamList>
-	Search: undefined
-	Discover: undefined
-	Settings: undefined
+	HomeTab: undefined
+	LibraryTab: NavigatorScreenParams<LibraryStackParamList>
+	SearchTab: undefined
+	DiscoverTab: undefined
+	SettingsTab: undefined
 }
 
-export type HomeTabProps = BottomTabScreenProps<TabParamList, 'Home'>
-export type LibraryTabProps = BottomTabScreenProps<TabParamList, 'Library'>
+export type HomeTabProps = BottomTabScreenProps<TabParamList, 'HomeTab'>
+export type LibraryTabProps = BottomTabScreenProps<TabParamList, 'LibraryTab'>
 
 export default TabParamList

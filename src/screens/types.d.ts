@@ -17,12 +17,6 @@ import TabParamList from './Tabs/types'
 import { PlayerParamList } from './Player/types'
 
 export type BaseStackParamList = {
-	Home: undefined
-	Library: undefined
-	Search: undefined
-	Discover: undefined
-	Settings: undefined
-
 	Artist: {
 		artist: BaseItemDto
 	}
@@ -52,6 +46,7 @@ export type BaseStackParamList = {
 
 export type ArtistProps = NativeStackScreenProps<BaseStackParamList, 'Artist'>
 export type AlbumProps = NativeStackScreenProps<BaseStackParamList, 'Album'>
+export type PlaylistProps = NativeStackNavigationProp<BaseStackParamList, 'Playlist'>
 export type TracksProps = NativeStackScreenProps<BaseStackParamList, 'Tracks'>
 export type InstantMixProps = NativeStackScreenProps<BaseStackParamList, 'InstantMix'>
 
@@ -59,19 +54,20 @@ export type RootStackParamList = {
 	Login: undefined
 	Tabs: NavigatorScreenParams<TabParamList>
 
-	Player: NavigatorScreenParams<PlayerParamList>
+	PlayerRoot: NavigatorScreenParams<PlayerParamList>
 
 	Context: {
 		item: BaseItemDto
 		navigation?: NativeStackNavigationProp<
 			HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
 		>
+		navigationCallback?: (screen: 'Album' | 'Artist', item: BaseItemDto) => void
 	}
 }
 
 export type LoginProps = NativeStackNavigationProp<RootStackParamList, 'Login'>
 export type TabProps = NativeStackScreenProps<RootStackParamList, 'Tabs'>
-export type PlayerProps = NativeStackScreenProps<RootStackParamList, 'Player'>
+export type PlayerProps = NativeStackScreenProps<RootStackParamList, 'PlayerRoot'>
 export type ContextProps = NativeStackScreenProps<RootStackParamList, 'Context'>
 
 export type ArtistsProps = {

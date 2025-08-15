@@ -2,13 +2,14 @@ import { RootStackParamList } from '../types'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 
-type PlayerParamList = RootStackParamList & {
-	Player: undefined
-	Queue: undefined
+type PlayerParamList = {
+	PlayerScreen: undefined
+	QueueScreen: undefined
 
-	MultipleArtists: {
+	MultipleArtistsSheet: {
 		artists: BaseItemDto[]
 	}
 }
 
-export type MultipleArtistsProps = NativeStackScreenProps<PlayerParamList, 'MultipleArtists'>
+export type PlayerProps = NativeStackScreenProps<PlayerParamList, 'PlayerScreen'>
+export type MultipleArtistsProps = NativeStackScreenProps<PlayerParamList, 'MultipleArtistsSheet'>

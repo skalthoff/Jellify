@@ -6,6 +6,8 @@ import { createContext, ReactNode, useCallback, useContext, useMemo } from 'reac
 import { SharedValue, useSharedValue } from 'react-native-reanimated'
 import { useJellifyContext } from '..'
 import { fetchArtistAlbums, fetchArtistFeaturedOn } from '../../api/queries/artist'
+import { isUndefined } from 'lodash'
+import { Spinner } from 'tamagui'
 
 interface ArtistContext {
 	fetchingAlbums: boolean
@@ -45,8 +47,9 @@ export const ArtistProvider = ({
 		refetch: refetchAlbums,
 		isPending: fetchingAlbums,
 	} = useQuery({
-		queryKey: [QueryKeys.ArtistAlbums, library?.musicLibraryId, artist.Id!],
+		queryKey: [QueryKeys.ArtistAlbums, library?.musicLibraryId, artist.Id],
 		queryFn: () => fetchArtistAlbums(api, library?.musicLibraryId, artist),
+		enabled: !isUndefined(artist.Id),
 	})
 
 	const {
@@ -54,8 +57,9 @@ export const ArtistProvider = ({
 		refetch: refetchFeaturedOn,
 		isPending: fetchingFeaturedOn,
 	} = useQuery({
-		queryKey: [QueryKeys.ArtistFeaturedOn, library?.musicLibraryId, artist.Id!],
+		queryKey: [QueryKeys.ArtistFeaturedOn, library?.musicLibraryId, artist.Id],
 		queryFn: () => fetchArtistFeaturedOn(api, library?.musicLibraryId, artist),
+		enabled: !isUndefined(artist.Id),
 	})
 
 	const {
@@ -63,8 +67,9 @@ export const ArtistProvider = ({
 		refetch: refetchSimilar,
 		isPending: fetchingSimilarArtists,
 	} = useQuery({
-		queryKey: [QueryKeys.SimilarItems, library?.musicLibraryId, artist.Id!],
+		queryKey: [QueryKeys.SimilarItems, library?.musicLibraryId, artist.Id],
 		queryFn: () => fetchSimilar(api, user, library?.musicLibraryId, artist.Id!),
+		enabled: !isUndefined(artist.Id),
 	})
 
 	const refresh = useCallback(() => {
@@ -100,7 +105,15 @@ export const ArtistProvider = ({
 		],
 	)
 
-	return <ArtistContext.Provider value={value}>{children}</ArtistContext.Provider>
+	return (
+		<ArtistContext.Provider value={value}>
+			{fetchingAlbums || fetchingFeaturedOn || fetchingSimilarArtists ? (
+				<Spinner color={'$primary'} flex={1} />
+			) : (
+				children
+			)}
+		</ArtistContext.Provider>
+	)
 }
 
 export const useArtistContext = () => useContext(ArtistContext)

@@ -2,8 +2,11 @@ import { BaseStackParamList } from '../types'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { UseInfiniteQueryResult } from '@tanstack/react-query'
+import { NavigatorScreenParams } from '@react-navigation/native'
 
 type HomeStackParamList = BaseStackParamList & {
+	HomeScreen: undefined
+
 	RecentArtists: {
 		artistsInfiniteQuery: UseInfiniteQueryResult<BaseItemDto[], Error>
 	}

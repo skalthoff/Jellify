@@ -9,9 +9,9 @@ export const PlayerStack = createNativeStackNavigator<PlayerParamList>()
 
 export default function Player(): React.JSX.Element {
 	return (
-		<PlayerStack.Navigator initialRouteName='Player'>
+		<PlayerStack.Navigator initialRouteName='PlayerScreen'>
 			<PlayerStack.Screen
-				name='Player'
+				name='PlayerScreen'
 				component={PlayerScreen}
 				options={{
 					headerShown: false,
@@ -20,7 +20,7 @@ export default function Player(): React.JSX.Element {
 			/>
 
 			<PlayerStack.Screen
-				name='Queue'
+				name='QueueScreen'
 				component={Queue}
 				options={{
 					headerTitle: '',
@@ -28,7 +28,7 @@ export default function Player(): React.JSX.Element {
 			/>
 
 			<PlayerStack.Screen
-				name='MultipleArtists'
+				name='MultipleArtistsSheet'
 				component={MultipleArtistsSheet}
 				options={{
 					presentation: 'formSheet',

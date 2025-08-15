@@ -11,16 +11,17 @@ import SearchStack from '../Search'
 import LibraryStack from '../Library'
 import InternetConnectionWatcher from '../../components/Network/internetConnectionWatcher'
 import TabParamList from './types'
+import { TabProps } from '../types'
 
 const Tab = createBottomTabNavigator<TabParamList>()
 
-export function Tabs(): React.JSX.Element {
+export default function Tabs({ route, navigation }: TabProps): React.JSX.Element {
 	const theme = useTheme()
 	const nowPlaying = useNowPlayingContext()
 
 	return (
 		<Tab.Navigator
-			initialRouteName='Home'
+			initialRouteName={route.params?.screen ?? 'HomeTab'}
 			screenOptions={{
 				animation: 'shift',
 				tabBarActiveTintColor: theme.primary.val,
@@ -30,7 +31,7 @@ export function Tabs(): React.JSX.Element {
 				<>
 					{nowPlaying && (
 						/* Hide miniplayer if the queue is empty */
-						<Miniplayer navigation={props.navigation} />
+						<Miniplayer />
 					)}
 					<InternetConnectionWatcher />
 
@@ -39,9 +40,10 @@ export function Tabs(): React.JSX.Element {
 			)}
 		>
 			<Tab.Screen
-				name='Home'
+				name='HomeTab'
 				component={Home}
 				options={{
+					title: 'Home',
 					headerShown: false,
 					tabBarIcon: ({ color, size }) => (
 						<MaterialDesignIcons name='jellyfish-outline' color={color} size={size} />
@@ -51,21 +53,24 @@ export function Tabs(): React.JSX.Element {
 			/>
 
 			<Tab.Screen
-				name='Library'
+				name='LibraryTab'
 				component={LibraryStack}
 				options={{
+					title: 'Library',
 					headerShown: false,
 					tabBarIcon: ({ color, size }) => (
 						<MaterialDesignIcons name='music-box-multiple' color={color} size={size} />
 					),
 					tabBarButtonTestID: 'library-tab-button',
+					lazy: false, // Load on mount since we need to be able to navigate here from the player
 				}}
 			/>
 
 			<Tab.Screen
-				name='Search'
+				name='SearchTab'
 				component={SearchStack}
 				options={{
+					title: 'Search',
 					headerShown: false,
 					tabBarIcon: ({ color, size }) => (
 						<MaterialDesignIcons name='magnify' color={color} size={size} />
@@ -75,9 +80,10 @@ export function Tabs(): React.JSX.Element {
 			/>
 
 			<Tab.Screen
-				name='Discover'
+				name='DiscoverTab'
 				component={Discover}
 				options={{
+					title: 'Discover',
 					headerShown: false,
 					tabBarIcon: ({ color, size }) => (
 						<MaterialDesignIcons name='earth' color={color} size={size} />
@@ -87,9 +93,10 @@ export function Tabs(): React.JSX.Element {
 			/>
 
 			<Tab.Screen
-				name='Settings'
+				name='SettingsTab'
 				component={SettingsScreen}
 				options={{
+					title: 'Settings',
 					headerShown: false,
 					tabBarIcon: ({ color, size }) => (
 						<MaterialDesignIcons name='dip-switch' color={color} size={size} />

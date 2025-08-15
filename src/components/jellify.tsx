@@ -21,6 +21,9 @@ import Toast from 'react-native-toast-message'
 import JellifyToastConfig from '../constants/toast.config'
 import { useColorScheme } from 'react-native'
 import { CarPlayProvider } from '../providers/CarPlay'
+import { LibrarySortAndFilterProvider } from '../providers/Library/sorting-filtering'
+import { LibraryProvider } from '../providers/Library'
+import { HomeProvider } from '../providers/Home'
 /**
  * The main component for the Jellify app. Children are wrapped in the {@link JellifyProvider}
  * @returns The {@link Jellify} component
@@ -83,8 +86,14 @@ function App(): React.JSX.Element {
 			<NetworkContextProvider>
 				<QueueProvider>
 					<PlayerProvider>
-						<CarPlayProvider />
-						<Root />
+						<HomeProvider>
+							<LibrarySortAndFilterProvider>
+								<LibraryProvider>
+									<CarPlayProvider />
+									<Root />
+								</LibraryProvider>
+							</LibrarySortAndFilterProvider>
+						</HomeProvider>
 					</PlayerProvider>
 				</QueueProvider>
 			</NetworkContextProvider>

@@ -16,6 +16,7 @@ import Icon from '../../Global/components/icon'
 import { useNavigation } from '@react-navigation/native'
 import { QueryKeys } from '../../../enums/query-keys'
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
+import { PlayerParamList } from '../../../screens/Player/types'
 
 export default function SongInfo(): React.JSX.Element {
 	const { api, user, library } = useJellifyContext()
@@ -28,11 +29,7 @@ export default function SongInfo(): React.JSX.Element {
 		queryFn: () => fetchItem(api, nowPlaying!.item.AlbumId!),
 	})
 
-	const { data: artists } = useQuery<
-		{ title: string | number; data: BaseItemDto[] },
-		Error,
-		void
-	>({
+	useQuery({
 		queryKey: [QueryKeys.TrackArtists, nowPlaying!.item.ArtistItems],
 		queryFn: () => fetchItems(api, user, library, [BaseItemKind.MusicArtist]),
 		select: (data: { title: string | number; data: BaseItemDto[] }) => data.data,
@@ -46,7 +43,7 @@ export default function SongInfo(): React.JSX.Element {
 					onPress={() => {
 						if (album) {
 							navigation.popTo('Tabs', {
-								screen: 'Library',
+								screen: 'LibraryTab',
 								params: {
 									screen: 'Album',
 									params: {
@@ -86,12 +83,15 @@ export default function SongInfo(): React.JSX.Element {
 								onPress={() => {
 									if (nowPlaying!.item.ArtistItems) {
 										if (nowPlaying!.item.ArtistItems!.length > 1) {
-											navigation.navigate('MultipleArtists', {
-												artists: nowPlaying!.item.ArtistItems!,
+											navigation.navigate('PlayerRoot', {
+												screen: 'MultipleArtistsSheet',
+												params: {
+													artists: nowPlaying!.item.ArtistItems!,
+												},
 											})
 										} else {
 											navigation.popTo('Tabs', {
-												screen: 'Library',
+												screen: 'LibraryTab',
 												params: {
 													screen: 'Artist',
 													params: {

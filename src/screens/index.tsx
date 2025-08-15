@@ -1,5 +1,5 @@
 import Player from './Player'
-import { Tabs } from './Tabs'
+import Tabs from './Tabs'
 import { RootStackParamList } from './types'
 import { getToken, useTheme } from 'tamagui'
 import { useJellifyContext } from '../providers'
@@ -20,7 +20,7 @@ export default function Root(): React.JSX.Element {
 			initialRouteName={api && library ? 'Tabs' : 'Login'}
 			screenOptions={({ route }) => ({
 				navigationBarColor:
-					route.name === 'Player' ? getToken('$black') : theme.background.val,
+					route.name === 'PlayerRoot' ? getToken('$black') : theme.background.val,
 			})}
 		>
 			<RootStack.Screen
@@ -33,7 +33,7 @@ export default function Root(): React.JSX.Element {
 				}}
 			/>
 			<RootStack.Screen
-				name='Player'
+				name='PlayerRoot'
 				component={Player}
 				options={{
 					presentation: 'modal',

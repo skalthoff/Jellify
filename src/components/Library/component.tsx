@@ -11,7 +11,10 @@ import React from 'react'
 
 const LibraryTabsNavigator = createMaterialTopTabNavigator()
 
-export default function Library({ route, navigation }: LibraryScreenProps): React.JSX.Element {
+export default function LibraryScreen({
+	route,
+	navigation,
+}: LibraryScreenProps): React.JSX.Element {
 	const theme = useTheme()
 
 	return (

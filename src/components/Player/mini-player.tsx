@@ -11,7 +11,7 @@ import {
 } from 'tamagui'
 import { useNowPlayingContext } from '../../providers/Player'
 import { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs'
-import { NavigationHelpers, ParamListBase } from '@react-navigation/native'
+import { NavigationHelpers, ParamListBase, useNavigation } from '@react-navigation/native'
 import { Text } from '../Global/helpers/text'
 import TextTicker from 'react-native-text-ticker'
 import PlayPauseButton from './components/buttons'
@@ -32,16 +32,16 @@ import Animated, {
 	withSpring,
 } from 'react-native-reanimated'
 import { ImageType } from '@jellyfin/sdk/lib/generated-client/models'
+import { RootStackParamList } from '../../screens/types'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
-export const Miniplayer = React.memo(function Miniplayer({
-	navigation,
-}: {
-	navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>
-}): React.JSX.Element {
+export const Miniplayer = React.memo(function Miniplayer(): React.JSX.Element {
 	const { api } = useJellifyContext()
 	const nowPlaying = useNowPlayingContext()
 	const useSkip = useSkipContext()
 	const usePrevious = usePreviousContext()
+
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
 	const translateX = useSharedValue(0)
 	const translateY = useSharedValue(0)
@@ -56,7 +56,7 @@ export const Miniplayer = React.memo(function Miniplayer({
 				useSkip()
 			} else if (direction === 'Swiped Up') {
 				// Navigate to the big player
-				navigation.navigate('Player')
+				navigation.navigate('PlayerRoot', { screen: 'PlayerScreen' })
 			}
 		},
 		[useSkip, usePrevious, navigation],
@@ -102,7 +102,9 @@ export const Miniplayer = React.memo(function Miniplayer({
 								margin={0}
 								padding={0}
 								height={'$7'}
-								onPress={() => navigation.navigate('Player')}
+								onPress={() =>
+									navigation.navigate('PlayerRoot', { screen: 'PlayerScreen' })
+								}
 							>
 								<YStack
 									justify='center'

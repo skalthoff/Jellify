@@ -7,6 +7,7 @@ export default function ItemContextScreen({ route, navigation }: ContextProps): 
 			item={route.params.item}
 			stackNavigation={route.params.navigation}
 			navigation={navigation}
+			navigationCallback={route.params.navigationCallback}
 		/>
 	)
 }

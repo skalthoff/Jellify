@@ -23,7 +23,7 @@ import ErrorBoundary from './src/components/ErrorBoundary'
 import OTAUpdateScreen from './src/components/OtaUpdates'
 import { usePerformanceMonitor } from './src/hooks/use-performance-monitor'
 import { SettingsProvider, useThemeSettingContext } from './src/providers/Settings'
-import { navigationRef } from './navigation'
+import navigationRef from './navigation'
 
 export default function App(): React.JSX.Element {
 	// Add performance monitoring to track app-level re-renders

@@ -16,11 +16,12 @@ import Toast from 'react-native-toast-message'
 import { IS_MAESTRO_BUILD } from '../../configs/config'
 import { AxiosResponse } from 'axios'
 import { AuthenticationResult } from '@jellyfin/sdk/lib/generated-client/models'
+import LoginStackParamList from './types'
 
 export default function ServerAuthentication({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<RootStackParamList>
+	navigation: NativeStackNavigationProp<LoginStackParamList>
 }): React.JSX.Element {
 	const { api } = useJellifyContext()
 	const [username, setUsername] = useState<string | undefined>(undefined)
@@ -116,10 +117,7 @@ export default function ServerAuthentication({
 						bordered={0}
 						onPress={() => {
 							if (navigation.canGoBack()) navigation.goBack()
-							else
-								navigation.navigate('ServerAddress', undefined, {
-									pop: true,
-								})
+							else navigation.navigate('ServerAddress', undefined, { pop: true })
 						}}
 					>
 						Switch Server
