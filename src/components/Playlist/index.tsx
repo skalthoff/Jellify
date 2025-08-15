@@ -48,13 +48,7 @@ export default function Playlist({
 			}}
 			ItemSeparatorComponent={() => <Separator />}
 			ListHeaderComponent={() =>
-				PlayliistTracklistHeader(
-					playlist,
-					navigation,
-					editing,
-					playlistTracks ?? [],
-					canEdit,
-				)
+				PlayliistTracklistHeader(playlist, editing, playlistTracks ?? [], canEdit)
 			}
 			stickyHeaderIndices={[0]}
 			numColumns={1}

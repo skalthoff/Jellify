@@ -16,7 +16,7 @@ export default function Tracks({
 	filterDownloaded,
 	filterFavorites,
 }: {
-	tracks: BaseItemDto[] | undefined
+	tracks: (string | number | BaseItemDto)[] | undefined
 	queue: Queue
 	fetchNextPage: () => void
 	hasNextPage: boolean
@@ -46,7 +46,7 @@ export default function Tracks({
 					}) ?? []
 			)
 		}
-		return tracks ?? []
+		return tracks?.filter((track) => typeof track === 'object') ?? []
 	}, [filterDownloaded, downloadedTracks, tracks, filterFavorites])
 
 	// Memoize key extraction for FlashList performance

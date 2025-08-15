@@ -24,7 +24,7 @@ export const alphabet = '#abcdefghijklmnopqrstuvwxyz'.split('')
 interface LibraryContext {
 	artistsInfiniteQuery: UseInfiniteQueryResult<(string | number | BaseItemDto)[], Error>
 	albumsInfiniteQuery: UseInfiniteQueryResult<(string | number | BaseItemDto)[], Error>
-	tracksInfiniteQuery: UseInfiniteQueryResult<InfiniteData<BaseItemDto[]>, Error>
+	tracksInfiniteQuery: UseInfiniteQueryResult<(string | number | BaseItemDto)[], Error>
 	// genres: BaseItemDto[] | undefined
 	playlistsInfiniteQuery: UseInfiniteQueryResult<BaseItemDto[], Error>
 
@@ -131,6 +131,7 @@ const LibraryContextInitializer = () => {
 				? lastPageParam + 1
 				: undefined
 		},
+		select: selectArtists,
 	})
 
 	const albumsInfiniteQuery = useInfiniteQuery({
@@ -304,11 +305,11 @@ const LibraryContext = createContext<LibraryContext>({
 		hasPreviousPage: false,
 		refetch: async () =>
 			Promise.resolve(
-				{} as InfiniteQueryObserverResult<InfiniteData<BaseItemDto[], unknown>, Error>,
+				{} as InfiniteQueryObserverResult<(string | number | BaseItemDto)[], Error>,
 			),
 		fetchNextPage: async () =>
 			Promise.resolve(
-				{} as InfiniteQueryObserverResult<InfiniteData<BaseItemDto[], unknown>, Error>,
+				{} as InfiniteQueryObserverResult<(string | number | BaseItemDto)[], Error>,
 			),
 		hasNextPage: false,
 		isFetchingNextPage: false,
@@ -329,8 +330,10 @@ const LibraryContext = createContext<LibraryContext>({
 		isInitialLoading: false,
 		isPaused: false,
 		fetchPreviousPage: async () =>
-			Promise.resolve({} as InfiniteQueryObserverResult<InfiniteData<BaseItemDto[]>, Error>),
-		promise: Promise.resolve({ pages: [], pageParams: [] }),
+			Promise.resolve(
+				{} as InfiniteQueryObserverResult<(string | number | BaseItemDto)[], Error>,
+			),
+		promise: Promise.resolve([]),
 	},
 	playlistsInfiniteQuery: {
 		data: undefined,

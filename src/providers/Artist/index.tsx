@@ -105,15 +105,7 @@ export const ArtistProvider = ({
 		],
 	)
 
-	return (
-		<ArtistContext.Provider value={value}>
-			{fetchingAlbums || fetchingFeaturedOn || fetchingSimilarArtists ? (
-				<Spinner color={'$primary'} flex={1} />
-			) : (
-				children
-			)}
-		</ArtistContext.Provider>
-	)
+	return <ArtistContext.Provider value={value}>{children}</ArtistContext.Provider>
 }
 
 export const useArtistContext = () => useContext(ArtistContext)

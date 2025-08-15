@@ -1,18 +1,18 @@
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
-import { getToken, ListItem, YGroup, ZStack } from 'tamagui'
-import { RootStackParamList } from '../../screens/types'
+import { getToken, ListItem, View, YGroup, ZStack } from 'tamagui'
+import { BaseStackParamList, RootStackParamList } from '../../screens/types'
 import { Text } from '../Global/helpers/text'
 import FavoriteContextMenuRow from '../Global/components/favorite-context-menu-row'
 import { Blurhash } from 'react-native-blurhash'
 import { getPrimaryBlurhashFromDto } from '../../utils/blurhash'
-import { InteractionManager, useColorScheme } from 'react-native'
+import { useColorScheme } from 'react-native'
 import { useThemeSettingContext } from '../../providers/Settings'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from '../Global/components/icon'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../enums/query-keys'
-import { fetchItem } from '../../api/queries/item'
+import { fetchItem, fetchItems } from '../../api/queries/item'
 import { useJellifyContext } from '../../providers'
 import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { useAddToQueueContext } from '../../providers/Player/queue'
@@ -22,28 +22,29 @@ import LibraryStackParamList from '../../screens/Library/types'
 import DiscoverStackParamList from '../../screens/Discover/types'
 import HomeStackParamList from '../../screens/Home/types'
 import { useCallback } from 'react'
-import { StackActions, TabActions } from '@react-navigation/native'
 import navigationRef from '../../../navigation'
 import { goToAlbumFromContextSheet, goToArtistFromContextSheet } from './utils/navigation'
+import { getItemName } from '../../utils/text'
+import ItemImage from '../Global/components/image'
+
+type StackNavigation = Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
 
 interface ContextProps {
 	item: BaseItemDto
-	stackNavigation?: NativeStackNavigationProp<
-		HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
-	>
+	stackNavigation?: StackNavigation
 	navigation: NativeStackNavigationProp<RootStackParamList>
 	navigationCallback?: (screen: 'Album' | 'Artist', item: BaseItemDto) => void
 }
 
 export default function ItemContext({ item, stackNavigation }: ContextProps): React.JSX.Element {
-	const { api } = useJellifyContext()
+	const { api, user, library } = useJellifyContext()
 
 	const isArtist = item.Type === BaseItemKind.MusicArtist
 	const isAlbum = item.Type === BaseItemKind.MusicAlbum
 	const isTrack = item.Type === BaseItemKind.Audio
 	const isPlaylist = item.Type === BaseItemKind.Playlist
 
-	const albumArtists = item.AlbumArtists ?? []
+	const itemArtists = item.ArtistItems ?? []
 
 	const { data: album } = useQuery({
 		queryKey: [QueryKeys.Item, item.AlbumId],
@@ -51,10 +52,26 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 		enabled: isTrack,
 	})
 
-	const { data: artist } = useQuery({
-		queryKey: [QueryKeys.ArtistById, albumArtists.length > 0 ? albumArtists[0].Id : item.Id],
-		queryFn: () => fetchItem(api, albumArtists[0].Id!),
-		enabled: (isTrack || isAlbum) && albumArtists.length > 0,
+	const { data: artists } = useQuery({
+		queryKey: [
+			QueryKeys.ArtistById,
+			itemArtists.length > 0 ? itemArtists?.map((artist) => artist.Id) : item.Id,
+		],
+		queryFn: () =>
+			fetchItems(
+				api,
+				user,
+				library,
+				[BaseItemKind.MusicArtist],
+				0,
+				[],
+				[],
+				undefined,
+				undefined,
+				itemArtists?.map((artist) => artist.Id!),
+			),
+		enabled: (isTrack || isAlbum) && itemArtists.length > 0,
+		select: (data) => data.data,
 	})
 
 	const { data: tracks } = useQuery({
@@ -90,7 +107,7 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 
 				{!isPlaylist && (
 					<ViewArtistMenuRow
-						item={isArtist ? item : artist}
+						artists={isArtist ? [item] : artists ? artists : []}
 						stackNavigation={stackNavigation}
 					/>
 				)}
@@ -166,9 +183,7 @@ function BackgroundGradient(): React.JSX.Element {
 
 interface MenuRowProps {
 	item: BaseItemDto | undefined
-	stackNavigation?: NativeStackNavigationProp<
-		HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
-	>
+	stackNavigation?: StackNavigation
 }
 
 function ViewAlbumMenuRow({ item: album, stackNavigation }: MenuRowProps): React.JSX.Element {
@@ -193,24 +208,38 @@ function ViewAlbumMenuRow({ item: album, stackNavigation }: MenuRowProps): React
 	)
 }
 
-function ViewArtistMenuRow({ item: artist, stackNavigation }: MenuRowProps): React.JSX.Element {
-	const goToArtist = useCallback(() => {
-		if (stackNavigation && artist) stackNavigation.navigate('Artist', { artist })
-		else goToArtistFromContextSheet(artist)
-	}, [artist, stackNavigation, navigationRef])
+function ViewArtistMenuRow({
+	artists,
+	stackNavigation,
+}: {
+	artists: BaseItemDto[]
+	stackNavigation: StackNavigation | undefined
+}): React.JSX.Element {
+	const goToArtist = useCallback(
+		(artist: BaseItemDto) => {
+			if (stackNavigation) stackNavigation.navigate('Artist', { artist })
+			else goToArtistFromContextSheet(artist)
+		},
+		[stackNavigation, navigationRef],
+	)
 
 	return (
-		<ListItem
-			animation={'quick'}
-			backgroundColor={'transparent'}
-			gap={'$2'}
-			justifyContent='flex-start'
-			onPress={goToArtist}
-			pressStyle={{ opacity: 0.5 }}
-		>
-			<Icon color='$primary' name='microphone-variant' />
+		<View>
+			{artists.map((artist, index) => (
+				<ListItem
+					animation={'quick'}
+					backgroundColor={'transparent'}
+					gap={'$3'}
+					justifyContent='flex-start'
+					key={index}
+					onPress={() => goToArtist(artist)}
+					pressStyle={{ opacity: 0.5 }}
+				>
+					<ItemImage circular item={artist} height={'$10'} width={'$10'} />
 
-			<Text bold>Go to Artist</Text>
-		</ListItem>
+					<Text bold>{`Go to ${getItemName(artist)}`}</Text>
+				</ListItem>
+			))}
+		</View>
 	)
 }

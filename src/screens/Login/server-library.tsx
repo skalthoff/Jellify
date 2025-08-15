@@ -4,13 +4,17 @@ import { RootStackParamList } from '../types'
 import { useJellifyContext } from '../../providers'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import LibrarySelector from '../../components/Global/components/library-selector'
+import LoginStackParamList from './types'
+import { useNavigation } from '@react-navigation/native'
 
 export default function ServerLibrary({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<RootStackParamList>
+	navigation: NativeStackNavigationProp<LoginStackParamList>
 }): React.JSX.Element {
 	const { setUser, setLibrary } = useJellifyContext()
+
+	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
 	const handleLibrarySelected = (
 		libraryId: string,
@@ -24,10 +28,7 @@ export default function ServerLibrary({
 			playlistLibraryId: playlistLibrary?.Id,
 			playlistLibraryPrimaryImageId: playlistLibrary?.ImageTags?.Primary,
 		})
-		navigation.navigate('Tabs', {
-			screen: 'Home',
-			params: {},
-		})
+		rootNavigation.navigate('Tabs', { screen: 'HomeTab' })
 	}
 
 	const handleCancel = () => {

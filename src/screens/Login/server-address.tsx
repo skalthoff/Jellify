@@ -18,11 +18,12 @@ import { PublicSystemInfo } from '@jellyfin/sdk/lib/generated-client/models'
 import { connectToServer } from '../../api/mutations/login'
 import { IS_MAESTRO_BUILD } from '../../configs/config'
 import { sleepify } from '../../utils/sleep'
+import LoginStackParamList from './types'
 
 export default function ServerAddress({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<RootStackParamList>
+	navigation: NativeStackNavigationProp<LoginStackParamList>
 }): React.JSX.Element {
 	const [serverAddressContainsProtocol, setServerAddressContainsProtocol] =
 		useState<boolean>(false)

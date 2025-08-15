@@ -8,12 +8,10 @@ import HorizontalCardList from '../../Global/components/horizontal-list'
 import { ItemCard } from '../../Global/components/item-card'
 import { H4 } from '../../Global/helpers/text'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
+import { useNavigation } from '@react-navigation/native'
+import DiscoverStackParamList from '../../../screens/Discover/types'
 
-export default function PublicPlaylists({
-	navigation,
-}: {
-	navigation: NativeStackNavigationProp<RootStackParamList>
-}) {
+export default function PublicPlaylists() {
 	const {
 		publicPlaylists,
 		fetchNextPublicPlaylists,
@@ -22,6 +20,8 @@ export default function PublicPlaylists({
 		isPendingPublicPlaylists,
 		refetchPublicPlaylists,
 	} = useDiscoverContext()
+
+	const navigation = useNavigation<NativeStackNavigationProp<DiscoverStackParamList>>()
 
 	const { server } = useJellifyContext()
 	const { width } = useSafeAreaFrame()

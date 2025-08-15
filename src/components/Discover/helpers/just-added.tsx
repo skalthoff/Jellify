@@ -6,12 +6,10 @@ import { useDiscoverContext } from '../../../providers/Discover'
 import { View, XStack } from 'tamagui'
 import { H2, H4 } from '../../../components/Global/helpers/text'
 import Icon from '../../Global/components/icon'
+import { useNavigation } from '@react-navigation/native'
+import DiscoverStackParamList from '../../../screens/Discover/types'
 
-export default function RecentlyAdded({
-	navigation,
-}: {
-	navigation: NativeStackNavigationProp<RootStackParamList>
-}): React.JSX.Element {
+export default function RecentlyAdded(): React.JSX.Element {
 	const {
 		recentlyAdded,
 		fetchNextRecentlyAdded,
@@ -19,6 +17,8 @@ export default function RecentlyAdded({
 		isPendingRecentlyAdded,
 		isFetchingNextRecentlyAdded,
 	} = useDiscoverContext()
+
+	const navigation = useNavigation<NativeStackNavigationProp<DiscoverStackParamList>>()
 
 	return (
 		<View>

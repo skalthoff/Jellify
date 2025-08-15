@@ -14,9 +14,10 @@ export default function SearchStack(): React.JSX.Element {
 	return (
 		<Stack.Navigator>
 			<Stack.Screen
-				name='Search'
+				name='SearchScreen'
 				component={Search}
 				options={{
+					title: 'Search',
 					headerTitleStyle: {
 						fontFamily: 'Figtree-Bold',
 					},

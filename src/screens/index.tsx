@@ -7,6 +7,7 @@ import Login from './Login'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Context from './Context'
 import { getItemName } from '../utils/text'
+import { useCallback } from 'react'
 
 const RootStack = createNativeStackNavigator<RootStackParamList>()
 
@@ -14,6 +15,10 @@ export default function Root(): React.JSX.Element {
 	const theme = useTheme()
 
 	const { api, library } = useJellifyContext()
+
+	const getContextSheetDetents = useCallback((artists: string[] | null | undefined) => {
+		return [0.2 + (artists?.length ?? 1) * 0.1]
+	}, [])
 
 	return (
 		<RootStack.Navigator
@@ -54,7 +59,7 @@ export default function Root(): React.JSX.Element {
 				options={({ route }) => ({
 					headerTitle: getItemName(route.params.item),
 					presentation: 'formSheet',
-					sheetAllowedDetents: [0.5],
+					sheetAllowedDetents: getContextSheetDetents(route.params.item.Artists),
 					sheetGrabberVisible: true,
 					headerTransparent: true,
 				})}

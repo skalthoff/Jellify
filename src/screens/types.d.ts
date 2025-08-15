@@ -58,9 +58,7 @@ export type RootStackParamList = {
 
 	Context: {
 		item: BaseItemDto
-		navigation?: NativeStackNavigationProp<
-			HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
-		>
+		navigation?: Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
 		navigationCallback?: (screen: 'Album' | 'Artist', item: BaseItemDto) => void
 	}
 }

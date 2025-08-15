@@ -34,7 +34,7 @@ export default function Player(): React.JSX.Element {
 					presentation: 'formSheet',
 					sheetAllowedDetents: 'fitToContents',
 					sheetGrabberVisible: true,
-					headerTitle: 'Artists',
+					headerShown: false,
 				}}
 			/>
 		</PlayerStack.Navigator>

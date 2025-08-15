@@ -5,9 +5,10 @@ import Icon from '../../Global/components/icon'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../screens/types'
 import { useNavigation } from '@react-navigation/native'
+import { PlayerParamList } from '../../../screens/Player/types'
 
 export default function Footer(): React.JSX.Element {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+	const navigation = useNavigation<NativeStackNavigationProp<PlayerParamList>>()
 
 	return (
 		<XStack justifyContent='flex-end' alignItems='center' marginHorizontal={'$5'} flex={1}>
@@ -21,7 +22,7 @@ export default function Footer(): React.JSX.Element {
 					testID='queue-button-test-id'
 					name='playlist-music'
 					onPress={() => {
-						navigation.navigate('Queue')
+						navigation.navigate('QueueScreen')
 					}}
 				/>
 			</XStack>

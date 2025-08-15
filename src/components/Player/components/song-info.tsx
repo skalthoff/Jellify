@@ -13,10 +13,15 @@ import { useJellifyContext } from '../../../providers'
 import FavoriteButton from '../../Global/components/favorite-button'
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
 import Icon from '../../Global/components/icon'
-import { useNavigation } from '@react-navigation/native'
+import { StackActions, useNavigation } from '@react-navigation/native'
 import { QueryKeys } from '../../../enums/query-keys'
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
 import { PlayerParamList } from '../../../screens/Player/types'
+import navigationRef from '@/navigation'
+import {
+	goToAlbumFromContextSheet,
+	goToArtistFromContextSheet,
+} from '../../Context/utils/navigation'
 
 export default function SongInfo(): React.JSX.Element {
 	const { api, user, library } = useJellifyContext()
@@ -41,17 +46,7 @@ export default function SongInfo(): React.JSX.Element {
 				<YStack
 					marginHorizontal={'$1.5'}
 					onPress={() => {
-						if (album) {
-							navigation.popTo('Tabs', {
-								screen: 'LibraryTab',
-								params: {
-									screen: 'Album',
-									params: {
-										album,
-									},
-								},
-							})
-						}
+						goToAlbumFromContextSheet(album)
 					}}
 					justifyContent='center'
 				>
@@ -90,15 +85,9 @@ export default function SongInfo(): React.JSX.Element {
 												},
 											})
 										} else {
-											navigation.popTo('Tabs', {
-												screen: 'LibraryTab',
-												params: {
-													screen: 'Artist',
-													params: {
-														artist: nowPlaying!.item.ArtistItems[0],
-													},
-												},
-											})
+											goToArtistFromContextSheet(
+												nowPlaying!.item.ArtistItems[0],
+											)
 										}
 									}
 								}}

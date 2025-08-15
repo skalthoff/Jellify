@@ -19,7 +19,7 @@ import SearchParamList from '../../screens/Search/types'
 export default function Search({
 	navigation,
 }: {
-	navigation: NativeStackNavigationProp<SearchParamList, 'Search'>
+	navigation: NativeStackNavigationProp<SearchParamList, 'SearchScreen'>
 }): React.JSX.Element {
 	const { api, library, user } = useJellifyContext()
 

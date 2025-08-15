@@ -5,13 +5,10 @@ import AddPlaylist from './add-playlist'
 import DeletePlaylist from './delete-playlist'
 import { ArtistScreen } from '../Artist'
 import { useTheme } from 'tamagui'
-import { LibraryProvider } from '../../providers/Library'
-import { LibrarySortAndFilterProvider } from '../../providers/Library/sorting-filtering'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import AlbumScreen from '../Album'
 import LibraryStackParamList from './types'
 import { LibraryTabProps } from '../Tabs/types'
-import { LibraryNavigationContext } from './navigation'
 
 const Stack = createNativeStackNavigator<LibraryStackParamList>()
 

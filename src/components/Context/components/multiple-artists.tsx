@@ -4,6 +4,7 @@ import { FlashList } from '@shopify/flash-list'
 import { PlayerParamList } from '../../../screens/Player/types'
 import { RouteProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../../../screens/types'
+import { getTokenValue } from 'tamagui'
 
 interface MultipleArtistsProps {
 	navigation: NativeStackNavigationProp<PlayerParamList, 'MultipleArtistsSheet'>
@@ -16,6 +17,9 @@ export default function MultipleArtists({
 	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 	return (
 		<FlashList
+			contentContainerStyle={{
+				marginVertical: getTokenValue('$2'),
+			}}
 			data={route.params.artists}
 			renderItem={({ item: artist }) => (
 				<ItemRow
