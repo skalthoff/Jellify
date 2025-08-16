@@ -15,6 +15,7 @@ import DiscoverStackParamList from './Discover/types'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import TabParamList from './Tabs/types'
 import { PlayerParamList } from './Player/types'
+import LoginStackParamList from './Login/types'
 
 export type BaseStackParamList = {
 	Artist: {
@@ -51,7 +52,7 @@ export type TracksProps = NativeStackScreenProps<BaseStackParamList, 'Tracks'>
 export type InstantMixProps = NativeStackScreenProps<BaseStackParamList, 'InstantMix'>
 
 export type RootStackParamList = {
-	Login: undefined
+	Login: NavigatorScreenParams<LoginStackParamList>
 	Tabs: NavigatorScreenParams<TabParamList>
 
 	PlayerRoot: NavigatorScreenParams<PlayerParamList>

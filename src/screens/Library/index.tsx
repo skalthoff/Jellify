@@ -96,6 +96,8 @@ export default function LibraryScreen({ route, navigation }: LibraryTabProps): R
 							component={DeletePlaylist}
 							options={{
 								title: 'Delete Playlist',
+								headerShown: false,
+								sheetGrabberVisible: true,
 							}}
 						/>
 					</LibraryStack.Group>

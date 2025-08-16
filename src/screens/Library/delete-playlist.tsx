@@ -47,7 +47,7 @@ export default function DeletePlaylist({
 	})
 
 	return (
-		<View margin={'$2'}>
+		<View margin={'$4'}>
 			<Text bold textAlign='center'>{`Delete playlist ${
 				route.params.playlist.Name ?? 'Untitled Playlist'
 			}?`}</Text>

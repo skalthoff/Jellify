@@ -124,9 +124,7 @@ export default function AddToPlaylist({ track }: { track: BaseItemDto }): React.
 
 				<YStack gap={'$2'} margin={'$2'}>
 					<TextTicker {...TextTickerConfig}>
-						<Text bold fontSize={'$6'}>
-							{getItemName(track)}
-						</Text>
+						<Text bold>{getItemName(track)}</Text>
 					</TextTicker>
 
 					<TextTicker {...TextTickerConfig}>

@@ -32,7 +32,7 @@ export default function PlayerScreen(): React.JSX.Element {
 	const { bottom } = useSafeAreaInsets()
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
+		<SafeAreaView style={{ flex: 1 }} edges={['top']}>
 			<View flex={1}>
 				{nowPlaying && (
 					<ZStack fullscreen>

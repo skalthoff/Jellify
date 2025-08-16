@@ -6,17 +6,14 @@ import Icon from '../../components/Global/components/icon'
 import { useJellifyContext } from '../../providers'
 import { useNetworkContext } from '../../providers/Network'
 import { useResetQueueContext } from '../../providers/Player/queue'
-import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../types'
+import navigationRef from '../../../navigation'
 
 export default function SignOutModal({ navigation }: SignOutModalProps): React.JSX.Element {
 	const { server } = useJellifyContext()
 
 	const resetQueue = useResetQueueContext()
 	const { clearDownloads } = useNetworkContext()
-
-	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
 	return (
 		<YStack margin={'$6'}>
@@ -43,7 +40,7 @@ export default function SignOutModal({ navigation }: SignOutModalProps): React.J
 					borderColor={'$danger'}
 					onPress={() => {
 						navigation.goBack()
-						rootNavigation.popTo('Login')
+						navigationRef.navigate('Login', { screen: 'ServerAddress' }, { pop: true })
 
 						clearDownloads()
 						resetQueue()

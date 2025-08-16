@@ -35,6 +35,7 @@ export default function SettingsScreen(): React.JSX.Element {
 					/* https://www.reddit.com/r/reactnative/comments/1dgktbn/comment/lxd23sj/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button */
 					presentation: 'formSheet',
 					sheetAllowedDetents: 'fitToContents',
+					sheetGrabberVisible: true,
 					headerShown: false,
 				}}
 			/>

@@ -24,10 +24,10 @@ export default function Root(): React.JSX.Element {
 
 			switch (type) {
 				case 'Audio':
-					detent = 0.25
+					detent = 0.3
 					break
 				case 'MusicAlbum':
-					detent = 0.2
+					detent = 0.25
 					break
 				case 'Playlist':
 					detent = 0.2
