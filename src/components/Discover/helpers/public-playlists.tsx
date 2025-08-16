@@ -10,6 +10,7 @@ import { H4 } from '../../Global/helpers/text'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 import DiscoverStackParamList from '../../../screens/Discover/types'
+import navigationRef from '../../../../navigation'
 
 export default function PublicPlaylists() {
 	const {
@@ -58,6 +59,12 @@ export default function PublicPlaylists() {
 						onPress={() => {
 							navigation.navigate('Playlist', { playlist: item, canEdit: false })
 						}}
+						onLongPress={() =>
+							navigationRef.navigate('Context', {
+								item,
+								navigation,
+							})
+						}
 					/>
 				)}
 			/>

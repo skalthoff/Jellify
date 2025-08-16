@@ -7,6 +7,7 @@ import { useDiscoverContext } from '../../../providers/Discover'
 import { H4 } from '../../Global/helpers/text'
 import { useNavigation } from '@react-navigation/native'
 import DiscoverStackParamList from '../../../screens/Discover/types'
+import navigationRef from '../../../../navigation'
 
 export default function SuggestedArtists(): React.JSX.Element {
 	const { suggestedArtistsInfiniteQuery } = useDiscoverContext()
@@ -40,6 +41,12 @@ export default function SuggestedArtists(): React.JSX.Element {
 								artist: item,
 							})
 						}}
+						onLongPress={() =>
+							navigationRef.navigate('Context', {
+								item,
+								navigation,
+							})
+						}
 					/>
 				)}
 			/>
