@@ -1,6 +1,6 @@
 import { useNowPlayingContext } from '../../providers/Player'
 import React, { useCallback, useState } from 'react'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { YStack, XStack, getToken, useTheme, ZStack, useWindowDimensions, View } from 'tamagui'
 import Scrubber from './components/scrubber'
 import Controls from './components/controls'
@@ -32,37 +32,39 @@ export default function PlayerScreen(): React.JSX.Element {
 	const { bottom } = useSafeAreaInsets()
 
 	return (
-		<View flex={1} width={width} height={height}>
-			{nowPlaying && (
-				<ZStack flex={1}>
-					<BlurredBackground width={width} height={height} />
+		<SafeAreaView style={{ flex: 1 }}>
+			<View flex={1}>
+				{nowPlaying && (
+					<ZStack fullscreen>
+						<BlurredBackground width={width} height={height} />
 
-					<YStack fullscreen marginBottom={bottom}>
-						<PlayerHeader />
+						<YStack flex={1} marginBottom={bottom}>
+							<PlayerHeader />
 
-						<XStack
-							justifyContent='center'
-							alignItems='center'
-							marginHorizontal={'auto'}
-							width={getToken('$20') + getToken('$20') + getToken('$5')}
-							maxWidth={width / 1.1}
-							flex={2}
-						>
-							<SongInfo />
-						</XStack>
+							<XStack
+								justifyContent='center'
+								alignItems='center'
+								marginHorizontal={'auto'}
+								width={getToken('$20') + getToken('$20') + getToken('$5')}
+								maxWidth={width / 1.1}
+								flex={2}
+							>
+								<SongInfo />
+							</XStack>
 
-						<XStack justifyContent='center' flex={1}>
-							{/* playback progress goes here */}
-							<Scrubber />
-						</XStack>
+							<XStack justifyContent='center' flex={1}>
+								{/* playback progress goes here */}
+								<Scrubber />
+							</XStack>
 
-						<Controls />
+							<Controls />
 
-						<Footer />
-					</YStack>
-				</ZStack>
-			)}
-			{showToast && <Toast config={JellifyToastConfig(theme)} />}
-		</View>
+							<Footer />
+						</YStack>
+					</ZStack>
+				)}
+				{showToast && <Toast config={JellifyToastConfig(theme)} />}
+			</View>
+		</SafeAreaView>
 	)
 }
