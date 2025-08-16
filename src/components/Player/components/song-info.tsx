@@ -1,115 +1,106 @@
 import TextTicker from 'react-native-text-ticker'
 import { getToken, XStack, YStack } from 'tamagui'
 import { TextTickerConfig } from '../component.config'
-import { useNowPlayingContext } from '../../../providers/Player'
 import { Text } from '../../Global/helpers/text'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../../screens/types'
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo, memo } from 'react'
 import ItemImage from '../../Global/components/image'
 import { useQuery } from '@tanstack/react-query'
-import { fetchItem, fetchItems } from '../../../api/queries/item'
+import { fetchItem } from '../../../api/queries/item'
 import { useJellifyContext } from '../../../providers'
 import FavoriteButton from '../../Global/components/favorite-button'
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
-import Icon from '../../Global/components/icon'
-import { StackActions, useNavigation } from '@react-navigation/native'
 import { QueryKeys } from '../../../enums/query-keys'
-import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
 import { PlayerParamList } from '../../../screens/Player/types'
+import { useNowPlayingContext } from '../../../providers/Player'
 import navigationRef from '@/navigation'
-import {
-	goToAlbumFromContextSheet,
-	goToArtistFromContextSheet,
-} from '../../Context/utils/navigation'
 
-export default function SongInfo(): React.JSX.Element {
-	const { api, user, library } = useJellifyContext()
+interface SongInfoProps {
+	navigation: NativeStackNavigationProp<PlayerParamList>
+}
+
+function SongInfo({ navigation }: SongInfoProps): React.JSX.Element {
+	const { api } = useJellifyContext()
 	const nowPlaying = useNowPlayingContext()
-
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
 	const { data: album } = useQuery({
 		queryKey: [QueryKeys.Album, nowPlaying!.item.AlbumId],
 		queryFn: () => fetchItem(api, nowPlaying!.item.AlbumId!),
+		enabled: !!nowPlaying?.item.AlbumId && !!api,
 	})
 
-	useQuery({
-		queryKey: [QueryKeys.TrackArtists, nowPlaying!.item.ArtistItems],
-		queryFn: () => fetchItems(api, user, library, [BaseItemKind.MusicArtist]),
-		select: (data: { title: string | number; data: BaseItemDto[] }) => data.data,
-	})
+	// Memoize expensive computations
+	const trackTitle = useMemo(() => nowPlaying!.title ?? 'Untitled Track', [nowPlaying?.title])
 
-	return useMemo(() => {
-		return (
-			<XStack flex={1}>
-				<YStack
-					marginHorizontal={'$1.5'}
-					onPress={() => {
-						goToAlbumFromContextSheet(album)
-					}}
-					justifyContent='center'
-				>
-					<Animated.View
-						entering={FadeIn}
-						exiting={FadeOut}
-						key={`${nowPlaying!.item.AlbumId}-album-image`}
-					>
-						<ItemImage item={nowPlaying!.item} width={'$11'} height={'$11'} />
-					</Animated.View>
-				</YStack>
+	const artistName = useMemo(() => nowPlaying?.artist ?? 'Unknown Artist', [nowPlaying?.artist])
 
-				<YStack justifyContent='flex-start' flex={1} gap={'$0.25'}>
-					<Animated.View
-						entering={FadeIn}
-						exiting={FadeOut}
-						key={`${nowPlaying!.item.AlbumId}-song-info`}
-					>
-						<TextTicker {...TextTickerConfig} style={{ height: getToken('$9') }}>
-							<Text bold fontSize={'$6'}>
-								{nowPlaying!.title ?? 'Untitled Track'}
-							</Text>
-						</TextTicker>
+	const artistItems = useMemo(() => nowPlaying!.item.ArtistItems, [nowPlaying?.item.ArtistItems])
 
-						<TextTicker {...TextTickerConfig} style={{ height: getToken('$8') }}>
-							<Text
-								fontSize={'$6'}
-								color={'$color'}
-								onPress={() => {
-									if (nowPlaying!.item.ArtistItems) {
-										if (nowPlaying!.item.ArtistItems!.length > 1) {
-											navigation.navigate('PlayerRoot', {
-												screen: 'MultipleArtistsSheet',
-												params: {
-													artists: nowPlaying!.item.ArtistItems!,
-												},
-											})
-										} else {
-											goToArtistFromContextSheet(
-												nowPlaying!.item.ArtistItems[0],
-											)
-										}
-									}
-								}}
-							>
-								{nowPlaying?.artist ?? 'Unknown Artist'}
-							</Text>
-						</TextTicker>
-					</Animated.View>
-				</YStack>
+	// Memoize navigation handlers
+	const handleAlbumPress = useCallback(() => {
+		if (album) {
+			navigation.goBack() // Dismiss player modal
+			navigationRef.navigate('Tabs', {
+				screen: 'LibraryTab',
+				params: {
+					screen: 'Album',
+					params: {
+						album,
+					},
+				},
+			})
+		}
+	}, [album, navigation])
 
-				<XStack gap={'$3'} justifyContent='flex-end' alignItems='center' flexShrink={1}>
-					<Icon
-						name='dots-horizontal-circle-outline'
-						onPress={() => {
-							navigation.navigate('Context', {
-								item: nowPlaying!.item,
-							})
-						}}
-					/>
-					<FavoriteButton item={nowPlaying!.item} />
-				</XStack>
+	const handleArtistPress = useCallback(() => {
+		if (artistItems) {
+			if (artistItems.length > 1) {
+				navigation.navigate('MultipleArtistsSheet', {
+					artists: artistItems,
+				})
+			} else {
+				navigation.goBack() // Dismiss player modal
+				navigationRef.navigate('Tabs', {
+					screen: 'LibraryTab',
+					params: {
+						screen: 'Artist',
+						params: {
+							artist: artistItems[0],
+						},
+					},
+				})
+			}
+		}
+	}, [artistItems, navigation])
+
+	return (
+		<XStack flex={1}>
+			<YStack marginHorizontal={'$1.5'} onPress={handleAlbumPress} justifyContent='center'>
+				<ItemImage item={nowPlaying!.item} width={'$11'} height={'$11'} />
+			</YStack>
+
+			<YStack justifyContent='flex-start' flex={1} gap={'$0.25'}>
+				<TextTicker {...TextTickerConfig} style={{ height: getToken('$9') }}>
+					<Text bold fontSize={'$6'}>
+						{trackTitle}
+					</Text>
+				</TextTicker>
+
+				<TextTicker {...TextTickerConfig} style={{ height: getToken('$8') }}>
+					<Text fontSize={'$6'} color={'$color'} onPress={handleArtistPress}>
+						{artistName}
+					</Text>
+				</TextTicker>
+			</YStack>
+
+			<XStack justifyContent='flex-end' alignItems='center' flexShrink={1}>
+				<FavoriteButton item={nowPlaying!.item} />
 			</XStack>
-		)
-	}, [nowPlaying, album])
+		</XStack>
+	)
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default memo(SongInfo, (prevProps: SongInfoProps, nextProps: SongInfoProps) => {
+	// Only re-render if navigation changes (which it shouldn't)
+	return prevProps.navigation === nextProps.navigation
+})

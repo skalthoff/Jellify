@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, useCallback } from 'react'
 import { getToken, Theme, useTheme, XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
 import { RunTimeTicks } from '../helpers/time-codes'
@@ -65,18 +65,110 @@ export default function Track({
 	const { downloadedTracks, networkStatus } = useNetworkContext()
 	const streamingQuality = useStreamingQualityContext()
 
-	const isPlaying = nowPlaying?.item.Id === track.Id
+	// Memoize expensive computations
+	const isPlaying = useMemo(
+		() => nowPlaying?.item.Id === track.Id,
+		[nowPlaying?.item.Id, track.Id],
+	)
 
-	const offlineAudio = downloadedTracks?.find((t) => t.item.Id === track.Id)
-	const isDownloaded = offlineAudio?.item?.Id
+	const offlineAudio = useMemo(
+		() => downloadedTracks?.find((t) => t.item.Id === track.Id),
+		[downloadedTracks, track.Id],
+	)
 
-	const isOffline = networkStatus === networkStatusTypes.DISCONNECTED
+	const isDownloaded = useMemo(() => offlineAudio?.item?.Id, [offlineAudio])
 
+	const isOffline = useMemo(
+		() => networkStatus === networkStatusTypes.DISCONNECTED,
+		[networkStatus],
+	)
+
+	// Memoize image source to prevent recreation
+	const imageSource = useMemo(
+		() => ({
+			uri:
+				getImageApi(api!).getItemImageUrlById(
+					track.AlbumId! || track.Id!,
+					ImageType.Primary,
+					{
+						tag: track.ImageTags?.Primary,
+					},
+				) || '',
+		}),
+		[api, track.AlbumId, track.Id, track.ImageTags?.Primary],
+	)
+
+	// Memoize tracklist for queue loading
+	const memoizedTracklist = useMemo(
+		() => tracklist ?? playQueue.map((track) => track.item),
+		[tracklist, playQueue],
+	)
+
+	// Memoize handlers to prevent recreation
+	const handlePress = useCallback(() => {
+		if (onPress) {
+			onPress()
+		} else {
+			useLoadNewQueue({
+				track,
+				index,
+				tracklist: memoizedTracklist,
+				queue,
+				queuingType: QueuingType.FromSelection,
+				startPlayback: true,
+			})
+		}
+	}, [onPress, track, index, memoizedTracklist, queue, useLoadNewQueue])
+
+	const handleLongPress = useCallback(() => {
+		if (onLongPress) {
+			onLongPress()
+		} else {
+			navigationRef.navigate('Context', {
+				item: track,
+			})
+		}
+	}, [onLongPress, navigation, track, isNested])
+
+	const handleIconPress = useCallback(() => {
+		if (showRemove) {
+			if (onRemove) onRemove()
+		} else {
+			navigationRef.navigate('Context', {
+				item: track,
+			})
+		}
+	}, [showRemove, onRemove, navigation, track, isNested])
+
+	// Only fetch media info if needed (for streaming)
 	useQuery({
 		queryKey: [QueryKeys.MediaSources, streamingQuality, track.Id],
 		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), track),
 		staleTime: Infinity, // Don't refetch media info unless the user changes the quality
+		enabled: !isDownloaded, // Only fetch if not downloaded
 	})
+
+	// Memoize text color to prevent recalculation
+	const textColor = useMemo(() => {
+		if (isPlaying) return theme.primary.val
+		if (isOffline) return isDownloaded ? theme.color : theme.neutral.val
+		return theme.color
+	}, [isPlaying, isOffline, isDownloaded, theme.primary.val, theme.color, theme.neutral.val])
+
+	// Memoize artists text
+	const artistsText = useMemo(() => track.Artists?.join(', ') ?? '', [track.Artists])
+
+	// Memoize track name
+	const trackName = useMemo(() => track.Name ?? 'Untitled Track', [track.Name])
+
+	// Memoize index number
+	const indexNumber = useMemo(() => track.IndexNumber?.toString() ?? '', [track.IndexNumber])
+
+	// Memoize show artists condition
+	const shouldShowArtists = useMemo(
+		() => showArtwork || (track.Artists && track.Artists.length > 1),
+		[showArtwork, track.Artists],
+	)
 
 	return (
 		<Theme name={invertedColors ? 'inverted_purple' : undefined}>
@@ -86,30 +178,8 @@ export default function Track({
 				height={showArtwork ? '$6' : '$5'}
 				flex={1}
 				testID={testID ?? undefined}
-				onPress={() => {
-					if (onPress) {
-						onPress()
-					} else {
-						useLoadNewQueue({
-							track,
-							index,
-							tracklist: tracklist ?? playQueue.map((track) => track.item),
-							queue,
-							queuingType: QueuingType.FromSelection,
-							startPlayback: true,
-						})
-					}
-				}}
-				onLongPress={
-					onLongPress
-						? () => onLongPress()
-						: () => {
-								navigationRef.navigate('Context', {
-									item: track,
-									navigation,
-								})
-							}
-				}
+				onPress={handlePress}
+				onLongPress={handleLongPress}
 				paddingVertical={'$2'}
 				justifyContent='center'
 				marginRight={'$2'}
@@ -122,16 +192,7 @@ export default function Track({
 					{showArtwork ? (
 						<FastImage
 							key={`${track.Id}-${track.AlbumId || track.Id}`}
-							source={{
-								uri:
-									getImageApi(api!).getItemImageUrlById(
-										track.AlbumId! || track.Id!,
-										ImageType.Primary,
-										{
-											tag: track.ImageTags?.Primary,
-										},
-									) || '',
-							}}
+							source={imageSource}
 							style={{
 								width: getToken('$12'),
 								height: getToken('$12'),
@@ -141,11 +202,11 @@ export default function Track({
 					) : (
 						<Text
 							key={`${track.Id}-number`}
-							color={isPlaying ? theme.primary.val : theme.color}
+							color={textColor}
 							width={getToken('$12')}
 							textAlign='center'
 						>
-							{track.IndexNumber?.toString() ?? ''}
+							{indexNumber}
 						</Text>
 					)}
 				</XStack>
@@ -154,28 +215,20 @@ export default function Track({
 					<Text
 						key={`${track.Id}-name`}
 						bold
-						color={
-							isPlaying
-								? theme.primary.val
-								: isOffline
-									? isDownloaded
-										? theme.color
-										: theme.neutral.val
-									: theme.color
-						}
+						color={textColor}
 						lineBreakStrategyIOS='standard'
 						numberOfLines={1}
 					>
-						{track.Name ?? 'Untitled Track'}
+						{trackName}
 					</Text>
 
-					{(showArtwork || (track.Artists && track.Artists.length > 1)) && (
+					{shouldShowArtists && (
 						<Text
 							key={`${track.Id}-artists`}
 							lineBreakStrategyIOS='standard'
 							numberOfLines={1}
 						>
-							{track.Artists?.join(', ') ?? ''}
+							{artistsText}
 						</Text>
 					)}
 				</YStack>
@@ -200,16 +253,7 @@ export default function Track({
 				<Icon
 					name={showRemove ? 'close' : 'dots-horizontal'}
 					flex={1}
-					onPress={() => {
-						if (showRemove) {
-							if (onRemove) onRemove()
-						} else {
-							navigationRef.navigate('Context', {
-								item: track,
-								navigation,
-							})
-						}
-					}}
+					onPress={handleIconPress}
 				/>
 			</XStack>
 		</Theme>
