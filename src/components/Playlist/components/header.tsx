@@ -193,7 +193,7 @@ function PlaylistHeaderControls({
 						small
 					/>
 				) : (
-					<InstantMixButton item={playlist} />
+					<InstantMixButton item={playlist} navigation={navigation} />
 				)}
 			</YStack>
 
