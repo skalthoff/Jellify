@@ -6,6 +6,7 @@ import { Text } from '../Global/helpers/text'
 import { useArtistContext } from '../../providers/Artist'
 import Animated, { useAnimatedScrollHandler } from 'react-native-reanimated'
 import { ActivityIndicator } from 'react-native'
+import navigationRef from '../../../navigation'
 
 export default function SimilarArtists(): React.JSX.Element {
 	const navigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
@@ -33,6 +34,12 @@ export default function SimilarArtists(): React.JSX.Element {
 					onPress={() => {
 						navigation.push('Artist', {
 							artist,
+						})
+					}}
+					onLongPress={() => {
+						navigationRef.navigate('Context', {
+							item: artist,
+							navigation,
 						})
 					}}
 				/>

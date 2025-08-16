@@ -49,7 +49,6 @@ export default function LibraryStack({ route, navigation }: LibraryTabProps): Re
 						name='Album'
 						component={AlbumScreen}
 						options={({ route }) => ({
-							headerShown: false,
 							title: route.params.album.Name ?? 'Untitled Album',
 							headerTitleStyle: {
 								color: theme.background.val,
@@ -61,7 +60,6 @@ export default function LibraryStack({ route, navigation }: LibraryTabProps): Re
 						name='Playlist'
 						component={PlaylistScreen}
 						options={({ route }) => ({
-							headerShown: false,
 							title: route.params.playlist.Name ?? 'Untitled Playlist',
 							headerTitleStyle: {
 								color: theme.background.val,
