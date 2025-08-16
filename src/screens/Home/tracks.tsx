@@ -18,6 +18,7 @@ export default function HomeTracksScreen({
 	if (route.name === 'MostPlayedTracks') {
 		return (
 			<Tracks
+				navigation={navigation}
 				tracks={frequentlyPlayed}
 				fetchNextPage={fetchNextFrequentlyPlayed}
 				hasNextPage={hasNextFrequentlyPlayed}
@@ -28,6 +29,7 @@ export default function HomeTracksScreen({
 
 	return (
 		<Tracks
+			navigation={navigation}
 			tracks={recentTracks}
 			fetchNextPage={fetchNextRecentTracks}
 			hasNextPage={hasNextRecentTracks}

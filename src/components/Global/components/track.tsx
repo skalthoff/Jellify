@@ -26,7 +26,7 @@ import { BaseStackParamList } from '@/src/screens/types'
 
 export interface TrackProps {
 	track: BaseItemDto
-	navigation: Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
+	navigation?: Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
 	tracklist?: BaseItemDto[] | undefined
 	index: number
 	queue: Queue
