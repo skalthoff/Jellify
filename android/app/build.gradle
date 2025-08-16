@@ -95,8 +95,8 @@ android {
         applicationId "com.jellify"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 99
-        versionName "0.15.0"
+        versionCode 100
+        versionName "0.15.1"
     }
     signingConfigs {
         debug {
