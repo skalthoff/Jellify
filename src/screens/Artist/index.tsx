@@ -13,7 +13,7 @@ export function ArtistScreen({
 }): React.JSX.Element {
 	return (
 		<ArtistProvider artist={route.params.artist}>
-			<ArtistNavigation />
+			<ArtistNavigation navigation={navigation} />
 		</ArtistProvider>
 	)
 }

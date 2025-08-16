@@ -9,6 +9,8 @@ import PublicPlaylists from './playlists'
 import { PlaylistScreen } from '../Playlist'
 import SuggestedArtists from './artists'
 import DiscoverStackParamList from './types'
+import InstantMix from '../../components/InstantMix/component'
+import { getItemName } from '../../utils/text'
 
 export const DiscoverStack = createNativeStackNavigator<DiscoverStackParamList>()
 
@@ -88,6 +90,14 @@ export function Discover(): React.JSX.Element {
 					options={{
 						title: 'Suggested Artists',
 					}}
+				/>
+
+				<DiscoverStack.Screen
+					name='InstantMix'
+					component={InstantMix}
+					options={({ route }) => ({
+						headerTitle: `${getItemName(route.params.item)} Mix`,
+					})}
 				/>
 			</DiscoverStack.Navigator>
 		</DiscoverProvider>

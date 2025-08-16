@@ -6,13 +6,16 @@ import { fetchInstantMixFromItem } from '../../../api/queries/instant-mixes'
 import Icon from './icon'
 import { Spacer, Spinner } from 'tamagui'
 import { useJellifyContext } from '../../../providers'
-import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { BaseStackParamList } from '../../../screens/types'
-export default function InstantMixButton({ item }: { item: BaseItemDto }): React.JSX.Element {
+export default function InstantMixButton({
+	item,
+	navigation,
+}: {
+	item: BaseItemDto
+	navigation: Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
+}): React.JSX.Element {
 	const { api, user } = useJellifyContext()
-
-	const navigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
 
 	const { data, isFetching, refetch } = useQuery({
 		queryKey: [QueryKeys.InstantMix, item.Id!],

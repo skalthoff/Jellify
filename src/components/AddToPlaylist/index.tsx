@@ -27,6 +27,7 @@ import { Text } from '../Global/helpers/text'
 import ItemImage from '../Global/components/image'
 import TextTicker from 'react-native-text-ticker'
 import { TextTickerConfig } from '../Player/component.config'
+import { getItemName } from '../../utils/text'
 
 export default function AddToPlaylist({ track }: { track: BaseItemDto }): React.JSX.Element {
 	const { api, user, library } = useJellifyContext()
@@ -121,8 +122,18 @@ export default function AddToPlaylist({ track }: { track: BaseItemDto }): React.
 			<XStack gap={'$2'} margin={'$4'}>
 				<ItemImage item={track} />
 
-				<YStack gap={'$2'}>
-					<TextTicker {...TextTickerConfig}></TextTicker>
+				<YStack gap={'$2'} margin={'$2'}>
+					<TextTicker {...TextTickerConfig}>
+						<Text bold fontSize={'$6'}>
+							{getItemName(track)}
+						</Text>
+					</TextTicker>
+
+					<TextTicker {...TextTickerConfig}>
+						<Text
+							bold
+						>{`${track.ArtistItems?.map((artist) => getItemName(artist)).join(',')}`}</Text>
+					</TextTicker>
 				</YStack>
 			</XStack>
 
@@ -152,9 +163,7 @@ export default function AddToPlaylist({ track }: { track: BaseItemDto }): React.
 										<ItemImage item={playlist} height={'$11'} width={'$11'} />
 
 										<YStack alignItems='flex-start' flex={5}>
-											<Text bold fontSize={'$6'}>
-												{playlist.Name ?? 'Untitled Playlist'}
-											</Text>
+											<Text bold>{playlist.Name ?? 'Untitled Playlist'}</Text>
 
 											<Text color={getTokens().color.amethyst.val}>{`${
 												playlist.ChildCount ?? 0

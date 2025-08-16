@@ -8,6 +8,7 @@ export default function InstantMix({ route, navigation }: InstantMixProps): Reac
 
 	return (
 		<FlatList
+			contentInsetAdjustmentBehavior='automatic'
 			data={mix}
 			ItemSeparatorComponent={() => <Separator />}
 			renderItem={({ item, index }) => (

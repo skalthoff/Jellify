@@ -1,5 +1,5 @@
 import React from 'react'
-import LibraryScreen from '../../components/Library/component'
+import Library from '../../components/Library/component'
 import { PlaylistScreen } from '../Playlist'
 import AddPlaylist from './add-playlist'
 import DeletePlaylist from './delete-playlist'
@@ -11,19 +11,21 @@ import LibraryStackParamList from './types'
 import { LibraryTabProps } from '../Tabs/types'
 import { LibraryProvider } from '../../providers/Library'
 import { LibrarySortAndFilterProvider } from '../../providers/Library/sorting-filtering'
+import InstantMix from '../../components/InstantMix/component'
+import { getItemName } from '../../utils/text'
 
-const Stack = createNativeStackNavigator<LibraryStackParamList>()
+const LibraryStack = createNativeStackNavigator<LibraryStackParamList>()
 
-export default function LibraryStack({ route, navigation }: LibraryTabProps): React.JSX.Element {
+export default function LibraryScreen({ route, navigation }: LibraryTabProps): React.JSX.Element {
 	const theme = useTheme()
 
 	return (
 		<LibrarySortAndFilterProvider>
 			<LibraryProvider>
-				<Stack.Navigator initialRouteName='LibraryScreen'>
-					<Stack.Screen
+				<LibraryStack.Navigator initialRouteName='LibraryScreen'>
+					<LibraryStack.Screen
 						name='LibraryScreen'
-						component={LibraryScreen}
+						component={Library}
 						options={{
 							title: 'Library',
 
@@ -34,7 +36,7 @@ export default function LibraryStack({ route, navigation }: LibraryTabProps): Re
 						}}
 					/>
 
-					<Stack.Screen
+					<LibraryStack.Screen
 						name='Artist'
 						component={ArtistScreen}
 						options={({ route }) => ({
@@ -45,7 +47,7 @@ export default function LibraryStack({ route, navigation }: LibraryTabProps): Re
 						})}
 					/>
 
-					<Stack.Screen
+					<LibraryStack.Screen
 						name='Album'
 						component={AlbumScreen}
 						options={({ route }) => ({
@@ -56,7 +58,7 @@ export default function LibraryStack({ route, navigation }: LibraryTabProps): Re
 						})}
 					/>
 
-					<Stack.Screen
+					<LibraryStack.Screen
 						name='Playlist'
 						component={PlaylistScreen}
 						options={({ route }) => ({
@@ -67,13 +69,21 @@ export default function LibraryStack({ route, navigation }: LibraryTabProps): Re
 						})}
 					/>
 
-					<Stack.Group
+					<LibraryStack.Screen
+						name='InstantMix'
+						component={InstantMix}
+						options={({ route }) => ({
+							headerTitle: `${getItemName(route.params.item)} Mix`,
+						})}
+					/>
+
+					<LibraryStack.Group
 						screenOptions={{
 							presentation: 'formSheet',
 							sheetAllowedDetents: 'fitToContents',
 						}}
 					>
-						<Stack.Screen
+						<LibraryStack.Screen
 							name='AddPlaylist'
 							component={AddPlaylist}
 							options={{
@@ -81,15 +91,15 @@ export default function LibraryStack({ route, navigation }: LibraryTabProps): Re
 							}}
 						/>
 
-						<Stack.Screen
+						<LibraryStack.Screen
 							name='DeletePlaylist'
 							component={DeletePlaylist}
 							options={{
 								title: 'Delete Playlist',
 							}}
 						/>
-					</Stack.Group>
-				</Stack.Navigator>
+					</LibraryStack.Group>
+				</LibraryStack.Navigator>
 			</LibraryProvider>
 		</LibrarySortAndFilterProvider>
 	)

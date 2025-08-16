@@ -8,7 +8,7 @@ import { Miniplayer } from '../../components/Player/mini-player'
 import { useTheme } from 'tamagui'
 import { useNowPlayingContext } from '../../providers/Player'
 import SearchStack from '../Search'
-import LibraryStack from '../Library'
+import LibraryScreen from '../Library'
 import InternetConnectionWatcher from '../../components/Network/internetConnectionWatcher'
 import TabParamList from './types'
 import { TabProps } from '../types'
@@ -56,7 +56,7 @@ export default function Tabs({ route, navigation }: TabProps): React.JSX.Element
 
 			<Tab.Screen
 				name='LibraryTab'
-				component={LibraryStack}
+				component={LibraryScreen}
 				options={{
 					title: 'Library',
 					headerShown: false,

@@ -24,6 +24,8 @@ import { goToAlbumFromContextSheet, goToArtistFromContextSheet } from './utils/n
 import { getItemName } from '../../utils/text'
 import ItemImage from '../Global/components/image'
 import { StackActions } from '@react-navigation/native'
+import TextTicker from 'react-native-text-ticker'
+import { TextTickerConfig } from '../Player/component.config'
 
 type StackNavigation = Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
 
@@ -226,7 +228,9 @@ function ViewAlbumMenuRow({ album: album, stackNavigation }: MenuRowProps): Reac
 		>
 			<ItemImage item={album} height={'$10'} width={'$10'} />
 
-			<Text bold>{`Go to ${getItemName(album)}`}</Text>
+			<TextTicker {...TextTickerConfig}>
+				<Text bold>{`Go to ${getItemName(album)}`}</Text>
+			</TextTicker>
 		</ListItem>
 	)
 }

@@ -5,17 +5,23 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ArtistTabBar from './tab-bar'
 import { useArtistContext } from '../../providers/Artist'
 import ArtistTabList from './types'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { BaseStackParamList } from '@/src/screens/types'
 
 const ArtistTabs = createMaterialTopTabNavigator<ArtistTabList>()
 
-export default function ArtistNavigation(): React.JSX.Element {
+export default function ArtistNavigation({
+	navigation,
+}: {
+	navigation: NativeStackNavigationProp<BaseStackParamList>
+}): React.JSX.Element {
 	const { featuredOn, artist } = useArtistContext()
 
 	const hasFeaturedOn = useMemo(() => featuredOn && featuredOn.length > 0, [artist])
 
 	return (
 		<ArtistTabs.Navigator
-			tabBar={ArtistTabBar}
+			tabBar={(props) => <ArtistTabBar stackNavigation={navigation} tabBarProps={props} />}
 			screenOptions={{
 				tabBarLabelStyle: {
 					fontFamily: 'Figtree-Bold',

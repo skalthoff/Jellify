@@ -10,6 +10,8 @@ import HomeTracksScreen from './tracks'
 import AlbumScreen from '../Album'
 import HomeStackParamList from './types'
 import { HomeTabProps } from '../Tabs/types'
+import InstantMix from '../../components/InstantMix/component'
+import { getItemName } from '../../utils/text'
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>()
 
@@ -89,6 +91,14 @@ export default function Home(): React.JSX.Element {
 							headerTitleStyle: {
 								color: theme.background.val,
 							},
+						})}
+					/>
+
+					<HomeStack.Screen
+						name='InstantMix'
+						component={InstantMix}
+						options={({ route }) => ({
+							headerTitle: `${getItemName(route.params.item)} Mix`,
 						})}
 					/>
 				</HomeStack.Group>

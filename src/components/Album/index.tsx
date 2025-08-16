@@ -118,7 +118,7 @@ export function Album(): React.JSX.Element {
 					</XStack>
 				) : null
 			}}
-			ListHeaderComponent={() => AlbumTrackListHeader(album, playAlbum)}
+			ListHeaderComponent={() => AlbumTrackListHeader(album, playAlbum, navigation)}
 			renderItem={({ item: track, index }) => (
 				<Track
 					navigation={navigation}
@@ -152,15 +152,9 @@ export function Album(): React.JSX.Element {
 function AlbumTrackListHeader(
 	album: BaseItemDto,
 	playAlbum: (shuffled?: boolean) => void,
+	navigation: Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>,
 ): React.JSX.Element {
 	const { width } = useSafeAreaFrame()
-
-	const navigation =
-		useNavigation<
-			NativeStackNavigationProp<
-				HomeStackParamList | LibraryStackParamList | DiscoverStackParamList
-			>
-		>()
 
 	return (
 		<YStack marginTop={'$4'} alignItems='center'>
@@ -204,7 +198,7 @@ function AlbumTrackListHeader(
 					>
 						<FavoriteButton item={album} />
 
-						<InstantMixButton item={album} />
+						<InstantMixButton item={album} navigation={navigation} />
 
 						<Icon name='play' onPress={() => playAlbum(false)} small />
 
