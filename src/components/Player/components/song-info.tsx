@@ -12,7 +12,8 @@ import FavoriteButton from '../../Global/components/favorite-button'
 import { QueryKeys } from '../../../enums/query-keys'
 import { PlayerParamList } from '../../../screens/Player/types'
 import { useNowPlayingContext } from '../../../providers/Player'
-import navigationRef from '@/navigation'
+import navigationRef from '../../../../navigation'
+import Icon from '../../Global/components/icon'
 
 interface SongInfoProps {
 	navigation: NativeStackNavigationProp<PlayerParamList>
@@ -92,7 +93,12 @@ function SongInfo({ navigation }: SongInfoProps): React.JSX.Element {
 				</TextTicker>
 			</YStack>
 
-			<XStack justifyContent='flex-end' alignItems='center' flexShrink={1}>
+			<XStack justifyContent='flex-end' alignItems='center' flexShrink={1} gap={'$3'}>
+				<Icon
+					name='dots-horizontal-circle-outline'
+					onPress={() => navigationRef.navigate('Context', { item: nowPlaying!.item })}
+				/>
+
 				<FavoriteButton item={nowPlaying!.item} />
 			</XStack>
 		</XStack>
