@@ -13,7 +13,7 @@ export function ProvidedHome(): React.JSX.Element {
 	const { refreshing: refetching, onRefresh } = useHomeContext()
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
+		<SafeAreaView style={{ flex: 1 }} edges={['top']}>
 			<ScrollView
 				contentInsetAdjustmentBehavior='automatic'
 				contentContainerStyle={{

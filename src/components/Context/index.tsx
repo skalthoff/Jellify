@@ -18,10 +18,7 @@ import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { useAddToQueueContext } from '../../providers/Player/queue'
 import { AddToQueueMutation } from '../../providers/Player/interfaces'
 import { QueuingType } from '../../enums/queuing-type'
-import LibraryStackParamList from '../../screens/Library/types'
-import DiscoverStackParamList from '../../screens/Discover/types'
-import HomeStackParamList from '../../screens/Home/types'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import navigationRef from '../../../navigation'
 import { goToAlbumFromContextSheet, goToArtistFromContextSheet } from './utils/navigation'
 import { getItemName } from '../../utils/text'
@@ -86,26 +83,26 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 				}),
 	})
 
-	const renderAddToQueueRow = isTrack || isAlbum || isPlaylist
+	const renderAddToQueueRow = isTrack || (isAlbum && tracks) || (isPlaylist && tracks)
 
 	const renderAddToPlaylistRow = isTrack
 
+	const renderViewAlbumRow = useMemo(() => isAlbum || (isTrack && album), [album, item])
+
 	return (
-		<ZStack>
+		<ZStack animation={'quick'}>
 			<ItemContextBackground item={item} />
 
 			<YGroup unstyled flex={1} marginTop={'$8'}>
 				<FavoriteContextMenuRow item={item} />
 
-				{renderAddToQueueRow && tracks && (
-					<AddToQueueMenuRow tracks={isTrack ? [item] : tracks} />
-				)}
+				{renderAddToQueueRow && <AddToQueueMenuRow tracks={isTrack ? [item] : tracks!} />}
 
 				{renderAddToPlaylistRow && <AddToPlaylistRow track={item} />}
 
-				{!isArtist && !isPlaylist && (
+				{renderViewAlbumRow && (
 					<ViewAlbumMenuRow
-						album={isAlbum ? item : album}
+						album={isAlbum ? item : album!}
 						stackNavigation={stackNavigation}
 					/>
 				)}
@@ -208,7 +205,7 @@ function BackgroundGradient(): React.JSX.Element {
 }
 
 interface MenuRowProps {
-	album: BaseItemDto | undefined
+	album: BaseItemDto
 	stackNavigation?: StackNavigation
 }
 
@@ -222,14 +219,14 @@ function ViewAlbumMenuRow({ album: album, stackNavigation }: MenuRowProps): Reac
 		<ListItem
 			animation='quick'
 			backgroundColor={'transparent'}
-			gap={'$2'}
+			gap={'$3'}
 			justifyContent='flex-start'
 			onPress={goToAlbum}
 			pressStyle={{ opacity: 0.5 }}
 		>
-			<Icon color='$primary' name='disc' />
+			<ItemImage item={album} height={'$10'} width={'$10'} />
 
-			<Text bold>Go to Album</Text>
+			<Text bold>{`Go to ${getItemName(album)}`}</Text>
 		</ListItem>
 	)
 }
