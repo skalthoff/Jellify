@@ -26,6 +26,7 @@ import navigationRef from '../../../navigation'
 import { goToAlbumFromContextSheet, goToArtistFromContextSheet } from './utils/navigation'
 import { getItemName } from '../../utils/text'
 import ItemImage from '../Global/components/image'
+import { StackActions } from '@react-navigation/native'
 
 type StackNavigation = Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
 
@@ -87,6 +88,8 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 
 	const renderAddToQueueRow = isTrack || isAlbum || isPlaylist
 
+	const renderAddToPlaylistRow = isTrack
+
 	return (
 		<ZStack>
 			<ItemContextBackground item={item} />
@@ -98,9 +101,11 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 					<AddToQueueMenuRow tracks={isTrack ? [item] : tracks} />
 				)}
 
+				{renderAddToPlaylistRow && <AddToPlaylistRow track={item} />}
+
 				{!isArtist && !isPlaylist && (
 					<ViewAlbumMenuRow
-						item={isAlbum ? item : album!}
+						album={isAlbum ? item : album}
 						stackNavigation={stackNavigation}
 					/>
 				)}
@@ -139,6 +144,27 @@ function BackgroundBlur({ item }: { item: BaseItemDto }): React.JSX.Element {
 	)
 }
 
+function AddToPlaylistRow({ track }: { track: BaseItemDto }): React.JSX.Element {
+	return (
+		<ListItem
+			animation={'quick'}
+			backgroundColor={'transparent'}
+			flex={1}
+			gap={'$2'}
+			justifyContent='flex-start'
+			onPress={() => {
+				navigationRef.goBack()
+				navigationRef.dispatch(StackActions.push('AddToPlaylist', { track }))
+			}}
+			pressStyle={{ opacity: 0.5 }}
+		>
+			<Icon color='$primary' name='playlist-plus' />
+
+			<Text bold>Add to Playlist</Text>
+		</ListItem>
+	)
+}
+
 function AddToQueueMenuRow({ tracks }: { tracks: BaseItemDto[] }): React.JSX.Element {
 	const useAddToQueue = useAddToQueueContext()
 
@@ -159,7 +185,7 @@ function AddToQueueMenuRow({ tracks }: { tracks: BaseItemDto[] }): React.JSX.Ele
 			}}
 			pressStyle={{ opacity: 0.5 }}
 		>
-			<Icon color='$primary' name='playlist-plus' />
+			<Icon color='$primary' name='music-note-plus' />
 
 			<Text bold>Add to Queue</Text>
 		</ListItem>
@@ -182,11 +208,11 @@ function BackgroundGradient(): React.JSX.Element {
 }
 
 interface MenuRowProps {
-	item: BaseItemDto | undefined
+	album: BaseItemDto | undefined
 	stackNavigation?: StackNavigation
 }
 
-function ViewAlbumMenuRow({ item: album, stackNavigation }: MenuRowProps): React.JSX.Element {
+function ViewAlbumMenuRow({ album: album, stackNavigation }: MenuRowProps): React.JSX.Element {
 	const goToAlbum = useCallback(() => {
 		if (stackNavigation && album) stackNavigation.navigate('Album', { album })
 		else goToAlbumFromContextSheet(album)

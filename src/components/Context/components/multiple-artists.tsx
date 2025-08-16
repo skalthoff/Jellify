@@ -24,8 +24,8 @@ export default function MultipleArtists({
 			renderItem={({ item: artist }) => (
 				<ItemRow
 					circular
-					key={artist.Id}
 					item={artist}
+					key={artist.Id}
 					queueName={''}
 					onPress={() => {
 						navigation.popToTop()

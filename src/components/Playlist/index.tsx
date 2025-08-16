@@ -76,6 +76,7 @@ export default function Playlist({
 					{editing && canEdit && <Icon name='drag' onPress={drag} />}
 
 					<Track
+						navigation={navigation}
 						track={track}
 						tracklist={playlistTracks ?? []}
 						index={getIndex() ?? 0}
@@ -86,6 +87,7 @@ export default function Playlist({
 								? drag()
 								: rootNavigation.navigate('Context', {
 										item: track,
+										navigation,
 									})
 						}}
 						showRemove={editing}

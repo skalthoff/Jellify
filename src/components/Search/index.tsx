@@ -112,7 +112,9 @@ export default function Search({
 			// We're displaying artists separately so we're going to filter them out here
 			data={items?.filter((result) => result.Type !== 'MusicArtist')}
 			refreshing={fetchingResults}
-			renderItem={({ item }) => <ItemRow item={item} queueName={searchString ?? 'Search'} />}
+			renderItem={({ item }) => (
+				<ItemRow item={item} queueName={searchString ?? 'Search'} navigation={navigation} />
+			)}
 			style={{
 				marginHorizontal: getToken('$2'),
 				marginTop: getToken('$4'),

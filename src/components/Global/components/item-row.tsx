@@ -1,6 +1,4 @@
-import { BaseStackParamList, RootStackParamList } from '../../../screens/types'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
 import Icon from './icon'
@@ -17,8 +15,17 @@ import { fetchMediaInfo } from '../../../api/queries/media'
 import { QueryKeys } from '../../../enums/query-keys'
 import { useJellifyContext } from '../../../providers'
 import { useStreamingQualityContext } from '../../../providers/Settings'
-import { useNavigation } from '@react-navigation/native'
-import navigate from '../../../../navigation'
+import navigationRef from '../../../../navigation'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { BaseStackParamList } from '../../../screens/types'
+
+interface ItemRowProps {
+	item: BaseItemDto
+	navigation?: Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
+	queueName: string
+	onPress?: () => void
+	circular?: boolean
+}
 
 /**
  * Displays an item as a row in a list.
@@ -33,21 +40,14 @@ import navigate from '../../../../navigation'
  */
 export default function ItemRow({
 	item,
+	navigation,
 	queueName,
 	onPress,
 	circular,
-}: {
-	item: BaseItemDto
-	queueName: string
-	onPress?: () => void
-	circular?: boolean
-}): React.JSX.Element {
+}: ItemRowProps): React.JSX.Element {
 	const useLoadNewQueue = useLoadQueueContext()
 	const { api, user } = useJellifyContext()
 	const streamingQuality = useStreamingQualityContext()
-
-	const navigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
-	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
 	useQuery({
 		queryKey: [QueryKeys.MediaSources, streamingQuality, item.Id],
@@ -87,7 +87,7 @@ export default function ItemRow({
 				minHeight={'$7'}
 				width={'100%'}
 				onLongPress={() => {
-					rootNavigation.navigate('Context', {
+					navigationRef.navigate('Context', {
 						item,
 						navigation,
 					})
@@ -100,12 +100,12 @@ export default function ItemRow({
 
 					switch (item.Type) {
 						case 'MusicArtist': {
-							navigation.navigate('Artist', { artist: item })
+							navigation?.navigate('Artist', { artist: item })
 							break
 						}
 
 						case 'MusicAlbum': {
-							navigation.navigate('Album', { album: item })
+							navigation?.navigate('Album', { album: item })
 							break
 						}
 					}
@@ -163,8 +163,9 @@ export default function ItemRow({
 						<Icon
 							name='dots-horizontal'
 							onPress={() => {
-								rootNavigation.navigate('Context', {
+								navigationRef.navigate('Context', {
 									item,
+									navigation,
 								})
 							}}
 						/>

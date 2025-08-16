@@ -42,6 +42,7 @@ export default function Playlists({
 						navigation.navigate('Playlist', { playlist, canEdit })
 					}}
 					queueName={playlist.Name ?? 'Untitled Playlist'}
+					navigation={navigation}
 				/>
 			)}
 			onEndReached={() => {

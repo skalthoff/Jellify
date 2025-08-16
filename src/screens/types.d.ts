@@ -61,12 +61,17 @@ export type RootStackParamList = {
 		navigation?: Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
 		navigationCallback?: (screen: 'Album' | 'Artist', item: BaseItemDto) => void
 	}
+
+	AddToPlaylist: {
+		track: BaseItemDto
+	}
 }
 
 export type LoginProps = NativeStackNavigationProp<RootStackParamList, 'Login'>
 export type TabProps = NativeStackScreenProps<RootStackParamList, 'Tabs'>
 export type PlayerProps = NativeStackScreenProps<RootStackParamList, 'PlayerRoot'>
 export type ContextProps = NativeStackScreenProps<RootStackParamList, 'Context'>
+export type AddToPlaylistProps = NativeStackScreenProps<RootStackParamList, 'AddToPlaylist'>
 
 export type ArtistsProps = {
 	artistsInfiniteQuery: UseInfiniteQueryResult<

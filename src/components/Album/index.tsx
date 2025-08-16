@@ -1,7 +1,6 @@
-import { BaseStackParamList } from '../../screens/types'
 import { YStack, XStack, Separator, getToken, Spacer, Spinner } from 'tamagui'
 import { H5, Text } from '../Global/helpers/text'
-import { ActivityIndicator, FlatList, SectionList } from 'react-native'
+import { FlatList, SectionList } from 'react-native'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
 import Track from '../Global/components/track'
 import FavoriteButton from '../Global/components/favorite-button'
@@ -10,7 +9,7 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import InstantMixButton from '../Global/components/instant-mix-button'
 import ItemImage from '../Global/components/image'
-import React from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { useJellifyContext } from '../../providers'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import Icon from '../Global/components/icon'
@@ -21,10 +20,10 @@ import { useLoadQueueContext } from '../../providers/Player/queue'
 import { QueuingType } from '../../enums/queuing-type'
 import { useAlbumContext } from '../../providers/Album'
 import { useNavigation } from '@react-navigation/native'
-import { isUndefined } from 'lodash'
 import HomeStackParamList from '@/src/screens/Home/types'
 import LibraryStackParamList from '@/src/screens/Library/types'
 import DiscoverStackParamList from '@/src/screens/Discover/types'
+import { BaseStackParamList } from '@/src/screens/types'
 
 /**
  * The screen for an Album's track list
@@ -35,6 +34,8 @@ import DiscoverStackParamList from '@/src/screens/Discover/types'
  * @returns A React component
  */
 export function Album(): React.JSX.Element {
+	const navigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
+
 	const { album, discs, isPending } = useAlbumContext()
 
 	const { api, sessionId } = useJellifyContext()
@@ -51,47 +52,61 @@ export function Album(): React.JSX.Element {
 		useDownloadMultiple.mutate(jellifyTracks)
 	}
 
-	const playAlbum = (shuffled: boolean = false) => {
-		if (!discs || discs.length === 0) return
+	const playAlbum = useCallback(
+		(shuffled: boolean = false) => {
+			if (!discs || discs.length === 0) return
 
-		const allTracks = discs?.flatMap((disc) => disc.data) ?? []
-		if (allTracks.length === 0) return
+			const allTracks = discs.flatMap((disc) => disc.data) ?? []
+			if (allTracks.length === 0) return
 
-		useLoadNewQueue({
-			track: allTracks[0],
-			index: 0,
-			tracklist: allTracks,
-			queue: album,
-			queuingType: QueuingType.FromSelection,
-			shuffled,
-			startPlayback: true,
-		})
-	}
+			useLoadNewQueue({
+				track: allTracks[0],
+				index: 0,
+				tracklist: allTracks,
+				queue: album,
+				queuingType: QueuingType.FromSelection,
+				shuffled,
+				startPlayback: true,
+			})
+		},
+		[discs, useLoadNewQueue],
+	)
+
+	const sections = useMemo(
+		() =>
+			(Array.isArray(discs) ? discs : []).map(({ title, data }) => ({
+				title,
+				data: Array.isArray(data) ? data : [],
+			})),
+		[discs],
+	)
+
+	const hasMultipleSections = sections.length > 1
+
+	const albumTrackList = useMemo(() => discs?.flatMap((disc) => disc.data), [discs])
 
 	return (
 		<SectionList
 			contentInsetAdjustmentBehavior='automatic'
-			sections={!isUndefined(discs) ? discs : []}
+			sections={sections}
 			keyExtractor={(item, index) => item.Id! + index}
 			ItemSeparatorComponent={Separator}
 			renderSectionHeader={({ section }) => {
-				return (
+				return !isPending && hasMultipleSections ? (
 					<XStack
 						width='100%'
-						justifyContent={discs && discs?.length >= 2 ? 'space-between' : 'flex-end'}
+						justifyContent={hasMultipleSections ? 'space-between' : 'flex-end'}
 						alignItems='center'
 						backgroundColor={'$background'}
 						paddingHorizontal={'$4.5'}
 					>
-						{discs && discs.length >= 2 && (
-							<Text
-								paddingVertical={'$2'}
-								paddingLeft={'$4.5'}
-								bold
-							>{`Disc ${section.title}`}</Text>
-						)}
+						<Text
+							paddingVertical={'$2'}
+							paddingLeft={'$4.5'}
+							bold
+						>{`Disc ${section.title}`}</Text>
 						<Icon
-							name={pendingDownloads?.length ? 'progress-download' : 'download'}
+							name={pendingDownloads.length ? 'progress-download' : 'download'}
 							small
 							onPress={() => {
 								if (pendingDownloads.length) {
@@ -101,14 +116,15 @@ export function Album(): React.JSX.Element {
 							}}
 						/>
 					</XStack>
-				)
+				) : null
 			}}
 			ListHeaderComponent={() => AlbumTrackListHeader(album, playAlbum)}
 			renderItem={({ item: track, index }) => (
 				<Track
+					navigation={navigation}
 					track={track}
-					tracklist={discs?.flatMap((disc) => disc.data)}
-					index={discs?.flatMap((disc) => disc.data).indexOf(track) ?? index}
+					tracklist={albumTrackList}
+					index={albumTrackList?.indexOf(track) ?? index}
 					queue={album}
 				/>
 			)}

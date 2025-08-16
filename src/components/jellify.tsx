@@ -16,7 +16,7 @@ import {
 import telemetryDeckConfig from '../../telemetrydeck.json'
 import glitchtipConfig from '../../glitchtip.json'
 import * as Sentry from '@sentry/react-native'
-import { Theme, useTheme } from 'tamagui'
+import { getToken, Theme, useTheme } from 'tamagui'
 import Toast from 'react-native-toast-message'
 import JellifyToastConfig from '../constants/toast.config'
 import { useColorScheme } from 'react-native'
@@ -24,6 +24,7 @@ import { CarPlayProvider } from '../providers/CarPlay'
 import { LibrarySortAndFilterProvider } from '../providers/Library/sorting-filtering'
 import { LibraryProvider } from '../providers/Library'
 import { HomeProvider } from '../providers/Home'
+import { SafeAreaView } from 'react-native-safe-area-context'
 /**
  * The main component for the Jellify app. Children are wrapped in the {@link JellifyProvider}
  * @returns The {@link Jellify} component
@@ -86,18 +87,13 @@ function App(): React.JSX.Element {
 			<NetworkContextProvider>
 				<QueueProvider>
 					<PlayerProvider>
-						<HomeProvider>
-							<LibrarySortAndFilterProvider>
-								<LibraryProvider>
-									<CarPlayProvider />
-									<Root />
-								</LibraryProvider>
-							</LibrarySortAndFilterProvider>
-						</HomeProvider>
+						<CarPlayProvider />
+						<Root />
 					</PlayerProvider>
 				</QueueProvider>
 			</NetworkContextProvider>
-			<Toast config={JellifyToastConfig(theme)} />
+
+			<Toast topOffset={getToken('$12')} config={JellifyToastConfig(theme)} />
 		</JellifyUserDataProvider>
 	)
 }

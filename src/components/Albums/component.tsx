@@ -1,5 +1,4 @@
 import { ActivityIndicator, RefreshControl } from 'react-native'
-import { useDisplayContext } from '../../providers/Display/display-provider'
 import { getToken, Separator, XStack, YStack } from 'tamagui'
 import React from 'react'
 import { Text } from '../Global/helpers/text'
@@ -7,6 +6,9 @@ import { FlashList } from '@shopify/flash-list'
 import { FetchNextPageOptions } from '@tanstack/react-query'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import ItemRow from '../Global/components/item-row'
+import { useNavigation } from '@react-navigation/native'
+import LibraryStackParamList from '../../screens/Library/types'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 interface AlbumsProps {
 	albums: (string | number | BaseItemDto)[] | undefined
@@ -24,9 +26,7 @@ export default function Albums({
 	isPending,
 	showAlphabeticalSelector,
 }: AlbumsProps): React.JSX.Element {
-	useDisplayContext()
-
-	const itemHeight = getToken('$6')
+	const navigation = useNavigation<NativeStackNavigationProp<LibraryStackParamList>>()
 
 	// Memoize expensive stickyHeaderIndices calculation to prevent unnecessary re-computations
 	const stickyHeaderIndices = React.useMemo(() => {
@@ -65,7 +65,11 @@ export default function Albums({
 							<Text>{album.toUpperCase()}</Text>
 						</XStack>
 					) : typeof album === 'number' ? null : typeof album === 'object' ? (
-						<ItemRow item={album} queueName={album.Name ?? 'Unknown Album'} />
+						<ItemRow
+							item={album}
+							queueName={album.Name ?? 'Unknown Album'}
+							navigation={navigation}
+						/>
 					) : null
 				}
 				ListEmptyComponent={

@@ -10,6 +10,9 @@ import { FlashList, FlashListRef } from '@shopify/flash-list'
 import { AZScroller } from '../Global/components/alphabetical-selector'
 import { useMutation } from '@tanstack/react-query'
 import { isString } from 'lodash'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import LibraryStackParamList from '../../screens/Library/types'
 
 /**
  * @param artistsInfiniteQuery - The infinite query for artists
@@ -25,6 +28,8 @@ export default function Artists({
 }: ArtistsProps): React.JSX.Element {
 	const theme = useTheme()
 	const { isFavorites } = useLibrarySortAndFilterContext()
+
+	const navigation = useNavigation<NativeStackNavigationProp<LibraryStackParamList>>()
 
 	const artists = artistsInfiniteQuery.data ?? []
 	const sectionListRef = useRef<FlashListRef<string | number | BaseItemDto>>(null)
@@ -142,6 +147,7 @@ export default function Artists({
 							circular
 							item={artist}
 							queueName={artist.Name ?? 'Unknown Artist'}
+							navigation={navigation}
 						/>
 					) : null
 				}

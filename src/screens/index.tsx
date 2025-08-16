@@ -8,6 +8,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Context from './Context'
 import { getItemName } from '../utils/text'
 import { useCallback } from 'react'
+import AddToPlaylistSheet from './AddToPlaylist'
+import { BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
 
 const RootStack = createNativeStackNavigator<RootStackParamList>()
 
@@ -16,9 +18,27 @@ export default function Root(): React.JSX.Element {
 
 	const { api, library } = useJellifyContext()
 
-	const getContextSheetDetents = useCallback((artists: string[] | null | undefined) => {
-		return [0.2 + (artists?.length ?? 1) * 0.1]
-	}, [])
+	const getContextSheetDetents = useCallback(
+		(artists: string[] | null | undefined, type: BaseItemKind | undefined) => {
+			let detent: number = 0
+
+			switch (type) {
+				case 'Audio':
+					detent = 0.25
+					break
+				case 'MusicAlbum':
+					detent = 0.2
+					break
+				case 'Playlist':
+					detent = 0.2
+					break
+				default:
+					detent = 0.15
+			}
+			return [detent + (artists?.length ?? 1) * 0.075]
+		},
+		[],
+	)
 
 	return (
 		<RootStack.Navigator
@@ -59,10 +79,24 @@ export default function Root(): React.JSX.Element {
 				options={({ route }) => ({
 					headerTitle: getItemName(route.params.item),
 					presentation: 'formSheet',
-					sheetAllowedDetents: getContextSheetDetents(route.params.item.Artists),
+					sheetAllowedDetents: getContextSheetDetents(
+						route.params.item.Artists,
+						route.params.item.Type,
+					),
 					sheetGrabberVisible: true,
 					headerTransparent: true,
 				})}
+			/>
+
+			<RootStack.Screen
+				name='AddToPlaylist'
+				component={AddToPlaylistSheet}
+				options={{
+					headerTitle: 'Add to Playlist',
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					sheetGrabberVisible: true,
+				}}
 			/>
 		</RootStack.Navigator>
 	)

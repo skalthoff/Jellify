@@ -15,9 +15,8 @@ function AlbumContextInitializer(album: BaseItemDto): AlbumContext {
 	const { api } = useJellifyContext()
 
 	const { data: discs, isPending } = useQuery({
-		queryKey: [QueryKeys.ItemTracks, album.Id!],
+		queryKey: [QueryKeys.ItemTracks, album.Id],
 		queryFn: () => fetchAlbumDiscs(api, album),
-		enabled: true,
 	})
 
 	return {
@@ -29,7 +28,7 @@ function AlbumContextInitializer(album: BaseItemDto): AlbumContext {
 
 const AlbumContext = createContext<AlbumContext>({
 	album: {},
-	discs: [],
+	discs: undefined,
 	isPending: false,
 })
 

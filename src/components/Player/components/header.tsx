@@ -1,7 +1,7 @@
 import { useJellifyContext } from '../../../providers'
 import { useNowPlayingContext, usePlaybackStateContext } from '../../../providers/Player'
 import { useQueueRefContext } from '../../../providers/Player/queue'
-import { getToken, useWindowDimensions, XStack, YStack, useTheme } from 'tamagui'
+import { getToken, useWindowDimensions, XStack, YStack, useTheme, Spacer } from 'tamagui'
 import { Text } from '../../Global/helpers/text'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import Icon from '../../Global/components/icon'
@@ -39,7 +39,7 @@ export default function PlayerHeader(): React.JSX.Element {
 					/>
 				</YStack>
 
-				<YStack alignItems='center' alignContent='center' flex={8}>
+				<YStack alignItems='center' alignContent='center' flex={2}>
 					<Text>Playing from</Text>
 					<Text bold numberOfLines={1} lineBreakStrategyIOS='standard'>
 						{
@@ -49,17 +49,7 @@ export default function PlayerHeader(): React.JSX.Element {
 					</Text>
 				</YStack>
 
-				<YStack flex={1} justifyContent='flex-end' alignContent='center'>
-					<Icon
-						small
-						name='dots-vertical'
-						onPress={() => {
-							navigation.navigate('Context', {
-								item: nowPlaying!.item,
-							})
-						}}
-					/>
-				</YStack>
+				<Spacer flex={1} />
 			</XStack>
 
 			<XStack justifyContent='center' alignContent='center' paddingVertical={'$8'}>

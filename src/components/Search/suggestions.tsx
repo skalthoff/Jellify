@@ -52,7 +52,7 @@ export default function Suggestions({
 				</Text>
 			}
 			renderItem={({ item }) => {
-				return <ItemRow item={item} queueName={'Suggestions'} />
+				return <ItemRow item={item} queueName={'Suggestions'} navigation={navigation} />
 			}}
 			style={{
 				marginHorizontal: 2,

@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { getToken, Theme, useTheme, XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
 import { RunTimeTicks } from '../helpers/time-codes'
 import { BaseItemDto, ImageType } from '@jellyfin/sdk/lib/generated-client/models'
 import Icon from './icon'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { BaseStackParamList, RootStackParamList } from '../../../screens/types'
 import { QueuingType } from '../../../enums/queuing-type'
 import { Queue } from '../../../player/types/queue-item'
 import FavoriteIcon from './favorite-icon'
@@ -22,10 +20,13 @@ import { fetchMediaInfo } from '../../../api/queries/media'
 import { useStreamingQualityContext } from '../../../providers/Settings'
 import { getQualityParams } from '../../../utils/mappings'
 import { useNowPlayingContext } from '../../../providers/Player'
-import { useNavigation } from '@react-navigation/native'
+import navigationRef from '../../../../navigation'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { BaseStackParamList } from '@/src/screens/types'
 
 export interface TrackProps {
 	track: BaseItemDto
+	navigation: Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
 	tracklist?: BaseItemDto[] | undefined
 	index: number
 	queue: Queue
@@ -42,6 +43,7 @@ export interface TrackProps {
 
 export default function Track({
 	track,
+	navigation,
 	tracklist,
 	index,
 	queue,
@@ -55,9 +57,6 @@ export default function Track({
 	onRemove,
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
-
-	const stackNavigation = useNavigation<NativeStackNavigationProp<BaseStackParamList>>()
-	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
 	const { api, user } = useJellifyContext()
 	const nowPlaying = useNowPlayingContext()
@@ -105,8 +104,9 @@ export default function Track({
 					onLongPress
 						? () => onLongPress()
 						: () => {
-								rootNavigation.navigate('Context', {
+								navigationRef.navigate('Context', {
 									item: track,
+									navigation,
 								})
 							}
 				}
@@ -204,8 +204,9 @@ export default function Track({
 						if (showRemove) {
 							if (onRemove) onRemove()
 						} else {
-							rootNavigation.navigate('Context', {
+							navigationRef.navigate('Context', {
 								item: track,
+								navigation,
 							})
 						}
 					}}

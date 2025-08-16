@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import Track from '../Global/components/track'
 import { getTokens, Separator } from 'tamagui'
 import { BaseItemDto, UserItemDataDto } from '@jellyfin/sdk/lib/generated-client/models'
@@ -7,22 +7,28 @@ import { useNetworkContext } from '../../providers/Network'
 import { queryClient } from '../../constants/query-client'
 import { QueryKeys } from '../../enums/query-keys'
 import { FlashList } from '@shopify/flash-list'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { BaseStackParamList } from '@/src/screens/types'
 
-export default function Tracks({
-	tracks,
-	queue,
-	fetchNextPage,
-	hasNextPage,
-	filterDownloaded,
-	filterFavorites,
-}: {
+interface TracksProps {
 	tracks: (string | number | BaseItemDto)[] | undefined
+	navigation: Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
 	queue: Queue
 	fetchNextPage: () => void
 	hasNextPage: boolean
 	filterDownloaded?: boolean | undefined
 	filterFavorites?: boolean | undefined
-}): React.JSX.Element {
+}
+
+export default function Tracks({
+	tracks,
+	navigation,
+	queue,
+	fetchNextPage,
+	hasNextPage,
+	filterDownloaded,
+	filterFavorites,
+}: TracksProps): React.JSX.Element {
 	const { downloadedTracks } = useNetworkContext()
 
 	// Memoize the expensive tracks processing to prevent memory leaks
@@ -56,6 +62,7 @@ export default function Tracks({
 	const renderItem = React.useCallback(
 		({ index, item: track }: { index: number; item: BaseItemDto }) => (
 			<Track
+				navigation={navigation}
 				showArtwork
 				index={0}
 				track={track}
