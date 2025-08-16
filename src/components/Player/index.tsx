@@ -1,7 +1,7 @@
 import { StackParamList } from '../types'
 import { usePlayerContext } from '../../providers/Player'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useMemo } from 'react'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { YStack, XStack, getToken, useTheme, ZStack, useWindowDimensions, View } from 'tamagui'
 import Scrubber from './components/scrubber'
@@ -13,12 +13,16 @@ import Footer from './components/footer'
 import BlurredBackground from './components/blurred-background'
 import PlayerHeader from './components/header'
 import SongInfo from './components/song-info'
+import { usePerformanceMonitor } from '../../hooks/use-performance-monitor'
 
 export default function PlayerScreen({
 	navigation,
 }: {
 	navigation: NativeStackNavigationProp<StackParamList>
 }): React.JSX.Element {
+	// Monitor performance
+	const performanceMetrics = usePerformanceMonitor('PlayerScreen', 5)
+
 	const [showToast, setShowToast] = useState(true)
 
 	const { nowPlaying } = usePlayerContext()
@@ -37,6 +41,35 @@ export default function PlayerScreen({
 
 	const { bottom } = useSafeAreaInsets()
 
+	// Memoize expensive calculations
+	const songInfoContainerStyle = useMemo(
+		() => ({
+			justifyContent: 'center' as const,
+			alignItems: 'center' as const,
+			marginHorizontal: 'auto' as const,
+			width: getToken('$20') + getToken('$20') + getToken('$5'),
+			maxWidth: width / 1.1,
+			flex: 2,
+		}),
+		[width],
+	)
+
+	const scrubberContainerStyle = useMemo(
+		() => ({
+			justifyContent: 'center' as const,
+			flex: 1,
+		}),
+		[],
+	)
+
+	const mainContainerStyle = useMemo(
+		() => ({
+			flex: 1,
+			marginBottom: bottom,
+		}),
+		[bottom],
+	)
+
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<View flex={1}>
@@ -44,21 +77,14 @@ export default function PlayerScreen({
 					<ZStack fullscreen>
 						<BlurredBackground width={width} height={height} />
 
-						<YStack flex={1} marginBottom={bottom}>
+						<YStack flex={1} marginBottom={bottom} style={mainContainerStyle}>
 							<PlayerHeader navigation={navigation} />
 
-							<XStack
-								justifyContent='center'
-								alignItems='center'
-								marginHorizontal={'auto'}
-								width={getToken('$20') + getToken('$20') + getToken('$5')}
-								maxWidth={width / 1.1}
-								flex={2}
-							>
+							<XStack style={songInfoContainerStyle}>
 								<SongInfo navigation={navigation} />
 							</XStack>
 
-							<XStack justifyContent='center' flex={1}>
+							<XStack style={scrubberContainerStyle}>
 								{/* playback progress goes here */}
 								<Scrubber />
 							</XStack>

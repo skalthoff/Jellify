@@ -4,7 +4,7 @@ import Icon from './icon'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../../enums/query-keys'
 import { fetchUserData } from '../../../api/queries/favorites'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, memo } from 'react'
 import { useJellifyContext } from '../../../providers'
 
 /**
@@ -14,7 +14,7 @@ import { useJellifyContext } from '../../../providers'
  * @param item - The item to display the favorite icon for.
  * @returns A React component that displays a favorite icon for a given item.
  */
-export default function FavoriteIcon({ item }: { item: BaseItemDto }): React.JSX.Element {
+function FavoriteIcon({ item }: { item: BaseItemDto }): React.JSX.Element {
 	const [isFavorite, setIsFavorite] = useState<boolean>(item.UserData?.IsFavorite ?? false)
 
 	const { api, user } = useJellifyContext()
@@ -23,10 +23,13 @@ export default function FavoriteIcon({ item }: { item: BaseItemDto }): React.JSX
 		queryKey: [QueryKeys.UserData, item.Id!],
 		queryFn: () => fetchUserData(api, user, item.Id!),
 		staleTime: 1000 * 60 * 5, // 5 minutes,
+		enabled: !!api && !!user && !!item.Id, // Only run if we have the required data
 	})
 
 	useEffect(() => {
-		if (!isPending) setIsFavorite(userData?.IsFavorite ?? false)
+		if (!isPending && userData !== undefined) {
+			setIsFavorite(userData?.IsFavorite ?? false)
+		}
 	}, [userData, isPending])
 
 	return isFavorite ? (
@@ -35,3 +38,12 @@ export default function FavoriteIcon({ item }: { item: BaseItemDto }): React.JSX
 		<Spacer flex={0.5} />
 	)
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default memo(FavoriteIcon, (prevProps, nextProps) => {
+	// Only re-render if the item ID changes or if the initial favorite state changes
+	return (
+		prevProps.item.Id === nextProps.item.Id &&
+		prevProps.item.UserData?.IsFavorite === nextProps.item.UserData?.IsFavorite
+	)
+})

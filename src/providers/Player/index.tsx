@@ -708,13 +708,7 @@ export const PlayerProvider: ({ children }: { children: ReactNode }) => React.JS
 	// Only recreate when essential values change
 	const value = useMemo(
 		() => context,
-		[
-			context.nowPlaying?.item?.Id,
-			context.playbackState,
-			context.repeatMode,
-			context.shuffled,
-			// Don't include mutation objects as dependencies since they're stable
-		],
+		[context.nowPlaying?.item?.Id, context.playbackState, context.repeatMode, context.shuffled],
 	)
 
 	return <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>
