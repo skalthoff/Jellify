@@ -22,16 +22,14 @@ export default function Home(): React.JSX.Element {
 
 	return (
 		<HomeProvider>
-			<HomeStack.Navigator
-				initialRouteName='HomeScreen'
-				screenOptions={{ headerShown: false }}
-			>
+			<HomeStack.Navigator initialRouteName='HomeScreen'>
 				<HomeStack.Group>
 					<HomeStack.Screen
 						name='HomeScreen'
 						component={ProvidedHome}
 						options={{
 							title: 'Home',
+							headerShown: false,
 							headerTitleStyle: {
 								fontFamily: 'Figtree-Bold',
 							},
