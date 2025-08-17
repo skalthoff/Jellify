@@ -14,11 +14,15 @@ export const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			/**
-			 * 30 minutes GC time for better memory management
-			 * This prevents excessive memory usage while still keeping
-			 * recent data in memory for performance
+			 * This needs to be set equal to or higher than the `maxAge` set in `../App.tsx`
+			 *
+			 * Because data can remain on the server forever, the `maxAge` is set to `Infinity`
+			 *
+			 * Therefore, this also needs to be set to `Infinity`, disabling garbage collection
+			 *
+			 * @see https://tanstack.com/query/latest/docs/framework/react/plugins/persistQueryClient#how-it-works
 			 */
-			gcTime: 1000 * 60 * 30, // 30 minutes
+			gcTime: Infinity,
 
 			/**
 			 * 1 hour as a default - reduced from 2 hours for better battery usage

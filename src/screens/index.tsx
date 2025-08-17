@@ -7,9 +7,8 @@ import Login from './Login'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Context from './Context'
 import { getItemName } from '../utils/text'
-import { useCallback } from 'react'
 import AddToPlaylistSheet from './AddToPlaylist'
-import { BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
+import { Platform } from 'react-native'
 
 const RootStack = createNativeStackNavigator<RootStackParamList>()
 
@@ -17,28 +16,6 @@ export default function Root(): React.JSX.Element {
 	const theme = useTheme()
 
 	const { api, library } = useJellifyContext()
-
-	const getContextSheetDetents = useCallback(
-		(artists: string[] | null | undefined, type: BaseItemKind | undefined) => {
-			let detent: number = 0
-
-			switch (type) {
-				case 'Audio':
-					detent = 0.3
-					break
-				case 'MusicAlbum':
-					detent = 0.25
-					break
-				case 'Playlist':
-					detent = 0.2
-					break
-				default:
-					detent = 0.15
-			}
-			return [detent + (artists?.length ?? 1) * 0.075]
-		},
-		[],
-	)
 
 	return (
 		<RootStack.Navigator
@@ -90,7 +67,7 @@ export default function Root(): React.JSX.Element {
 				component={AddToPlaylistSheet}
 				options={{
 					headerTitle: 'Add to Playlist',
-					presentation: 'formSheet',
+					presentation: Platform.OS === 'ios' ? 'formSheet' : 'modal',
 					sheetAllowedDetents: 'fitToContents',
 					sheetGrabberVisible: true,
 				}}
