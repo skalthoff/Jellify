@@ -113,7 +113,6 @@ function Container({ playerIsReady }: { playerIsReady: boolean }): React.JSX.Ele
 					 * same forever on the server
 					 */
 					maxAge: Infinity,
-					buster: '0.10.99',
 				}}
 			>
 				<GestureHandlerRootView>
