@@ -75,7 +75,7 @@ function SongInfo({ navigation }: SongInfoProps): React.JSX.Element {
 
 	return (
 		<XStack flex={1}>
-			<YStack marginHorizontal={'$1.5'} onPress={handleAlbumPress} justifyContent='center'>
+			<YStack marginRight={'$1.5'} onPress={handleAlbumPress} justifyContent='center'>
 				<ItemImage item={nowPlaying!.item} width={'$11'} height={'$11'} />
 			</YStack>
 

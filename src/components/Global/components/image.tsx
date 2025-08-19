@@ -43,6 +43,7 @@ export default function ItemImage({
 		<FastImage
 			source={{ uri: imageUrl }}
 			testID={testID}
+			resizeMode='contain'
 			style={{
 				shadowRadius: getTokenValue('$4'),
 				shadowOffset: {
@@ -55,12 +56,12 @@ export default function ItemImage({
 					? typeof width === 'number'
 						? width
 						: getTokenValue(width)
-					: getTokenValue('$12') + getTokenValue('$5'),
+					: '100%',
 				height: !isUndefined(height)
 					? typeof height === 'number'
 						? height
 						: getTokenValue(height)
-					: getTokenValue('$12') + getTokenValue('$5'),
+					: '100%',
 				alignSelf: 'center',
 				backgroundColor: theme.borderColor.val,
 			}}

@@ -38,7 +38,7 @@ export default function PlayerScreen({
 
 	const { width, height } = useWindowDimensions()
 
-	const { bottom } = useSafeAreaInsets()
+	const { top, bottom } = useSafeAreaInsets()
 
 	// Memoize expensive calculations
 	const songInfoContainerStyle = useMemo(
@@ -46,9 +46,7 @@ export default function PlayerScreen({
 			justifyContent: 'center' as const,
 			alignItems: 'center' as const,
 			marginHorizontal: 'auto' as const,
-			width: getToken('$20') + getToken('$20') + getToken('$5'),
-			maxWidth: width / 1.1,
-			flex: 2,
+			flex: 1,
 		}),
 		[width],
 	)
@@ -63,39 +61,37 @@ export default function PlayerScreen({
 
 	const mainContainerStyle = useMemo(
 		() => ({
-			flex: 1,
+			marginTop: top,
 			marginBottom: bottom,
 		}),
-		[bottom],
+		[top, bottom],
 	)
 
 	return (
-		<SafeAreaView style={{ flex: 1 }} edges={['top']}>
-			<View flex={1}>
-				{nowPlaying && (
-					<ZStack fullscreen>
-						<BlurredBackground width={width} height={height} />
+		<View flex={1}>
+			{nowPlaying && (
+				<ZStack fullscreen>
+					<BlurredBackground width={width} height={height} />
 
-						<YStack flex={1} marginBottom={bottom} style={mainContainerStyle}>
-							<PlayerHeader />
+					<YStack flex={1} margin={'$4'} {...mainContainerStyle}>
+						<PlayerHeader />
 
-							<XStack style={songInfoContainerStyle}>
-								<SongInfo navigation={navigation} />
-							</XStack>
+						<XStack style={songInfoContainerStyle}>
+							<SongInfo navigation={navigation} />
+						</XStack>
 
-							<XStack style={scrubberContainerStyle}>
-								{/* playback progress goes here */}
-								<Scrubber />
-							</XStack>
+						<XStack style={scrubberContainerStyle}>
+							{/* playback progress goes here */}
+							<Scrubber />
+						</XStack>
 
-							<Controls />
+						<Controls />
 
-							<Footer />
-						</YStack>
-					</ZStack>
-				)}
-				{showToast && <Toast config={JellifyToastConfig(theme)} />}
-			</View>
-		</SafeAreaView>
+						<Footer />
+					</YStack>
+				</ZStack>
+			)}
+			{showToast && <Toast config={JellifyToastConfig(theme)} />}
+		</View>
 	)
 }

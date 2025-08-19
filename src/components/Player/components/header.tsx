@@ -11,6 +11,8 @@ import { State } from 'react-native-track-player'
 import ItemImage from '../../Global/components/image'
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native'
+import { useSafeAreaFrame } from 'react-native-safe-area-context'
+import { Platform } from 'react-native'
 
 export default function PlayerHeader(): React.JSX.Element {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
@@ -22,16 +24,16 @@ export default function PlayerHeader(): React.JSX.Element {
 
 	const queueRef = useQueueRefContext()
 
-	const { width } = useWindowDimensions()
+	const { height } = useSafeAreaFrame()
 
 	const theme = useTheme()
 
 	return (
-		<YStack flexShrink={1} marginTop={'$2'}>
-			<XStack justifyContent='center' marginBottom={'$2'} marginHorizontal={'$2'}>
+		<YStack flex={6}>
+			<XStack flex={1} justifyContent='center' marginVertical={'$2'}>
 				<YStack alignContent='center' flex={1} justifyContent='center'>
 					<Icon
-						name='chevron-down'
+						name={Platform.OS === 'ios' ? 'chevron-down' : 'chevron-left'}
 						onPress={() => {
 							navigation.goBack()
 						}}
@@ -56,14 +58,13 @@ export default function PlayerHeader(): React.JSX.Element {
 				<Animated.View
 					entering={FadeIn}
 					exiting={FadeOut}
+					style={{
+						height: '100%',
+						width: '100%',
+					}}
 					key={`${nowPlaying!.item.AlbumId}-item-image`}
 				>
-					<ItemImage
-						item={nowPlaying!.item}
-						testID='player-image-test-id'
-						width={getToken('$20') * 2}
-						height={getToken('$20') * 2}
-					/>
+					<ItemImage item={nowPlaying!.item} testID='player-image-test-id' />
 				</Animated.View>
 			</XStack>
 		</YStack>
