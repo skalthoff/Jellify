@@ -48,10 +48,9 @@ export default function Icon({
 			justifyContent='center'
 			onPress={onPress}
 			onPressIn={onPressIn}
-			paddingHorizontal={'$0.5'}
 			hitSlop={getTokenValue('$2.5')}
-			width={size + getToken('$1')}
-			height={size + getToken('$1')}
+			width={size}
+			height={size}
 			flex={flex}
 		>
 			<MaterialDesignIcon

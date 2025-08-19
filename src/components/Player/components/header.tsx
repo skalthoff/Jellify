@@ -44,12 +44,12 @@ export default function PlayerHeader(): React.JSX.Element {
 				<Spacer flex={1} />
 			</XStack>
 
-			<XStack
+			<YStack
 				flexGrow={1}
-				justifyContent='center'
 				marginVertical={'auto'}
 				maxHeight={'70%'}
-				paddingVertical={Platform.OS === 'android' ? '7%' : 0}
+				paddingVertical={Platform.OS === 'android' ? '10%' : undefined}
+				paddingHorizontal={'$2.5'}
 				maxWidth={'100%'}
 			>
 				<Animated.View
@@ -62,7 +62,7 @@ export default function PlayerHeader(): React.JSX.Element {
 				>
 					<ItemImage item={nowPlaying!.item} testID='player-image-test-id' />
 				</Animated.View>
-			</XStack>
+			</YStack>
 		</YStack>
 	)
 }
