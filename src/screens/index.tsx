@@ -17,6 +17,8 @@ export default function Root(): React.JSX.Element {
 
 	const { api, library } = useJellifyContext()
 
+	const isApple = ['ios', 'macos'].includes(Platform.OS)
+
 	return (
 		<RootStack.Navigator
 			initialRouteName={api && library ? 'Tabs' : 'Login'}
@@ -55,7 +57,7 @@ export default function Root(): React.JSX.Element {
 				component={Context}
 				options={({ route }) => ({
 					headerTitle: getItemName(route.params.item),
-					presentation: 'formSheet',
+					presentation: isApple ? 'formSheet' : 'modal',
 					sheetAllowedDetents: 'fitToContents',
 					sheetGrabberVisible: true,
 					headerTransparent: true,
@@ -67,8 +69,8 @@ export default function Root(): React.JSX.Element {
 				component={AddToPlaylistSheet}
 				options={{
 					headerTitle: 'Add to Playlist',
-					presentation: Platform.OS === 'ios' ? 'formSheet' : 'modal',
-					sheetAllowedDetents: 'fitToContents',
+					presentation: isApple ? 'formSheet' : 'modal',
+					sheetAllowedDetents: isApple ? 'fitToContents' : undefined,
 					sheetGrabberVisible: true,
 				}}
 			/>

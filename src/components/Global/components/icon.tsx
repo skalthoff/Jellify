@@ -3,6 +3,7 @@ import {
 	ColorTokens,
 	getToken,
 	getTokens,
+	getTokenValue,
 	themeable,
 	ThemeTokens,
 	Tokens,
@@ -11,13 +12,11 @@ import {
 } from 'tamagui'
 import MaterialDesignIcon from '@react-native-vector-icons/material-design-icons'
 
-const smallSize = 30
+const smallSize = 28
 
-const regularSize = 36
+const regularSize = 34
 
-const largeSize = 48
-
-const extraLargeSize = 96
+const largeSize = 44
 
 export default function Icon({
 	name,
@@ -25,7 +24,6 @@ export default function Icon({
 	onPressIn,
 	small,
 	large,
-	extraLarge,
 	disabled,
 	color,
 	flex,
@@ -37,13 +35,12 @@ export default function Icon({
 	small?: boolean
 	large?: boolean
 	disabled?: boolean
-	extraLarge?: boolean
 	color?: ThemeTokens | undefined
 	flex?: number | undefined
 	testID?: string | undefined
 }): React.JSX.Element {
 	const theme = useTheme()
-	const size = extraLarge ? extraLargeSize : large ? largeSize : small ? smallSize : regularSize
+	const size = large ? largeSize : small ? smallSize : regularSize
 
 	return (
 		<YStack
@@ -52,6 +49,7 @@ export default function Icon({
 			onPress={onPress}
 			onPressIn={onPressIn}
 			paddingHorizontal={'$0.5'}
+			hitSlop={getTokenValue('$2.5')}
 			width={size + getToken('$1')}
 			height={size + getToken('$1')}
 			flex={flex}

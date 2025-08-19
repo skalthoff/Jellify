@@ -1,66 +1,62 @@
-import { useJellifyContext } from '../../../providers'
-import { useNowPlayingContext, usePlaybackStateContext } from '../../../providers/Player'
+import { useNowPlayingContext } from '../../../providers/Player'
 import { useQueueRefContext } from '../../../providers/Player/queue'
-import { getToken, useWindowDimensions, XStack, YStack, useTheme, Spacer } from 'tamagui'
+import { XStack, YStack, Spacer, useTheme, getTokenValue, TamaguiElement } from 'tamagui'
 import { Text } from '../../Global/helpers/text'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import Icon from '../../Global/components/icon'
-import { RootStackParamList } from '../../../screens/types'
-import React from 'react'
-import { State } from 'react-native-track-player'
+import React, { useMemo, useRef } from 'react'
 import ItemImage from '../../Global/components/image'
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
-import { useNavigation } from '@react-navigation/native'
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import { Platform } from 'react-native'
+import { useSafeAreaFrame } from 'react-native-safe-area-context'
+import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
 
 export default function PlayerHeader(): React.JSX.Element {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+	const imageBounds = getTokenValue('$20') * 2
 
 	const nowPlaying = useNowPlayingContext()
-	const playbackState = usePlaybackStateContext()
-
-	const isPlaying = playbackState === State.Playing
 
 	const queueRef = useQueueRefContext()
 
-	const { height } = useSafeAreaFrame()
-
 	const theme = useTheme()
 
-	return (
-		<YStack flex={6}>
-			<XStack flex={1} justifyContent='center' marginVertical={'$2'}>
-				<YStack alignContent='center' flex={1} justifyContent='center'>
-					<Icon
-						name={Platform.OS === 'ios' ? 'chevron-down' : 'chevron-left'}
-						onPress={() => {
-							navigation.goBack()
-						}}
-						small
-					/>
-				</YStack>
+	// If the Queue is a BaseItemDto, display the name of it
+	const playingFrom = useMemo(
+		() => (typeof queueRef === 'object' ? (queueRef.Name ?? 'Untitled') : queueRef),
+		[queueRef],
+	)
 
-				<YStack alignItems='center' alignContent='center' flex={2}>
+	return (
+		<YStack flexGrow={1} justifyContent='flex-start' maxHeight={'80%'}>
+			<XStack flexShrink={1} alignContent='flex-start' justifyContent='center'>
+				<MaterialDesignIcons
+					color={theme.color.val}
+					name={Platform.OS === 'android' ? 'chevron-left' : 'chevron-down'}
+					size={22}
+					style={{ flex: 1, margin: 'auto' }}
+				/>
+
+				<YStack alignItems='center' flex={1}>
 					<Text>Playing from</Text>
 					<Text bold numberOfLines={1} lineBreakStrategyIOS='standard'>
-						{
-							// If the Queue is a BaseItemDto, display the name of it
-							typeof queueRef === 'object' ? (queueRef.Name ?? 'Untitled') : queueRef
-						}
+						{playingFrom}
 					</Text>
 				</YStack>
 
 				<Spacer flex={1} />
 			</XStack>
 
-			<XStack justifyContent='center' alignContent='center' paddingVertical={'$8'}>
+			<XStack
+				flexGrow={1}
+				justifyContent='center'
+				marginVertical={'auto'}
+				maxHeight={'70%'}
+				paddingVertical={Platform.OS === 'android' ? '7%' : 0}
+				maxWidth={'100%'}
+			>
 				<Animated.View
 					entering={FadeIn}
 					exiting={FadeOut}
 					style={{
-						height: '100%',
-						width: '100%',
+						flex: 1,
 					}}
 					key={`${nowPlaying!.item.AlbumId}-item-image`}
 				>

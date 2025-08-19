@@ -5,7 +5,7 @@ import { Text } from '../Global/helpers/text'
 import FavoriteContextMenuRow from '../Global/components/favorite-context-menu-row'
 import { Blurhash } from 'react-native-blurhash'
 import { getPrimaryBlurhashFromDto } from '../../utils/blurhash'
-import { useColorScheme } from 'react-native'
+import { Platform, useColorScheme } from 'react-native'
 import { useThemeSettingContext } from '../../providers/Settings'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from '../Global/components/icon'
@@ -92,7 +92,7 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 	const renderViewAlbumRow = useMemo(() => isAlbum || (isTrack && album), [album, item])
 
 	return (
-		<View animation={'quick'}>
+		<View flex={Platform.OS === 'android' ? 1 : undefined} animation={'quick'}>
 			<YGroup unstyled flex={1} marginTop={'$8'}>
 				<FavoriteContextMenuRow item={item} />
 
