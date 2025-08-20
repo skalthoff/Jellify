@@ -1,23 +1,11 @@
 import React, { useMemo, useCallback } from 'react'
-import {
-	getToken,
-	Progress,
-	Spacer,
-	useWindowDimensions,
-	View,
-	XStack,
-	YStack,
-	ZStack,
-} from 'tamagui'
+import { getToken, Progress, View, XStack, YStack, ZStack } from 'tamagui'
 import { useNowPlayingContext } from '../../providers/Player'
-import { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs'
-import { NavigationHelpers, ParamListBase, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { Text } from '../Global/helpers/text'
 import TextTicker from 'react-native-text-ticker'
 import PlayPauseButton from './components/buttons'
 import { ProgressMultiplier, TextTickerConfig } from './component.config'
-import FastImage from 'react-native-fast-image'
-import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import { usePreviousContext, useSkipContext } from '../../providers/Player/queue'
 import { useJellifyContext } from '../../providers'
 import { RunTimeSeconds } from '../Global/helpers/time-codes'
@@ -31,9 +19,9 @@ import Animated, {
 	useSharedValue,
 	withSpring,
 } from 'react-native-reanimated'
-import { ImageType } from '@jellyfin/sdk/lib/generated-client/models'
 import { RootStackParamList } from '../../screens/types'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import ItemImage from '../Global/components/image'
 
 export const Miniplayer = React.memo(function Miniplayer(): React.JSX.Element {
 	const { api } = useJellifyContext()
@@ -119,30 +107,10 @@ export const Miniplayer = React.memo(function Miniplayer(): React.JSX.Element {
 											exiting={FadeOut}
 											key={`${nowPlaying!.item.AlbumId}-album-image`}
 										>
-											<FastImage
-												source={{
-													uri:
-														getImageApi(api)?.getItemImageUrlById(
-															nowPlaying!.item.AlbumId! ||
-																nowPlaying!.item.Id!,
-															ImageType.Primary,
-															{
-																tag: nowPlaying!.item.ImageTags
-																	?.Primary,
-															},
-														) || '',
-												}}
-												style={{
-													width: getToken('$12'),
-													height: getToken('$12'),
-													borderRadius: getToken('$2'),
-													backgroundColor: '$borderColor',
-													shadowRadius: getToken('$2'),
-													shadowOffset: {
-														width: 0,
-														height: -getToken('$2'),
-													},
-												}}
+											<ItemImage
+												item={nowPlaying!.item}
+												width={'$12'}
+												height={'$12'}
 											/>
 										</Animated.View>
 									)}

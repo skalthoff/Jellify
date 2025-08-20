@@ -127,6 +127,7 @@ export default function Track({
 		} else {
 			navigationRef.navigate('Context', {
 				item: track,
+				navigation,
 			})
 		}
 	}, [onLongPress, track, isNested])
@@ -144,7 +145,7 @@ export default function Track({
 	// Only fetch media info if needed (for streaming)
 	useQuery({
 		queryKey: [QueryKeys.MediaSources, streamingQuality, track.Id],
-		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), track),
+		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), track.Id!),
 		staleTime: Infinity, // Don't refetch media info unless the user changes the quality
 		enabled: !isDownloaded, // Only fetch if not downloaded
 	})
@@ -152,7 +153,7 @@ export default function Track({
 	// Fire query for fetching the track's media sources
 	useQuery({
 		queryKey: [QueryKeys.MediaSources, streamingQuality, track.Id],
-		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), track),
+		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), track.Id!),
 		staleTime: Infinity, // Don't refetch media info unless the user changes the quality
 		enabled: track.Type === 'Audio',
 	})

@@ -151,13 +151,17 @@ const QueueContextInitailizer = () => {
 	const shuffledInit = storage.getBoolean(MMKVStorageKeys.Shuffled)
 
 	//#region State
+	const [currentIndex, setCurrentIndex] = useState<number>(currentIndexValue ?? -1)
 	const [playQueue, setPlayQueue] = useState<JellifyTrack[]>(playQueueInit)
 	const [queueRef, setQueueRef] = useState<Queue>(queueRefInit)
 	const [unshuffledQueue, setUnshuffledQueue] = useState<JellifyTrack[]>(unshuffledQueueInit)
 
-	const [currentIndex, setCurrentIndex] = useState<number>(currentIndexValue ?? -1)
-
+	/**
+	 * Handles whether we are loading in a new queue, in which case we will temporarily ignore
+	 * {@link Event.PlaybackActiveTrackChanged} events until that mutation has settled
+	 */
 	const [skipping, setSkipping] = useState<boolean>(false)
+	const [initialized, setInitialized] = useState<boolean>(false)
 
 	const [shuffled, setShuffled] = useState<boolean>(shuffledInit ?? false)
 
@@ -176,6 +180,11 @@ const QueueContextInitailizer = () => {
 		async ({ index, track }: { index?: number | undefined; track?: Track | undefined }) => {
 			console.debug(`Active Track Changed to: ${index}. Skipping: ${skipping}`)
 			if (skipping) return
+
+			// We get an event emitted when the queue is loaded from storage for the first time
+			// This is the most convenient place I could find to flip this boolean and start
+			// listening to emitted updates
+			if (!initialized) return setInitialized(true)
 
 			let newIndex = -1
 
@@ -262,10 +271,6 @@ const QueueContextInitailizer = () => {
 		startIndex: number = 0,
 		shuffleQueue: boolean = false,
 	) => {
-		trigger('impactLight')
-		console.debug(`Queuing ${audioItems.length} items`)
-
-		setSkipping(true)
 		setShuffled(shuffleQueue)
 
 		// Get the item at the start index
@@ -535,7 +540,14 @@ const QueueContextInitailizer = () => {
 			queue,
 			shuffled,
 		}: QueueMutation) => loadQueue(tracklist, queue, index, shuffled),
+		onMutate: async ({ tracklist }) => {
+			trigger('impactLight')
+			console.debug(`Queuing ${tracklist.length} items`)
+
+			setSkipping(true)
+		},
 		onSuccess: async (data: void, { startPlayback }: QueueMutation) => {
+			setInitialized(true)
 			trigger('notificationSuccess')
 			console.debug(`Loaded new queue`)
 

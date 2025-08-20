@@ -24,6 +24,7 @@ import OTAUpdateScreen from './src/components/OtaUpdates'
 import { usePerformanceMonitor } from './src/hooks/use-performance-monitor'
 import { SettingsProvider, useThemeSettingContext } from './src/providers/Settings'
 import navigationRef from './navigation'
+import { PROGRESS_UPDATE_EVENT_INTERVAL } from './src/player/config'
 
 export default function App(): React.JSX.Element {
 	// Add performance monitoring to track app-level re-renders
@@ -59,7 +60,7 @@ export default function App(): React.JSX.Element {
 				capabilities: CAPABILITIES,
 				notificationCapabilities: CAPABILITIES,
 				// Reduced interval for smoother progress tracking and earlier prefetch detection
-				progressUpdateEventInterval: 5,
+				progressUpdateEventInterval: PROGRESS_UPDATE_EVENT_INTERVAL,
 			}),
 		)
 		.finally(() => {

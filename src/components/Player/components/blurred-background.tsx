@@ -54,7 +54,7 @@ function BlurredBackground({
 	const gradientStyle2 = {
 		width,
 		height,
-		flex: 2,
+		flex: 3,
 	}
 
 	const backgroundStyle = {

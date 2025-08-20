@@ -83,10 +83,7 @@ function getBorderRadius(circular: boolean | undefined, width: Token | number | 
 	if (circular) {
 		borderRadius = width ? (typeof width === 'number' ? width : getTokenValue(width)) : '100%'
 	} else if (!isUndefined(width)) {
-		borderRadius =
-			typeof width === 'number'
-				? width / 25
-				: getTokenValue(width) / (getTokenValue(width) / 6)
+		borderRadius = typeof width === 'number' ? width / 25 : getTokenValue(width) / 15
 	} else borderRadius = '5%'
 
 	return borderRadius

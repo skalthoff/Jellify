@@ -49,18 +49,19 @@ export default function PlayerHeader(): React.JSX.Element {
 				<Spacer flex={1} />
 			</XStack>
 
-			<YStack flexGrow={1} justifyContent='center'>
+			<YStack
+				flexGrow={1}
+				justifyContent='center'
+				paddingHorizontal={'$2'}
+				maxHeight={'70%'}
+				marginVertical={'auto'}
+			>
 				<Animated.View
 					entering={FadeIn}
 					exiting={FadeOut}
 					key={`${nowPlaying!.item.AlbumId}-item-image`}
 				>
-					<ItemImage
-						item={nowPlaying!.item}
-						testID='player-image-test-id'
-						width={360}
-						height={360}
-					/>
+					<ItemImage item={nowPlaying!.item} testID='player-image-test-id' />
 				</Animated.View>
 			</YStack>
 		</YStack>

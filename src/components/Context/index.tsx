@@ -79,6 +79,14 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 
 	const renderViewAlbumRow = useMemo(() => isAlbum || (isTrack && album), [album, item])
 
+	const artistIds = !isPlaylist
+		? isArtist
+			? [item.Id]
+			: item.ArtistItems
+				? item.ArtistItems.map((item) => item.Id)
+				: []
+		: []
+
 	return (
 		<ScrollView>
 			<YGroup unstyled marginBottom={bottom}>
@@ -108,10 +116,7 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 				)}
 
 				{!isPlaylist && (
-					<ViewArtistMenuRow
-						artists={isArtist ? [item] : itemArtists}
-						stackNavigation={stackNavigation}
-					/>
+					<ArtistMenuRows artistIds={artistIds} stackNavigation={stackNavigation} />
 				)}
 			</YGroup>
 		</ScrollView>
@@ -210,13 +215,37 @@ function ViewAlbumMenuRow({ album: album, stackNavigation }: MenuRowProps): Reac
 	)
 }
 
-function ViewArtistMenuRow({
-	artists,
+function ArtistMenuRows({
+	artistIds,
 	stackNavigation,
 }: {
-	artists: BaseItemDto[]
+	artistIds: (string | null | undefined)[]
 	stackNavigation: StackNavigation | undefined
 }): React.JSX.Element {
+	return (
+		<View>
+			{artistIds.map((id) => (
+				<ViewArtistMenuRow artistId={id} key={id} stackNavigation={stackNavigation} />
+			))}
+		</View>
+	)
+}
+
+function ViewArtistMenuRow({
+	artistId,
+	stackNavigation,
+}: {
+	artistId: string | null | undefined
+	stackNavigation: StackNavigation | undefined
+}): React.JSX.Element {
+	const { api } = useJellifyContext()
+
+	const { data: artist } = useQuery({
+		queryKey: [QueryKeys.ArtistById, artistId],
+		queryFn: () => fetchItem(api, artistId!),
+		enabled: !!artistId,
+	})
+
 	const goToArtist = useCallback(
 		(artist: BaseItemDto) => {
 			if (stackNavigation) stackNavigation.navigate('Artist', { artist })
@@ -225,23 +254,20 @@ function ViewArtistMenuRow({
 		[stackNavigation, navigationRef],
 	)
 
-	return (
-		<View>
-			{artists.map((artist, index) => (
-				<ListItem
-					animation={'quick'}
-					backgroundColor={'transparent'}
-					gap={'$3'}
-					justifyContent='flex-start'
-					key={index}
-					onPress={() => goToArtist(artist)}
-					pressStyle={{ opacity: 0.5 }}
-				>
-					<ItemImage circular item={artist} height={'$10'} width={'$10'} />
+	return artist ? (
+		<ListItem
+			animation={'quick'}
+			backgroundColor={'transparent'}
+			gap={'$3'}
+			justifyContent='flex-start'
+			onPress={() => goToArtist(artist)}
+			pressStyle={{ opacity: 0.5 }}
+		>
+			<ItemImage circular item={artist} height={'$10'} width={'$10'} />
 
-					<Text bold>{`Go to ${getItemName(artist)}`}</Text>
-				</ListItem>
-			))}
-		</View>
+			<Text bold>{`Go to ${getItemName(artist)}`}</Text>
+		</ListItem>
+	) : (
+		<></>
 	)
 }
