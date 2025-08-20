@@ -72,12 +72,10 @@ export default function FavoriteContextMenuRow({ item }: { item: BaseItemDto }):
 			pressStyle={{ opacity: 0.5 }}
 		>
 			<Animated.View entering={FadeIn} exiting={FadeOut} key={`${item.Id}-favorite-row`}>
-				<XStack alignContent='center' justifyContent='flex-start' gap={'$3'}>
-					<Icon name={'heart-outline'} small color={'$primary'} />
+				<XStack alignItems='center' justifyContent='flex-start' gap={'$2'}>
+					<Icon small name={'heart-outline'} color={'$primary'} />
 
-					<Text marginTop={'$2'} bold>
-						Add to favorites
-					</Text>
+					<Text bold>Add to favorites</Text>
 				</XStack>
 			</Animated.View>
 		</ListItem>

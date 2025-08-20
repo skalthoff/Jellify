@@ -24,6 +24,8 @@ import navigationRef from '../../../../navigation'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { BaseStackParamList } from '../../../screens/types'
 import { fetchItem } from '../../../api/queries/item'
+import ItemImage from './image'
+import { ItemProvider } from '../../../providers/Item'
 
 export interface TrackProps {
 	track: BaseItemDto
@@ -82,21 +84,6 @@ export default function Track({
 	const isOffline = useMemo(
 		() => networkStatus === networkStatusTypes.DISCONNECTED,
 		[networkStatus],
-	)
-
-	// Memoize image source to prevent recreation
-	const imageSource = useMemo(
-		() => ({
-			uri:
-				getImageApi(api!).getItemImageUrlById(
-					track.AlbumId! || track.Id!,
-					ImageType.Primary,
-					{
-						tag: track.ImageTags?.Primary,
-					},
-				) || '',
-		}),
-		[api, track.AlbumId, track.Id, track.ImageTags?.Primary],
 	)
 
 	// Memoize tracklist for queue loading
@@ -188,91 +175,85 @@ export default function Track({
 	)
 
 	return (
-		<Theme name={invertedColors ? 'inverted_purple' : undefined}>
-			<XStack
-				alignContent='center'
-				alignItems='center'
-				height={showArtwork ? '$6' : '$5'}
-				flex={1}
-				testID={testID ?? undefined}
-				onPress={handlePress}
-				onLongPress={handleLongPress}
-				paddingVertical={'$2'}
-				justifyContent='center'
-				marginRight={'$2'}
-			>
+		<ItemProvider item={track}>
+			<Theme name={invertedColors ? 'inverted_purple' : undefined}>
 				<XStack
 					alignContent='center'
+					alignItems='center'
+					height={showArtwork ? '$6' : '$5'}
+					flex={1}
+					testID={testID ?? undefined}
+					onPress={handlePress}
+					onLongPress={handleLongPress}
+					paddingVertical={'$2'}
 					justifyContent='center'
-					marginHorizontal={showArtwork ? '$2' : '$1'}
+					marginRight={'$2'}
 				>
-					{showArtwork ? (
-						<FastImage
-							key={`${track.Id}-${track.AlbumId || track.Id}`}
-							source={imageSource}
-							style={{
-								width: getToken('$12'),
-								height: getToken('$12'),
-								borderRadius: getToken('$1'),
-							}}
-						/>
-					) : (
-						<Text
-							key={`${track.Id}-number`}
-							color={textColor}
-							width={getToken('$12')}
-							textAlign='center'
-						>
-							{indexNumber}
-						</Text>
-					)}
-				</XStack>
-
-				<YStack alignContent='center' justifyContent='flex-start' flex={6}>
-					<Text
-						key={`${track.Id}-name`}
-						bold
-						color={textColor}
-						lineBreakStrategyIOS='standard'
-						numberOfLines={1}
+					<XStack
+						alignContent='center'
+						justifyContent='center'
+						marginHorizontal={showArtwork ? '$2' : '$1'}
 					>
-						{trackName}
-					</Text>
+						{showArtwork ? (
+							<ItemImage item={track} width={'$12'} height={'$12'} />
+						) : (
+							<Text
+								key={`${track.Id}-number`}
+								color={textColor}
+								width={getToken('$12')}
+								textAlign='center'
+							>
+								{indexNumber}
+							</Text>
+						)}
+					</XStack>
 
-					{shouldShowArtists && (
+					<YStack alignContent='center' justifyContent='flex-start' flex={6}>
 						<Text
-							key={`${track.Id}-artists`}
+							key={`${track.Id}-name`}
+							bold
+							color={textColor}
 							lineBreakStrategyIOS='standard'
 							numberOfLines={1}
 						>
-							{artistsText}
+							{trackName}
 						</Text>
-					)}
-				</YStack>
 
-				<DownloadedIcon item={track} />
+						{shouldShowArtists && (
+							<Text
+								key={`${track.Id}-artists`}
+								lineBreakStrategyIOS='standard'
+								numberOfLines={1}
+							>
+								{artistsText}
+							</Text>
+						)}
+					</YStack>
 
-				<FavoriteIcon item={track} />
+					<DownloadedIcon item={track} />
 
-				<RunTimeTicks
-					key={`${track.Id}-runtime`}
-					props={{
-						style: {
-							textAlign: 'center',
-							flex: 1.5,
-							alignSelf: 'center',
-						},
-					}}
-				>
-					{track.RunTimeTicks}
-				</RunTimeTicks>
+					<FavoriteIcon item={track} />
 
-				<Icon
-					name={showRemove ? 'close' : 'dots-horizontal'}
-					flex={1}
-					onPress={handleIconPress}
-				/>
-			</XStack>
-		</Theme>
+					<RunTimeTicks
+						key={`${track.Id}-runtime`}
+						props={{
+							style: {
+								textAlign: 'center',
+								flex: 1.5,
+								alignSelf: 'center',
+							},
+						}}
+					>
+						{track.RunTimeTicks}
+					</RunTimeTicks>
+
+					<Icon
+						name={showRemove ? 'close' : 'dots-horizontal'}
+						flex={1}
+						onPress={handleIconPress}
+					/>
+				</XStack>
+			</Theme>
+		</ItemProvider>
 	)
 }

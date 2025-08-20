@@ -137,7 +137,7 @@ function AddToPlaylistRow({ track }: { track: BaseItemDto }): React.JSX.Element 
 			}}
 			pressStyle={{ opacity: 0.5 }}
 		>
-			<Icon color='$primary' name='playlist-plus' />
+			<Icon small color='$primary' name='playlist-plus' />
 
 			<Text bold>Add to Playlist</Text>
 		</ListItem>
@@ -164,9 +164,11 @@ function AddToQueueMenuRow({ tracks }: { tracks: BaseItemDto[] }): React.JSX.Ele
 			}}
 			pressStyle={{ opacity: 0.5 }}
 		>
-			<Icon color='$primary' name='music-note-plus' />
+			<Icon small color='$primary' name='music-note-plus' />
 
-			<Text bold>Add to Queue</Text>
+			<Text bold marginLeft={'$1'}>
+				Add to Queue
+			</Text>
 		</ListItem>
 	)
 }
@@ -206,7 +208,7 @@ function ViewAlbumMenuRow({ album: album, stackNavigation }: MenuRowProps): Reac
 			onPress={goToAlbum}
 			pressStyle={{ opacity: 0.5 }}
 		>
-			<ItemImage item={album} height={'$10'} width={'$10'} />
+			<ItemImage item={album} height={'$9'} width={'$9'} />
 
 			<TextTicker {...TextTickerConfig}>
 				<Text bold>{`Go to ${getItemName(album)}`}</Text>
@@ -263,7 +265,7 @@ function ViewArtistMenuRow({
 			onPress={() => goToArtist(artist)}
 			pressStyle={{ opacity: 0.5 }}
 		>
-			<ItemImage circular item={artist} height={'$10'} width={'$10'} />
+			<ItemImage circular item={artist} height={'$9'} width={'$9'} />
 
 			<Text bold>{`Go to ${getItemName(artist)}`}</Text>
 		</ListItem>
