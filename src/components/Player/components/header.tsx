@@ -47,9 +47,9 @@ export default function PlayerHeader(): React.JSX.Element {
 			<YStack
 				flexGrow={1}
 				marginVertical={'auto'}
-				maxHeight={'70%'}
-				paddingVertical={Platform.OS === 'android' ? '10%' : undefined}
-				paddingHorizontal={'$2.5'}
+				maxHeight={'65%'}
+				paddingVertical={Platform.OS === 'android' ? '$2' : undefined}
+				paddingHorizontal={Platform.OS === 'ios' ? '$3' : '$2'}
 				maxWidth={'100%'}
 			>
 				<Animated.View

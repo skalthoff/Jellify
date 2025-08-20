@@ -1,16 +1,17 @@
 import React from 'react'
 import { CardProps as TamaguiCardProps } from 'tamagui'
 import { getToken, Card as TamaguiCard, View, YStack } from 'tamagui'
-import { BaseItemDto, ImageType } from '@jellyfin/sdk/lib/generated-client/models'
+import { BaseItemDto, BaseItemKind, ImageType } from '@jellyfin/sdk/lib/generated-client/models'
 import { Text } from '../helpers/text'
 import FastImage from 'react-native-fast-image'
-import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
+import { getImageApi, getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { useJellifyContext } from '../../../providers'
 import { fetchMediaInfo } from '../../../api/queries/media'
 import { QueryKeys } from '../../../enums/query-keys'
 import { getQualityParams } from '../../../utils/mappings'
 import { useStreamingQualityContext } from '../../../providers/Settings'
 import { useQuery } from '@tanstack/react-query'
+import { fetchItem } from '../../../api/queries/item'
 
 interface CardProps extends TamaguiCardProps {
 	caption?: string | null | undefined
@@ -36,6 +37,24 @@ export function ItemCard(props: CardProps) {
 		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), props.item),
 		staleTime: Infinity, // Don't refetch media info unless the user changes the quality
 		enabled: props.item.Type === 'Audio',
+	})
+
+	useQuery({
+		queryKey: [QueryKeys.Album, props.item.AlbumId],
+		queryFn: () => fetchItem(api, props.item.AlbumId!),
+		enabled: props.item.Type === BaseItemKind.Audio && !!props.item.AlbumId,
+	})
+
+	useQuery({
+		queryKey: [QueryKeys.ItemTracks, props.item.Id],
+		queryFn: () =>
+			getItemsApi(api!)
+				.getItems({ parentId: props.item.Id! })
+				.then(({ data }) => {
+					if (data.Items) return data.Items
+					else return []
+				}),
+		enabled: !!props.item.Id && props.item.Type === BaseItemKind.MusicAlbum,
 	})
 
 	return (

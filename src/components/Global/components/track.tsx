@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react'
 import { getToken, Theme, useTheme, XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
 import { RunTimeTicks } from '../helpers/time-codes'
-import { BaseItemDto, ImageType } from '@jellyfin/sdk/lib/generated-client/models'
+import { BaseItemDto, BaseItemKind, ImageType } from '@jellyfin/sdk/lib/generated-client/models'
 import Icon from './icon'
 import { QueuingType } from '../../../enums/queuing-type'
 import { Queue } from '../../../player/types/queue-item'
@@ -22,7 +22,8 @@ import { getQualityParams } from '../../../utils/mappings'
 import { useNowPlayingContext } from '../../../providers/Player'
 import navigationRef from '../../../../navigation'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { BaseStackParamList } from '@/src/screens/types'
+import { BaseStackParamList } from '../../../screens/types'
+import { fetchItem } from '../../../api/queries/item'
 
 export interface TrackProps {
 	track: BaseItemDto
@@ -146,6 +147,21 @@ export default function Track({
 		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), track),
 		staleTime: Infinity, // Don't refetch media info unless the user changes the quality
 		enabled: !isDownloaded, // Only fetch if not downloaded
+	})
+
+	// Fire query for fetching the track's media sources
+	useQuery({
+		queryKey: [QueryKeys.MediaSources, streamingQuality, track.Id],
+		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), track),
+		staleTime: Infinity, // Don't refetch media info unless the user changes the quality
+		enabled: track.Type === 'Audio',
+	})
+
+	// Fire query for fetching the track's album
+	useQuery({
+		queryKey: [QueryKeys.Album, track.AlbumId],
+		queryFn: () => fetchItem(api, track.AlbumId!),
+		enabled: track.Type === BaseItemKind.Audio && !!track.AlbumId,
 	})
 
 	// Memoize text color to prevent recalculation

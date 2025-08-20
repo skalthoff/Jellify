@@ -1,5 +1,5 @@
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
-import { getToken, getTokenValue, ListItem, View, YGroup, ZStack } from 'tamagui'
+import { getToken, getTokenValue, ListItem, ScrollView, View, YGroup, ZStack } from 'tamagui'
 import { BaseStackParamList, RootStackParamList } from '../../screens/types'
 import { Text } from '../Global/helpers/text'
 import FavoriteContextMenuRow from '../Global/components/favorite-context-menu-row'
@@ -60,31 +60,9 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 	const itemArtists = item.ArtistItems ?? []
 
 	const { data: album } = useQuery({
-		queryKey: [QueryKeys.Item, item.AlbumId],
+		queryKey: [QueryKeys.Album, item.AlbumId],
 		queryFn: () => fetchItem(api, item.AlbumId!),
 		enabled: isTrack,
-	})
-
-	const { data: artists } = useQuery({
-		queryKey: [
-			QueryKeys.ArtistById,
-			itemArtists.length > 0 ? itemArtists?.map((artist) => artist.Id) : item.Id,
-		],
-		queryFn: () =>
-			fetchItems(
-				api,
-				user,
-				library,
-				[BaseItemKind.MusicArtist],
-				0,
-				[],
-				[],
-				undefined,
-				undefined,
-				itemArtists?.map((artist) => artist.Id!),
-			),
-		enabled: (isTrack || isAlbum) && itemArtists.length > 0,
-		select: (data) => data.data,
 	})
 
 	const { data: tracks } = useQuery({
@@ -105,27 +83,29 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 	const renderViewAlbumRow = useMemo(() => isAlbum || (isTrack && album), [album, item])
 
 	return (
-		<YGroup unstyled marginBottom={bottomMargin}>
-			<FavoriteContextMenuRow item={item} />
+		<ScrollView>
+			<YGroup unstyled marginBottom={bottomMargin}>
+				<FavoriteContextMenuRow item={item} />
 
-			{renderAddToQueueRow && <AddToQueueMenuRow tracks={isTrack ? [item] : tracks!} />}
+				{renderAddToQueueRow && <AddToQueueMenuRow tracks={isTrack ? [item] : tracks!} />}
 
-			{renderAddToPlaylistRow && <AddToPlaylistRow track={item} />}
+				{renderAddToPlaylistRow && <AddToPlaylistRow track={item} />}
 
-			{renderViewAlbumRow && (
-				<ViewAlbumMenuRow
-					album={isAlbum ? item : album!}
-					stackNavigation={stackNavigation}
-				/>
-			)}
+				{renderViewAlbumRow && (
+					<ViewAlbumMenuRow
+						album={isAlbum ? item : album!}
+						stackNavigation={stackNavigation}
+					/>
+				)}
 
-			{!isPlaylist && (
-				<ViewArtistMenuRow
-					artists={isArtist ? [item] : artists ? artists : []}
-					stackNavigation={stackNavigation}
-				/>
-			)}
-		</YGroup>
+				{!isPlaylist && (
+					<ViewArtistMenuRow
+						artists={isArtist ? [item] : item.ArtistItems ? item.ArtistItems : []}
+						stackNavigation={stackNavigation}
+					/>
+				)}
+			</YGroup>
+		</ScrollView>
 	)
 }
 

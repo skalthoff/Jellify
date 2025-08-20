@@ -1,4 +1,4 @@
-import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
+import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
 import { XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
 import Icon from './icon'
@@ -18,6 +18,8 @@ import { useStreamingQualityContext } from '../../../providers/Settings'
 import navigationRef from '../../../../navigation'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { BaseStackParamList } from '../../../screens/types'
+import { fetchItem } from '../../../api/queries/item'
+import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 
 interface ItemRowProps {
 	item: BaseItemDto
@@ -49,11 +51,44 @@ export default function ItemRow({
 	const { api, user } = useJellifyContext()
 	const streamingQuality = useStreamingQualityContext()
 
+	/**
+	 * Fire a query for fetching a track's media sources
+	 *
+	 * Referenced later when queuing tracks
+	 */
 	useQuery({
 		queryKey: [QueryKeys.MediaSources, streamingQuality, item.Id],
 		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), item),
 		staleTime: Infinity, // Don't refetch media info unless the user changes the quality
 		enabled: item.Type === 'Audio',
+	})
+
+	/**
+	 * Fire a query for fetching an album for a given track
+	 *
+	 * Referenced later in the context sheet
+	 */
+	useQuery({
+		queryKey: [QueryKeys.Album, item.AlbumId],
+		queryFn: () => fetchItem(api, item.AlbumId!),
+		enabled: item.Type === BaseItemKind.Audio && !!item.AlbumId,
+	})
+
+	/**
+	 * Fire a query for fetching an album's tracks
+	 *
+	 * Referenced later in the context sheet
+	 */
+	useQuery({
+		queryKey: [QueryKeys.ItemTracks, item.Id],
+		queryFn: () =>
+			getItemsApi(api!)
+				.getItems({ parentId: item.Id! })
+				.then(({ data }) => {
+					if (data.Items) return data.Items
+					else return []
+				}),
+		enabled: !!item.Id && item.Type === BaseItemKind.MusicAlbum,
 	})
 
 	const gestureCallback = () => {
