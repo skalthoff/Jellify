@@ -11,7 +11,7 @@ import { QueryKeys } from '../../../enums/query-keys'
 import { getQualityParams } from '../../../utils/mappings'
 import { useStreamingQualityContext } from '../../../providers/Settings'
 import { useQuery } from '@tanstack/react-query'
-import { fetchItem } from '../../../api/queries/item'
+import { fetchAlbumDiscs, fetchItem } from '../../../api/queries/item'
 
 interface CardProps extends TamaguiCardProps {
 	caption?: string | null | undefined
@@ -36,15 +36,36 @@ export function ItemCard(props: CardProps) {
 		queryKey: [QueryKeys.MediaSources, streamingQuality, props.item.Id],
 		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), props.item),
 		staleTime: Infinity, // Don't refetch media info unless the user changes the quality
-		enabled: props.item.Type === 'Audio',
+		enabled: props.item.Type === BaseItemKind.Audio,
 	})
 
+	/**
+	 * Fire query for a track's album
+	 *
+	 * Referenced later in the context sheet
+	 */
 	useQuery({
 		queryKey: [QueryKeys.Album, props.item.AlbumId],
 		queryFn: () => fetchItem(api, props.item.AlbumId!),
 		enabled: props.item.Type === BaseItemKind.Audio && !!props.item.AlbumId,
 	})
 
+	/**
+	 * Fire query for an album's tracks
+	 *
+	 * Referenced later in the context sheet
+	 */
+	useQuery({
+		queryKey: [QueryKeys.ItemTracks, props.item.Id],
+		queryFn: () => fetchAlbumDiscs(api, props.item),
+		enabled: !!props.item.Id && props.item.Type === BaseItemKind.MusicAlbum,
+	})
+
+	/**
+	 * Fire query for an playlist's tracks
+	 *
+	 * Referenced later in the context sheet
+	 */
 	useQuery({
 		queryKey: [QueryKeys.ItemTracks, props.item.Id],
 		queryFn: () =>
@@ -54,7 +75,7 @@ export function ItemCard(props: CardProps) {
 					if (data.Items) return data.Items
 					else return []
 				}),
-		enabled: !!props.item.Id && props.item.Type === BaseItemKind.MusicAlbum,
+		enabled: !!props.item.Id && props.item.Type === BaseItemKind.Playlist,
 	})
 
 	return (

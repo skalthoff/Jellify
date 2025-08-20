@@ -1,13 +1,13 @@
 import { useNowPlayingContext } from '../../../providers/Player'
 import { useQueueRefContext } from '../../../providers/Player/queue'
-import { XStack, YStack, Spacer, useTheme, getTokenValue, TamaguiElement } from 'tamagui'
+import { XStack, YStack, Spacer, useTheme, getTokenValue } from 'tamagui'
 import { Text } from '../../Global/helpers/text'
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo } from 'react'
 import ItemImage from '../../Global/components/image'
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
 import { Platform } from 'react-native'
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
+import navigationRef from '../../../../navigation'
 
 export default function PlayerHeader(): React.JSX.Element {
 	const imageBounds = getTokenValue('$20') * 2
@@ -26,7 +26,12 @@ export default function PlayerHeader(): React.JSX.Element {
 
 	return (
 		<YStack flexGrow={1} justifyContent='flex-start' maxHeight={'80%'}>
-			<XStack flexShrink={1} alignContent='flex-start' justifyContent='center'>
+			<XStack
+				alignContent='flex-start'
+				flexShrink={1}
+				justifyContent='center'
+				onPress={() => navigationRef.goBack()}
+			>
 				<MaterialDesignIcons
 					color={theme.color.val}
 					name={Platform.OS === 'android' ? 'chevron-left' : 'chevron-down'}
@@ -44,23 +49,18 @@ export default function PlayerHeader(): React.JSX.Element {
 				<Spacer flex={1} />
 			</XStack>
 
-			<YStack
-				flexGrow={1}
-				marginVertical={'auto'}
-				maxHeight={'65%'}
-				paddingVertical={Platform.OS === 'android' ? '$2' : undefined}
-				paddingHorizontal={Platform.OS === 'ios' ? '$3' : '$2'}
-				maxWidth={'100%'}
-			>
+			<YStack flexGrow={1} justifyContent='center'>
 				<Animated.View
 					entering={FadeIn}
 					exiting={FadeOut}
-					style={{
-						flex: 1,
-					}}
 					key={`${nowPlaying!.item.AlbumId}-item-image`}
 				>
-					<ItemImage item={nowPlaying!.item} testID='player-image-test-id' />
+					<ItemImage
+						item={nowPlaying!.item}
+						testID='player-image-test-id'
+						width={360}
+						height={360}
+					/>
 				</Animated.View>
 			</YStack>
 		</YStack>

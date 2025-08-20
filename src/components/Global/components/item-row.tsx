@@ -18,7 +18,7 @@ import { useStreamingQualityContext } from '../../../providers/Settings'
 import navigationRef from '../../../../navigation'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { BaseStackParamList } from '../../../screens/types'
-import { fetchItem } from '../../../api/queries/item'
+import { fetchAlbumDiscs, fetchItem } from '../../../api/queries/item'
 import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 
 interface ItemRowProps {
@@ -81,6 +81,17 @@ export default function ItemRow({
 	 */
 	useQuery({
 		queryKey: [QueryKeys.ItemTracks, item.Id],
+		queryFn: () => fetchAlbumDiscs(api, item),
+		enabled: !!item.Id && item.Type === BaseItemKind.MusicAlbum,
+	})
+
+	/**
+	 * Fire query for an playlist's tracks
+	 *
+	 * Referenced later in the context sheet
+	 */
+	useQuery({
+		queryKey: [QueryKeys.ItemTracks, item.Id],
 		queryFn: () =>
 			getItemsApi(api!)
 				.getItems({ parentId: item.Id! })
@@ -88,7 +99,7 @@ export default function ItemRow({
 					if (data.Items) return data.Items
 					else return []
 				}),
-		enabled: !!item.Id && item.Type === BaseItemKind.MusicAlbum,
+		enabled: !!item.Id && item.Type === BaseItemKind.Playlist,
 	})
 
 	const gestureCallback = () => {

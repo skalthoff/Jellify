@@ -129,7 +129,7 @@ export default function Track({
 				item: track,
 			})
 		}
-	}, [onLongPress, navigation, track, isNested])
+	}, [onLongPress, track, isNested])
 
 	const handleIconPress = useCallback(() => {
 		if (showRemove) {
@@ -139,7 +139,7 @@ export default function Track({
 				item: track,
 			})
 		}
-	}, [showRemove, onRemove, navigation, track, isNested])
+	}, [showRemove, onRemove, track, isNested])
 
 	// Only fetch media info if needed (for streaming)
 	useQuery({

@@ -12,7 +12,7 @@ import Icon from '../Global/components/icon'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../enums/query-keys'
-import { fetchItem, fetchItems } from '../../api/queries/item'
+import { fetchAlbumDiscs, fetchItem, fetchItems } from '../../api/queries/item'
 import { useJellifyContext } from '../../providers'
 import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { useAddToQueueContext } from '../../providers/Player/queue'
@@ -38,19 +38,9 @@ interface ContextProps {
 }
 
 export default function ItemContext({ item, stackNavigation }: ContextProps): React.JSX.Element {
-	const { api, user, library } = useJellifyContext()
+	const { api } = useJellifyContext()
 
 	const { bottom } = useSafeAreaInsets()
-
-	const bottomMargin = useMemo(() => {
-		const isAndroid = Platform.OS === 'android'
-
-		let finalMargin = bottom
-
-		if (isAndroid) finalMargin += getTokenValue('$12')
-
-		return finalMargin
-	}, [bottom])
 
 	const isArtist = item.Type === BaseItemKind.MusicArtist
 	const isAlbum = item.Type === BaseItemKind.MusicAlbum
@@ -74,6 +64,13 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 					if (data.Items) return data.Items
 					else return []
 				}),
+		enabled: isPlaylist,
+	})
+
+	const { data: discs } = useQuery({
+		queryKey: [QueryKeys.ItemTracks, item.Id],
+		queryFn: () => fetchAlbumDiscs(api, item),
+		enabled: isAlbum,
 	})
 
 	const renderAddToQueueRow = isTrack || (isAlbum && tracks) || (isPlaylist && tracks)
@@ -84,10 +81,22 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 
 	return (
 		<ScrollView>
-			<YGroup unstyled marginBottom={bottomMargin}>
+			<YGroup unstyled marginBottom={bottom}>
 				<FavoriteContextMenuRow item={item} />
 
-				{renderAddToQueueRow && <AddToQueueMenuRow tracks={isTrack ? [item] : tracks!} />}
+				{renderAddToQueueRow && (
+					<AddToQueueMenuRow
+						tracks={
+							isTrack
+								? [item]
+								: isAlbum && discs
+									? discs.flatMap((data) => data.data)
+									: isPlaylist && tracks
+										? tracks
+										: []
+						}
+					/>
+				)}
 
 				{renderAddToPlaylistRow && <AddToPlaylistRow track={item} />}
 
@@ -100,35 +109,12 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 
 				{!isPlaylist && (
 					<ViewArtistMenuRow
-						artists={isArtist ? [item] : item.ArtistItems ? item.ArtistItems : []}
+						artists={isArtist ? [item] : itemArtists}
 						stackNavigation={stackNavigation}
 					/>
 				)}
 			</YGroup>
 		</ScrollView>
-	)
-}
-
-function ItemContextBackground({ item }: { item: BaseItemDto }): React.JSX.Element {
-	return (
-		<ZStack flex={1}>
-			<BackgroundBlur item={item} />
-
-			<BackgroundGradient />
-		</ZStack>
-	)
-}
-
-function BackgroundBlur({ item }: { item: BaseItemDto }): React.JSX.Element {
-	const blurhash = getPrimaryBlurhashFromDto(item)
-
-	return (
-		<Blurhash
-			blurhash={blurhash!}
-			style={{
-				flex: 1,
-			}}
-		/>
 	)
 }
 
