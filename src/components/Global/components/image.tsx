@@ -43,6 +43,7 @@ export default function ItemImage({
 		<FastImage
 			source={{ uri: imageUrl }}
 			testID={testID}
+			resizeMode='cover'
 			style={{
 				shadowRadius: getTokenValue('$4'),
 				shadowOffset: {
@@ -55,12 +56,12 @@ export default function ItemImage({
 					? typeof width === 'number'
 						? width
 						: getTokenValue(width)
-					: getTokenValue('$12') + getTokenValue('$5'),
+					: '100%',
 				height: !isUndefined(height)
 					? typeof height === 'number'
 						? height
 						: getTokenValue(height)
-					: getTokenValue('$12') + getTokenValue('$5'),
+					: '100%',
 				alignSelf: 'center',
 				backgroundColor: theme.borderColor.val,
 			}}
@@ -80,14 +81,10 @@ function getBorderRadius(circular: boolean | undefined, width: Token | number | 
 	let borderRadius
 
 	if (circular) {
-		borderRadius = width
-			? typeof width === 'number'
-				? width
-				: getTokenValue(width)
-			: getTokenValue('$12') + getTokenValue('$5')
+		borderRadius = width ? (typeof width === 'number' ? width : getTokenValue(width)) : '100%'
 	} else if (!isUndefined(width)) {
-		borderRadius = typeof width === 'number' ? width / 10 : getTokenValue(width) / 10
-	}
+		borderRadius = typeof width === 'number' ? width / 25 : getTokenValue(width) / 15
+	} else borderRadius = '5%'
 
 	return borderRadius
 }
