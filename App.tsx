@@ -7,7 +7,7 @@ import { TamaguiProvider } from 'tamagui'
 import { Platform, useColorScheme } from 'react-native'
 import jellifyConfig from './tamagui.config'
 import { clientPersister } from './src/constants/storage'
-import { queryClient } from './src/constants/query-client'
+import { ONE_DAY, queryClient } from './src/constants/query-client'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import TrackPlayer, {
 	AndroidAudioContentType,
@@ -110,10 +110,9 @@ function Container({ playerIsReady }: { playerIsReady: boolean }): React.JSX.Ele
 					persister: clientPersister,
 
 					/**
-					 * Infinity, since data can remain the
-					 * same forever on the server
+					 * Maximum query data age of one day
 					 */
-					maxAge: Infinity,
+					maxAge: ONE_DAY,
 				}}
 			>
 				<GestureHandlerRootView>

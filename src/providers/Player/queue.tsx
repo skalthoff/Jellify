@@ -161,10 +161,10 @@ const QueueContextInitailizer = () => {
 	 * {@link Event.PlaybackActiveTrackChanged} events until that mutation has settled
 	 */
 	const [skipping, setSkipping] = useState<boolean>(false)
-	const [initialized, setInitialized] = useState<boolean>(false)
 
 	const [shuffled, setShuffled] = useState<boolean>(shuffledInit ?? false)
 
+	const [initialized, setInitialized] = useState<boolean>(false)
 	//#endregion State
 
 	//#region Context
@@ -178,13 +178,10 @@ const QueueContextInitailizer = () => {
 	useTrackPlayerEvents(
 		[Event.PlaybackActiveTrackChanged],
 		async ({ index, track }: { index?: number | undefined; track?: Track | undefined }) => {
-			console.debug(`Active Track Changed to: ${index}. Skipping: ${skipping}`)
-			if (skipping) return
-
-			// We get an event emitted when the queue is loaded from storage for the first time
-			// This is the most convenient place I could find to flip this boolean and start
-			// listening to emitted updates
-			if (!initialized) return setInitialized(true)
+			console.debug(
+				`Active Track Changed to: ${index}. Skipping: ${skipping}, Initialized: ${initialized}`,
+			)
+			if (skipping || !initialized) return
 
 			let newIndex = -1
 
@@ -547,7 +544,6 @@ const QueueContextInitailizer = () => {
 			setSkipping(true)
 		},
 		onSuccess: async (data: void, { startPlayback }: QueueMutation) => {
-			setInitialized(true)
 			trigger('notificationSuccess')
 			console.debug(`Loaded new queue`)
 
@@ -716,6 +712,20 @@ const QueueContextInitailizer = () => {
 	//#endregion Hooks
 
 	//#region useEffect(s)
+
+	/**
+	 * Initialization
+	 */
+	useEffect(() => {
+		if (playQueue.length > 0 && currentIndex > -1 && !initialized) {
+			TrackPlayer.setQueue(playQueue)
+			TrackPlayer.skip(currentIndex)
+			setInitialized(true)
+		} else {
+			console.debug(`No queue to initialize from`)
+			setInitialized(true)
+		}
+	}, [initialized])
 
 	/**
 	 * Store play queue in storage when it changes

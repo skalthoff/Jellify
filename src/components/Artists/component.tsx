@@ -168,6 +168,7 @@ export default function Artists({
 					if (artistsInfiniteQuery.hasNextPage && !artistsInfiniteQuery.isFetching)
 						artistsInfiniteQuery.fetchNextPage()
 				}}
+				removeClippedSubviews
 			/>
 
 			{showAlphabeticalSelector && artistPageParams && (

@@ -1,8 +1,8 @@
-import { createContext } from 'react'
+import { createContext, useEffect } from 'react'
 import { useJellifyContext } from '..'
-import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../enums/query-keys'
 import { fetchItem } from '../../api/queries/item'
+import { queryClient } from '../../constants/query-client'
 
 interface ItemArtistContext {
 	artistId: string | undefined
@@ -19,13 +19,15 @@ export const ItemArtistProvider: ({
 }) => React.JSX.Element = ({ artistId }) => {
 	const { api } = useJellifyContext()
 
-	/**
-	 * Store queryable of artist item
-	 */
-	useQuery({
-		queryKey: [QueryKeys.ArtistById, artistId],
-		queryFn: () => fetchItem(api, artistId!),
-		enabled: !!artistId,
+	useEffect(() => {
+		/**
+		 * Store queryable of artist item
+		 */
+		if (artistId)
+			queryClient.ensureQueryData({
+				queryKey: [QueryKeys.ArtistById, artistId],
+				queryFn: () => fetchItem(api, artistId!),
+			})
 	})
 
 	return <ItemArtistContext.Provider value={{ artistId }} />

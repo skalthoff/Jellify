@@ -1,24 +1,22 @@
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
-import { getToken, getTokenValue, ListItem, ScrollView, View, YGroup, ZStack } from 'tamagui'
+import { getToken, ListItem, ScrollView, View, YGroup } from 'tamagui'
 import { BaseStackParamList, RootStackParamList } from '../../screens/types'
 import { Text } from '../Global/helpers/text'
 import FavoriteContextMenuRow from '../Global/components/favorite-context-menu-row'
-import { Blurhash } from 'react-native-blurhash'
-import { getPrimaryBlurhashFromDto } from '../../utils/blurhash'
-import { Platform, useColorScheme } from 'react-native'
+import { useColorScheme } from 'react-native'
 import { useThemeSettingContext } from '../../providers/Settings'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from '../Global/components/icon'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../enums/query-keys'
-import { fetchAlbumDiscs, fetchItem, fetchItems } from '../../api/queries/item'
+import { fetchAlbumDiscs, fetchItem } from '../../api/queries/item'
 import { useJellifyContext } from '../../providers'
 import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { useAddToQueueContext } from '../../providers/Player/queue'
 import { AddToQueueMutation } from '../../providers/Player/interfaces'
 import { QueuingType } from '../../enums/queuing-type'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import navigationRef from '../../../navigation'
 import { goToAlbumFromContextSheet, goToArtistFromContextSheet } from './utils/navigation'
 import { getItemName } from '../../utils/text'
@@ -27,6 +25,7 @@ import { StackActions } from '@react-navigation/native'
 import TextTicker from 'react-native-text-ticker'
 import { TextTickerConfig } from '../Player/component.config'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { trigger } from 'react-native-haptic-feedback'
 
 type StackNavigation = Pick<NativeStackNavigationProp<BaseStackParamList>, 'navigate' | 'dispatch'>
 
@@ -46,8 +45,6 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 	const isAlbum = item.Type === BaseItemKind.MusicAlbum
 	const isTrack = item.Type === BaseItemKind.Audio
 	const isPlaylist = item.Type === BaseItemKind.Playlist
-
-	const itemArtists = item.ArtistItems ?? []
 
 	const { data: album } = useQuery({
 		queryKey: [QueryKeys.Album, item.AlbumId],
@@ -77,7 +74,7 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 
 	const renderAddToPlaylistRow = isTrack
 
-	const renderViewAlbumRow = useMemo(() => isAlbum || (isTrack && album), [album, item])
+	const renderViewAlbumRow = isAlbum || (isTrack && album)
 
 	const artistIds = !isPlaylist
 		? isArtist
@@ -87,24 +84,22 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 				: []
 		: []
 
+	const itemTracks = isTrack
+		? [item]
+		: isAlbum && discs
+			? discs.flatMap((data) => data.data)
+			: isPlaylist && tracks
+				? tracks
+				: []
+
+	useEffect(() => trigger('impactLight'), [item?.Id])
+
 	return (
 		<ScrollView>
 			<YGroup unstyled marginBottom={bottom}>
 				<FavoriteContextMenuRow item={item} />
 
-				{renderAddToQueueRow && (
-					<AddToQueueMenuRow
-						tracks={
-							isTrack
-								? [item]
-								: isAlbum && discs
-									? discs.flatMap((data) => data.data)
-									: isPlaylist && tracks
-										? tracks
-										: []
-						}
-					/>
-				)}
+				{renderAddToQueueRow && <AddToQueueMenuRow tracks={itemTracks} />}
 
 				{renderAddToPlaylistRow && <AddToPlaylistRow track={item} />}
 

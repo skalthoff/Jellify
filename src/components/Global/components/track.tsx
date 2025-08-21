@@ -2,28 +2,19 @@ import React, { useMemo, useCallback } from 'react'
 import { getToken, Theme, useTheme, XStack, YStack } from 'tamagui'
 import { Text } from '../helpers/text'
 import { RunTimeTicks } from '../helpers/time-codes'
-import { BaseItemDto, BaseItemKind, ImageType } from '@jellyfin/sdk/lib/generated-client/models'
+import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import Icon from './icon'
 import { QueuingType } from '../../../enums/queuing-type'
 import { Queue } from '../../../player/types/queue-item'
 import FavoriteIcon from './favorite-icon'
-import FastImage from 'react-native-fast-image'
-import { getImageApi } from '@jellyfin/sdk/lib/utils/api'
 import { networkStatusTypes } from '../../../components/Network/internetConnectionWatcher'
 import { useNetworkContext } from '../../../providers/Network'
 import { useLoadQueueContext, usePlayQueueContext } from '../../../providers/Player/queue'
-import { useJellifyContext } from '../../../providers'
 import DownloadedIcon from './downloaded-icon'
-import { useQuery } from '@tanstack/react-query'
-import { QueryKeys } from '../../../enums/query-keys'
-import { fetchMediaInfo } from '../../../api/queries/media'
-import { useStreamingQualityContext } from '../../../providers/Settings'
-import { getQualityParams } from '../../../utils/mappings'
 import { useNowPlayingContext } from '../../../providers/Player'
 import navigationRef from '../../../../navigation'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { BaseStackParamList } from '../../../screens/types'
-import { fetchItem } from '../../../api/queries/item'
 import ItemImage from './image'
 import { ItemProvider } from '../../../providers/Item'
 
@@ -61,12 +52,10 @@ export default function Track({
 }: TrackProps): React.JSX.Element {
 	const theme = useTheme()
 
-	const { api, user } = useJellifyContext()
 	const nowPlaying = useNowPlayingContext()
 	const playQueue = usePlayQueueContext()
 	const useLoadNewQueue = useLoadQueueContext()
 	const { downloadedTracks, networkStatus } = useNetworkContext()
-	const streamingQuality = useStreamingQualityContext()
 
 	// Memoize expensive computations
 	const isPlaying = useMemo(
@@ -128,29 +117,6 @@ export default function Track({
 			})
 		}
 	}, [showRemove, onRemove, track, isNested])
-
-	// Only fetch media info if needed (for streaming)
-	useQuery({
-		queryKey: [QueryKeys.MediaSources, streamingQuality, track.Id],
-		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), track.Id!),
-		staleTime: Infinity, // Don't refetch media info unless the user changes the quality
-		enabled: !isDownloaded, // Only fetch if not downloaded
-	})
-
-	// Fire query for fetching the track's media sources
-	useQuery({
-		queryKey: [QueryKeys.MediaSources, streamingQuality, track.Id],
-		queryFn: () => fetchMediaInfo(api, user, getQualityParams(streamingQuality), track.Id!),
-		staleTime: Infinity, // Don't refetch media info unless the user changes the quality
-		enabled: track.Type === 'Audio',
-	})
-
-	// Fire query for fetching the track's album
-	useQuery({
-		queryKey: [QueryKeys.Album, track.AlbumId],
-		queryFn: () => fetchItem(api, track.AlbumId!),
-		enabled: track.Type === BaseItemKind.Audio && !!track.AlbumId,
-	})
 
 	// Memoize text color to prevent recalculation
 	const textColor = useMemo(() => {
