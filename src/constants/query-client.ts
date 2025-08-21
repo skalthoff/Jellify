@@ -29,9 +29,10 @@ export const queryClient = new QueryClient({
 			gcTime: ONE_DAY,
 
 			/**
-			 * 1 hour as a default - reduced from 2 hours for better battery usage
+			 * Refetch data after 2 hours as a default
 			 */
-			staleTime: ONE_HOUR, // 1 hour
+			staleTime: ONE_HOUR * 2,
+
 			retry(failureCount: number, error: Error) {
 				if (failureCount > 2) return false
 

@@ -720,7 +720,10 @@ const QueueContextInitailizer = () => {
 		if (playQueue.length > 0 && currentIndex > -1 && !initialized) {
 			TrackPlayer.setQueue(playQueue)
 			TrackPlayer.skip(currentIndex)
-			setInitialized(true)
+
+			// Set Initialized after a timeout to ignore events emitted
+			// while the queue is setting up
+			setTimeout(() => setInitialized(true), 500)
 		} else {
 			console.debug(`No queue to initialize from`)
 			setInitialized(true)

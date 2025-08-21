@@ -1,6 +1,6 @@
 import { useNowPlayingContext } from '../../../providers/Player'
 import { useQueueRefContext } from '../../../providers/Player/queue'
-import { XStack, YStack, Spacer, useTheme, getTokenValue } from 'tamagui'
+import { XStack, YStack, Spacer, useTheme } from 'tamagui'
 import { Text } from '../../Global/helpers/text'
 import React, { useMemo } from 'react'
 import ItemImage from '../../Global/components/image'
@@ -10,8 +10,6 @@ import MaterialDesignIcons from '@react-native-vector-icons/material-design-icon
 import navigationRef from '../../../../navigation'
 
 export default function PlayerHeader(): React.JSX.Element {
-	const imageBounds = getTokenValue('$20') * 2
-
 	const nowPlaying = useNowPlayingContext()
 
 	const queueRef = useQueueRefContext()
@@ -55,6 +53,7 @@ export default function PlayerHeader(): React.JSX.Element {
 				paddingHorizontal={'$2'}
 				maxHeight={'70%'}
 				marginVertical={'auto'}
+				paddingVertical={Platform.OS === 'android' ? '$4' : '$2'}
 			>
 				<Animated.View
 					entering={FadeIn}

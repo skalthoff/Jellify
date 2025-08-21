@@ -84,13 +84,12 @@ export default function ItemContext({ item, stackNavigation }: ContextProps): Re
 				: []
 		: []
 
-	const itemTracks = isTrack
-		? [item]
-		: isAlbum && discs
-			? discs.flatMap((data) => data.data)
-			: isPlaylist && tracks
-				? tracks
-				: []
+	const itemTracks = useMemo(() => {
+		if (isTrack) return [item]
+		else if (isAlbum && discs) return discs.flatMap((data) => data.data)
+		else if (isPlaylist && tracks) return tracks
+		else return []
+	}, [isTrack, isAlbum, discs, isPlaylist, tracks])
 
 	useEffect(() => trigger('impactLight'), [item?.Id])
 
