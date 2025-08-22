@@ -1,5 +1,5 @@
 import { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models'
-import { createContext, ReactNode, useEffect } from 'react'
+import { createContext, ReactNode, useEffect, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from '../../enums/query-keys'
 import { fetchMediaInfo } from '../../api/queries/media'
@@ -11,6 +11,7 @@ import { getItemsApi } from '@jellyfin/sdk/lib/utils/api'
 import { ItemArtistProvider } from './item-artists'
 import { queryClient } from '../../constants/query-client'
 import { fetchUserData } from '../../api/queries/favorites'
+import { usePerformanceMonitor } from '../../hooks/use-performance-monitor'
 
 interface ItemContext {
 	item: BaseItemDto
@@ -43,6 +44,8 @@ export const ItemProvider: ({ item, children }: ItemProviderProps) => React.JSX.
 	item,
 	children,
 }) => {
+	const perfMonitor = usePerformanceMonitor('ItemProvider', 5)
+
 	const { api, user } = useJellifyContext()
 
 	const streamingQuality = useStreamingQualityContext()
@@ -51,9 +54,20 @@ export const ItemProvider: ({ item, children }: ItemProviderProps) => React.JSX.
 
 	const artistIds = ArtistItems?.map(({ Id }) => Id) ?? []
 
+	const prefetchedContext = useRef<Record<string, true>>({})
+
 	useEffect(() => {
 		// Fail fast if we don't have an Item ID to work with
 		if (!Id) return
+
+		const effectSig = `${Id}-${Type}`
+
+		// If we've already warmed the cache for this item, return
+		if (prefetchedContext.current[effectSig]) return
+		prefetchedContext.current[effectSig] = true
+
+		console.debug(`Warming context query cache for item ${Id}`)
+
 		/**
 		 * Fetch and cache the media sources if this item is a track
 		 */
@@ -123,7 +137,7 @@ export const ItemProvider: ({ item, children }: ItemProviderProps) => React.JSX.
 				queryKey: [QueryKeys.UserData, Id],
 				queryFn: () => fetchUserData(api, user, Id),
 			})
-	}, [queryClient, api, user, Id, Type, AlbumId, UserData, item, streamingQuality])
+	}, [queryClient, api?.basePath, user?.id, Id, streamingQuality])
 
 	return (
 		<ItemContext.Provider value={{ item }}>

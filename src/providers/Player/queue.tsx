@@ -348,11 +348,6 @@ const QueueContextInitailizer = () => {
 		console.debug(
 			`Queued ${queue.length} tracks, starting at ${finalStartIndex}${shuffleQueue ? ' (shuffled)' : ''}`,
 		)
-
-		// Set skipping to false after a short delay to prevent flickering
-		// IDK why this needs to be 1000ms, but there are a lot of events are emitted
-		// by RNTP at this time so we need to wait for it to settle
-		setTimeout(() => setSkipping(false), 1000)
 	}
 
 	/**
@@ -547,6 +542,10 @@ const QueueContextInitailizer = () => {
 			trigger('notificationSuccess')
 			console.debug(`Loaded new queue`)
 
+			// Set skipping to false after a short delay to prevent flickering
+			// IDK why this needs to be 500ms, but there are a lot of events are emitted
+			// by RNTP at this time so we need to wait for it to settle
+			setTimeout(() => setSkipping(false), 500)
 			if (startPlayback) await TrackPlayer.play()
 		},
 		onError: async (error: Error) => {
