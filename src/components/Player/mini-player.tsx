@@ -26,8 +26,8 @@ import { usePrevious, useSkip } from '../../providers/Player/hooks/mutations'
 
 export const Miniplayer = React.memo(function Miniplayer(): React.JSX.Element {
 	const { data: nowPlaying } = useNowPlaying()
-	const { mutate: skip } = useSkip()
-	const { mutate: previous } = usePrevious()
+	const skip = useSkip()
+	const previous = usePrevious()
 
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
@@ -83,8 +83,8 @@ export const Miniplayer = React.memo(function Miniplayer(): React.JSX.Element {
 	)
 
 	return (
-		<View testID='miniplayer-test-id'>
-			<GestureDetector gesture={gesture}>
+		<GestureDetector gesture={gesture}>
+			<Animated.View testID='miniplayer-test-id' entering={FadeIn} exiting={FadeOut}>
 				<YStack>
 					<MiniPlayerProgress />
 					<XStack paddingBottom={'$1'} alignItems='center' onPress={openPlayer}>
@@ -138,8 +138,8 @@ export const Miniplayer = React.memo(function Miniplayer(): React.JSX.Element {
 						</XStack>
 					</XStack>
 				</YStack>
-			</GestureDetector>
-		</View>
+			</Animated.View>
+		</GestureDetector>
 	)
 })
 

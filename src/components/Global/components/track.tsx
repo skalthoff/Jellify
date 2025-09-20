@@ -62,7 +62,7 @@ export default function Track({
 
 	const { data: nowPlaying } = useNowPlaying()
 	const { data: playQueue } = useQueue()
-	const { mutate: loadNewQueue } = useLoadNewQueue()
+	const loadNewQueue = useLoadNewQueue()
 	const [networkStatus] = useNetworkStatus()
 
 	const { data: mediaInfo } = useStreamedMediaInfo(track.Id)
@@ -172,6 +172,7 @@ export default function Track({
 				marginRight={'$2'}
 				animation={'quick'}
 				pressStyle={{ opacity: 0.5 }}
+				backgroundColor={'$background'}
 			>
 				<XStack
 					alignContent='center'
