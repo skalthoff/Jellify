@@ -42,7 +42,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - NitroModules (0.29.4):
+  - NitroModules (0.30.2):
     - boost
     - DoubleConversion
     - fast_float
@@ -54,6 +54,65 @@ PODS:
     - RCTRequired
     - RCTTypeSafety
     - React-callinvoker
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
+  - NitroOta (0.2.3):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - NitroModules
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-callinvoker
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - SSZipArchive
+    - Yoga
+  - NitroOtaBundleManager (0.2.3):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
     - React-debug
     - React-Fabric
@@ -3050,9 +3109,9 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - SDWebImage (5.11.1):
-    - SDWebImage/Core (= 5.11.1)
-  - SDWebImage/Core (5.11.1)
+  - SDWebImage (5.21.2):
+    - SDWebImage/Core (= 5.21.2)
+  - SDWebImage/Core (5.21.2)
   - Sentry/HybridSDK (8.56.0)
   - SocketRocket (0.7.1)
   - SSZipArchive (2.4.3)
@@ -3070,6 +3129,8 @@ DEPENDENCIES:
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - NitroImage (from `../node_modules/react-native-nitro-image`)
   - NitroModules (from `../node_modules/react-native-nitro-modules`)
+  - NitroOta (from `../node_modules/react-native-nitro-ota`)
+  - NitroOtaBundleManager (from `../node_modules/react-native-nitro-ota`)
   - NitroWebImage (from `../node_modules/react-native-nitro-web-image`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
@@ -3197,6 +3258,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-nitro-image"
   NitroModules:
     :path: "../node_modules/react-native-nitro-modules"
+  NitroOta:
+    :path: "../node_modules/react-native-nitro-ota"
+  NitroOtaBundleManager:
+    :path: "../node_modules/react-native-nitro-ota"
   NitroWebImage:
     :path: "../node_modules/react-native-nitro-web-image"
   RCT-Folly:
@@ -3389,7 +3454,9 @@ SPEC CHECKSUMS:
   google-cast-sdk: 1fb6724e94cc5ff23b359176e0cf6360586bb97a
   hermes-engine: 273e30e7fb618279934b0b95ffab60ecedb7acf5
   NitroImage: f2d14e6531629630904d8ceb4037459d6057440a
-  NitroModules: 8d96528777600e967d371fd62b7eb183e9204530
+  NitroModules: 72acdf761541be4f8bbb3f0cdca41ae23ce13c50
+  NitroOta: b2adec40232e3da0cc9eeaa3f7e1ec67313b1f17
+  NitroOtaBundleManager: 09eeec5c1d7e33b868b2374ce64613f23ad348cd
   NitroWebImage: 04de36dd513d350fe3d4d3a9279a95817c1a39f1
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   Protobuf: 164aea2ae380c3951abdc3e195220c01d17400e0
@@ -3481,13 +3548,13 @@ SPEC CHECKSUMS:
   RNScreens: 833237c48c756d40764540246a501b47dadb2cac
   RNSentry: 60919c9cdac7e4b35e9f5dd0149f551ec12f35cb
   RNWorklets: ab618bf7d1c7fd2cb793b9f0f39c3e29274b3ebf
-  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SDWebImage: 9f177d83116802728e122410fb25ad88f5c7608a
   Sentry: 3d82977434c80381cae856c40b99c39e4be6bc11
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SwiftAudioEx: f6aa653770f3a0d3851edaf8d834a30aee4a7646
   Yoga: 689c8e04277f3ad631e60fe2a08e41d411daf8eb
 
-PODFILE CHECKSUM: 320ff45ce6a038db4058773abf4993a674de141e
+PODFILE CHECKSUM: 05d07b9cff134e4c27345bc2b588e090e4d3431c
 
 COCOAPODS: 1.16.2
