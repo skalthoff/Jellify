@@ -23,6 +23,7 @@
     "fastlane:ios:match": "cd ios && bundle exec fastlane match development",
     "fastlane:ios:beta": "cd ios && bundle exec fastlane beta",
     "fastlane:android:build": "cd android && bundle install && bundle exec fastlane build",
+    "fastlane:android:deploy": "cd android && bundle install && bundle exec fastlane deploy",
     "androidBuild": "cd android && ./gradlew clean && ./gradlew assembleRelease && cd .. && echo 'find apk in android/app/build/outputs/apk/release'",
     "prepare": "husky",
     "format:check": "prettier --check .",

@@ -34,5 +34,6 @@ platform :android do
       release_status: 'draft',
       json_key: './play-store-credentials.json',
     )
+    gradle(task: 'assembleRelease') # This is to ensure the app is built and the apk is generated FOR GITHUB ACTIONS
   end
 end
