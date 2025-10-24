@@ -31,8 +31,8 @@ platform :android do
     upload_to_play_store(
       package_name: 'com.jellify',
       track: 'internal',
-      release_status: 'completed',
-      json_key: '/Users/violet/Downloads/play-store-credentials.json',
+      release_status: 'draft',
+      json_key: './play-store-credentials.json',
     )
   end
 end
