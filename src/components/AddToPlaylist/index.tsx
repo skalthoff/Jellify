@@ -97,7 +97,7 @@ export default function AddToPlaylist({
 
 			trigger('notificationSuccess')
 
-			refetch()
+			if (refetch) void refetch()
 
 			queryClient.invalidateQueries({
 				queryKey: [QueryKeys.ItemTracks, playlist.Id!],
