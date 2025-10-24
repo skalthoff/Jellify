@@ -27,7 +27,12 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
+    gradle(task: 'clean bundleRelease')
+    upload_to_play_store(
+      package_name: 'com.jellify',
+      track: 'internal',
+      release_status: 'completed',
+      json_key: '/Users/violet/Downloads/play-store-credentials.json',
+    )
   end
 end
