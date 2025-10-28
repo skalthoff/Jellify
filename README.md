@@ -1,4 +1,6 @@
-<img alt='Jellify logo' src='assets/transparent-banner.png' width="600" height="300" /><br/>
+<p align="center">
+  <img alt='Jellify logo' src='assets/transparent-banner.png' width="600" height="300" />
+</p>
 
 [![Latest Version](https://img.shields.io/github/package-json/version/anultravioletaurora/jellify?label=Latest%20Version&color=indigo)](https://github.com/anultravioletaurora/Jellify/releases)
 [![publish-beta](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml/badge.svg?branch=main)](https://github.com/anultravioletaurora/Jellify/actions/workflows/publish-beta.yml) [![Publish Over-the-Air Update](https://github.com/Jellify-Music/App/actions/workflows/publish-ota-update.yml/badge.svg)](https://github.com/Jellify-Music/App/actions/workflows/publish-ota-update.yml)
