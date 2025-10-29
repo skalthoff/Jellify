@@ -1998,9 +1998,9 @@ PODS:
     - Yoga
   - react-native-carplay (2.4.1-beta.0):
     - React
-  - react-native-config (1.5.9):
-    - react-native-config/App (= 1.5.9)
-  - react-native-config/App (1.5.9):
+  - react-native-config (1.5.6):
+    - react-native-config/App (= 1.5.6)
+  - react-native-config/App (1.5.6):
     - React-Core
   - react-native-google-cast (4.9.1):
     - google-cast-sdk
@@ -3465,7 +3465,7 @@ SPEC CHECKSUMS:
   react-native-blob-util: e2162ce4757849682559754bca954b65dc7eeb2f
   react-native-blurhash: c1721deafe7a685088ea14ab4712a1c460be9fe4
   react-native-carplay: 8f388f6f73e5e0f73ed154ad8794371343ee20c0
-  react-native-config: d08b60865268872495a43e211059b4606131fe01
+  react-native-config: f1dde39f8468ad922fc7e8bd4308c8e6223d5ee8
   react-native-google-cast: 7be68a5d0b7eeb95a5924c3ecef8d319ef6c0a44
   react-native-mmkv: ac7507625cd74bac0eb5333604a7cd7b08fe9e3e
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
