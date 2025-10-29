@@ -1,6 +1,6 @@
 {
   "name": "jellify",
-  "version": "2",
+  "version": "0.19.2",
   "private": true,
   "scripts": {
     "init-android": "yarn install --network-concurrency 1",
