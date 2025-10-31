@@ -1,7 +1,7 @@
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import React, { useCallback } from 'react'
 import Icon from './icon'
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
+import Animated, { BounceIn, FadeIn, FadeOut } from 'react-native-reanimated'
 import { useAddFavorite, useRemoveFavorite } from '../../../api/mutations/favorite'
 import { useIsFavorite } from '../../../api/queries/user-data'
 import { getTokenValue, Spinner } from 'tamagui'
@@ -29,7 +29,7 @@ function AddFavoriteButton({ item, onToggle }: FavoriteButtonProps): React.JSX.E
 	return isPending ? (
 		<Spinner color={'$primary'} width={34 + getTokenValue('$0.5')} height={'$1'} />
 	) : (
-		<Animated.View entering={FadeIn} exiting={FadeOut}>
+		<Animated.View entering={BounceIn} exiting={FadeOut}>
 			<Icon
 				name={'heart'}
 				color={'$primary'}
