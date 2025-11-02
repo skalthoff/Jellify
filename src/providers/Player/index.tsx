@@ -15,6 +15,7 @@ import saveAudioItem from '../../api/mutations/download/utils'
 import { useDownloadingDeviceProfile } from '../../stores/device-profile'
 import Initialize from './functions/initialization'
 import { useEnableAudioNormalization } from '../../stores/settings/player'
+import { usePlayerQueueStore } from '@/src/stores/player/queue'
 
 const PLAYER_EVENTS: Event[] = [
 	Event.PlaybackActiveTrackChanged,
@@ -43,7 +44,7 @@ export const PlayerProvider: () => React.JSX.Element = () => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		async (event: any) => {
 			switch (event.type) {
-				case Event.PlaybackActiveTrackChanged:
+				case Event.PlaybackActiveTrackChanged: {
 					// When we load a new queue, our index is updated before RNTP
 					// Because of this, we only need to respond to this event
 					// if the index from the event differs from what we have stored
@@ -64,26 +65,32 @@ export const PlayerProvider: () => React.JSX.Element = () => {
 						else await reportPlaybackStopped(api, event.lastTrack as JellifyTrack)
 					}
 					break
-
-				case Event.PlaybackProgressUpdated:
+				}
+				case Event.PlaybackProgressUpdated: {
 					console.debug(`Completion percentage: ${event.position / event.duration}`)
 
-					if (event.track) await reportPlaybackProgress(api, event.track, event.position)
+					const currentTrack = usePlayerQueueStore.getState().currentTrack
 
-					if (event.position / event.duration > 0.3 && autoDownload && event.track)
-						await saveAudioItem(api, event.track.item, downloadingDeviceProfile, true)
+					if (currentTrack)
+						await reportPlaybackProgress(api, currentTrack, event.position)
+
+					if (event.position / event.duration > 0.3 && autoDownload && currentTrack)
+						await saveAudioItem(api, currentTrack.item, downloadingDeviceProfile, true)
 					break
+				}
 
-				case Event.PlaybackState:
+				case Event.PlaybackState: {
+					const currentTrack = usePlayerQueueStore.getState().currentTrack
 					switch (event.state) {
 						case State.Playing:
-							if (event.track) await reportPlaybackStarted(api, event.track)
+							if (currentTrack) await reportPlaybackStarted(api, currentTrack)
 							break
 						default:
-							if (event.track) await reportPlaybackStopped(api, event.track)
+							if (currentTrack) await reportPlaybackStopped(api, currentTrack)
 							break
 					}
 					break
+				}
 			}
 		},
 		[api, autoDownload, enableAudioNormalization],
