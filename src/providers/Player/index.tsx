@@ -54,15 +54,28 @@ export const PlayerProvider: () => React.JSX.Element = () => {
 						const volume = calculateTrackVolume(event.track)
 						await TrackPlayer.setVolume(volume)
 					} else if (event.track) {
-						await reportPlaybackStarted(api, event.track)
+						try {
+							await reportPlaybackStarted(api, event.track)
+						} catch (error) {
+							console.error('Unable to report playback started for track', error)
+						}
 					}
 
 					await handleActiveTrackChanged()
 
 					if (event.lastTrack) {
-						if (isPlaybackFinished(event.lastPosition, event.lastTrack.duration ?? 1))
-							await reportPlaybackCompleted(api, event.lastTrack as JellifyTrack)
-						else await reportPlaybackStopped(api, event.lastTrack as JellifyTrack)
+						try {
+							if (
+								isPlaybackFinished(
+									event.lastPosition,
+									event.lastTrack.duration ?? 1,
+								)
+							)
+								await reportPlaybackCompleted(api, event.lastTrack as JellifyTrack)
+							else await reportPlaybackStopped(api, event.lastTrack as JellifyTrack)
+						} catch (error) {
+							console.error('Unable to report playback stopped for lastTrack', error)
+						}
 					}
 					break
 				}
@@ -72,10 +85,18 @@ export const PlayerProvider: () => React.JSX.Element = () => {
 					const currentTrack = usePlayerQueueStore.getState().currentTrack
 
 					if (currentTrack)
-						await reportPlaybackProgress(api, currentTrack, event.position)
+						try {
+							await reportPlaybackProgress(api, currentTrack, event.position)
+						} catch (error) {
+							console.error('Unable to report playback progress', error)
+						}
 
-					if (event.position / event.duration > 0.3 && autoDownload && currentTrack)
+					if (event.position / event.duration > 0.3 && autoDownload && currentTrack) {
+						console.debug('Autodownloading current track')
 						await saveAudioItem(api, currentTrack.item, downloadingDeviceProfile, true)
+						console.debug('Finished autodownloading current track')
+					}
+
 					break
 				}
 
