@@ -15,7 +15,7 @@ import saveAudioItem from '../../api/mutations/download/utils'
 import { useDownloadingDeviceProfile } from '../../stores/device-profile'
 import Initialize from './functions/initialization'
 import { useEnableAudioNormalization } from '../../stores/settings/player'
-import { usePlayerQueueStore } from '@/src/stores/player/queue'
+import { usePlayerQueueStore } from '../../stores/player/queue'
 
 const PLAYER_EVENTS: Event[] = [
 	Event.PlaybackActiveTrackChanged,
