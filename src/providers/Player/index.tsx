@@ -42,9 +42,6 @@ export const PlayerProvider: () => React.JSX.Element = () => {
 	const eventHandler = useCallback(
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		async (event: any) => {
-			console.debug(`Received RNTP event, ${JSON.stringify(event)}`)
-			let nowPlaying: JellifyTrack | undefined
-
 			switch (event.type) {
 				case Event.PlaybackActiveTrackChanged:
 					// When we load a new queue, our index is updated before RNTP
