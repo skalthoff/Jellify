@@ -25,6 +25,7 @@ import { useIsFavorite } from '../../../api/queries/user-data'
 import { useApi } from '../../../stores'
 import { useCurrentTrack, usePlayQueue } from '../../../stores/player/queue'
 import { useAddFavorite, useRemoveFavorite } from '../../../api/mutations/favorite'
+import { StackActions } from '@react-navigation/native'
 
 export interface TrackProps {
 	track: BaseItemDto
@@ -179,9 +180,13 @@ export default function Track({
 					tracks: [track],
 					queuingType: QueuingType.DirectlyQueued,
 				}),
-			toggleFavorite: () =>
-				isFavoriteTrack ? removeFavorite({ item: track }) : addFavorite({ item: track }),
-			addToPlaylist: () => navigationRef.navigate('AddToPlaylist', { track }),
+			toggleFavorite: () => {
+				if (isFavoriteTrack) removeFavorite({ item: track })
+				else addFavorite({ item: track })
+			},
+			addToPlaylist: () => {
+				navigationRef.dispatch(StackActions.push('AddToPlaylist', { track }))
+			},
 		}),
 		[
 			addToQueue,
@@ -192,6 +197,7 @@ export default function Track({
 			addFavorite,
 			removeFavorite,
 			isFavoriteTrack,
+			navigationRef,
 		],
 	)
 

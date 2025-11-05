@@ -116,13 +116,18 @@ export const playNextInQueue = async ({
 	)
 
 	const currentIndex = await TrackPlayer.getActiveTrackIndex()
+	const currentQueue = (await TrackPlayer.getQueue()) as JellifyTrack[]
 
 	console.debug(`Adding ${tracks.length} to the queue at index ${currentIndex}`)
-	// Then update RNTP
-	await TrackPlayer.add(tracksToPlayNext, (currentIndex ?? 0) + 1)
 
+	// If we're already at the end of the queue, add the track to the end
+	if (currentIndex === currentQueue.length - 1) await TrackPlayer.add(tracksToPlayNext)
+	// Else as long as we have an active index, we'll add the track(s) after that
+	else if (currentIndex) await TrackPlayer.add(tracksToPlayNext, currentIndex + 1)
+
+	// Get the active queue, put it in Zustand
 	const updatedQueue = (await TrackPlayer.getQueue()) as JellifyTrack[]
-	usePlayerQueueStore.getState().setQueue(updatedQueue)
+	usePlayerQueueStore.getState().setQueue([...updatedQueue])
 
 	// Add to the state unshuffled queue, using the currently playing track as the index
 	usePlayerQueueStore

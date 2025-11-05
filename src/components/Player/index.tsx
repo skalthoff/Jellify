@@ -170,19 +170,13 @@ export default function PlayerScreen(): React.JSX.Element {
 							{...mainContainerStyle}
 						>
 							{/* flexGrow 1 */}
-							<YStack>
-								<PlayerHeader />
-								<SongInfo />
-							</YStack>
+							<PlayerHeader />
 
 							<YStack justifyContent='flex-start' gap={'$5'} flexShrink={1}>
+								<SongInfo />
 								<Scrubber />
-
-								{/* playback progress goes here */}
-								<YStack>
-									<Controls />
-									<Footer />
-								</YStack>
+								<Controls />
+								<Footer />
 							</YStack>
 						</YStack>
 					</Animated.View>
