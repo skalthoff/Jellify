@@ -14,12 +14,12 @@ import { useRemoteMediaClient } from 'react-native-google-cast'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../screens/types'
 import { useNavigation } from '@react-navigation/native'
-import { useAllDownloadedTracks } from '../../../api/queries/download'
 import useHapticFeedback from '../../../hooks/use-haptic-feedback'
 import { queryClient } from '../../../constants/query-client'
 import { REPEAT_MODE_QUERY_KEY } from '../constants/query-keys'
 import { usePlayerQueueStore } from '../../../stores/player/queue'
 import { useCallback } from 'react'
+import { getAudioCache } from '../../../api/mutations/download/offlineModeUtils'
 
 /**
  * A mutation to handle starting playback
@@ -151,15 +151,13 @@ const useSeekBy = () => {
 }
 
 export const useAddToQueue = () => {
-	const downloadedTracks = useAllDownloadedTracks().data
-
 	const trigger = useHapticFeedback()
 
 	return useMutation({
 		mutationFn: (variables: AddToQueueMutation) =>
 			variables.queuingType === QueuingType.PlayingNext
-				? playNextInQueue({ ...variables, downloadedTracks })
-				: playLaterInQueue({ ...variables, downloadedTracks }),
+				? playNextInQueue({ ...variables, downloadedTracks: getAudioCache() })
+				: playLaterInQueue({ ...variables, downloadedTracks: getAudioCache() }),
 		onSuccess: (_: void, { queuingType }: AddToQueueMutation) => {
 			trigger('notificationSuccess')
 			console.debug(
@@ -198,15 +196,13 @@ export const useLoadNewQueue = () => {
 	const remoteClient = useRemoteMediaClient()
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-	const { data: downloadedTracks } = useAllDownloadedTracks()
-
 	const trigger = useHapticFeedback()
 
 	return useCallback(
 		async (variables: QueueMutation) => {
 			trigger('impactLight')
 			await TrackPlayer.pause()
-			const { finalStartIndex, tracks } = await loadQueue({ ...variables, downloadedTracks })
+			const { finalStartIndex, tracks } = await loadQueue({ ...variables })
 
 			usePlayerQueueStore.getState().setCurrentIndex(finalStartIndex)
 
@@ -225,7 +221,7 @@ export const useLoadNewQueue = () => {
 			usePlayerQueueStore.getState().setQueue(tracks)
 			usePlayerQueueStore.getState().setCurrentTrack(tracks[finalStartIndex])
 		},
-		[isCasting, remoteClient, navigation, downloadedTracks, trigger, usePlayerQueueStore],
+		[isCasting, remoteClient, navigation, trigger, usePlayerQueueStore],
 	)
 }
 

@@ -9,10 +9,7 @@ import JellifyTrack from '../../../types/JellifyTrack'
 import { getCurrentTrack } from '.'
 import { JellifyDownload } from '../../../types/JellifyDownload'
 import { usePlayerQueueStore } from '../../../stores/player/queue'
-
-type LoadQueueOperation = QueueMutation & {
-	downloadedTracks: JellifyDownload[] | undefined
-}
+import { getAudioCache } from '../../../api/mutations/download/offlineModeUtils'
 
 type LoadQueueResult = {
 	finalStartIndex: number
@@ -27,8 +24,7 @@ export async function loadQueue({
 	api,
 	deviceProfile,
 	networkStatus = networkStatusTypes.ONLINE,
-	downloadedTracks,
-}: LoadQueueOperation): Promise<LoadQueueResult> {
+}: QueueMutation): Promise<LoadQueueResult> {
 	usePlayerQueueStore.getState().setQueueRef(queueRef)
 	usePlayerQueueStore.getState().setShuffled(shuffled)
 
@@ -36,6 +32,8 @@ export async function loadQueue({
 
 	// Get the item at the start index
 	const startingTrack = tracklist[startIndex]
+
+	const downloadedTracks = getAudioCache()
 
 	const availableAudioItems = filterTracksOnNetworkStatus(
 		networkStatus as networkStatusTypes,
