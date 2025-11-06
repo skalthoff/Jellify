@@ -3,13 +3,11 @@ import { XStack, YStack, getToken } from 'tamagui'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
 	Easing,
-	interpolate,
 	useAnimatedStyle,
 	useSharedValue,
 	withTiming,
 } from 'react-native-reanimated'
 import Icon from './icon'
-import { Text } from '../helpers/text'
 import useHapticFeedback from '../../../hooks/use-haptic-feedback'
 import {
 	notifySwipeableRowClosed,
@@ -17,7 +15,7 @@ import {
 	registerSwipeableRow,
 	unregisterSwipeableRow,
 } from './swipeable-row-registry'
-import { runOnJS, runOnUISync, scheduleOnRN, scheduleOnUI } from 'react-native-worklets'
+import { scheduleOnRN } from 'react-native-worklets'
 
 export type SwipeAction = {
 	label: string
@@ -34,6 +32,8 @@ export type QuickAction = {
 
 type Props = {
 	children: React.ReactNode
+	onPress?: () => void | null
+	onLongPress?: () => void | null
 	leftAction?: SwipeAction | null // immediate action on right swipe
 	leftActions?: QuickAction[] | null // quick action menu on right swipe
 	rightAction?: SwipeAction | null // legacy immediate action on left swipe
@@ -47,6 +47,8 @@ type Props = {
  */
 export default function SwipeableRow({
 	children,
+	onPress,
+	onLongPress,
 	leftAction,
 	leftActions,
 	rightAction,
@@ -114,14 +116,44 @@ export default function SwipeableRow({
 		menuOpenRef.current = menuOpen.value
 	}, [menuOpen])
 
-	const schedule = (fn?: () => void) => {
-		'worklet'
-		if (!fn) return
-		// Defer JS work so the UI bounce plays smoothly
-		setTimeout(() => fn(), 0)
-	}
+	const fgOpacity = useSharedValue(1.0)
 
-	const gesture = useMemo(() => {
+	const tapGesture = useMemo(() => {
+		return Gesture.Tap()
+			.runOnJS(true)
+			.onBegin(() => {
+				fgOpacity.set(0.5)
+			})
+			.onEnd(() => {
+				if (onPress) {
+					triggerHaptic('impactLight')
+					onPress()
+				}
+			})
+			.onFinalize(() => {
+				fgOpacity.set(1.0)
+			})
+	}, [onPress])
+
+	const longPressGesture = useMemo(() => {
+		return Gesture.LongPress()
+			.runOnJS(true)
+			.onBegin(() => {
+				fgOpacity.set(0.5)
+			})
+			.onStart(() => {
+				if (onLongPress) {
+					triggerHaptic('effectDoubleClick')
+					onLongPress()
+				}
+				fgOpacity.set(1.0)
+			})
+			.onTouchesCancelled(() => {
+				fgOpacity.set(1.0)
+			})
+	}, [onLongPress])
+
+	const panGesture = useMemo(() => {
 		return Gesture.Pan()
 			.runOnJS(true)
 			.activeOffsetX([-10, 10])
@@ -129,6 +161,7 @@ export default function SwipeableRow({
 			.onBegin(() => {
 				if (disabled) return
 				dragging.set(true)
+				fgOpacity.set(1.0)
 			})
 			.onUpdate((e) => {
 				if (disabled) return
@@ -211,7 +244,14 @@ export default function SwipeableRow({
 		triggerHaptic,
 	])
 
-	const fgStyle = useAnimatedStyle(() => ({ transform: [{ translateX: tx.value }] }))
+	const fgStyle = useAnimatedStyle(() => ({
+		transform: [
+			{
+				translateX: tx.value,
+			},
+		],
+		opacity: withTiming(fgOpacity.value, { easing: Easing.bounce }),
+	}))
 	const leftUnderlayStyle = useAnimatedStyle(() => {
 		// Normalize progress to [0,1] with a monotonic denominator to avoid non-monotonic ranges
 		// when the available swipe distance is smaller than the threshold (e.g., 1 quick action = 48px)
@@ -234,7 +274,7 @@ export default function SwipeableRow({
 	if (disabled) return <>{children}</>
 
 	return (
-		<GestureDetector gesture={gesture}>
+		<GestureDetector gesture={Gesture.Simultaneous(tapGesture, longPressGesture, panGesture)}>
 			<YStack position='relative' overflow='hidden'>
 				{/* Left action underlay with colored background (icon-only) */}
 				{leftAction && !leftActions && (

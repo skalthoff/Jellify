@@ -26,6 +26,7 @@ import { useApi } from '../../../stores'
 import { useCurrentTrack, usePlayQueue } from '../../../stores/player/queue'
 import { useAddFavorite, useRemoveFavorite } from '../../../api/mutations/favorite'
 import { StackActions } from '@react-navigation/native'
+import { TouchableOpacity } from 'react-native'
 
 export interface TrackProps {
 	track: BaseItemDto
@@ -213,15 +214,18 @@ export default function Track({
 
 	return (
 		<Theme name={invertedColors ? 'inverted_purple' : undefined}>
-			<SwipeableRow disabled={isNested === true} {...swipeConfig}>
+			<SwipeableRow
+				disabled={isNested === true}
+				{...swipeConfig}
+				onLongPress={handleLongPress}
+				onPress={handlePress}
+			>
 				<XStack
 					alignContent='center'
 					alignItems='center'
 					height={showArtwork ? '$6' : '$5'}
 					flex={1}
 					testID={testID ?? undefined}
-					onPress={handlePress}
-					onLongPress={handleLongPress}
 					paddingVertical={'$2'}
 					justifyContent='center'
 					marginRight={'$2'}
