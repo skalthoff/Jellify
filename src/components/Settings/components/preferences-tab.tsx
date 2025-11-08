@@ -34,9 +34,12 @@ export default function PreferencesTab(): React.JSX.Element {
 		onPress: () => void
 	}) => (
 		<Button
+			pressStyle={{
+				backgroundColor: '$neutral',
+			}}
 			onPress={onPress}
-			backgroundColor={active ? '$primary' : 'transparent'}
-			borderColor={active ? '$primary' : '$borderColor'}
+			backgroundColor={active ? '$success' : 'transparent'}
+			borderColor={active ? '$success' : '$borderColor'}
 			borderWidth={'$0.5'}
 			color={active ? '$background' : '$color'}
 			paddingHorizontal={'$3'}
