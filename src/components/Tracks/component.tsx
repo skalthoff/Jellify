@@ -90,6 +90,14 @@ export default function Tracks({
 		[tracksToDisplay, queue],
 	)
 
+	const ItemSeparatorComponent = useCallback(
+		({ leadingItem, trailingItem }: { leadingItem: unknown; trailingItem: unknown }) =>
+			typeof leadingItem === 'string' || typeof trailingItem === 'string' ? null : (
+				<Separator />
+			),
+		[],
+	)
+
 	// Effect for handling the pending alphabet selector letter
 	useEffect(() => {
 		if (isString(pendingLetterRef.current) && tracksInfiniteQuery.data) {
@@ -136,7 +144,7 @@ export default function Tracks({
 			<FlashList
 				ref={sectionListRef}
 				contentInsetAdjustmentBehavior='automatic'
-				ItemSeparatorComponent={() => <Separator />}
+				ItemSeparatorComponent={ItemSeparatorComponent}
 				numColumns={1}
 				data={tracksInfiniteQuery.data}
 				keyExtractor={keyExtractor}

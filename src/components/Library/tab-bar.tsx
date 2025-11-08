@@ -26,18 +26,12 @@ function LibraryTabBar(props: MaterialTopTabBarProps) {
 			{[''].includes(props.state.routes[props.state.index].name) ? null : (
 				<XStack
 					borderColor={'$borderColor'}
-					marginTop={'$2'}
-					alignItems={'center'}
+					alignContent={'flex-start'}
 					justifyContent='flex-start'
-					paddingHorizontal={'$4'}
-					paddingVertical={'$1'}
+					paddingHorizontal={'$2'}
+					paddingVertical={'$2'}
 					gap={'$4'}
 					maxWidth={'80%'}
-					shadowOffset={{
-						width: 0,
-						height: getTokenValue('$2'),
-					}}
-					shadowColor={'$background25'}
 				>
 					{props.state.routes[props.state.index].name === 'Playlists' ? (
 						<XStack

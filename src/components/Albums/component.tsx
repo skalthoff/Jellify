@@ -1,6 +1,6 @@
 import { ActivityIndicator, RefreshControl } from 'react-native'
 import { Separator, useTheme, XStack, YStack } from 'tamagui'
-import React, { RefObject, useEffect, useRef } from 'react'
+import React, { RefObject, useCallback, useEffect, useRef } from 'react'
 import { Text } from '../Global/helpers/text'
 import { FlashList, FlashListRef } from '@shopify/flash-list'
 import { UseInfiniteQueryResult } from '@tanstack/react-query'
@@ -43,6 +43,14 @@ export default function Albums({
 
 	const { mutate: alphabetSelectorMutate } = useAlphabetSelector(
 		(letter) => (pendingLetterRef.current = letter.toUpperCase()),
+	)
+
+	const ItemSeparatorComponent = useCallback(
+		({ leadingItem, trailingItem }: { leadingItem: unknown; trailingItem: unknown }) =>
+			typeof leadingItem === 'string' || typeof trailingItem === 'string' ? null : (
+				<Separator />
+			),
+		[],
 	)
 
 	// Effect for handling the pending alphabet selector letter
@@ -115,7 +123,7 @@ export default function Albums({
 				ListFooterComponent={
 					albumsInfiniteQuery.isFetchingNextPage ? <ActivityIndicator /> : null
 				}
-				ItemSeparatorComponent={() => <Separator borderColor={'$neutral'} />}
+				ItemSeparatorComponent={ItemSeparatorComponent}
 				refreshControl={
 					<RefreshControl
 						refreshing={albumsInfiniteQuery.isFetching}

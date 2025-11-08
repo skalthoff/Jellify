@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useMemo, useRef } from 'react'
+import React, { RefObject, useCallback, useEffect, useMemo, useRef } from 'react'
 import { Separator, useTheme, XStack, YStack } from 'tamagui'
 import { Text } from '../Global/helpers/text'
 import { RefreshControl } from 'react-native'
@@ -57,6 +57,14 @@ export default function Artists({
 			.filter((value, index, indices) => indices.indexOf(value) === index)
 	}, [showAlphabeticalSelector, artists])
 
+	const ItemSeparatorComponent = useCallback(
+		({ leadingItem, trailingItem }: { leadingItem: unknown; trailingItem: unknown }) =>
+			typeof leadingItem === 'string' || typeof trailingItem === 'string' ? null : (
+				<Separator />
+			),
+		[],
+	)
+
 	// Effect for handling the pending alphabet selector letter
 	useEffect(() => {
 		if (isString(pendingLetterRef.current) && artists) {
@@ -107,7 +115,7 @@ export default function Artists({
 							? item.toString()
 							: item.Id!
 				}
-				ItemSeparatorComponent={() => <Separator />}
+				ItemSeparatorComponent={ItemSeparatorComponent}
 				ListEmptyComponent={
 					<YStack flex={1} justify='center' alignItems='center'>
 						<Text marginVertical='auto' color={'$borderColor'}>
