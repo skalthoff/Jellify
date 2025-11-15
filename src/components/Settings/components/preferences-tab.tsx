@@ -4,6 +4,7 @@ import SettingsListGroup from './settings-list-group'
 import { RadioGroupItemWithLabel } from '../../Global/helpers/radio-group-item-with-label'
 import {
 	ThemeSetting,
+	useHideRunTimesSetting,
 	useReducedHapticsSetting,
 	useSendMetricsSetting,
 	useThemeSetting,
@@ -17,6 +18,9 @@ export default function PreferencesTab(): React.JSX.Element {
 	const [sendMetrics, setSendMetrics] = useSendMetricsSetting()
 	const [reducedHaptics, setReducedHaptics] = useReducedHapticsSetting()
 	const [themeSetting, setThemeSetting] = useThemeSetting()
+
+	const [hideRunTimes, setHideRunTimes] = useHideRunTimesSetting()
+
 	const left = useSwipeSettingsStore((s) => s.left)
 	const right = useSwipeSettingsStore((s) => s.right)
 	const toggleLeft = useSwipeSettingsStore((s) => s.toggleLeft)
@@ -27,13 +31,16 @@ export default function PreferencesTab(): React.JSX.Element {
 		label,
 		icon,
 		onPress,
+		testID,
 	}: {
 		active: boolean
 		label: string
 		icon: string
 		onPress: () => void
+		testID?: string
 	}) => (
 		<Button
+			testID={testID}
 			pressStyle={{
 				backgroundColor: '$neutral',
 			}}
@@ -113,18 +120,21 @@ export default function PreferencesTab(): React.JSX.Element {
 									<SizableText size={'$3'}>Swipe Left</SizableText>
 									<XStack gap={'$2'} flexWrap='wrap'>
 										<ActionChip
+											testID='swipe-left-favorite-toggle'
 											active={left.includes('ToggleFavorite')}
 											label='Favorite'
 											icon='heart'
 											onPress={() => toggleLeft('ToggleFavorite')}
 										/>
 										<ActionChip
+											testID='swipe-left-playlist-toggle'
 											active={left.includes('AddToPlaylist')}
 											label='Add to Playlist'
 											icon='playlist-plus'
 											onPress={() => toggleLeft('AddToPlaylist')}
 										/>
 										<ActionChip
+											testID='swipe-left-queue-toggle'
 											active={left.includes('AddToQueue')}
 											label='Add to Queue'
 											icon='playlist-play'
@@ -136,18 +146,21 @@ export default function PreferencesTab(): React.JSX.Element {
 									<SizableText size={'$3'}>Swipe Right</SizableText>
 									<XStack gap={'$2'} flexWrap='wrap'>
 										<ActionChip
+											testID='swipe-right-favorite-toggle'
 											active={right.includes('ToggleFavorite')}
 											label='Favorite'
 											icon='heart'
 											onPress={() => toggleRight('ToggleFavorite')}
 										/>
 										<ActionChip
+											testID='swipe-right-playlist-toggle'
 											active={right.includes('AddToPlaylist')}
 											label='Add to Playlist'
 											icon='playlist-plus'
 											onPress={() => toggleRight('AddToPlaylist')}
 										/>
 										<ActionChip
+											testID='swipe-right-queue-toggle'
 											active={right.includes('AddToQueue')}
 											label='Add to Queue'
 											icon='playlist-play'
@@ -160,6 +173,20 @@ export default function PreferencesTab(): React.JSX.Element {
 					),
 				},
 				{
+					title: 'Hide Runtimes',
+					iconName: 'clock-digital',
+					iconColor: hideRunTimes ? '$success' : '$borderColor',
+					subTitle: 'Hides track runtime lengths',
+					children: (
+						<SwitchWithLabel
+							checked={hideRunTimes}
+							onCheckedChange={setHideRunTimes}
+							size={'$2'}
+							label={hideRunTimes ? 'Hidden' : 'Shown'}
+						/>
+					),
+				},
+				{
 					title: 'Reduce Haptics',
 					iconName: reducedHaptics ? 'vibrate-off' : 'vibrate',
 					iconColor: reducedHaptics ? '$success' : '$borderColor',
@@ -169,7 +196,7 @@ export default function PreferencesTab(): React.JSX.Element {
 							checked={reducedHaptics}
 							onCheckedChange={setReducedHaptics}
 							size={'$2'}
-							label={reducedHaptics ? 'Enabled' : 'Disabled'}
+							label={reducedHaptics ? 'Reduced' : 'Disabled'}
 						/>
 					),
 				},
@@ -183,7 +210,7 @@ export default function PreferencesTab(): React.JSX.Element {
 							checked={sendMetrics}
 							onCheckedChange={setSendMetrics}
 							size={'$2'}
-							label={sendMetrics ? 'Enabled' : 'Disabled'}
+							label={sendMetrics ? 'Sending' : 'Disabled'}
 						/>
 					),
 				},

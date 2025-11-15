@@ -15,6 +15,8 @@ import useStreamingDeviceProfile from '../../../stores/device-profile'
 import useItemContext from '../../../hooks/use-item-context'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import { useCallback } from 'react'
+import Animated, { useAnimatedStyle } from 'react-native-reanimated'
+import { useSwipeableRowContext } from './swipeable-row-context'
 import SwipeableRow from './SwipeableRow'
 import { useSwipeSettingsStore } from '../../../stores/settings/swipe'
 import { buildSwipeConfig } from '../helpers/swipe-actions'
@@ -46,6 +48,7 @@ export default function ItemRow({
 	circular,
 	navigation,
 	onPress,
+	queueName,
 }: ItemRowProps): React.JSX.Element {
 	const api = useApi()
 
@@ -157,6 +160,7 @@ export default function ItemRow({
 				alignContent='center'
 				minHeight={'$7'}
 				width={'100%'}
+				testID={item.Id ? `item-row-${item.Id}` : undefined}
 				onPressIn={onPressIn}
 				onPress={onPressCallback}
 				onLongPress={onLongPress}
@@ -165,16 +169,8 @@ export default function ItemRow({
 				paddingVertical={'$2'}
 				paddingRight={'$2'}
 			>
-				<YStack marginHorizontal={'$3'} justifyContent='center'>
-					<ItemImage
-						item={item}
-						height={'$12'}
-						width={'$12'}
-						circular={item.Type === 'MusicArtist' || circular}
-					/>
-				</YStack>
-
-				<ItemRowDetails item={item} />
+				<HideableArtwork item={item} circular={circular} />
+				<StickyText item={item} />
 
 				<XStack justifyContent='flex-end' alignItems='center' flex={2}>
 					{renderRunTime ? (
@@ -235,5 +231,42 @@ function ItemRowDetails({ item }: { item: BaseItemDto }): React.JSX.Element {
 				</Text>
 			)}
 		</YStack>
+	)
+}
+
+// Artwork wrapper that fades out when the quick-action menu is open
+function HideableArtwork({
+	item,
+	circular,
+}: {
+	item: BaseItemDto
+	circular?: boolean
+}): React.JSX.Element {
+	const { tx } = useSwipeableRowContext()
+	// Hide artwork as soon as swiping starts (any non-zero tx)
+	const style = useAnimatedStyle(() => ({
+		opacity: tx.value === 0 ? 1 : 0,
+	}))
+	return (
+		<Animated.View style={style}>
+			<YStack marginHorizontal={'$3'} justifyContent='center'>
+				<ItemImage
+					item={item}
+					height={'$12'}
+					width={'$12'}
+					circular={item.Type === 'MusicArtist' || circular}
+				/>
+			</YStack>
+		</Animated.View>
+	)
+}
+
+// Text/details remain visible. No counter-translation needed now that underlays are width-bound.
+function StickyText({ item }: { item: BaseItemDto }): React.JSX.Element {
+	const style = useAnimatedStyle(() => ({}))
+	return (
+		<Animated.View style={[style, { flex: 5 }]}>
+			<ItemRowDetails item={item} />
+		</Animated.View>
 	)
 }
