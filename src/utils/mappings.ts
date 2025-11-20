@@ -21,6 +21,7 @@ import { DownloadQuality } from '../stores/settings/usage'
 import MediaInfoQueryKey from '../api/queries/media/keys'
 import StreamingQuality from '../enums/audio-quality'
 import { getAudioCache } from '../api/mutations/download/offlineModeUtils'
+import RNFS from 'react-native-fs'
 
 /**
  * Gets quality-specific parameters for transcoding
@@ -143,8 +144,8 @@ function ensureFileUri(path?: string): string | undefined {
 function buildDownloadedTrack(downloadedTrack: JellifyDownload): TrackMediaInfo {
 	return {
 		type: TrackType.Default,
-		url: ensureFileUri(downloadedTrack.path) ?? downloadedTrack.url,
-		image: ensureFileUri(downloadedTrack.artwork),
+		url: `file://${RNFS.DocumentDirectoryPath}/${downloadedTrack.path!.split('/').pop()}`,
+		image: `file://${RNFS.DocumentDirectoryPath}/${downloadedTrack.artwork!.split('/').pop()}`,
 		duration: convertRunTimeTicksToSeconds(
 			downloadedTrack.mediaSourceInfo?.RunTimeTicks || downloadedTrack.item.RunTimeTicks || 0,
 		),
