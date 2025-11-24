@@ -39,7 +39,6 @@ export function fetchAlbums(
 			Fields: [ItemFields.SortName],
 			Recursive: true,
 		}).then((data) => {
-			console.debug('Albums Response receieved')
 			return data.Items ? resolve(data.Items) : resolve([])
 		})
 	})

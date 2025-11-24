@@ -38,7 +38,6 @@ export function fetchArtists(
 			Fields: [ItemFields.SortName, ItemFields.Genres],
 		})
 			.then((data) => {
-				console.debug('Artists Response received')
 				return data.Items ? resolve(data.Items) : resolve([])
 			})
 			.catch((error) => {
