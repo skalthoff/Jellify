@@ -111,7 +111,7 @@ export default function PlayerScreen(): React.JSX.Element {
 	const mainContainerStyle = useMemo(
 		() => ({
 			marginTop: isAndroid ? top : getTokenValue('$4'),
-			marginBottom: bottom + getTokenValue('$8'),
+			marginBottom: bottom + getTokenValue('$10'),
 		}),
 		[top, bottom, isAndroid],
 	)
