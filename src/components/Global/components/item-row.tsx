@@ -16,7 +16,7 @@ import useItemContext from '../../../hooks/use-item-context'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import React, { useCallback, useState } from 'react'
 import { LayoutChangeEvent } from 'react-native'
-import Animated, { useAnimatedStyle } from 'react-native-reanimated'
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSwipeableRowContext } from './swipeable-row-context'
 import SwipeableRow from './SwipeableRow'
 import { useSwipeSettingsStore } from '../../../stores/settings/swipe'
@@ -166,7 +166,6 @@ export default function ItemRow({
 		>
 			<XStack
 				alignContent='center'
-				minHeight={'$7'}
 				width={'100%'}
 				testID={item.Id ? `item-row-${item.Id}` : undefined}
 				onPressIn={onPressIn}
@@ -189,7 +188,7 @@ export default function ItemRow({
 					<ItemRowDetails item={item} />
 				</SlidingTextArea>
 
-				<XStack justifyContent='flex-end' alignItems='center' flex={2}>
+				<XStack justifyContent='flex-end' alignItems='center' flexShrink={1}>
 					{renderRunTime ? (
 						<RunTimeTicks>{item.RunTimeTicks}</RunTimeTicks>
 					) : item.Type === 'Playlist' ? (
@@ -219,7 +218,7 @@ function ItemRowDetails({ item }: { item: BaseItemDto }): React.JSX.Element {
 	const shouldRenderGenres = item.Type === 'Playlist' || item.Type === BaseItemKind.MusicArtist
 
 	return (
-		<YStack alignContent='center' justifyContent='center' flex={5}>
+		<YStack alignContent='center' justifyContent='center' flexGrow={1}>
 			<Text bold lineBreakStrategyIOS='standard' numberOfLines={1}>
 				{item.Name ?? ''}
 			</Text>
@@ -264,18 +263,18 @@ function HideableArtwork({
 	const { tx } = useSwipeableRowContext()
 	// Hide artwork as soon as swiping starts (any non-zero tx)
 	const style = useAnimatedStyle(() => ({
-		opacity: tx.value === 0 ? 1 : 0,
+		opacity: tx.value === 0 ? withTiming(1) : 0,
 	}))
 	return (
 		<Animated.View style={style} onLayout={onLayout}>
-			<YStack marginHorizontal={'$3'} justifyContent='center'>
+			<XStack marginHorizontal={'$3'} marginVertical={'auto'} alignItems='center'>
 				<ItemImage
 					item={item}
 					height={'$12'}
 					width={'$12'}
 					circular={item.Type === 'MusicArtist' || circular}
 				/>
-			</YStack>
+			</XStack>
 		</Animated.View>
 	)
 }
