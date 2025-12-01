@@ -1,4 +1,4 @@
-import { ScrollView, Spinner, useTheme, XStack, YStack } from 'tamagui'
+import { ScrollView, Spinner, useTheme, XStack } from 'tamagui'
 import Track from '../Global/components/track'
 import Icon from '../Global/components/icon'
 import { PlaylistProps } from './interfaces'
@@ -7,7 +7,7 @@ import { StackActions, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../../screens/types'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import Sortable from 'react-native-sortables'
-import { useCallback, useLayoutEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { useReducedHapticsSetting } from '../../stores/settings/app'
 import { RenderItemInfo } from 'react-native-sortables/dist/typescript/types'
 import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client'
@@ -110,79 +110,65 @@ export default function Playlist({
 
 	const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-	const renderItem = useCallback(
-		({ item: track, index }: RenderItemInfo<BaseItemDto>) => {
-			const handlePress = async () => {
-				await loadNewQueue({
-					track,
-					tracklist: playlistTracks ?? [],
-					api,
-					networkStatus,
-					deviceProfile: streamingDeviceProfile,
-					index,
-					queue: playlist,
-					queuingType: QueuingType.FromSelection,
-					startPlayback: true,
-				})
-			}
+	const renderItem = ({ item: track, index }: RenderItemInfo<BaseItemDto>) => {
+		const handlePress = async () => {
+			await loadNewQueue({
+				track,
+				tracklist: playlistTracks ?? [],
+				api,
+				networkStatus,
+				deviceProfile: streamingDeviceProfile,
+				index,
+				queue: playlist,
+				queuingType: QueuingType.FromSelection,
+				startPlayback: true,
+			})
+		}
 
-			return (
-				<XStack alignItems='center' key={`${index}-${track.Id}`} flex={1}>
-					{editing && (
-						<Sortable.Handle>
-							<Icon name='drag' />
-						</Sortable.Handle>
-					)}
+		return (
+			<XStack alignItems='center' key={`${index}-${track.Id}`} flex={1}>
+				{editing && (
+					<Sortable.Handle>
+						<Icon name='drag' />
+					</Sortable.Handle>
+				)}
 
+				<Sortable.Touchable
+					style={{ flexGrow: 1 }}
+					onTap={handlePress}
+					onLongPress={() => {
+						if (!editing)
+							rootNavigation.navigate('Context', {
+								item: track,
+								navigation,
+							})
+					}}
+				>
+					<Track
+						navigation={navigation}
+						track={track}
+						tracklist={playlistTracks ?? []}
+						index={index}
+						queue={playlist}
+						showArtwork
+						editing={editing}
+					/>
+				</Sortable.Touchable>
+
+				{editing && (
 					<Sortable.Touchable
-						style={{ flexGrow: 1 }}
-						onTap={handlePress}
-						onLongPress={() => {
-							if (!editing)
-								rootNavigation.navigate('Context', {
-									item: track,
-									navigation,
-								})
+						onTap={() => {
+							setPlaylistTracks(
+								(playlistTracks ?? []).filter(({ Id }) => Id !== track.Id),
+							)
 						}}
 					>
-						<Track
-							navigation={navigation}
-							track={track}
-							tracklist={playlistTracks ?? []}
-							index={index}
-							queue={playlist}
-							showArtwork
-							editing={editing}
-						/>
+						<Icon name='close' color={'$danger'} />
 					</Sortable.Touchable>
-
-					{editing && (
-						<Sortable.Touchable
-							onTap={() => {
-								setPlaylistTracks(
-									(playlistTracks ?? []).filter(({ Id }) => Id !== track.Id),
-								)
-							}}
-						>
-							<Icon name='close' color={'$danger'} />
-						</Sortable.Touchable>
-					)}
-				</XStack>
-			)
-		},
-		[
-			navigation,
-			playlist,
-			playlistTracks,
-			editing,
-			setPlaylistTracks,
-			loadNewQueue,
-			api,
-			networkStatus,
-			streamingDeviceProfile,
-			rootNavigation,
-		],
-	)
+				)}
+			</XStack>
+		)
+	}
 
 	return (
 		<ScrollView

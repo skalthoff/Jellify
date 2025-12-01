@@ -9,7 +9,7 @@ import { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import InstantMixButton from '../Global/components/instant-mix-button'
 import ItemImage from '../Global/components/image'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import Icon from '../Global/components/icon'
 import { mapDtoToTrack } from '../../utils/mappings'
@@ -50,22 +50,14 @@ export function Album(): React.JSX.Element {
 		addToDownloadQueue(jellifyTracks)
 	}
 
-	const sections = useMemo(
-		() =>
-			(Array.isArray(discs) ? discs : []).map(({ title, data }) => ({
-				title,
-				data: Array.isArray(data) ? data : [],
-			})),
-		[discs],
-	)
+	const sections = (Array.isArray(discs) ? discs : []).map(({ title, data }) => ({
+		title,
+		data: Array.isArray(data) ? data : [],
+	}))
 
 	const hasMultipleSections = sections.length > 1
 
-	const albumTrackList = useMemo(() => discs?.flatMap((disc) => disc.data), [discs])
-
-	const handleScrollBeginDrag = useCallback(() => {
-		closeAllSwipeableRows()
-	}, [])
+	const albumTrackList = discs?.flatMap((disc) => disc.data)
 
 	return (
 		<SectionList
@@ -116,7 +108,7 @@ export function Album(): React.JSX.Element {
 					{isPending ? <Spinner color={'$primary'} /> : <Text>No tracks found</Text>}
 				</YStack>
 			)}
-			onScrollBeginDrag={handleScrollBeginDrag}
+			onScrollBeginDrag={closeAllSwipeableRows}
 		/>
 	)
 }
