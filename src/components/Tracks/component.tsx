@@ -152,6 +152,10 @@ export default function Tracks({
 				}}
 				onScrollBeginDrag={handleScrollBeginDrag}
 				stickyHeaderIndices={stickyHeaderIndicies}
+				stickyHeaderConfig={{
+					// The list likes to flicker without this
+					useNativeDriver: false,
+				}}
 				ListEmptyComponent={
 					<YStack flex={1} justify='center' alignItems='center'>
 						<Text marginVertical='auto' color={'$borderColor'}>
