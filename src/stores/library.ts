@@ -6,7 +6,7 @@ type LibraryStore = {
 	sortDescending: boolean
 	setSortDescending: (sortDescending: boolean) => void
 	isFavorites: boolean
-	setIsFavorites: (isFavorites: boolean) => void
+	setIsFavorites: (isFavorites: boolean | undefined) => void
 	isDownloaded: boolean
 	setIsDownloaded: (isDownloaded: boolean) => void
 }
@@ -19,7 +19,7 @@ const useLibraryStore = create<LibraryStore>()(
 				setSortDescending: (sortDescending: boolean) => set({ sortDescending }),
 
 				isFavorites: false,
-				setIsFavorites: (isFavorites: boolean) => set({ isFavorites }),
+				setIsFavorites: (isFavorites: boolean | undefined) => set({ isFavorites }),
 
 				isDownloaded: false,
 				setIsDownloaded: (isDownloaded: boolean) => set({ isDownloaded }),

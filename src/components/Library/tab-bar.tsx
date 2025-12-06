@@ -50,7 +50,7 @@ function LibraryTabBar(props: MaterialTopTabBarProps) {
 						<XStack
 							onPress={() => {
 								trigger('impactLight')
-								setIsFavorites(!isFavorites)
+								setIsFavorites(isFavorites ? undefined : true)
 							}}
 							pressStyle={{ opacity: 0.6 }}
 							animation='quick'
