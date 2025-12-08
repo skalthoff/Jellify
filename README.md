@@ -219,6 +219,7 @@ Install via [Altstore](https://altstore.io) or your favorite sideloading utility
 
 #### 3.0.0 - TBD
 - Watch Support
+- tvOS (Apple and Android)
 
 \*This is subject to change
 
