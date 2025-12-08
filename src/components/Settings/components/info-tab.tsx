@@ -113,12 +113,13 @@ export default function InfoTab() {
 					},
 					{
 						title: 'Wall of Fame',
-						subTitle: 'Sponsor on GitHub or Patreon',
+						subTitle: 'Sponsor on GitHub, Patreon, or Ko-fi',
 						iconName: 'hand-heart',
 						iconColor: '$secondary',
 						children: (
 							<YStack>
 								<XStack
+									flexWrap='wrap'
 									justifyContent='flex-start'
 									gap={'$4'}
 									marginVertical={'$2'}
@@ -144,6 +145,13 @@ export default function InfoTab() {
 									>
 										<Icon name='patreon' small color='$borderColor' />
 										<Text>Patreon</Text>
+									</XStack>
+									<XStack
+										alignItems='center'
+										onPress={() => Linking.openURL('https://ko-fi.com/jellify')}
+									>
+										<Icon name='coffee-outline' small color='$borderColor' />
+										<Text>Ko-fi</Text>
 									</XStack>
 								</XStack>
 								<PatronsList patrons={patrons} />
