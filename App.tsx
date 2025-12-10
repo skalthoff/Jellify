@@ -3,9 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import 'react-native-url-polyfill/auto'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import Jellify from './src/components/jellify'
-import { TamaguiProvider } from 'tamagui'
 import { LogBox, Platform, useColorScheme } from 'react-native'
-import jellifyConfig from './tamagui.config'
 import { queryClientPersister } from './src/constants/storage'
 import { ONE_DAY, queryClient } from './src/constants/query-client'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -26,6 +24,7 @@ import { usePerformanceMonitor } from './src/hooks/use-performance-monitor'
 import navigationRef from './navigation'
 import { BUFFERS, PROGRESS_UPDATE_EVENT_INTERVAL } from './src/player/config'
 import { useThemeSetting } from './src/stores/settings/app'
+import { MaterialThemeProvider, ThemeName } from './src/material/theme'
 
 LogBox.ignoreAllLogs()
 
@@ -109,6 +108,9 @@ function Container({ playerIsReady }: { playerIsReady: boolean }): React.JSX.Ele
 
 	const isDarkMode = useColorScheme() === 'dark'
 
+	const themeName: ThemeName =
+		theme === 'system' ? (isDarkMode ? 'dark' : 'light') : (theme as ThemeName)
+
 	return (
 		<NavigationContainer
 			ref={navigationRef}
@@ -125,9 +127,9 @@ function Container({ playerIsReady }: { playerIsReady: boolean }): React.JSX.Ele
 			}
 		>
 			<GestureHandlerRootView>
-				<TamaguiProvider config={jellifyConfig}>
+				<MaterialThemeProvider name={themeName}>
 					{playerIsReady && <Jellify />}
-				</TamaguiProvider>
+				</MaterialThemeProvider>
 			</GestureHandlerRootView>
 		</NavigationContainer>
 	)
