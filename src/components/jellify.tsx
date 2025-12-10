@@ -10,14 +10,13 @@ import {
 } from '@typedigital/telemetrydeck-react'
 import telemetryDeckConfig from '../../telemetrydeck.json'
 import * as Sentry from '@sentry/react-native'
-import { getToken, Theme, useTheme } from 'tamagui'
+import { getToken, useTheme } from 'tamagui'
 import Toast from 'react-native-toast-message'
 import JellifyToastConfig from '../configs/toast.config'
-import { useColorScheme } from 'react-native'
 import { CarPlayProvider } from '../providers/CarPlay'
 import { StorageProvider } from '../providers/Storage'
 import { useSelectPlayerEngine } from '../stores/player/engine'
-import { useSendMetricsSetting, useThemeSetting } from '../stores/settings/app'
+import { useSendMetricsSetting } from '../stores/settings/app'
 import { GLITCHTIP_DSN } from '../configs/config'
 import useDownloadProcessor from '../hooks/use-download-processor'
 /**
@@ -25,19 +24,14 @@ import useDownloadProcessor from '../hooks/use-download-processor'
  * @returns The {@link Jellify} component
  */
 export default function Jellify(): React.JSX.Element {
-	const [theme] = useThemeSetting()
-
-	const isDarkMode = useColorScheme() === 'dark'
 	useSelectPlayerEngine()
 
 	return (
-		<Theme name={theme === 'system' ? (isDarkMode ? 'dark' : 'light') : theme}>
-			<JellifyLoggingWrapper>
-				<DisplayProvider>
-					<App />
-				</DisplayProvider>
-			</JellifyLoggingWrapper>
-		</Theme>
+		<JellifyLoggingWrapper>
+			<DisplayProvider>
+				<App />
+			</DisplayProvider>
+		</JellifyLoggingWrapper>
 	)
 }
 

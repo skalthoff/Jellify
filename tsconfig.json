@@ -3,9 +3,11 @@
 	"include": ["**/*.ts", "**/*.tsx"],
 	"exclude": ["**/node_modules", "**/Pods"],
 	"compilerOptions": {
-		"paths": {
-			"@/*": ["./*"]
-		},
+                "paths": {
+                        "@/*": ["./*"],
+                        "tamagui": ["./src/material/tamagui"],
+                        "tamagui/*": ["./src/material/tamagui"],
+                },
 		"jsx": "react-native",
 		"types": ["jest", "node"],
 		"skipLibCheck": true
