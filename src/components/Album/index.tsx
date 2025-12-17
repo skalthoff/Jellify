@@ -170,7 +170,15 @@ function AlbumTrackListHeader({ album }: { album: BaseItemDto }): React.JSX.Elem
 
 	return (
 		<YStack alignContent='center' flex={1} marginTop={'$4'}>
-			<ItemImage item={album} width={'$20'} height={'$20'} />
+			<ItemImage
+				item={album}
+				width={'$20'}
+				height={'$20'}
+				imageOptions={{
+					maxHeight: 500,
+					maxWidth: 500,
+				}}
+			/>
 
 			<YStack marginTop={'$2'} alignContent='center' justifyContent='center' gap={'$2'}>
 				<H5 lineBreakStrategyIOS='standard' textAlign='center' numberOfLines={5}>
