@@ -1,6 +1,6 @@
-import { YStack, XStack, Separator, Spacer, Spinner } from 'tamagui'
+import { YStack, XStack, Separator, Spinner } from 'tamagui'
 import { H5, Text } from '../Global/helpers/text'
-import { FlatList, SectionList } from 'react-native'
+import { SectionList } from 'react-native'
 import { RunTimeTicks } from '../Global/helpers/time-codes'
 import Track from '../Global/components/track'
 import FavoriteButton from '../Global/components/favorite-button'
@@ -10,7 +10,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import InstantMixButton from '../Global/components/instant-mix-button'
 import ItemImage from '../Global/components/image'
 import React, { useLayoutEffect } from 'react'
-import { useSafeAreaFrame } from 'react-native-safe-area-context'
 import Icon from '../Global/components/icon'
 import { useNetworkStatus } from '../../stores/network'
 import { useLoadNewQueue } from '../../providers/Player/hooks/mutations'
@@ -28,6 +27,8 @@ import { fetchAlbumDiscs } from '../../api/queries/item'
 import { useQuery } from '@tanstack/react-query'
 import useAddToPendingDownloads, { usePendingDownloads } from '../../stores/network/downloads'
 import Button from '../Global/helpers/button'
+import Animated, { FadeInUp, FadeOutDown, LinearTransition } from 'react-native-reanimated'
+import { FlashList } from '@shopify/flash-list'
 
 /**
  * The screen for an Album's track list
@@ -115,8 +116,12 @@ export function Album({ album }: { album: BaseItemDto }): React.JSX.Element {
 			)}
 			ListFooterComponent={() => <AlbumTrackListFooter album={album} />}
 			ListEmptyComponent={() => (
-				<YStack flex={1} alignContent='center'>
-					{isPending ? <Spinner color={'$primary'} /> : <Text>No tracks found</Text>}
+				<YStack flex={1} alignContent='center' margin={'$4'}>
+					{isPending ? (
+						<Spinner color={'$primary'} />
+					) : (
+						<Text color={'$borderColor'}>No album tracks</Text>
+					)}
 				</YStack>
 			)}
 			onScrollBeginDrag={closeAllSwipeableRows}
@@ -133,8 +138,6 @@ export function Album({ album }: { album: BaseItemDto }): React.JSX.Element {
  */
 function AlbumTrackListHeader({ album }: { album: BaseItemDto }): React.JSX.Element {
 	const api = useApi()
-
-	const { width } = useSafeAreaFrame()
 
 	const [networkStatus] = useNetworkStatus()
 	const streamingDeviceProfile = useStreamingDeviceProfile()
@@ -196,12 +199,13 @@ function AlbumTrackListHeader({ album }: { album: BaseItemDto }): React.JSX.Elem
 						}
 						textAlign='center'
 						fontSize={'$5'}
+						paddingBottom={'$2'}
 					>
 						{album.AlbumArtists![0].Name ?? 'Untitled Artist'}
 					</Text>
 				)}
 
-				<XStack justify='center' gap={'$3'}>
+				<XStack justify='center' gap={'$3'} marginBottom={'$2'}>
 					<YStack flex={1}>
 						{album.ProductionYear ? (
 							<Text fontVariant={['tabular-nums']} textAlign='right'>
@@ -217,37 +221,45 @@ function AlbumTrackListHeader({ album }: { album: BaseItemDto }): React.JSX.Elem
 					</RunTimeTicks>
 				</XStack>
 
-				<XStack alignContent='center' gap={'$2'} marginHorizontal={'$2'}>
-					<Button
-						icon={() => <Icon small name='play' color='$primary' />}
-						borderWidth={'$1'}
-						borderColor={'$primary'}
-						flex={1}
-						onPress={() => playAlbum(false)}
-						pressStyle={{ scale: 0.875 }}
-						hoverStyle={{ scale: 0.925 }}
-						animation={'bouncy'}
+				{discs && (
+					<Animated.View
+						entering={FadeInUp.springify()}
+						exiting={FadeOutDown.springify()}
+						layout={LinearTransition.springify()}
 					>
-						<Text bold color={'$primary'}>
-							Play
-						</Text>
-					</Button>
+						<XStack alignContent='center' gap={'$2'} marginHorizontal={'$2'}>
+							<Button
+								icon={() => <Icon small name='play' color='$primary' />}
+								borderWidth={'$1'}
+								borderColor={'$primary'}
+								flex={1}
+								onPress={() => playAlbum(false)}
+								pressStyle={{ scale: 0.875 }}
+								hoverStyle={{ scale: 0.925 }}
+								animation={'bouncy'}
+							>
+								<Text bold color={'$primary'}>
+									Play
+								</Text>
+							</Button>
 
-					<Button
-						icon={() => <Icon small name='shuffle' color='$primary' />}
-						borderWidth={'$1'}
-						borderColor={'$primary'}
-						flex={1}
-						onPress={() => playAlbum(true)}
-						pressStyle={{ scale: 0.875 }}
-						hoverStyle={{ scale: 0.925 }}
-						animation={'bouncy'}
-					>
-						<Text bold color={'$primary'}>
-							Shuffle
-						</Text>
-					</Button>
-				</XStack>
+							<Button
+								icon={() => <Icon small name='shuffle' color='$primary' />}
+								borderWidth={'$1'}
+								borderColor={'$primary'}
+								flex={1}
+								onPress={() => playAlbum(true)}
+								pressStyle={{ scale: 0.875 }}
+								hoverStyle={{ scale: 0.925 }}
+								animation={'bouncy'}
+							>
+								<Text bold color={'$primary'}>
+									Shuffle
+								</Text>
+							</Button>
+						</XStack>
+					</Animated.View>
+				)}
 			</YStack>
 		</YStack>
 	)
@@ -267,7 +279,7 @@ function AlbumTrackListFooter({ album }: { album: BaseItemDto }): React.JSX.Elem
 				<>
 					<H5>Featuring</H5>
 
-					<FlatList
+					<FlashList
 						data={album.ArtistItems}
 						horizontal
 						renderItem={({ item: artist }) => (
