@@ -96,7 +96,7 @@ export default function PlayerScreen(): React.JSX.Element {
 	 */
 	const mainContainerStyle = {
 		marginTop: isAndroid ? top : getTokenValue('$4'),
-		marginBottom: bottom + getTokenValue('$11', 'space'),
+		marginBottom: bottom + getTokenValue(isAndroid ? '$10' : '$12', 'space'),
 	}
 
 	return nowPlaying ? (
