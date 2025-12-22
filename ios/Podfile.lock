@@ -74,7 +74,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - NitroModules (0.31.10):
+  - NitroModules (0.32.0-beta.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -3599,7 +3599,7 @@ SPEC CHECKSUMS:
   MMKVCore: f2dd4c9befea04277a55e84e7812f930537993df
   NitroFetch: 660adfb47f84b28db664f97b50e5dc28506ab6c1
   NitroMmkv: ce1df9b9f0e06dfbde2455d863047e0411fceb6e
-  NitroModules: 5bc319d441f4983894ea66b1d392c519536e6d23
+  NitroModules: 7dc2f90b6122b23143848972adc5ac9513537d43
   NitroOta: d6a10da7e79dd58dace797d43b43e8e034c86eca
   NitroOtaBundleManager: 59a8392078acfd0f28d31c1360f15f7eddcd8482
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
