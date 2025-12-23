@@ -226,9 +226,11 @@ export const useRemoveFromQueue = () => {
 	return async (index: number) => {
 		trigger('impactMedium')
 		TrackPlayer.remove([index])
-		const newQueue = await TrackPlayer.getQueue()
 
-		usePlayerQueueStore.getState().setQueue(newQueue as JellifyTrack[])
+		const prevQueue = usePlayerQueueStore.getState().queue
+		const newQueue = prevQueue.filter((_, i) => i !== index)
+
+		usePlayerQueueStore.getState().setQueue(newQueue)
 	}
 }
 
@@ -244,9 +246,15 @@ export const useRemoveUpcomingTracks = () => {
 export const useReorderQueue = () => {
 	return async ({ fromIndex, toIndex }: QueueOrderMutation) => {
 		await TrackPlayer.move(fromIndex, toIndex)
-		const newQueue = await TrackPlayer.getQueue()
 
-		usePlayerQueueStore.getState().setQueue(newQueue as JellifyTrack[])
+		const queue = usePlayerQueueStore.getState().queue
+
+		const itemToMove = queue[fromIndex]
+		const newQueue = [...queue]
+		newQueue.splice(fromIndex, 1)
+		newQueue.splice(toIndex, 0, itemToMove)
+
+		usePlayerQueueStore.getState().setQueue(newQueue)
 	}
 }
 
