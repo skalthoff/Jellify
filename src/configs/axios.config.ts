@@ -8,7 +8,9 @@ const nitroAxiosAdapter: AxiosAdapter = async (config) => {
 		body: config.data,
 	})
 
-	const data = await response.json()
+	const responseText = await response.text()
+
+	const data = responseText.length > 0 ? JSON.parse(responseText) : null
 
 	const headers: Record<string, string> = {}
 	response.headers.forEach((value, key) => {
