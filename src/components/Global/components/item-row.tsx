@@ -211,7 +211,7 @@ function ItemRowDetails({ item }: { item: BaseItemDto }): React.JSX.Element {
 	const route = useRoute<RouteProp<BaseStackParamList>>()
 
 	const shouldRenderArtistName =
-		item.Type === 'Audio' || (item.Type === 'MusicAlbum' && !route.name.includes('Overview'))
+		item.Type === 'Audio' || (item.Type === 'MusicAlbum' && !route.name.includes('Artist'))
 
 	const shouldRenderProductionYear = item.Type === 'MusicAlbum' && route.name.includes('Artist')
 
