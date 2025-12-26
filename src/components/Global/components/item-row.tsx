@@ -213,7 +213,7 @@ function ItemRowDetails({ item }: { item: BaseItemDto }): React.JSX.Element {
 	const shouldRenderArtistName =
 		item.Type === 'Audio' || (item.Type === 'MusicAlbum' && !route.name.includes('Overview'))
 
-	const shouldRenderProductionYear = item.Type === 'MusicAlbum' && route.name.includes('Overview')
+	const shouldRenderProductionYear = item.Type === 'MusicAlbum' && route.name.includes('Artist')
 
 	const shouldRenderGenres = item.Type === 'Playlist' || item.Type === BaseItemKind.MusicArtist
 
