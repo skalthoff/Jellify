@@ -14,7 +14,7 @@ import { useNetworkStatus } from '../../../stores/network'
 import useStreamingDeviceProfile from '../../../stores/device-profile'
 import useItemContext from '../../../hooks/use-item-context'
 import { RouteProp, useRoute } from '@react-navigation/native'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { LayoutChangeEvent } from 'react-native'
 import Animated, {
 	SharedValue,
