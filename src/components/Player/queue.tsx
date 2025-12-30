@@ -1,5 +1,5 @@
 import Icon from '../Global/components/icon'
-import Track from '../Global/components/track'
+import Track from '../Global/components/Track'
 import { RootStackParamList } from '../../screens/types'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { ScrollView, Text, XStack } from 'tamagui'
@@ -37,10 +37,13 @@ export default function Queue({
 		navigation.setOptions({
 			headerRight: () => {
 				return (
-					<XStack>
-						<Text>Clear Upcoming</Text>
+					<XStack gap='$1'>
+						<Text color={'$warning'} marginVertical={'auto'} fontWeight={'bold'}>
+							Clear
+						</Text>
 						<Icon
-							name='notification-clear-all'
+							name='broom'
+							color='$warning'
 							onPress={async () => {
 								await removeUpcomingTracks()
 								setQueue(usePlayerQueueStore.getState().queue)

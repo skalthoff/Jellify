@@ -24,8 +24,6 @@ import { StackActions } from '@react-navigation/native'
 import TextTicker from 'react-native-text-ticker'
 import { TextTickerConfig } from '../Player/component.config'
 import { useAddToQueue } from '../../providers/Player/hooks/mutations'
-import { useNetworkStatus } from '../../stores/network'
-import useStreamingDeviceProfile from '../../stores/device-profile'
 import { useIsDownloaded } from '../../api/queries/download'
 import { useDeleteDownloads } from '../../api/mutations/download'
 import useHapticFeedback from '../../hooks/use-haptic-feedback'
@@ -185,18 +183,9 @@ function AddToPlaylistRow({
 }
 
 function AddToQueueMenuRow({ tracks }: { tracks: BaseItemDto[] }): React.JSX.Element {
-	const api = useApi()
-
-	const [networkStatus] = useNetworkStatus()
-
-	const deviceProfile = useStreamingDeviceProfile()
-
 	const addToQueue = useAddToQueue()
 
 	const mutation: AddToQueueMutation = {
-		api,
-		networkStatus,
-		deviceProfile,
 		tracks,
 	}
 
@@ -297,7 +286,7 @@ function DownloadMenuRow({ items }: { items: BaseItemDto[] }): React.JSX.Element
 			onPress={removeDownloads}
 			pressStyle={{ opacity: 0.5 }}
 		>
-			<Icon small color='$danger' name='delete' />
+			<Icon small color='$warning' name='broom' />
 
 			<Text bold>Remove Download</Text>
 		</ListItem>

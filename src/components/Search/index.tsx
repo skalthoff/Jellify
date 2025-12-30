@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import Input from '../Global/helpers/input'
-import { Text } from '../Global/helpers/text'
+import { H5, Text } from '../Global/helpers/text'
 import ItemRow from '../Global/components/item-row'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { QueryKeys } from '../../enums/query-keys'
 import { fetchSearchResults } from '../../api/queries/search'
 import { useQuery } from '@tanstack/react-query'
-import { FlatList } from 'react-native'
 import { getToken, H3, Separator, Spinner, YStack } from 'tamagui'
 import Suggestions from './suggestions'
 import { isEmpty } from 'lodash'
@@ -16,6 +15,9 @@ import SearchParamList from '../../screens/Search/types'
 import { closeAllSwipeableRows } from '../Global/components/swipeable-row-registry'
 import { useApi, useJellifyLibrary, useJellifyUser } from '../../stores'
 import { useSearchSuggestions } from '../../api/queries/suggestions'
+import { FlashList } from '@shopify/flash-list'
+import navigationRef from '../../../navigation'
+import { StackActions } from '@react-navigation/native'
 
 export default function Search({
 	navigation,
@@ -65,11 +67,10 @@ export default function Search({
 	}
 
 	return (
-		<FlatList
+		<FlashList
 			contentInsetAdjustmentBehavior='automatic'
-			progressViewOffset={10}
 			ListHeaderComponent={
-				<YStack>
+				<YStack paddingTop={'$2'}>
 					<Input
 						placeholder='Seek and ye shall find'
 						onChangeText={(value) => handleSearchStringUpdate(value)}
@@ -95,6 +96,13 @@ export default function Search({
 													artist: artistResult,
 												})
 											}}
+											onLongPress={() => {
+												navigationRef.dispatch(
+													StackActions.push('Context', {
+														item: artistResult,
+													}),
+												)
+											}}
 											size={'$8'}
 											caption={artistResult.Name ?? 'Untitled Artist'}
 										/>
@@ -105,7 +113,7 @@ export default function Search({
 					)}
 				</YStack>
 			}
-			ItemSeparatorComponent={() => <Separator />}
+			ItemSeparatorComponent={Separator}
 			ListEmptyComponent={() => {
 				// Show spinner while fetching
 				if (fetchingResults) {
@@ -126,7 +134,7 @@ export default function Search({
 							gap={'$3'}
 							paddingHorizontal={'$4'}
 						>
-							<H3>No Results</H3>
+							<H5>No Results</H5>
 							<Text textAlign='center'>
 								{`No results found for "${searchString}". Try a different search term.`}
 							</Text>
@@ -147,8 +155,7 @@ export default function Search({
 			renderItem={({ item }) => <ItemRow item={item} navigation={navigation} />}
 			onScrollBeginDrag={handleScrollBeginDrag}
 			style={{
-				marginHorizontal: getToken('$4'),
-				marginTop: getToken('$4'),
+				paddingHorizontal: getToken('$4'),
 			}}
 		/>
 	)
