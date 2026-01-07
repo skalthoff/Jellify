@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   build-bundle:
-    runs-on: macos-latest
+    runs-on: ${{ vars.USE_SELF_HOSTED_RUNNER == 'true' && 'self-hosted' || 'macos-latest' }}
 
     steps:
       - name: 🧾 Checkout repository
