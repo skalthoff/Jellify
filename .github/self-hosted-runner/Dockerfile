@@ -33,9 +33,9 @@ RUN mkdir -p $ANDROID_SDK_ROOT/cmdline-tools \
     && yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true \
     && $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
-# Install Ruby and Bundler for Fastlane
+# Install Ruby and Bundler for Fastlane (bundler 2.4.22 is last version supporting Ruby 2.7)
 RUN apt-get install -y ruby-full \
-    && gem install bundler
+    && gem install bundler -v 2.4.22
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
