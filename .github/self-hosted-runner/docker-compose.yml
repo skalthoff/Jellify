@@ -1,0 +1,32 @@
+services:
+  github-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - REPO_URL=${REPO_URL:-https://github.com/skalthoff/jellify}
+      - RUNNER_TOKEN=${RUNNER_TOKEN}
+      - RUNNER_NAME_PREFIX=${RUNNER_NAME_PREFIX:-jellify-runner}
+      - RUNNER_WORKDIR=/tmp/github-runner
+      - LABELS=self-hosted,Linux,X64,jellify
+      - EPHEMERAL=false
+      - RUN_AS_ROOT=true
+      - DISABLE_AUTO_UPDATE=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - runner-work:/tmp/github-runner
+    restart: always
+    # Scale with: docker compose up --scale github-runner=3 -d
+    deploy:
+      mode: replicated
+      replicas: ${RUNNER_COUNT:-1}
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '1'
+          memory: 2G
+
+volumes:
+  runner-work:
