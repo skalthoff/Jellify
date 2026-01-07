@@ -30,9 +30,40 @@ RUN mkdir -p $ANDROID_SDK_ROOT/cmdline-tools \
     && yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true \
     && $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
-# Install Ruby and Bundler for Fastlane (bundler 2.4.22 is last version supporting Ruby 2.7)
-RUN apt-get install -y ruby-full \
-    && gem install bundler -v 2.4.22
+# Install Ruby 3.0 into the tool cache for setup-ruby action
+# Install dependencies for building Ruby
+RUN apt-get update && apt-get install -y \
+    autoconf \
+    bison \
+    build-essential \
+    libssl-dev \
+    libyaml-dev \
+    libreadline6-dev \
+    zlib1g-dev \
+    libncurses5-dev \
+    libffi-dev \
+    libgdbm6 \
+    libgdbm-dev \
+    libdb-dev \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install ruby-build
+RUN git clone https://github.com/rbenv/ruby-build.git /tmp/ruby-build \
+    && /tmp/ruby-build/install.sh \
+    && rm -rf /tmp/ruby-build
+
+# Install Ruby 3.0 to hostedtoolcache (setup-ruby expects this)
+# Using 3.0.6 as a stable 3.0 release
+ENV RUNNER_TOOL_CACHE=/opt/hostedtoolcache
+RUN mkdir -p ${RUNNER_TOOL_CACHE}/Ruby/3.0.6/x64 \
+    && ruby-build 3.0.6 ${RUNNER_TOOL_CACHE}/Ruby/3.0.6/x64 \
+    && touch ${RUNNER_TOOL_CACHE}/Ruby/3.0.6/x64.complete
+
+# Also create a '3.0' alias/symlink if possible or just rely on semver matching
+# setup-ruby usually finds 3.0.6 when asked for 3.0
+
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
