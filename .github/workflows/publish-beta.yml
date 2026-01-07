@@ -25,7 +25,7 @@ on:
 
 jobs:
   generate-release-notes:
-    runs-on: ${{ vars.USE_SELF_HOSTED_RUNNER == 'true' && 'self-hosted' || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     outputs:
       release_notes: ${{ steps.set-output.outputs.release_notes }}
     steps:
@@ -75,7 +75,7 @@ jobs:
 
   publish-android:
     if: ${{ github.event.inputs['build-platform'] == 'Android' || github.event.inputs['build-platform'] == 'Both' }}
-    runs-on: ${{ vars.USE_SELF_HOSTED_RUNNER == 'true' && 'self-hosted' || 'macos-15' }}
+    runs-on: macos-15
     outputs:
       version: ${{ steps.setver.outputs.version }}
     steps:

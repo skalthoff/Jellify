@@ -9,7 +9,7 @@ on:
       - 'scripts/getRandomVersion.sh'
 jobs:
   publish-ota-update:
-    runs-on: ${{ vars.USE_SELF_HOSTED_RUNNER == 'true' && 'self-hosted' || 'macos-15' }}
+    runs-on: macos-15
     steps:
       - name: 🛒 Checkout
         uses: actions/checkout@v6
