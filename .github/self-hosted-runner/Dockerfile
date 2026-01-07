@@ -1,9 +1,6 @@
 # Custom GitHub Actions Runner with Node.js, Bun, and Android tools
 FROM myoung34/github-runner:latest
 
-# Switch to root for installation
-USER root
-
 # Install Node.js 20 (LTS)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
@@ -39,6 +36,3 @@ RUN apt-get install -y ruby-full \
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Switch back to runner user
-USER runner

@@ -10,6 +10,8 @@ services:
       - RUNNER_WORKDIR=/tmp/github-runner
       - LABELS=self-hosted,Linux,X64,jellify
       - EPHEMERAL=false
+      - RUN_AS_ROOT=true
+      - DISABLE_AUTO_UPDATE=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - runner-work:/tmp/github-runner
