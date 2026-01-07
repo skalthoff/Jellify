@@ -12,6 +12,9 @@ RUN curl -fsSL https://bun.sh/install | bash \
     && mv /root/.bun/bin/bun /usr/local/bin/ \
     && bun --version
 
+# Set Bun cache to user home to avoid cross-device link errors
+ENV BUN_INSTALL_CACHE_DIR=/home/runner/.bun/install/cache
+
 # Install JDK 17 for Android builds
 RUN apt-get update && apt-get install -y openjdk-17-jdk \
     && java -version
